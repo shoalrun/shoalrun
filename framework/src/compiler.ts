@@ -411,6 +411,10 @@ export async function compile(configFile: string, destination?: string, provenan
       for (const file of value.sources) if (typeof file === 'string') walkthroughSources.add(file);
     }
     if (Array.isArray(value.children)) for (const child of value.children) collectPageAssets(child);
+    // Procedure bodies live on items rather than the container's children.
+    if ((value.type === 'docSteps' || value.type === 'docTimeline') && Array.isArray(value.items)) {
+      for (const item of value.items) collectPageAssets(item);
+    }
   };
   for (const page of rendered) {
     collectPageAssets(page.doc.tree);

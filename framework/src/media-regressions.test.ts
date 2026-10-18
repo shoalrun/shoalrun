@@ -145,3 +145,40 @@ test('Markdown image references, URL suffixes, and matching basenames keep disti
   assert.ok(images[2][1].endsWith('#mark'));
   assert.deepEqual((await auditLinks(project.output)).findings, []);
 });
+
+test('procedure bodies publish component and Markdown images through nested containers', async t => {
+  const project = await fixture(t, `<Steps>
+<Step title="Inspect images">
+<Image src="./step.svg" alt="Step image" />
+
+![Step diagram](./diagram.svg)
+
+<Timeline current="inspect">
+<Milestone id="inspect" title="Inspect nested image">
+<Tabs label="Inspection">
+<Tab label="Diagram">
+<Image src="./nested.svg" alt="Nested image" />
+</Tab>
+<Tab label="Notes">
+Inspect the diagram.
+</Tab>
+</Tabs>
+</Milestone>
+</Timeline>
+</Step>
+</Steps>`, '/docs');
+  const files = ['step.svg', 'diagram.svg', 'nested.svg'];
+  for (const file of files) await writeFile(path.join(project.content, file), `<svg xmlns="http://www.w3.org/2000/svg"><text>${file}</text></svg>`);
+  const manifest = await compile(project.config, project.output);
+  const html = await readFile(path.join(project.built, 'index.html'), 'utf8');
+  const markdown = await readFile(path.join(project.built, 'index.md'), 'utf8');
+  const images = [...html.matchAll(/<img[^>]*src="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(images.length, 3);
+  for (const [index, url] of images.entries()) {
+    assert.ok(url.startsWith('/docs/assets/pages/'), url);
+    assert.equal(await readFile(path.join(project.output, url), 'utf8'), await readFile(path.join(project.content, files[index]), 'utf8'));
+    assert.ok(markdown.includes(url), markdown);
+    assert.ok(manifest.dependencies.some(file => file.endsWith(files[index])));
+  }
+  assert.deepEqual((await auditLinks(project.output)).findings, []);
+});
