@@ -1,0 +1,14 @@
+---
+id: reference.get-message
+title: Check message delivery
+summary: Look up the message ID returned when you queued an email.
+type: api-reference
+slug: /reference/get-message
+channel: production
+version: current
+language: en
+operations: [notifications.get-message]
+access: { policy: public }
+---
+
+Use the returned message ID in the same environment. `queued` means the request was accepted. `delivered` means the provider reported delivery; it does not prove the recipient read the email. For `failed`, inspect `failureReason` before sending another request.

@@ -1,0 +1,76 @@
+---
+# RECIPE TEMPLATE. Delete these comments and resolve every [[TODO: ...]] prompt before publishing.
+# Scaffold fills id, title, summary, type, slug, publication, and access from the command and config.
+# A recipe is a specialized how-to for one customer goal. Write it directly or combine ingredients. Use a tutorial for a learning path.
+
+# Stable identity used by links, cards, navigation, and relationships. Keep it after publication.
+# Short lowercase words separated by dots or hyphens work well, such as recipe.send-welcome-email.
+id: recipe.example
+
+# Name the customer goal as an action, such as "Send a welcome email".
+# Scaffold derives a starting title from the file name. Rewrite it for readers.
+title: Achieve one customer goal
+
+# One sentence describing what the reader can accomplish. Replace the draft summary.
+# Cards, search results, and link previews use this by default.
+summary: Draft recipe for one customer goal.
+
+# Leave this page kind as recipe. A cookbook can collect pages with this type.
+type: recipe
+
+# Stable lowercase URL path before publication prefixes. Start with /.
+slug: /recipes/example
+
+# These values must identify an enabled publication. Scaffold chooses the project defaults
+# unless you pass --channel, --version, or --language.
+channel: production
+version: current
+language: en
+
+# Optional: stable operation IDs used by this recipe. Pass --operation to scaffold, or add
+# the IDs after checking apis.*.operations in config. Delete this field for a non-API recipe.
+# operations: [notifications.send-email]
+
+# Optional: reuse the project's topic tags when a collection filters recipes by tag.
+# tags: [notifications]
+
+# Optional: override card text or give this page a known Lucide icon.
+# card: { icon: chef-hat, eyebrow: Recipe }
+
+# Drafts stay out of the published site. Change to public only after testing the steps,
+# replacing TODOs, and checking the HTML and Markdown outputs.
+access: { policy: draft }
+---
+
+[[TODO: Name the customer goal, the result, and when to use this recipe.]]
+
+## Before you start
+
+[[TODO: List the credentials, tools, files, and starting state needed for the task. If composing ingredients, combine their requirements. Remove duplicates.]]
+
+## Ingredients
+
+1. [[TODO: OPTIONAL SECTION. Keep this list only when composing reusable ingredients. Name the first ingredient and its input and output. Delete this whole section for a directly authored recipe.]]
+2. [[TODO: Add the next ingredient. Check that the previous output provides its required input.]]
+
+## Do it
+
+[[TODO: Write the complete actions needed for the customer goal. If using ingredients, include the values passed between them. Assume practical competence, give conditional actions for relevant cases, and link out for background and complete reference facts. Do not make readers assemble the instructions themselves.]]
+
+## Check it worked
+
+[[TODO: State one observable end-to-end success value, the command or screen that shows it, and the first thing to inspect if it does not match. Verify the full recipe yourself.]]
+
+## If it fails
+
+[[TODO: OPTIONAL SECTION. Add a likely failure, its symptom, and a recovery step. Delete this section when there is no useful task-specific advice.]]
+
+## HTML, Markdown, and agents
+
+[[TODO: OPTIONAL SECTION. Keep this only when the recipe uses a component or has different HTML and Markdown behavior. Delete it otherwise.]]
+
+## Related reading
+
+[[TODO: Add useful relationships in config/relationships.yaml, then delete this prompt. Delete this whole section if there are no related pages.]]
+
+<RelatedReading />

@@ -1,0 +1,88 @@
+schemaVersion: 1
+
+site:
+  title: Notifications API
+  origin: https://docs.example.com
+
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }
+
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+
+apis:
+  notifications:
+    publicReview:
+      digest: 16837b2b5d0d4aa28c30368e3ff2fefd0d8a62a5dda50a9a4379839778942599
+    source: { kind: file, path: ./apis/notifications.yaml }
+    operations:
+      - id: notifications.send-email
+        sourceOperationId: sendEmail
+        reference: reference.send-email
+      - id: notifications.send-push
+        sourceOperationId: sendPush
+        reference: reference.send-push
+      - id: notifications.send-sms
+        sourceOperationId: sendSms
+        reference: reference.send-sms
+
+      - id: notifications.get-message
+        sourceOperationId: getMessage
+        reference: reference.get-message
+
+cookbooks:
+  welcome-email:
+    title: What do you need to confirm?
+    mode: single
+    options:
+      - id: accepted
+        label: Confirm the request was accepted
+        doc: recipe.queue-email
+        when: You are testing the request payload and only need an acceptance check.
+        needs: A running local demo, cURL, and Node.js.
+        outcome: A queued response and a message ID. Delivery is still unknown.
+      - id: delivered
+        label: Follow the email through delivery
+        doc: recipe.send-welcome-email
+        when: You need to distinguish acceptance, delivery, and a delivery failure.
+        needs: A running local demo, cURL, and Node.js.
+        outcome: A delivery status tied to the message you queued, with a failure check.
+  notify-users:
+    title: Choose notification channels
+    options:
+      - { id: email, label: Email, doc: recipe.queue-email }
+      - { id: push, label: Push, doc: recipe.queue-push }
+      - { id: sms, label: SMS, doc: recipe.queue-sms }
+
+navigation:
+  - id: start
+    doc: guide.notifications-start
+  - id: api
+    doc: reference.send-email
+  - id: push-api
+    doc: reference.send-push
+  - id: sms-api
+    doc: reference.send-sms
+  - id: cookbook
+    label: Cookbook
+    items:
+      - { id: notify-users, doc: cookbook.notify-users }
+      - { id: queue-email, doc: recipe.queue-email }
+      - { id: queue-push, doc: recipe.queue-push }
+      - { id: queue-sms, doc: recipe.queue-sms }
+  - id: delivery-api
+    doc: reference.get-message
+  - id: welcome-cookbook
+    doc: cookbook.welcome-email
+  - id: welcome-recipe
+    doc: recipe.send-welcome-email

@@ -1,0 +1,55 @@
+schemaVersion: 1
+
+site:
+  title: Cedar Parcel API · reference stress test
+  origin: https://docs.cedar-parcel.example
+
+theme:
+  mode: system
+  toggle: true
+
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: '' }
+  versions:
+    current: { pathPrefix: '' }
+  enabled:
+    - { channel: production, version: current, language: en }
+
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    language: en
+    access: { policy: public }
+
+apis:
+  cedar:
+    source: { kind: file, path: ./apis/cedar-parcel.yaml, focused: true }
+    publicReview:
+      digest: a5e7cb842c54e81d769f827abf3fc2bd0d2618b06360a157a31b52f71910ca00
+    mappings:
+      subjectLifecycle:
+        from: x-docs-availability.phase
+        values:
+          limited: beta
+          building: in-development
+          retired: deprecated
+    querySyntax:
+      - parameter: parameters
+        pathPrefixes: [/Search/]
+        style: unwrapped
+        example: declaredValue(gt)=100
+    generateReferences:
+      pathPrefix: /reference
+
+navigation:
+  - { id: overview, doc: guide.overview }
+  - id: api
+    label: API reference
+    api: cedar
+    items:
+      - { id: enrollment-guide, doc: guide.enrollment-shapes }
+      - { id: generated, generated: tags }

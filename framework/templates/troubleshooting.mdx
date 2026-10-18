@@ -1,0 +1,159 @@
+---
+# TROUBLESHOOTING TEMPLATE. Delete every comment line (starting with #) before you publish.
+# Search the file for TODO and resolve every placeholder in double square brackets.
+# A page with a placeholder left cannot be published.
+#
+# Scaffold filled in id, title, summary, type, slug, channel, version, language, and access from
+# the command line, the file path, and your config. Rewrite title, summary, and slug for the reader.
+
+# Stable identity. Links, cards, navigation, and relationships use it, so it can outlive
+# a renamed file or a changed URL. Scaffold derived it from the file path. Shorten it if you like,
+# to lowercase words separated by dots or hyphens, such as troubleshooting.payment-declined.
+# Never change it after publishing.
+id: troubleshooting.example
+
+# The page heading and the browser tab title. Name the symptom the way the reader would search for it:
+# "Payment fails with error 402" or "Build stops with unresolved placeholders".
+# Use the exact error code or message when there is one. Sentence case, 60 characters or fewer.
+# Scaffold derived a placeholder title from the file name. Rewrite it.
+title: Example
+
+# One sentence of 160 characters or fewer that names the problem and promises the fix.
+# It appears on cards, in search results, and as the default link preview text.
+# Good: "Fix a payment that fails with error 402 because the account has no card."
+# Bad: "Troubleshooting payments." (It does not name the symptom.)
+# Scaffold wrote a draft summary that blocks publishing. Replace it.
+summary: Draft summary
+
+# Optional longer text for search and link previews. Two sentences at most, about 300 characters.
+# Add detail the summary leaves out, such as the version or the audience. Do not repeat the summary.
+# Delete this field if you have nothing to add.
+description: "[[TODO: Two sentences that add detail to the summary, or delete this field.]]"
+
+# The page kind. Leave this as troubleshooting.
+type: troubleshooting
+
+# The URL path. Start with /. Use lowercase words separated by hyphens, and keep it stable.
+# Good: /troubleshooting/payment-error-402. Avoid dates and version numbers.
+slug: /troubleshooting/example
+
+# The publication this page belongs to. It must match an enabled entry in publications.enabled.
+# A page in a channel, version, or language that is not enabled is skipped without a warning.
+channel: production
+version: current
+language: en
+
+# Topic labels that help collections find this page. One to three, lowercase, short.
+# Use labels your team already uses. Do not invent one for a single page.
+tags:
+  - "[[TODO: One lowercase topic label, such as payments. Add a line for each extra label.]]"
+
+# How this page looks when another page links to it with a card. The icon is a Lucide name in
+# lowercase, such as life-buoy, credit-card, or terminal. Browse the names at lucide.dev/icons.
+# An unknown name fails the build. To add a short label above the card title, or card text that
+# replaces the summary on cards only, add eyebrow or description: card: { icon: life-buoy, eyebrow: Troubleshooting }
+card: { icon: life-buoy }
+
+# ---------------------------------------------------------------------------------------------
+# OPTIONAL FIELDS. Uncomment one only when the rule in its comment applies.
+# ---------------------------------------------------------------------------------------------
+#
+#
+# API TASKS ONLY. Stable operation IDs from your apis config that this page uses.
+# Adds a "Related documentation" list here and on each operation's reference page.
+# Scaffold fills this field when you pass --operation. IDs that do not exist fail the build.
+# operations: [payments.create]
+#
+# Who this page is for, shown as badges. Free text unless your config defines an audience
+# reader view, in which case use its choice IDs. Uncomment only if your site uses audiences.
+# audiences: [developers]
+#
+# Reader-view marks for pages that appear only in some views. Use only IDs from readerFilters.facets.
+# The product, area, and subarea fields set a single choice for a facet with the same name.
+# readerFilters: { audience: [developer] }
+# product: payments
+# area: reporting
+# subarea: settlements
+#
+# Status of the feature or API this page covers: beta, in-development, or deprecated.
+# It shows a badge in navigation and the page header. Leave it out for a stable feature.
+# subjectLifecycle: beta
+#
+# Editorial state of this document, such as needs-review. Free text. It is kept but never shown.
+# lifecycle: needs-review
+#
+# Deepest heading level in the on-page table of contents. Use 0 to hide it, or 2 through 6.
+# The default is 3. Set 2 for a long page with many small subsections.
+# tocDepth: 2
+#
+# Page width. wide drops the "On this page" column for wide tables and diagrams.
+# The default is docs. landing is for home pages, so do not use it on a guide.
+# layout: wide
+#
+# A local .png or .jpg, 1200 by 630 pixels, that replaces the generated link-preview image.
+# The path is relative to this file.
+# image: ./images/retry-payment.png
+#
+# Overrides for the browser title and meta description. Only title and description are supported.
+# seo:
+#   title: Retry a failed payment | Example API
+#   description: Retry a payment with the same idempotency key.
+#
+# Literal text for one output only. Keys: card, pageHeader, search, htmlDescription, socialCard.
+# displayText:
+#   socialCard: Retry a failed payment without charging twice.
+#
+# A named Markdown-header profile from your config, or a mapping that overrides the header.
+# markdownMetadata: minimal
+#
+# Values for snippets used on this page. They override project variables.
+# variables: { product: Payments sandbox }
+
+# Publishing control. Scaffold sets draft, which keeps the page out of the site. Change to
+# { policy: public } only after every TODO is resolved and you have reproduced the problem and confirmed the fix works.
+access: { policy: draft }
+---
+
+[[TODO: Write the introduction as one paragraph of 150 words or fewer. Put no heading above it. Name the problem, who hits it, and what the page fixes. Use this pattern: "This page helps you fix [symptom]. It applies to [product, version, or environment]. If [different symptom], see [link]." Do not explain background.]]
+
+## Symptoms
+
+[[TODO: Quote the exact error message, status code, or visible behavior, in a code block if it is text. State the affected product version and environment. If several symptoms share one cause, list each as a bullet.]]
+
+## Cause
+
+[[TODO: Explain the confirmed cause in one to three sentences. If the cause is likely and not confirmed, say "likely" and say what evidence is missing. Keep confirmed and likely causes in separate paragraphs.]]
+
+## Diagnose
+
+[[TODO: Give one to three read-only checks that confirm this is the problem. Number them. State the expected result of each check, and what a different result means. Change nothing at this stage.]]
+
+1. [[TODO: First check, and its expected result.]]
+
+## Resolve
+
+[[TODO: Give the smallest safe fix, as numbered steps. Name any permission or prerequisite. Warn before any step that cannot be undone. Show the expected state after each step.]]
+
+1. [[TODO: First corrective action.]]
+
+## Verify the fix
+
+[[TODO: Give one check that proves the problem is gone, independent of the last resolve step. State the exact expected result.]]
+
+## If it still fails
+
+[[TODO: List the details to collect before asking for help: versions, request IDs, and logs. Say which to remove first, and never include credentials or private customer data. Link to the support path or the relevant reference page.]]
+
+## Reference
+
+[[TODO: OPTIONAL SECTION. List related error codes, limits, or settings that a reader may need after the fix. Delete this heading and text if none apply. It always comes after all procedure.]]
+
+## HTML, Markdown, and agents
+
+[[TODO: OPTIONAL SECTION. Keep it when the page uses a component or describes behavior that differs between HTML and Markdown or affects what an agent reads. Delete this heading and text otherwise. Describe what HTML shows or lets a reader do, what the Markdown twin contains, and what that means for an agent. Name the useful .md page, documents.json entry, or focused contract when relevant. Describe actual behavior in two to five sentences.]]
+
+## Related reading
+
+[[TODO: Add relationship entries for this page to your relationships config, then delete this paragraph. Each entry names this page's ID as "from", the related page's ID as "to", a type, and a reason. Types: prerequisite, next-step, reference, advanced, see-also, not-confused-with. If this page has no natural related pages, delete this whole section.]]
+
+<RelatedReading />

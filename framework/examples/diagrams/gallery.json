@@ -1,0 +1,236 @@
+[
+  {
+    "id": "flowchart",
+    "title": "Flowchart",
+    "summary": "Follow decisions and retry paths.",
+    "source": "flowchart TD\n Draft[Draft page] --> Check{Checks pass?}\n Check -->|Yes| Publish[Publish]\n Check -->|No| Revise[Revise page]\n Revise --> Draft"
+  },
+  {
+    "id": "sequence",
+    "title": "Sequence",
+    "summary": "Trace messages between an agent and documentation tools.",
+    "source": "sequenceDiagram\n participant Agent\n participant Docs\n Agent->>Docs: search_docs\n Docs-->>Agent: Page IDs\n Agent->>Docs: get_page\n Docs-->>Agent: Markdown and citation"
+  },
+  {
+    "id": "class",
+    "title": "Class",
+    "summary": "Describe types, fields, and relationships.",
+    "source": "classDiagram\n class Page {\n +String title\n +String slug\n +render()\n }\n class Section {\n +String heading\n }\n Page \"1\" *-- \"many\" Section"
+  },
+  {
+    "id": "er",
+    "title": "Entity relationship",
+    "summary": "Show entities and relationship cardinality.",
+    "source": "erDiagram\n PROJECT ||--o{ PAGE : contains\n PAGE ||--o{ SECTION : contains\n PAGE {\n string id PK\n string title\n }\n SECTION {\n string heading\n }"
+  },
+  {
+    "id": "state",
+    "title": "State",
+    "summary": "Explain a document lifecycle.",
+    "source": "stateDiagram-v2\n [*] --> Draft\n Draft --> Review\n Review --> Draft : revise\n Review --> Published : approve\n Published --> [*]"
+  },
+  {
+    "id": "gantt",
+    "title": "Gantt",
+    "summary": "Schedule work against explicit dates.",
+    "source": "gantt\n title Documentation release\n dateFormat YYYY-MM-DD\n section Preparation\n Draft guides :a, 2026-10-01, 3d\n Review guides :b, after a, 2d\n section Release\n Publish :after b, 1d"
+  },
+  {
+    "id": "git",
+    "title": "Git graph",
+    "summary": "Illustrate branches, commits, and merges.",
+    "source": "gitGraph\n commit id: \"Start\"\n branch guide\n checkout guide\n commit id: \"Draft\"\n checkout main\n merge guide\n commit id: \"Publish\""
+  },
+  {
+    "id": "pie",
+    "title": "Pie",
+    "summary": "Compare proportions with explicit values.",
+    "source": "pie title Example traffic channels\n \"Direct\" : 45\n \"Search\" : 35\n \"Referral\" : 20"
+  },
+  {
+    "id": "mindmap",
+    "title": "Mindmap",
+    "summary": "Organize related documentation topics.",
+    "source": "mindmap\n root((Documentation))\n  Authoring\n   Pages\n   Components\n  Publishing\n   Builds\n   Hosting"
+  },
+  {
+    "id": "kanban",
+    "title": "Kanban",
+    "summary": "Group tasks by workflow stage.",
+    "source": "kanban\n todo[To do]\n  setup[Configure project]\n review[Review]\n  draft[Review guide]\n done[Done]\n  install[Install tools]"
+  },
+  {
+    "id": "timeline",
+    "title": "Timeline",
+    "summary": "Place milestones in chronological order.",
+    "source": "timeline\n title Documentation rollout\n Week 1 : Draft guides\n Week 2 : Review examples : Test installation\n Week 3 : Publish documentation"
+  },
+  {
+    "id": "journey",
+    "title": "User journey",
+    "summary": "Show the stages and participants in a reader journey.",
+    "source": "journey\n title Find an answer\n section Discover\n  Search docs: 4: Reader\n  Open guide: 5: Reader\n section Apply\n  Try example: 4: Reader\n  Check result: 5: Reader"
+  },
+  {
+    "id": "quadrant",
+    "title": "Quadrant chart",
+    "summary": "Compare work along two dimensions.",
+    "source": "quadrantChart\n title Example priorities\n x-axis Low effort --> High effort\n y-axis Low impact --> High impact\n quadrant-1 Plan\n quadrant-2 Start\n quadrant-3 Defer\n quadrant-4 Reconsider\n Navigation: [0.25, 0.8]\n Rewrite: [0.8, 0.65]\n Cleanup: [0.2, 0.2]"
+  },
+  {
+    "id": "xychart",
+    "title": "XY chart",
+    "summary": "Compare values on labeled axes.",
+    "source": "xychart-beta\n title \"Example weekly builds\"\n x-axis [W1, W2, W3, W4]\n y-axis \"Builds\" 0 --> 50\n bar [12, 24, 32, 41]\n line [10, 20, 28, 35]"
+  },
+  {
+    "id": "requirement",
+    "title": "Requirement",
+    "summary": "Connect an implementation element to a requirement.",
+    "source": "requirementDiagram\n requirement readable {\n id: 1\n text: Preserve essential instructions\n risk: low\n verifymethod: test\n }\n element markdown {\n type: renderer\n }\n markdown - satisfies -> readable"
+  },
+  {
+    "id": "sankey",
+    "title": "Sankey",
+    "summary": "Show how quantities flow between groups.",
+    "source": "sankey-beta\n Sources,Guides,30\n Sources,Reference,20\n Guides,Readers,25\n Guides,Agents,5\n Reference,Readers,10\n Reference,Agents,10"
+  },
+  {
+    "id": "architecture",
+    "title": "Architecture",
+    "summary": "Connect services using built-in symbols.",
+    "source": "architecture-beta\n group docs(cloud)[Documentation]\n service app(server)[Site] in docs\n service store(database)[Content] in docs\n app:R -- L:store"
+  },
+  {
+    "id": "c4",
+    "title": "C4",
+    "summary": "Describe a system and its users at a high level.",
+    "source": "C4Context\n title Documentation context\n Person(reader, \"Reader\", \"Finds instructions\")\n System(docs, \"Documentation\", \"Published guides\")\n Rel(reader, docs, \"Reads\")"
+  },
+  {
+    "id": "block",
+    "title": "Block",
+    "summary": "Arrange connected blocks in explicit columns.",
+    "source": "block-beta\n columns 3\n a[\"Author\"] b[\"Build\"] c[\"Publish\"]\n a --> b\n b --> c"
+  },
+  {
+    "id": "agentflow",
+    "title": "Agentflow",
+    "summary": "Show agent tasks and decisions.",
+    "source": "agentflow-beta TB\n draft[\"Draft guide\"]@{ shape: task }\n check[\"Checks pass?\"]@{ shape: decision }\n publish[\"Publish guide\"]@{ shape: action }\n draft --> check\n check -- yes --> publish\n check -- no --> draft"
+  },
+  {
+    "id": "railroad",
+    "title": "Railroad",
+    "summary": "Describe a small grammar using EBNF.",
+    "source": "railroad-ebnf-beta\n name = \"guide\" | \"reference\" ;\n command = \"read\", name ;"
+  },
+  {
+    "id": "treeview",
+    "title": "Tree view",
+    "summary": "Display a directory hierarchy.",
+    "source": "treeView-beta\n \"docs\"\n  \"content\"\n   \"start.mdx\"\n   \"configuration.mdx\"\n  \"docs.config.yaml\""
+  },
+  {
+    "id": "cynefin",
+    "title": "Cynefin",
+    "summary": "Group decisions by their operating context.",
+    "source": "cynefin-beta\n title Documentation decisions\n complex\n  \"Test new navigation\"\n complicated\n  \"Review API coverage\"\n clear\n  \"Fix broken link\"\n chaotic\n  \"Restore unavailable site\""
+  },
+  {
+    "id": "wardley",
+    "title": "Wardley map",
+    "summary": "Relate a reader need to supporting capabilities.",
+    "source": "wardley-beta\n title Documentation capabilities\n anchor Reader [0.95, 0.80]\n component Guides [0.70, 0.55]\n component Hosting [0.30, 0.90]\n Reader -> Guides\n Guides -> Hosting"
+  },
+  {
+    "id": "eventmodeling",
+    "title": "Event modeling",
+    "summary": "Trace interface actions and resulting events.",
+    "source": "eventmodeling\n tf 01 ui Editor\n tf 02 cmd PublishPage\n tf 03 evt PagePublished"
+  },
+  {
+    "id": "usecase",
+    "title": "Use case",
+    "summary": "Connect an actor to a supported action.",
+    "source": "usecase-beta\n actor Reader\n Browse[Browse documentation]\n Search[Search documentation]\n Reader --> Browse\n Reader --> Search"
+  },
+  {
+    "id": "venn",
+    "title": "Venn",
+    "summary": "Show overlapping sets of requirements.",
+    "source": "venn-beta\n set A[\"Readable\"]\n set B[\"Searchable\"]\n union A,B[\"Useful docs\"]"
+  },
+  {
+    "id": "ishikawa",
+    "title": "Ishikawa",
+    "summary": "Organize possible causes of a problem.",
+    "source": "ishikawa-beta\n Slow documentation build\n Content\n  Large diagrams\n  Duplicate inputs\n Environment\n  Cold cache\n  Missing dependencies"
+  },
+  {
+    "id": "packet",
+    "title": "Packet",
+    "summary": "Describe a small binary record layout.",
+    "source": "packet-beta\n title Example record header\n 0-7: \"Version\"\n 8-15: \"Flags\"\n 16-31: \"Length\""
+  },
+  {
+    "id": "radar",
+    "title": "Radar",
+    "summary": "Compare several dimensions for two example approaches.",
+    "source": "radar-beta\n title Example review scores\n axis a[\"Clarity\"], b[\"Coverage\"], c[\"Speed\"]\n curve x[\"Approach A\"]{4, 3, 5}\n curve y[\"Approach B\"]{3, 5, 3}\n max 5"
+  },
+  {
+    "id": "swimlane",
+    "title": "Swimlane",
+    "summary": "Separate work by team.",
+    "source": "swimlane-beta LR\n subgraph Authors\n  draft[Draft guide]\n end\n subgraph Reviewers\n  review[Review guide]\n end\n draft --> review"
+  },
+  {
+    "id": "treemap",
+    "title": "Treemap",
+    "summary": "Compare the size of nested categories.",
+    "source": "treemap-beta\n \"Documentation\"\n  \"Guides\": 30\n  \"Reference\": 45\n  \"Tutorials\": 25"
+  },
+  {
+    "id": "info",
+    "title": "Renderer information",
+    "summary": "Display the renderer version as an informational diagram.",
+    "source": "info"
+  },
+  {
+    "id": "shapes-1",
+    "title": "Flowchart shapes 1",
+    "summary": "Compare rect, rounded, stadium, fr-rect, cyl, circle, dbl-circ, diam.",
+    "source": "flowchart TB\n n0@{ shape: rect, label: \"rect\" }\n n1@{ shape: rounded, label: \"rounded\" }\n n2@{ shape: stadium, label: \"stadium\" }\n n3@{ shape: fr-rect, label: \"fr-rect\" }\n n4@{ shape: cyl, label: \"cyl\" }\n n5@{ shape: circle, label: \"circle\" }\n n6@{ shape: dbl-circ, label: \"dbl-circ\" }\n n7@{ shape: diam, label: \"diam\" }\n n0 --> n1 --> n2 --> n3\n n4 --> n5 --> n6 --> n7"
+  },
+  {
+    "id": "shapes-2",
+    "title": "Flowchart shapes 2",
+    "summary": "Compare hex, odd, lean-r, lean-l, trap-b, trap-t, text, bow-rect.",
+    "source": "flowchart TB\n n0@{ shape: hex, label: \"hex\" }\n n1@{ shape: odd, label: \"odd\" }\n n2@{ shape: lean-r, label: \"lean-r\" }\n n3@{ shape: lean-l, label: \"lean-l\" }\n n4@{ shape: trap-b, label: \"trap-b\" }\n n5@{ shape: trap-t, label: \"trap-t\" }\n n6@{ shape: text, label: \"text\" }\n n7@{ shape: bow-rect, label: \"bow-rect\" }\n n0 --> n1 --> n2 --> n3\n n4 --> n5 --> n6 --> n7"
+  },
+  {
+    "id": "shapes-3",
+    "title": "Flowchart shapes 3",
+    "summary": "Compare sm-circ, f-circ, fr-circ, fork, notch-rect, lin-rect, div-rect, win-pane.",
+    "source": "flowchart TB\n n0@{ shape: sm-circ, label: \"sm-circ\" }\n n1@{ shape: f-circ, label: \"f-circ\" }\n n2@{ shape: fr-circ, label: \"fr-circ\" }\n n3@{ shape: fork, label: \"fork\" }\n n4@{ shape: notch-rect, label: \"notch-rect\" }\n n5@{ shape: lin-rect, label: \"lin-rect\" }\n n6@{ shape: div-rect, label: \"div-rect\" }\n n7@{ shape: win-pane, label: \"win-pane\" }\n n0 --> n1 --> n2 --> n3\n n4 --> n5 --> n6 --> n7"
+  },
+  {
+    "id": "shapes-4",
+    "title": "Flowchart shapes 4",
+    "summary": "Compare notch-pent, cross-circ, st-rect, datastore, lin-cyl, tag-rect, doc, tri.",
+    "source": "flowchart TB\n n0@{ shape: notch-pent, label: \"notch-pent\" }\n n1@{ shape: cross-circ, label: \"cross-circ\" }\n n2@{ shape: st-rect, label: \"st-rect\" }\n n3@{ shape: datastore, label: \"datastore\" }\n n4@{ shape: lin-cyl, label: \"lin-cyl\" }\n n5@{ shape: tag-rect, label: \"tag-rect\" }\n n6@{ shape: doc, label: \"doc\" }\n n7@{ shape: tri, label: \"tri\" }\n n0 --> n1 --> n2 --> n3\n n4 --> n5 --> n6 --> n7"
+  },
+  {
+    "id": "shapes-5",
+    "title": "Flowchart shapes 5",
+    "summary": "Compare flip-tri, sl-rect, hourglass, delay, h-cyl, curv-trap, docs, flag.",
+    "source": "flowchart TB\n n0@{ shape: flip-tri, label: \"flip-tri\" }\n n1@{ shape: sl-rect, label: \"sl-rect\" }\n n2@{ shape: hourglass, label: \"hourglass\" }\n n3@{ shape: delay, label: \"delay\" }\n n4@{ shape: h-cyl, label: \"h-cyl\" }\n n5@{ shape: curv-trap, label: \"curv-trap\" }\n n6@{ shape: docs, label: \"docs\" }\n n7@{ shape: flag, label: \"flag\" }\n n0 --> n1 --> n2 --> n3\n n4 --> n5 --> n6 --> n7"
+  },
+  {
+    "id": "shapes-6",
+    "title": "Flowchart shapes 6",
+    "summary": "Compare bolt, bang, cloud, brace, brace-r, braces, tag-doc, lin-doc.",
+    "source": "flowchart TB\n n0@{ shape: bolt, label: \"bolt\" }\n n1@{ shape: bang, label: \"bang\" }\n n2@{ shape: cloud, label: \"cloud\" }\n n3@{ shape: brace, label: \"brace\" }\n n4@{ shape: brace-r, label: \"brace-r\" }\n n5@{ shape: braces, label: \"braces\" }\n n6@{ shape: tag-doc, label: \"tag-doc\" }\n n7@{ shape: lin-doc, label: \"lin-doc\" }\n n0 --> n1 --> n2 --> n3\n n4 --> n5 --> n6 --> n7"
+  }
+]

@@ -1,0 +1,9 @@
+payment.request-prep:
+  file: ../snippets/request-prep.mdx
+  variables:
+    product: { type: string, required: true }
+    header: { type: string, default: Idempotency-Key }
+payment.retry-note:
+  file: ../snippets/retry-note.mdx
+  variables:
+    product: { type: string, required: true }

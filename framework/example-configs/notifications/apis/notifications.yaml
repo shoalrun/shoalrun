@@ -1,0 +1,132 @@
+openapi: 3.1.0
+info: { title: Notifications API, version: 1.0.0 }
+servers:
+  - { url: 'https://api.example.com/v1' }
+paths:
+  /messages/push:
+    post:
+      operationId: sendPush
+      summary: Queue a push notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [deviceToken, title, body]
+              properties:
+                deviceToken: { type: string }
+                title: { type: string }
+                body: { type: string }
+            examples:
+              welcome:
+                value: { deviceToken: device_example, title: Welcome, body: Your account is ready. }
+      responses:
+        '202':
+          description: Push message queued.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: string }
+                  status: { type: string, enum: [queued] }
+              example: { id: push_123, status: queued }
+  /messages/sms:
+    post:
+      operationId: sendSms
+      summary: Queue an SMS notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [to, body]
+              properties:
+                to: { type: string }
+                body: { type: string }
+            examples:
+              welcome:
+                value: { to: '+15555550123', body: Your account is ready. }
+      responses:
+        '202':
+          description: SMS message queued.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: string }
+                  status: { type: string, enum: [queued] }
+              example: { id: sms_123, status: queued }
+  /messages/email:
+    post:
+      operationId: sendEmail
+      summary: Queue an email notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [to, template]
+              properties:
+                to: { type: string, format: email }
+                template: { type: string }
+                variables:
+                  type: object
+                  additionalProperties: { type: string }
+            examples:
+              welcome:
+                summary: Welcome message
+                value:
+                  to: reader@example.com
+                  template: welcome
+                  variables: { firstName: Avery }
+      responses:
+        '202':
+          description: Message queued for delivery.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: string }
+                  status: { type: string, enum: [queued] }
+              examples:
+                queued:
+                  summary: Queued message
+                  value: { id: msg_123, status: queued }
+  /messages/{messageId}:
+    get:
+      operationId: getMessage
+      summary: Check notification delivery
+      description: Queued means accepted. Delivered means delivery was reported by the provider, not that the recipient read the message. Failed is terminal; inspect failureReason before retrying.
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          schema: { type: string }
+          example: msg_123
+      responses:
+        '200':
+          description: Current status of the requested message.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, status]
+                properties:
+                  id: { type: string }
+                  status: { type: string, enum: [queued, delivered, failed] }
+                  failureReason: { type: string }
+              examples:
+                queued:
+                  value: { id: msg_123, status: queued }
+                delivered:
+                  value: { id: msg_123, status: delivered }
+                failed:
+                  value: { id: msg_123, status: failed, failureReason: recipient_rejected }
+        '404':
+          description: No message with that ID exists in this environment.

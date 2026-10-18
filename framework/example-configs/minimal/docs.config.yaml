@@ -1,0 +1,31 @@
+# The smallest useful site: one publication, two pages, a sidebar.
+schemaVersion: 1
+
+site:
+  title: Acme handbook
+
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }
+
+# Every page gets these values unless it sets its own.
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+
+navigation:
+  - id: welcome
+    doc: guide.welcome
+  - id: setup
+    label: Setup
+    items:
+      - id: install
+        doc: guide.install

@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import { execFile } from 'node:child_process';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { promisify } from 'node:util';
+import test from 'node:test';
+import { createNotificationDemo } from '../example-configs/notifications/demo.mjs';
+
+const exec = promisify(execFile);
+for (const failed of [false, true]) test(`published welcome-email commands reach ${failed ? 'failed' : 'delivered'} for their returned ID`, async t => {
+  const server = createNotificationDemo();
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-message-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const origin = `http://127.0.0.1:${server.address().port}/v1`;
+  const source = await readFile(new URL('../example-configs/notifications/content/welcome-email.mdx', import.meta.url), 'utf8');
+  const blocks = [...source.matchAll(/```sh\n([\s\S]*?)\n```/g)].map(match => match[1]);
+  assert.equal(blocks.length, 2);
+  const queue = failed ? blocks[0].replace('reader@example.com', 'blocked@example.com') : blocks[0];
+  await exec('/bin/sh', ['-ec', `${queue}\n${blocks[1]}\ncp delivery.json pending.json\n${blocks[1]}`], { cwd: directory, env: { ...process.env, API_BASE: origin } });
+  const queued = JSON.parse(await readFile(path.join(directory, 'queued.json'), 'utf8'));
+  const pending = JSON.parse(await readFile(path.join(directory, 'pending.json'), 'utf8'));
+  const terminal = JSON.parse(await readFile(path.join(directory, 'delivery.json'), 'utf8'));
+  assert.equal(queued.status, 'queued');
+  assert.equal(pending.status, 'queued');
+  assert.equal(terminal.id, queued.id);
+  assert.equal(terminal.status, failed ? 'failed' : 'delivered');
+  if (failed) assert.equal(terminal.failureReason, 'recipient_rejected');
+  assert.equal((await fetch(`${origin}/messages/unknown`)).status, 404);
+});

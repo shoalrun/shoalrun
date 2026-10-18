@@ -1,0 +1,7 @@
+schemaVersion: 1
+id: ingredient.queue-welcome-email
+title: Queue a welcome email
+summary: Send the welcome email request and inspect the queued response.
+slug: /ingredients/queue-welcome-email
+operation: notifications.send-email
+requestExample: welcome

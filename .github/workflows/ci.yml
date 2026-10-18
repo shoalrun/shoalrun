@@ -1,0 +1,20 @@
+name: Framework validation
+on:
+  workflow_dispatch:
+concurrency:
+  group: framework-validation-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: npm, cache-dependency-path: framework/package-lock.json }
+      - run: npm ci --prefix framework
+      - run: npm test
+      - run: node framework/scripts/package-authoring-smoke.mjs --clean-install

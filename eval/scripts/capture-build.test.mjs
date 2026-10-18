@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import test from 'node:test';
+import { compile } from '../../framework/dist/compiler.js';
+import { checkEvalReport, evalBuildSnapshot } from '../../framework/dist/docs-eval.js';
+import { captureEvalBuild } from './capture-build.mjs';
+
+test('captured builds travel unchanged, omit private artifacts, and remain ungraded', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-capture-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  await cp(new URL('../../framework/example-configs/minimal/', import.meta.url), root, { recursive: true });
+  const site = path.join(root, 'site');
+  await compile(path.join(root, 'docs.config.yaml'), site);
+  await mkdir(path.join(site, 'ai'));
+  await writeFile(path.join(site, 'ai/private.json'), 'Not public');
+  const tasks = path.join(root, 'tasks.json');
+  await writeFile(tasks, JSON.stringify({schemaVersion: 1, tasks: [{id: 'read', prompt: 'Read the docs', allowedTools: ['docs.read'], criteria: [{id: 'answer', description: 'Answer with evidence'}]}]}));
+  const output = path.join(root, 'captured');
+  await captureEvalBuild(site, tasks, output, 'a'.repeat(40));
+  assert.equal((await evalBuildSnapshot(path.join(output, 'site'))).buildDigest, (await evalBuildSnapshot(site)).buildDigest);
+  await assert.rejects(readFile(path.join(output, 'site/ai/private.json')), /ENOENT/);
+  const report = JSON.parse(await readFile(path.join(output, 'report-template.json'), 'utf8'));
+  assert.equal(report.review, null);
+  assert.equal(report.results[0].status, 'skipped');
+  assert.equal((await checkEvalReport(path.join(output, 'site'), path.join(output, 'tasks.yaml'), path.join(output, 'report-template.json'))).status, 'error');
+  await assert.rejects(captureEvalBuild(site, tasks, output), /EEXIST/);
+  await assert.rejects(captureEvalBuild(site, tasks, path.join(site, 'capture')), /outside/);
+});

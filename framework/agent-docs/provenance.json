@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "siteBuild": {
+    "schemaVersion": 1,
+    "configDigest": "f9890cd6f3223018fdd14a9e95a9c050129e37a0c640c0511e1792c3ce5f4d6a",
+    "buildId": "7bb779bdbf245f64ca0f363380a1da41c745bd6f068205c5571caba4a0c31871"
+  },
+  "packageIntegrity": "sha512-oCCUTRGkF/kw0E4Vb/wN3szsd6HeDAHFTFMCHmvmrh3qNXc/YEtmElY7b+JlDs1B+Yh8q5p+Nt8dkbbiZfU12g==",
+  "manifestDigest": "42791f40fd9f24c53d846cea57c60f68bb82835bf9610e35f5573c944331a539"
+}

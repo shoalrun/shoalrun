@@ -1,0 +1,12 @@
+- id: overview
+  doc: guide.overview
+- id: payments
+  label: Payments
+  items:
+    - id: api
+      operation: payments.create
+    - id: payment-guide
+      doc: guide.create-payment
+    - id: other-payments
+      api: payments
+      generated: tags

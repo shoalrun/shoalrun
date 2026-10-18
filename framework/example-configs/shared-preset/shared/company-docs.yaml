@@ -1,0 +1,46 @@
+# Settings every docs site in the company shares. Sites layer their
+# own docs.config.yaml over this file with `extends`.
+schemaVersion: 1
+
+site:
+  title: Company docs
+  header:
+    links:
+      - { label: All docs, href: "https://docs.example.com" }
+      - { label: Support, href: "https://support.example.com", style: button }
+
+theme:
+  preset: ledger
+  palette: ink
+
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }
+
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+  fields:
+    owner:
+      type: string
+      required: true
+      description: Team that maintains the page.
+
+# Every site starts with the same first page. Paths in an extended file
+# resolve from that file, so this template body lives next to it.
+navigation:
+  - id: start
+    doc: guide.start
+
+templates:
+  runbook:
+    type: guide
+    body: ./runbook.mdx

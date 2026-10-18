@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shoalrun.com/schemas/sync.schema.json",
+  "title": "Shoalrun document sync snapshot, version 1",
+  "description": "The current documents.sync.json producer contract. Resolve the companion manifest schema locally by its $id; schema identifiers do not imply hosted availability. Consumers retain their own baseline snapshots. Unknown properties are allowed for additive evolution.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "buildId", "metadataDigest", "documents"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "buildId": {
+      "$ref": "manifest.schema.json#/$defs/digest",
+      "description": "Opaque identity shared with this publication's manifest and build-info.json."
+    },
+    "metadataDigest": {
+      "$ref": "manifest.schema.json#/$defs/digest",
+      "description": "SHA-256 of canonical JSON of manifest top-level metadata, excluding documents, dependencies, and buildId. Object keys are recursively sorted; array order is preserved."
+    },
+    "documents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/syncRecord" },
+      "description": "Records sorted by the JSON tuple [id, channel, version, language]. That identity must be unique; check uniqueness separately."
+    }
+  },
+  "$defs": {
+    "syncRecord": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "variant", "url", "markdownUrl", "digest", "contentDigest", "recordDigest"],
+      "properties": {
+        "id": { "$ref": "manifest.schema.json#/$defs/nonemptyString" },
+        "variant": { "$ref": "manifest.schema.json#/$defs/variant" },
+        "url": { "$ref": "manifest.schema.json#/$defs/route" },
+        "markdownUrl": { "$ref": "manifest.schema.json#/$defs/markdownRoute" },
+        "digest": {
+          "$ref": "manifest.schema.json#/$defs/digest",
+          "description": "Required SHA-256 of the complete generated Markdown twin bytes; copied from its manifest record."
+        },
+        "contentDigest": {
+          "$ref": "manifest.schema.json#/$defs/digest",
+          "description": "Opaque resolved article-content fingerprint copied from the manifest. Compare for article changes, not fetched-byte verification."
+        },
+        "recordDigest": {
+          "$ref": "manifest.schema.json#/$defs/digest",
+          "description": "SHA-256 of canonical JSON of the entire corresponding manifest document record, including its metadata; not a hash of this trimmed sync record. Object keys are recursively sorted; array order is preserved."
+        }
+      }
+    }
+  }
+}

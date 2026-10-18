@@ -1,0 +1,38 @@
+---
+id: guide.create-payment
+title: Create a payment in the example API
+summary: Follow the request flow and read the related endpoint reference.
+type: how-to
+slug: /guides/create-payment
+channel: production
+version: v1
+language: en
+operations: [payments.create]
+access: { policy: public }
+agent:
+  intent: Help readers prepare an idempotent payment request.
+editorial:
+  reviewNote: Confirm the example amount before publication.
+---
+
+This guide is part of the example fixture. The endpoint is not deployed, and the request below is not an execution record.
+
+## Prepare the request
+
+<Snippet id="payment.request-prep" values={{ product: "Payments" }} />
+
+## Inspect the contract
+
+The [Create a payment reference](doc:reference.create-payment) describes the supported source variants and response schemas.
+
+### Request example
+
+<ApiExample operation="payments.create" kind="request" mediaType="application/json" example="bank" />
+
+<ApiSchema operation="payments.create" kind="request" mediaType="application/json" schema="./schemas/payment.yaml#/$defs/CreatePayment" />
+
+### Response example
+
+<ApiExample operation="payments.create" kind="response" status="201" mediaType="application/json" example="pending" />
+
+<ApiSchema operation="payments.create" kind="response" status="201" mediaType="application/json" />

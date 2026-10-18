@@ -1,0 +1,33 @@
+---
+id: recipe.queue-push
+title: Queue a welcome push notification
+summary: Send the example push request and confirm the API queues it.
+type: recipe
+slug: /recipes/queue-push
+channel: production
+version: current
+language: en
+operations: [notifications.send-push]
+access: { policy: public }
+---
+
+This recipe uses a synthetic notification API. It shows how to queue a push message; it does not establish device delivery.
+
+## Ingredients
+
+1. A device token and welcome message.
+2. The [push request](doc:reference.send-push).
+3. A check for HTTP 202 and `status: queued`.
+
+## Queue the message
+
+```sh
+curl --request POST \
+  --url 'https://api.example.com/v1/messages/push' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{"deviceToken":"device_example","title":"Welcome","body":"Your account is ready."}'
+```
+
+## Check it worked
+
+The example response is HTTP 202 with `status: queued` and a message ID. A real project must separately confirm delivery to the device.

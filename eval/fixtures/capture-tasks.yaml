@@ -1,0 +1,8 @@
+schemaVersion: 1
+tasks:
+  - id: starter-content
+    prompt: Explain how to install the example project using the documentation.
+    allowedTools: [docs.search, docs.read]
+    criteria:
+      - id: documented-steps
+        description: Give the documented installation steps with a page citation.

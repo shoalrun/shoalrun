@@ -1,0 +1,6 @@
+extends: existence
+message: "Use 'kept in this repository' or 'local copy' instead of '%s'."
+level: error
+ignorecase: true
+tokens:
+  - '\bvendor(?:ed|ing)\b'

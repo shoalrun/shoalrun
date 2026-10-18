@@ -1,0 +1,18 @@
+# One team's site. It inherits the shared theme, publication, page
+# defaults, the required `owner` field, and the runbook template.
+schemaVersion: 1
+extends: [../shared/company-docs.yaml]
+
+site:
+  title: Billing team docs     # replaces the shared title; header links stay
+
+theme:
+  palette: coral               # keeps the shared ledger preset
+
+navigation:
+  $concat:                     # adds pages after the shared start page
+    - id: runbooks
+      label: Runbooks
+      items:
+        - id: failed-invoices
+          doc: guide.failed-invoices

@@ -1,0 +1,42 @@
+---
+id: recipe.queue-email
+title: Queue a welcome email
+summary: Submit the welcome template and confirm the API accepted the request.
+type: recipe
+slug: /recipes/queue-email
+channel: production
+version: current
+language: en
+operations: [notifications.send-email]
+access: { policy: public }
+---
+
+Use this path to check request acceptance. For delivery status and failure handling, follow [the complete delivery recipe](doc:recipe.send-welcome-email).
+
+## Before you start
+
+Start the local simulation from the Shoalrun repository root in a separate terminal:
+
+```sh
+node framework/example-configs/notifications/demo.mjs
+```
+
+Keep it running. Have cURL and Node.js available, and use a scratch directory for `queued.json`; the command replaces that file. The demo sends no email.
+
+## Queue the message
+
+```sh
+export API_BASE=http://127.0.0.1:8787/v1
+curl --fail-with-body --silent --show-error \
+  --request POST "$API_BASE/messages/email" \
+  --header 'Content-Type: application/json' \
+  --data '{"to":"reader@example.com","template":"welcome","variables":{"firstName":"Avery"}}' \
+  --output queued.json --write-out 'HTTP %{http_code}\n'
+cat queued.json
+MESSAGE_ID=$(node -p "JSON.parse(require('fs').readFileSync('queued.json', 'utf8')).id")
+printf '\nMessage ID: %s\n' "$MESSAGE_ID"
+```
+
+## Check the outcome
+
+The HTTP status is 202, the response says `status: queued`, and the returned `id` is nonempty. Keep that ID if you will check delivery later. A failed POST needs its own diagnostic; do not reuse an ID from an earlier attempt. Acceptance leaves delivery unknown.

@@ -1,0 +1,68 @@
+/* Reef: soft floating panels, pill navigation, and generous radii on a tinted page. */
+:root {
+  --font-body: "Figtree", "Figtree Fallback", ui-rounded, "SF Pro Rounded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius-small: .7rem;
+  --radius-panel: 1.25rem;
+  --shadow-panel: var(--shadow-edge), 0 1px 2px #1a24400d, 0 8px 24px -12px #1a244026;
+  --width-site: 96rem;
+  --width-reference: 96rem;
+}
+
+/* The masthead floats as a rounded bar above the page. */
+.mast{background:transparent;border:0;padding:1rem 2rem 0}
+.mast-inner{background:var(--color-surface);border-radius:999px;box-shadow:var(--shadow-panel);min-height:3.75rem;padding:.6rem 1rem .6rem 1.4rem}
+.brand::before{width:1.1rem;height:1.1rem;border-radius:.35rem;transform:rotate(12deg);background:linear-gradient(135deg,var(--color-accent),color-mix(in srgb,var(--color-accent),#fff 40%))}
+.edition{border-radius:999px;background:var(--color-field-surface)}
+
+/* Navigation and reading column are separate floating panels. */
+.layout{padding-top:1.5rem;gap:1.5rem}
+.side{background:var(--color-surface);border:0;border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);padding:1rem;top:1rem;max-height:calc(100dvh - 2rem)}
+.side .nav-tools{background:var(--color-surface)}
+.side h2{letter-spacing:.06em;padding-left:.7rem}
+.side a{border-radius:999px;padding-inline:.9rem}
+.side a[aria-current=page]{background:var(--color-nav-active);box-shadow:none}
+.side .nav-group>details>ul{border-left:0;margin-left:.2rem;padding-left:0}
+.nav-search input{border-radius:999px;padding-left:1rem}
+.content{background:var(--color-surface);border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);padding:2.5rem clamp(1.5rem,4vw,3.5rem) 3rem}
+.page-head{border-bottom:0;padding-bottom:.5rem}
+.eyebrow{display:inline-block;background:var(--color-nav-active);color:var(--color-nav-active-text);border-radius:999px;padding:.2rem .7rem;letter-spacing:.08em}
+.page-head h1{letter-spacing:-.035em}
+.formats{border-radius:999px;padding-inline:.9rem;margin-left:-.9rem}
+.page-toc{background:var(--color-surface);border:0;border-radius:var(--radius-panel);box-shadow:var(--shadow-panel);padding:1rem 1.25rem}
+.content h2{border-top:0;padding-top:0}
+.content blockquote{border-left:0;border-radius:var(--radius-small);box-shadow:inset 4px 0 var(--callout-line,var(--color-callout-line))}
+.content table{border-collapse:separate;border-spacing:0;border:1px solid var(--color-border);border-radius:var(--radius-small);overflow:hidden}
+.content tr:last-child>td{border-bottom:0}
+.code-block,.content pre,.example-body pre{border-radius:var(--radius-small)}
+.examples{background:var(--color-surface);border:0;box-shadow:var(--shadow-panel)}
+.content .doc-card{border-color:transparent;background:var(--color-field-surface);transition:transform .15s ease,box-shadow .15s ease}
+.content .doc-card:hover{background:var(--color-surface);border-color:var(--color-border);box-shadow:var(--shadow-panel);transform:translateY(-2px)}
+.content .doc-card-icon{box-sizing:content-box;padding:.45rem;border-radius:.7rem;background:var(--color-nav-active)}
+.content .doc-tablist a{border-radius:999px;border:0;margin-bottom:.5rem}
+.content .doc-tablist a[aria-selected=true]{background:var(--color-strong-surface,var(--color-ink));color:var(--color-strong-text,var(--color-surface))}
+
+@media(max-width:48rem){
+  .mast{padding:.75rem .75rem 0}
+  .mast-inner{border-radius:var(--radius-panel)}
+  .layout,.layout.has-examples{padding:1rem .75rem 3rem}
+  .side{box-shadow:var(--shadow-panel);background:var(--color-surface);padding:0}
+  .page-toc{padding:0;box-shadow:var(--shadow-panel)}
+  .content{padding:1.5rem 1.1rem 2rem}
+}
+@media(prefers-reduced-motion:reduce){.content .doc-card{transition:none}.content .doc-card:hover{transform:none}}
+@media print{.content,.side,.examples{box-shadow:none}}
+
+/* Header tools follow the pill shape. */
+.site-search input,.header-actions a,.site-search-key{border-radius:999px}
+.site-search input{background:var(--color-page);border-color:transparent;padding-left:1.1rem}
+.site-search input:focus{background:var(--color-surface);border-color:var(--color-field-border)}
+.site-search-results{border:0;box-shadow:var(--shadow-panel),0 16px 40px -16px #1a244040}
+.site-search-results a{border-radius:.9rem}
+.header-actions a{padding-inline:1rem}
+.header-primary{box-shadow:0 4px 12px -4px color-mix(in srgb,var(--color-accent),transparent 40%)}
+
+/* Landing hero: a tinted panel inside the reading panel, with pill actions. */
+.content .hero{border:0;background:radial-gradient(70% 90% at 50% 0%,var(--color-nav-active),transparent 75%),var(--color-field-surface)}
+.content .hero[data-align=start]{background:linear-gradient(135deg,var(--color-nav-active),var(--color-field-surface) 70%)}
+.content .hero-action{border-radius:999px}
+.content .hero-primary{box-shadow:0 6px 16px -8px color-mix(in srgb,var(--color-accent),transparent 30%)}

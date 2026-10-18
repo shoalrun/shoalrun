@@ -1,0 +1,38 @@
+---
+# COOKBOOK TEMPLATE. Delete comments and resolve every [[TODO: ...]] prompt before publishing.
+# Scaffold fills id, title, summary, type, slug, publication, and access from the command and config.
+# A cookbook helps readers choose among related, prebuilt recipes.
+
+# Stable identity for navigation, links, and cards.
+id: cookbook.example
+
+# Name the family of goals, such as "Notify Users".
+title: Choose a workflow
+
+# Explain which reader decision this cookbook helps with.
+summary: Find a reviewed recipe for your goal.
+
+# Leave this page kind as cookbook.
+type: cookbook
+
+# Stable lowercase URL path before publication prefixes. Start with /.
+slug: /cookbooks/example
+
+# These values must match the recipe publication used by CookbookChooser.
+channel: production
+version: current
+language: en
+
+# Keep draft until every linked recipe is public and the selected order makes sense.
+access: { policy: draft }
+---
+
+[[TODO: Explain the related goals and when readers should use this cookbook.]]
+
+## Choose a recipe
+
+[[TODO: List the complete public recipes with <DocCards docs={["recipe.one", "recipe.two"]} />, or configure options under cookbooks in docs.config.yaml and place <CookbookChooser id="your-cookbook-id" /> here. Choose one presentation and delete this prompt.]]
+
+## How these recipes fit together
+
+[[TODO: Explain shared setup, differences between choices, and the next useful recipe after completion. Delete this section if the choices are self-explanatory.]]

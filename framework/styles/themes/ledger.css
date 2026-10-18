@@ -1,0 +1,93 @@
+/* Ledger: a dense technical manual with square corners, hard rules, and monospace headings. */
+:root {
+  --font-body: "Source Serif 4", "Source Serif 4 Fallback", "Iowan Old Style", "Palatino Linotype", Palatino, Charter, Georgia, serif;
+  --font-code: "JetBrains Mono", "JetBrains Mono Fallback", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-ui: var(--font-code);
+  --font-heading: var(--font-ui);
+  --radius-small: 0;
+  --radius-panel: 0;
+  --width-site: 104rem;
+  --width-reference: 104rem;
+}
+:root{font-size:17px;line-height:1.6}
+
+/* A black masthead with a monospace imprint. */
+.mast{border-bottom:4px solid var(--color-accent)}
+.mast-inner{min-height:3.5rem;padding-block:.6rem}
+.brand{font-family:var(--font-ui);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-strong-text,var(--color-surface))}
+.brand::before{width:.7rem;height:.7rem;border-radius:0;transform:none}
+
+/* Navigation reads like an index: uppercase groups, a solid marker for the current page. */
+.side,.page-toc,.formats,.eyebrow,.subject-lifecycle-badge,.examples,.content .doc-tablist a,.site-footer{font-family:var(--font-ui)}
+.side{font-size:.78rem;border-right:2px solid var(--color-ink)}
+.side .nav-tools{background:var(--color-page)}
+.side h2{font-size:.72rem;letter-spacing:.2em;color:var(--color-ink);border-bottom:2px solid var(--color-ink);padding-bottom:.4rem}
+.side .nav-group>details>summary{text-transform:uppercase;letter-spacing:.06em;font-size:.72rem}
+.side a{padding-inline:.6rem}
+.side a[aria-current=page]{background:var(--color-strong-surface,var(--color-ink));color:var(--color-strong-text,var(--color-surface));box-shadow:none}
+.side a[aria-current=page]::before{content:"\25B8\00a0";color:var(--color-accent)}
+/* Endpoint links are a grid, so the marker sits outside it rather than taking the method column. */
+.side a[aria-current=page]:has(>.endpoint-method){position:relative;padding-left:1.45rem}
+.side a[aria-current=page]:has(>.endpoint-method)::before{position:absolute;left:.6rem;top:var(--nav-item-pad-y)}
+.side .nav-group>details>ul{border-left:1px dashed var(--color-border-nested)}
+.side .nav-search input{border:1px solid var(--color-ink);background:var(--color-surface);font-family:var(--font-ui)}
+
+/* Page heads and numbered sections. */
+.eyebrow{letter-spacing:.14em}
+.eyebrow::before{content:"["}
+.eyebrow::after{content:"]"}
+.page-head{border-bottom:2px solid var(--color-ink)}
+.page-head h1{font-family:var(--font-heading);font-weight:700;letter-spacing:-.03em;line-height:1.15}
+.content :where(h2,h3,h4){font-family:var(--font-heading);letter-spacing:-.01em}
+.content article{counter-reset:ledger-section}
+.content h2{font-size:1.25rem;border-top:1px solid var(--color-ink);counter-increment:ledger-section}
+.content h2::before{content:counter(ledger-section,decimal-leading-zero) "\2003";color:var(--color-accent)}
+.content .doc-tabs h3.tab-fallback-heading,.content h3{font-size:1rem}
+.formats{text-transform:uppercase;letter-spacing:.06em;font-size:.7rem}
+.formats:hover{background:var(--color-strong-surface,var(--color-ink));color:var(--color-strong-text,var(--color-surface));border-color:var(--color-strong-surface,var(--color-ink))}
+.page-toc{border-left:2px solid var(--color-ink)}
+.content code{border-radius:0}
+.content table{border:2px solid var(--color-ink)}
+.content th{background:var(--color-strong-surface,var(--color-ink));color:var(--color-strong-text,var(--color-surface));font-family:var(--font-ui);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
+.content th,.content td{border-bottom:1px solid var(--color-border-soft);border-right:1px solid var(--color-border-soft)}
+.content blockquote{border-left-width:6px}
+.content li[data-field]{border-width:1px 1px 1px 4px;border-left-color:var(--color-accent)}
+.subject-lifecycle-badge{border-radius:0;text-transform:uppercase;letter-spacing:.06em}
+
+/* Cards and panels get a hard offset shadow instead of soft elevation. */
+.content .doc-card{border:2px solid var(--color-ink);background:var(--color-surface);transition:transform .12s ease,box-shadow .12s ease}
+.content .doc-card:hover{border-color:var(--color-ink);background:var(--color-surface);box-shadow:5px 5px 0 var(--color-ink);transform:translate(-2px,-2px)}
+.content .doc-card .doc-card-title{font-family:var(--font-ui);font-size:.92rem}
+.content .doc-card-icon{color:var(--color-accent)}
+.examples{border:2px solid var(--color-ink);background:var(--color-surface)}
+.examples details{border-color:var(--color-border-soft)}
+.content .doc-tabs,.content .doc-accordion{border:2px solid var(--color-ink)}
+.content .doc-tablist{background:var(--color-field-surface);border-bottom:2px solid var(--color-ink);padding:0;gap:0}
+.content .doc-tablist a{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;border:0;border-right:1px solid var(--color-border-soft)}
+.content .doc-tablist a[aria-selected=true]{background:var(--color-strong-surface,var(--color-ink));color:var(--color-strong-text,var(--color-surface))}
+.content .doc-tablist a[aria-selected=true]:hover{color:var(--color-strong-text,var(--color-surface))}
+
+@media(max-width:48rem){
+  .side{border:2px solid var(--color-ink)}
+  .page-head h1{font-size:1.75rem}
+}
+@media(prefers-reduced-motion:reduce){.content .doc-card{transition:none}.content .doc-card:hover{transform:none}}
+@media print{.mast{border-bottom:0}.content h2::before{color:inherit}}
+
+/* Header tools sit on the inked masthead. */
+.site-search input,.site-search-key,.header-actions a{font-family:var(--font-ui)}
+.site-search input{font-size:.78rem}
+.site-search-results{border:2px solid var(--color-ink);box-shadow:6px 6px 0 var(--color-ink);font-family:var(--font-body)}
+.site-search-results [aria-selected=true] a,.site-search-results a:hover{background:var(--color-strong-surface,var(--color-ink));color:var(--color-strong-text,var(--color-surface))}
+.search-hit-title{font-family:var(--font-ui);font-size:.8rem}
+.header-actions a{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+.header-primary{border-color:var(--color-accent)}
+
+/* Landing hero: an inked band with square actions. */
+.content .hero{background:var(--color-strong-surface,var(--color-ink));border:0;border-bottom:4px solid var(--color-accent)}
+.content .hero-title{color:var(--color-strong-text,var(--color-surface));letter-spacing:-.03em;font-weight:700}
+.content .hero-tagline{color:color-mix(in srgb,var(--color-strong-text,var(--color-surface)) 82%,transparent)}
+.content .hero-action{font-family:var(--font-ui);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;background:transparent;color:var(--color-strong-text,var(--color-surface));border-color:var(--color-strong-text,var(--color-surface))}
+.content .hero-action:hover{background:var(--color-strong-text,var(--color-surface));color:var(--color-strong-surface,var(--color-ink))}
+.content .hero-primary{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-accent-contrast,#fff)}
+.content .hero-visual .code-block{border:1px solid color-mix(in srgb,var(--color-strong-text,var(--color-surface)) 30%,transparent);border-radius:0}

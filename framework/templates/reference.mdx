@@ -1,0 +1,171 @@
+---
+# REFERENCE TEMPLATE. Delete every comment line (starting with #) before you publish.
+# Search the file for TODO and resolve every placeholder in double square brackets.
+# A page with a placeholder left cannot be published.
+#
+# Scaffold filled in id, title, summary, type, slug, channel, version, language, and access from
+# the command line, the file path, and your config. Rewrite title, summary, and slug for the reader.
+
+# Stable identity. Links, cards, navigation, and relationships use it, so it can outlive
+# a renamed file or a changed URL. Scaffold derived it from the file path. Shorten it if you like,
+# to lowercase words separated by dots or hyphens, such as reference.cli-options.
+# Never change it after publishing.
+id: reference.example
+
+# The page heading and the browser tab title. Name the thing being documented with a noun phrase:
+# "CLI reference", "Frontmatter fields", "Rate limits". Do not use a verb, and do not start with "How to".
+# Sentence case, 60 characters or fewer, no final period.
+# Scaffold derived a placeholder title from the file name. Rewrite it.
+title: Example
+
+# One sentence of 160 characters or fewer that says what the reader can look up here.
+# It appears on cards, in search results, and as the default link preview text.
+# Good: "Every option of the export command, with defaults and limits."
+# Bad: "This page describes the export command." (It says what the page is, not what the reader gets.)
+# Scaffold wrote a draft summary that blocks publishing. Replace it.
+summary: Draft summary
+
+# Optional longer text for search and link previews. Two sentences at most, about 300 characters.
+# Add detail the summary leaves out, such as the version or the audience. Do not repeat the summary.
+# Delete this field if you have nothing to add.
+description: "[[TODO: Two sentences that add detail to the summary, or delete this field.]]"
+
+# The page kind. Leave this as reference. Use how-to for a task, tutorial for learning, or explanation for understanding.
+type: reference
+
+# The URL path. Start with /. Use lowercase words separated by hyphens, and keep it stable.
+# Good: /reference/cli-options. Avoid dates and version numbers.
+slug: /reference/example
+
+# The publication this page belongs to. It must match an enabled entry in publications.enabled.
+# A page in a channel, version, or language that is not enabled is skipped without a warning.
+channel: production
+version: current
+language: en
+
+# Topic labels that help collections find this page. One to three, lowercase, short.
+# Use labels your team already uses. Do not invent one for a single page.
+tags:
+  - "[[TODO: One lowercase topic label, such as payments. Add a line for each extra label.]]"
+
+# How this page looks when another page links to it with a card. The icon is a Lucide name in
+# lowercase, such as book-marked, credit-card, or terminal. Browse the names at lucide.dev/icons.
+# An unknown name fails the build. To add a short label above the card title, or card text that
+# replaces the summary on cards only, add eyebrow or description: card: { icon: book-marked, eyebrow: Reference }
+card: { icon: book-marked }
+
+# ---------------------------------------------------------------------------------------------
+# OPTIONAL FIELDS. Uncomment one only when the rule in its comment applies.
+# ---------------------------------------------------------------------------------------------
+#
+#
+# API TASKS ONLY. Stable operation IDs from your apis config that this page uses.
+# Adds a "Related documentation" list here and on each operation's reference page.
+# Scaffold fills this field when you pass --operation. IDs that do not exist fail the build.
+# operations: [payments.create]
+#
+# Who this page is for, shown as badges. Free text unless your config defines an audience
+# reader view, in which case use its choice IDs. Uncomment only if your site uses audiences.
+# audiences: [developers]
+#
+# Reader-view marks for pages that appear only in some views. Use only IDs from readerFilters.facets.
+# The product, area, and subarea fields set a single choice for a facet with the same name.
+# readerFilters: { audience: [developer] }
+# product: payments
+# area: reporting
+# subarea: settlements
+#
+# Status of the feature or API this page covers: beta, in-development, or deprecated.
+# It shows a badge in navigation and the page header. Leave it out for a stable feature.
+# subjectLifecycle: beta
+#
+# Editorial state of this document, such as needs-review. Free text. It is kept but never shown.
+# lifecycle: needs-review
+#
+# Deepest heading level in the on-page table of contents. Use 0 to hide it, or 2 through 6.
+# The default is 3. Set 2 for a long page with many small subsections.
+# tocDepth: 2
+#
+# Page width. wide drops the "On this page" column for wide tables and diagrams.
+# The default is docs. landing is for home pages, so do not use it on a guide.
+# layout: wide
+#
+# A local .png or .jpg, 1200 by 630 pixels, that replaces the generated link-preview image.
+# The path is relative to this file.
+# image: ./images/retry-payment.png
+#
+# Overrides for the browser title and meta description. Only title and description are supported.
+# seo:
+#   title: Retry a failed payment | Example API
+#   description: Retry a payment with the same idempotency key.
+#
+# Literal text for one output only. Keys: card, pageHeader, search, htmlDescription, socialCard.
+# displayText:
+#   socialCard: Retry a failed payment without charging twice.
+#
+# A named Markdown-header profile from your config, or a mapping that overrides the header.
+# markdownMetadata: minimal
+#
+# Values for snippets used on this page. They override project variables.
+# variables: { product: Payments sandbox }
+
+# Publishing control. Scaffold sets draft, which keeps the page out of the site. Change to
+# { policy: public } only after every TODO is resolved and the tables and examples have been checked against the source of truth.
+access: { policy: draft }
+---
+
+[[TODO: Write the introduction as one paragraph of 150 words or fewer. Put no heading above it. Say what this page documents, who looks it up, and what it does not cover. Use this pattern: "This page lists every [thing] for [subject]. Use it to [look-up task]. To [do a task], see [how-to link]." Arrange sections to match the structure of the product being described. Keep the wording neutral and factual; use examples to illustrate behavior without a task walkthrough. Move reader task walkthroughs to a how-to and link to it; descriptions of product behavior remain here.]]
+
+## At a glance
+
+[[TODO: Give a table with one row per item: name, purpose in one clause, default, and where it applies. Use the same order as the sections below. Skip this section if there are fewer than four items. Do not add prose that repeats the table.]]
+
+| Name | Purpose | Default | Applies to |
+| --- | --- | --- | --- |
+| [[TODO: Item name]] | [[TODO: Purpose in one clause]] | [[TODO: Default, or None]] | [[TODO: Where it applies]] |
+
+## Syntax
+
+[[TODO: Show the exact form in one fenced code block with a real language label (sh, yaml, json). Use a command with its flags, a config key path, or a JSON shape. Then write one sentence for each part: what it is, what values it takes, and whether it is optional. Mark optional parts in the code block with brackets or a comment.]]
+
+```sh
+[[TODO: Replace with the exact syntax.]]
+```
+
+## Options
+
+[[TODO: Describe every option, field, or setting in one table with these columns: Name, Type, Required, Default, Meaning. Give one fact per row. Say how the rows are ordered, for example alphabetical or required first. Give exact types, units, and allowed values. Keep Meaning to one sentence. Put longer explanations in an explanation page and link to it. Mark deprecated items. Rename this heading to Fields, Parameters, or Flags if that fits better. For nested fields, use the Fields component instead of a table.]]
+
+| Name | Type | Required | Default | Meaning |
+| --- | --- | --- | --- | --- |
+| [[TODO: Name]] | [[TODO: Type]] | [[TODO: Yes or No]] | [[TODO: Default, or None]] | [[TODO: One sentence.]] |
+
+## Defaults and validation
+
+[[TODO: OPTIONAL SECTION. Say what happens when a value is left out, and list the exact rules that make a value invalid, each with the error it produces. Delete this heading and text if the Options table already says all of this.]]
+
+## Examples
+
+[[TODO: Give at least one complete example that a reader can run or paste, not a fragment. Put a sentence before it saying what it shows. Put the expected output straight after it. Add a second example for the most common variation. Use safe placeholder values, and never include a real key, token, or customer record.]]
+
+```sh
+[[TODO: Replace with a complete, runnable example.]]
+```
+
+## Errors and limits
+
+[[TODO: OPTIONAL SECTION. Give a table of exact error text or code, its cause, and its fix. Then list hard limits with numbers and units, such as sizes, rates, and counts. Delete this heading and text if nothing applies.]]
+
+## Availability
+
+[[TODO: OPTIONAL SECTION. Say which versions, channels, or plans include this, and what changed between them. If the feature is beta, in development, or deprecated, set subjectLifecycle in the frontmatter, say so here, and name the replacement. Delete this heading and text if it is stable everywhere.]]
+
+## HTML, Markdown, and agents
+
+[[TODO: OPTIONAL SECTION. Keep it when the page uses a component or describes behavior that differs between HTML and Markdown or affects what an agent reads. Delete this heading and text otherwise. Describe what HTML shows or lets a reader do, what the Markdown twin contains, and what that means for an agent. Name the useful .md page, documents.json entry, or focused contract when relevant. Describe actual behavior in two to five sentences.]]
+
+## Related reading
+
+[[TODO: Add relationship entries for this page to your relationships config, then delete this paragraph. Each entry names this page's ID as "from", the related page's ID as "to", a type, and a reason. Types: prerequisite, next-step, reference, advanced, see-also, not-confused-with. If this page has no natural related pages, delete this whole section.]]
+
+<RelatedReading />

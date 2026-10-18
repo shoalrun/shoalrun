@@ -1,0 +1,369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shoalrun.com/schemas/manifest.schema.json",
+  "title": "Shoalrun published document manifest, version 1",
+  "description": "The current documents.json producer contract. Schema identifiers do not imply hosted schema availability. Unknown properties are allowed for additive evolution; cross-record identities, references, and digest coherence require separate checks.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "buildId", "configDigest", "basePath", "dependencies", "documents", "operations", "relationships", "redirects", "apiSources"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "buildId": {
+      "$ref": "#/$defs/digest",
+      "description": "Opaque identity of assembled publication artifacts before buildId stamping and sync snapshot addition."
+    },
+    "configDigest": {
+      "$ref": "#/$defs/digest",
+      "description": "SHA-256 of JSON.stringify of the loaded, resolved configuration."
+    },
+    "basePath": {
+      "type": "string",
+      "description": "Configured site path prefix; empty string at the root."
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Public dependency identifiers, with project-relative, shoalrun:, or package: paths rather than local absolute source paths."
+    },
+    "searchSynonyms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "uniqueItems": true,
+        "items": { "$ref": "#/$defs/nonemptyString" }
+      }
+    },
+    "sitemap": { "$ref": "#/$defs/route" },
+    "readerFacets": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/readerFacet" }
+    },
+    "documents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/document" },
+      "description": "One record per published document variant. The tuple id/channel/version/language must be unique."
+    },
+    "navigationTabs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/navigationTab" },
+      "description": "Navigation sections for every publication, independent of the selected HTML tab."
+    },
+    "operations": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "$ref": "#/$defs/operation" }
+      },
+      "description": "Stable operation IDs mapped to published pages that reference them."
+    },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relationship" }
+    },
+    "redirects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/redirect" }
+    },
+    "apiSources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/apiSource" }
+    }
+  },
+  "$defs": {
+    "navigationTab": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "variant", "url", "markdownUrl", "indexUrl"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "label": { "$ref": "#/$defs/nonemptyString" },
+        "variant": { "$ref": "#/$defs/variant" },
+        "url": { "$ref": "#/$defs/route" },
+        "markdownUrl": { "$ref": "#/$defs/markdownRoute" },
+        "indexUrl": { "$ref": "#/$defs/route" }
+      }
+    },
+    "nonemptyString": { "type": "string", "minLength": 1, "pattern": "\\S" },
+    "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "route": {
+      "type": "string",
+      "pattern": "^/(?!/)[^\\\\?#\\u0000-\\u0020]*$",
+      "not": { "pattern": "(^|/)\\.\\.(/|$)" },
+      "description": "Site-absolute route, including any base path and publication prefix."
+    },
+    "markdownRoute": {
+      "allOf": [{ "$ref": "#/$defs/route" }, { "pattern": "\\.md$" }],
+      "type": "string"
+    },
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "updated": {
+      "type": "string",
+      "anyOf": [
+        { "$ref": "#/$defs/date" },
+        { "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$" },
+        { "pattern": "^\\d{4}-\\d{2}-\\d{2}T24:00:00(?:\\.0+)?(?:Z|[+-]\\d{2}:\\d{2})$" }
+      ],
+      "description": "Last meaningful page update: a date or timezone-qualified ISO timestamp, including the producer's accepted end-of-day 24:00:00 spelling. The output contract checker separately checks Date.parse acceptance and that the leading calendar date is real; the end-of-day pattern alone does not validate calendar dates or timezone ranges. Independent of author review."
+    },
+    "nonnegativeInteger": { "type": "integer", "minimum": 0 },
+    "stringList": { "type": "array", "items": { "$ref": "#/$defs/nonemptyString" } },
+    "variant": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["channel", "version", "language"],
+      "properties": {
+        "channel": { "$ref": "#/$defs/nonemptyString" },
+        "version": { "$ref": "#/$defs/nonemptyString" },
+        "language": { "$ref": "#/$defs/nonemptyString" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "title", "url", "markdownUrl"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonemptyString" },
+        "title": { "type": "string" },
+        "url": { "$ref": "#/$defs/route" },
+        "markdownUrl": { "$ref": "#/$defs/markdownRoute" }
+      },
+      "description": "A resolved public document target in the containing record's publication variant."
+    },
+    "subjectDeprecation": {
+      "type": "object",
+      "additionalProperties": true,
+      "minProperties": 1,
+      "properties": {
+        "deprecatedOn": { "$ref": "#/$defs/date" },
+        "sunsetOn": { "$ref": "#/$defs/date" },
+        "replacement": { "$ref": "#/$defs/target" },
+        "migration": { "$ref": "#/$defs/target" }
+      },
+      "description": "Optional author-declared details for a deprecated subject. No date or target is individually mandatory. Sunset must not precede deprecation; dates do not change lifecycle automatically."
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["kind", "affects"],
+      "properties": {
+        "kind": { "enum": ["editorial", "procedure", "behavior", "breaking"] },
+        "affects": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/target" }
+        },
+        "migration": { "$ref": "#/$defs/target" }
+      },
+      "description": "Authored change classification on a changelog-entry. Targets name other public documents in the same variant. A digest change alone does not imply a classification."
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "title", "depth", "markdownUrl", "parentMarkdownUrl", "parentDigest", "digest", "markdownBytes", "markdownTokens", "markdownTokenEncoding"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonemptyString" },
+        "title": { "type": "string" },
+        "depth": { "const": 2 },
+        "standalone": {
+          "const": true,
+          "description": "Present only for author-declared standalone sections; it does not certify completeness."
+        },
+        "markdownUrl": { "$ref": "#/$defs/markdownRoute" },
+        "parentMarkdownUrl": { "$ref": "#/$defs/markdownRoute" },
+        "parentDigest": { "$ref": "#/$defs/digest", "description": "SHA-256 of the complete parent Markdown twin bytes." },
+        "digest": { "$ref": "#/$defs/digest", "description": "SHA-256 of the complete section Markdown bytes." },
+        "markdownBytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "markdownTokens": { "$ref": "#/$defs/nonnegativeInteger" },
+        "markdownTokenEncoding": { "$ref": "#/$defs/nonemptyString" }
+      },
+      "description": "An eligible top-level level-two heading resource. IDs and routes are heading-derived and can change after heading edits."
+    },
+    "breadcrumb": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["label"],
+      "properties": {
+        "label": { "type": "string" },
+        "url": { "$ref": "#/$defs/route" }
+      }
+    },
+    "readerFacet": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["label", "options"],
+      "properties": {
+        "label": { "$ref": "#/$defs/nonemptyString" },
+        "options": { "type": "object", "additionalProperties": { "$ref": "#/$defs/nonemptyString" } }
+      }
+    },
+    "readerSelection": {
+      "type": "object",
+      "additionalProperties": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+      "description": "Facet names mapped to configured option IDs. Presentation controls, not access controls; an empty map is shared content."
+    },
+    "relationshipType": { "enum": ["next-step", "see-also", "prerequisite", "reference", "advanced", "not-confused-with"] },
+    "cardQuery": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["component"],
+      "properties": {
+        "component": { "enum": ["DocCard", "DocCards", "DocCollection", "RelatedReading"] },
+        "layout": { "enum": ["list", "cards"] },
+        "doc": { "$ref": "#/$defs/nonemptyString" },
+        "docs": { "$ref": "#/$defs/stringList", "type": "array", "uniqueItems": true },
+        "relatedTo": { "$ref": "#/$defs/nonemptyString" },
+        "relation": { "$ref": "#/$defs/relationshipType" },
+        "type": { "$ref": "#/$defs/nonemptyString" },
+        "tag": { "$ref": "#/$defs/nonemptyString" },
+        "operation": { "$ref": "#/$defs/nonemptyString" },
+        "audience": { "$ref": "#/$defs/nonemptyString" },
+        "orderBy": { "enum": ["title", "id", "date", "releaseVersion"] },
+        "limit": { "type": "integer", "minimum": 1 },
+        "exclude": { "$ref": "#/$defs/stringList", "type": "array", "uniqueItems": true },
+        "pin": { "$ref": "#/$defs/stringList", "type": "array", "uniqueItems": true },
+        "empty": { "$ref": "#/$defs/nonemptyString" }
+      },
+      "allOf": [
+        { "if": { "properties": { "component": { "const": "DocCard" } }, "required": ["component"] }, "then": { "properties": { "doc": {} }, "required": ["doc"] } },
+        { "if": { "properties": { "component": { "const": "DocCards" } }, "required": ["component"] }, "then": { "anyOf": [{ "properties": { "docs": {} }, "required": ["docs"] }, { "properties": { "relation": {} }, "required": ["relation"] }] } }
+      ]
+    },
+    "apiEmbed": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["component"],
+      "properties": {
+        "component": { "enum": ["ApiExample", "ApiSchema"] },
+        "operation": { "$ref": "#/$defs/nonemptyString" },
+        "api": { "$ref": "#/$defs/nonemptyString" },
+        "kind": { "enum": ["request", "response"] },
+        "mediaType": { "$ref": "#/$defs/nonemptyString" },
+        "status": { "$ref": "#/$defs/nonemptyString" },
+        "example": { "$ref": "#/$defs/nonemptyString" },
+        "schema": { "$ref": "#/$defs/nonemptyString" }
+      },
+      "allOf": [
+        { "if": { "properties": { "component": { "const": "ApiExample" } }, "required": ["component"] }, "then": { "properties": { "operation": {}, "kind": {}, "mediaType": {}, "example": {} }, "required": ["operation", "kind", "mediaType", "example"] } },
+        { "if": { "properties": { "component": { "const": "ApiSchema" } }, "required": ["component"] }, "then": { "anyOf": [{ "properties": { "api": {}, "schema": {} }, "required": ["api", "schema"] }, { "properties": { "operation": {}, "kind": {}, "mediaType": {} }, "required": ["operation", "kind", "mediaType"] }] } },
+        { "if": { "properties": { "kind": { "const": "response" } }, "required": ["kind"] }, "then": { "properties": { "status": {} }, "required": ["status"] } }
+      ]
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "demo", "type", "title", "summary", "subjectLifecycle", "variant", "url", "markdownUrl", "indexable", "contentDigest", "breadcrumbs", "cardTargets", "cardQueries", "snippets", "apiEmbeds", "focusedContractUrl", "focusedContractBytes", "focusedContractDigest", "sections", "markdownBytes", "markdownTokens", "markdownTokenEncoding", "digest"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonemptyString" },
+        "demo": { "type": "boolean", "description": "True identifies author-declared fictional examples; false means unmarked and does not verify a live service." },
+        "type": { "$ref": "#/$defs/nonemptyString" },
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "subjectLifecycle": { "enum": ["beta", "in-development", "experimental", "deprecated", null] },
+        "subjectDeprecation": { "$ref": "#/$defs/subjectDeprecation" },
+        "change": { "$ref": "#/$defs/change" },
+        "variant": { "$ref": "#/$defs/variant" },
+        "url": { "$ref": "#/$defs/route" },
+        "markdownUrl": { "$ref": "#/$defs/markdownRoute" },
+        "indexable": { "type": "boolean", "description": "Index eligibility, not access policy." },
+        "updated": { "$ref": "#/$defs/updated" },
+        "verified": { "$ref": "#/$defs/date", "description": "Optional author-supplied review date; omitted when unset and not proof of external review." },
+        "contentDigest": { "$ref": "#/$defs/digest", "description": "Opaque resolved article-content fingerprint for change tracking, not a hash of the Markdown bytes." },
+        "breadcrumbs": { "type": "array", "items": { "$ref": "#/$defs/breadcrumb" } },
+        "navigationTab": { "$ref": "#/$defs/navigationTab" },
+        "product": { "$ref": "#/$defs/nonemptyString" },
+        "area": { "$ref": "#/$defs/nonemptyString" },
+        "subarea": { "$ref": "#/$defs/nonemptyString" },
+        "readerFilters": { "$ref": "#/$defs/readerSelection" },
+        "cardTargets": { "$ref": "#/$defs/stringList", "description": "Resolved target document IDs." },
+        "cardQueries": { "type": "array", "items": { "$ref": "#/$defs/cardQuery" } },
+        "snippets": { "$ref": "#/$defs/stringList", "type": "array", "uniqueItems": true, "description": "IDs of snippets used by this document." },
+        "apiEmbeds": { "type": "array", "items": { "$ref": "#/$defs/apiEmbed" } },
+        "focusedContractUrl": { "anyOf": [{ "$ref": "#/$defs/route" }, { "type": "null" }] },
+        "focusedContractBytes": { "anyOf": [{ "$ref": "#/$defs/nonnegativeInteger" }, { "type": "null" }] },
+        "focusedContractDigest": { "anyOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }] },
+        "sections": { "type": "array", "items": { "$ref": "#/$defs/section" }, "description": "Published eligible section resources; an empty array does not imply no headings." },
+        "markdownBytes": { "$ref": "#/$defs/nonnegativeInteger", "description": "Complete generated Markdown twin size in UTF-8 bytes." },
+        "markdownTokens": { "$ref": "#/$defs/nonnegativeInteger" },
+        "markdownTokenEncoding": { "$ref": "#/$defs/nonemptyString", "description": "Tokenizer for markdownTokens; currently cl100k_base, not a universal model count." },
+        "digest": { "$ref": "#/$defs/digest", "description": "Required SHA-256 of the complete generated Markdown bytes. Consumer byte verification is optional." }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "focusedContractUrl": { "type": "null" },
+            "focusedContractBytes": { "type": "null" },
+            "focusedContractDigest": { "type": "null" }
+          }
+        },
+        {
+          "properties": {
+            "focusedContractUrl": { "$ref": "#/$defs/route" },
+            "focusedContractBytes": { "$ref": "#/$defs/nonnegativeInteger" },
+            "focusedContractDigest": { "$ref": "#/$defs/digest" }
+          }
+        }
+      ],
+      "dependentSchemas": {
+        "subjectDeprecation": { "properties": { "subjectLifecycle": { "const": "deprecated" } } },
+        "change": { "properties": { "type": { "const": "changelog-entry" } } }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "type", "channel", "version", "language", "url", "markdownUrl"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonemptyString" },
+        "type": { "$ref": "#/$defs/nonemptyString" },
+        "channel": { "$ref": "#/$defs/nonemptyString" },
+        "version": { "$ref": "#/$defs/nonemptyString" },
+        "language": { "$ref": "#/$defs/nonemptyString" },
+        "url": { "$ref": "#/$defs/route" },
+        "markdownUrl": { "$ref": "#/$defs/markdownRoute" },
+        "focusedContractUrl": { "$ref": "#/$defs/route" }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "from", "to", "type", "reason", "variant"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonemptyString" },
+        "from": { "$ref": "#/$defs/nonemptyString" },
+        "to": { "$ref": "#/$defs/nonemptyString" },
+        "type": { "$ref": "#/$defs/relationshipType" },
+        "reason": { "$ref": "#/$defs/nonemptyString" },
+        "order": { "type": "number" },
+        "variant": { "$ref": "#/$defs/variant" }
+      }
+    },
+    "redirect": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["from", "to", "markdownFrom", "markdownTo", "status"],
+      "properties": {
+        "from": { "$ref": "#/$defs/route" },
+        "to": { "$ref": "#/$defs/route" },
+        "markdownFrom": { "$ref": "#/$defs/markdownRoute" },
+        "markdownTo": { "$ref": "#/$defs/markdownRoute" },
+        "status": { "enum": [301, 302, 303, 307, 308] }
+      }
+    },
+    "apiSource": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["apiId", "channel", "version", "endpoint", "referenceUrl", "sourceUrl", "mediaType"],
+      "properties": {
+        "apiId": { "$ref": "#/$defs/nonemptyString" },
+        "channel": { "$ref": "#/$defs/nonemptyString" },
+        "version": { "$ref": "#/$defs/nonemptyString" },
+        "endpoint": { "type": ["string", "null"] },
+        "referenceUrl": { "$ref": "#/$defs/route" },
+        "sourceUrl": { "$ref": "#/$defs/route" },
+        "mediaType": { "enum": ["application/json", "application/yaml"] }
+      }
+    }
+  }
+}

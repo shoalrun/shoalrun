@@ -1,0 +1,6 @@
+extends: existence
+message: "Replace '%s' with a concrete instruction: say who chooses a value or which values must match."
+level: error
+ignorecase: true
+tokens:
+  - '\bagreed\b'

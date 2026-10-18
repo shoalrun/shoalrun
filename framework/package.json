@@ -1,0 +1,81 @@
+{
+  "name": "@shoalrun/cli",
+  "version": "0.1.0-alpha.2",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    "./authoring": "./dist/authoring-api.js",
+    "./*": "./*",
+    "./components": "./dist/components.js"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.js",
+    "!dist/**/*.test.d.ts",
+    "assets",
+    "styles",
+    "templates",
+    "examples",
+    "!examples/**/node_modules/**",
+    "example-configs",
+    "!example-configs/**/.shoalrun/**",
+    "agent-docs",
+    "skills",
+    "README.md"
+  ],
+  "bin": {
+    "shoalrun": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "test": "npm run build && node --test dist/*.test.js scripts/*.test.mjs",
+    "test:authoring-tools": "npm run build && node --test dist/authoring-guidance.test.js dist/authoring-project.test.js dist/authoring-validation.test.js dist/authoring-review.test.js dist/docs-author.test.js dist/documentation-core.test.js dist/docs-mcp.test.js dist/scaffold-templates.test.js",
+    "demo": "npm run build && node dist/cli.js build example/docs.config.yaml example/dist",
+    "api-preview": "npm run build && node scripts/preview-api.mjs",
+    "deploy:check": "node scripts/check-deployment.mjs",
+    "preview": "npm run demo && node preview.mjs",
+    "agent-docs:import": "node scripts/import-docs-snapshot.mjs"
+  },
+  "dependencies": {
+    "@d2lang/d2": "^0.1.34",
+    "@modelcontextprotocol/server": "2.2.0",
+    "@resvg/resvg-js": "2.6.2",
+    "esbuild": "0.28.2",
+    "js-tiktoken": "1.0.21",
+    "katex": "0.16.47",
+    "lucide": "1.47.0",
+    "parse5": "8.0.1",
+    "pele": "1.6.0",
+    "rehype-stringify": "10.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-mdx": "3.1.1",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
+    "remark-stringify": "11.0.0",
+    "shiki": "4.4.3",
+    "unified": "11.0.5",
+    "yaml": "2.9.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.2.0",
+    "@types/node": "22.19.19",
+    "afdocs": "0.20.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "axe-core": "^4.13.0",
+    "puppeteer": "^25.12.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "5.9.3"
+  },
+  "description": "Documentation compiler and CLI with HTML, Markdown, and read-only MCP tools."
+}

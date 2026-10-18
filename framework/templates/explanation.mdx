@@ -1,0 +1,76 @@
+---
+# EXPLANATION TEMPLATE. Resolve every TODO before publication.
+# Stable identity. Links and relationships use it even when a file or URL changes.
+# Never change it after publishing.
+id: explanation.example
+
+# Name the concept or question, such as "How parcel tracking works".
+# Use sentence case, 60 characters or fewer, without a final period.
+title: Example
+
+# One sentence of 160 characters or fewer stating what the reader will understand.
+# Good: "Understand how tracking events describe a parcel's journey."
+# Replace the derived draft summary before publication.
+summary: Draft summary
+
+# Optional search and link-preview detail. Remove if the summary is sufficient.
+description: "[[TODO: Add context in two sentences, or delete this field.]]"
+
+# Explanation develops understanding. Use how-to for tasks, tutorial for exercises,
+# and reference for exact facts.
+type: explanation
+
+# Stable URL path: lowercase words separated by hyphens, starting with /.
+slug: /explanations/example
+
+# Must match an enabled publication in project config.
+channel: production
+version: current
+language: en
+
+# One to three existing topic labels used by the project.
+tags:
+  - "[[TODO: One lowercase topic label, such as parcels.]]"
+
+# Optional card icon: a valid Lucide icon name.
+card: { icon: lightbulb }
+
+# OPTIONAL FIELDS. Uncomment only with valid project values.
+# audiences: [developers]
+# readerFilters: { audience: [developer] }
+# subjectLifecycle: beta
+# tocDepth: 2
+# layout: wide
+
+# Scaffold always writes draft. Publish only after resolving placeholders and
+# reviewing the explanation against evidence.
+access: { policy: draft }
+---
+
+[[TODO: Write the introduction as one paragraph of 150 words or fewer. Put no heading above it. Name the concept, the question this page answers, and the knowledge the reader already needs. Explain why understanding it helps. Do not promise a task or prescribe a sequence of actions.]]
+
+## Context
+
+[[TODO: Explain the problem or background that makes this concept useful. State the scope and assumptions. Link to a tutorial or how-to when readers need practical experience first.]]
+
+## [[TODO: Name the central concept or question]]
+
+[[TODO: Develop the explanation from familiar ideas to unfamiliar ones. Explain why the system behaves this way and how its parts relate. Use a concrete parcel example, analogy, or supported diagram where it clarifies the idea. Distinguish facts from assumptions. Add topic headings as needed; do not turn this into numbered task steps or a field catalog.]]
+
+## Tradeoffs and alternatives
+
+[[TODO: OPTIONAL SECTION. Keep it when understanding requires comparing approaches. Explain the reasons for the design, relevant history and constraints, its limitations, and when another approach makes sense. Identify whose perspective or judgment a claim represents, and consider counterexamples. Delete this heading and text otherwise. Link to reference material for exact limits.]]
+
+## Common misconceptions
+
+[[TODO: OPTIONAL SECTION. Keep it when readers often confuse related concepts. Explain the distinction and its practical consequence. Delete this heading and text otherwise.]]
+
+## HTML, Markdown, and agents
+
+[[TODO: OPTIONAL SECTION. Keep it when the explanation uses components or discusses representation differences. Say what HTML shows, what the Markdown twin contains, and what an agent can read. Delete this heading and text otherwise.]]
+
+## Related reading
+
+[[TODO: Add relationships to a tutorial for learning by doing, a how-to for a concrete task, or a reference for exact facts. Delete this paragraph after configuring the relationships; delete the whole section if none apply.]]
+
+<RelatedReading />

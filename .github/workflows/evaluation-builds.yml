@@ -1,0 +1,23 @@
+name: Evaluation build capture
+on:
+  workflow_dispatch:
+concurrency:
+  group: capture-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: npm, cache-dependency-path: framework/package-lock.json }
+      - run: npm ci --prefix framework
+      - run: npm --prefix framework run build
+      - run: node framework/dist/cli.js build framework/example-configs/minimal/docs.config.yaml .capture-site
+      - run: node eval/scripts/capture-build.mjs .capture-site eval/fixtures/capture-tasks.yaml .capture-output
+      - uses: actions/upload-artifact@v4
+        with: { name: ungraded-starter-capture, path: .capture-output, retention-days: 7 }

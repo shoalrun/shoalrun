@@ -1,0 +1,56 @@
+$defs:
+  Amount:
+    type: object
+    required: [value, currency]
+    properties:
+      value: { type: integer, minimum: 1, description: Minor currency units. }
+      currency: { type: string, enum: [USD, EUR] }
+  CreatePayment:
+    type: object
+    required: [amount, source]
+    properties:
+      amount: { $ref: '#/$defs/Amount' }
+      source:
+        discriminator: { propertyName: type }
+        oneOf:
+          - type: object
+            title: Card token
+            required: [type, token]
+            properties:
+              type: { type: string, const: card }
+              token: { type: string, minLength: 5 }
+          - type: object
+            title: Bank account
+            required: [type, accountId]
+            properties:
+              type: { type: string, const: bank }
+              accountId: { type: string }
+      metadata:
+        type: object
+        additionalProperties: { type: string, maxLength: 100 }
+      extra:
+        type: object
+        additionalProperties: true
+  Payment:
+    type: object
+    required: [id, status, amount]
+    properties:
+      id: { type: string }
+      status: { type: string, enum: [pending, succeeded, failed] }
+      amount: { $ref: '#/$defs/Amount' }
+      events:
+        type: array
+        items: { $ref: '#/$defs/Event' }
+  Event:
+    type: object
+    required: [kind]
+    properties:
+      kind: { type: string }
+      parent: { $ref: '#/$defs/Payment' }
+  Problem:
+    type: object
+    required: [type, title]
+    properties:
+      type: { type: string, format: uri }
+      title: { type: string }
+      detail: { type: [string, 'null'] }

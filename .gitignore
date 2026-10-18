@@ -1,0 +1,28 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+
+node_modules/
+dist/
+.shoalrun/
+.vercel/
+.docs/cache/
+.docs/generated/
+docs/.docs-vercel-*.yaml
+
+*.log
+*.tsbuildinfo
+
+# Private third-party documentation experiments; never bundle or deploy.
+/.private-evals/
+/.private-archives/
+
+# Local checks and study artifacts
+.capture-site/
+.capture-output/
+site-dist/
+.cache/
+coverage/
+*.tgz
+SOURCE-INVENTORY.local.json

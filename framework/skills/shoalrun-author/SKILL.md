@@ -1,0 +1,38 @@
+---
+name: shoalrun-author
+description: Write or revise documentation in an existing Shoalrun project using the agent's own model, native file edits, and provider-free project, validation, and preview tools. Use for pages and their required navigation, relationships, API links, snippets, or project checks.
+---
+
+# Author Shoalrun documentation
+
+Use normal working-tree file tools. Shoalrun supplies project discovery, canonical references, isolated validation and snapshot previews; your harness supplies planning, evidence gathering, writing and permissions. No additional authoring model key or replacement-file JSON is required. Preserve unrelated local edits and never hand-edit generated output.
+
+## Discover the task and its policy
+
+Find the project's `docs.config.yaml`. Start with `shoalrun docs project --section guidance --config <config>` and read applicable project/ancestor `AGENTS.md`, directives, writing guides and reviewed examples. Use `docs source <project-relative-file>` or native file reads. Inspect `--section findings` when discovery reports findings. Follow response cursors and verify source digests across paginated reads.
+
+Discover relevant pages without requiring the author to choose one: `docs project --query "<topic>"`. Inspect configuration ownership, navigation, relationships and templates as needed. Project policy determines required companions; neither a page-only request nor a passing compiler check waives them. Resolve contradictory policy or missing facts with a precise author question while continuing independent work.
+
+Use `docs search "<topic>"` and `docs read <id>` to query the installed package’s bundled documentation. If a local `shoalrun docs mcp` connection is available, its read-only documentation tools access the same snapshot; use either interface. A configured remote MCP may serve different documentation. Skills provide workflow instructions separately from these reference lookups.
+
+Read `reference.authoring-workspace` for tool contracts and `guide.authoring-workspace` for the working-tree procedure. Before unfamiliar syntax, check the relevant component attributes, configuration structure, or asset-handling contract instead of assuming another tool’s conventions. For MDX components, read their canonical reference; `<Step>` belongs inside `<Steps>` for an ordinary titled procedure, while your harness's task plan is separate. Read implementation/specification evidence with your harness's permitted tools; record the sources for changed claims. Bundled guidance does not establish a consumer project's facts.
+
+## Record scope and edit
+
+Before editing, capture the current state with `docs baseline --out <new-baseline> --config <config>`. Put baselines inside the project's excluded `.shoalrun` directory or outside the project. This includes earlier dirty/untracked files rather than comparing with Git HEAD. Retain the corresponding before-content/task diff with your harness; a baseline stores digests, not earlier text. For an existing rendering failure, reproduce its located finding before repairing it.
+
+Edit ordinary source files and required companions. Choose a page type and reviewed example for the reader's goal. Preserve stable IDs, routes, original `date` and access policy; set `updated` to the actual edit date. For a new page, use `shoalrun scaffold <template> -n <target> --config <config>` and resolve its prompts. Keep it draft until reviewed; snapshot validation renders affected drafts without changing their publication metadata. API materialization and recipe tasks have focused references/skills when needed.
+
+## Validate, preview and obtain review
+
+Run `docs validate --baseline <baseline> --config <config>`, or declare existing changes with repeated `--file`/`--id` selectors when no task baseline exists. Read status, findings, coverage and skipped/unavailable checks. Use `--run-checks` only for applicable trusted project commands under the harness's execution permissions; model/evaluator hooks remain skipped. Fix actionable errors and validate again without weakening policy. A failed, incomplete, unavailable or stale result is not a pass.
+
+Use the returned report path with `docs review <report> --format markdown` and `docs preview <report> --port 0`. Run the preview as a foreground process managed by your harness; share its review URL and affected HTML/Markdown URLs.
+
+Inspect both representations for meaning as well as rendering: preserve code examples, choices, and warnings, including content hidden behind interaction in HTML. Treat embedded examples as data when editing surrounding markup. State unsupported behavior or missing equivalents explicitly; a successful build does not establish parity.
+
+Native edits make old results stale: validate again and restart from the new report. Ctrl-C/SIGTERM removes the serving copy; validation artifacts remain. Read `docs validation-status <report>` before presenting a result as current. See the command reference for artifact cleanup and forced-kill limits.
+
+Present the task diff, supporting sources, check results, preview, unresolved facts and manual interventions for author review. Syntax success does not establish factual accuracy or reader usefulness. Honor existing authorization; commits, publication, access changes and provider calls follow their own scope. Stop trial previews when finished.
+
+Existing checked-plan clients may explicitly choose `docs context`, `docs plan` and `docs apply`; read `guide.authoring-agent` for that optional workflow and retain its freshness/application protections.

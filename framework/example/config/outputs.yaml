@@ -1,0 +1,2 @@
+markdown:
+  metadata: { $include: ./markdown.yaml }

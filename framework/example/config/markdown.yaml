@@ -1,0 +1,16 @@
+format: yaml-frontmatter
+fields:
+  id: frontmatter.id
+  title: frontmatter.title
+  description: frontmatter.summary
+  type: frontmatter.type
+  operations: frontmatter.operations
+  channel: publication.channel
+  version: publication.version
+  language: publication.language
+  canonical: publication.canonicalUrl
+omitNull: true
+byType:
+  how-to:
+    addFields:
+      agent.intent: frontmatter.agent.intent

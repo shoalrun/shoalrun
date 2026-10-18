@@ -1,0 +1,10 @@
+defaults: { channel: production, version: v1, language: en }
+channels:
+  production: { pathPrefix: "" }
+  sandbox: { pathPrefix: /sandbox }
+versions:
+  v1: { pathPrefix: /v1 }
+  v2: { pathPrefix: /v2 }
+enabled:
+  - { channel: production, version: v1, language: en }
+  - { channel: sandbox, version: v1, language: en }

@@ -1,0 +1,25 @@
+[data-shoalrun-component="RetryBudget"] .retry-calculator {
+  padding: clamp(1rem, 3vw, 1.7rem); margin: 1rem 0 1.5rem;
+  border: 1px solid var(--line, #9998); border-radius: 1rem;
+  background: var(--surface, Canvas); color: var(--text, CanvasText);
+}
+.retry-calculator .retry-eyebrow { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+.retry-calculator h3 { margin: .4rem 0; }
+.retry-calculator fieldset { min-width: 0; border: 0; padding: 0; margin: 1.2rem 0; }
+.retry-calculator legend { font-weight: 650; margin-bottom: .65rem; }
+.retry-calculator .retry-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: .85rem; }
+.retry-calculator label { display: grid; gap: .35rem; font-size: .85rem; }
+.retry-calculator input, .retry-calculator select, .retry-calculator button {
+  font: inherit; color: inherit; border: 1px solid var(--line, #9998); border-radius: .4rem; background: var(--surface, Canvas); padding: .55rem .65rem; min-width: 0; width: 100%;
+}
+.retry-calculator input:focus-visible, .retry-calculator select:focus-visible, .retry-calculator button:focus-visible { outline: 2px solid var(--accent, Highlight); outline-offset: 3px; }
+.retry-calculator .retry-result { display: grid; gap: .35rem; padding: 1rem; border-radius: .6rem; background: color-mix(in srgb, var(--accent, #227565) 10%, transparent); }
+.retry-calculator .retry-result strong { font-size: 1.8rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.retry-calculator .retry-result span, .retry-calculator .retry-note { font-size: .85rem; }
+.retry-calculator .retry-timeline { list-style: none; padding: 0; margin: 1rem 0; }
+.retry-calculator .retry-timeline li { display: grid; grid-template-columns: 5rem minmax(1rem, 1fr) 7rem; align-items: center; gap: .7rem; margin: .65rem 0; font-size: .85rem; }
+.retry-calculator .retry-timeline strong { text-align: right; font-variant-numeric: tabular-nums; }
+.retry-calculator .retry-track { background: color-mix(in srgb, currentColor 7%, transparent); height: .65rem; border-radius: 1rem; }
+.retry-calculator .retry-track > span { display: block; height: 100%; border-radius: inherit; background: var(--accent, #227565); }
+.retry-calculator button { width: auto; cursor: pointer; }
+@media (max-width: 420px) { .retry-calculator .retry-timeline li { grid-template-columns: 4rem minmax(1rem, 1fr) 6rem; gap: .4rem; font-size: .75rem; } }

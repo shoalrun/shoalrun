@@ -1,0 +1,88 @@
+openapi: 3.1.0
+info: { title: Example Payments API, version: 1.0.0 }
+servers:
+  - { url: 'https://api.example.test/v1', description: Example production endpoint }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer }
+    keyAuth: { type: apiKey, in: header, name: X-Example-Key }
+  examples:
+    BankPayment:
+      summary: Bank account payment
+      description: Uses a saved bank account instead of a card token.
+      value:
+        amount: { value: 1250, currency: USD }
+        source: { type: bank, accountId: acct_example }
+paths:
+  /payments:
+    parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        description: Path-level default overridden by this operation.
+        schema: { type: string }
+    post:
+      operationId: createPayment
+      summary: Create a payment
+      description: Submit a payment with a typed source and [idempotency key](/v1/guides/create-payment).
+      security:
+        - bearerAuth: []
+        - keyAuth: []
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: true
+          description: Reuse this key when retrying the same payment.
+          schema: { type: string, minLength: 8, maxLength: 255 }
+          examples:
+            initial-attempt:
+              summary: Initial attempt
+              value: payment-demo-001
+            safe-retry:
+              summary: Retry the same payment
+              description: Keep the original key when retrying an uncertain response.
+              value: payment-demo-001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: ./schemas/payment.yaml#/$defs/CreatePayment }
+            examples:
+              card:
+                summary: Card token payment
+                description: A tokenized card payment for the same amount.
+                value:
+                  amount: { value: 1250, currency: USD }
+                  source: { type: card, token: tok_example }
+              bank: { $ref: '#/components/examples/BankPayment' }
+      responses:
+        '201':
+          description: Payment accepted.
+          content:
+            application/json:
+              schema: { $ref: ./schemas/payment.yaml#/$defs/Payment }
+              examples:
+                pending:
+                  summary: Pending payment
+                  value:
+                    id: pay_example
+                    status: pending
+                    amount: { value: 1250, currency: USD }
+                succeeded:
+                  summary: Succeeded payment
+                  value:
+                    id: pay_example
+                    status: succeeded
+                    amount: { value: 1250, currency: USD }
+        '409':
+          description: Idempotency key conflicts with an earlier request.
+          content:
+            application/problem+json:
+              schema: { $ref: ./schemas/payment.yaml#/$defs/Problem }
+              examples:
+                conflicting-key:
+                  summary: Conflicting idempotency key
+                  description: The key already identifies a different request.
+                  value:
+                    type: https://api.example.test/problems/idempotency-conflict
+                    title: Idempotency key conflict

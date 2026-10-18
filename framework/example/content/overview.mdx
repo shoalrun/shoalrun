@@ -1,0 +1,23 @@
+---
+id: guide.overview
+title: Documentation framework prototype
+summary: A self-built example of stable IDs and paired API documentation.
+type: overview
+slug: /overview
+channel: production
+version: v1
+language: en
+access: { policy: public }
+---
+
+This page is compiled by the framework prototype itself. The complex endpoint below is an example API fixture, not a deployed Shoalrun service.
+
+Read the [Create a payment API reference](doc:reference.create-payment) to inspect nested schemas, multiple response types, and Markdown parity.
+
+On a wide screen, the reference places navigation, endpoint details, and named examples in three columns. The sample requests and responses are authored fixtures; none are execution evidence.
+
+The build also publishes [the API catalog](/.well-known/api-catalog), [agent discovery](/llms.txt), and the [versioned OpenAPI source](/api/payments/production/v1/openapi.yaml). The catalog's API URL uses the reserved `.test` domain because this is an offline fixture.
+
+## Explore payment documentation
+
+<DocCollection operation="payments.create" pin={["reference.create-payment"]} />

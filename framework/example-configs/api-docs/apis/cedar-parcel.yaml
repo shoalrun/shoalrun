@@ -1,0 +1,413 @@
+openapi: 3.1.0
+info:
+  title: Cedar Parcel API
+  version: 1.0.0
+  description: A fictional parcel service used to stress documentation renderers.
+tags:
+  - { name: Enrollment, description: Set up a parcel program. }
+  - { name: Query, description: Search parcel records. }
+  - { name: Parcels, description: Read parcel records. }
+  - { name: Manifests, description: Upload dispatch files. }
+  - { name: Legacy, description: Older routes retained for migration testing. }
+servers:
+  - { url: 'https://sandbox.api.cedar-parcel.example/v1', description: Sandbox }
+  - { url: 'https://api.cedar-parcel.example/v1', description: Production }
+security:
+  - ServiceBearer: []
+  - ParcelKey: []
+paths:
+  /Enrollments:
+    post:
+      operationId: createEnrollment
+      tags: [Enrollment]
+      summary: Create a parcel enrollment
+      description: |
+        Create one of four enrollment shapes. The service accepts different
+        required fields for each program; the examples illustrate the shapes
+        but have not been sent to a server.
+      x-docs-availability: { phase: limited, note: Invite-only preview }
+      servers:
+        - { url: 'https://sandbox.api.cedar-parcel.example/v1', description: Enrollment sandbox only }
+      security:
+        - ApplicationKey: []
+      requestBody:
+        required: true
+        description: Choose the program that matches the parcels you will dispatch.
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateEnrollment' }
+            examples:
+              localShop:
+                summary: Local shop
+                description: A storefront with standard pickup windows.
+                value:
+                  program: local
+                  organization: { displayName: Example Corner Shop, address: { line1: 12 Sample Lane, city: Northport, region: NP, postalCode: '00012' } }
+                  contact: { name: Taylor Example, email: taylor@example.com }
+                  pickupWindows: [{ day: monday, opensAt: '09:00', closesAt: '17:00' }]
+              chilledGoods:
+                summary: Chilled goods
+                value:
+                  program: chilled
+                  organization: { displayName: Demo Cold Store, address: { line1: 9 Test Quay, city: Northport, region: NP, postalCode: '00019' } }
+                  contact: { name: Robin Sample, email: robin@example.com }
+                  temperatureRange: { minimumCelsius: 2, maximumCelsius: 6 }
+                  handlingNotes: Keep upright.
+              bulkDispatch:
+                summary: Bulk dispatch
+                value:
+                  program: bulk
+                  organization: { displayName: Fictional Warehouse, address: { line1: 4 Mock Road, city: Eastmere, region: EM, postalCode: '00044' } }
+                  contact: { name: Lee Demo, email: lee@example.com }
+                  monthlyParcelEstimate: 12000
+                  manifestFormat: csv
+              combinedProgram:
+                summary: Combined program
+                value:
+                  program: combined
+                  organization: { displayName: Synthetic Logistics, address: { line1: 8 Example Drive, city: Eastmere, region: EM, postalCode: '00048' } }
+                  contact: { name: Morgan Test, email: morgan@example.com }
+                  pickupWindows: [{ day: friday, opensAt: '08:00', closesAt: '16:00' }]
+                  temperatureRange: { minimumCelsius: 1, maximumCelsius: 7 }
+                  monthlyParcelEstimate: 8000
+                  manifestFormat: json
+      responses:
+        '201':
+          description: The enrollment was recorded. Review may still be pending.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EnrollmentReceipt' }
+              examples:
+                pending:
+                  summary: Pending review
+                  value: { enrollmentId: enr_demo_001, status: pending, warnings: [], approvedAt: null }
+        '400':
+          description: The selected program is missing one or more required fields.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+  /Search/parcels/{scope}:
+    get:
+      operationId: listParcels
+      tags: [Query]
+      summary: List parcel records
+      description: |
+        List records for an account or region. Use `downloadAs` to request a
+        file; the same successful status can return JSON, CSV, or a spreadsheet.
+      x-docs-availability: { phase: building }
+      parameters:
+        - name: scope
+          in: path
+          required: true
+          description: The account or region identifier.
+          schema: { type: string }
+          example: region-demo
+        - name: parameters
+          in: query
+          description: |
+            Placeholder for field/operator filters. Do not send `parameters=`.
+            Put each expression directly in the URL, for example
+            `declaredValue(gt)=100`.
+
+            Accepted fields: `createdAt` (gt, ge, lt, le, eq),
+            `declaredValue` (gt, ge, lt, le, eq), `carrier` (eq, ne, in),
+            `recipientCity` (eq, ct), and `status` (eq, ne, in).
+            `in` values are separated by `|`.
+          schema: { type: object, additionalProperties: { type: string } }
+          examples:
+            highValue:
+              summary: High declared value
+              value: { 'declaredValue(gt)': 100 }
+            matchingCity:
+              summary: City contains text
+              value: { 'recipientCity(ct)': port }
+        - name: downloadAs
+          in: query
+          description: Return a file instead of JSON when specified.
+          schema: { $ref: '#/components/schemas/ExportFormat' }
+        - name: skipRows
+          in: query
+          description: Number of records to skip.
+          schema: { type: integer, default: 0 }
+        - name: maxRows
+          in: query
+          description: Maximum records to return. Zero or a negative value requests all records.
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: |
+            A page of records, or a downloadable file if `downloadAs` is set.
+            The response format depends on the query value.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ParcelPage' }
+              examples:
+                firstPage:
+                  summary: First page
+                  value:
+                    records: [{ parcelId: pcl_demo_001, status: in_transit, declaredValue: 145.5, recipient: { city: Northport, postalCode: '00012' } }]
+                    totalRecords: 1
+                    nextCursor: null
+            text/csv:
+              schema: { type: string, description: CSV rows with a header line. }
+              example: "parcelId,status,declaredValue\npcl_demo_001,in_transit,145.5\n"
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema: { type: string, format: binary, description: A spreadsheet download. }
+        '400':
+          description: A field name or comparison operator is unsupported.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+  /parcels/{parcelId}:
+    servers:
+      - { url: 'https://lookup.api.cedar-parcel.example/v1', description: Public lookup host }
+    get:
+      operationId: getParcel
+      tags: [Parcels]
+      summary: Get a parcel
+      description: This lookup route does not use the API's default authentication.
+      security: []
+      parameters:
+        - name: parcelId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Parcel found.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Parcel' }
+        '404':
+          description: No parcel has that identifier.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+  /manifests:
+    post:
+      operationId: uploadManifest
+      tags: [Manifests]
+      summary: Upload a manifest
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [manifest, checksum]
+              properties:
+                manifest: { type: string, format: binary, description: Dispatch data file. }
+                checksum: { type: string, format: binary, description: Separate checksum file. }
+      responses:
+        '202':
+          description: Upload accepted for validation.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [jobId, status]
+                properties:
+                  jobId: { type: string }
+                  status: { type: string, enum: [queued, validating] }
+  /legacy/parcels/{parcelId}:
+    get:
+      operationId: getLegacyParcel
+      tags: [Legacy]
+      summary: Get a parcel through the old route
+      deprecated: true
+      x-docs-availability: { phase: limited }
+      parameters:
+        - name: parcelId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Parcel found. Use the current lookup route for new integrations.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Parcel' }
+webhooks:
+  parcel.delivered:
+    post:
+      operationId: parcelDelivered
+      tags: [Parcels]
+      summary: Parcel delivered event
+      description: The service sends this event to the receiver's webhook URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DeliveryEvent' }
+            examples:
+              doorstep:
+                summary: Delivered at doorstep
+                value: { eventId: evt_demo_001, parcelId: pcl_demo_001, occurredAt: '2026-01-02T10:15:00Z', outcome: delivered, proof: { kind: photo, url: 'https://media.cedar-parcel.example/proof/demo.jpg' } }
+      responses:
+        '204': { description: Receiver accepted the event. }
+components:
+  securitySchemes:
+    ServiceBearer: { type: http, scheme: bearer, bearerFormat: JWT, description: Short-lived service token. }
+    ParcelKey: { type: apiKey, in: header, name: X-Parcel-Key, description: Long-lived account key. }
+    ApplicationKey: { type: apiKey, in: header, name: X-Application-Key, description: Enrollment-only key. }
+  schemas:
+    Address:
+      type: object
+      required: [line1, city, region, postalCode]
+      properties:
+        line1: { type: string, description: Street and number. }
+        line2: { type: [string, 'null'], description: 'Additional address line, if present.' }
+        city: { type: string }
+        region: { type: string }
+        postalCode: { type: string }
+    Contact:
+      type: object
+      required: [name, email]
+      properties:
+        name: { type: string }
+        email: { type: string, format: email }
+        phone: { type: [string, 'null'] }
+    Organization:
+      type: object
+      required: [displayName, address]
+      properties:
+        displayName: { type: string, description: Name shown on parcel labels. }
+        address: { $ref: '#/components/schemas/Address' }
+        registrationCode: { type: [string, 'null'], description: Optional local registration code. }
+    PickupWindow:
+      type: object
+      required: [day, opensAt, closesAt]
+      properties:
+        day: { type: string, enum: [monday, tuesday, wednesday, thursday, friday] }
+        opensAt: { type: string, description: Local time in HH:mm format. }
+        closesAt: { type: string, description: Local time in HH:mm format. }
+    TemperatureRange:
+      type: object
+      required: [minimumCelsius, maximumCelsius]
+      properties:
+        minimumCelsius: { type: number }
+        maximumCelsius: { type: number }
+    EnrollmentBase:
+      type: object
+      required: [program, organization, contact]
+      properties:
+        program: { type: string, enum: [local, chilled, bulk, combined], description: Selects the enrollment shape. }
+        organization: { $ref: '#/components/schemas/Organization' }
+        contact: { $ref: '#/components/schemas/Contact' }
+        externalReference: { type: string, description: An optional identifier from the caller. }
+        notes: { type: [string, 'null'], description: 'Additional context, or null when unknown.' }
+    LocalEnrollment:
+      type: object
+      required: [program, organization, contact, pickupWindows]
+      properties:
+        program: { type: string, const: local }
+        organization: { $ref: '#/components/schemas/Organization' }
+        contact: { $ref: '#/components/schemas/Contact' }
+        pickupWindows: { type: array, description: The windows when parcels can be collected., items: { $ref: '#/components/schemas/PickupWindow' } }
+        fragileHandling: { type: boolean, default: false }
+        notes: { type: [string, 'null'] }
+    ChilledEnrollment:
+      type: object
+      required: [program, organization, contact, temperatureRange]
+      properties:
+        program: { type: string, const: chilled }
+        organization: { $ref: '#/components/schemas/Organization' }
+        contact: { $ref: '#/components/schemas/Contact' }
+        temperatureRange: { $ref: '#/components/schemas/TemperatureRange' }
+        handlingNotes: { type: string, description: Instructions printed for handlers. }
+        sensorRequired: { type: boolean, default: true }
+    BulkEnrollment:
+      type: object
+      required: [program, organization, contact, monthlyParcelEstimate, manifestFormat]
+      properties:
+        program: { type: string, const: bulk }
+        organization: { $ref: '#/components/schemas/Organization' }
+        contact: { $ref: '#/components/schemas/Contact' }
+        monthlyParcelEstimate: { type: integer, exclusiveMinimum: 0, examples: [8000, 12000] }
+        manifestFormat: { type: string, enum: [csv, json] }
+        callbackUrl: { type: [string, 'null'], format: uri }
+        customMetadata: true
+    CombinedEnrollment:
+      type: object
+      required: [program, organization, contact, pickupWindows, temperatureRange, monthlyParcelEstimate, manifestFormat]
+      properties:
+        program: { type: string, const: combined }
+        organization: { $ref: '#/components/schemas/Organization' }
+        contact: { $ref: '#/components/schemas/Contact' }
+        pickupWindows: { type: array, items: { $ref: '#/components/schemas/PickupWindow' } }
+        temperatureRange: { $ref: '#/components/schemas/TemperatureRange' }
+        monthlyParcelEstimate: { type: integer, minimum: 1 }
+        manifestFormat: { type: string, enum: [csv, json] }
+        callbackUrl: { type: [string, 'null'], format: uri }
+    CreateEnrollment:
+      oneOf:
+        - { title: Local pickup, description: A shop with ordinary pickup windows., $ref: '#/components/schemas/LocalEnrollment' }
+        - { title: Chilled goods, description: Requires a temperature range and handling instructions., $ref: '#/components/schemas/ChilledEnrollment' }
+        - { title: Bulk dispatch, description: Requires an estimated volume and manifest format., $ref: '#/components/schemas/BulkEnrollment' }
+        - { title: Combined program, description: 'Supplies pickup, temperature, and volume details.', $ref: '#/components/schemas/CombinedEnrollment' }
+    EnrollmentReceipt:
+      type: object
+      required: [enrollmentId, status, warnings, approvedAt]
+      properties:
+        enrollmentId: { type: string }
+        status: { type: string, enum: [pending, approved, rejected] }
+        warnings: { type: array, items: { type: string } }
+        approvedAt: { type: [string, 'null'], format: date-time, description: Always present; null until approved. }
+    ExportFormat:
+      type: string
+      description: Return a file instead of JSON when specified.
+      enum: [csv, xlsx]
+    Recipient:
+      type: object
+      required: [city, postalCode]
+      properties:
+        city: { type: string }
+        postalCode: { type: string }
+    Parcel:
+      type: object
+      required: [parcelId, status, declaredValue, recipient]
+      properties:
+        parcelId: { type: string }
+        status: { type: string, enum: [label_created, in_transit, delivered, exception] }
+        declaredValue: { type: number, minimum: 0, multipleOf: 0.01, description: 'Value in currency units, to the nearest cent.' }
+        recipient: { $ref: '#/components/schemas/Recipient' }
+        events:
+          type: array
+          description: Tracking history in chronological order.
+          items:
+            type: object
+            required: [kind, at]
+            properties:
+              kind: { type: string, enum: [pickup, scan, delivery] }
+              at: { type: string, format: date-time }
+              details: { type: [string, 'null'] }
+    ParcelPage:
+      type: object
+      minProperties: 3
+      maxProperties: 3
+      additionalProperties: false
+      required: [records, totalRecords, nextCursor]
+      properties:
+        records: { type: array, uniqueItems: true, items: { $ref: '#/components/schemas/Parcel' } }
+        totalRecords: { type: integer, minimum: 0 }
+        nextCursor: { type: [string, 'null'], description: Always present; null on the last page. }
+    DeliveryEvent:
+      type: object
+      required: [eventId, parcelId, occurredAt, outcome, proof]
+      properties:
+        eventId: { type: string }
+        parcelId: { type: string }
+        occurredAt: { type: string, format: date-time }
+        outcome: { type: string, enum: [delivered, returned] }
+        proof:
+          oneOf:
+            - { title: Photo proof, type: object, required: [kind, url], properties: { kind: { type: string, const: photo }, url: { type: string, format: uri } } }
+            - { title: Signature proof, type: object, required: [kind, signedBy], properties: { kind: { type: string, const: signature }, signedBy: { type: string } } }
+    Problem:
+      type: object
+      required: [type, title, status]
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }

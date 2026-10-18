@@ -1,0 +1,9 @@
+fields:
+  agent.intent:
+    type: string
+    description: The reader task this page helps an agent complete.
+    public: true
+  editorial.reviewNote:
+    type: string
+    description: Internal editorial note kept out of Markdown metadata.
+    public: false

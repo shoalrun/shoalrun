@@ -1,0 +1,1653 @@
+{
+  "schemaVersion": 1,
+  "site": "docs/docs.config.yaml",
+  "note": "Labeled against the shoalrun docs. `expect` lists alternative pages; a hit on any counts. `expectGroups` marks synthesis questions that need a hit from every group of alternative pages. Kind `none` has no answer in the docs. Expanded benchmark: original 94 CI rows plus 106 additional author-labeled rows checked against the frozen 2026-10-02 corpus. Labels were set before model results. This is not an independently judged held-out evaluation.",
+  "queries": [
+    {
+      "kind": "exact",
+      "query": "$include",
+      "expect": [
+        "guide.configuration",
+        "reference.config"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "outputs.html.search",
+      "expect": [
+        "guide.search",
+        "guide.configuration"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "shoalrun config explain",
+      "expect": [
+        "guide.configuration",
+        "reference.cli"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "Accept: text/markdown",
+      "expect": [
+        "guide.content-negotiation"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "llms.txt",
+      "expect": [
+        "guide.agent-friendliness",
+        "guide.content-negotiation",
+        "guide.output"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "subjectLifecycle",
+      "expect": [
+        "guide.frontmatter",
+        "guide.frontmatter-reference",
+        "guide.markdown-metadata"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "ApiExample",
+      "expect": [
+        "guide.component.api-embeds"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "ApiExample",
+      "variant": "production|current|en",
+      "readerSelection": {
+        "focus": [
+          "write"
+        ]
+      },
+      "expect": [
+        "guide.component.api-embeds"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "site.basePath",
+      "variant": "production|current|en",
+      "readerSelection": {
+        "focus": [
+          "configure"
+        ]
+      },
+      "expect": [
+        "reference.config",
+        "guide.content-negotiation"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "shoalrun audit",
+      "expect": [
+        "guide.audit",
+        "reference.cli"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "deploy:check",
+      "expect": [
+        "guide.deployment-check"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "readerFilters",
+      "expect": [
+        "guide.reader-filters"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "site.origin",
+      "expect": [
+        "guide.seo",
+        "reference.config",
+        "guide.share-images",
+        "guide.release-revisions"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "site.header.links",
+      "expect": [
+        "guide.header",
+        "guide.configuration"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "access.policy",
+      "expect": [
+        "guide.frontmatter",
+        "guide.frontmatter-reference",
+        "guide.configuration",
+        "guide.concepts"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "shoalrun vercel build",
+      "expect": [
+        "guide.vercel",
+        "reference.cli"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "pathPrefix",
+      "expect": [
+        "reference.config",
+        "reference.config-examples",
+        "guide.publications"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "exact",
+      "query": "frontmatter.enforced",
+      "expect": [
+        "guide.frontmatter",
+        "guide.frontmatter-reference",
+        "guide.custom-metadata",
+        "guide.configuration"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "how do I deploy to Vercel",
+      "expect": [
+        "guide.vercel"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "create a new page from a template",
+      "expect": [
+        "guide.add-page",
+        "guide.templates"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "is there a way to do code tutorials with Shoalrun",
+      "expect": [
+        "guide.component.walkthrough"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "change the site colors to match my brand",
+      "expect": [
+        "guide.palettes",
+        "guide.themes",
+        "guide.css"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "show different content in the Markdown version than the HTML page",
+      "expect": [
+        "guide.component.only"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "add an OpenAPI spec to my docs",
+      "expect": [
+        "guide.api-references",
+        "guide.api-generation"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "reuse the same paragraph on several pages",
+      "expect": [
+        "guide.snippets"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "publish docs for more than one version",
+      "expect": [
+        "guide.publications",
+        "guide.release-revisions"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "set the social preview image",
+      "expect": [
+        "guide.share-images",
+        "guide.seo"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "make my docs easy for AI agents to read",
+      "expect": [
+        "guide.agent-friendliness",
+        "guide.output",
+        "guide.agent-skills"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "verify a deployed site is configured correctly",
+      "expect": [
+        "guide.deployment-check"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "let readers switch between views of the page",
+      "expect": [
+        "guide.reader-filters"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "build a landing page",
+      "expect": [
+        "guide.layouts"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "write a changelog",
+      "expect": [
+        "guide.release-notes"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "my page is marked as a draft and will not build",
+      "expect": [
+        "guide.troubleshooting",
+        "guide.add-page"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "hide the search box",
+      "expect": [
+        "guide.search"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "make the site always use dark mode",
+      "expect": [
+        "guide.color-modes"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "use my own fonts",
+      "expect": [
+        "guide.themes"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "add a column of links to the footer",
+      "expect": [
+        "guide.footer"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "put a link to our GitHub repo in the masthead",
+      "expect": [
+        "guide.header"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "my page is not showing up in the built site",
+      "expect": [
+        "guide.troubleshooting"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "two pages have the same route",
+      "expect": [
+        "guide.troubleshooting"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "the site works on my machine but breaks after deploy",
+      "expect": [
+        "guide.troubleshooting",
+        "guide.deployment-check"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "reorder pages in the sidebar",
+      "expect": [
+        "guide.navigation-lifecycle"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "make a help center in several languages",
+      "expect": [
+        "reference.config-examples",
+        "guide.publications"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "add a filter box to a long table",
+      "expect": [
+        "guide.component.table"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "stop the tabs from changing height",
+      "expect": [
+        "guide.component.tabs"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "give one page a custom social image",
+      "expect": [
+        "guide.share-images"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "add my own page template for my team",
+      "expect": [
+        "guide.templates"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "only generate some of the API operations as pages",
+      "expect": [
+        "guide.api-generation"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "update the bundled skills after changing docs",
+      "expect": [
+        "guide.maintain-skills",
+        "guide.agent-skills"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "serve the built site on my machine",
+      "expect": [
+        "reference.cli"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "host the site on my own Node server",
+      "expect": [
+        "guide.publish",
+        "guide.host-adapters"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "find out what the project does not do yet",
+      "expect": [
+        "guide.status"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "the address my social preview images load from",
+      "expect": [
+        "guide.seo",
+        "guide.share-images"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "synthesis",
+      "query": "What can Shoalrun do?",
+      "expectGroups": [
+        [
+          "guide.what-is-shoalrun",
+          "guide.about"
+        ],
+        [
+          "guide.status"
+        ]
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "synthesis",
+      "query": "How do document identity, navigation, and related reading work together?",
+      "expectGroups": [
+        [
+          "guide.concepts",
+          "guide.content-identity"
+        ],
+        [
+          "guide.navigation-lifecycle"
+        ],
+        [
+          "guide.related-reading"
+        ]
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "synthesis",
+      "query": "How do versions and agent-readable output fit together?",
+      "expectGroups": [
+        [
+          "guide.publications"
+        ],
+        [
+          "guide.agent-friendliness",
+          "guide.output"
+        ]
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "synthesis",
+      "query": "How can API examples and recipes help readers complete a goal?",
+      "expectGroups": [
+        [
+          "guide.api-generation",
+          "guide.api-references"
+        ],
+        [
+          "guide.recipes-overview",
+          "guide.recipe-drafts"
+        ]
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "what are stable IDs",
+      "expect": [
+        "guide.content-identity",
+        "reference.glossary"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "how does Shoalrun publish HTML and Markdown from source pages",
+      "expect": [
+        "guide.output",
+        "guide.concepts"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "what is a focused contract",
+      "expect": [
+        "guide.focused-contracts"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "what is a publication channel",
+      "expect": [
+        "guide.publications",
+        "guide.concepts",
+        "reference.glossary"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "what happens to a page marked draft",
+      "expect": [
+        "guide.concepts",
+        "guide.troubleshooting",
+        "guide.add-page"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "what does a hosting adapter have to do",
+      "expect": [
+        "guide.host-adapters"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "what is a snippet variable",
+      "expect": [
+        "guide.snippets"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "concept",
+      "query": "how do agents get exact API details",
+      "expect": [
+        "guide.focused-contracts",
+        "guide.agent-friendliness"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "expandable section that hides details until clicked",
+      "expect": [
+        "guide.component.collapsible"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "numbered steps that highlight code as you scroll",
+      "expect": [
+        "guide.component.walkthrough"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "flowcharts and sequence diagrams from text",
+      "expect": [
+        "guide.component.diagrams"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "highlight a warning or tip in the page",
+      "expect": [
+        "guide.component.callout"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "order and grouping of the sidebar",
+      "expect": [
+        "guide.navigation-lifecycle"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "links in the top bar of every page",
+      "expect": [
+        "guide.header"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "make an endpoint show a Beta badge",
+      "expect": [
+        "guide.navigation-lifecycle",
+        "reference.openapi-extension-mappings",
+        "guide.frontmatter"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "which OpenAPI keywords can't be used",
+      "expect": [
+        "guide.openapi-support"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "list of color and spacing variables I can override",
+      "expect": [
+        "guide.css"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "check that my brand colors are readable",
+      "expect": [
+        "guide.palettes"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "let readers hide sections that don't apply to them",
+      "expect": [
+        "guide.reader-filters"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "typo",
+      "query": "vercell deploymnet",
+      "expect": [
+        "guide.vercel"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "typo",
+      "query": "configration presets",
+      "expect": [
+        "guide.configuration",
+        "reference.config"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "typo",
+      "query": "diagrm mermad",
+      "expect": [
+        "guide.component.diagrams"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "typo",
+      "query": "colour palete contrast",
+      "expect": [
+        "guide.palettes"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "typo",
+      "query": "deploymnet check",
+      "expect": [
+        "guide.deployment-check"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "typo",
+      "query": "frontmater reference",
+      "expect": [
+        "guide.frontmatter-reference",
+        "guide.frontmatter"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "typo",
+      "query": "shoalrun serch command",
+      "expect": [
+        "reference.cli",
+        "guide.search"
+      ],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "configure Kubernetes autoscaling",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "reset my account password",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "how do I train a machine learning model",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "does Shoalrun support GraphQL APIs",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "add Google Analytics to every page",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "migrate from Docusaurus",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "export the documentation as a PDF",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "run Shoalrun inside a Docker container",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "add an edit this page link to every page",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "how much does Shoalrun cost",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "none",
+      "query": "add reader comments to pages",
+      "expect": [],
+      "split": "original"
+    },
+    {
+      "kind": "task",
+      "query": "How do I render a displayed equation with KaTeX?",
+      "expect": [
+        "guide.component.math"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Will mathematical expressions remain readable in the Markdown output?",
+      "expect": [
+        "guide.component.math"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Show a nested project directory with folders initially expanded",
+      "expect": [
+        "guide.component.file-tree"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "How can I link a file in a directory tree to another docs page?",
+      "expect": [
+        "guide.component.file-tree"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Which component presents terms beside their definitions?",
+      "expect": [
+        "guide.component.definition-list"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "I need a glossary-style list rather than a regular two-column table",
+      "expect": [
+        "guide.component.definition-list"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Show the keyboard shortcut Command plus K as separate keys",
+      "expect": [
+        "guide.component.kbd"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Does the keyboard key component accept attributes?",
+      "expect": [
+        "guide.component.kbd"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Display a labeled count of completed items out of a total",
+      "expect": [
+        "guide.component.progress"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Can readers change the progress indicator themselves?",
+      "expect": [
+        "guide.component.progress"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Where does the trail of parent pages at the top come from?",
+      "expect": [
+        "guide.component.breadcrumbs"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Do I write a Breadcrumbs tag in each article?",
+      "expect": [
+        "guide.component.breadcrumbs"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Add a short expandable explanation beside unfamiliar text",
+      "expect": [
+        "guide.component.info-hint"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Which component can show a brief tooltip without hiding essential instructions?",
+      "expect": [
+        "guide.component.info-hint"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Put individually titled steps into cards",
+      "expect": [
+        "guide.component.steps"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "How do I include procedure step headings in the table of contents?",
+      "expect": [
+        "guide.component.steps"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Show a migration plan with the review milestone currently in progress",
+      "expect": [
+        "guide.component.timeline"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Does the timeline count the current milestone as complete?",
+      "expect": [
+        "guide.component.timeline"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Synchronize explanations with changing code examples",
+      "expect": [
+        "guide.component.walkthrough"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "When should I choose a walkthrough instead of ordinary Steps?",
+      "expect": [
+        "guide.component.walkthrough"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Use a custom synchronous syntax highlighter that preserves source whitespace",
+      "expect": [
+        "guide.component.code-blocks"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "How do I add a filename label to a code block?",
+      "expect": [
+        "guide.component.code-blocks"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Present examples in selectable tabs while preserving every example in Markdown",
+      "expect": [
+        "guide.component.tabs"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "How do tab groups render for an agent reading plain text?",
+      "expect": [
+        "guide.component.tabs"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Let readers expand optional supporting details",
+      "expect": [
+        "guide.component.collapsible"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Does collapsed content disappear from the generated Markdown?",
+      "expect": [
+        "guide.component.collapsible"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Add a filter box and sticky column headings to a long Markdown table",
+      "expect": [
+        "guide.component.table"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Where can I find the Table component contract?",
+      "expect": [
+        "guide.component.table"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Embed a Mermaid flowchart in documentation",
+      "expect": [
+        "guide.component.diagrams"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "How are diagrams represented in the Markdown twin?",
+      "expect": [
+        "guide.component.diagrams"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Give a screenshot a caption and descriptive alternative text",
+      "expect": [
+        "guide.component.images"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "What image syntax does Shoalrun support?",
+      "expect": [
+        "guide.component.images"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Link to a page using its stable document identifier",
+      "expect": [
+        "guide.component.doc-link"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "How can an internal link survive a page moving to a new URL?",
+      "expect": [
+        "guide.component.doc-link"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Choose related pages explicitly inside the article body",
+      "expect": [
+        "guide.component.related-reading"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "What is the syntax for a RelatedReading block?",
+      "expect": [
+        "guide.component.related-reading"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Style a prominent link to the next action",
+      "expect": [
+        "guide.component.action-link"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Which component should I use for a button-shaped navigation link?",
+      "expect": [
+        "guide.component.action-link"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Label a feature as experimental with a small badge",
+      "expect": [
+        "guide.component.badge"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Where are the supported badge attributes documented?",
+      "expect": [
+        "guide.component.badge"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Connect an agent to local docs without granting a shell tool",
+      "expect": [
+        "guide.mcp"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "How do MCP page reads indicate that a token budget truncated the content?",
+      "expect": [
+        "guide.mcp"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Prepare an evaluation report without running an agent",
+      "expect": [
+        "guide.evals"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Does the documentation build automatically execute and grade evaluation tasks?",
+      "expect": [
+        "guide.evals"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Generate reviewed answers in advance for frequent questions",
+      "expect": [
+        "guide.prepared-answers"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Does serving a stored answer still call an embedding provider?",
+      "expect": [
+        "guide.prepared-answers"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Review an agent's proposed page edit before writing it",
+      "expect": [
+        "guide.authoring-agent"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Does docs draft --apply use the candidate I already reviewed?",
+      "expect": [
+        "guide.authoring-agent"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Publish one operation's contract while keeping the full specification internal",
+      "expect": [
+        "guide.focused-contracts"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Do focused OpenAPI contracts preserve vendor extension keys?",
+      "expect": [
+        "guide.focused-contracts"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Offer a link from stable docs to the matching page on a separate next site",
+      "expect": [
+        "guide.release-revisions"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Where does a build record the Git revision selected by deployment?",
+      "expect": [
+        "guide.release-revisions"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "What happens to a large code block when passages are split?",
+      "expect": [
+        "guide.passage-index"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Does an ordinary site build call an embedding service?",
+      "expect": [
+        "guide.passage-index"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Copy generated docs into another site's output without overwriting its files",
+      "expect": [
+        "guide.host-adapters"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Which HTTP headers must an adapter apply to generated SVG files?",
+      "expect": [
+        "guide.host-adapters"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Can reader views protect confidential sections from agents?",
+      "expect": [
+        "guide.reader-filters"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Does published Markdown include sections hidden by a reader's chosen view?",
+      "expect": [
+        "guide.reader-filters"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Trace which included config file supplied a setting",
+      "expect": [
+        "guide.configuration"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "task",
+      "query": "Where are the order of config merges and preset overrides explained?",
+      "expect": [
+        "guide.configuration"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Add an organization-specific frontmatter field with a site-wide default",
+      "expect": [
+        "guide.custom-metadata"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "When metadata defaults merge, do arrays concatenate or replace?",
+      "expect": [
+        "guide.custom-metadata"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Find the definitions of the built-in frontmatter fields",
+      "expect": [
+        "guide.frontmatter-reference"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Which frontmatter controls whether a page is draft or published?",
+      "expect": [
+        "guide.frontmatter-reference"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Keep relationships stable after changing a page's slug",
+      "expect": [
+        "guide.content-identity"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "How are a document's identity and its public address different?",
+      "expect": [
+        "guide.content-identity"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Split a large navigation menu into included YAML files",
+      "expect": [
+        "guide.navigation-lifecycle"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Do navigation search terms affect the site-wide search index?",
+      "expect": [
+        "guide.navigation-lifecycle"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Materialize reference pages from registered API operations",
+      "expect": [
+        "guide.api-generation"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "How do generated API pages map back to source operations?",
+      "expect": [
+        "guide.api-generation"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Which OpenAPI versions and schema features can Shoalrun read?",
+      "expect": [
+        "guide.openapi-support"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "paraphrase",
+      "query": "Are remote API specifications fetched during compilation?",
+      "expect": [
+        "guide.openapi-support"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Check whether a chat answer is supported by documentation",
+      "expect": [
+        "guide.chat-checks"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Where are chat regression checks documented?",
+      "expect": [
+        "guide.chat-checks"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "How does chat retrieve evidence before producing an answer?",
+      "expect": [
+        "guide.retrieval-chat"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Where can I read about the retrieval and answer pipeline?",
+      "expect": [
+        "guide.retrieval-chat"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Host the optional chat endpoint beside a static docs site",
+      "expect": [
+        "guide.host-chat"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Where are the deployment requirements for the chat service?",
+      "expect": [
+        "guide.host-chat"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Update shared content once and include it in several articles",
+      "expect": [
+        "guide.snippets"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "How do I insert a reusable snippet into a page?",
+      "expect": [
+        "guide.snippets"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Read publication and lifecycle details from a page's Markdown metadata",
+      "expect": [
+        "guide.markdown-metadata"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Where are the metadata fields in generated Markdown documented?",
+      "expect": [
+        "guide.markdown-metadata"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "Find the machine-readable document manifest for an agent",
+      "expect": [
+        "guide.agent-discovery"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "concept",
+      "query": "How does an agent discover available documentation pages?",
+      "expect": [
+        "guide.agent-discovery"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Check broken references and documentation contracts before shipping",
+      "expect": [
+        "guide.audit"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "How do I run an audit on a built docs directory?",
+      "expect": [
+        "guide.audit"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Configure canonical URLs for pages in a published site",
+      "expect": [
+        "guide.seo"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "How does Shoalrun generate a sitemap for search engines?",
+      "expect": [
+        "guide.seo"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Preview a theme before applying it to the docs site",
+      "expect": [
+        "guide.theme-preview"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Where can I compare theme appearances locally?",
+      "expect": [
+        "guide.theme-preview"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Describe a repeatable workflow using recipes and ingredients",
+      "expect": [
+        "guide.recipes-overview"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "How are recipes different from the smaller ingredients they use?",
+      "expect": [
+        "guide.recipes-overview"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Draft a recipe workflow before treating it as ready to use",
+      "expect": [
+        "guide.recipe-drafts"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Where is the recipe draft process explained?",
+      "expect": [
+        "guide.recipe-drafts"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "Keep agent skills aligned with changing documentation",
+      "expect": [
+        "guide.maintain-skills"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "mixed",
+      "query": "How should a documentation project's skills be maintained over time?",
+      "expect": [
+        "guide.maintain-skills"
+      ],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "What is the current account balance for customer acct_83920?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "What was the production request error rate at 09:13 UTC today?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "What is the private signing key for our billing webhook?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "Which warehouse currently holds parcel SHIP-987654?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "What is the weather forecast for Kyoto tomorrow?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "Who won the 2026 World Series?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "Give the latest exchange rate from euros to yen",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "What is the password for user marina@example.net?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "How many paid subscribers does my organization have today?",
+      "expect": [],
+      "split": "additional"
+    },
+    {
+      "kind": "none",
+      "query": "What is the tracking status of enrollment ENROLL-77319?",
+      "expect": [],
+      "split": "additional"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+# One site in English and German, with a theme, a shared snippet,
+# and a custom callout type. English is the default language, so its
+# pages have no prefix; German pages live under /de.
+schemaVersion: 1
+
+site:
+  title: Tidewater help center
+  header:
+    links:
+      - { label: Status, href: "https://status.example.com" }
+      - { label: Contact us, href: "mailto:help@example.com", style: button }
+
+theme:
+  preset: reef
+  palette: harbor
+  mode: system        # follows the reader's setting and shows a switch
+
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }              # English
+    - { channel: production, version: current, language: de }  # German
+
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+
+# Values every page can use in snippets.
+variables:
+  product: Tidewater
+  supportHours: 24
+
+snippets:
+  support.contact:
+    file: ./snippets/contact.mdx
+    variables:
+      product: { type: string, required: true }
+      supportHours: { type: number, required: true }
+
+callouts:
+  types:
+    privacy:
+      label: Privacy
+      tone: important
+      icon: shield-check
+
+navigation:
+  - id: home
+    doc: guide.home
+  - id: account
+    label: Account
+    items:
+      - id: reset-password
+        doc: guide.reset-password

@@ -1,0 +1,25 @@
+# Changelog
+
+Navigation section ID: changelog-tab. Publication: production/current/en.
+
+[All sections and published pages](https://www.shoalrun.com/llms.min.txt). This index covers this section only; shared and unlisted pages remain in the global index. Reader views do not remove pages from this index.
+
+- [Agent discovery, verified Markdown, and incremental sync](https://www.shoalrun.com/changelog/2026-10-14-agent-readiness.md) — ID: change.agent-readiness. Find the right page with less context, verify its contents, and fetch only what changed.
+
+- [Agent reading and evaluation](https://www.shoalrun.com/changelog/2026-10-15-evaluation-builds.md) — ID: change.evaluation-builds. Smaller Markdown reads, clearer lifecycle and change guidance, and exact-output evaluation comparisons.
+
+- [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. Review affected pages, findings, coverage, and freshness beside an exact snapshot preview.
+
+- [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. Reviewed agent drafts, improved search results, and better context for documentation answers.
+
+- [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. Discover project context and validate working-tree edits in a separate capture.
+
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. Notable changes to Shoalrun's compiler, CLI, and reader experience.
+
+- [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. Serve documentation tools, measure MCP calls, and build custom components with shared HTML and Markdown content.
+
+- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — ID: change.navigation-layouts. Navigation sections, reader controls, page layouts, and optional browser interaction analytics.
+
+- [Search results and tooltips](https://www.shoalrun.com/changelog/2026-10-18-search-and-tooltips.md) — ID: change.search-and-tooltips. Improve search results with a prepared index and add separate hover and focus tooltips.
+
+- [Portable working-tree authoring workflow](https://www.shoalrun.com/changelog/working-tree-skill.md) — ID: change.working-tree-skill. Guide existing coding agents through discovery, native editing, validation, and snapshot review.

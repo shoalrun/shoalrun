@@ -1,0 +1,37 @@
+---
+id: ingredient.queue-welcome-email
+title: Queue the welcome email
+summary: Submit the welcome template and save the returned message ID.
+type: ingredient
+slug: /ingredients/queue-welcome-email
+channel: production
+version: current
+language: en
+operations: [notifications.send-email]
+access: { policy: draft }
+workflow:
+  inputs:
+    API_BASE: The demo API base URL set in your terminal.
+  outputs:
+    MESSAGE_ID: The id returned in queued.json; use this exact value for the delivery check.
+  prerequisites:
+    - From the Shoalrun repository root, run `node framework/example-configs/notifications/demo.mjs` in a separate terminal and keep it running. If it is already running, reuse it.
+    - Use a scratch directory for queued.json and delivery.json. These commands replace those files.
+    - Have cURL and Node.js available in your command terminal.
+  check: The POST returns HTTP 202, status is queued, and MESSAGE_ID is nonempty. This confirms acceptance only.
+---
+
+Send the `welcome` template to the demo recipient. The demo stores a simulated message and sends no email.
+
+```sh
+curl --fail-with-body --silent --show-error \
+  --request POST "$API_BASE/messages/email" \
+  --header 'Content-Type: application/json' \
+  --data '{"to":"reader@example.com","template":"welcome","variables":{"firstName":"Avery"}}' \
+  --output queued.json --write-out 'HTTP %{http_code}\n'
+cat queued.json
+MESSAGE_ID=$(node -p "JSON.parse(require('fs').readFileSync('queued.json', 'utf8')).id")
+printf '\nMessage ID: %s\n' "$MESSAGE_ID"
+```
+
+A successful response looks like `{"id":"msg_…","status":"queued"}`. If the POST fails, inspect its HTTP status and response before continuing. Do not reuse a message ID from an earlier attempt.

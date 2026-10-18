@@ -1,0 +1,10 @@
+# Optional layout for npm run api-preview -- <spec> <directory> --all --nav <this-file>
+# Operation IDs below come from the example OpenAPI fixture.
+navigation:
+  - id: featured
+    label: Featured endpoints
+    items:
+      - operation: createPayment
+  - generated: tags
+subjectLifecycle:
+  createPayment: beta

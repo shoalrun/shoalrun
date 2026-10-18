@@ -1,0 +1,171 @@
+---
+# HOW-TO TEMPLATE. Delete every comment line (starting with #) before you publish.
+# Search the file for TODO and resolve every placeholder in double square brackets.
+# A page with a placeholder left cannot be published.
+#
+# Scaffold filled in id, title, summary, type, slug, channel, version, language, and access from
+# the command line, the file path, and your config. Rewrite title, summary, and slug for the reader.
+# The order below is deliberate: identity, then publication, then card, then optional fields,
+# then the publishing switch last.
+
+# Stable identity. Links, cards, navigation, and relationships use it, so it can outlive
+# a renamed file or a changed URL. Scaffold derived it from the file path. Shorten it if you like,
+# to lowercase words separated by dots or hyphens, such as how-to.track-parcel.
+# Never change it after publishing.
+id: how-to.example
+
+# The page heading and the browser tab title. Start with a verb that names the task:
+# "Retry a failed enrollment" or "How to retry an enrollment", not "Enrollment retries".
+# Sentence case, 60 characters or fewer, no final period.
+# Scaffold derived a placeholder title from the file name. Rewrite it.
+title: Example
+
+# One sentence of 160 characters or fewer that says what the reader can do after this how-to.
+# It appears on cards, in search results, and as the default link preview text.
+# Good: "Retry a failed enrollment without creating duplicate enrollments."
+# Bad: "This how-to covers enrollment retries." (It says what the page is, not what the reader gets.)
+# Scaffold wrote a draft summary that blocks publishing. Replace it.
+summary: Draft summary
+
+# Optional longer text for search and link previews. Two sentences at most, about 300 characters.
+# Add detail the summary leaves out, such as the prerequisite or the API version. Do not repeat the summary.
+# Delete this field if you have nothing to add.
+description: "[[TODO: Two sentences that add detail to the summary, or delete this field.]]"
+
+# The page kind. Leave this as how-to. Use tutorial for learning, reference for facts, or explanation for understanding.
+type: how-to
+
+# The URL path. Start with /. Use lowercase words separated by hyphens, and keep it stable.
+# Good: /how-tos/retry-enrollment. Avoid dates, version numbers, and redundant page-kind words.
+slug: /how-tos/example
+
+# The publication this page belongs to. It must match an enabled entry in publications.enabled.
+# A page in a channel, version, or language that is not enabled is skipped without a warning.
+channel: production
+version: current
+language: en
+
+# Topic labels that help collections find this page. One to three, lowercase, short.
+# Use labels your team already uses. Do not invent one for a single page.
+tags:
+  - "[[TODO: One lowercase topic label, such as parcels. Add a line for each extra label.]]"
+
+# How this page looks when another page links to it with a card. The icon is a Lucide name in
+# lowercase, such as book-open, package, or terminal. Browse the names at lucide.dev/icons.
+# An unknown name fails the build. To add a short label above the card title, or card text that
+# replaces the summary on cards only, add eyebrow or description: card: { icon: book-open, eyebrow: Parcels how-to }
+card: { icon: book-open }
+
+# ---------------------------------------------------------------------------------------------
+# OPTIONAL FIELDS. Uncomment one only when the rule in its comment applies.
+# ---------------------------------------------------------------------------------------------
+#
+# API TASKS ONLY. Stable operation IDs from your apis config that this how-to uses.
+# Adds a "Related documentation" list here and on each operation's reference page.
+# Scaffold fills this field when you pass --operation. IDs that do not exist fail the build.
+# operations: [parcels.create]
+#
+# API TASKS ONLY. API reference page IDs to link from this how-to and back. How-tos only.
+# Use page IDs (reference.create-parcel), not operation IDs (parcels.create).
+# relatedApiReferences: [reference.create-parcel]
+#
+# Who this page is for, shown as badges. Free text unless your config defines an audience
+# reader view, in which case use its choice IDs. Uncomment only if your site uses audiences.
+# audiences: [developers]
+#
+# Reader-view marks for pages that appear only in some views. Use only IDs from readerFilters.facets.
+# The product, area, and subarea fields set a single choice for a facet with the same name.
+# readerFilters: { audience: [developer] }
+# product: parcels
+# area: reporting
+# subarea: delivery
+#
+# Status of the feature or API this how-to covers: beta, in-development, or deprecated.
+# It shows a badge in navigation and the page header. Leave it out for a stable feature.
+# subjectLifecycle: beta
+#
+# Editorial state of this document, such as needs-review. Free text. It is kept but never shown.
+# lifecycle: needs-review
+#
+# Deepest heading level in the on-page table of contents. Use 0 to hide it, or 2 through 6.
+# The default is 3. Set 2 for a long page with many small subsections.
+# tocDepth: 2
+#
+# Page width. wide drops the "On this page" column for wide tables and diagrams.
+# The default is docs. landing is for home pages, so do not use it on a how-to.
+# layout: wide
+#
+# A local .png or .jpg, 1200 by 630 pixels, that replaces the generated link-preview image.
+# The path is relative to this file.
+# image: ./images/retry-enrollment.png
+#
+# Overrides for the browser title and meta description. Only title and description are supported.
+# seo:
+#   title: Retry a failed enrollment | Example API
+#   description: Retry a parcel with the same idempotency key.
+#
+# Literal text for one output only. Keys: card, pageHeader, search, htmlDescription, socialCard.
+# displayText:
+#   socialCard: Retry a failed enrollment without creating duplicates.
+#
+# A named Markdown-header profile from your config, or a mapping that overrides the header.
+# markdownMetadata: minimal
+#
+# Values for snippets used on this page. They override project variables.
+# variables: { product: Parcels sandbox }
+
+# Publishing control. Scaffold sets draft, which keeps the page out of the site. Change to
+# { policy: public } only after every TODO is resolved and the steps have been run end to end.
+access: { policy: draft }
+---
+
+[[TODO: Write the introduction as one paragraph of 150 words or fewer. Put no heading above it. Say what the reader will be able to do, who this how-to is for, and where it stops. Use two sentences: "This how-to shows you how to [outcome]. It is for [reader role] who [starting situation]." Add one sentence naming what the how-to does not cover and where to go for that. Do not explain background the reader already has, and do not list the sections that follow.]]
+
+## Prerequisites
+
+[[TODO: OPTIONAL SECTION. Keep it only if the reader must have something before step one. Delete this heading and text if they need nothing. List each requirement as one bullet: what it is, how to get it (link by document ID), and how to check they have it. Example: "An API key with the parcels write scope. See the authentication how-to. Run the whoami request to confirm it works." Name exact versions and permissions. Keep each bullet to two sentences. Put one requirement per bullet.]]
+
+- [[TODO: First requirement, with a link and a check.]]
+- [[TODO: API TASKS ONLY, delete otherwise. Name the credential and permission the reader needs, and link to setup. Never paste a real key, token, or secret. Use a placeholder such as YOUR_API_KEY.]]
+- [[TODO: API TASKS ONLY, delete otherwise. State the environment (sandbox or production), the API version, and the publication channel these steps use.]]
+
+## Considerations
+
+[[TODO: OPTIONAL SECTION. Keep it only if the reader should weigh something before starting. Delete this heading and text if nothing applies. Use it for a cost, a side effect, an action that cannot be undone, or a case where a different approach fits better. Write one bullet for each, and start each with the consequence in bold. Example: "**This creates a parcel enrollment.** Use a sandbox key while you test." Link to the better how-to when one exists. Do not repeat requirements from Prerequisites.]]
+
+- [[TODO: First consideration. Bold consequence first, then what to do about it.]]
+- [[TODO: API TASKS ONLY, delete otherwise. State any side effect, cost, rate limit, or call that cannot be reversed.]]
+- [[TODO: When another how-to is a better fit, say so and link to it by document ID.]]
+
+## [[TODO: Name the task with a verb, such as "Retry a failed enrollment"]]
+
+[[TODO: PROCEDURE. Keep the guidance focused on the reader's task. Assume the reader knows the tools; link to tutorials for learning and references for complete option lists. Write one sentence saying what the steps produce. Then number every action. Each step has one action, the exact input (a value, a field, a menu path), and the result the reader should see. Start each step with a verb. Explain a field only if it is not obvious, in one clause. Show input the reader can copy, using safe example values. Use a sequence that follows the reader's work. When real situations require a choice, give a condition and the action for each branch; allow readers to adapt values to their own situation.]]
+
+1. [[TODO: First action. Include the exact input and where to find it.]]
+2. [[TODO: Second action. Show the exact command, request, or menu path. Explain any field that is not obvious.]]
+3. [[TODO: Say what the reader should now see: a status code, a response field, a message, or a screen state.]]
+
+```sh
+[[TODO: API TASKS ONLY, delete this block otherwise. Replace with one runnable request that uses safe values, and show the expected response after it. Use YOUR_API_KEY style placeholders. Never include a real key, token, or customer record.]]
+```
+
+## Check the result
+
+[[TODO: Give one check that proves the task worked, independent of the last step. Name what to look at (a response field, an event, a screen), the exact value that means success, and what a different value means. Two to four sentences.]]
+
+## Troubleshooting
+
+[[TODO: List the two to four failures readers are most likely to hit while doing these steps. Use one bullet for each. Give the symptom in the reader's words or the exact error text. Then give the cause in one sentence, and the recovery step. If the fix is long, link to a troubleshooting page instead of writing it here.]]
+
+- [[TODO: First likely failure. Symptom, cause, recovery.]]
+- [[TODO: API TASKS ONLY, delete otherwise. Say whether retrying is safe, and which key or identifier the reader must reuse.]]
+
+## HTML, Markdown, and agents
+
+[[TODO: OPTIONAL SECTION. Keep it when the page uses a component or describes behavior that differs between HTML and Markdown or affects what an agent reads. Delete this heading and text otherwise. Describe what HTML shows or lets a reader do, what the Markdown twin contains, and what that means for an agent. Name the useful .md page, documents.json entry, or focused contract when relevant. Describe actual behavior in two to five sentences.]]
+
+## Related reading
+
+[[TODO: Add relationship entries for this page to your relationships config, then delete this paragraph. Each entry names this page's ID as "from", the related page's ID as "to", a type, and a reason. Types: prerequisite, next-step, reference, advanced, see-also, not-confused-with. If this page has no natural related pages, delete this whole section.]]
+
+<RelatedReading />

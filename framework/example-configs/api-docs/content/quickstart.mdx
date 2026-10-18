@@ -1,0 +1,52 @@
+---
+id: guide.quickstart
+title: Enroll your first parcel program
+summary: Prepare a local-shop enrollment and understand the receipt.
+slug: /quickstart
+card: { icon: rocket, eyebrow: Start here }
+---
+
+Enroll a local shop by sending its organization, contact, and pickup windows. This guide uses the same request and response examples as the [enrollment reference](doc:reference.create-enrollment).
+
+<Callout type="note" label="Before you begin">
+The Cedar Parcel hosts are fictional. Replace the sandbox URL with your own server before running the command. Enrollment requires an application key; other operations have their own authentication rules.
+</Callout>
+
+## Request example
+
+<ApiExample operation="cedar.createEnrollment" kind="request" mediaType="application/json" example="localShop" />
+
+## Create an enrollment
+
+<Steps>
+<Step title="Prepare the request">
+Save the request JSON above as `enrollment.json`. The `local` program requires the organization, contact, and pickup-window fields shown in the example.
+</Step>
+
+<Step title="Send the enrollment">
+Set `CEDAR_BASE_URL` to your sandbox's base URL and `CEDAR_APPLICATION_KEY` to its enrollment key. The example source uses `https://sandbox.api.cedar-parcel.example/v1`.
+
+```sh
+curl --request POST "$CEDAR_BASE_URL/Enrollments" \
+  --header "X-Application-Key: $CEDAR_APPLICATION_KEY" \
+  --header 'Content-Type: application/json' \
+  --data @enrollment.json
+```
+</Step>
+
+<Step title="Inspect the receipt">
+A successful create request returns HTTP `201`. Save the returned `enrollmentId`. A `pending` status means the enrollment was recorded but review is still pending. `approvedAt` can be null until approval.
+</Step>
+</Steps>
+
+## Response example
+
+<ApiExample operation="cedar.createEnrollment" kind="response" status="201" mediaType="application/json" example="pending" />
+
+## What next?
+
+Open the [enrollment reference](doc:reference.create-enrollment) to compare local, chilled, bulk, and combined programs. Use [parcel search](doc:reference.cedar.listParcels) to explore record filters and download formats. Inspect the [delivery webhook](doc:reference.cedar.parcelDelivered) to see how an event includes photo or signature proof.
+
+## Related reading
+
+<RelatedReading />

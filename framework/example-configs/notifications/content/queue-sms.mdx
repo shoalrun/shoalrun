@@ -1,0 +1,33 @@
+---
+id: recipe.queue-sms
+title: Queue a welcome SMS
+summary: Send the example SMS request and confirm the API queues it.
+type: recipe
+slug: /recipes/queue-sms
+channel: production
+version: current
+language: en
+operations: [notifications.send-sms]
+access: { policy: public }
+---
+
+This recipe uses a synthetic notification API. It shows how to queue an SMS; it does not establish phone delivery.
+
+## Ingredients
+
+1. A phone number and welcome message.
+2. The [SMS request](doc:reference.send-sms).
+3. A check for HTTP 202 and `status: queued`.
+
+## Queue the message
+
+```sh
+curl --request POST \
+  --url 'https://api.example.com/v1/messages/sms' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{"to":"+15555550123","body":"Your account is ready."}'
+```
+
+## Check it worked
+
+The example response is HTTP 202 with `status: queued` and a message ID. A real project must separately confirm delivery to the phone.

@@ -1,0 +1,11 @@
+schemaVersion: 1
+id: recipe.send-welcome-email
+title: Send a welcome email and confirm delivery
+summary: Follow one message from an accepted request through delivery, and inspect a simulated failure.
+slug: /recipes/send-welcome-email
+inputs:
+  API_BASE: 'Set `export API_BASE=http://127.0.0.1:8787/v1` in your command terminal.'
+outcome: 'The final response contains the same message ID you saved and `status: delivered`. You have verified the simulated delivery flow. The local demo sends no email; a real provider reporting delivery still does not prove the recipient read it.'
+ingredients:
+  - ../ingredients/queue-welcome-email.mdx
+  - ../ingredients/check-delivery.mdx

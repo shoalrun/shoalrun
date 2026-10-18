@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "labelOrigin": "Additional authored paraphrases fixed before inspecting their rankings; not independent, held-out, or model evaluations. Evidence reused from the initial fixture.",
+  "publication": {
+    "channel": "production",
+    "version": "current",
+    "language": "en"
+  },
+  "tasks": [
+    {
+      "id": "reader-visibility",
+      "category": "authored-paraphrase",
+      "question": "Hide examples for different readers and understand whether agents still see them.",
+      "query": "How can I hide examples from different readers?",
+      "expectedPageIds": [
+        "guide.reader-filters"
+      ],
+      "evidence": [
+        "ReaderSection",
+        "They do not create separate agent publications"
+      ]
+    },
+    {
+      "id": "reader-selection",
+      "category": "authored-paraphrase",
+      "question": "Hide examples for different readers and understand whether agents still see them.",
+      "query": "Show different examples to UI readers and developers",
+      "expectedPageIds": [
+        "guide.reader-filters"
+      ],
+      "evidence": [
+        "ReaderSection",
+        "They do not create separate agent publications"
+      ]
+    },
+    {
+      "id": "reader-config",
+      "category": "authored-paraphrase",
+      "question": "Implement reader sections and an entry choice, including the required facet configuration. The search names the action; success also requires the prerequisite configuration.",
+      "query": "Configure reader choices and mark sections",
+      "expectedPageIds": [
+        "guide.reader-filters"
+      ],
+      "evidence": [
+        "facets:",
+        "<ReaderSection audience=\"ui\">",
+        "<ReaderChoice audience=\"developer\""
+      ]
+    },
+    {
+      "id": "reader-agent",
+      "category": "authored-paraphrase",
+      "question": "Hide examples for different readers and understand whether agents still see them.",
+      "query": "Do agents see examples hidden by reader views?",
+      "expectedPageIds": [
+        "guide.reader-filters"
+      ],
+      "evidence": [
+        "ReaderSection",
+        "They do not create separate agent publications"
+      ]
+    },
+    {
+      "id": "custom-module",
+      "category": "authored-paraphrase",
+      "question": "Write and configure a custom browser search provider.",
+      "query": "How do custom search modules load their imports?",
+      "expectedPageIds": [
+        "guide.search"
+      ],
+      "evidence": [
+        "export async function search(query, { language, limit, signal })",
+        "module: ./search/hosted.js",
+        "It does not copy files that the module imports with relative paths."
+      ]
+    },
+    {
+      "id": "disable-box",
+      "category": "authored-paraphrase",
+      "question": "Disable the search box and understand the index behavior.",
+      "query": "Remove the search box and its index",
+      "expectedPageIds": [
+        "guide.search"
+      ],
+      "evidence": [
+        "provider: none",
+        "This removes both the reader search box and its index"
+      ]
+    },
+    {
+      "id": "split-navigation",
+      "category": "authored-paraphrase",
+      "question": "Split navigation into files while keeping include paths correct.",
+      "query": "Split navigation menus into separate files",
+      "expectedPageIds": [
+        "guide.navigation-lifecycle"
+      ],
+      "evidence": [
+        "$include",
+        "relative to the file"
+      ]
+    },
+    {
+      "id": "lifecycle-status",
+      "category": "authored-paraphrase",
+      "question": "Find the allowed lifecycle statuses and how OpenAPI deprecation interacts with them.",
+      "query": "Which lifecycle labels can mark a deprecated API?",
+      "expectedPageIds": [
+        "guide.navigation-lifecycle"
+      ],
+      "evidence": [
+        "in-development",
+        "deprecated: true",
+        "cannot be overridden"
+      ]
+    },
+    {
+      "id": "copy-failure",
+      "category": "authored-paraphrase",
+      "question": "Copy the full page Markdown and recover when clipboard access fails.",
+      "query": "Copy Markdown when clipboard access fails",
+      "expectedPageIds": [
+        "guide.agent-discovery"
+      ],
+      "evidence": [
+        "including metadata and all reader-labeled sections",
+        "If fetching or clipboard access fails"
+      ]
+    },
+    {
+      "id": "mcp-limits",
+      "category": "authored-paraphrase",
+      "question": "Configure the local MCP client and explain the token budget limits.",
+      "query": "Set up an MCP client and check token limits",
+      "expectedPageIds": [
+        "guide.mcp"
+      ],
+      "evidence": [
+        "/absolute/path/to/shoalrun/framework/dist/cli.js",
+        "cl100k_base",
+        "256 through 100000"
+      ]
+    }
+  ]
+}

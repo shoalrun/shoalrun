@@ -1,0 +1,138 @@
+[
+  {
+    "id": "flow",
+    "title": "Connected steps",
+    "summary": "Connect the stages of a documentation build.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nsource: Source files\nbuild: Build documentation\nsite: Published site\nsource -> build: compile\nbuild -> site: publish",
+    "width": 640
+  },
+  {
+    "id": "decision",
+    "title": "Decision flow",
+    "summary": "Show approval and revision paths.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: down\ndraft: Draft guide\nreview: Ready to publish? { shape: diamond }\npublish: Publish guide\nrevise: Revise guide\ndraft -> review\nreview -> publish: yes\nreview -> revise: no\nrevise -> draft",
+    "width": 480
+  },
+  {
+    "id": "connections",
+    "title": "Connection styles",
+    "summary": "Distinguish directed, two-way, and dashed relationships.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nwriter: Writer\nreviewer: Reviewer\narchive: Archive { shape: cylinder }\nwriter <-> reviewer: discuss\nreviewer -> archive: approved copy\nwriter -> archive: reference { style.stroke-dash: 4 }",
+    "width": 640
+  },
+  {
+    "id": "containers",
+    "title": "Nested containers",
+    "summary": "Group a site and its supporting services.",
+    "layout": "elk",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nproject: Documentation project {\n content: Content files\n config: Configuration\n}\nsite: Published site {\n html: HTML pages\n markdown: Markdown pages\n}\nproject.content -> site.html\nproject.content -> site.markdown\nproject.config -> site",
+    "width": 640
+  },
+  {
+    "id": "architecture",
+    "title": "Service architecture",
+    "summary": "Connect readers, a documentation endpoint, and stored content.",
+    "layout": "tala",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\nreader: Reader { shape: person }\nsite: Documentation site\nmcp: MCP endpoint\ncontent: Published content { shape: cylinder }\nreader -> site: browse\nreader -> mcp: read with tools\nsite -> content\nmcp -> content",
+    "width": 640
+  },
+  {
+    "id": "tables",
+    "title": "SQL tables",
+    "summary": "Show columns, key constraints, and a foreign-key relationship.",
+    "layout": "elk",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\npages: Pages {\n shape: sql_table\n id: text { constraint: primary_key }\n title: text\n}\nsections: Sections {\n shape: sql_table\n id: text { constraint: primary_key }\n page_id: text { constraint: foreign_key }\n heading: text\n}\nsections.page_id -> pages.id",
+    "width": 500
+  },
+  {
+    "id": "uml",
+    "title": "UML classes",
+    "summary": "Describe a page class and its section class.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nPage: {\n shape: class\n title: string\n slug: string\n render(): HTML\n}\nSection: {\n shape: class\n heading: string\n text: string\n}\nPage -> Section: contains",
+    "width": 640
+  },
+  {
+    "id": "sequence",
+    "title": "Sequence diagram",
+    "summary": "Read requests and responses in their declared order.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\nshape: sequence_diagram\nagent: Agent\nserver: MCP server\nindex: Published index\nagent -> server: Search documentation\nserver -> index: Find matching pages\nindex -> server: Page IDs\nserver -> agent: Read instruction\nagent -> server: Read selected page\nserver -> agent: Markdown and citation",
+    "width": 540
+  },
+  {
+    "id": "grid",
+    "title": "Grid layout",
+    "summary": "Arrange related topics in a fixed number of columns.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ngrid-columns: 3\nstart: Start\nconfigure: Configure\nauthor: Author\npublish: Publish\nmeasure: Measure\nmaintain: Maintain",
+    "width": 480
+  },
+  {
+    "id": "styling",
+    "title": "Reusable styles",
+    "summary": "Apply a shared style with explicit contrasting text and fill colors.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nclasses: {\n step: {\n  style.fill: \"#e9f3ef\"\n  style.font-color: \"#16332e\"\n  style.stroke: \"#52706a\"\n  style.border-radius: 8\n }\n}\na: Draft { class: step }\nb: Review { class: step }\nc: Publish { class: step }\na -> b -> c",
+    "width": 560
+  },
+  {
+    "id": "code",
+    "title": "Code block",
+    "summary": "Include a short source-code excerpt as a diagram node.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\nexample: |ts\n  const page = { title: \"Getting started\" };\n  console.log(page.title);\n|",
+    "width": 500
+  },
+  {
+    "id": "layout-tala",
+    "title": "TALA layout",
+    "summary": "Compare the same source using TALA.",
+    "layout": "tala",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nsource: Source\nvalidate: Validate\nhtml: HTML\nmarkdown: Markdown\nsource -> validate\nvalidate -> html\nvalidate -> markdown",
+    "width": 600
+  },
+  {
+    "id": "layout-elk",
+    "title": "ELK layout",
+    "summary": "Compare the same source using ELK.",
+    "layout": "elk",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nsource: Source\nvalidate: Validate\nhtml: HTML\nmarkdown: Markdown\nsource -> validate\nvalidate -> html\nvalidate -> markdown",
+    "width": 540
+  },
+  {
+    "id": "layout-dagre",
+    "title": "Dagre layout",
+    "summary": "Compare the same source using DAGRE.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ndirection: right\nsource: Source\nvalidate: Validate\nhtml: HTML\nmarkdown: Markdown\nsource -> validate\nvalidate -> html\nvalidate -> markdown",
+    "width": 600
+  },
+  {
+    "id": "shapes-1",
+    "title": "D2 shapes 1",
+    "summary": "Compare rectangle, square, page, parallelogram, document, cylinder.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ngrid-columns: 3\nnode0: rectangle { shape: rectangle }\nnode1: square { shape: square }\nnode2: page { shape: page }\nnode3: parallelogram { shape: parallelogram }\nnode4: document { shape: document }\nnode5: cylinder { shape: cylinder }",
+    "width": 580
+  },
+  {
+    "id": "shapes-2",
+    "title": "D2 shapes 2",
+    "summary": "Compare queue, package, step, callout, stored_data, person.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ngrid-columns: 3\nnode0: queue { shape: queue }\nnode1: package { shape: package }\nnode2: step { shape: step }\nnode3: callout { shape: callout }\nnode4: stored_data { shape: stored_data }\nnode5: person { shape: person }",
+    "width": 560
+  },
+  {
+    "id": "shapes-3",
+    "title": "D2 shapes 3",
+    "summary": "Compare diamond, oval, circle, hexagon, cloud, text.",
+    "layout": "dagre",
+    "source": "vars: {\n d2-config: {\n  pad: 16\n }\n}\n\ngrid-columns: 3\nnode0: diamond { shape: diamond }\nnode1: oval { shape: oval }\nnode2: circle { shape: circle }\nnode3: hexagon { shape: hexagon }\nnode4: cloud { shape: cloud }\nnode5: text { shape: text }",
+    "width": 540
+  }
+]

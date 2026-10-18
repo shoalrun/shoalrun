@@ -1,0 +1,53 @@
+/* Masthead tools: site search, color-mode toggle, and configured header links. Themes restyle these through tokens and selectors. */
+/* Form fields need a 3:1 boundary (WCAG 1.4.11); this outranks the base navigation filter rule. */
+.side .nav-search input{border-color:var(--color-field-border)}
+.mast-tools{display:flex;align-items:center;gap:.75rem;margin-left:auto;min-width:0}
+.publication-switcher{position:relative;flex:none}
+.publication-switcher summary{display:flex;align-items:center;gap:.45rem;min-height:2.5rem;padding:.35rem .7rem;border:1px solid var(--color-field-border);border-radius:var(--radius-small);background:var(--color-field-surface);color:var(--color-ink);font-size:.8rem;cursor:pointer;list-style:none}
+.publication-switcher summary::-webkit-details-marker{display:none}
+.publication-switcher summary::after{content:'▾';margin-left:.15rem;color:var(--color-muted)}
+.publication-switcher summary strong{font-weight:650;white-space:nowrap}
+.publication-switcher ul{position:absolute;z-index:30;top:calc(100% + .35rem);right:0;min-width:100%;width:max-content;max-width:min(22rem,calc(100vw - 2rem));max-height:60dvh;overflow:auto;margin:0;padding:.3rem;list-style:none;border:1px solid var(--color-border);border-radius:var(--radius-small);background:var(--color-surface);box-shadow:0 12px 32px -12px #0003}
+.publication-switcher a{display:block;padding:.55rem .7rem;border-radius:var(--radius-small);color:var(--color-text);text-decoration:none;white-space:nowrap}
+.publication-switcher a:hover,.publication-switcher a[aria-current=page]{background:var(--color-nav-active);color:var(--color-nav-active-text)}
+.publication-switcher :is(summary,a):focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.site-search{position:relative;width:clamp(12rem,24vw,20rem)}
+.site-search-label,.site-search-status,.mode-toggle-label{position:absolute;width:1px;height:1px;padding:0;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.site-search input{width:100%;min-height:2.5rem;padding:.45rem 2.2rem .45rem .8rem;border:1px solid var(--color-field-border);border-radius:var(--radius-small);background:var(--color-field-surface);color:var(--color-text);font-size:.85rem;appearance:none}
+.site-search input::placeholder{color:var(--color-muted)}
+.site-search input::-webkit-search-cancel-button{display:none}
+.site-search-key{position:absolute;right:.55rem;top:50%;transform:translateY(-50%);min-width:1.4rem;padding:.05rem .35rem;border:1px solid var(--color-border);border-radius:.3rem;background:var(--color-surface);color:var(--color-muted);font-family:var(--font-code);font-size:.7rem;text-align:center;pointer-events:none}
+.site-search input:focus~.site-search-key{display:none}
+.site-search-results{position:absolute;z-index:20;top:calc(100% + .4rem);right:0;width:min(30rem,calc(100vw - 2rem));max-height:min(28rem,70dvh);overflow:auto;margin:0;padding:.35rem;list-style:none;border:1px solid var(--color-border);border-radius:var(--radius-panel);background:var(--color-surface);box-shadow:0 12px 32px -12px #0003}
+.site-search-results li{margin:0}
+.site-search-results a{display:block;padding:.6rem .75rem;border-radius:var(--radius-small);text-decoration:none;color:var(--color-text)}
+.site-search-results [aria-selected=true] a,.site-search-results a:hover{background:var(--color-nav-active);color:var(--color-nav-active-text)}
+.site-search-results [aria-selected=true] :is(.search-hit-title,.search-hit-section,.search-hit-summary,mark),.site-search-results a:hover :is(.search-hit-title,.search-hit-section,.search-hit-summary,mark){color:inherit}
+.site-search-results [aria-selected=true] mark,.site-search-results a:hover mark{text-decoration:underline;text-underline-offset:.15em}
+.search-hit-title{display:block;font-size:.88rem;font-weight:650;color:var(--color-ink)}
+.search-hit-section{font-weight:500;color:var(--color-muted)}
+.search-hit-summary{display:block;margin-top:.15rem;font-size:.76rem;line-height:1.45;color:var(--color-muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.site-search-results mark{background:none;color:var(--color-emphasis);font-weight:700}
+.site-search-empty{padding:.75rem;font-size:.82rem;color:var(--color-muted)}
+.header-actions{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.header-actions a{display:inline-flex;align-items:center;min-height:2.5rem;padding:.4rem .8rem;border-radius:var(--radius-small);font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap}
+.header-link{color:var(--color-nav-text)}
+.header-link:hover{background:var(--color-nav-hover);color:var(--color-ink)}
+.header-button{border:1px solid var(--color-field-border);color:var(--color-ink);background:var(--color-surface)}
+.header-button:hover{border-color:var(--color-field-border);background:var(--color-nav-hover);color:var(--color-ink)}
+.header-primary{background:var(--color-accent);color:var(--color-accent-contrast,#fff);border:1px solid var(--color-accent)}
+.header-primary:hover{filter:brightness(1.08);color:var(--color-accent-contrast,#fff)}
+.mode-toggle{display:inline-grid;place-items:center;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--color-field-border);border-radius:var(--radius-small);background:transparent;color:var(--color-ink)}
+.mode-toggle:hover{background:var(--color-nav-hover)}
+.mode-toggle svg{width:1.15rem;height:1.15rem}
+.mode-toggle .mode-icon-dark,.mode-toggle[aria-pressed=true] .mode-icon-light{display:none}
+.mode-toggle[aria-pressed=true] .mode-icon-dark{display:block}
+@media(max-width:48rem){
+  .mast-tools{order:3;width:100%;flex-wrap:wrap;margin-left:0}
+  .site-search{flex:1 1 100%;width:auto}
+  .site-search-key{display:none}
+  .header-actions{flex:1 1 100%}
+  .header-actions a{min-height:2.25rem;font-size:.8rem}
+}
+@media(forced-colors:active){.site-search-results [aria-selected=true] a{outline:2px solid Highlight}}
+@media print{.mast-tools{display:none}}

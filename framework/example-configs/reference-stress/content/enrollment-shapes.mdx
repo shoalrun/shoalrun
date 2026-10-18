@@ -1,0 +1,16 @@
+---
+id: guide.enrollment-shapes
+title: Choose an enrollment shape
+summary: Compare the four synthetic request forms before opening their fields.
+slug: /guides/enrollment-shapes
+---
+
+The [Create a parcel enrollment](doc:reference.cedar.createEnrollment) reference presents four `oneOf` alternatives. Read the title and description before expanding a shape's properties. Each branch has different required fields, and several branches reuse the same nested address and contact objects.
+
+This local shop request is an authored OpenAPI example:
+
+<ApiExample operation="cedar.createEnrollment" kind="request" mediaType="application/json" example="localShop" />
+
+## How it works for agents
+
+The Markdown version includes this example and every field of the linked operation. The focused contract keeps the exact `oneOf` structure and required lists.

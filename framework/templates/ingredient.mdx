@@ -1,0 +1,53 @@
+---
+# INGREDIENT TEMPLATE. Delete these comments and resolve every [[TODO: ...]] prompt before using it in a published recipe.
+# Scaffold fills id, title, summary, type, slug, publication, and access from the command and config.
+# An ingredient is one reusable action or check. A recipe combines ingredients for a customer goal.
+
+# Stable identity for this ingredient. Keep it after recipes start using it.
+id: ingredient.example
+
+# Name the action or check, such as "Configure webhook delivery".
+title: Do one reusable step
+
+# One sentence describing what this ingredient contributes to a recipe.
+summary: Draft ingredient for one reusable step.
+
+# Leave this page kind as ingredient.
+type: ingredient
+
+# Stable lowercase URL path before publication prefixes. Start with /.
+slug: /ingredients/example
+
+# These values must match the recipe publication when assembled by `recipe draft`.
+channel: production
+version: current
+language: en
+
+# Optional handoff metadata for `recipe draft`. Names identify values; descriptions
+# and checks are instructions, not executed code. Uncomment and adapt when needed.
+# workflow: { inputs: { parcelId: "Existing parcel ID" }, outputs: { trackingStatus: "Returned tracking status" }, prerequisites: ["Have a parcel lookup key"], check: "The response contains the requested parcel ID." }
+
+# Optional: stable configured API operation IDs used by this ingredient.
+# operations: [notifications.send-email]
+
+# Keep draft access while validating this step and any recipes using it.
+access: { policy: draft }
+---
+
+[[TODO: State what this ingredient contributes and when a recipe needs it.]]
+
+## Inputs
+
+[[TODO: Name the exact values and starting state needed for this step.]]
+
+## Action
+
+[[TODO: Give the exact action, with commands or UI labels readers can follow.]]
+
+## Output
+
+[[TODO: Name the value or state that the next ingredient can use.]]
+
+## Check it worked
+
+[[TODO: Give one observable check for this ingredient. The complete recipe also needs an end-to-end check.]]

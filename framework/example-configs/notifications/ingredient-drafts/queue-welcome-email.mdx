@@ -1,0 +1,48 @@
+---
+id: ingredient.queue-welcome-email
+title: Queue a welcome email
+summary: Send the welcome email request and inspect the queued response.
+type: ingredient
+slug: /ingredients/queue-welcome-email
+channel: production
+version: current
+language: en
+operations:
+  - notifications.send-email
+access:
+  policy: draft
+---
+
+> Generated draft from `apis/notifications.yaml` (21c6fb6cfeb5). Review every instruction before publishing.
+
+Send the welcome email request and inspect the queued response.
+
+## Before you start
+
+[[TODO: State the credentials, tools, and setup needed to run this request. The OpenAPI example does not prove they work.]]
+
+## Send the request
+
+The following cURL command comes from the `welcome` request example for [POST /messages/email](doc:reference.send-email). Check its host, authentication, and values before using it.
+
+```sh
+curl --request POST \
+  --url 'https://api.example.com/v1/messages/email' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{"to":"reader@example.com","template":"welcome","variables":{"firstName":"Avery"}}'
+```
+
+## Expected response
+
+The OpenAPI source gives this example for HTTP 202. It is an example, not a verified live result.
+
+```json
+{
+  "id": "msg_123",
+  "status": "queued"
+}
+```
+
+## Check it worked
+
+[[TODO: Give a concrete check against a real environment, including the value that means success and what to inspect if it fails.]]

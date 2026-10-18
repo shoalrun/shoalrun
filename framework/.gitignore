@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.shoalrun/
+example/dist/
+.theme-shots/

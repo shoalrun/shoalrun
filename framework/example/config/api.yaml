@@ -1,0 +1,13 @@
+payments:
+  publicReview:
+    digest: 1d26534bb92c9804b894435b6668ae42815fcd63e154fde1e7ad8073a03fba99
+  source:
+    kind: file
+    path: ../apis/payments/openapi.yaml
+    publish: true
+  discovery:
+    endpoint: https://api.example.test/v1
+  operations:
+    - id: payments.create
+      sourceOperationId: createPayment
+      reference: reference.create-payment

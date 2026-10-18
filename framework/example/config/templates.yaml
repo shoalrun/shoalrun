@@ -1,0 +1,4 @@
+how-to:
+  type: how-to
+  body: ../templates/how-to.mdx
+  required: [operations]

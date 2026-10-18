@@ -1,0 +1,9 @@
+{
+  "attempts": 4,
+  "baseDelayMs": 500,
+  "maxDelayMs": 30000,
+  "backoff": "exponential",
+  "jitter": "none",
+  "retryableStatuses": [429, 502, 503, 504],
+  "warning": "Retry only idempotent operations, or requests protected by an idempotency key. Honor a server's Retry-After header; it can require a longer wait than this policy."
+}

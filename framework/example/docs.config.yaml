@@ -1,0 +1,10 @@
+schemaVersion: 1
+site: { $include: ./config/site.yaml }
+navigation: { $include: ./config/nav.yaml }
+redirects: { $include: ./config/redirects.yaml }
+apis: { $include: ./config/api.yaml }
+publications: { $include: ./config/publications.yaml }
+frontmatter: { $include: ./config/frontmatter.yaml }
+snippets: { $include: ./config/snippets.yaml }
+templates: { $include: ./config/templates.yaml }
+outputs: { $include: ./config/outputs.yaml }

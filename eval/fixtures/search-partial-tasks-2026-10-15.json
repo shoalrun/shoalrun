@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "labelOrigin": "Authored partial-ranking regression questions fixed before inspecting their rankings. Evidence reused from prior fixtures; not independent or model evaluations.",
+  "publication": {
+    "channel": "production",
+    "version": "current",
+    "language": "en"
+  },
+  "tasks": [
+    {
+      "id": "mcp-install",
+      "category": "partial-ranking",
+      "question": "Configure the local MCP client and explain the token budget limits.",
+      "query": "How can I set up the MCP client and its token budget?",
+      "expectedPageIds": [
+        "guide.mcp"
+      ],
+      "evidence": [
+        "/absolute/path/to/shoalrun/framework/dist/cli.js",
+        "cl100k_base",
+        "256 through 100000"
+      ]
+    },
+    {
+      "id": "mcp-response",
+      "category": "partial-ranking",
+      "question": "Configure the local MCP client and explain the token budget limits.",
+      "query": "Configure an MCP client with a maximum response size",
+      "expectedPageIds": [
+        "guide.mcp"
+      ],
+      "evidence": [
+        "/absolute/path/to/shoalrun/framework/dist/cli.js",
+        "cl100k_base",
+        "256 through 100000"
+      ]
+    },
+    {
+      "id": "mcp-limit",
+      "category": "partial-ranking",
+      "question": "Configure the local MCP client and explain the token budget limits.",
+      "query": "MCP client token limit",
+      "expectedPageIds": [
+        "guide.mcp"
+      ],
+      "evidence": [
+        "/absolute/path/to/shoalrun/framework/dist/cli.js",
+        "cl100k_base",
+        "256 through 100000"
+      ]
+    },
+    {
+      "id": "search-setup",
+      "category": "partial-ranking",
+      "question": "Write and configure a custom browser search provider.",
+      "query": "Set up a custom search provider and check module imports",
+      "expectedPageIds": [
+        "guide.search"
+      ],
+      "evidence": [
+        "export async function search(query, { language, limit, signal })",
+        "module: ./search/hosted.js",
+        "It does not copy files that the module imports with relative paths."
+      ]
+    },
+    {
+      "id": "reader-setup",
+      "category": "partial-ranking",
+      "question": "Implement reader sections and an entry choice, including the required facet configuration. The search names the action; success also requires the prerequisite configuration.",
+      "query": "Set up reader choices and mark sections for an audience",
+      "expectedPageIds": [
+        "guide.reader-filters"
+      ],
+      "evidence": [
+        "facets:",
+        "<ReaderSection audience=\"ui\">",
+        "<ReaderChoice audience=\"developer\""
+      ]
+    },
+    {
+      "id": "nav-check",
+      "category": "partial-ranking",
+      "question": "Split navigation into files while keeping include paths correct.",
+      "query": "Set up navigation in separate files and check include paths",
+      "expectedPageIds": [
+        "guide.navigation-lifecycle"
+      ],
+      "evidence": [
+        "$include",
+        "relative to the file"
+      ]
+    }
+  ]
+}
