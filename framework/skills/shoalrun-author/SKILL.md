@@ -23,9 +23,13 @@ Before editing, capture the current state with `docs baseline --out <new-baselin
 
 Edit ordinary source files and required companions. Choose a page type and reviewed example for the reader's goal. Preserve stable IDs, routes, original `date` and access policy; set `updated` to the actual edit date. For a new page, use `shoalrun scaffold <template> -n <target> --config <config>` and resolve its prompts. Keep it draft until reviewed; snapshot validation renders affected drafts without changing their publication metadata. API materialization and recipe tasks have focused references/skills when needed.
 
+When adapting source material, choose components by reader purpose rather than translating unfamiliar markup into a generic container. Use authored `Fields` for client settings, source-backed `ApiSchema` or operation references for HTTP contracts, and `Steps` for procedures. Check field presence, nullability, defaults, constraints, warnings, and nested relationships against the source in both outputs. Keep configuration settings distinct from API request fields, and prefer source-backed contract data to a second handwritten copy.
+
 ## Validate, preview and obtain review
 
 Run `docs validate --baseline <baseline> --config <config>`, or declare existing changes with repeated `--file`/`--id` selectors when no task baseline exists. Read status, findings, coverage and skipped/unavailable checks. Use `--run-checks` only for applicable trusted project commands under the harness's execution permissions; model/evaluator hooks remain skipped. Fix actionable errors and validate again without weakening policy. A failed, incomplete, unavailable or stale result is not a pass.
+
+Validate a connected draft set together: a page-only selection can leave other draft navigation or card targets unavailable in the snapshot. Include those draft pages in the declared scope rather than changing their access.
 
 Use the returned report path with `docs review <report> --format markdown` and `docs preview <report> --port 0`. Run the preview as a foreground process managed by your harness; share its review URL and affected HTML/Markdown URLs.
 
