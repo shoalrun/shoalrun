@@ -97,6 +97,19 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
   let pluginDepth = 0;
   let tabsIndex = 0;
   let walkthroughIndex = 0;
+  const imageReferences = new Map<string, Set<string>>();
+  const collectImageReferences = (value: unknown, file: string) => {
+    const references = new Set<string>();
+    const visit = (node: unknown) => {
+      if (!isMdxInputNode(node)) return;
+      if (node.type === 'imageReference' && typeof node.identifier === 'string') references.add(node.identifier);
+      node.children?.forEach(visit);
+    };
+    visit(value);
+    imageReferences.set(file, references);
+  };
+  collectImageReferences(tree, current.file);
+  for (const snippet of snippets.values()) collectImageReferences(snippet.tree, snippet.file);
   function attr(node: { name?: string; attributes?: MdxAttribute[] }, key: string): string {
     const item = node.attributes?.find(x => x.name === key);
     if (!item || typeof item.value !== 'string') throw new Error(`${current.file}: <${node.name}> needs literal ${key}`);
@@ -220,7 +233,7 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
         if (display && node.type !== 'mdxJsxFlowElement') throw new Error(`${sourceFile}: display <Math> must be a block`);
         try { katex.renderToString(expression, { output: 'mathml', displayMode: !!display, throwOnError: true, strict: 'error', trust: false, maxExpand: 1000 }); }
         catch (error) { throw new Error(`${sourceFile}: invalid <Math> expression: ${(error as Error).message}`); }
-        return { type: 'docMath', expression, display: !!display };
+        return { type: 'docMath', expression, display: !!display, block: node.type === 'mdxJsxFlowElement' };
       }
       if (node.name === 'ActionLink' || node.name === 'Button') {
         const attributes = node.attributes ?? [];
@@ -530,7 +543,21 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
       if (!target) throw new Error(`${sourceFile}: unknown document link ${node.url}`);
       return { ...node, url: target.route, children: childrenOf(node.children ?? [], scope, stack, sourceFile) };
     }
-    if (stack.length && ['link', 'image'].includes(node.type) && typeof node.url === 'string' && !/^(?:\/|#|[a-z][a-z0-9+.-]*:)/i.test(node.url)) throw new Error(`${sourceFile}: snippet links and assets need absolute or doc: URLs`);
+    const markdownImage = node.type === 'image' || (node.type === 'definition' && typeof node.identifier === 'string' && imageReferences.get(sourceFile)?.has(node.identifier));
+    if (stack.length && (node.type === 'link' || markdownImage) && typeof node.url === 'string' && !/^(?:\/|#|[a-z][a-z0-9+.-]*:)/i.test(node.url)) throw new Error(`${sourceFile}: snippet links and assets need absolute or doc: URLs`);
+    if (markdownImage && typeof node.url === 'string' && !/^(?:\/|#|[a-z][a-z0-9+.-]*:)/i.test(node.url)) {
+      const [, pathname, suffix = ''] = /^([^?#]*)([?#].*)?$/.exec(node.url)!;
+      let localPath: string;
+      try { localPath = decodeURIComponent(pathname); }
+      catch { throw new Error(`${sourceFile}: invalid local image URL ${node.url}`); }
+      if (!/\.(?:png|jpe?g|webp|svg|gif|avif)$/i.test(localPath)) throw new Error(`${sourceFile}: local Markdown image must be a .png, .jpg, .jpeg, .webp, .svg, .gif, or .avif file`);
+      const file = path.resolve(path.dirname(sourceFile), localPath);
+      if (!existsSync(file)) throw new Error(`${sourceFile}: image not found: ${file}`);
+      const extension = path.extname(file);
+      const stem = path.basename(file, extension).replace(/[^A-Za-z0-9._-]/g, '-');
+      const identity = createHash('sha256').update(path.relative(path.dirname(sourceFile), file).split(path.sep).join('/')).digest('hex').slice(0, 12);
+      return { ...node, url: `/assets/pages${current.route === '/' ? '/index' : current.route}/${stem}-${identity}${extension}${suffix}`, file };
+    }
     if (node.children) {
       const children = childrenOf(node.children, scope, stack, sourceFile);
       if (node.type === 'paragraph' && children.length === 1 && children[0].type === 'blockquote') return children[0];

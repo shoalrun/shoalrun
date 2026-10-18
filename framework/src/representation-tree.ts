@@ -100,10 +100,14 @@ export function publicTree(tree: any, representation: 'html' | 'markdown', docum
       return [element('div', { className: ['doc-progress'] }, [element('p', { className: ['doc-progress-label'] }, [text(summary)]), element('progress', { value: node.value, max: node.max, 'aria-label': node.label }, [text(`${node.value} of ${node.max}`)])])];
     }
     if (node.type === 'docMath') {
-      if (representation === 'markdown') return [node.display ? { type: 'code', lang: 'latex', value: node.expression } : { type: 'inlineCode', value: node.expression }];
+      if (representation === 'markdown') {
+        const math = node.display ? { type: 'code', lang: 'latex', value: node.expression } : { type: 'inlineCode', value: node.expression };
+        return [node.block && !node.display ? paragraph(math) : math];
+      }
       const marker = `SHOALRUNMATH${createHash('sha256').update(`${node.display}|${node.expression}`).digest('hex').slice(0, 24)}`;
       const markup = katex.renderToString(node.expression, { output: 'mathml', displayMode: node.display, throwOnError: true, strict: 'error', trust: false, maxExpand: 1000 });
-      return [element(node.display ? 'div' : 'span', { className: [node.display ? 'doc-math-display' : 'doc-math-inline'] }, [{ type: 'text', value: marker, data: { mathMarkup: markup } }])];
+      const math = element(node.display ? 'div' : 'span', { className: [node.display ? 'doc-math-display' : 'doc-math-inline'] }, [{ type: 'text', value: marker, data: { mathMarkup: markup } }]);
+      return [node.block && !node.display ? paragraph(math) : math];
     }
     if (node.type === 'docActionLink') {
       const children = node.children.flatMap(walk);

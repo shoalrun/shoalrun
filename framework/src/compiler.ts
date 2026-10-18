@@ -391,21 +391,21 @@ export async function compile(configFile: string, destination?: string, provenan
     }
     return shareImages.enabled ? { route: publicPath(shareRoute(doc.route.slice(basePath.length) || '/')), generated: true } : undefined;
   };
-  // Local Hero and Image assets publish beside their page under /assets/pages.
+  // Local component and Markdown images publish beside their page under /assets/pages.
   const heroImages = new Map<string, string>();
   const walkthroughSources = new Set<string>();
   const collectPageAssets = (value: unknown) => {
     if (!isConfigMapping(value)) return;
     const image = value.image;
-    if (value.type === 'docHero' && isConfigMapping(image) && typeof image.url === 'string') {
+    if (value.type === 'docHero' && isConfigMapping(image) && typeof image.url === 'string' && typeof image.file === 'string') {
       const route = publicPath(image.url);
       image.url = route;
-      if (typeof image.file === 'string') heroImages.set(route, image.file);
+      heroImages.set(route, image.file);
     }
-    if (value.type === 'docImage' && typeof value.url === 'string') {
+    if (['docImage', 'image', 'definition'].includes(String(value.type)) && typeof value.url === 'string' && typeof value.file === 'string') {
       const route = publicPath(value.url);
       value.url = route;
-      if (typeof value.file === 'string') heroImages.set(route, value.file);
+      heroImages.set(route.split(/[?#]/)[0], value.file);
     }
     if (value.type === 'docWalkthrough' && Array.isArray(value.sources)) {
       for (const file of value.sources) if (typeof file === 'string') walkthroughSources.add(file);
