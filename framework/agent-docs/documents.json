@@ -1913,8 +1913,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-13",
-      "contentDigest": "a1f2ad801c5e3aded098be9b1d1053d321594e9744885c0dc006982d409071f7",
+      "updated": "2026-10-19",
+      "contentDigest": "3df502d54d5bd4cb0cb210b1a302a459b1a5b63d9ca87893fc343496518ee951",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1959,10 +1959,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 5316,
-      "markdownTokens": 1150,
+      "markdownBytes": 5885,
+      "markdownTokens": 1274,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "a388eff1129309aa4f9fdd602a542f28d0080924e9c0879a0ac93d3705517498"
+      "digest": "3a8773de166e807d61e4931b65fb29f9919ca792804b5762e669bf1ce9c76953"
     },
     {
       "id": "guide.cards",
