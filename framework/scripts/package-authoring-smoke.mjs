@@ -2,7 +2,7 @@
 // installed dependencies; --clean-install installs production dependencies anew.
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { cp, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -79,6 +79,14 @@ console.log(JSON.stringify({ pages: project.entries.length, schemaVersion: proje
   assert.match(await readFile(path.join(installed, 'skills/shoalrun-component-author/SKILL.md'), 'utf8'), /name: shoalrun-component-author/);
   const cli = path.join(installed, manifest.bin.shoalrun);
   const runCli = (args, cwd) => cleanInstall ? run(path.join(consumer, 'node_modules/.bin/shoalrun'), args, cwd) : run(process.execPath, [cli, ...args], cwd);
+  assert.match(runCli(['--help'], consumer), /docs validate/);
+  const skills = JSON.parse(runCli(['skills', 'list', '--json'], consumer)).skills;
+  assert.ok(skills.some(skill => skill.name === 'shoalrun-author'));
+  for (const skill of skills) {
+    assert.ok((await realpath(skill.file)).startsWith(await realpath(installed) + path.sep));
+    const read = JSON.parse(runCli(['skills', 'read', skill.name, '--json'], consumer));
+    assert.equal(read.content, await readFile(skill.file, 'utf8'));
+  }
   for (const starter of ['minimal', 'api-docs']) {
     const project = path.join(consumer, starter);
     // Use the public packaged initializer, rather than a dist implementation import.

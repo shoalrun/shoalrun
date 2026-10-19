@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { cliHelp, docsHelp, skillsHelp, runSkillsCommand } from './cli-discovery.js';
 import { compareDocumentSnapshots } from './document-sync.js';
 import { validateAuthoringGuidance } from './authoring-guidance.js';
 import { resolveAgentDiscovery } from './agent-discovery.js';
@@ -85,7 +86,13 @@ const defaultPort = () => process.env.PORT?.trim() ? Number(process.env.PORT) : 
 
 const [command, subcommand, ...rest] = process.argv.slice(2);
 try {
-  if (command === 'init') {
+  if ((command === undefined || ['--help', '-h', 'help'].includes(command)) && subcommand === undefined) {
+    process.stdout.write(cliHelp);
+  } else if ((command === 'docs' || command === 'skills') && ['--help', '-h', 'help'].includes(subcommand) && !rest.length) {
+    process.stdout.write(command === 'docs' ? docsHelp : skillsHelp);
+  } else if (command === 'skills') {
+    process.stdout.write(await runSkillsCommand([subcommand, ...rest].filter((value): value is string => value !== undefined)));
+  } else if (command === 'init') {
     const args = [subcommand, ...rest].filter((item): item is string => item !== undefined);
     let directory = '.';
     let starter: Starter = 'minimal';

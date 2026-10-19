@@ -28,36 +28,25 @@ npx shoalrun docs read guide.overview --json
 
 The package includes a documentation snapshot matched to this release. Your project’s documentation can change independently of package upgrades. The [live documentation](https://www.shoalrun.com/start) may describe newer changes.
 
-## Develop the framework
+## Package support policy
 
-From this directory:
-
-Install [Vale](https://vale.sh/) 3.20 or newer for the repository's documentation checks and recipe workflow tests.
-
-```sh
-npm ci
-npm test
-npm run demo
-npm run preview
-```
-
-Use Node.js 22.12 or newer. Diagrams render during the build without Chrome. Browser development tests still use Puppeteer. The demo builds `example/dist/`; the preview serves it at `http://127.0.0.1:8765/`. The example APIs are fixtures, not deployed services.
-
-### Package support policy
-
-Version `0.1.0-alpha.1` is a private preview. Configuration and output formats may change; there is no compatibility promise or maintained older release line yet. Production installs do not require Chrome. Browser development checks still need a browser. Release checks include installing the packed artifact into clean projects and exercising both starters, bundled documentation, and diagrams.
-
-`npm run build` compiles TypeScript into `dist/`. Invoke the CLI with `node dist/cli.js <command>`; see the [CLI reference](https://github.com/shoalrun/docs/blob/main/docs/content/cli-reference.mdx). The [compiler guide](https://github.com/shoalrun/docs/blob/main/docs/content/compiler-internals.mdx) explains implementation boundaries.
-
-## Documentation and verification
-
-Validate locally using the root README. Reuse compiled output and run the relevant package, contract and browser checks before pushing.
-
-Public authored content lives in shoalrun/docs. This repository imports an explicitly reviewed offline snapshot; do not edit generated bundle files or fetch latest site content during builds.
+This alpha is a private preview. Configuration and output formats may change; there is no compatibility promise or maintained older release line yet. The installed version is recorded in `@shoalrun/cli/package.json`.
 
 ## Write with your agent
 
-Use your existing coding agent and normal working-tree file tools. Shoalrun supplies templates, documentation reads, project context and isolated snapshot validation. Your agent supplies its model and gathers supporting evidence. Checked edit plans remain an optional existing interface. The portable authoring skill guides this workflow.
+Use your existing coding agent and normal working-tree file tools. Shoalrun supplies templates, documentation reads, project context and isolated snapshot validation. Your agent supplies its model and gathers supporting evidence. Checked edit plans remain an optional existing interface. Discover the packaged skills without searching installation directories:
+
+```sh
+npx shoalrun --help
+npx shoalrun skills list
+npx shoalrun skills read shoalrun-setup
+npx shoalrun skills read shoalrun-author --json
+npx shoalrun docs --help
+```
+
+The list returns skill names, descriptions and absolute `SKILL.md` paths. Read the skill that fits the task: `shoalrun-setup` for a new site, `shoalrun-author` for page edits, and `shoalrun-component-author` for component packages. Ask your agent to read the returned file, or use your agent's skill installation mechanism if it supports one. These commands read guidance; they do not install or activate skills in an agent.
+
+Read the project's own guidance with `docs project --section guidance` and `docs source`. A minimal starter has no owner-specific policy; supply your writing and review requirements rather than treating the bundled framework references as project policy.
 
 ## Project and reference tools
 
@@ -332,6 +321,33 @@ The public library adds `authoringReview(reportFile)`,
 - [Components](https://github.com/shoalrun/docs/blob/main/docs/content/components.mdx), [page metadata](https://github.com/shoalrun/docs/blob/main/docs/content/frontmatter.mdx), and [CSS](https://github.com/shoalrun/docs/blob/main/docs/content/css.mdx).
 - [Add an API](https://github.com/shoalrun/docs/blob/main/docs/content/api-references.mdx), [OpenAPI support and limits](https://github.com/shoalrun/docs/blob/main/docs/content/openapi-support.mdx), and [focused contracts](https://github.com/shoalrun/docs/blob/main/docs/content/focused-contracts.mdx).
 - [Published outputs](https://github.com/shoalrun/docs/blob/main/docs/content/output.mdx), [hosting](https://github.com/shoalrun/docs/blob/main/docs/content/publish.mdx), and [prototype status](https://github.com/shoalrun/docs/blob/main/docs/content/status.mdx).
+
+## Framework contributors
+
+These commands are for a source checkout, not an installed consumer project. Run them from the repository’s `framework/` directory:
+
+Install [Vale](https://vale.sh/) 3.20 or newer for the repository's documentation checks and recipe workflow tests.
+
+```sh
+npm ci
+npm test
+npm run demo
+npm run preview
+```
+
+Use Node.js 22.12 or newer. Diagrams render during the build without Chrome. Browser development tests still use Puppeteer. The demo builds `example/dist/`; the preview serves it at `http://127.0.0.1:8765/`. The example APIs are fixtures, not deployed services.
+
+### Development verification
+
+Production installs do not require Chrome. Browser development checks still need a browser. Release checks include installing the packed artifact into clean projects and exercising both starters, bundled documentation, and diagrams.
+
+`npm run build` compiles TypeScript into `dist/`. Invoke the CLI with `node dist/cli.js <command>`; see the [CLI reference](https://github.com/shoalrun/docs/blob/main/docs/content/cli-reference.mdx). The [compiler guide](https://github.com/shoalrun/docs/blob/main/docs/content/compiler-internals.mdx) explains implementation boundaries.
+
+### Documentation and verification
+
+Validate locally using the root README. Reuse compiled output and run the relevant package, contract and browser checks before pushing.
+
+Public authored content lives in shoalrun/docs. This repository imports an explicitly reviewed offline snapshot; do not edit generated bundle files or fetch latest site content during builds.
 
 ## License
 
