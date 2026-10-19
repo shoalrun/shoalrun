@@ -3,13 +3,14 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "npm --prefix framework test && node --test eval/scripts/*.test.mjs",
-    "test:compiled": "node --test framework/dist/*.test.js framework/scripts/*.test.mjs eval/scripts/*.test.mjs",
+    "test:compiled": "node --test framework/dist/*.test.js framework/scripts/*.test.mjs eval/scripts/*.test.mjs && npm run skills:check",
     "test:authoring-tools": "npm --prefix framework run test:authoring-tools",
     "authoring:package-check": "node framework/scripts/package-authoring-smoke.mjs --clean-install",
     "eval:test": "node --test eval/scripts/*.test.mjs",
     "demo": "npm --prefix framework run demo",
     "docs:lint": "vale framework/README.md framework/example/content",
     "docs:format:test": "node --test framework/scripts/docs-format.test.mjs",
-    "agent-docs:import": "node framework/scripts/import-docs-snapshot.mjs"
+    "agent-docs:import": "node framework/scripts/import-docs-snapshot.mjs",
+    "skills:check": "node framework/scripts/check-skills.mjs framework/skills"
   }
 }

@@ -37,13 +37,14 @@
   "scripts": {
     "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.json",
     "prepack": "npm run build",
-    "test": "npm run build && node --test dist/*.test.js scripts/*.test.mjs",
+    "test": "npm run build && node --test dist/*.test.js scripts/*.test.mjs && npm run skills:check",
     "test:authoring-tools": "npm run build && node --test dist/authoring-guidance.test.js dist/authoring-project.test.js dist/authoring-validation.test.js dist/authoring-review.test.js dist/docs-author.test.js dist/documentation-core.test.js dist/docs-mcp.test.js dist/scaffold-templates.test.js",
     "demo": "npm run build && node dist/cli.js build example/docs.config.yaml example/dist",
     "api-preview": "npm run build && node scripts/preview-api.mjs",
     "deploy:check": "node scripts/check-deployment.mjs",
     "preview": "npm run demo && node preview.mjs",
-    "agent-docs:import": "node scripts/import-docs-snapshot.mjs"
+    "agent-docs:import": "node scripts/import-docs-snapshot.mjs",
+    "skills:check": "node scripts/check-skills.mjs skills"
   },
   "dependencies": {
     "@d2lang/d2": "^0.1.34",

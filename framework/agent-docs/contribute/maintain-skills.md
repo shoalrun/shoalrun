@@ -12,43 +12,59 @@ canonical: /contribute/maintain-skills
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Project updates](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project updates](https://www.shoalrun.com/status.md) > Project > Maintain bundled skills
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Contribute > Maintain bundled skills
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
-Shoalrun's portable skills live in `framework/skills/`. To use them on a site, see [use the bundled agent skills](https://www.shoalrun.com/contribute/agent-skills.md). This page covers changing the workflows shipped with Shoalrun.
+Shoalrun's portable skills live in `framework/skills/` in the framework repository. This page covers changes to the workflows shipped with Shoalrun. To use them in your documentation project, see [use the bundled agent skills](https://www.shoalrun.com/contribute/agent-skills.md).
 
 ## Validate a skill change
 
-Edit the relevant `SKILL.md` and any supporting files in its folder. Keep commands consistent with the [CLI reference](https://www.shoalrun.com/cli.md) and verify the workflow against a temporary project. From the repository root, with [skill-validator](https://github.com/agent-ecosystem/skill-validator) installed, run:
+Edit the relevant `SKILL.md` and supporting files in its folder. Keep commands consistent with the [CLI reference](https://www.shoalrun.com/cli.md). From the framework repository root, prepare the pinned validator dependencies and check every packaged skill:
 
 ```sh
-skill-validator check --strict framework/skills/shoalrun-setup
-skill-validator check --strict framework/skills/shoalrun-author
-skill-validator check --strict framework/skills/shoalrun-recipes
-skill-validator check --strict framework/skills/shoalrun-walkthrough
+python3 -m venv .venv
+.venv/bin/python -m pip install -r framework/scripts/requirements-skills.txt
+export SKILL_VALIDATOR_PYTHON="$PWD/.venv/bin/python"
+npm run skills:check
 ```
 
-Validation checks the skill structure. Review its instructions and execute the affected workflow as well.
+The check uses a pinned copy of OpenAI's skill-creator validator. A missing validator dependency or invalid skill fails the command. It checks skill metadata and unfinished placeholders; it does not prove that the instructions work. Execute the affected workflow in a temporary project and review its results as well. Preserve unrelated edits when testing an editing workflow.
 
-## Refresh the documentation bundle
+## Build and review the documentation export
 
-The CLI's `docs search` and `docs read` commands consult generated files under `framework/agent-docs/`:
+The source documentation lives in the separate `shoalrun/docs` repository. Use its installed framework package. Prepare its Python validator environment as described in that repository's README, then run from the docs repository root:
 
-- `documents.json` maps stable page IDs to publication variants and Markdown paths.
-- `search-index.json` contains searchable page records.
-- The `.md` files contain complete generated pages.
+```sh
+npm run docs:build
+npm run docs:check
+npm run docs:preview
+```
 
-The authored source is `docs/content/`. After changing those sources, run from the repository root:
+Review the changed HTML and Markdown. The checks reuse the existing build, validate the site's skill, and run AFdocs and strict discovery checks. Read the full reports, including findings that do not fail the required checks.
+
+Export the reviewed build from the docs repository root:
 
 ```sh
 npm run agent-docs:build
+```
+
+Commit the reviewed documentation source and record its full Git commit hash before importing the export. Keep the source revision and validation evidence together. Do not hand-edit the generated Markdown.
+
+## Import the reviewed snapshot
+
+The framework's `docs search` and `docs read` commands use `framework/agent-docs/`. The snapshot contains complete Markdown pages, a document manifest, a search index, and provenance identifying the source docs commit.
+
+From the framework repository root, replace the export path and `FULL_DOCS_COMMIT` with the reviewed values:
+
+```sh
+npm run agent-docs:import -- /path/to/docs/agent-docs --source-commit FULL_DOCS_COMMIT
 npm test
 ```
 
-Commit the generated changes with the source changes. The suite compares the bundle with a fresh site build, including its search index and page content.
+The importer verifies export digests and provenance before replacing the bundle. Confirm the changed guide is available through the CLI's `docs read` command. Commit the framework snapshot separately from the docs source, keeping its source revision pinned. Package publication and website deployment remain separate actions.
 
 ## Related reading
 

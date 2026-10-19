@@ -1,6 +1,6 @@
 ---
 name: shoalrun-walkthrough
-description: Turn notes, a tutorial, or a piece of code into a Shoalrun <Walkthrough> that explains code step by step. Use when a user asks for a code walkthrough, a step-by-step code explanation, or to convert an existing guide's numbered code steps into one.
+description: Turn notes, a tutorial, or a piece of code into a Shoalrun Walkthrough component that explains code step by step. Use when a user asks for a code walkthrough, a step-by-step code explanation, or to convert an existing guide's numbered code steps into one.
 ---
 
 # Write a Shoalrun walkthrough

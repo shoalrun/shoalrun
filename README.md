@@ -41,11 +41,16 @@ The CLI source is in `framework/src/`. Runnable starters are in `framework/examp
 After installing dependencies and building as above:
 
 ```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r framework/scripts/requirements-skills.txt
+export SKILL_VALIDATOR_PYTHON="$PWD/.venv/bin/python"
 npm run test:compiled
 npm run authoring:package-check
 ```
 
-`npm test` builds and runs the full suite. Reuse compiled output for follow-up checks when source inputs are unchanged. Browser tests need Chrome or Puppeteer's development browser; documentation formatting tests use Vale 3.20 or newer. The package check installs a local tarball with fresh production dependencies and needs npm registry access.
+`npm test` builds and runs the full suite. Reuse compiled output for follow-up checks when source inputs are unchanged. Browser tests need Chrome or Puppeteer's development browser; documentation formatting tests use Vale 3.20 or newer. The test commands also run the bundled OpenAI skill validator against every packaged skill. Set `SKILL_VALIDATOR_PYTHON` to use a Python virtual environment.
+
+The package check installs a local tarball with fresh production dependencies and needs npm registry access.
 
 The bundled documentation is a pinned import with provenance in `framework/agent-docs/SNAPSHOT.json`. To update it, export a reviewed snapshot from the docs repository, then run `npm run agent-docs:import -- PATH --source-commit FULL_DOCS_COMMIT`. Builds never fetch the latest website content. Portable evaluation tools live in `eval/`; provider-backed studies are opt-in.
 

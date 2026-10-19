@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "configDigest": "f9890cd6f3223018fdd14a9e95a9c050129e37a0c640c0511e1792c3ce5f4d6a",
+  "configDigest": "3682e8d1526401a14eabc420242c2cd82d418731ccf393cc3a0440e8bdec2deb",
   "searchSynonyms": [
     [
       "walkthrough",
@@ -505,8 +505,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-17",
-      "contentDigest": "d34de9f4ad5f2e6668698e3c8eccd93888e61021b003d456c80f7d583d48e2db",
+      "updated": "2026-10-19",
+      "contentDigest": "729c0d4e92f59ea86bf22ae36d2f14d3073e67bb28cfd4ffd855464517385a13",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -552,8 +552,8 @@
           "standalone": true,
           "markdownUrl": "/publish/agent-friendliness.sections/try-the-page-controls.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "e428eb190719a1a1dd14a05bf4b434e532696ae20b0de3f17c94d3af22286fff",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "84866a6cf5d4f423f6ac06eb85dac3a3642f57019d3302677c147b839e84d072",
           "markdownBytes": 2579,
           "markdownTokens": 587,
           "markdownTokenEncoding": "cl100k_base"
@@ -564,8 +564,8 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/what-an-agent-reads.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "be1e0224650be01f3d7f6e349ecbd35ad238f912c9c8438bcdcc0286e5c451a7",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "63b9b5924b8bd6203b306c8ebdadca306ed6b63a5e7d03e2bf22f3b5dfe85a2e",
           "markdownBytes": 3083,
           "markdownTokens": 690,
           "markdownTokenEncoding": "cl100k_base"
@@ -576,8 +576,8 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/what-happens-to-an-unsupported-component.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "cac0f6efd9f35f7c358148061249e0cd3380f96e23db76ebcc0fa9b7d212bd39",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "7753c5d878f531a8373ccb80911c08b71017e034fda0473635bb6d025209818c",
           "markdownBytes": 3113,
           "markdownTokens": 692,
           "markdownTokenEncoding": "cl100k_base"
@@ -588,8 +588,8 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/discover-a-page-with-a-small-context-budget.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "07a3f81547dcc8fbe58f903b7851f65ba872edc30939581b91ba17e64cfaceb7",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "9a3e756345cd2455656abd09999765b4dbbf6fdf55bc9de0af66a2353f49ecbe",
           "markdownBytes": 5266,
           "markdownTokens": 1084,
           "markdownTokenEncoding": "cl100k_base"
@@ -600,8 +600,8 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/verify-the-page-and-detect-changes.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "786f2254657f4e8fd9b9557713120ca1dcf01196354334310bd46cf480196895",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "adbe935d24f6336c5aface4b4824522a83c4f3416fee473b25a02ce3b07a048c",
           "markdownBytes": 4138,
           "markdownTokens": 850,
           "markdownTokenEncoding": "cl100k_base"
@@ -612,8 +612,8 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/keep-shared-instructions-complete.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "1271b4a98a6fa916479a1c86ba46d19a7fdc9dcff67ec87c9bb6d3678af903ba",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "58cb3f67e692440c0c0a7c593fab468a26ea1b1ba8bf9e3f69683c9e0507b6b8",
           "markdownBytes": 3295,
           "markdownTokens": 717,
           "markdownTokenEncoding": "cl100k_base"
@@ -624,8 +624,8 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/distinguish-examples-from-a-real-service.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "00f7b2f10d8cdd31c1be3eaec95619002f356d5d9dfb343ce0ed82daa1a3d348",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "c92168efa57892cb470b14ad35c94d20e0aa014f6eb7c8bd0a0686991de178ad",
           "markdownBytes": 3215,
           "markdownTokens": 713,
           "markdownTokenEncoding": "cl100k_base"
@@ -636,8 +636,8 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/use-the-transport-your-client-supports.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "f6d6e0d3bf8f8ee9c02da322d8c4544fc6b60e66c0b2ed816e7c6cc4c48324d6",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "a552aad9daa4c546b12b633511e137f3806463efa51ab6e5281f7497e04c4aad",
           "markdownBytes": 3717,
           "markdownTokens": 839,
           "markdownTokenEncoding": "cl100k_base"
@@ -648,10 +648,22 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/evidence-has-a-scope.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "344bb51ae956716174e750ace30d5d3ccfcfb7d0098d0754fc3ba33ad02dbff8",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "0ecae21888f786ee56523e28bffcfecb6d96048d1ac9b0eb03fe094537e542f4",
           "markdownBytes": 2924,
           "markdownTokens": 649,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "secret-handshake",
+          "title": "Secret handshake",
+          "depth": 2,
+          "markdownUrl": "/publish/agent-friendliness.sections/secret-handshake.md",
+          "parentMarkdownUrl": "/publish/agent-friendliness.md",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "9ccaf05276cb89e9d423516b6d159bba2063d8cd965a5926b35fee393133b655",
+          "markdownBytes": 2409,
+          "markdownTokens": 566,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -660,17 +672,17 @@
           "depth": 2,
           "markdownUrl": "/publish/agent-friendliness.sections/related-reading.md",
           "parentMarkdownUrl": "/publish/agent-friendliness.md",
-          "parentDigest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220",
-          "digest": "2818cf84a301931198f96a83f64aa794a0d8372a3e64527ea03c565601d08d75",
+          "parentDigest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb",
+          "digest": "58230bf7aa784b30bba8b16e794043ea8663f568d64cb9ef4b9d854e814779fd",
           "markdownBytes": 2939,
           "markdownTokens": 684,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 14393,
-      "markdownTokens": 2862,
+      "markdownBytes": 14601,
+      "markdownTokens": 2914,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "ecde8a73ad482e241eff4a88f27fa03bc01bc86f77ced828ac66f07aa0476220"
+      "digest": "7104004ccd2be4aba8b6d36b880749059aec5a25fe8086aadf6273d6d70265fb"
     },
     {
       "id": "reference.agent-skills",
@@ -9647,27 +9659,27 @@
       "url": "/contribute/maintain-skills",
       "markdownUrl": "/contribute/maintain-skills.md",
       "navigationTab": {
-        "id": "project-updates",
-        "label": "Project updates",
+        "id": "docs",
+        "label": "Docs",
         "variant": {
           "channel": "production",
           "version": "current",
           "language": "en"
         },
-        "url": "/status",
-        "markdownUrl": "/status.md",
-        "indexUrl": "/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt"
+        "url": "/what-is-shoalrun",
+        "markdownUrl": "/what-is-shoalrun.md",
+        "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-09-30",
-      "contentDigest": "2b28c1cea334331405bf043eb9245421994208012d7858b4ae31357a8fecc41a",
+      "updated": "2026-10-19",
+      "contentDigest": "fc21c8b5944defcb163a0cae97fc2d7598ded532a5a9595d7e00ac4cad9ebd28",
       "breadcrumbs": [
         {
-          "label": "Project updates",
-          "url": "/status"
+          "label": "Docs",
+          "url": "/what-is-shoalrun"
         },
         {
-          "label": "Project"
+          "label": "Contribute"
         },
         {
           "label": "Maintain bundled skills",
@@ -9693,10 +9705,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 2540,
-      "markdownTokens": 597,
+      "markdownBytes": 3721,
+      "markdownTokens": 827,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "6b2121f5a3183b5445bb43ab9213f5e066548739589baf50ef94d5f932152aa0"
+      "digest": "e0709967c3fd8bf46c680246640b24af67128af432433a7955da83f06af1dec1"
     },
     {
       "id": "guide.markdown-metadata",

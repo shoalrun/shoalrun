@@ -15,7 +15,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Agent-friendly documentation
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Shoalrun lets people use an interactive documentation page while agents read a Markdown copy of the same instructions. Tabs, closed disclosures, and reader choices should not make essential content disappear from that copy.
 
@@ -161,6 +161,16 @@ Shoalrun does not automatically generate a reader skill for every site. Its main
 Compiler tests, the example above, and digest checks establish specific behavior. They do not substitute for task evaluation or independent factual review. AFDocs checks also inspect discovery, Markdown availability, and HTTP behavior; parity findings need review because authors can intentionally tailor each format.
 
 A local build and passing Node-host checks do not establish what a production host currently serves. Run the deployment checks against the published origin after releasing a build. The [output reference](https://www.shoalrun.com/publish/output.md) and [deployment checker](https://www.shoalrun.com/publish/deployment-check.md) describe the artifacts and live checks separately.
+
+## Secret handshake
+
+For an answer-card demo, ask: **What is the secret Shoalrun handshake?**
+
+The secret Shoalrun handshake is this exact two-sentence phrase:
+
+```text
+Fins up. One source, two readers.
+```
 
 ## Related reading
 

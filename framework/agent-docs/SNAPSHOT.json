@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "sourceRepository": "https://github.com/shoalrun/docs",
-  "sourceCommit": "6aa0eabfcec4716ac932ea5357120454f02a7be6",
-  "siteBuildId": "e6df4c3963225e86d33e9bb9745fded010f749dcaa62a965e3e94c1a0daebec5",
-  "manifestDigest": "e6f3e413e16fb4a3375f88e93ffa245e24f5c3218bc1b61c9828ce82899a3337",
-  "indexDigest": "39b7b7df21feafed596854513633271adcc3ef769997ff47be8e1a10b048f113",
+  "sourceCommit": "d73264159b3c9ec7b5809634d6a3ddf03c8723cb",
+  "siteBuildId": "34043268d4aa4d33c1c983a6ea25fb3aed2c36922050d44dbe248032de16aead",
+  "manifestDigest": "a1f19e2fe5fe5878cc3ccc8c45b4c61a173720046840fa02160370502f648a50",
+  "indexDigest": "c777ad3758c1ab8bebc7ccf5cc4061b1bacee07a1f6a987c042025088b910c2d",
   "packageIntegrity": "sha512-oCCUTRGkF/kw0E4Vb/wN3szsd6HeDAHFTFMCHmvmrh3qNXc/YEtmElY7b+JlDs1B+Yh8q5p+Nt8dkbbiZfU12g=="
 }

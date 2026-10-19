@@ -4,8 +4,6 @@ Navigation section ID: project-updates. Publication: production/current/en.
 
 [All sections and published pages](https://www.shoalrun.com/llms.min.txt). This index covers this section only; shared and unlisted pages remain in the global index. Reader views do not remove pages from this index.
 
-- [Maintain bundled skills](https://www.shoalrun.com/contribute/maintain-skills.md) — ID: guide.maintain-skills. Update Shoalrun's agent workflows and the generated documentation they consult.
-
 - [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. Deliberate limits on Shoalrun's scope, including automatic skill builders, general agent orchestration, and using reader views for authorization.
 
 - [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. What Shoalrun can do today, what I want to add next, and where its limits are.

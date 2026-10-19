@@ -180,6 +180,8 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Page layouts, landing pages, and splash pages](https://www.shoalrun.com/styling/layouts.md) — ID: guide.layouts. Give a page more width, or build a landing or full-bleed splash page with a Hero and Sections, using the layout frontmatter field.
 
+- [Maintain bundled skills](https://www.shoalrun.com/contribute/maintain-skills.md) — ID: guide.maintain-skills. Update Shoalrun's agent workflows and the generated documentation they consult.
+
 - [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md) — ID: guide.markdown-metadata. Public field projection, source paths, profiles, precedence, and required values.
 
 - [Measure MCP tool usage](https://www.shoalrun.com/publish/mcp-analytics.md) — ID: guide.mcp-analytics. Send optional server events to your analytics service without changing the documentation tools.

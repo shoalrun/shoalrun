@@ -26,3 +26,5 @@ site-dist/
 coverage/
 *.tgz
 SOURCE-INVENTORY.local.json
+
+.venv/
