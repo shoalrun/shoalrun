@@ -28,7 +28,8 @@
     "!example-configs/**/.shoalrun/**",
     "agent-docs",
     "skills",
-    "README.md"
+    "README.md",
+    "AUTHORING.md"
   ],
   "bin": {
     "shoalrun": "./dist/cli.js"

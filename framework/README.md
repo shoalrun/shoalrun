@@ -1,354 +1,75 @@
-# Shoalrun framework
+# Shoalrun
 
-`@shoalrun/cli` builds documentation for people and agents from the same source. This is an invite-only alpha distributed through GitHub Packages. The source repository remains private. Use Node.js 22.12 or newer.
+Shoalrun turns Markdown and MDX into a documentation website and Markdown pages from the same content. People can browse the site; agents can read the Markdown. Native components such as steps, tabs, and API references preserve their content in both formats.
 
-## Install the private preview
+This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. This is a private alpha distributed through GitHub Packages; your account needs package read access.
 
-Your GitHub account needs package read access. Authenticate using a GitHub classic personal access token with `read:packages`; enter it at the password prompt, never in a committed file:
+## Install
+
+From the project where you want to keep your documentation, authenticate with a GitHub classic personal access token that has `read:packages`. Enter the token at the password prompt:
 
 ```sh
 npm login --scope=@shoalrun --registry=https://npm.pkg.github.com --auth-type=legacy
 npm install --save-dev @shoalrun/cli@0.1.0-alpha.2 --@shoalrun:registry=https://npm.pkg.github.com
 ```
 
-Create and build a starter project from the directory where you installed the package:
+## Create and preview a site
+
+Run these commands from the directory where you installed the package:
 
 ```sh
 npx shoalrun init my-docs --starter minimal
-npx shoalrun build my-docs/docs.config.yaml my-docs/dist
-npx shoalrun serve my-docs/dist --port 8770
+npx shoalrun build my-docs/docs.config.yaml my-docs/site-dist
+npx shoalrun serve my-docs/site-dist --port 8770
 ```
 
-Open `http://127.0.0.1:8770/` to view the result. Read the bundled framework documentation without a provider key or a connection to shoalrun.com:
+Open <http://127.0.0.1:8770/>. Edit the pages in `my-docs/content/` and the site settings and navigation in `my-docs/docs.config.yaml`. Rebuild to update the preview, or use the development server to rebuild on changes:
 
 ```sh
-npx shoalrun docs search "getting started" --json
-npx shoalrun docs read guide.overview --json
+npx shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
 ```
 
-The package includes a documentation snapshot matched to this release. Your project’s documentation can change independently of package upgrades. The [live documentation](https://www.shoalrun.com/start) may describe newer changes.
+Stop the existing preview with Ctrl-C before starting the development server on the same port. Use the `api-docs` starter instead of `minimal` for an example site with an OpenAPI source.
 
-## Package support policy
+## Work with an agent
 
-This alpha is a private preview. Configuration and output formats may change; there is no compatibility promise or maintained older release line yet. The installed version is recorded in `@shoalrun/cli/package.json`.
+Shoalrun works with your existing coding agent. Its packaged skills explain how to set up a site, edit pages, and develop components:
 
-## Write with your agent
+```sh
+npx shoalrun skills list
+npx shoalrun skills read shoalrun-setup
+```
 
-Use your existing coding agent and normal working-tree file tools. Shoalrun supplies templates, documentation reads, project context and isolated snapshot validation. Your agent supplies its model and gathers supporting evidence. Checked edit plans remain an optional existing interface. Discover the packaged skills without searching installation directories:
+Ask your agent to read the skill for the task. `skills list` returns names, descriptions, and local instruction-file paths. These commands read the skills; installing the npm package does not automatically install them into your agent.
+
+The usual editing workflow is to capture a baseline, edit source files, validate the changes, then review a local preview. From your documentation project directory:
+
+```sh
+npx shoalrun docs baseline --out .shoalrun/task-baseline.json
+# Edit your pages and configuration.
+npx shoalrun docs validate --baseline .shoalrun/task-baseline.json
+```
+
+Validation returns a report path. Pass that path to `shoalrun docs review` and `shoalrun docs preview`. Snapshot validation can render affected draft pages while preserving their draft access; ordinary site builds exclude drafts. Supply your own project writing and review requirements—the starter does not define them for you.
+
+## Find documentation
+
+Read the documentation bundled with your installed version without a provider key or website connection:
 
 ```sh
 npx shoalrun --help
-npx shoalrun skills list
-npx shoalrun skills read shoalrun-setup
-npx shoalrun skills read shoalrun-author --json
-npx shoalrun docs --help
+npx shoalrun docs search "Steps" --json
+npx shoalrun docs read guide.component.steps --json
 ```
 
-The list returns skill names, descriptions and absolute `SKILL.md` paths. Read the skill that fits the task: `shoalrun-setup` for a new site, `shoalrun-author` for page edits, and `shoalrun-component-author` for component packages. Ask your agent to read the returned file, or use your agent's skill installation mechanism if it supports one. These commands read guidance; they do not install or activate skills in an agent.
+See the [authoring command reference](AUTHORING.md) for project inspection, validation, report schemas, and the public authoring API. Visit [shoalrun.com](https://www.shoalrun.com) for the full documentation; it may describe changes newer than your installed package.
 
-Read the project's own guidance with `docs project --section guidance` and `docs source`. A minimal starter has no owner-specific policy; supply your writing and review requirements rather than treating the bundled framework references as project policy.
+## Status and development
 
-## Project and reference tools
+This alpha may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
 
-These provider-free commands inspect an existing project without selecting a page:
-
-```sh
-shoalrun docs project --config docs.config.yaml
-shoalrun docs project --section guidance --config docs.config.yaml
-shoalrun docs project --section configuration --config docs.config.yaml
-shoalrun docs project --query "installation" --config docs.config.yaml
-shoalrun docs project --id guide.install --section relationships --config docs.config.yaml
-shoalrun docs source AGENTS.md --config docs.config.yaml
-shoalrun docs search "Steps" --json
-shoalrun docs read guide.component.steps --json
-```
-
-`--config` defaults to the nearest `docs.config.yaml` in the current directory or
-its ancestors. The project root is the configuration directory. Search/read reuse
-the bundled documentation and their existing token budgets/publication filters;
-they need no project or model key. The Steps reference contains exact MDX,
-required attributes, nesting, accessibility and HTML/Markdown semantics. Use
-`guide.frontmatter-reference` for metadata definitions, `guide.frontmatter` for
-authoring guidance, and `guide.templates` for page shapes. These references
-describe bundled framework behavior, not a consumer project's companion policy.
-
-`docs project` always returns JSON (`--json` is accepted). Its sections are:
-
-| Section | Entries |
-| --- | --- |
-| `pages` (default) | IDs, owning paths, SHA-256 source digests, resolved type/summary/slug, publication defaults, access and link-label aliases. Includes draft and untracked pages. |
-| `guidance` | Exact configured directives and guide/example locations, project/content and loaded configuration ancestors' `AGENTS.md` files, digests, source roles and directory scope. Read files with `docs source`. |
-| `configuration` | Leaf values for site, metadata defaults/enforcement/custom fields, publications, authoring source locations, audit, templates and search; each has its actual owning file/key/digest. |
-| `navigation`, `relationships` | Flattened entries/edges with actual configuration ownership. |
-| `templates` | Canonical scaffold definitions and project overrides, types, required fields and body locations. Page types remain extensible; this is a template catalogue, not a type whitelist. |
-| `findings` | Inspection errors, skipped symlinks and missing guidance/policy with severity, location when known and next action. |
-
-Choose at most one of `--id ID`, `--file PROJECT_RELATIVE_PATH`, or
-`--query TEXT` for pages/navigation/relationships. Topic matching is lexical over
-IDs, paths, titles, summaries, body text and aliases, using configured search
-synonyms. It returns ranked leads; it does not choose a page for the author.
-Navigation and relationship selectors use all matching IDs before pagination.
-An unknown selector returns an empty result.
-
-Project JSON schema version 1 has `kind: shoalrun-authoring-project`, `status`,
-`summary`, `section`, `entries`, `pagination`, `coverage` and `budget`.
-`summary` identifies the project/config digest, content directory, section counts,
-policy status, reference IDs and check availability. `coverage.validation` and
-check execution are `not-run`: inspection is not snapshot validation or a preview.
-Always inspect `summary.counts.findings` and read the findings section as needed.
-
-`--offset N` (default 0) and `--limit N` (default 20, range 1–100) page the
-selected section. `pagination.nextOffset` is null at the end. The serialized JSON
-fits `--max-tokens N` (default 8192, range 1024–100000, `cl100k_base`); a budget
-can reduce the number of entries. Follow the returned cursor, not the requested
-limit. An entry that cannot fit returns `invalid_input`; increase the budget or
-read its source passage. Pagination assumes an unchanged working tree. Inspection
-does not capture an atomic snapshot; rerun discovery after edits.
-
-`docs source FILE` returns schema version 1, `kind: shoalrun-authoring-source`,
-`status`, `file`, whole-file SHA-256 `digest`, `role`, `location`, `applicability`,
-`content`, `nextOffset` and `budget`. Paths must be project-relative and resolve
-inside the project; outside symlinks and traversal are rejected. Its `--offset`
-counts Unicode code points (not bytes), with a reported starting line. Its default
-budget is 4096 tokens (same range as project). Follow `nextOffset` to reconstruct
-long passages, including long lines. Check the digest between reads. External
-implementation roots are reported as configured locations; read them with the
-harness's own tools and permissions. Unconfigured sources are `unclassified`,
-never implicitly approved as technical evidence.
-
-Policy status is `missing` or `requires-interpretation`. Read all applicable
-policy/style/example sources. Opposing prose is retained for author review;
-the tool does not infer changelog, navigation or relationship obligations or
-silently choose between conflicting policies. Ancestor instructions outside the
-configuration directory remain the harness's responsibility. Configured audit
-settings are exposed, but inspection runs no shell checks.
-
-Both new commands exit 0 when inspection completes, even with findings. Request
-or execution failures exit 1 and emit JSON on stdout with `schemaVersion: 1`,
-`status: error`, and `error: { code, message }`. Codes are `invalid_input`,
-`unknown_source`, `unsafe_path`, `invalid_project` and `internal_error`.
-Findings use `code`, `severity` (`error`, `warning`, `review-needed`), optional
-`file`/`location`/`reference`, `explanation` and `nextAction`. A reference is a
-bundled documentation ID. Existing context/plan/apply and search/read retain
-their existing schemas and exit behavior.
-
-The public library entry point is `PACKAGE_NAME/authoring`. API version 1 adds
-`inspectAuthoringProject(configFile, options)`,
-`readAuthoringSource(configFile, file, options)`, `projectToolSchemaVersion`,
-`projectSections`, `ProjectToolError`, `projectToolFailure`, and the existing
-`bundledDocumentation`, `searchDocumentation`, `getDocumentationPage` functions.
-New discovery capabilities are additive; checked plan/apply clients remain
-compatible. Library failures throw; CLI failures use the envelope above.
-
-The runtime package excludes compiled development tests.
-
-Run `npm run test:authoring-tools` from the repository root for the supported
-authoring contracts. Run `npm run authoring:package-check` for packed public
-CLI/library compatibility.
-
-After building, run `node framework/scripts/package-authoring-smoke.mjs --clean-install`
-from the repository root to install the tarball with fresh production dependencies
-and an empty npm cache, then exercise both starters through the installed CLI and
-public library. This mode needs npm registry access. Provider credentials and
-`NODE_PATH` are omitted; browser downloads are disabled. It does not test diagrams
-or replace independent author trials. Without the flag, the check shares existing
-dependencies for an offline package compatibility check. Both modes remove their
-temporary consumers after completion.
-
-## Working-tree snapshot validation
-
-Capture a task baseline before editing when earlier local edits need to be
-distinguished from this task. Otherwise declare the changed files or IDs explicitly:
-
-```sh
-shoalrun docs baseline --out .shoalrun/task-baseline.json --config docs.config.yaml
-# Edit ordinary MDX/configuration files with the harness's native file tools.
-shoalrun docs validate --baseline .shoalrun/task-baseline.json --config docs.config.yaml
-shoalrun docs validate --file content/procedure.mdx --file config/nav.yaml --config docs.config.yaml
-shoalrun docs validate --id guide.install --config docs.config.yaml
-shoalrun docs validation-status /path/from/result/report.json
-```
-
-These commands always return JSON; `--json` is accepted. Configuration discovery
-works as for `docs project`. Baseline output is exclusive: choose a new filename
-for a new task. It records the **current working tree**, including earlier dirty
-and untracked files, rather than Git HEAD. It executes no checks. Its version-1
-`shoalrun-authoring-baseline` file contains project/config identity, input paths,
-SHA-256 digests, modes, external directory scope, exclusions and an integrity
-digest. A baseline from another project/configuration is rejected.
-
-`docs validate` requires either a baseline or explicit `--file`/`--id` selectors.
-Repeat file/ID flags for multiple changes; do not combine them with a baseline.
-Baseline comparison detects new, modified and deleted inputs, preserving earlier
-dirty files outside the task's change set. Sibling dependencies remain in baseline
-scope even after configuration stops referencing them. Explicit files describe
-the author's declared change set: absent paths declare deletions; unknown IDs
-fail (select broken/deleted pages by path). Without a baseline, prior file contents
-and creation history are unknown and reported as `declared`, not inferred from Git.
-
-Validation captures all regular project files within a 10000-file/256-MiB bound.
-It excludes `.git`, `node_modules`, `dist`, `site-dist`, `.vercel`, `.shoalrun`, `.private-archives`, `.private-evals`,
-`.aws`, `.ssh`, `.codex`, `.npmrc`, `.env` and `.env.*` entries and reports those
-exclusions. Source symlinks are rejected. Loaded configuration and supported local
-dependency paths, including sibling Walkthrough sources and page images, retain
-their relative layout within the project parent. Dependencies beyond that boundary
-or absolute local dependency paths are unsupported; a required excluded/uncaptured
-dependency cannot receive a passing report. External directory scopes are captured
-recursively. This is source capture, not a clean dependency installation.
-
-The compiler runs only on the temporary copy. Public pages and affected authored
-drafts are checked together. Configuration, source dependency and deletion changes
-conservatively affect every current authored page. Draft rendering uses an explicit
-compiler authoring option and retains authored/resolved access metadata, including
-enforced draft access. Unchanged, unselected drafts remain excluded from ordinary
-publication rendering. An affected page that matches no enabled publication is a
-located error, never a pass. Snapshot validation requires affected page IDs to
-match `[A-Za-z0-9][A-Za-z0-9._-]*`; this is the snapshot tool's stable-ID contract,
-and existing checked plan/apply keeps its prior behavior. Compiler checks cover metadata, identities/routes,
-components, document links, navigation and relationships. Local link/fragment checks
-read the actual HTML and Markdown; external URLs are not requested. Configured API
-example and focused-contract audits reuse the existing auditors.
-
-Configured `audit.tests` (including style/example commands) are **skipped** unless
-the harness explicitly runs `docs validate ... --run-checks` under its execution
-permissions. Commands run with argv and the captured project as their working
-directory, with `SHOALRUN_VALIDATION_SITE` and `SHOALRUN_VALIDATION_SNAPSHOT` set.
-They are trusted project code, not an OS sandbox: the harness must authorize them
-and ensure they operate on the capture rather than absolute live paths or external
-services. Declare sibling files/directories required by a check with optional
-`audit.tests[].inputs`, relative to the project configuration directory. Capture
-rejects missing files, symlinks, excluded locations and paths outside the project
-parent; directory additions/deletions participate in freshness. Snapshot builds
-resolve revision dates without writing captured freshness history. Changes made
-by checks to captured source or history still invalidate the result.
-Node checks receive the installed tool's dependency search paths through
-`NODE_PATH` for CommonJS resolution; ESM does not use it. Consumer dependencies
-are not copied. Missing executables or Node modules are `unavailable`.
-Model/evaluator hooks are skipped. Executable metadata/highlighting
-extensions currently return `unavailable` without invocation. No provider is chosen
-and no semantic review, automatic rewrite, application or publication occurs.
-
-`--artifacts DIRECTORY` chooses a new, exclusive artifact directory; otherwise a
-temporary directory is retained. Baselines and artifacts must be outside the
-project or inside its excluded `.shoalrun` directory. Canonical path checks prevent
-source/output collisions, including filesystem aliases. Results report the snapshot
-ID, report/site/captured-project locations and cleanup instructions. Remove only
-the reported artifact directory when finished. Validation starts no service. Use the separate snapshot review/preview commands
-below to inspect this captured result.
-
-Validation JSON schema version 1 has `kind: shoalrun-authoring-validation`, `status`,
-`snapshotId`, project/config identity, declared `baseline`, `changed` operations
-and before/current digests, full `inputs`/`excluded` lists, `dependencies`, content,
-config and validator digests, `runtimeDependencies`, `checks`, `findings`,
-`coverage`, `artifacts` and `freshness`. Coverage distinguishes current authored
-paths, affected paths, actual rendered routes/Markdown twins and affected paths
-that did not render. Findings include stable codes, severity, owning file, exact
-line/column/key when established, related collision files, explanation, canonical
-reference and next action. Compiler failure can stop later checks; unrendered
-affected pages remain visible. A build does not establish factual correctness.
-
-Validation status is `ok`, `failed`, `incomplete` (skipped configured checks),
-`unavailable` or `stale`. Only `ok` exits 0. Request/capture failures exit 1 with
-`{ schemaVersion: 1, status: "error", error: { code, message } }`; capture codes
-include `invalid_input`, `unsafe_path`, `stale_input`, `capture_limit` and
-`unsupported_dependency`. `validation-status` exits 0 only for a still-current
-`ok` report; it returns individual source/baseline/validator/artifact change flags
-and the next validation action. It performs no build or source writes.
-
-Capture verifies file identity/size/time/mode around reads and compares complete
-inventories after copying and after validation. Persistent concurrent edits cause
-a stale result rather than apparently successful mixed inputs. Report and artifact
-digests bind the checked content and core validator code/assets/configuration;
-freshness includes new/deleted source files, baseline changes and relevant renderer
-configuration. This detects changes between checks, not an OS transaction or proof
-against a file changing and reverting between observations. Installed transitive
-runtime code is identified by package configuration; complete clean-install/version
-compatibility remains a later gate. Recheck applicability after subsequent edits.
-
-The public `PACKAGE_NAME/authoring` entry adds `captureAuthoringBaseline(configFile)`,
-`writeAuthoringBaseline(configFile, output)`,
-`validateAuthoringChanges(configFile, { files?, ids?, baselineFile?, artifactsDirectory?, runConfiguredChecks? })`,
-`authoringValidationStatus(reportFile)`, `snapshotSchemaVersion` and matching types.
-API version 1 and the existing checked plan/apply contracts remain compatible.
-
-## Snapshot review and preview
-
-```sh
-shoalrun docs review /path/from/validation/report.json
-shoalrun docs review /path/from/validation/report.json --format markdown
-shoalrun docs preview /path/from/validation/report.json --port 8771
-```
-
-Review returns `kind: shoalrun-authoring-review`, schema version 1, the snapshot ID,
-validation status and current freshness. It identifies the baseline and changed-file
-operations/digests. Results include checks, findings and source/reference locations,
-coverage, affected HTML/Markdown routes and artifact paths, dependencies and next action. Baselines contain digests rather than earlier source contents;
-`diff.available` is false with the declared basis and an explanation. Harness-owned
-evidence and optional reviewer/disposition slots are explicitly unpopulated.
-Configuration/dependency/deletion changes include every rendered page, including
-generated API references; authored-only changes list affected pages. Page origin and
-selection scope are explicit. No semantic review is implied by compiler success. Review exits 0 only for current
-`ok`; errors use the validation JSON envelope even in Markdown mode.
-
-Preview binds only to `127.0.0.1`, defaults to port 8771, and accepts port 0 for an
-allocated port. It emits JSON with `kind: shoalrun-authoring-preview`, snapshot ID,
-origin, review/status URLs, all affected rendered page URLs, private serving-copy
-path, validation review and lifecycle. It remains a foreground process. Open the
-returned URL with your harness's normal browser interaction. Ctrl-C/SIGTERM closes
-connections, removes only the private copy and emits a stopped record. Retained
-validation artifacts remain separate; a forced kill can leave the serving copy.
-
-The private copy is checked against the validation site digest. Changed/missing
-artifacts refuse startup or serving. A stale working tree can be inspected as a
-historical snapshot with a visible banner. HTML pages poll freshness every two
-seconds; Markdown remains the captured output with an `X-Shoalrun-Snapshot` HTTP
-header. Failed/skipped checks retain their actual status while previewing. No
-watching/rebuilding occurs: edit, validate again, stop and restart with the new
-report. The copy limit is 20,000 regular files and 512 MiB; symlinks are rejected.
-The preview is a local development service for trusted project artifacts.
-
-The public library adds `authoringReview(reportFile)`,
-`authoringReviewMarkdown(review)`, and
-`startAuthoringPreview(reportFile, { port? })`. The controller exposes `server`,
-`review()` and idempotent `close()` plus the connection metadata. Always await
-`close()` in cleanup. API version 1 remains unchanged; capabilities add
-`snapshot-preview` and `authoring-review-report`.
-
-## Feature documentation
-
-- [Configuration](https://github.com/shoalrun/docs/blob/main/docs/content/config-reference.mdx) and [complete example projects](https://github.com/shoalrun/docs/blob/main/docs/content/example-configs.mdx).
-- [Write pages with an agent](https://github.com/shoalrun/docs/blob/main/docs/content/write-with-agents.mdx) and [project writing guides](https://github.com/shoalrun/docs/blob/main/docs/content/design-writing-guides.mdx).
-- [Components](https://github.com/shoalrun/docs/blob/main/docs/content/components.mdx), [page metadata](https://github.com/shoalrun/docs/blob/main/docs/content/frontmatter.mdx), and [CSS](https://github.com/shoalrun/docs/blob/main/docs/content/css.mdx).
-- [Add an API](https://github.com/shoalrun/docs/blob/main/docs/content/api-references.mdx), [OpenAPI support and limits](https://github.com/shoalrun/docs/blob/main/docs/content/openapi-support.mdx), and [focused contracts](https://github.com/shoalrun/docs/blob/main/docs/content/focused-contracts.mdx).
-- [Published outputs](https://github.com/shoalrun/docs/blob/main/docs/content/output.mdx), [hosting](https://github.com/shoalrun/docs/blob/main/docs/content/publish.mdx), and [prototype status](https://github.com/shoalrun/docs/blob/main/docs/content/status.mdx).
-
-## Framework contributors
-
-These commands are for a source checkout, not an installed consumer project. Run them from the repository’s `framework/` directory:
-
-Install [Vale](https://vale.sh/) 3.20 or newer for the repository's documentation checks and recipe workflow tests.
-
-```sh
-npm ci
-npm test
-npm run demo
-npm run preview
-```
-
-Use Node.js 22.12 or newer. Diagrams render during the build without Chrome. Browser development tests still use Puppeteer. The demo builds `example/dist/`; the preview serves it at `http://127.0.0.1:8765/`. The example APIs are fixtures, not deployed services.
-
-### Development verification
-
-Production installs do not require Chrome. Browser development checks still need a browser. Release checks include installing the packed artifact into clean projects and exercising both starters, bundled documentation, and diagrams.
-
-`npm run build` compiles TypeScript into `dist/`. Invoke the CLI with `node dist/cli.js <command>`; see the [CLI reference](https://github.com/shoalrun/docs/blob/main/docs/content/cli-reference.mdx). The [compiler guide](https://github.com/shoalrun/docs/blob/main/docs/content/compiler-internals.mdx) explains implementation boundaries.
-
-### Documentation and verification
-
-Validate locally using the root README. Reuse compiled output and run the relevant package, contract and browser checks before pushing.
-
-Public authored content lives in shoalrun/docs. This repository imports an explicitly reviewed offline snapshot; do not edit generated bundle files or fetch latest site content during builds.
+To contribute to the framework, use the [repository development instructions](https://github.com/shoalrun/shoalrun#develop-the-framework). Those commands run in a source checkout.
 
 ## License
 
-Copyright 2026 Casey Smith. This package is licensed under [Apache-2.0](LICENSE). Your authored site content keeps its own license. Built sites also contain Shoalrun runtime assets and may contain copied template text; retain applicable licenses and third-party notices when distributing those materials.
+Copyright 2026 Casey Smith. This package is licensed under [Apache-2.0](LICENSE). Your authored site content keeps its own license. Built sites contain runtime assets and may contain copied template text; retain applicable licenses and third-party notices when distributing them.
