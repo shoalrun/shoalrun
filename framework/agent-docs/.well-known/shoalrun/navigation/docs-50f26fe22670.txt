@@ -144,6 +144,8 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Example configs](https://www.shoalrun.com/config/examples.md) — ID: reference.config-examples. Complete, working docs.config.yaml files for common kinds of documentation sites.
 
+- [Explore the docs](https://www.shoalrun.com/explore.md) — ID: guide.explore. Explore topics and follow connections to find your next page.
+
 - [Focused OpenAPI contracts](https://www.shoalrun.com/api-docs/focused-contracts.md) — ID: guide.focused-contracts. Give tools one operation and its required schemas without the rest of the API source.
 
 - [Site footer](https://www.shoalrun.com/styling/footer.md) — ID: guide.footer. Add link columns, a bottom row of links, and a short text line below every page.
@@ -180,8 +182,6 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Page layouts, landing pages, and splash pages](https://www.shoalrun.com/styling/layouts.md) — ID: guide.layouts. Give a page more width, or build a landing or full-bleed splash page with a Hero and Sections, using the layout frontmatter field.
 
-- [Maintain bundled skills](https://www.shoalrun.com/contribute/maintain-skills.md) — ID: guide.maintain-skills. Update Shoalrun's agent workflows and the generated documentation they consult.
-
 - [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md) — ID: guide.markdown-metadata. Public field projection, source paths, profiles, precedence, and required values.
 
 - [Measure MCP tool usage](https://www.shoalrun.com/publish/mcp-analytics.md) — ID: guide.mcp-analytics. Send optional server events to your analytics service without changing the documentation tools.
@@ -195,6 +195,8 @@ Navigation section ID: docs. Publication: production/current/en.
 - [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) — ID: guide.openapi-support. Check supported OpenAPI operations, schema keywords, examples, and source restrictions before importing a specification.
 
 - [Publishing and agent representations](https://www.shoalrun.com/publish/output.md) — ID: guide.output. Read the published-output contract for HTML, Markdown, manifests, and incremental sync.
+
+- [Design and enforce a page taxonomy](https://www.shoalrun.com/author/taxonomy.md) — ID: guide.page-taxonomy. Define page categories, validate allowed values, and enforce your project's area and subarea rules.
 
 - [Color palettes](https://www.shoalrun.com/styling/palettes.md) — ID: guide.palettes. Use a built-in palette or extend one with your brand colors. The build checks every palette against WCAG contrast.
 

@@ -4,6 +4,8 @@ title: Measure MCP tool usage
 summary: Send optional server events to your analytics service without changing
   the documentation tools.
 type: how-to
+area: discovery
+subarea: discovery-mcp
 canonical: /publish/mcp-analytics
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > MCP > Measure MCP tool usage
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 

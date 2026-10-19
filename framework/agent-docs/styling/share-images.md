@@ -4,6 +4,8 @@ title: Share images and favicon
 summary: Generated social images, metadata precedence, SVG placeholders, fonts,
   and favicon settings.
 type: reference
+area: appearance
+subarea: appearance-branding
 canonical: /styling/share-images
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Share images and favicon
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 When someone pastes a page link into Slack, LinkedIn, or X, the preview shows an image. Shoalrun draws one for every page at build time and adds the tags those apps read. It also generates a favicon. Both follow the site's preset and palette, so they need no setup.
 

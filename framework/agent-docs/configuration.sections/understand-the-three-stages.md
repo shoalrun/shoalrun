@@ -4,6 +4,8 @@ title: Organize project configuration
 summary: Learn how Shoalrun resolves config files, layers presets, tracks path
   origins, and applies page defaults before building publications.
 type: how-to
+area: publishing
+subarea: publishing-configuration
 canonical: /configuration
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/configuration.md)
 

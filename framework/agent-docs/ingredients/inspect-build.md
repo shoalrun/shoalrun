@@ -4,6 +4,8 @@ title: Check the built page artifacts
 summary: Resolve a document ID through the manifest and check its HTML and
   Markdown files.
 type: ingredient
+area: quality
+subarea: quality-audits
 canonical: /ingredients/inspect-build
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Reusable Shoalrun steps > Check the built page artifacts
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Choose a document by its stable ID. The default below checks the recipes overview; replace it with the ID of the page you changed.
 

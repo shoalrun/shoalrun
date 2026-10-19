@@ -3,6 +3,8 @@ id: recipe.queue-email
 title: Queue a welcome email
 summary: Submit the welcome template and confirm the API accepted the request.
 type: recipe
+area: api
+subarea: api-examples
 canonical: /recipes/queue-email
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Queue a welcome email
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Use this path to check request acceptance. For delivery status and failure handling, follow [the complete delivery recipe](https://www.shoalrun.com/recipes/send-welcome-email.md).
 

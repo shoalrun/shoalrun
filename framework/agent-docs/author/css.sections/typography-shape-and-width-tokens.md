@@ -4,6 +4,8 @@ title: CSS and theme reference
 summary: Customize colors, typography, layout, navigation, code, and component
   styles with one project stylesheet.
 type: reference
+area: appearance
+subarea: appearance-themes
 canonical: /author/css
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > CSS and theme reference
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/css.md)
 

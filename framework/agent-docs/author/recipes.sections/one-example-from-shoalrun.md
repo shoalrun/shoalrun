@@ -4,6 +4,8 @@ title: Understand ingredients, recipes, and cookbooks
 summary: See how reusable source instructions become complete recipe pages that
   a cookbook helps readers choose.
 type: explanation
+area: authoring
+subarea: authoring-composition
 canonical: /author/recipes
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/recipes.md)
 

@@ -3,6 +3,8 @@ id: guide.component.related-reading
 title: RelatedReading
 summary: Display authored relationships as links or cards.
 type: reference
+area: components
+subarea: components-navigation
 canonical: /author/components/related-reading
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > RelatedReading
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 `<RelatedReading>` presents connections declared in the central `relationships` config. Use it for prerequisites, next steps, references, related topics, and distinctions that need a reason.
 

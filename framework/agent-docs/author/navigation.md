@@ -3,6 +3,8 @@ id: guide.navigation-lifecycle
 title: Organize site navigation
 summary: Arrange guides, reference pages, and other documents into a clear site menu.
 type: how-to
+area: appearance
+subarea: appearance-navigation
 canonical: /author/navigation
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Navigation > Overview
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 The `navigation` setting controls the site's left menu. It can be a list in `docs.config.yaml` or import a separate YAML file. Add guides, tutorials, concepts, and reference pages by their stable document IDs. Nodes appear in the order you write them.
 

@@ -4,6 +4,8 @@ title: Bundled agent skills
 summary: Skill names, locations, workflow behavior, offline documentation, and
   validation limits.
 type: reference
+area: authoring
+subarea: authoring-agent-workflows
 canonical: /reference/agent-skills
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Bundled agent skills
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Shoalrun ships five portable skill folders under `framework/skills/`. Each folder contains a `SKILL.md` with instructions for an agent that can read files and run the Shoalrun CLI. A skill supplies guidance; it does not run a separate authoring service.
 
@@ -63,8 +65,6 @@ Search returns JSON with document IDs and excerpts. Read returns the complete ge
 Skills guide the agent's actions. They cannot establish whether a technical claim is true. Shoalrun's [audit](https://www.shoalrun.com/publish/audit.md) checks implemented build and representation rules and any configured external tests. Human review and behavior tests establish whether the instructions work.
 
 The recipes skill prefers complete task pages, adds ingredients when instructions are shared, and uses cookbooks when readers need help choosing tasks. It respects an explicitly requested format. [Ingredients, recipes, and cookbooks](https://www.shoalrun.com/author/recipes.md) explains those distinctions.
-
-[Maintain bundled skills](https://www.shoalrun.com/contribute/maintain-skills.md) covers changes to the shipped workflows and documentation bundle.
 
 ## Related reading
 

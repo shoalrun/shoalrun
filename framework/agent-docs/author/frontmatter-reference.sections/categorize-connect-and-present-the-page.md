@@ -3,6 +3,8 @@ id: guide.frontmatter-reference
 title: Frontmatter field reference
 summary: Browse the built-in and project-defined page fields this site supports.
 type: reference
+area: authoring
+subarea: authoring-metadata
 canonical: /author/frontmatter-reference
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Generated frontmatter reference
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/frontmatter-reference.md)
 

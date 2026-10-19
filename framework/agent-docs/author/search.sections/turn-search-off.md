@@ -3,6 +3,8 @@ id: guide.search
 title: Site search
 summary: Search settings, keyboard behavior, provider interfaces, and index fields.
 type: reference
+area: discovery
+subarea: discovery-search
 canonical: /author/search
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Site search
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 **Verified: 2026-10-01.**
 

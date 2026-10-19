@@ -3,6 +3,8 @@ id: change.authoring-tools
 title: Working-tree authoring tools
 summary: Discover project context and validate working-tree edits in a separate capture.
 type: changelog-entry
+area: authoring
+subarea: authoring-agent-workflows
 canonical: /changelog/authoring-tools
 date: 2026-10-13
 ---

@@ -3,6 +3,8 @@ id: guide.component.definition-list
 title: Definition lists
 summary: Pair terms with full explanations in semantic HTML and readable Markdown.
 type: reference
+area: components
+subarea: components-prose
 canonical: /author/components/definition-list
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Definition lists
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Use `<DefinitionList>` for a compact glossary or configuration reference. Put alternating `<Term>` and `<Definition>` children inside it. Add `filter` when readers need to search a long list by term or definition text.
 

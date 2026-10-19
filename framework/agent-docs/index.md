@@ -5,6 +5,8 @@ summary: A preview of Shoalrun, a flexible framework for API and product docs
   with fine-grained controls for what people see and what agents can discover
   and read.
 type: overview
+area: project
+subarea: project-overview
 canonical: /
 ---
 
@@ -12,7 +14,7 @@ canonical: /
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 **Docs for people. Context for agents.**
 

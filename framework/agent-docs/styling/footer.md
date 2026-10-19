@@ -4,6 +4,8 @@ title: Site footer
 summary: Add link columns, a bottom row of links, and a short text line below
   every page.
 type: reference
+area: appearance
+subarea: appearance-navigation
 canonical: /styling/footer
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Site footer
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 The footer sits below every page, after the navigation and article. Configure it under `site.footer`. Without that setting, the site has no footer.
 

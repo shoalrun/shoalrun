@@ -3,6 +3,8 @@ id: guide.example-note
 title: Prepare a note request
 summary: Prepare a fictional note payload and follow its linked operation contracts.
 type: how-to
+area: api
+subarea: api-examples
 canonical: /example-api/write-note
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Example Notes API > Prepare a note request
 
-**Updated: 2026-10-01.**
+**Updated: 2026-10-19.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 

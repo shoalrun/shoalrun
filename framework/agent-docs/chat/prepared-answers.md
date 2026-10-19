@@ -4,6 +4,8 @@ title: Generate and refresh answer cards
 summary: Generate and review common answers ahead of time, then serve confirmed
   cards without a new chat-model answer.
 type: how-to
+area: discovery
+subarea: discovery-chat
 subjectLifecycle: experimental
 canonical: /chat/prepared-answers
 ---
@@ -16,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Documentation chat > Answer cards
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

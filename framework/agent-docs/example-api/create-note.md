@@ -3,6 +3,8 @@ id: reference.create-note
 title: Create a note
 summary: Preview an API operation page built from a small, fictional OpenAPI file.
 type: api-reference
+area: api
+subarea: api-examples
 canonical: /example-api/create-note
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Example Notes API > Create a note
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 

@@ -3,6 +3,8 @@ id: guide.component.info-hint
 title: Short definitions
 summary: Let readers open a brief definition with a click, tap, or keyboard.
 type: reference
+area: components
+subarea: components-prose
 canonical: /author/components/info-hint
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Short definitions
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Use `<InfoHint>` for a short definition that readers can open when they need it. It is a click-to-expand disclosure. Use a [tooltip](https://www.shoalrun.com/author/components/tooltips.md) for brief text that appears on hover or keyboard focus. Put longer explanations in a [callout](https://www.shoalrun.com/author/components/callout.md) or a linked page.
 

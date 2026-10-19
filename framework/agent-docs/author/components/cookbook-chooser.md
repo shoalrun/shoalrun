@@ -3,6 +3,8 @@ id: guide.component.cookbook-chooser
 title: CookbookChooser
 summary: Let readers select reviewed recipes and assemble them into one reading path.
 type: reference
+area: components
+subarea: components-procedures
 canonical: /author/components/cookbook-chooser
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > CookbookChooser
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Use `<CookbookChooser>` to help a reader choose a complete recipe or combine compatible recipes. The author reviews each recipe and sets its place in the choice list. The browser loads the selected published recipe pages and displays their instructions. The component does not read ingredient files, generate a recipe, or execute commands. Start with [how recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md), then [configure a cookbook](https://www.shoalrun.com/author/cookbooks.md); this page lists the component's exact syntax.
 

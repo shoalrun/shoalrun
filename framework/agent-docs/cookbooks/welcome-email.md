@@ -3,6 +3,8 @@ id: cookbook.welcome-email
 title: Welcome email workflows
 summary: Choose an acceptance check or follow the same message through delivery.
 type: cookbook
+area: api
+subarea: api-examples
 canonical: /cookbooks/welcome-email
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Email simulation
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 An accepted request is the first checkpoint. Choose how far you want to follow the message. Both paths use a local simulation that sends no email.
 

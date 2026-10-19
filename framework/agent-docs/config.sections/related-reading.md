@@ -4,6 +4,8 @@ title: Configuration reference
 summary: Every top-level setting in docs.config.yaml, with defaults, validation
   rules, and links to the full guides.
 type: reference
+area: publishing
+subarea: publishing-configuration
 canonical: /config
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/config.md)
 

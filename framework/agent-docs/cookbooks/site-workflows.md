@@ -3,6 +3,8 @@ id: cookbook.site-workflows
 title: Site workflows
 summary: Choose a build check or a complete build-and-audit workflow for Shoalrun.
 type: cookbook
+area: publishing
+subarea: publishing-builds
 canonical: /cookbooks/site-workflows
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Site workflows
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Use these recipes on a local Shoalrun checkout after editing documentation. Choose the level of validation you need. The audit path already includes the build and artifact checks, so run one complete path.
 

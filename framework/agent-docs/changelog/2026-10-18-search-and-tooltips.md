@@ -4,6 +4,8 @@ title: Search results and tooltips
 summary: Improve search results with a prepared index and add separate hover and
   focus tooltips.
 type: changelog-entry
+area: discovery
+subarea: discovery-search
 canonical: /changelog/2026-10-18-search-and-tooltips
 date: 2026-10-18
 ---

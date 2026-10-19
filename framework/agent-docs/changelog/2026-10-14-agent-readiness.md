@@ -4,6 +4,8 @@ title: Agent discovery, verified Markdown, and incremental sync
 summary: Find the right page with less context, verify its contents, and fetch
   only what changed.
 type: changelog-entry
+area: discovery
+subarea: discovery-agents
 canonical: /changelog/2026-10-14-agent-readiness
 date: 2026-10-14
 ---

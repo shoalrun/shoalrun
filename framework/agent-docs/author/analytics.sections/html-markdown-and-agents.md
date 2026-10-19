@@ -4,6 +4,8 @@ title: Bring your own analytics
 summary: Send documentation interaction events to your analytics service through
   an optional browser adapter.
 type: reference
+area: quality
+subarea: quality-analytics
 canonical: /author/analytics
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Analytics
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/analytics.md)
 

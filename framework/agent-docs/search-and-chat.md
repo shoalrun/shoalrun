@@ -4,6 +4,8 @@ title: Search and chat
 summary: Choose page search, meaning-based search, or cited answers for your
   documentation.
 type: explanation
+area: discovery
+subarea: discovery-search
 canonical: /search-and-chat
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Overview
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Start with [site search](https://www.shoalrun.com/author/search.md) if readers need links to pages and sections. It is built in, works on a static host, and needs no provider account. Add chat when readers need answers written from your documentation.
 

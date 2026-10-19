@@ -4,6 +4,8 @@ title: Understand ingredients, recipes, and cookbooks
 summary: See how reusable source instructions become complete recipe pages that
   a cookbook helps readers choose.
 type: explanation
+area: authoring
+subarea: authoring-composition
 canonical: /author/recipes
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 A **recipe** is the complete page someone follows to finish a task. An **ingredient** is a reusable piece of source documentation used to write that page. A **cookbook** is a page that helps readers choose a recipe.
 

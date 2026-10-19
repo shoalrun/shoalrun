@@ -4,6 +4,8 @@ title: Metadata customization
 summary: Defaults, enforcement, custom field declarations, text selection, and
   provider contracts.
 type: reference
+area: authoring
+subarea: authoring-metadata
 canonical: /author/custom-metadata
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Metadata customization
 
-**Updated: 2026-10-03.**
+**Updated: 2026-10-19.**
 
 Use this guide when your project needs shared metadata rules or fields beyond the [native page metadata](https://www.shoalrun.com/author/frontmatter.md). To choose which values appear in published Markdown, see [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md).
 

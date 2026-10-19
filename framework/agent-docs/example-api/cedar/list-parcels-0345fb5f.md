@@ -3,6 +3,8 @@ id: reference.cedar.listParcels
 title: List parcel records
 summary: GET /Search/parcels/{scope}
 type: api-reference
+area: api
+subarea: api-reference
 subjectLifecycle: in-development
 canonical: /example-api/cedar/list-parcels-0345fb5f
 ---
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Cedar Parcel API · styling lab > Query > List parcel records
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 **Status: In development.**
 

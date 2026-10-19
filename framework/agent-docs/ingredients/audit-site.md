@@ -3,6 +3,8 @@ id: ingredient.audit-site
 title: Audit the Shoalrun docs project
 summary: Run configured project checks and inspect failures before sharing a change.
 type: ingredient
+area: quality
+subarea: quality-audits
 canonical: /ingredients/audit-site
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Reusable Shoalrun steps > Audit the Shoalrun docs project
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Run Shoalrun's configured checks. This repository's formatting check requires [Vale](https://vale.sh/) 3.20 or newer:
 

@@ -4,6 +4,8 @@ title: OpenAPI extension mappings
 summary: Map selected operation-level x-* values into Shoalrun metadata without
   depending on a particular authoring service.
 type: reference
+area: api
+subarea: api-contracts
 canonical: /publish/openapi-extension-mappings
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > OpenAPI extension mappings
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 OpenAPI permits [specification extensions](https://spec.openapis.org/oas/v3.1.0#specification-extensions) whose names begin with `x-`. Their names and values belong to the tool or team that wrote the description. Shoalrun reads standard OpenAPI fields directly and applies an extension only when the project config explicitly maps it to a supported Shoalrun field.
 

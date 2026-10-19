@@ -3,6 +3,8 @@ id: guide.custom-components
 title: Custom components
 summary: Register trusted component plugins with shared HTML and Markdown content.
 type: reference
+area: components
+subarea: components-custom
 canonical: /author/components/custom
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Custom components > Overview
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 A component package adds a custom component, such as `<CopyText>`, that authors can use in their pages. Its `content()` function produces the content shown in both HTML and Markdown. An optional browser module adds interactive behavior.
 

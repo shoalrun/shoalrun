@@ -3,6 +3,8 @@ id: guide.component.kbd
 title: Keyboard shortcuts
 summary: Mark up key names and shortcuts inside documentation text.
 type: reference
+area: components
+subarea: components-code
 canonical: /author/components/kbd
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Keyboard shortcuts
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Use `<Kbd>` to name a key or shortcut in a sentence. Include the action in the sentence; key styling alone does not explain what the shortcut does.
 

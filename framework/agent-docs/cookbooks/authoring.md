@@ -4,6 +4,8 @@ title: Authoring workflows
 summary: Choose a complete Shoalrun workflow for adding a guide, previewing a
   change, or refreshing agent docs.
 type: cookbook
+area: authoring
+subarea: authoring-composition
 canonical: /cookbooks/authoring
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Authoring workflows
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Choose the outcome you need for Shoalrun's own documentation. Each recipe includes setup, ordered work, handoffs, and an observable final check.
 

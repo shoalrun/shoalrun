@@ -4,6 +4,8 @@ title: Reader views
 summary: Reader-view configuration, page and section marks, controls, and
   agent-facing behavior.
 type: reference
+area: discovery
+subarea: discovery-reader-views
 canonical: /author/reader-views
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-01.**
+**Updated: 2026-10-19.**
 
 A reader view changes which pages appear in navigation and search. It also controls document cards and marked sections within pages. The site still publishes one URL for each page. A first-time visitor sees all content; a choice is saved in the browser and added to the URL so it can be shared.
 

@@ -3,6 +3,8 @@ id: guide.header
 title: Header links
 summary: Add links and buttons to the site masthead.
 type: reference
+area: appearance
+subarea: appearance-navigation
 canonical: /styling/header
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Header links
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 The masthead shows the site title, the publication label, the [search box](https://www.shoalrun.com/author/search.md), the [dark mode toggle](https://www.shoalrun.com/styling/color-modes.md) when it's on, and any links you configure. Add links under `site.header.links`:
 

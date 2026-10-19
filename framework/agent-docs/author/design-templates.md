@@ -3,6 +3,8 @@ id: guide.design-templates
 title: Design templates
 summary: Make repeatable page structures that help authors and agents serve readers.
 type: explanation
+area: authoring
+subarea: authoring-templates
 audiences:
   - authors
 canonical: /author/design-templates
@@ -16,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Shared writing guidance > Design templates
 
-**Updated: 2026-10-03.**
+**Updated: 2026-10-19.**
 
 A template defines the starting structure of a page. Use it for information that belongs in most pages of a particular kind. A writing guide explains how to write that information.
 

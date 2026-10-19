@@ -4,6 +4,8 @@ title: Agent authoring, search, and documentation answers
 summary: Reviewed agent drafts, improved search results, and better context for
   documentation answers.
 type: changelog-entry
+area: authoring
+subarea: authoring-agent-workflows
 canonical: /changelog/authoring-search
 date: 2026-10-03
 ---

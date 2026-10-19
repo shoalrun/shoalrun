@@ -3,6 +3,8 @@ id: reference.changelog
 title: Changelog
 summary: Notable changes to Shoalrun's compiler, CLI, and reader experience.
 type: reference
+area: project
+subarea: project-releases
 canonical: /changelog
 ---
 
@@ -14,11 +16,17 @@ Navigation section: [Changelog](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Changelog](https://www.shoalrun.com/changelog.md) > Changelog > All changes
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Updates to Shoalrun's private prototype. Each entry groups changes planned to ship together.
 
 ## Latest changes
+
+- 2026-10-19
+
+  [Experimental visual navigation and taxonomy enforcement](https://www.shoalrun.com/changelog/2026-10-19-visual-navigation.md)
+
+  Visual navigation and taxonomy validation.
 
 - 2026-10-18
 

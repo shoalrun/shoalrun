@@ -4,6 +4,8 @@ title: Share pages across documentation versions
 summary: "Versioning one docs site without copying every page: share unchanged
   pages, vary sections, and publish changed pages separately."
 type: how-to
+area: publishing
+subarea: publishing-versions
 canonical: /publish/publications
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Share pages across documentation versions
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Say you support v1 and v2. Your setup instructions are mostly the same, but v2 has a new credential and one extra guide. You can keep the common instructions in **one source file**, show the right credential in each version, and publish the extra guide only in v2.
 

@@ -4,6 +4,8 @@ title: Walkthroughs
 summary: Build code tutorials that explain code one step at a time, with a
   scrolling pane in HTML and every step in Markdown.
 type: reference
+area: components
+subarea: components-code
 canonical: /author/components/walkthroughs
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Walkthroughs
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Use `<Walkthrough>` to explain code step by step. Each step pairs an explanation with code built up across steps or read from a project file.
 

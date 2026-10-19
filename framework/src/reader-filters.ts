@@ -87,7 +87,7 @@ export function pageReaderFilters(frontmatter: { type: string; audiences?: strin
     const category = (frontmatter as Record<string, unknown>)[facet];
     if (category === undefined || !config.facets[facet]) continue;
     if (object(frontmatter.readerFilters) && Object.hasOwn(frontmatter.readerFilters, facet)) throw new Error(`${file}: use ${facet} or readerFilters.${facet}, not both`);
-    explicit[facet] = validateReaderSelection({ [facet]: [category] }, config, `${file}: category`)[facet];
+    explicit[facet] = validateReaderSelection({ [facet]: Array.isArray(category) ? category : [category] }, config, `${file}: category`)[facet];
   }
   return Object.fromEntries(Object.entries({ ...(config.typeDefaults[frontmatter.type] ?? {}), ...explicit }).filter(([, choices]) => choices.length));
 }

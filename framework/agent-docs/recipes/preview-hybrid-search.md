@@ -4,6 +4,8 @@ title: Preview semantic search in this checkout
 summary: Build the Shoalrun docs, index passages, and verify vector retrieval
   and lexical fallback locally.
 type: recipe
+area: discovery
+subarea: discovery-search
 canonical: /recipes/preview-hybrid-search
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Preview semantic search in this checkout
 
-**Updated: 2026-10-03.**
+**Updated: 2026-10-19.**
 
 Build the Shoalrun docs, index passages, and verify vector retrieval and lexical fallback locally.
 

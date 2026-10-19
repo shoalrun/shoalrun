@@ -3,6 +3,8 @@ id: guide.component.timeline
 title: Timelines
 summary: Show the current milestone and overall progress through a process.
 type: reference
+area: components
+subarea: components-procedures
 canonical: /author/components/timeline
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Timelines
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Use `<Timeline>` to show progress through an ordered set of milestones. Set `current` to the `id` of the milestone in progress. Earlier milestones become complete; later milestones become upcoming.
 

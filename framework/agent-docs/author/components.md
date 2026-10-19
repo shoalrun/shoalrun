@@ -3,6 +3,8 @@ id: guide.components
 title: Component reference
 summary: Find a dedicated guide for every supported MDX component and code block.
 type: reference
+area: components
+subarea: components-overview
 canonical: /author/components
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Overview
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, footnotes, and autolinks) and the MDX components below. Each component family has a page with syntax, attributes, HTML and Markdown behavior, and limits. Component names and attributes are case-sensitive. Unknown components, dynamic MDX expressions, and exports fail the build because they have no shared HTML and Markdown representation. The build drops `import` lines, so imported components are not available.
 

@@ -3,6 +3,8 @@ id: guide.cookbooks
 title: Let readers choose recipes with a cookbook
 summary: Create a page that helps readers choose among complete published recipes.
 type: how-to
+area: authoring
+subarea: authoring-composition
 canonical: /author/cookbooks
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Let readers choose recipes with a cookbook
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 A cookbook combines an authored introduction with a list or chooser of **published recipe pages**. It does not read ingredient files. Ingredients have already been copied into the recipes during authoring.
 

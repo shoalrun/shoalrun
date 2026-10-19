@@ -3,6 +3,8 @@ id: guide.audit
 title: Audit a docs project
 summary: Run project tests and local API representation checks with one CI command.
 type: how-to
+area: quality
+subarea: quality-audits
 canonical: /publish/audit
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Audit a docs project
 
-**Updated: 2026-10-01.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/publish/audit.md)
 

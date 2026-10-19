@@ -4,6 +4,8 @@ title: API reference styling lab
 summary: Inspect a synthetic API with complex schemas, filters, response
   formats, and webhooks.
 type: overview
+area: api
+subarea: api-examples
 canonical: /example-api/cedar
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Cedar Parcel API · styling lab > API reference styling lab
 
-**Updated: 2026-10-01.**
+**Updated: 2026-10-19.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 

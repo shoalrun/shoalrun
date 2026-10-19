@@ -3,6 +3,8 @@ id: ingredient.scaffold-page
 title: Scaffold a new guide
 summary: Create a draft guide with a stable ID without overwriting an existing file.
 type: ingredient
+area: authoring
+subarea: authoring-pages
 canonical: /ingredients/scaffold-page
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Reusable Shoalrun steps > Scaffold a new guide
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Choose a file name, title, and stable document ID for your real topic. The commands use `my-new-guide` as the example; replace those values together.
 

@@ -4,6 +4,8 @@ title: How Shoalrun works
 summary: Follow a page from source file to published HTML and Markdown, and
   learn the terms the rest of these docs use.
 type: explanation
+area: project
+subarea: project-overview
 canonical: /concepts
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > How Shoalrun works
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Shoalrun is a static documentation compiler. It reads a project config, Markdown and MDX pages, and local OpenAPI files. It writes an HTML site and a Markdown copy of every page. A build makes no network requests and no model calls, so the same inputs always give the same output.
 

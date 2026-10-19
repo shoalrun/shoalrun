@@ -4,6 +4,8 @@ title: Passage index
 summary: Passage file formats, chunking rules, identifiers, embedding behavior,
   and limits.
 type: reference
+area: discovery
+subarea: discovery-search
 subjectLifecycle: experimental
 canonical: /chat/passage-index
 ---
@@ -16,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Reference > Passage index
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

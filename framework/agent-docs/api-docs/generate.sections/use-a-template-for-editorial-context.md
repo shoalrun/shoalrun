@@ -4,6 +4,8 @@ title: Generate and select API pages
 summary: Choose operations, generate reference pages, and add editorial context
   to an API reference.
 type: how-to
+area: api
+subarea: api-generation
 canonical: /api-docs/generate
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/api-docs/generate.md)
 

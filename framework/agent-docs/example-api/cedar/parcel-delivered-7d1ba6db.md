@@ -3,6 +3,8 @@ id: reference.cedar.parcelDelivered
 title: Parcel delivered event
 summary: "Webhook event: parcel.delivered"
 type: api-reference
+area: api
+subarea: api-reference
 canonical: /example-api/cedar/parcel-delivered-7d1ba6db
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Cedar Parcel API · styling lab > Parcels > Parcel delivered event
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 

@@ -4,6 +4,8 @@ title: Authoring snapshot previews and review reports
 summary: Review affected pages, findings, coverage, and freshness beside an
   exact snapshot preview.
 type: changelog-entry
+area: authoring
+subarea: authoring-agent-workflows
 canonical: /changelog/authoring-preview
 date: 2026-10-13
 ---

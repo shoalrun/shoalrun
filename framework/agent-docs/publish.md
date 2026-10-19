@@ -4,6 +4,8 @@ title: Deploy your documentation
 summary: Build your site, choose Vercel or Node hosting, and verify the deployed
   HTML and Markdown.
 type: how-to
+area: publishing
+subarea: publishing-hosting
 canonical: /publish
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Deploy your documentation
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 After the [quickstart](https://www.shoalrun.com/start.md), you have a source project and a compiled Shoalrun CLI. Use the commands below from `my-docs/`, with `SHOALRUN_CLI` still pointing to the checkout's `framework/dist/cli.js`.
 

@@ -4,6 +4,8 @@ title: Content negotiation
 summary: Understand content negotiation, why it helps agents, and what a hosting
   provider needs to do.
 type: reference
+area: discovery
+subarea: discovery-agents
 canonical: /publish/content-negotiation
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Content negotiation
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 

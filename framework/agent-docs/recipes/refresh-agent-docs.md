@@ -3,6 +3,8 @@ id: recipe.refresh-agent-docs
 title: Refresh Shoalrun's bundled agent docs
 summary: Regenerate offline docs, verify CLI search and read, and run project audits.
 type: recipe
+area: discovery
+subarea: discovery-agents
 canonical: /recipes/refresh-agent-docs
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Refresh Shoalrun's bundled agent docs
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Regenerate offline docs, verify CLI search and read, and run project audits.
 

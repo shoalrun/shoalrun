@@ -3,6 +3,8 @@ id: guide.cards
 title: Cards and collections
 summary: Link to documents by stable ID and build filtered card collections.
 type: reference
+area: components
+subarea: components-navigation
 canonical: /author/components/cards
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Cards and collections
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/components/cards.md)
 

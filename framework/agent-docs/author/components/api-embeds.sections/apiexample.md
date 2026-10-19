@@ -3,6 +3,8 @@ id: guide.component.api-embeds
 title: ApiExample and ApiSchema
 summary: Include named OpenAPI examples and selected schemas in authored pages.
 type: reference
+area: components
+subarea: components-api
 canonical: /author/components/api-embeds
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > ApiExample and ApiSchema
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/components/api-embeds.md)
 

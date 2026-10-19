@@ -4,6 +4,8 @@ title: Try a theme
 summary: Preview every preset, palette, and color mode on this page, then copy
   the config.
 type: how-to
+area: appearance
+subarea: appearance-themes
 canonical: /styling/try
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Try a theme
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Pick a shape, a palette, and a mode. This page restyles itself as you choose. Scroll down to see how each option styles the sample content, then copy the config into `docs.config.yaml`.
 

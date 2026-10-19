@@ -3,6 +3,8 @@ id: guide.component.math
 title: Math
 summary: Render inline and display LaTeX expressions at build time.
 type: reference
+area: components
+subarea: components-visuals
 canonical: /author/components/math
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Math
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Use `<Math>` with a literal LaTeX expression. It supports the KaTeX math subset and reports invalid expressions during the build.
 

@@ -4,6 +4,8 @@ title: Set up local documentation chat
 summary: Build a passage index, configure a chat service, and verify cited
   answers locally.
 type: how-to
+area: discovery
+subarea: discovery-chat
 subjectLifecycle: experimental
 canonical: /chat/setup
 ---
@@ -16,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Documentation chat > Set up locally
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

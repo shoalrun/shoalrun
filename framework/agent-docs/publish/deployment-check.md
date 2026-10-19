@@ -3,6 +3,8 @@ id: guide.deployment-check
 title: Check a deployed site
 summary: Run the provider-neutral HTTP checker after publishing and before release.
 type: how-to
+area: quality
+subarea: quality-audits
 canonical: /publish/deployment-check
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Check a deployed site
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 A local build verifies the generated files. After deployment, check what the host actually serves. From the `framework/` directory in a Shoalrun checkout, pass the deployed **site origin** to the post-deploy checker:
 

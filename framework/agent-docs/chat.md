@@ -4,6 +4,8 @@ title: How documentation answers work
 summary: Understand how passages, embeddings, scoring, and a chat model produce
   cited answers.
 type: explanation
+area: discovery
+subarea: discovery-chat
 subjectLifecycle: experimental
 canonical: /chat
 ---
@@ -16,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Documentation chat > How answers work
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

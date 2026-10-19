@@ -3,6 +3,8 @@ id: ingredient.preview-site
 title: Serve the built docs locally
 summary: Open a successful build over HTTP and compare a page with its Markdown twin.
 type: ingredient
+area: publishing
+subarea: publishing-builds
 canonical: /ingredients/preview-site
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Reusable Shoalrun steps > Serve the built docs locally
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Serve the build from the repository root:
 

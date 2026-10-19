@@ -1,4 +1,5 @@
 import { loadComponentPlugins } from './component-plugins.js';
+import { resolveTaxonomy } from './taxonomy.js';
 import { resolveMcp } from './mcp-config.js';
 import { fictionalDocument, resolveLlmsDiscovery } from './llms-discovery.js';
 import { resolveAnalytics } from './analytics.js';
@@ -524,7 +525,7 @@ export async function compile(configFile: string, destination?: string, provenan
   const llmsDiscovery = resolveLlmsDiscovery(configField(config.outputs, 'llms'));
   const { manifest, headers, sitemaps } = buildPublicationManifest({
     fictionalDocuments: new Set(rendered.filter(({ doc }) => fictionalDocument(doc, llmsDiscovery)).map(({ doc }) => doc)),
-    configDigest: loaded.digest, synonyms, basePath, publicPath, readerFilters, dependencies: manifestDependencies,
+    configDigest: loaded.digest, synonyms, basePath, publicPath, readerFilters, taxonomy: resolveTaxonomy(configField(config.frontmatter, 'taxonomy')), dependencies: manifestDependencies,
     rendered, resolvedNavigation, cardUses, snippetUses, apiEmbedUses, focusedContracts, operations,
     publishedRelationships, redirects, apiSources, siteOrigin, siteIndexing: config.site.indexing !== false,
     siteUpdated: config.site.updated, diagramAssets, heroImages, faviconRoute, catalog

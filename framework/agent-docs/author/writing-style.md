@@ -4,6 +4,8 @@ title: Example writing guide
 summary: Adapt this site's writing guide for your own documentation and agent
   instructions.
 type: reference
+area: authoring
+subarea: authoring-writing
 canonical: /author/writing-style
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Shared writing guidance > Example writing guide
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
 

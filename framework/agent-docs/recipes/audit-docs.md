@@ -4,6 +4,8 @@ title: Build and audit this documentation site
 summary: Build current documentation, check its artifacts, and run the
   configured audits.
 type: recipe
+area: quality
+subarea: quality-audits
 canonical: /recipes/audit-docs
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Build and audit this documentation site
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Build current documentation, check its artifacts, and run the configured audits.
 

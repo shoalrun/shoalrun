@@ -4,6 +4,8 @@ title: Authoring tools commands
 summary: Look up provider-free project discovery, reference reads, baselines,
   and snapshot validation.
 type: reference
+area: authoring
+subarea: authoring-agent-workflows
 audiences:
   - authors
 subjectLifecycle: experimental
@@ -18,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Project tools > Commands
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

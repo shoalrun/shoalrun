@@ -5,6 +5,8 @@ summary: Deliberate limits on Shoalrun's scope, including automatic skill
   builders, general agent orchestration, and using reader views for
   authorization.
 type: explanation
+area: project
+subarea: project-overview
 canonical: /non-goals
 ---
 
@@ -16,7 +18,7 @@ Navigation section: [Project updates](https://www.shoalrun.com/.well-known/shoal
 
 Breadcrumbs: [Project updates](https://www.shoalrun.com/status.md) > Project > Non-goals
 
-**Updated: 2026-10-14.**
+**Updated: 2026-10-19.**
 
 Shoalrun's scope includes publishing documentation that people and agents can discover and read. This page records capabilities we deliberately exclude and the reasoning behind those decisions.
 

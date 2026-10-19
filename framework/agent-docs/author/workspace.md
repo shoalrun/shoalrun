@@ -4,6 +4,8 @@ title: Check working-tree documentation edits
 summary: Discover a project, capture a baseline, edit files, and validate an
   isolated copy.
 type: how-to
+area: authoring
+subarea: authoring-agent-workflows
 audiences:
   - authors
 subjectLifecycle: experimental

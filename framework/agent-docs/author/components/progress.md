@@ -3,6 +3,8 @@ id: guide.component.progress
 title: Progress
 summary: Show a bounded count with a visible label and native progress bar.
 type: reference
+area: components
+subarea: components-procedures
 canonical: /author/components/progress
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Progress
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Use `<Progress>` for a published count in a tutorial or migration guide. It shows the amount completed as text and as a bar. Update the source and rebuild the site when the shared state changes.
 

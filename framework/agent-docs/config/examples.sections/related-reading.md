@@ -4,6 +4,8 @@ title: Example configs
 summary: Complete, working docs.config.yaml files for common kinds of
   documentation sites.
 type: reference
+area: publishing
+subarea: publishing-configuration
 canonical: /config/examples
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Example projects
 
-**Updated: 2026-09-28.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/config/examples.md)
 

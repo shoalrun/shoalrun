@@ -3,6 +3,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { parseYaml } from './yaml-value.js';
 import { validateSearch } from './search-config.js';
+import { resolveTaxonomy } from './taxonomy.js';
 import { validateCookbooks } from './cookbook-chooser.js';
 
 export type Source = { file: string; history: string[] };
@@ -97,6 +98,7 @@ export async function loadConfig(file: string) {
   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new ConfigError(`${root}: unknown setting ${key}`);
   validateCookbooks(value.cookbooks, root);
   validateSearch(value.search);
+  resolveTaxonomy(object(value.frontmatter) ? value.frontmatter.taxonomy : undefined);
   if (object(value.publications) && ((object(value.publications.defaults) && Object.hasOwn(value.publications.defaults, 'locale')) || (Array.isArray(value.publications.enabled) && value.publications.enabled.some(item => object(item) && Object.hasOwn(item, 'locale'))))) throw new ConfigError(`${root}: publications.locale is now publications.language; page locale is reserved for formatting conventions`);
   return { value, tree, dependencies: [...dependencies].sort(), digest: createHash('sha256').update(JSON.stringify(value)).digest('hex') };
 }

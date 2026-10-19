@@ -3,6 +3,8 @@ id: guide.agent-skills
 title: Use the bundled agent skills
 summary: Give an agent the setup and authoring workflows that ship with Shoalrun.
 type: how-to
+area: authoring
+subarea: authoring-agent-workflows
 canonical: /contribute/agent-skills
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Use the bundled agent skills
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Give an agent a bundled skill when you want it to follow Shoalrun's setup, authoring, recipe, component, or walkthrough workflow. You need an agent that can read the skill file and run commands, plus a Shoalrun checkout or installed CLI.
 
@@ -64,8 +66,6 @@ If the agent lacks product guidance, have it run `shoalrun docs search` and `sho
 - [Frontmatter field reference](https://www.shoalrun.com/author/frontmatter-reference.md) — Point agents at the local inventory of page fields this project accepts.
 
 - [Apply a checked edit plan](https://www.shoalrun.com/author/authoring-agent.md) — Let an agent run the same draft, check, and apply loop. (Status: experimental.)
-
-- [Maintain bundled skills](https://www.shoalrun.com/contribute/maintain-skills.md) — Use the workflows in a documentation project.
 
 - [Getting started](https://www.shoalrun.com/start.md) — Give an agent the same setup and authoring workflow as a bundled skill.
 

@@ -3,6 +3,8 @@ id: guide.host-adapters
 title: Add Shoalrun to another build or host
 summary: Publish compiled files alongside another site and supply the host's HTTP rules.
 type: how-to
+area: publishing
+subarea: publishing-hosting
 canonical: /publish/host-adapters
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Add Shoalrun to another build or host
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Shoalrun builds a complete static site without a host framework. To include its pages in another build system, run Shoalrun's CLI as a build step. Then copy the generated files into the host's output. The host does not need to parse Shoalrun's MDX or OpenAPI sources.
 

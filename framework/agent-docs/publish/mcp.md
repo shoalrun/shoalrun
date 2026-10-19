@@ -4,6 +4,8 @@ title: Connect an MCP client
 summary: Connect read-only MCP clients over stdio or HTTP to search and read
   built documentation.
 type: how-to
+area: discovery
+subarea: discovery-mcp
 canonical: /publish/mcp
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > MCP > Connect an MCP client
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Connect an MCP client to built documentation through four read-only tools. Use stdio for a client-launched local process, or enable an HTTP endpoint on Node or in a generated Vercel function. Both use the same search and Markdown reading core.
 

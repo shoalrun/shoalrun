@@ -8,12 +8,13 @@ import type { materializePages } from './page-materialization.js';
 import { navigationPath, navigationTab, navigationTabRecord, type resolveProjectNavigation } from './project-navigation.js';
 import type { ReaderFiltersConfig } from './reader-filters.js';
 import { sitemapFiles } from './sitemap.js';
+import type { Taxonomy } from './taxonomy.js';
 import type { SnippetUse } from './snippets.js';
 
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
 const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
 
-export function buildPublicationManifest({ fictionalDocuments, configDigest, synonyms, basePath, publicPath, readerFilters, dependencies, rendered,
+export function buildPublicationManifest({ fictionalDocuments, configDigest, synonyms, basePath, publicPath, readerFilters, taxonomy, dependencies, rendered,
   resolvedNavigation, cardUses, snippetUses, apiEmbedUses, focusedContracts, operations, publishedRelationships,
   redirects, apiSources, siteOrigin, siteIndexing, siteUpdated, diagramAssets, heroImages, faviconRoute, catalog }: {
   fictionalDocuments: Set<Document>;
@@ -22,6 +23,7 @@ export function buildPublicationManifest({ fictionalDocuments, configDigest, syn
   basePath: string;
   publicPath: (route: string) => string;
   readerFilters?: ReaderFiltersConfig;
+  taxonomy?: Taxonomy;
   dependencies: string[];
   rendered: Awaited<ReturnType<typeof materializePages>>['rendered'];
   resolvedNavigation: Map<string, ReturnType<typeof resolveProjectNavigation>>;
@@ -59,6 +61,7 @@ export function buildPublicationManifest({ fictionalDocuments, configDigest, syn
     basePath,
     ...(sitemaps.size ? { sitemap: publicPath('/sitemap.xml') } : {}),
     ...(readerFilters ? { readerFacets: readerFilters.facets } : {}),
+    ...(taxonomy ? { taxonomy } : {}),
     dependencies,
     ...(tabs.length ? { navigationTabs: tabs } : {}),
     documents: rendered.map(({ doc, markdown, sections }) => ({ id: doc.frontmatter.id, demo: fictionalDocuments.has(doc), type: doc.frontmatter.type, title: doc.frontmatter.title, summary: doc.frontmatter.summary, subjectLifecycle: doc.frontmatter.subjectLifecycle ?? null, ...(doc.change ? { change: doc.change } : {}), ...(doc.subjectDeprecation ? { subjectDeprecation: doc.subjectDeprecation } : {}), variant: doc.variant, url: doc.route, markdownUrl: doc.markdownRoute, ...tabFor(doc), indexable: indexable(doc), ...(updatedFor(doc) ? { updated: updatedFor(doc) } : {}), ...(doc.frontmatter.verified ? { verified: doc.frontmatter.verified } : {}), contentDigest: doc.contentDigest, breadcrumbs: navigationPath(resolvedNavigation.get(`${doc.variant.channel}|${doc.variant.version}|${doc.variant.language}`) ?? [], doc.route), ...(doc.frontmatter.product !== undefined ? { product: doc.frontmatter.product } : {}), ...(doc.frontmatter.area !== undefined ? { area: doc.frontmatter.area } : {}), ...(doc.frontmatter.subarea !== undefined ? { subarea: doc.frontmatter.subarea } : {}), ...(readerFilters ? { readerFilters: doc.readerFilters ?? {} } : {}), cardTargets: cardUses.get(doc)?.targets ?? [], cardQueries: cardUses.get(doc)?.queries ?? [], snippets: [...new Set(snippetUses.filter(use => use.documentId === doc.frontmatter.id).map(use => use.id))], apiEmbeds: apiEmbedUses.filter(use => use.documentKey === keyFor(doc.frontmatter.id, doc.variant)).map(({ sourceFile, documentKey, ...request }) => request), focusedContractUrl: doc.focusedContractUrl ?? null, focusedContractBytes: doc.focusedContractUrl ? focusedContracts.get(doc.focusedContractUrl)?.bytes : null, focusedContractDigest: doc.focusedContractUrl ? focusedContracts.get(doc.focusedContractUrl)?.digest : null, sections: (sections ?? []).map(({ content, ...record }) => record), ...markdownSize(markdown), digest: digest(markdown) })),

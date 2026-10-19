@@ -4,6 +4,8 @@ title: Compose and maintain recipes
 summary: Use Shoalrun ingredient files and a recipe spec to produce a complete,
   reviewable task page.
 type: how-to
+area: authoring
+subarea: authoring-composition
 canonical: /author/recipe-drafts
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Use ingredients when several recipes share instructions you want to maintain in one place. This guide follows Shoalrun's **Build and audit this documentation site** recipe from its source files to its published page.
 

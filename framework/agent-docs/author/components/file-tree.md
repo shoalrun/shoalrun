@@ -3,6 +3,8 @@ id: guide.component.file-tree
 title: File trees
 summary: Show nested files and folders with links and an indented Markdown equivalent.
 type: reference
+area: components
+subarea: components-code
 canonical: /author/components/file-tree
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > File trees
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 `<FileTree>` shows a file layout or other hierarchy. `<Tree>` is an alias. Add `<Folder>` branches and `<File>` leaves; folders may contain more folders or files.
 

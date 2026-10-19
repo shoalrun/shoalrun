@@ -3,6 +3,8 @@ id: guide.color-modes
 title: Light and dark mode
 summary: Light, dark, and system modes, toggle behavior, storage, and accessibility.
 type: reference
+area: appearance
+subarea: appearance-themes
 canonical: /styling/color-modes
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Light and dark mode
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Every [palette](https://www.shoalrun.com/styling/palettes.md) has a light set and a dark set. `theme.mode` decides which set readers see.
 

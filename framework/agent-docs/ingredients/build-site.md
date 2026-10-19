@@ -3,6 +3,8 @@ id: ingredient.build-site
 title: Build the Shoalrun docs site
 summary: Compile authored documentation into local HTML, Markdown, and manifests.
 type: ingredient
+area: publishing
+subarea: publishing-builds
 canonical: /ingredients/build-site
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Reusable Shoalrun steps > Build the Shoalrun docs site
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Use the installed CLI to build Shoalrun's documentation:
 

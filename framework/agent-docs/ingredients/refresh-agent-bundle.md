@@ -3,6 +3,8 @@ id: ingredient.refresh-agent-bundle
 title: Regenerate the agent documentation bundle
 summary: Build the offline Markdown and search index used by the CLI.
 type: ingredient
+area: discovery
+subarea: discovery-agents
 canonical: /ingredients/refresh-agent-bundle
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Reusable Shoalrun steps > Regenerate the agent documentation bundle
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Export the already built site for the framework’s next documentation snapshot:
 

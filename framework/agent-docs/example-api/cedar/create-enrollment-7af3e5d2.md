@@ -3,6 +3,8 @@ id: reference.cedar.createEnrollment
 title: Create a parcel enrollment
 summary: POST /Enrollments
 type: api-reference
+area: api
+subarea: api-reference
 subjectLifecycle: beta
 canonical: /example-api/cedar/create-enrollment-7af3e5d2
 ---
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Cedar Parcel API · styling lab > Enrollment > Create a parcel enrollment
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 **Status: Beta.**
 

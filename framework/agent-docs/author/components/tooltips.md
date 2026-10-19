@@ -4,6 +4,8 @@ title: Tooltips
 summary: Show brief supporting text on hover or keyboard focus, with a tap
   option for touch readers.
 type: reference
+area: components
+subarea: components-prose
 canonical: /author/components/tooltips
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Tooltips
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Use `<Tooltip>` for brief supporting text beside a term. The text appears when readers hover over or focus the label. Use [Short definitions](https://www.shoalrun.com/author/components/info-hint.md) for click-to-expand explanations, or a [callout](https://www.shoalrun.com/author/components/callout.md) for warnings and instructions that belong in the reading path.
 

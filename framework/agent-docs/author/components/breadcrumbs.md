@@ -3,6 +3,8 @@ id: guide.component.breadcrumbs
 title: Breadcrumbs
 summary: Show where a page sits in the configured navigation hierarchy.
 type: reference
+area: appearance
+subarea: appearance-navigation
 canonical: /author/components/breadcrumbs
 ---
 
@@ -14,9 +16,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Navigation > Breadcrumbs
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
-Shoalrun generates breadcrumbs from the [navigation tree](https://www.shoalrun.com/author/navigation.md). Place a page under its intended groups in navigation; there is no `<Breadcrumbs>` tag to repeat in each MDX file.
+Breadcrumbs are built into site navigation. Shoalrun generates them from the [navigation tree](https://www.shoalrun.com/author/navigation.md). Place a page under its intended groups in navigation; there is no `<Breadcrumbs>` tag to repeat in each MDX file.
 
 ## Configuration
 

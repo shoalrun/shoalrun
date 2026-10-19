@@ -3,6 +3,8 @@ id: guide.templates
 title: Templates
 summary: Create and edit page starting points, then scaffold drafts from them.
 type: reference
+area: authoring
+subarea: authoring-templates
 audiences:
   - authors
 canonical: /author/templates
@@ -16,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Templates
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/templates.md)
 

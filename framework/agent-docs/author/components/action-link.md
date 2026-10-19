@@ -4,6 +4,8 @@ title: Action links
 summary: Give a next step a prominent link style while retaining real navigation
   semantics.
 type: reference
+area: components
+subarea: components-navigation
 canonical: /author/components/action-link
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Action links
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 `<ActionLink>` styles a navigation link as a prominent action. `<Button>` is an alias for authors migrating button-like links. Both render a real `<a>` element, so they work with keyboard navigation and without JavaScript.
 

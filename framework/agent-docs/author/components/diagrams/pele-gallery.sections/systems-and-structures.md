@@ -3,6 +3,8 @@ id: reference.pele-gallery
 title: Pele gallery
 summary: Browse Mermaid-syntax diagrams and flowchart shapes rendered with Pele.
 type: reference
+area: components
+subarea: components-visuals
 canonical: /author/components/diagrams/pele-gallery
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Diagrams > Pele gallery
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/components/diagrams/pele-gallery.md)
 

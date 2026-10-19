@@ -4,6 +4,8 @@ title: Evaluate agent tasks against your docs
 summary: Define realistic tasks, record reviewed answers from your own agent,
   and check the results against a documentation build.
 type: how-to
+area: quality
+subarea: quality-evaluations
 canonical: /publish/evals
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Evaluate agent tasks against your docs
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun does not launch agents, choose a model, or grade prose.
 

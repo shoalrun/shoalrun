@@ -4,6 +4,8 @@ title: Publish on Vercel
 summary: Build a Vercel deployment with Markdown negotiation and correct
   discovery headers.
 type: how-to
+area: publishing
+subarea: publishing-hosting
 canonical: /publish/vercel
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Publish on Vercel
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/publish/vercel.md)
 

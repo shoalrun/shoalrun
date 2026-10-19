@@ -4,6 +4,8 @@ title: Themes
 summary: Pick a site shape, pair it with a color palette, and choose how light
   and dark mode behave.
 type: reference
+area: appearance
+subarea: appearance-themes
 canonical: /styling/themes
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Themes
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 The `theme` setting controls how the HTML site looks. It has five keys, and each has a default:
 

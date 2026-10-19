@@ -3,6 +3,8 @@ id: guide.component.badge
 title: Badges
 summary: Put a short, labeled status or platform name inside a sentence.
 type: reference
+area: components
+subarea: components-prose
 canonical: /author/components/badge
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Badges
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 `<Badge>` adds a compact label inside prose, a heading, or a table cell. Write the state in its text; color and the optional icon only reinforce it.
 

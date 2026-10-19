@@ -3,6 +3,8 @@ id: guide.cards
 title: Cards and collections
 summary: Link to documents by stable ID and build filtered card collections.
 type: reference
+area: components
+subarea: components-navigation
 canonical: /author/components/cards
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Cards and collections
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 A card is a linked preview of another documentation page: it shows a title and short preview so readers can decide where to go next. Cards use the target page's title, the project's configured `outputs.text.card` field, and its current URL. The target is the page the reader will open when they select the card.
 

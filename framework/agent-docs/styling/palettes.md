@@ -4,6 +4,8 @@ title: Color palettes
 summary: Use a built-in palette or extend one with your brand colors. The build
   checks every palette against WCAG contrast.
 type: reference
+area: appearance
+subarea: appearance-themes
 canonical: /styling/palettes
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Color palettes
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 A palette sets every color token on the site, with one set for light mode and one for dark mode. Choose a built-in palette by name, or extend one with your own colors.
 

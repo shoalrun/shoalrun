@@ -4,6 +4,8 @@ title: How snapshot validation works
 summary: Understand captured files, affected-page coverage, freshness, and
   validation limits.
 type: explanation
+area: authoring
+subarea: authoring-agent-workflows
 audiences:
   - authors
 subjectLifecycle: experimental
@@ -18,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Project tools > Snapshot validation
 
-**Updated: 2026-10-14.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

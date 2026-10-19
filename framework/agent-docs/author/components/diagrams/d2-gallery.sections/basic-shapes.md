@@ -3,6 +3,8 @@ id: reference.d2-gallery
 title: D2 gallery
 summary: Browse D2 diagrams, layout engines, and basic shapes with copyable source.
 type: reference
+area: components
+subarea: components-visuals
 canonical: /author/components/diagrams/d2-gallery
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Diagrams > D2 gallery
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/components/diagrams/d2-gallery.md)
 

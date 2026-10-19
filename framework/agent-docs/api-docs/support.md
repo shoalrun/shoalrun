@@ -4,6 +4,8 @@ title: OpenAPI support and limits
 summary: Check supported OpenAPI operations, schema keywords, examples, and
   source restrictions before importing a specification.
 type: reference
+area: api
+subarea: api-contracts
 canonical: /api-docs/support
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > OpenAPI support and limits
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Shoalrun renders a defined subset of OpenAPI into HTML, Markdown, and focused contracts. Check these limits before importing a large specification. A supported OpenAPI version does not mean every feature in that version can be rendered.
 

@@ -3,6 +3,8 @@ id: guide.component.fields
 title: Fields
 summary: Write field lists in MDX with the same readable format as OpenAPI schemas.
 type: reference
+area: components
+subarea: components-prose
 canonical: /author/components/fields
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Fields
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Use `<Fields>` and `<Field>` to describe fields that are not selected from an OpenAPI schema, or to explain a small task-specific subset in your own words. The list uses the same field styling as generated schemas. If the exact contract already exists in OpenAPI, [ApiSchema](https://www.shoalrun.com/author/components/api-embeds.md) can include the source schema or one of its fields.
 

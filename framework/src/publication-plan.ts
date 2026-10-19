@@ -62,7 +62,7 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
     } : undefined, sourceOverrides?.get(file));
     frontmatter.language ??= language;
     applyFormattingLocale(frontmatter, config.frontmatter, sourceFrontmatter);
-    validateFrontmatter(frontmatter, config.frontmatter, file);
+    validateFrontmatter(frontmatter, config.frontmatter, file, sourceFrontmatter);
     const pagePublications = frontmatter.publications;
     if (pagePublications) {
       if (sourceFrontmatter.channel !== undefined || sourceFrontmatter.version !== undefined) throw new Error(`${file}: use publications instead of page-level channel or version`);

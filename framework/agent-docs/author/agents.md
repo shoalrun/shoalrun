@@ -4,6 +4,8 @@ title: Write with agents
 summary: Use your existing coding agent with project guidance, templates, and
   provider-free documentation tools.
 type: explanation
+area: authoring
+subarea: authoring-writing
 audiences:
   - authors
 canonical: /author/agents
@@ -17,7 +19,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Overview
 
-**Updated: 2026-10-14.**
+**Updated: 2026-10-19.**
 
 Use your existing coding agent to write and revise Shoalrun documentation. Your agent supplies its model and evidence-gathering tools; Shoalrun supplies templates, canonical guidance, project discovery, and isolated snapshot validation. You review factual claims, accept changes, and decide when to publish.
 

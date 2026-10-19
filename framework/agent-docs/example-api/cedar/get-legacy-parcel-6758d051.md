@@ -3,6 +3,8 @@ id: reference.cedar.getLegacyParcel
 title: Get a parcel through the old route
 summary: GET /legacy/parcels/{parcelId}
 type: api-reference
+area: api
+subarea: api-reference
 subjectLifecycle: deprecated
 canonical: /example-api/cedar/get-legacy-parcel-6758d051
 ---
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Cedar Parcel API · styling lab > Legacy > Get a parcel through the old route
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 **Status: Deprecated.**
 

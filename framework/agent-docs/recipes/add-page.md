@@ -4,6 +4,8 @@ title: Add a page to this documentation site
 summary: Create a guide, add navigation, build and audit it, then refresh its
   agent documentation.
 type: recipe
+area: authoring
+subarea: authoring-pages
 canonical: /recipes/add-page
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Add a page to this documentation site
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Create a guide, add navigation, build and audit it, then refresh its agent documentation.
 

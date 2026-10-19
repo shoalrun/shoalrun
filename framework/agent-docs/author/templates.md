@@ -3,6 +3,8 @@ id: guide.templates
 title: Templates
 summary: Create and edit page starting points, then scaffold drafts from them.
 type: reference
+area: authoring
+subarea: authoring-templates
 audiences:
   - authors
 canonical: /author/templates
@@ -16,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Templates
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 

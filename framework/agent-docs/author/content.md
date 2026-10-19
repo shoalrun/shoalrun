@@ -3,6 +3,8 @@ id: guide.content-identity
 title: Content and stable IDs
 summary: Give each page a durable identity and publish explicit variants.
 type: explanation
+area: authoring
+subarea: authoring-pages
 canonical: /author/content
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Content and stable IDs
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Author pages as `.md` or `.mdx` under the content directory, `site.contentDir` (default `content`, relative to `docs.config.yaml`). The build parses and validates every `.md` and `.mdx` file there, drafts included, so a stray README without frontmatter fails the build. The `id` identifies a document independently of its filename, title, slug, and navigation position. A page's `slug` sets its public route. The compiler rejects route collisions and duplicate IDs within a publication variant.
 

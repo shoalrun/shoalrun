@@ -3,6 +3,8 @@ id: guide.component.code-blocks
 title: Code blocks
 summary: Write fenced examples and configure Shiki or another highlighter.
 type: reference
+area: components
+subarea: components-code
 canonical: /author/components/code-blocks
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Code blocks
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Fenced code is ordinary Markdown rather than an MDX component. It belongs in the component reference because authors use it beside components to show commands, configuration, and payloads.
 

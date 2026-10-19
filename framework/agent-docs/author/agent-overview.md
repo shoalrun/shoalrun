@@ -4,6 +4,8 @@ title: Authoring tools for your coding agent
 summary: Understand project discovery, working-tree editing, snapshot
   validation, and human review.
 type: explanation
+area: authoring
+subarea: authoring-agent-workflows
 audiences:
   - authors
 subjectLifecycle: experimental
@@ -18,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Project tools > Tools overview
 
-**Updated: 2026-10-14.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

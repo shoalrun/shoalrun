@@ -4,6 +4,8 @@ title: Portable working-tree authoring workflow
 summary: Guide existing coding agents through discovery, native editing,
   validation, and snapshot review.
 type: changelog-entry
+area: authoring
+subarea: authoring-agent-workflows
 canonical: /changelog/working-tree-skill
 date: 2026-10-13
 ---

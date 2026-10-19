@@ -3,6 +3,8 @@ id: reference.notes.getNote
 title: Get a note
 summary: GET /notes/{id}
 type: api-reference
+area: api
+subarea: api-reference
 canonical: /example-api/generated/get-note-cbedb319
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Example Notes API > Notes > Get a note
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 

@@ -5,6 +5,8 @@ summary: Set page identity, publication, and presentation fields before publishi
 description: Learn how page metadata, project defaults, and publication choices
   shape the site and its Markdown output.
 type: reference
+area: authoring
+subarea: authoring-metadata
 audiences:
   - authors
   - maintainers
@@ -21,7 +23,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Page metadata
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -54,6 +56,8 @@ See the [generated frontmatter reference](https://www.shoalrun.com/author/frontm
 ### Next steps
 
 - [Templates](https://www.shoalrun.com/author/templates.md) — Pre-fill these fields in the starting points for new pages.
+
+- [Design and enforce a page taxonomy](https://www.shoalrun.com/author/taxonomy.md) — Define allowed page categories and enforce your project's taxonomy.
 
 ### Go deeper
 

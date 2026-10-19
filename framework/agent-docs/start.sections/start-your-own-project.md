@@ -4,6 +4,8 @@ title: Getting started
 summary: Create a documentation site, scaffold your first page from a template,
   and preview its HTML and Markdown.
 type: tutorial
+area: project
+subarea: project-overview
 canonical: /start
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/start.md)
 

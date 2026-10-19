@@ -4,6 +4,8 @@ title: Write release notes and changelog entries
 summary: Write flexible release summaries and changelog entries identified by
   date or version.
 type: how-to
+area: project
+subarea: project-releases
 canonical: /author/release-notes
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write release notes
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 Release notes and changelog entries serve different reading needs. A **release note** summarizes a named release, quarter, or other period. A **changelog entry** records a change identified by date, release version, or both. Both are ordinary Markdown or MDX pages with HTML and Markdown outputs and stable IDs.
 

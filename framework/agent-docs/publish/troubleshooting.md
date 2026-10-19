@@ -4,6 +4,8 @@ title: Troubleshooting
 summary: Troubleshoot a build, recover missing pages and fix document links,
   route collisions, MDX errors, API review digests, and diagram rendering.
 type: how-to
+area: quality
+subarea: quality-audits
 canonical: /publish/troubleshooting
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Troubleshooting
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Run these commands from your documentation project, with `SHOALRUN_CLI` pointing to the compiled CLI as in the [quickstart](https://www.shoalrun.com/start.md). Start by rebuilding so the error names the current source file:
 

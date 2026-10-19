@@ -3,6 +3,8 @@ id: guide.component.only
 title: Content for one format
 summary: Use Only to add content to the HTML page or its Markdown twin alone.
 type: reference
+area: components
+subarea: components-procedures
 canonical: /author/components/only
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Content for one format
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Use `<Only>` to author content for one output format. Shared material stays outside the blocks; a block can contain an instruction, explanation, example, or link that serves only one version:
 

@@ -4,6 +4,8 @@ title: Agent reading and evaluation
 summary: Smaller Markdown reads, clearer lifecycle and change guidance, and
   exact-output evaluation comparisons.
 type: changelog-entry
+area: quality
+subarea: quality-evaluations
 canonical: /changelog/2026-10-15-evaluation-builds
 date: 2026-10-15
 ---

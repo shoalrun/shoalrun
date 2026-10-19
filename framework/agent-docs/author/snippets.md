@@ -3,6 +3,8 @@ id: guide.snippets
 title: Reuse prose across pages
 summary: Share validated prose across pages with typed variables.
 type: how-to
+area: authoring
+subarea: authoring-composition
 canonical: /author/snippets
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reusable snippets
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 A snippet is a shared Markdown or MDX fragment that the build expands into each page that includes it. Use one when the wording must stay in sync across pages. A [template](https://www.shoalrun.com/author/templates.md) creates a draft once; editing a template does not change existing pages.
 

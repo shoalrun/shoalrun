@@ -4,6 +4,8 @@ title: Add an OpenAPI API
 summary: Import a local OpenAPI file, author an operation page, review its
   public content, and build HTML and Markdown.
 type: how-to
+area: api
+subarea: api-contracts
 canonical: /publish/api-references
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Add an OpenAPI API
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/publish/api-references.md)
 

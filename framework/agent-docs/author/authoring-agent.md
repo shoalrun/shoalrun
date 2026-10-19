@@ -3,6 +3,8 @@ id: guide.authoring-agent
 title: Apply a checked edit plan
 summary: Find a page's sources, review an edit, and apply it through Shoalrun checks.
 type: how-to
+area: authoring
+subarea: authoring-agent-workflows
 audiences:
   - authors
 subjectLifecycle: experimental
@@ -17,7 +19,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Use your agent > Checked edit plans
 
-**Updated: 2026-10-13.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

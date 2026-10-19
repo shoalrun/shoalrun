@@ -4,6 +4,8 @@ title: CLI reference
 summary: Every shoalrun command, its arguments and defaults, what it prints, and
   when it fails.
 type: reference
+area: authoring
+subarea: authoring-command-line
 canonical: /cli
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > CLI reference
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 The private `@shoalrun/cli` package supplies the `shoalrun` command. It needs Node.js 22.12 or newer. Follow [Getting started](https://www.shoalrun.com/start.md) to install it from GitHub Packages, then run commands as `npx --no-install shoalrun <command>`. Framework contributors can build the source checkout and run `node framework/dist/cli.js <command>` from its root.
 

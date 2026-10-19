@@ -4,6 +4,8 @@ title: Tables
 summary: Add optional filtering and sticky headings to long HTML tables while
   preserving every row in Markdown.
 type: reference
+area: components
+subarea: components-visuals
 canonical: /author/components/tables
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Tables
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Ordinary Markdown tables work without a component. For a long table, wrap one table in `<Table>` to add a filter box, sticky column headings, or both in HTML:
 

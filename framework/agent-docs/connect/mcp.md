@@ -4,6 +4,8 @@ title: Use this site's MCP
 summary: Connect your agent to Shoalrun's public documentation and ask it to
   search, read pages, or fetch sections.
 type: how-to
+area: discovery
+subarea: discovery-mcp
 canonical: /connect/mcp
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > MCP > Use this site's MCP
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Connect an MCP client to Shoalrun's live documentation at **`https://www.shoalrun.com/mcp`**. You need an agent application that supports remote HTTP MCP servers. No Shoalrun account, API key, custom header, or local installation is required.
 

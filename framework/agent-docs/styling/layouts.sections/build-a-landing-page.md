@@ -4,6 +4,8 @@ title: Page layouts, landing pages, and splash pages
 summary: Give a page more width, or build a landing or full-bleed splash page
   with a Hero and Sections, using the layout frontmatter field.
 type: reference
+area: appearance
+subarea: appearance-layouts
 canonical: /styling/layouts
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Page layouts, landing pages, and splash pages
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/styling/layouts.md)
 

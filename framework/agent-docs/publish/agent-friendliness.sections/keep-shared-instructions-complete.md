@@ -4,6 +4,8 @@ title: Agent-friendly documentation
 summary: See how interactive docs become readable Markdown, then discover pages
   and verify their contents.
 type: explanation
+area: discovery
+subarea: discovery-agents
 canonical: /publish/agent-friendliness
 ---
 

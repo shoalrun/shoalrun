@@ -3,6 +3,8 @@ id: reference.chat-config
 title: Retrieval and chat settings
 summary: Look up embedding, chat-model, scoring, and answer-reuse configuration.
 type: reference
+area: discovery
+subarea: discovery-chat
 subjectLifecycle: experimental
 canonical: /chat/settings
 ---
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Reference > Retrieval and chat settings
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

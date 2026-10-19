@@ -4,6 +4,8 @@ title: Publishing and agent representations
 summary: Read the published-output contract for HTML, Markdown, manifests, and
   incremental sync.
 type: reference
+area: publishing
+subarea: publishing-builds
 canonical: /publish/output
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Generated outputs
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 `shoalrun build` turns accepted source pages and local OpenAPI files into a static site. A **publication** is one enabled channel, version, and language combination, such as production, v1, and English. The build includes a public page only in publications matching its frontmatter. It makes no model calls or remote requests.
 

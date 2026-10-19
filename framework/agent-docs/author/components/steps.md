@@ -4,6 +4,8 @@ title: Steps
 summary: Show a short procedure as numbered steps with full instructions in both
   outputs.
 type: reference
+area: components
+subarea: components-procedures
 canonical: /author/components/steps
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Steps
 
-**Updated: 2026-09-27.**
+**Updated: 2026-10-19.**
 
 Use `<Steps>` when each part of a procedure needs a title and supporting content. For a simple sequence with no step titles, an ordinary Markdown numbered list is enough. For code that changes between steps, use a [Walkthrough](https://www.shoalrun.com/author/components/walkthroughs.md).
 

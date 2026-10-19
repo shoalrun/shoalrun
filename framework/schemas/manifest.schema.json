@@ -8,6 +8,30 @@
   "required": ["schemaVersion", "buildId", "configDigest", "basePath", "dependencies", "documents", "operations", "relationships", "redirects", "apiSources"],
   "properties": {
     "schemaVersion": { "const": 1 },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["areas", "required", "requireExplicit", "multiple"],
+      "properties": {
+        "required": { "type": "array", "uniqueItems": true, "items": { "enum": ["area", "subarea"] } },
+        "requireExplicit": { "type": "array", "uniqueItems": true, "items": { "enum": ["area", "subarea"] } },
+        "multiple": { "type": "array", "uniqueItems": true, "items": { "enum": ["area", "subarea"] } },
+        "areas": {
+          "type": "object", "minProperties": 1,
+          "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" },
+          "additionalProperties": {
+            "type": "object", "additionalProperties": false, "required": ["label", "subareas"],
+            "properties": {
+              "label": { "type": "string", "minLength": 1 },
+              "subareas": {
+                "type": "object", "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" },
+                "additionalProperties": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
     "buildId": {
       "$ref": "#/$defs/digest",
       "description": "Opaque identity of assembled publication artifacts before buildId stamping and sync snapshot addition."
@@ -273,8 +297,8 @@
         "breadcrumbs": { "type": "array", "items": { "$ref": "#/$defs/breadcrumb" } },
         "navigationTab": { "$ref": "#/$defs/navigationTab" },
         "product": { "$ref": "#/$defs/nonemptyString" },
-        "area": { "$ref": "#/$defs/nonemptyString" },
-        "subarea": { "$ref": "#/$defs/nonemptyString" },
+        "area": { "oneOf": [{ "$ref": "#/$defs/nonemptyString" }, { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/nonemptyString" } }] },
+        "subarea": { "oneOf": [{ "$ref": "#/$defs/nonemptyString" }, { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/nonemptyString" } }] },
         "readerFilters": { "$ref": "#/$defs/readerSelection" },
         "cardTargets": { "$ref": "#/$defs/stringList", "description": "Resolved target document IDs." },
         "cardQueries": { "type": "array", "items": { "$ref": "#/$defs/cardQuery" } },

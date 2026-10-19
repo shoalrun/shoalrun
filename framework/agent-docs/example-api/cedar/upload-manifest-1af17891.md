@@ -3,6 +3,8 @@ id: reference.cedar.uploadManifest
 title: Upload a manifest
 summary: POST /manifests
 type: api-reference
+area: api
+subarea: api-reference
 canonical: /example-api/cedar/upload-manifest-1af17891
 ---
 
@@ -14,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Cedar Parcel API · styling lab > Manifests > Upload a manifest
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 

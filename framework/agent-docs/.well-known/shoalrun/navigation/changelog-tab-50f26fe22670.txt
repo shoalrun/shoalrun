@@ -22,4 +22,6 @@ Navigation section ID: changelog-tab. Publication: production/current/en.
 
 - [Search results and tooltips](https://www.shoalrun.com/changelog/2026-10-18-search-and-tooltips.md) — ID: change.search-and-tooltips. Improve search results with a prepared index and add separate hover and focus tooltips.
 
+- [Experimental visual navigation and taxonomy enforcement](https://www.shoalrun.com/changelog/2026-10-19-visual-navigation.md) — ID: change.visual-navigation. Visual navigation and taxonomy validation.
+
 - [Portable working-tree authoring workflow](https://www.shoalrun.com/changelog/working-tree-skill.md) — ID: change.working-tree-skill. Guide existing coding agents through discovery, native editing, validation, and snapshot review.

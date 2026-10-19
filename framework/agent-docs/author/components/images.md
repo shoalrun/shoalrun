@@ -4,6 +4,8 @@ title: Images
 summary: Add responsive images with optional width limits, captions, and
   expanded viewing.
 type: reference
+area: components
+subarea: components-visuals
 canonical: /author/components/images
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Images
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Use `<Image>` to show an image with optional sizing, a caption, or click-to-expand viewing. Plain Markdown image syntax also works when you only need an image and alt text.
 

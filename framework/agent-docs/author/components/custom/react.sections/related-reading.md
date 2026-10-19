@@ -4,6 +4,8 @@ title: Data-driven React components
 summary: Follow local data through a component plugin, shared documentation, and
   a React calculator.
 type: explanation
+area: components
+subarea: components-custom
 canonical: /author/components/custom/react
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Custom components > Data-driven React components
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/components/custom/react.md)
 

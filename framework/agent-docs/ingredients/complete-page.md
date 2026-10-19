@@ -4,6 +4,8 @@ title: Complete the guide and add navigation
 summary: Write the guide, replace scaffold prompts, and make it discoverable in
   the local build.
 type: ingredient
+area: authoring
+subarea: authoring-pages
 canonical: /ingredients/complete-page
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Reusable Shoalrun steps > Complete the guide and add navigation
 
-**Updated: 2026-09-30.**
+**Updated: 2026-10-19.**
 
 Open the scaffolded file and write the actual task, prerequisites, steps, and an observable success check. Set `updated` to today's date, replace the draft summary, and resolve every generated TODO prompt. Check every technical claim against the implementation or a tested workflow.
 

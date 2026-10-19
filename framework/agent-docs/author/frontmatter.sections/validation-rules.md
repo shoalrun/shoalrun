@@ -5,6 +5,8 @@ summary: Set page identity, publication, and presentation fields before publishi
 description: Learn how page metadata, project defaults, and publication choices
   shape the site and its Markdown output.
 type: reference
+area: authoring
+subarea: authoring-metadata
 audiences:
   - authors
   - maintainers
@@ -21,7 +23,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Page metadata
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -34,6 +36,8 @@ Parent page: [Full Markdown page](/author/frontmatter.md)
 **Next steps**
 
 - [Templates](https://www.shoalrun.com/author/templates.md) — Pre-fill these fields in the starting points for new pages.
+
+- [Design and enforce a page taxonomy](https://www.shoalrun.com/author/taxonomy.md) — Define allowed page categories and enforce your project's taxonomy.
 
 Frontmatter is the YAML header between the first two `---` lines of a `.md` or `.mdx` page. It gives a page its identity, URL, and publication settings. Start with this complete header, then write the page body below it:
 
@@ -67,3 +71,5 @@ The build reads every `.md` and `.mdx` file in the content directory, including 
 - A public page fails while it still contains a scaffold placeholder or a scaffolded summary. See [templates](https://www.shoalrun.com/author/templates.md) for the exact patterns.
 
 `type` is free text, but some values change behavior. An `api-reference` page must list exactly one operation. `guide` and `how-to` pages can use `relatedApiReferences`. Any type can get its own Markdown metadata through [`byType` in Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md). The HTML page header shows the type as words: `api-reference` appears as "API reference".
+
+[Design and enforce a page taxonomy](https://www.shoalrun.com/author/taxonomy.md) explains how to choose categories, define allowed values, and add required-field and pair checks to your build.

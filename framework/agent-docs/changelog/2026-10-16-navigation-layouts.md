@@ -4,6 +4,8 @@ title: Navigation, page layouts, and browser analytics
 summary: Navigation sections, reader controls, page layouts, and optional
   browser interaction analytics.
 type: changelog-entry
+area: appearance
+subarea: appearance-layouts
 canonical: /changelog/2026-10-16-navigation-layouts
 date: 2026-10-16
 ---

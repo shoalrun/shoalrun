@@ -3,6 +3,8 @@ id: guide.chat-checks
 title: Check and speed up answers
 summary: Understand answer checks, direct excerpts, caching, and the limits of each.
 type: explanation
+area: discovery
+subarea: discovery-chat
 subjectLifecycle: experimental
 canonical: /chat/checks
 ---
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-17.**
+**Updated: 2026-10-19.**
 
 **Status: Experimental.**
 

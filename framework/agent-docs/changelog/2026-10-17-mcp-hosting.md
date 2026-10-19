@@ -4,6 +4,8 @@ title: MCP hosting, analytics, and component improvements
 summary: Serve documentation tools, measure MCP calls, and build custom
   components with shared HTML and Markdown content.
 type: changelog-entry
+area: discovery
+subarea: discovery-mcp
 canonical: /changelog/2026-10-17-mcp-hosting
 date: 2026-10-17
 ---

@@ -1,6 +1,7 @@
 import { validateAuthoredChange, changeKinds } from './authored-change.js';
 import { validateSubjectDeprecation } from './subject-deprecation.js';
 import { validateCardMetadata } from './cards.js';
+import { resolveTaxonomy, validateTaxonomy, taxonomySchema } from './taxonomy.js';
 import type { Frontmatter } from './content.js';
 
 export const nativePublicFields = new Set(['id', 'title', 'type', 'summary', 'description', 'language', 'locale', 'date', 'updated', 'verified', 'releaseVersion', 'product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'audiences', 'readerFilters', 'tags', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle']);
@@ -22,7 +23,8 @@ function mergeMetadata(base: Record<string, any>, overlay: Record<string, any>):
 
 export function frontmatterLayers(config: any = {}) {
   if (!object(config)) throw new Error('frontmatter must be a mapping');
-  for (const key of Object.keys(config)) if (!['fields', 'defaults', 'enforced', 'locales', 'changelogIdentifier'].includes(key)) throw new Error(`Unknown frontmatter setting ${key}`);
+  for (const key of Object.keys(config)) if (!['fields', 'defaults', 'enforced', 'locales', 'changelogIdentifier', 'taxonomy'].includes(key)) throw new Error(`Unknown frontmatter setting ${key}`);
+  resolveTaxonomy(config.taxonomy);
   if (config.locales !== undefined && (!object(config.locales) || Object.entries(config.locales).some(([language, locale]) => !language.trim() || typeof locale !== 'string' || !locale.trim()))) throw new Error('frontmatter.locales must map languages to nonempty locale values');
   if (config.changelogIdentifier !== undefined && !['date', 'version', 'either'].includes(config.changelogIdentifier)) throw new Error('frontmatter.changelogIdentifier must be date, version, or either');
   const layers: Record<string, Record<string, any>> = {};
@@ -91,7 +93,9 @@ function matchesType(value: unknown, type: string): boolean {
   return typeof value === type;
 }
 
-export function validateFrontmatter(frontmatter: Frontmatter, config: any, file: string): void {
+export function validateFrontmatter(frontmatter: Frontmatter, config: any, file: string, source?: Record<string, unknown>): void {
+  const taxonomy = resolveTaxonomy(config?.taxonomy);
+  validateTaxonomy(frontmatter, taxonomy, file, source);
   validateCardMetadata(frontmatter.card, file);
   validateSubjectDeprecation(frontmatter.subjectDeprecation, file);
   validateAuthoredChange(frontmatter, file);
@@ -117,6 +121,7 @@ export function validateFrontmatter(frontmatter: Frontmatter, config: any, file:
   }
   for (const field of ['channel', 'version', 'language', 'locale', 'product', 'area', 'subarea']) {
     const value = frontmatter[field];
+    if ((field === 'area' || field === 'subarea') && Array.isArray(value) && taxonomy?.multiple.includes(field)) continue;
     if (value !== undefined && (typeof value !== 'string' || !value.trim())) throw new Error(`${file}: ${field} must be nonempty text`);
   }
   if (frontmatter.publications !== undefined) {
@@ -241,17 +246,20 @@ export function frontmatterSchema(config: any): any {
     };
     if (definition.required && segments.reduce<any>((value, part) => value?.[part], inherited) === undefined) (at.required ??= []).push(last);
   }
-  return { $schema: 'https://json-schema.org/draft/2020-12/schema', title: 'Documentation frontmatter', type: 'object', properties, required, additionalProperties: true };
+  const taxonomy = resolveTaxonomy(config?.taxonomy);
+  return { $schema: 'https://json-schema.org/draft/2020-12/schema', title: 'Documentation frontmatter', type: 'object', properties, required, additionalProperties: true, ...(taxonomy ? taxonomySchema(taxonomy, properties, required, inherited) : {}) };
 }
 
 export function frontmatterReference(config: any, sectionsOnly = false): string {
   const schema = frontmatterSchema(config);
+  const taxonomy = resolveTaxonomy(config?.taxonomy);
   const cell = (value: string) => value.replaceAll('|', '\\|').replaceAll('\n', ' ');
   const nativeRows = (names: string[]) => names.flatMap(name => {
     const definition = schema.properties[name];
-    const requirement = ['id', 'slug'].includes(name) ? 'On each page' : schema.required.includes(name) ? 'After inheritance' : ['channel', 'version', 'access'].includes(name) ? 'Public page' : 'Optional';
+    const requirement = ['id', 'slug'].includes(name) || taxonomy?.requireExplicit.some(field => field === name) ? 'On each page' : schema.required.includes(name) ? 'After inheritance' : ['channel', 'version', 'access'].includes(name) ? 'Public page' : 'Optional';
+    const type = definition === false ? 'Not allowed' : definition.type ?? definition.oneOf?.map((option: any) => option?.type).filter(Boolean).join(' or ') ?? 'string or object';
     return [
-      `| \`${name}\` | ${definition.type ?? 'string or object'} | ${requirement} | ${cell(definition.description ?? '')} |`,
+      `| \`${name}\` | ${type} | ${requirement} | ${cell(definition.description ?? '')} |`,
       ...(['access', 'card', 'seo'].includes(name) ? Object.entries<any>(definition.properties).map(([childName, child]) => `| \`${name}.${childName}\` | ${child.type} | ${name === 'access' ? 'With access' : 'Optional'} | ${cell(child.description ?? '')} |`) : [])
     ];
   });
@@ -271,8 +279,9 @@ export function frontmatterReference(config: any, sectionsOnly = false): string 
     ...table, ...nativeRows(['channel', 'version', 'language', 'locale', 'access', 'audiences', 'readerFilters']), '',
     'Language is the content language and selects a publication. Locale describes formatting conventions in the content and does not select a publication. `frontmatter.locales` can set a project locale for each language; pages may override it.', '',
     '## Categorize, connect, and present the page', '',
-    '`product`, `area`, and `subarea` are optional, nonempty string categories. They can come from project defaults and appear in the document manifest and search index. A matching configured reader facet makes each category a page filter; without that facet it remains taxonomy only. `operations` links a guide or reference to stable API operation IDs. On a guide or how-to page, `relatedApiReferences` names API reference page IDs to add cross links in both directions within the same publication. Tags help document collections find the page. Card settings change its preview when another page links to it; they do not change the destination. `subjectLifecycle` displays the status of the documented API or feature; `lifecycle` is available for the document\'s editorial state. `tocDepth` limits the HTML page table of contents; use 0 to hide it. `layout` picks the HTML page layout: `docs`, `wide`, `landing`, or `splash`. `showNavigationTabs` overrides the navigation tab bar for this page; landing and splash pages hide it by default. `image` replaces the generated link-preview image. `date` and `releaseVersion` can identify a changelog entry under the project\'s `frontmatter.changelogIdentifier` rule.', '',
+    'By default, `product`, `area`, and `subarea` are optional, nonempty string categories. They can come from project defaults and appear in the document manifest and search index. A matching configured reader facet makes each category a page filter; without that facet it remains taxonomy only. `operations` links a guide or reference to stable API operation IDs. On a guide or how-to page, `relatedApiReferences` names API reference page IDs to add cross links in both directions within the same publication. Tags help document collections find the page. Card settings change its preview when another page links to it; they do not change the destination. `subjectLifecycle` displays the status of the documented API or feature; `lifecycle` is available for the document\'s editorial state. `tocDepth` limits the HTML page table of contents; use 0 to hide it. `layout` picks the HTML page layout: `docs`, `wide`, `landing`, or `splash`. `showNavigationTabs` overrides the navigation tab bar for this page; landing and splash pages hide it by default. `image` replaces the generated link-preview image. `date` and `releaseVersion` can identify a changelog entry under the project\'s `frontmatter.changelogIdentifier` rule.', '',
     ...table, ...nativeRows(['product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'tags', 'date', 'releaseVersion', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle', 'card', 'standaloneSections', 'tocDepth', 'layout', 'showNavigationTabs', 'image']), '',
+    'Projects can opt into built-in category enforcement with `frontmatter.taxonomy`. It declares areas and their allowed subareas, optional required fields, and optional explicit-field requirements for authored pages. Its `multiple` list permits arrays for selected category fields; otherwise each field allows one value. Defaults and enforced values still apply; generated API references use resolved categories. Definitions appear in the document manifest and constrain the generated frontmatter schema. Omit taxonomy or set it to false to preserve optional category behavior.', '',
     '## Control output details', '',
     '`seo` changes the browser title or HTML meta description. `displayText` overrides the text chosen for one output surface on this page. `variables` supplies values to registered snippets before they expand into the page body. `markdownMetadata` selects or overrides the YAML preamble of the generated Markdown twin—the machine-readable copy of this page. That generated preamble is separate from the source frontmatter shown above.', '',
     ...table, ...nativeRows(['seo', 'displayText', 'variables', 'markdownMetadata']), '',

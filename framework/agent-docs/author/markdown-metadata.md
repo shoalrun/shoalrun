@@ -4,6 +4,8 @@ title: Markdown metadata
 summary: Public field projection, source paths, profiles, precedence, and
   required values.
 type: reference
+area: authoring
+subarea: authoring-metadata
 canonical: /author/markdown-metadata
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Markdown metadata
 
-**Updated: 2026-10-15.**
+**Updated: 2026-10-19.**
 
 The build publishes [the page metadata guide as Markdown](https://www.shoalrun.com/author/frontmatter.md) alongside its HTML page. That `.md` file starts with a YAML header containing selected values from the source page header. Source headers can grow long and contain review notes or other details that do not help an agent read the page. Selecting a small set of useful fields keeps the agent's context focused and avoids exposing internal metadata in that header. Compare the two custom values in that guide's source:
 

@@ -4,6 +4,8 @@ title: Collapsibles
 summary: Show optional detail in individual disclosures or compact groups, with
   full Markdown output.
 type: reference
+area: components
+subarea: components-procedures
 canonical: /author/components/collapsible
 ---
 
@@ -15,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Collapsibles
 
-**Updated: 2026-10-18.**
+**Updated: 2026-10-19.**
 
 `<Collapsible>` keeps supporting detail near the main instructions. Use it for material readers may need, but do not need to see before taking the next step. Its body is present in the initial HTML even when closed, and fully expanded in the Markdown twin.
 
