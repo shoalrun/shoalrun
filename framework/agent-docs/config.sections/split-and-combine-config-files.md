@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/config.md)
 
@@ -48,101 +48,18 @@ navigation: { $include: ./config/nav.yaml }
 
 ## Split and combine config files
 
-Four directives let one config span several files. Paths are relative to the file that contains them.
+These directives compose configuration values. Paths resolve relative to the file declaring them. For complete examples, merge order, and troubleshooting, follow [Configure your project](https://www.shoalrun.com/configuration.md).
 
 ### `$include`
 
-`{ $include: ./path.yaml }` replaces a value with the contents of another YAML file. The included content becomes the value at that position. If the containing file extends a preset, the normal merge rules then apply to that value. A mapping that uses `$include` can have no other keys. Included files can include others, and a cycle fails with `Configuration cycle` and the chain of files.
-
-Move a large section into its own file:
-
-```yaml title="docs.config.yaml"
-navigation: { $include: ./config/nav.yaml }
-apis: { $include: ./config/api.yaml }
-```
-
-Include a value at any depth, not only at the top level:
-
-```yaml title="docs.config.yaml"
-apis:
-  payments:
-    source: { kind: file, path: ./apis/payments/openapi.yaml }
-    operations: { $include: ./config/payment-operations.yaml }
-```
-
-An API source path is relative to the file declaring `source.path`. Here `config/api.yaml` points one level up to reach `apis/`:
-
-```yaml title="config/api.yaml"
-payments:
-  source: { kind: file, path: ../apis/payments/openapi.yaml }
-```
+`{ $include: ./path.yaml }` replaces a value at any depth with the contents of another YAML file. The mapping can have no other keys. Included files can include others; a cycle fails with `Configuration cycle` and the chain of files. Normal inheritance rules apply to the resolved value.
 
 ### `extends`
 
-A top-level `extends: [./base.yaml]` in any config file layers that file over one or more preset files, in order. Mappings merge key by key, and lists and single values replace what came before. Use it to share settings across several sites:
-
-```yaml title="docs.config.yaml"
-schemaVersion: 1
-extends: [../shared/docs-base.yaml]
-site:
-  title: Payments documentation
-```
-
-List several presets to layer them. Later files override earlier ones, and the current file overrides them all:
-
-```yaml title="docs.config.yaml"
-schemaVersion: 1
-extends:
-  - ../shared/docs-base.yaml
-  - ../shared/brand-theme.yaml
-```
-
-A preset is an ordinary config file, and it can have its own `extends`:
-
-```yaml title="../shared/docs-base.yaml"
-schemaVersion: 1
-site:
-  title: Company documentation
-  header:
-    links:
-      - { label: Support, href: "https://support.example.com" }
-theme:
-  preset: reef
-```
-
-A top-level `extends` is always read as a list of config files. So a file you `$include` can't use a top-level `extends` for any other purpose. See the palette example in [palettes](https://www.shoalrun.com/styling/palettes.md).
+A top-level `extends: [./base.yaml]` layers one or more presets in order, followed by the current file. Mappings merge key by key; lists and scalar values replace earlier values. Presets may extend other presets. A top-level `extends` always names config files, including in an included file; it cannot serve another purpose there.
 
 ### `$concat` and `$remove`
 
-`{ $concat: [...] }` appends items to a list inherited through `extends`. Without an inherited list, it becomes the list itself. `{ $remove: [name, ...] }` drops inherited mapping keys, or list items by their `id`. `$remove` fails when nothing is inherited.
+`{ $concat: [...] }` appends items to an inherited list, or becomes the list when none is inherited. It also accepts included lists. `{ $remove: [name, ...] }` removes inherited mapping keys by name or list items by `id`; it fails when nothing is inherited.
 
-Add pages after the shared navigation, and drop a relationship the shared config declares:
-
-```yaml title="docs.config.yaml"
-extends: [../shared/docs-base.yaml]
-navigation:
-  $concat:
-    - { id: payments, doc: guide.payments }
-    - { id: refunds, doc: guide.refunds }
-relationships: { $remove: [legacy-overview-link] }
-```
-
-Remove inherited mapping keys by name. This drops a snippet and a template that the preset registers:
-
-```yaml title="docs.config.yaml"
-extends: [../shared/docs-base.yaml]
-snippets: { $remove: [legal.beta-notice] }
-templates: { $remove: [troubleshooting-legacy] }
-```
-
-`$concat` also accepts included lists, so each team can keep its own navigation file:
-
-```yaml title="docs.config.yaml"
-extends: [../shared/docs-base.yaml]
-navigation:
-  $concat:
-    - { $include: ./config/nav-payments.yaml }
-    - { $include: ./config/nav-reports.yaml }
-```
-
-Run `shoalrun config explain <key> docs.config.yaml` to see which file set a value and what it replaced. The [CLI reference](https://www.shoalrun.com/cli.md) covers the other `config` commands.
+Run `shoalrun config explain <key> docs.config.yaml` to inspect a value's source and overrides. See the [CLI reference](https://www.shoalrun.com/cli.md) for other inspection commands.

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 A project's config starts at `docs.config.yaml`. The CLI looks for that name by default, and `shoalrun scaffold -n` searches parent directories for it. For the configuration workflow, composition rules, and debugging, start with [configure your project](https://www.shoalrun.com/configuration.md). This page lists every top-level key. Keys with a dedicated guide link there for the full rules. For complete, working configs, see [example configs](https://www.shoalrun.com/config/examples.md).
 
@@ -40,104 +40,21 @@ navigation: { $include: ./config/nav.yaml }
 
 ## Split and combine config files
 
-Four directives let one config span several files. Paths are relative to the file that contains them.
+These directives compose configuration values. Paths resolve relative to the file declaring them. For complete examples, merge order, and troubleshooting, follow [Configure your project](https://www.shoalrun.com/configuration.md).
 
 ### `$include`
 
-`{ $include: ./path.yaml }` replaces a value with the contents of another YAML file. The included content becomes the value at that position. If the containing file extends a preset, the normal merge rules then apply to that value. A mapping that uses `$include` can have no other keys. Included files can include others, and a cycle fails with `Configuration cycle` and the chain of files.
-
-Move a large section into its own file:
-
-```yaml title="docs.config.yaml"
-navigation: { $include: ./config/nav.yaml }
-apis: { $include: ./config/api.yaml }
-```
-
-Include a value at any depth, not only at the top level:
-
-```yaml title="docs.config.yaml"
-apis:
-  payments:
-    source: { kind: file, path: ./apis/payments/openapi.yaml }
-    operations: { $include: ./config/payment-operations.yaml }
-```
-
-An API source path is relative to the file declaring `source.path`. Here `config/api.yaml` points one level up to reach `apis/`:
-
-```yaml title="config/api.yaml"
-payments:
-  source: { kind: file, path: ../apis/payments/openapi.yaml }
-```
+`{ $include: ./path.yaml }` replaces a value at any depth with the contents of another YAML file. The mapping can have no other keys. Included files can include others; a cycle fails with `Configuration cycle` and the chain of files. Normal inheritance rules apply to the resolved value.
 
 ### `extends`
 
-A top-level `extends: [./base.yaml]` in any config file layers that file over one or more preset files, in order. Mappings merge key by key, and lists and single values replace what came before. Use it to share settings across several sites:
-
-```yaml title="docs.config.yaml"
-schemaVersion: 1
-extends: [../shared/docs-base.yaml]
-site:
-  title: Payments documentation
-```
-
-List several presets to layer them. Later files override earlier ones, and the current file overrides them all:
-
-```yaml title="docs.config.yaml"
-schemaVersion: 1
-extends:
-  - ../shared/docs-base.yaml
-  - ../shared/brand-theme.yaml
-```
-
-A preset is an ordinary config file, and it can have its own `extends`:
-
-```yaml title="../shared/docs-base.yaml"
-schemaVersion: 1
-site:
-  title: Company documentation
-  header:
-    links:
-      - { label: Support, href: "https://support.example.com" }
-theme:
-  preset: reef
-```
-
-A top-level `extends` is always read as a list of config files. So a file you `$include` can't use a top-level `extends` for any other purpose. See the palette example in [palettes](https://www.shoalrun.com/styling/palettes.md).
+A top-level `extends: [./base.yaml]` layers one or more presets in order, followed by the current file. Mappings merge key by key; lists and scalar values replace earlier values. Presets may extend other presets. A top-level `extends` always names config files, including in an included file; it cannot serve another purpose there.
 
 ### `$concat` and `$remove`
 
-`{ $concat: [...] }` appends items to a list inherited through `extends`. Without an inherited list, it becomes the list itself. `{ $remove: [name, ...] }` drops inherited mapping keys, or list items by their `id`. `$remove` fails when nothing is inherited.
+`{ $concat: [...] }` appends items to an inherited list, or becomes the list when none is inherited. It also accepts included lists. `{ $remove: [name, ...] }` removes inherited mapping keys by name or list items by `id`; it fails when nothing is inherited.
 
-Add pages after the shared navigation, and drop a relationship the shared config declares:
-
-```yaml title="docs.config.yaml"
-extends: [../shared/docs-base.yaml]
-navigation:
-  $concat:
-    - { id: payments, doc: guide.payments }
-    - { id: refunds, doc: guide.refunds }
-relationships: { $remove: [legacy-overview-link] }
-```
-
-Remove inherited mapping keys by name. This drops a snippet and a template that the preset registers:
-
-```yaml title="docs.config.yaml"
-extends: [../shared/docs-base.yaml]
-snippets: { $remove: [legal.beta-notice] }
-templates: { $remove: [troubleshooting-legacy] }
-```
-
-`$concat` also accepts included lists, so each team can keep its own navigation file:
-
-```yaml title="docs.config.yaml"
-extends: [../shared/docs-base.yaml]
-navigation:
-  $concat:
-    - { $include: ./config/nav-payments.yaml }
-    - { $include: ./config/nav-reports.yaml }
-```
-
-Run `shoalrun config explain <key> docs.config.yaml` to see which file set a value and what it replaced. The [CLI reference](https://www.shoalrun.com/cli.md) covers the other `config` commands.
+Run `shoalrun config explain <key> docs.config.yaml` to inspect a value's source and overrides. See the [CLI reference](https://www.shoalrun.com/cli.md) for other inspection commands.
 
 ## `search`
 
@@ -282,6 +199,10 @@ The mode controls visual presentation and whether the instruction is included:
 Screen readers and agents parsing raw HTML can encounter the block in all enabled modes. An agent using screenshots sees the same visual presentation as a human. Some HTML extraction tools discard visually hidden elements; the document head also provides discovery links. Visually hiding the block does not make it private.
 
 This setting affects HTML only. It does not change the Markdown index link, generated discovery files, or the standard accessibility skip link. The focus and visible blocks follow that skip link before the header. Disclosure mode places the toggle inside the header. It is hidden in print.
+
+### Content freshness
+
+`site.freshness: { history: ./config/content-updates.json }` opts into persistent content-digest dates. Paths resolve from the root config directory and must stay inside the project. The first build seeds declared dates; changed content later receives today's UTC date while unchanged content retains its date. Commit the history file for reproducible clean builds. Without this setting, declared `updated` and `site.updated` remain authoritative. Native page `verified` is an independent, author-set calendar date. See [revision and verification dates](https://www.shoalrun.com/publish/seo.md).
 
 ## `theme`
 
@@ -616,6 +537,10 @@ audit:
 
 The snapshot copies declared files and directories within the project parent. It rejects missing inputs, symlinks, credentials, dependency folders, and paths outside that boundary. Directory declarations also track added and deleted files for freshness. Declare the configuration's supporting files too; Shoalrun does not infer dependencies from command arguments. Ordinary `check` and `audit` commands still run in the original project.
 
+### Agent evaluation reports
+
+`audit.evals` opts into checking a reviewed task report after the audit's temporary build. Set `tasks` to a YAML or JSON task file and `report` to a JSON result file. Both paths resolve relative to the file declaring them. Optional `run` is a nonempty command/argument list. It runs without a shell from the root config directory after a successful build. The timeout is two minutes; environment variables supply eval paths and digests. It can call external services and write the report; a nonzero exit fails independently of report validation. No evaluator is built into Shoalrun. See [evaluate agent tasks](https://www.shoalrun.com/publish/evals.md) for the report format, environment variables, and CLI commands.
+
 ## `cookbooks`
 
 Optional mapping of cookbook IDs to a chooser title and ordered reader options. Each option has a unique `id`, `label`, and `doc` ID for a public `type: recipe` page in the same publication as the chooser. The build rejects duplicate options and unavailable targets. Set `mode: single` for alternative goals or use `mode: multiple` (the default) for compatible recipes. Optional option fields `when`, `needs`, and `outcome` explain each choice. The browser loads selected published recipe content in configured order and supports selection links, Markdown downloads, and printing. The [CookbookChooser reference](https://www.shoalrun.com/author/components/cookbook-chooser.md) shows a live example and the HTML and Markdown behavior.
@@ -728,54 +653,11 @@ limits.rate:
 
 ## `callouts`
 
-Custom callout `types` and color `tones`. A type has a `label`, a `tone`, and an optional Lucide `icon`. A tone has `line`, `background`, and `text` colors, and an optional `dark` set. See [callouts](https://www.shoalrun.com/author/components/callout.md).
-
-A new type that uses a built-in tone:
-
-```yaml title="config/callouts.yaml"
-types:
-  security:
-    label: Security
-    tone: warning
-    icon: shield-alert
-```
-
-A new tone with light and dark colors, used by a new type:
-
-```yaml title="config/callouts.yaml"
-tones:
-  laboratory:
-    line: "#087f8c"
-    background: "#e9f8f8"
-    text: "#075c66"
-    dark: { line: "#3cb9c4", background: "#0e2a2d", text: "#8fe3ea" }
-types:
-  experiment:
-    label: Experiment
-    tone: laboratory
-    icon: flask-conical
-```
-
-Relabel a built-in type:
-
-```yaml title="config/callouts.yaml"
-types:
-  note:
-    label: Good to know
-    tone: note
-```
+Custom callout `types` and color `tones`. A type has a `label`, a `tone`, and an optional Lucide `icon`. A tone has `line`, `background`, and `text` colors, and an optional `dark` set. See [callouts](https://www.shoalrun.com/author/components/callout.md) for configuration examples and contrast requirements.
 
 ## `badges`
 
 `badges.variants` adds or overrides inline badge colors. Each lowercase kebab-case name needs `light.background` and `light.text` hex colors; `light.border` is optional and defaults to the text color. Add the same fields under `dark` when the site uses dark or system mode. The build checks badge text contrast in every shown mode. See [Badges](https://www.shoalrun.com/author/components/badge.md) for the built-in variant table and a separate custom `partner` example.
-
-```yaml
-badges:
-  variants:
-    partner:
-      light: { background: '#e5f5f3', text: '#175b57', border: '#4c9992' }
-      dark: { background: '#102e2d', text: '#a6e7df', border: '#4caaa1' }
-```
 
 ## `templates`
 
@@ -980,19 +862,7 @@ outputs:
     search: { provider: custom, module: ./search/hosted.js }
 ```
 
-## Related reading
-
-### Read first
-
-- [How Shoalrun works](https://www.shoalrun.com/concepts.md) — Understand publications, stable IDs, and config composition before changing settings.
-
-### Related topics
-
-- [CLI reference](https://www.shoalrun.com/cli.md) — Build, serve, and inspect a config from the command line.
-
-- [Example configs](https://www.shoalrun.com/config/examples.md) — The same settings, combined into complete, working files.
-
-## Agent discovery index
+### Agent discovery index
 
 Every published page is included automatically, using its title and frontmatter summary. You do not need to list page IDs. Omit `outputs.llms` for automatic grouping, or choose a bare alphabetical list of links and summaries:
 
@@ -1017,10 +887,14 @@ outputs:
 
 `primaryIds` keeps named document IDs in their primary type section even when an optional type or prefix matches; fictional examples remain optional. Entries sort alphabetically within each section or optional group. Type labels appear only in the mixed optional groups. `optionalTypes` defaults to recipe, ingredient, and cookbook. Both prefix lists default to empty. Prefixes match page slugs before publication and base-path prefixes, on path boundaries. Fictional entries are always optional, labeled in the index, and carry a disclaimer in their Markdown twins. Use fictional prefixes only for synthetic examples, not real product API references.
 
-## Content freshness
+## Related reading
 
-`site.freshness: { history: ./config/content-updates.json }` opts into persistent content-digest dates. Paths resolve from the root config directory and must stay inside the project. The first build seeds declared dates; changed content later receives today's UTC date while unchanged content retains its date. Commit the history file for reproducible clean builds. Without this setting, declared `updated` and `site.updated` remain authoritative. Native page `verified` is an independent, author-set calendar date. See [revision and verification dates](https://www.shoalrun.com/publish/seo.md).
+### Read first
 
-## Agent evaluation reports
+- [How Shoalrun works](https://www.shoalrun.com/concepts.md) — Understand publications, stable IDs, and config composition before changing settings.
 
-`audit.evals` opts into checking a reviewed task report after the audit's temporary build. Set `tasks` to a YAML or JSON task file and `report` to a JSON result file. Both paths resolve relative to the file declaring them. Optional `run` is a nonempty command/argument list. It runs without a shell from the root config directory after a successful build. The timeout is two minutes; environment variables supply eval paths and digests. It can call external services and write the report; a nonzero exit fails independently of report validation. No evaluator is built into Shoalrun. See [evaluate agent tasks](https://www.shoalrun.com/publish/evals.md) for the report format, environment variables, and CLI commands.
+### Related topics
+
+- [CLI reference](https://www.shoalrun.com/cli.md) — Build, serve, and inspect a config from the command line.
+
+- [Example configs](https://www.shoalrun.com/config/examples.md) — The same settings, combined into complete, working files.

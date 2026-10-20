@@ -19,19 +19,26 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Overview
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
-Use your existing coding agent to write and revise Shoalrun documentation. Your agent supplies its model and evidence-gathering tools; Shoalrun supplies templates, canonical guidance, project discovery, and isolated snapshot validation. You review factual claims, accept changes, and decide when to publish.
+Use your existing coding agent to write and revise Shoalrun documentation. Start with the workflow that matches your task.
 
 ## Choose a writing task
 
-Start with [Use your coding agent](https://www.shoalrun.com/author/coding-agent.md) to draft a new page. For working-tree edits, follow [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md). Existing checked-plan clients can continue using [Apply a checked edit plan](https://www.shoalrun.com/author/authoring-agent.md).
+Each guide below describes a different starting point:
 
-Project discovery does not require a selected page. Search by topic to find the relevant pages, then read project instructions, supporting sources, and reviewed examples before editing. No additional authoring provider key is required.
+| Task                                              | Start here                                                                             |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Draft a new page                                  | [Use your coding agent](https://www.shoalrun.com/author/coding-agent.md)               |
+| Check edits in your working tree                  | [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md) |
+| Apply a plan from an existing checked-plan client | [Apply a checked edit plan](https://www.shoalrun.com/author/authoring-agent.md)        |
+| Give your agent the bundled workflow instructions | [Use agent skills](https://www.shoalrun.com/contribute/agent-skills.md)                |
+
+[Authoring tools for your coding agent](https://www.shoalrun.com/author/agent-overview.md) explains project discovery, isolated validation, and the division of work between Shoalrun and your agent. No additional authoring provider key is required.
 
 ## Review the result
 
-Snapshot validation checks a separate capture and reports findings, coverage, and freshness. Review the diff, sources, and built HTML and Markdown before accepting the edit. Compiler success does not establish factual accuracy or writing quality. Use `docs review` and `docs preview` to inspect the captured result and its freshness. The portable authoring skill follows this working-tree workflow. Independent author trials remain a separate release gate.
+Review the diff, supporting sources, and built HTML and Markdown before accepting an edit. For coverage, skipped checks, and result freshness, follow [snapshot validation](https://www.shoalrun.com/author/agent-workflow.md). You decide when the result is ready to publish.
 
 ## Shared writing guidance
 

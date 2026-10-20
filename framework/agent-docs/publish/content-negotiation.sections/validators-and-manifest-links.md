@@ -15,7 +15,7 @@ canonical: /publish/content-negotiation
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Content negotiation
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Content negotiation
 
 **Updated: 2026-10-19.**
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/config.md)
 
@@ -49,11 +49,3 @@ navigation: { $include: ./config/nav.yaml }
 ## `badges`
 
 `badges.variants` adds or overrides inline badge colors. Each lowercase kebab-case name needs `light.background` and `light.text` hex colors; `light.border` is optional and defaults to the text color. Add the same fields under `dark` when the site uses dark or system mode. The build checks badge text contrast in every shown mode. See [Badges](https://www.shoalrun.com/author/components/badge.md) for the built-in variant table and a separate custom `partner` example.
-
-```yaml
-badges:
-  variants:
-    partner:
-      light: { background: '#e5f5f3', text: '#175b57', border: '#4c9992' }
-      dark: { background: '#102e2d', text: '#a6e7df', border: '#4caaa1' }
-```

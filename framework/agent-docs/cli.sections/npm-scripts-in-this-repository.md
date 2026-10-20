@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > CLI reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/cli.md)
 
@@ -29,30 +29,18 @@ Commands that return data print JSON to standard output. On an error, the CLI pr
 
 ## npm scripts in this repository
 
-`npm run docs:format` checks authored page formatting with the repository's Vale policy. `npm run docs:lint` runs the broader prose rules. `npm run docs:check` combines configured project checks, a temporary build, API audits, and local link checks. See [formatting policy](https://www.shoalrun.com/author/templates.md) for customization.
+These scripts belong to Shoalrun's docs repository. Installing `@shoalrun/cli` in another project provides the `shoalrun` command; it does not add these npm scripts. Run the scripts below from the docs repository root.
 
-Run the docs scripts from the repository root; run the framework build, demo, and preview scripts from `framework/`.
+| Script                             | What it does                                                                                                         |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `npm run docs:build`               | Builds this site to `docs/dist/`.                                                                                    |
+| `npm run docs:preview`             | Serves the existing build at `http://127.0.0.1:8770/`. Run `docs:build` first.                                       |
+| `npm run docs:dev`                 | Watches the source, builds, and serves the site at `http://127.0.0.1:8770/`.                                         |
+| `npm run docs:check`               | Checks the existing build, skills, card icons, recipe compositions, and agent-facing output. Run `docs:build` first. |
+| `npm run docs:audit`               | Runs the configured project audit, including a temporary build.                                                      |
+| `npm run docs:format`              | Checks formatting in `docs/content` with the repository's Vale policy.                                               |
+| `npm run docs:lint`                | Runs the broader prose rules on `docs/content`.                                                                      |
+| `npm run docs:vercel`              | Generates the site's Vercel deployment output.                                                                       |
+| `npm run deploy:check -- <origin>` | Checks a deployed site's HTTP responses.                                                                             |
 
-| Script                        | What it does                                                                                                   |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `npm run build`               | Compiles the TypeScript to `dist/`.                                                                            |
-| `npm test`                    | Builds and runs the test suite, which also builds these docs.                                                  |
-| `npm run docs:build`          | Builds these docs to `docs/dist/` from the repository root.                                                    |
-| `npm run docs:preview`        | Builds and serves these docs at `http://127.0.0.1:8770/`.                                                      |
-| `npm run docs:search-preview` | Serves the already built and indexed docs at `http://127.0.0.1:8770/` with the local semantic search endpoint. |
-| `npm run docs:dev`            | Watches and serves these docs at `http://127.0.0.1:8770/`.                                                     |
-| `npm run docs:vercel`         | Builds these docs as Vercel output.                                                                            |
-| `npm run docs:lint`           | Runs Vale on the README, these docs, and `example/content`.                                                    |
-| `npm run demo`                | Builds the example project to `example/dist/`.                                                                 |
-| `npm run preview`             | Builds and serves the example project.                                                                         |
-| `npm run api-preview`         | Builds a preview site from any local OpenAPI file. See below.                                                  |
-
-`preview.mjs` serves `DOCS_PREVIEW_ROOT` (default `example/dist`) on `DOCS_PREVIEW_PORT` (default `8765`) at `127.0.0.1`. It ignores `PORT`.
-
-### Preview a private OpenAPI file
-
-```sh
-npm run api-preview -- <openapi-file> <directory> (--all | <operationId>...) [--nav <layout.yaml>]
-```
-
-Generates a throwaway project in `<directory>` with one reference page per selected operation, then builds it to `<directory>/site`. It **deletes and rewrites `<directory>/content`**, so use an empty directory outside the repository. The script refuses a directory that has files unless an earlier run created it; each run leaves a `.shoalrun-api-preview` marker file. Serve the result with `DOCS_PREVIEW_ROOT=<directory>/site node preview.mjs`. The optional layout file groups operations in navigation; see [navigation](https://www.shoalrun.com/author/navigation.md).
+See [formatting policy](https://www.shoalrun.com/author/templates.md) to configure prose checks and [deployment checks](https://www.shoalrun.com/publish/deployment-check.md) for the HTTP checker. To document an OpenAPI file in your own project, follow [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references.md) and [Generate and select API pages](https://www.shoalrun.com/api-docs/generate.md).

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/config.md)
 
@@ -48,39 +48,4 @@ navigation: { $include: ./config/nav.yaml }
 
 ## `callouts`
 
-Custom callout `types` and color `tones`. A type has a `label`, a `tone`, and an optional Lucide `icon`. A tone has `line`, `background`, and `text` colors, and an optional `dark` set. See [callouts](https://www.shoalrun.com/author/components/callout.md).
-
-A new type that uses a built-in tone:
-
-```yaml title="config/callouts.yaml"
-types:
-  security:
-    label: Security
-    tone: warning
-    icon: shield-alert
-```
-
-A new tone with light and dark colors, used by a new type:
-
-```yaml title="config/callouts.yaml"
-tones:
-  laboratory:
-    line: "#087f8c"
-    background: "#e9f8f8"
-    text: "#075c66"
-    dark: { line: "#3cb9c4", background: "#0e2a2d", text: "#8fe3ea" }
-types:
-  experiment:
-    label: Experiment
-    tone: laboratory
-    icon: flask-conical
-```
-
-Relabel a built-in type:
-
-```yaml title="config/callouts.yaml"
-types:
-  note:
-    label: Good to know
-    tone: note
-```
+Custom callout `types` and color `tones`. A type has a `label`, a `tone`, and an optional Lucide `icon`. A tone has `line`, `background`, and `text` colors, and an optional `dark` set. See [callouts](https://www.shoalrun.com/author/components/callout.md) for configuration examples and contrast requirements.

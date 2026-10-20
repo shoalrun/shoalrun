@@ -23,7 +23,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Page metadata
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -59,10 +59,14 @@ Keep `id` stable when you rename a file or change its URL. Use it in [navigation
 
 See the [generated frontmatter reference](https://www.shoalrun.com/author/frontmatter-reference.md) under **Write documentation** for native and project-defined fields. Each build also writes `.shoalrun/frontmatter-reference.md` and `.shoalrun/frontmatter.schema.json` beside `docs.config.yaml` for local authoring.
 
-## Choose metadata for the published Markdown page
+## Related metadata tasks
 
-[Choose exported fields and named Markdown metadata profiles](https://www.shoalrun.com/author/markdown-metadata.md) in the advanced metadata guides.
+Choose the guide for the metadata you want to configure:
 
-### Projection settings
-
-See [Markdown projection settings](https://www.shoalrun.com/author/markdown-metadata.md) for supported sources, protected fields, and precedence.
+| Task                                                           | Guide                                                                               |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Declare custom field types and public export eligibility       | [Custom page fields](https://www.shoalrun.com/author/custom-metadata.md)            |
+| Choose text for cards, page headers, search, and link previews | [Text for each surface](https://www.shoalrun.com/author/custom-metadata.md)         |
+| Load metadata from a local module                              | [Metadata providers](https://www.shoalrun.com/author/custom-metadata.md)            |
+| Choose exported fields and named Markdown profiles             | [Published Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md) |
+| Look up supported sources, protected fields, and precedence    | [Projection settings](https://www.shoalrun.com/author/markdown-metadata.md)         |

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/config.md)
 
@@ -73,3 +73,7 @@ audit:
 ```
 
 The snapshot copies declared files and directories within the project parent. It rejects missing inputs, symlinks, credentials, dependency folders, and paths outside that boundary. Directory declarations also track added and deleted files for freshness. Declare the configuration's supporting files too; Shoalrun does not infer dependencies from command arguments. Ordinary `check` and `audit` commands still run in the original project.
+
+### Agent evaluation reports
+
+`audit.evals` opts into checking a reviewed task report after the audit's temporary build. Set `tasks` to a YAML or JSON task file and `report` to a JSON result file. Both paths resolve relative to the file declaring them. Optional `run` is a nonempty command/argument list. It runs without a shell from the root config directory after a successful build. The timeout is two minutes; environment variables supply eval paths and digests. It can call external services and write the report; a nonzero exit fails independently of report validation. No evaluator is built into Shoalrun. See [evaluate agent tasks](https://www.shoalrun.com/publish/evals.md) for the report format, environment variables, and CLI commands.

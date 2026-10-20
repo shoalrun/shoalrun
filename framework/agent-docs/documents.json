@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "configDigest": "984267d7bfa150ecd6da19aac034f17410284e7a2bcab53148dcaf184e74ccfa",
+  "configDigest": "668c346cc55967942b2d00b118ce22a8e99c832e71c62e32e9e5509f214598e0",
   "searchSynonyms": [
     [
       "walkthrough",
@@ -12,63 +12,6 @@
   "basePath": "",
   "sitemap": "/sitemap.xml",
   "readerFacets": {
-    "area": {
-      "label": "Area",
-      "options": {
-        "authoring": "Authoring",
-        "components": "Content components",
-        "api": "API documentation",
-        "appearance": "Site appearance",
-        "publishing": "Publishing",
-        "discovery": "Search & discovery",
-        "quality": "Quality & measurement",
-        "project": "Project"
-      }
-    },
-    "subarea": {
-      "label": "Subarea",
-      "options": {
-        "authoring-pages": "Pages",
-        "authoring-metadata": "Metadata",
-        "authoring-writing": "Writing",
-        "authoring-templates": "Templates",
-        "authoring-composition": "Composition",
-        "authoring-agent-workflows": "Agent workflows",
-        "authoring-command-line": "Command line",
-        "components-api": "API examples and schemas",
-        "components-overview": "Overview",
-        "components-code": "Code",
-        "components-prose": "Prose",
-        "components-navigation": "Navigation",
-        "components-procedures": "Procedures",
-        "components-visuals": "Visuals",
-        "components-custom": "Custom",
-        "api-contracts": "Contracts",
-        "api-generation": "Generation",
-        "api-examples": "Examples",
-        "appearance-themes": "Themes",
-        "appearance-layouts": "Layouts",
-        "appearance-navigation": "Navigation",
-        "appearance-branding": "Branding",
-        "publishing-configuration": "Configuration",
-        "publishing-builds": "Builds",
-        "publishing-hosting": "Hosting",
-        "publishing-versions": "Versions",
-        "discovery-mcp": "MCP",
-        "discovery-agents": "Agents",
-        "discovery-search": "Search",
-        "discovery-chat": "Chat",
-        "discovery-reader-views": "Reader views",
-        "quality-audits": "Audits",
-        "quality-evaluations": "Evaluations",
-        "quality-analytics": "Analytics",
-        "project-overview": "Overview",
-        "project-contributing": "Contributing",
-        "project-internals": "Internals",
-        "project-releases": "Releases",
-        "api-reference": "API endpoint reference"
-      }
-    },
     "focus": {
       "label": "Focus",
       "options": {
@@ -91,6 +34,101 @@
       }
     }
   },
+  "taxonomy": {
+    "required": [
+      "area",
+      "subarea"
+    ],
+    "requireExplicit": [
+      "area",
+      "subarea"
+    ],
+    "multiple": [
+      "area",
+      "subarea"
+    ],
+    "areas": {
+      "authoring": {
+        "label": "Authoring",
+        "subareas": {
+          "authoring-pages": "Pages",
+          "authoring-metadata": "Metadata",
+          "authoring-writing": "Writing",
+          "authoring-templates": "Templates",
+          "authoring-composition": "Composition",
+          "authoring-agent-workflows": "Agent workflows",
+          "authoring-command-line": "Command line"
+        }
+      },
+      "components": {
+        "label": "Content components",
+        "subareas": {
+          "components-api": "API examples and schemas",
+          "components-overview": "Overview",
+          "components-code": "Code",
+          "components-prose": "Prose",
+          "components-navigation": "Navigation",
+          "components-procedures": "Procedures",
+          "components-visuals": "Visuals",
+          "components-custom": "Custom"
+        }
+      },
+      "api": {
+        "label": "API documentation",
+        "subareas": {
+          "api-contracts": "Contracts",
+          "api-generation": "Generation",
+          "api-examples": "Examples",
+          "api-reference": "API endpoint reference"
+        }
+      },
+      "appearance": {
+        "label": "Site appearance",
+        "subareas": {
+          "appearance-themes": "Themes",
+          "appearance-layouts": "Layouts",
+          "appearance-navigation": "Navigation",
+          "appearance-branding": "Branding"
+        }
+      },
+      "publishing": {
+        "label": "Publishing",
+        "subareas": {
+          "publishing-configuration": "Configuration",
+          "publishing-builds": "Builds",
+          "publishing-hosting": "Hosting",
+          "publishing-versions": "Versions"
+        }
+      },
+      "discovery": {
+        "label": "Search & discovery",
+        "subareas": {
+          "discovery-mcp": "MCP",
+          "discovery-agents": "Agents",
+          "discovery-search": "Search",
+          "discovery-chat": "Chat",
+          "discovery-reader-views": "Reader views"
+        }
+      },
+      "quality": {
+        "label": "Quality & measurement",
+        "subareas": {
+          "quality-audits": "Audits",
+          "quality-evaluations": "Evaluations",
+          "quality-analytics": "Analytics"
+        }
+      },
+      "project": {
+        "label": "Project",
+        "subareas": {
+          "project-overview": "Overview",
+          "project-contributing": "Contributing",
+          "project-internals": "Internals",
+          "project-releases": "Releases"
+        }
+      }
+    }
+  },
   "dependencies": [
     "apis/cedar-parcel.yaml",
     "apis/notes/openapi.yaml",
@@ -103,6 +141,7 @@
     "config/frontmatter.yaml",
     "config/nav.yaml",
     "config/notes-pages.yaml",
+    "config/reader-facets.yaml",
     "config/relationships.yaml",
     "config/search-synonyms.yaml",
     "config/snippets.yaml",
@@ -932,7 +971,8 @@
     "package:scheduler/package.json",
     "search/hybrid.js",
     "site-interactions.js",
-    "snippets/build-check.mdx"
+    "snippets/build-check.mdx",
+    "snippets/hosting-subpath.mdx"
   ],
   "navigationTabs": [
     {
@@ -993,14 +1033,7 @@
       "breadcrumbs": [],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -1042,7 +1075,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "1f78229b2283f82fd97fa44e0185e248a6d5fa75c3ad92e5c4e86227f9c2c87a",
+      "contentDigest": "284f867bb851d5e781cd48c0605365ad3de5a8aab9d8196d79e86596fb656487",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1061,12 +1094,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-pages"
         ]
       },
       "cardTargets": [
@@ -1118,7 +1145,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "99953e4ac4a2676d40ddb2c5f4132fce3e5dbbcf8559b61f1802d6fff3dc791a",
+      "contentDigest": "9f686aaa3ef37bdc54e1eac764b6b99887dfa9d0e2c8ad1ab537fbac73f90f08",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1137,12 +1164,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-agents"
         ]
       },
       "cardTargets": [
@@ -1193,7 +1214,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "1eccee3f10a9db4eaf5e6ca9cd6f9885949903166d70988696ffb6d055519898",
+      "contentDigest": "f5103e3f6ad14c2b1ae8cd223f3e6fdcbc0bdc886a37a58db8c88833c45366e6",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1212,12 +1233,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-agents"
         ]
       },
       "cardTargets": [
@@ -1407,7 +1422,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5a1644073e5736f3d91ecc6939577d78cb9f5a6258e2cff5564cbdb9c71c91ce",
+      "contentDigest": "cd4e760cab30356c072bfe1865664eeff5b511e1d6bda13dbfcf387bfb4edbd2",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1426,12 +1441,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [
@@ -1481,7 +1490,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "96b174706c8223952d5ad2217bda1e3b7fd169831333284f919adde5404e3c40",
+      "contentDigest": "711cd805b7f0faea2e138f91b1cc49be27414b3b56d6b91f8acc78665e01c657",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1500,12 +1509,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [
@@ -1559,7 +1562,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "6be0df7ee8b2aaf5c7bb4efb3bc2cfe3f82c4a23016f085f34167c7cac3f002f",
+      "contentDigest": "37e1a2045d4da0aa69d458bdfe70dd045bc393e4e38eade2ba1e5e4b2ff3e790",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1578,12 +1581,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-analytics"
         ]
       },
       "cardTargets": [
@@ -1757,7 +1754,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "ef85f1c47177788098fe935491dbd0d024ee4ab8a560463079f81dcdb1a76b67",
+      "contentDigest": "bae3ae1a4a4e66a48e49882c5334cafdc34ca427de7c249eb3838432fb356346",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1776,12 +1773,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-generation"
         ]
       },
       "cardTargets": [
@@ -1940,8 +1931,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "74026e617498335f3670fc9eea572407c417e4ab75d01907b256248889c0a00b",
+      "updated": "2026-10-20",
+      "contentDigest": "6b002feeca86b987b1f9abf172cda68c57cf56d09f5b26b4292b4dfb41b5daf3",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -1960,12 +1951,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-contracts"
         ]
       },
       "cardTargets": [
@@ -1991,10 +1976,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/put-the-spec-in-your-project.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "d27898cd417bbcad8b5ffd1f3e2fa18147f963efa8dec0edad6ecc3aa0b1642e",
-          "markdownBytes": 2504,
-          "markdownTokens": 611,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "4c849af35c9ced78a64a429e137023337c82835897b028826efafcdc28508042",
+          "markdownBytes": 2576,
+          "markdownTokens": 622,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2003,10 +1988,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/register-the-operation.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "ece80fd42fdaaa40d1bfdd05c3ea06ac2009b9a2b3dff0ba06f36e1c7c0453e5",
-          "markdownBytes": 3230,
-          "markdownTokens": 797,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "6783c0368c0a74041a9f96e6625e42502f28cb78037a8239262bafd4b58179d1",
+          "markdownBytes": 3385,
+          "markdownTokens": 825,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2015,10 +2000,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/author-the-reference-page.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "d6310d88a88b584009f3d714936af316f0cd0a2292f5b8ef76536a34da59bb81",
-          "markdownBytes": 2637,
-          "markdownTokens": 635,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "ec28221abcc2f4e14f0e92a9acdbe4ec6baa569ac4486627b99881ba425d1157",
+          "markdownBytes": 2709,
+          "markdownTokens": 646,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2027,10 +2012,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/review-imported-content-before-publishing.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "74f048bbf7f4ebe1720df9371d1c6e30ae6ff85d281eb2d1922ff72f3bc4a1bf",
-          "markdownBytes": 2913,
-          "markdownTokens": 685,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "a580d70029b0f805fd39459d841e50af74e6624406a9ece7bdfd1d772cba2ecd",
+          "markdownBytes": 2990,
+          "markdownTokens": 696,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2039,10 +2024,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/build-and-verify-the-output.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "353fae65d64444b8caecb3099d636113479f76bde4a63946930617b209594b5b",
-          "markdownBytes": 2943,
-          "markdownTokens": 722,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "79da23d6fbf5bbb76df0b14b6266c318654b485fbc8366c0d1de4d50eb40e6bf",
+          "markdownBytes": 3042,
+          "markdownTokens": 738,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2051,10 +2036,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/what-readers-get.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "e88a1596285bb66ff1552e2e9105bb13f96f8ea4937de7e6f5783759c022eecc",
-          "markdownBytes": 2354,
-          "markdownTokens": 554,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "8d08fd303e7755a75cbdd4e5a805e9927b6be409093e01be703648f2d48aec49",
+          "markdownBytes": 2426,
+          "markdownTokens": 565,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2063,10 +2048,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/publish-several-versions.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "002d887b01433edf7416f0d6362bb587ffbb0d8753fb20016629b7d65b5e83b1",
-          "markdownBytes": 1768,
-          "markdownTokens": 441,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "7889cc491347796f67861d38d5c91e68030ed7afc33125375fc8bd0b8e830b6c",
+          "markdownBytes": 1840,
+          "markdownTokens": 452,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2075,10 +2060,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/map-extension-values-to-shoalrun-status.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "53e14a2904352c0f7f18d22f421e754de6951bd1a834512a0e98ee9baf0e3509",
-          "markdownBytes": 1760,
-          "markdownTokens": 448,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "4659ce12dddb3db4f682cd84c87e28f9b6f96057104cbfe312f5f4561e706816",
+          "markdownBytes": 1832,
+          "markdownTokens": 459,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2087,10 +2072,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/describe-filters-that-do-not-use-their-openapi-parameter-name.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "e40e7c8ad503f6b1695376ee47a36fb4afbc10e6e53a1621a32e0401da37da62",
-          "markdownBytes": 1764,
-          "markdownTokens": 446,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "524ac76c2be741e91b683dbe4e446e2ab84938de8e8997039fcae292030542c6",
+          "markdownBytes": 1836,
+          "markdownTokens": 457,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2099,10 +2084,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/generate-many-pages-selectively.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "a9082dda947f02777adc4c74482e4dd4e42b09b9d753b0fbc2338d590e185e2f",
-          "markdownBytes": 1788,
-          "markdownTokens": 450,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "0701676193556cc636b3ae3f7f6a5ce8be44b93565751e0e1bfb0011149c4f22",
+          "markdownBytes": 1860,
+          "markdownTokens": 461,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2111,10 +2096,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/use-a-template-for-editorial-context.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "6fa9c26f12e5b5b4d3ca6a822e226ac86e149aa305a4fc77ed10cd8802c0850c",
-          "markdownBytes": 1741,
-          "markdownTokens": 439,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "f647971b4bc63175b865948ccdac6f11a234189935aadc6350219c2ecdd796e2",
+          "markdownBytes": 1813,
+          "markdownTokens": 450,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2123,10 +2108,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/add-useful-examples.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "cc265755fde2badf7953f3f0fed7ca43131272e3c2dea49cad04a88a2fd1295a",
-          "markdownBytes": 1739,
-          "markdownTokens": 441,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "15faa2a0a2de64b703242206e90e812131c97d1a4cb3c4d242bf4414b212c1aa",
+          "markdownBytes": 1811,
+          "markdownTokens": 452,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2135,10 +2120,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/link-guides-to-api-references.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "af1d2166b4a77c05ac152b3ca2957f0f02e31d1b6021cba684569cb9b0f7b7c5",
-          "markdownBytes": 1747,
-          "markdownTokens": 441,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "4085e9a6b58b38005c0e3d915337135c3ceedce5b2c0ceba162154586a97b181",
+          "markdownBytes": 1819,
+          "markdownTokens": 452,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2147,10 +2132,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/inspect-the-machine-readable-contract.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "f2423d8fb59b7c10296c6c398348dbd182f283b1d84168818e57c78c7ca01e9b",
-          "markdownBytes": 1982,
-          "markdownTokens": 492,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "42ca67603df54c5f8254a418a9c895837e5a5a5d8eb7378260e37600cb7de9eb",
+          "markdownBytes": 2054,
+          "markdownTokens": 503,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2159,10 +2144,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/preview-a-small-api-reference.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "6f543b5b18560dbfdb130b2e69b25674293f2b61a7c7b5fd0561e9d9e0e2aff4",
-          "markdownBytes": 2392,
-          "markdownTokens": 586,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "47544c3c7a9fa34df10177852db604062c62933773a80cbdd38222bc65020388",
+          "markdownBytes": 2226,
+          "markdownTokens": 548,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2171,17 +2156,17 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/related-reading.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba",
-          "digest": "06ae8982674d1f22c34f42a19b3674d0b6813f36e76cb657d1924199831e3440",
-          "markdownBytes": 2046,
-          "markdownTokens": 513,
+          "parentDigest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1",
+          "digest": "7a4cd42fc35ced163151f57942645ffa440656e9b5c47b6c98f2beca66ee3784",
+          "markdownBytes": 2118,
+          "markdownTokens": 524,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 11740,
-      "markdownTokens": 2656,
+      "markdownBytes": 11689,
+      "markdownTokens": 2640,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "c4faa05860228182353ec280712d340092a510da4988571ad01ddbb687d12cba"
+      "digest": "e17945d7aa177eb35b3b671169ea49118192b3a571ca6f9ac06bb3fdd633c0b1"
     },
     {
       "id": "guide.audit",
@@ -2211,7 +2196,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "dae053a81b0fa2985de12ba48d6141015a259346f3c2754f28caa504eff0e696",
+      "contentDigest": "d34a0932cc3894408f51c9b594b5ee1ebc8c4d4bdc84415cddbfafdc78577823",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2230,12 +2215,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-audits"
         ]
       },
       "cardTargets": [
@@ -2360,7 +2339,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "a0f157011571c3bbe169b3122866f5399b26ad8c25880b5adefd0833bed7f2ee",
+      "contentDigest": "b2c6f2ff30646b0e474b2f2cfbc679066c3c8d1346b5730c1e439bb8720e2c2a",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2388,12 +2367,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [
@@ -2446,7 +2419,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0ad50da7bbee1f45600c1e6eb011c3005d95f4b2a717635e3a33120e58fb0ab3",
+      "contentDigest": "5542d96ac15993e30c43c9877fd4b7516fa12e9dfec3c7f8f0e273be44c20d19",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2474,12 +2447,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [
@@ -2530,7 +2497,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "41e5f0e7cec2edf16e176a14d8ed8108b13f898d24e12be99f58c16ab5929725",
+      "contentDigest": "3202fe62d97df984227fe02dcd7c1a5c1d3e996ca20532ea7a975c226f3a75f4",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2558,12 +2525,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [
@@ -2647,12 +2608,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [],
@@ -2700,7 +2655,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "1735c75314cfdb3d1aa4d588001a4435b512d8bd6f8bbddbd859e79ebed7a93d",
+      "contentDigest": "48d23e8b4fb67af7cee0916d2b5b1dbfae3dfb735a85ce4eaff1b624803835c6",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2728,12 +2683,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [
@@ -2786,7 +2735,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "7c27db236887f405d2311feb9118f32ee37471e6b8fecfc4ac4acedeef45fc96",
+      "contentDigest": "30df331de6771c139e17eff7fc1f4030967816d6853141821c340d26e3b83370",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2808,12 +2757,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-navigation"
         ]
       },
       "cardTargets": [
@@ -2985,12 +2928,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-examples"
         ]
       },
       "cardTargets": [],
@@ -3050,14 +2987,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-agents",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-agents"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -3115,14 +3045,7 @@
       ],
       "area": "quality",
       "subarea": "quality-evaluations",
-      "readerFilters": {
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-evaluations"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -3164,7 +3087,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "e47898896dc34afc354b680c3e230145dd720affb801c58ecaed77bd0ca32d4d",
+      "contentDigest": "4505b16180430bc2b9b489290128f22821e3febbd8ce93b3f386ad911990ed29",
       "breadcrumbs": [
         {
           "label": "Changelog",
@@ -3180,14 +3103,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-agent-workflows",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.authoring-workspace",
         "reference.authoring-workspace"
@@ -3236,7 +3152,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "869bc99c0cb294e3fadf80258b400cbe6a691288ea14d15579d134896df09f04",
+      "contentDigest": "2733f89d3f7182cd42da2175d282b271ff62c62b6c9f75d5bdbf767055f548b7",
       "breadcrumbs": [
         {
           "label": "Changelog",
@@ -3252,14 +3168,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-agent-workflows",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.search",
         "guide.chat-checks",
@@ -3309,7 +3218,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "8e1cce8f300a255401bce50a67823925e678a23cd9afe60c33574971da49c7bf",
+      "contentDigest": "9a9c13af7319ab2ee6c59befd9775b8116003035331b6eb410be8859cd984c00",
       "breadcrumbs": [
         {
           "label": "Changelog",
@@ -3325,14 +3234,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-agent-workflows",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.authoring-agent-overview"
       ],
@@ -3380,7 +3282,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "89742ae837eeb998c430d7dc5564421a8a5d72add1a71a36f00504f70e1a7a08",
+      "contentDigest": "4e41a0ceccccb2c8f0e016cbe0528c15f1a5a2fe12b04cc82e2e44116bf6ac75",
       "breadcrumbs": [
         {
           "label": "Changelog",
@@ -3396,14 +3298,7 @@
       ],
       "area": "project",
       "subarea": "project-releases",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-releases"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "change.visual-navigation",
         "change.search-and-tooltips",
@@ -3483,14 +3378,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-mcp",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-mcp"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -3532,7 +3420,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "a955be2887d4d997b675162fac32009825c5e73039175700e9c03f6d85e9ab94",
+      "contentDigest": "7a021be1636eaa29dd1979efcb61020f1f8340a135d06b032c716cfec3af2643",
       "breadcrumbs": [
         {
           "label": "Changelog",
@@ -3548,14 +3436,7 @@
       ],
       "area": "appearance",
       "subarea": "appearance-layouts",
-      "readerFilters": {
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-layouts"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.navigation-lifecycle",
         "guide.output",
@@ -3623,14 +3504,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-search",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-search"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -3688,14 +3562,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-search",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-search"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -3737,7 +3604,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "f261ccbe454007414b0328b281fa2c7c1adc1d6d7e5654025299955c224a6eb6",
+      "contentDigest": "8a2570069b33415f6439ccfa8a976b671ae4f16752511174800a5d59856ec76b",
       "breadcrumbs": [
         {
           "label": "Changelog",
@@ -3753,14 +3620,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-agent-workflows",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.agent-skills",
         "guide.authoring-workspace"
@@ -3809,7 +3669,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0bf6c025562cdf0ef566026db65c26a2b5ea2f0634b5dbb7de285ecd37a68fb4",
+      "contentDigest": "e918366ba6af4b4add435e8720bc312c64adefa6708c41a7365b5f191ddf6aa3",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -3831,12 +3691,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-chat"
         ]
       },
       "cardTargets": [
@@ -4007,12 +3861,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-chat"
         ]
       },
       "cardTargets": [],
@@ -4144,8 +3992,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "77f71eeaeaff6a3b4c8fa07e821b1e45f5eb5c59339f071a65827f1903a9fa1b",
+      "updated": "2026-10-20",
+      "contentDigest": "48b4388ef4e7d0a5b2f6e47aa75181f12f6e947021051d7c9ad78dc62b529b81",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -4161,14 +4009,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-command-line",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-command-line"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "reference.config"
       ],
@@ -4189,8 +4030,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/start-a-project.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "6869d36d20d24ce92fe6458baec59822416e4f80b6fcea2bfd12444aa84516c2",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "b0efbbd54c65bcf30f5387536e72694d224541da41852bee2b2ff770ebd0ed0e",
           "markdownBytes": 2488,
           "markdownTokens": 599,
           "markdownTokenEncoding": "cl100k_base"
@@ -4201,8 +4042,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/build-and-serve.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "f8bbf65875ea12685faf3a400930ffabe29d8ee3d357dce4c4afdb658ebed58e",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "f5d851bdcbe106e0594494943161d6e3c0d0e8dea8e2f42a892e7dd0f2aa18e3",
           "markdownBytes": 9777,
           "markdownTokens": 2341,
           "markdownTokenEncoding": "cl100k_base"
@@ -4213,8 +4054,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/author-pages.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "2fe152a05119a5c5607f9e9ae88426ed59f19a418ae3c822192d8b969b5aeba0",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "c0fd234da081e9187e35090b0cf1abe7ce0cd57da7956999e308c8e898837262",
           "markdownBytes": 7287,
           "markdownTokens": 1577,
           "markdownTokenEncoding": "cl100k_base"
@@ -4225,8 +4066,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/inspect-config-and-operations.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "cd6fb94c17aa6b7abf3e6a6ebd91155f1cfdb02cc03471451b03db490ff42813",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "e0e7c163baba3c7a7608ea79797ec06c03831771acb6111b791cd1f2443d828d",
           "markdownBytes": 4019,
           "markdownTokens": 736,
           "markdownTokenEncoding": "cl100k_base"
@@ -4237,8 +4078,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/audit-a-project-and-api-sources.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "b927fe04b767413f89130bfb6df1b8b11335f8c7c71c6df9470418effb85ff9b",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "87f0255b1290a931f4b20bbbb346942d3e54b2e4f18ec2e6ce714119dad6090e",
           "markdownBytes": 6649,
           "markdownTokens": 1579,
           "markdownTokenEncoding": "cl100k_base"
@@ -4249,10 +4090,10 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/npm-scripts-in-this-repository.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "80c760a99a2cf1b35dc132b45766ced6d413a175a2827c68075824aed3084df0",
-          "markdownBytes": 4892,
-          "markdownTokens": 1041,
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "0d0ff58fbe028c38cb6c3d82e685ef700a8b089f55a229e2a2b4af15d9136745",
+          "markdownBytes": 4033,
+          "markdownTokens": 854,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -4261,8 +4102,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/search-and-chat.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "d2df58564678e7385887734a0a6ab058e6360e8db75f91de17d788b9d8f44248",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "423b4b977f70c205b2a796520cc959cb534790a61399cecc8b701411cb4851e5",
           "markdownBytes": 12790,
           "markdownTokens": 2879,
           "markdownTokenEncoding": "cl100k_base"
@@ -4273,8 +4114,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/working-tree-authoring-tools.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "1787217f90187c5bf7a21420779c190b04859fda225d4d6a986bca84fc334e78",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "58624df5aa4446ad4f5a21a562226d3395f83bd6d04d544398964abfa4ff1218",
           "markdownBytes": 2748,
           "markdownTokens": 643,
           "markdownTokenEncoding": "cl100k_base"
@@ -4285,17 +4126,17 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/related-reading.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2",
-          "digest": "146e2b6c9a521b416cadbee4e5eff791bdd915d89addd7ac6f813b05aed1a721",
+          "parentDigest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48",
+          "digest": "6481173bd8ac635ea5cd16dec0c64d414cb206427109d0f9d84a3b566d42bdd9",
           "markdownBytes": 1796,
           "markdownTokens": 459,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 39339,
-      "markdownTokens": 8465,
+      "markdownBytes": 38480,
+      "markdownTokens": 8278,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "a34118af739b01d95c062372a16ddf2cc4a66540aef1b28a3ec126852ce11af2"
+      "digest": "7b11c79876bf13afdb4e7676f65d401c41c413d08fd45e18d4043bceee7fca48"
     },
     {
       "id": "guide.coding-agent-authoring",
@@ -4325,7 +4166,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "e6a919fb0e2fefdf6c936ae917cda2bbacc0181a5dda0b02afc422c4b9a7302e",
+      "contentDigest": "883653de82e2a6e78aa8516027e0e18837db91fe9715f12c35647442624687fa",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -4353,12 +4194,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-agent-workflows"
         ]
       },
       "cardTargets": [
@@ -4410,7 +4245,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "4e8a23be9c137663f5fb0751fdf43b3f6914051a280611bee3eda6a3638539fb",
+      "contentDigest": "35a4f183e51f1c24a89060206499ede3f2424088c23218d1339f45cd632f9470",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -4429,12 +4264,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-themes"
         ]
       },
       "cardTargets": [
@@ -4507,12 +4336,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-navigation"
         ]
       },
       "cardTargets": [],
@@ -4556,7 +4379,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "7da6c885424e1365390ac39931cc25a8097b837342494a921779672645cc5095",
+      "contentDigest": "80b2f993215680b495c6c0a65f09f4646890019bab991958c1d049a48e54cd8e",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -4573,17 +4396,17 @@
           "url": "/author/components/api-embeds"
         }
       ],
-      "area": "components",
-      "subarea": "components-api",
+      "area": [
+        "components",
+        "api"
+      ],
+      "subarea": [
+        "components-api",
+        "api-contracts"
+      ],
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-api"
         ]
       },
       "cardTargets": [
@@ -4633,10 +4456,10 @@
           "depth": 2,
           "markdownUrl": "/author/components/api-embeds.sections/apiexample.md",
           "parentMarkdownUrl": "/author/components/api-embeds.md",
-          "parentDigest": "2c191bf0d05fb5080e44126fcd2607a17b1adea7be8ee184a0a8b04a3b8a9a97",
-          "digest": "48509bacd7a6052f08b97f536c8907634c6bd588865c9b1de553583a59f96f00",
-          "markdownBytes": 4601,
-          "markdownTokens": 1119,
+          "parentDigest": "dc41d15d593edcc8f70f59a3f761b2807a0ddc90e6d971da99aa26e3fb66fce9",
+          "digest": "394695dce9ad36160dd772b57aaa1d1b04649b4d30855ff7327d5873f89eebb2",
+          "markdownBytes": 4635,
+          "markdownTokens": 1133,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -4645,10 +4468,10 @@
           "depth": 2,
           "markdownUrl": "/author/components/api-embeds.sections/html-markdown-and-agents.md",
           "parentMarkdownUrl": "/author/components/api-embeds.md",
-          "parentDigest": "2c191bf0d05fb5080e44126fcd2607a17b1adea7be8ee184a0a8b04a3b8a9a97",
-          "digest": "95afe89bbd9bd64000e26e90de88257b4be0d761c5bffec4f331181d61fba6fa",
-          "markdownBytes": 1648,
-          "markdownTokens": 388,
+          "parentDigest": "dc41d15d593edcc8f70f59a3f761b2807a0ddc90e6d971da99aa26e3fb66fce9",
+          "digest": "2481cdf9a84f04771e1f9685d10f12006c625043bb721b14a0b40df4804a98f4",
+          "markdownBytes": 1682,
+          "markdownTokens": 402,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -4657,17 +4480,17 @@
           "depth": 2,
           "markdownUrl": "/author/components/api-embeds.sections/related-reading.md",
           "parentMarkdownUrl": "/author/components/api-embeds.md",
-          "parentDigest": "2c191bf0d05fb5080e44126fcd2607a17b1adea7be8ee184a0a8b04a3b8a9a97",
-          "digest": "28bc5d0fe1738a6e995997d2df8c4baa010e972695a44ee816dc4e0207508fb2",
-          "markdownBytes": 1355,
-          "markdownTokens": 341,
+          "parentDigest": "dc41d15d593edcc8f70f59a3f761b2807a0ddc90e6d971da99aa26e3fb66fce9",
+          "digest": "5f2d500659d5f219dbcb9c6ec265ef7e06e30b41ea80e3f15d927eb60f264040",
+          "markdownBytes": 1389,
+          "markdownTokens": 355,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 10108,
-      "markdownTokens": 2289,
+      "markdownBytes": 10142,
+      "markdownTokens": 2303,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "2c191bf0d05fb5080e44126fcd2607a17b1adea7be8ee184a0a8b04a3b8a9a97"
+      "digest": "dc41d15d593edcc8f70f59a3f761b2807a0ddc90e6d971da99aa26e3fb66fce9"
     },
     {
       "id": "guide.component.badge",
@@ -4719,12 +4542,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-prose"
         ]
       },
       "cardTargets": [],
@@ -4768,7 +4585,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "16a33af17e67b353c55ba03d903ac691dc4b470eda598bd75c3b575bdaefd5f1",
+      "contentDigest": "60ff06c37a8ab6bab84a3d27b1078ac84cff6f5a93426c59bc2f0001da66ff42",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -4790,12 +4607,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-navigation"
         ]
       },
       "cardTargets": [
@@ -4845,7 +4656,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "96cff771d4c917da2345369afd2134f598bb4d7ab98925f2b9353f37a238a217",
+      "contentDigest": "250d0ad4ca88613049b396dcd05ec76f8a20199e9d5f87b32da1cbb5c26cf856",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -4867,12 +4678,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-prose"
         ]
       },
       "cardTargets": [
@@ -4923,7 +4728,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "a575d7cf89d06f7cdc8a4acf6f4fcd93da5679c2959bd1e11f548500b7b4a4cb",
+      "contentDigest": "7a25092fa55d5669963cd51e3688e25072191bdf3584a64e5c4b658449522229",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -4945,12 +4750,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-code"
         ]
       },
       "cardTargets": [
@@ -5001,7 +4800,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "30f7fb808a76f7132154831c0ebe5011a56855d31531a75710a57c82dbed5519",
+      "contentDigest": "00f0fc07e9fc7793db3119038911fb30641baa488f371a1087379a42dee4a438",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5023,12 +4822,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-procedures"
         ]
       },
       "cardTargets": [
@@ -5079,7 +4872,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0d11617c3c57d1d3e32dcb49f45b9367db008aa94f417b936f37043be7342575",
+      "contentDigest": "f1d7a1be027a40367bb4045ba3d97a2dccb21bcd89182e54801496138669a0cf",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5101,12 +4894,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-procedures"
         ]
       },
       "cardTargets": [
@@ -5158,7 +4945,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "c5d8c738e43d48d18c9900be1c7b4470402aa0be0559c22c59a687319b627a99",
+      "contentDigest": "2bf0781e12edab7d12f587918e8ab063fc99d68b32eaf3312d39880d551ddab1",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5180,12 +4967,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-prose"
         ]
       },
       "cardTargets": [
@@ -5235,7 +5016,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "c2e3bb846bd9cec6579028766036b17a4b9dc8883b657d9e4b89d0313f516e0e",
+      "contentDigest": "745bda919015434f98d2b34a2bb63327a069f02755e52e21f0cfd0acefef0a70",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5260,12 +5041,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-visuals"
         ]
       },
       "cardTargets": [
@@ -5318,7 +5093,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "afcea3b693441b2deb117147b55af59d153a3a148c62775379dba0a43c28540a",
+      "contentDigest": "661e95dd8a48f2865ad7b0702929e7fc6fb69df09ed52944363d2e12a44ea7ab",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5340,12 +5115,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-navigation"
         ]
       },
       "cardTargets": [
@@ -5396,7 +5165,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "c632a78b1687dc29898dadf3c457bb07e2486d363c640840aeee7cf32ae590aa",
+      "contentDigest": "4df96e96b98cf9aa24883428f2d911976ec73ee91df2f3b27dda045b88f4b278",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5418,12 +5187,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-prose"
         ]
       },
       "cardTargets": [
@@ -5495,12 +5258,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-code"
         ]
       },
       "cardTargets": [],
@@ -5544,7 +5301,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "06ecfd9fbf8fd37eab11bd5acb68edef3649c1b73e48e5e5bc0e492cea8cf610",
+      "contentDigest": "e7f80cdd9b3d439bc8be6189f8b5b18ca1d23f354353e162f0a30bb8f349bc30",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5566,12 +5323,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-visuals"
         ]
       },
       "cardTargets": [
@@ -5621,7 +5372,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "384099d4439f8a61ee650e2623c99631c93e9d05b50d613ded5869dda7831759",
+      "contentDigest": "43cd0c984ec60561fad67ab8afc338883fe50aa1fb17606c907ca338148dabf5",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5643,12 +5394,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-prose"
         ]
       },
       "cardTargets": [
@@ -5701,7 +5446,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "949d224ba9672727a0aab885bdca6b7c68742a9a57fe1707928ab8f586984f79",
+      "contentDigest": "6a690686bdf89b4148adfe24a8ef7332767afdd64e56ce7d748852f717886045",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5723,12 +5468,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-code"
         ]
       },
       "cardTargets": [
@@ -5800,12 +5539,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-visuals"
         ]
       },
       "cardTargets": [],
@@ -5849,7 +5582,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "73ebff339015f90fc6b7a46029186c183fd5a1aa48e16a4a99ca409a3c7d3d32",
+      "contentDigest": "e8adbd8a41763e7f15a0fe563eab8f89eefa6943d58461777f2a889123171af4",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5871,12 +5604,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-procedures"
         ]
       },
       "cardTargets": [
@@ -5927,7 +5654,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "91a008fbe0e44d0519acf6bf6ef0920fa6ff1c4ce1f553b1eec0e8f7a96e3a0b",
+      "contentDigest": "3649474fc2dd3af811cae3201ab3732a0f4b9894216fd06b9736f17ae16458d5",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -5949,12 +5676,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-procedures"
         ]
       },
       "cardTargets": [
@@ -6004,7 +5725,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0562ee2fbbc71b057c6a74ec1210db8cedaf773f6fdf691d156a32bf671e1a96",
+      "contentDigest": "a350bc3d1a7c6b4ce74ed58d964ced3b86812e159b10288cc42113881afb51bf",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -6026,12 +5747,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-navigation"
         ]
       },
       "cardTargets": [
@@ -6103,12 +5818,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-procedures"
         ]
       },
       "cardTargets": [],
@@ -6174,12 +5883,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-visuals"
         ]
       },
       "cardTargets": [],
@@ -6223,7 +5926,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "d0b956e32a331ed00f1bdcb694d6f06dd3faf510551d980399c1676028afa2f3",
+      "contentDigest": "46741769c518592327f349eaab7342dc729e461e2af8dd1d861684665bddf7cd",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -6245,12 +5948,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-procedures"
         ]
       },
       "cardTargets": [
@@ -6323,12 +6020,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-procedures"
         ]
       },
       "cardTargets": [],
@@ -6372,7 +6063,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5ea33e48ed4e1be6f298c0dad62c4b3db46009464d92c45421c96ee618dee87e",
+      "contentDigest": "2ac6c1fc0f1df32a4998d8a0fe0892dcdce0de467a0e35ccaa698dba83b4799a",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -6394,12 +6085,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-prose"
         ]
       },
       "cardTargets": [
@@ -6449,7 +6134,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "1ef098d9ce947b42ff0ae1d10bc6486d487851b97c1bc014ac26dd979c4e9abd",
+      "contentDigest": "d09b5638770b31ff7a5447843cf1b32c6934b382c3389b221b6560def58791c9",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -6471,12 +6156,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-code"
         ]
       },
       "cardTargets": [
@@ -6611,7 +6290,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "3333492803a1b20d777a620202d4e7cb62825645506c37026d7bc37717936cf3",
+      "contentDigest": "ed984a5d3cdc9d7f07082ac53cb669ce4c924fb63cfb964f1c1a6a7b82a5e12b",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -6633,12 +6312,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-overview"
         ]
       },
       "cardTargets": [
@@ -6689,7 +6362,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "8c1c39b621a484e4a6e9ee3aa2bf319a3cdf44ec25f255cb8d63ec4c9ea7ed0b",
+      "contentDigest": "0f30108afa84c8b4ceca2acc82eedad68d918bbc3cfe797200eb9cfc3be13637",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -6705,14 +6378,7 @@
       ],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "reference.config",
         "guide.configuration",
@@ -6764,8 +6430,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "6dc5b998c9bed2af3694e29a539b75eaa1f38c170d60891757a2bb12a0995be3",
+      "updated": "2026-10-20",
+      "contentDigest": "ffc004dd3945d44271e04cfd66ccd4e0b5e79d0731c2a743c33f871b5c27a884",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -6784,12 +6450,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-configuration"
         ]
       },
       "cardTargets": [
@@ -6814,10 +6474,10 @@
           "depth": 2,
           "markdownUrl": "/config.sections/split-and-combine-config-files.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "5601e841d1836fee96e663be4975bb84192ee66d2e9cde856013fa713ba60281",
-          "markdownBytes": 5884,
-          "markdownTokens": 1433,
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "88a226a796a876da28c0474a9055b59b77a77ba97a524736700bbdf562241f37",
+          "markdownBytes": 3602,
+          "markdownTokens": 843,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -6826,8 +6486,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/search.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "284a3213fa7becf75c25465fe49c3de5e2f6eafb7be5887546600a4b78996c14",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "7f0bc871e4ef4c43510bfa2c13aa8b4592c17a20724441e7c02bb9eb876aa950",
           "markdownBytes": 2596,
           "markdownTokens": 630,
           "markdownTokenEncoding": "cl100k_base"
@@ -6838,8 +6498,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/authoring.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "0f69496176d71f6e3931b73b69800551f80e96d3ff1f33d204d6a678fcf3a5dc",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "bd8448aa5f53f0f654a4805eb5b6e1215361efdbd547c365c2600796b291848d",
           "markdownBytes": 4378,
           "markdownTokens": 890,
           "markdownTokenEncoding": "cl100k_base"
@@ -6850,10 +6510,10 @@
           "depth": 2,
           "markdownUrl": "/config.sections/site.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "29ff6024d604806a835f8c645f9fef9c10b9a4b804c1c064883b50f38d28b4ca",
-          "markdownBytes": 11078,
-          "markdownTokens": 1935,
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "2c1e6a4890056f893a8f3328c135665824148af9ef5555c53afa75b55e1eeb1a",
+          "markdownBytes": 11698,
+          "markdownTokens": 2061,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -6862,8 +6522,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/theme.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "4d000d0d757084cc141f471a33dcdbf88e7f486ab413dda64997f6d9449c80ea",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "47e225b264ff49d4a3894b545143f146d4e4cb2cfb1f71291b7c46bd91b1777f",
           "markdownBytes": 4428,
           "markdownTokens": 997,
           "markdownTokenEncoding": "cl100k_base"
@@ -6874,8 +6534,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/publications.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "45395b001cf32e8e51f9473ba54bdbd9740db0dc735b73a4878d238ef5903dfb",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "ae6b4cc340df9cc074f553bf0c1d8fbcc56c2bbc14a34d6895de7dceb1943aec",
           "markdownBytes": 7108,
           "markdownTokens": 1427,
           "markdownTokenEncoding": "cl100k_base"
@@ -6886,8 +6546,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/navigation.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "5b8a734a5414965a12a0c25c4b6d880a1a40ecd0b0244c6f73bea081b5ed36aa",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "57d616ac144c1f1b682877d7e1850a6b78cf7047ea512d4ebc9522142be1fc7a",
           "markdownBytes": 5450,
           "markdownTokens": 1114,
           "markdownTokenEncoding": "cl100k_base"
@@ -6898,8 +6558,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/redirects.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "b9081906cc345fe77d7d022ca285bf462647e67b51996209557d83bf4c81ef6f",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "e5205101f54189f8e83d1948807988302cc7353ebe484c1691bf35222429636d",
           "markdownBytes": 4998,
           "markdownTokens": 1164,
           "markdownTokenEncoding": "cl100k_base"
@@ -6910,8 +6570,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/apis.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "0133be186c67238027435247cc5792bc8466043de2fe0c3835d36048e825d37e",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "f0289a1dc116e6b80ae6662cc3a040d1e85bf79ea430b3b47a77de8f55730c56",
           "markdownBytes": 7736,
           "markdownTokens": 1474,
           "markdownTokenEncoding": "cl100k_base"
@@ -6922,10 +6582,10 @@
           "depth": 2,
           "markdownUrl": "/config.sections/audit.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "8691c4f87d4e4566e0ab6ec9a7207202a5bd029faa4915d247e008b6eda5e76f",
-          "markdownBytes": 4287,
-          "markdownTokens": 990,
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "14bd22bd140373fb38a44702a4e3d161a5c19a47670aed9cb9fa4454b38d5448",
+          "markdownBytes": 5035,
+          "markdownTokens": 1149,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -6934,8 +6594,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/cookbooks.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "215217fabffa5ce637abf26f0f51754ad1468ee69626106595a8b85793ad0235",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "0a7d5721526b8a708ef72718daef4873172012e63013b58cc68b212be2a73d61",
           "markdownBytes": 3047,
           "markdownTokens": 720,
           "markdownTokenEncoding": "cl100k_base"
@@ -6946,8 +6606,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/relationships.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "13e46d0fbc1173b83eac1578b900a2caedbbac1cde070e8541e71b50ee2edd14",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "5d4e351b5b778ad4ebc71a8265f9194d43d8dfc64d69b19c2a73831e87e9a8aa",
           "markdownBytes": 3635,
           "markdownTokens": 913,
           "markdownTokenEncoding": "cl100k_base"
@@ -6958,8 +6618,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/variables.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "ef7cfb08afeb4581e4f3d0b339b0ee67d4c5ee26ed441187f60e94f9d707af64",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "31945da9659f831db8f0c0450271519c3034f5b125318d6c7a331540c117cd64",
           "markdownBytes": 2905,
           "markdownTokens": 704,
           "markdownTokenEncoding": "cl100k_base"
@@ -6970,8 +6630,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/snippets.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "2ddd91f222e9ac97cca02c928aa56118503bf47a863808cdb4ee00fca9f4ea31",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "d9056f6b82d60f04d2cca48513e837089a91016751ce2c75715db01c67822937",
           "markdownBytes": 3087,
           "markdownTokens": 775,
           "markdownTokenEncoding": "cl100k_base"
@@ -6982,10 +6642,10 @@
           "depth": 2,
           "markdownUrl": "/config.sections/callouts.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "a1e235e3287dc80a90d6611e8739de8681a60ce650e646948c49c9cdc467ac48",
-          "markdownBytes": 3111,
-          "markdownTokens": 809,
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "b0e13cda7e6289a4ab2aadf31b5e47c7de9f0b936fa717345f1eeddab66029a6",
+          "markdownBytes": 2534,
+          "markdownTokens": 623,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -6994,10 +6654,10 @@
           "depth": 2,
           "markdownUrl": "/config.sections/badges.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "cfd0a4e709fdee36a0d2d48a4249dd6d935f2d120b5d6cbbc612704921ce4291",
-          "markdownBytes": 2888,
-          "markdownTokens": 724,
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "e6b8d4c63fec202de233cbaba2444adbe5aad152f5045e63c34208cebf7d3c02",
+          "markdownBytes": 2693,
+          "markdownTokens": 650,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -7006,8 +6666,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/templates.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "d058f69876b05cd9a886ef72c57e598a86e98ca5d478c5d4ebf30791b3bd1ef9",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "2b352e3f6c504bc62310c1927f6d3ee837015b40f4d448067f07c2b3b4d55481",
           "markdownBytes": 3082,
           "markdownTokens": 753,
           "markdownTokenEncoding": "cl100k_base"
@@ -7018,8 +6678,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/readerfilters.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "40a6652b503cda7491122dec571fc5e1d594b0302f1565b05959e69e5f697f13",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "afa75178a5945ed538d6ac6ed78b9fd8f2ec35e47e897f05e897e44e11bf058a",
           "markdownBytes": 2991,
           "markdownTokens": 721,
           "markdownTokenEncoding": "cl100k_base"
@@ -7030,8 +6690,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/frontmatter.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "8d2cb43b4eb0fa7549004b5d9ca102422ae223ef769506d3f711fac375068dc1",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "2519294aded74904ccbc450f6b58459796e35ddf59bb3426a51316f487839977",
           "markdownBytes": 3525,
           "markdownTokens": 853,
           "markdownTokenEncoding": "cl100k_base"
@@ -7042,8 +6702,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/mcp.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "6fc9c669590cf7901071ebda7bae0be5702e5894ecb5e42ed403aaedb041576a",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "1db18e91d6275ae221cbc2b8eac8b777336cec4d83dbf348d209da13fb0e46cc",
           "markdownBytes": 5660,
           "markdownTokens": 1262,
           "markdownTokenEncoding": "cl100k_base"
@@ -7054,8 +6714,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/analytics.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "9fa7a8575747544f4169d3450d0f04c3b2c1d2a2a6806477bfab0a0c75a224c3",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "87644ac1676b8b63ce650c42af804fdf1929d84d45eb0e7c948dc0e9eedfda87",
           "markdownBytes": 2817,
           "markdownTokens": 665,
           "markdownTokenEncoding": "cl100k_base"
@@ -7066,8 +6726,8 @@
           "depth": 2,
           "markdownUrl": "/config.sections/metadata.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "2d257fffc6c3c727622cf3bfe98c21765e1af394e2f90ba55283a6d7ddf3d980",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "f1d8e87bc09975643f5271b02e70b69206eb712be65ad95797839e4facec2ee5",
           "markdownBytes": 2784,
           "markdownTokens": 656,
           "markdownTokenEncoding": "cl100k_base"
@@ -7078,10 +6738,10 @@
           "depth": 2,
           "markdownUrl": "/config.sections/outputs.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "ec25103681c33aabf0a357b2a4ae47ded3434cc98e3671eb0659d4be3961c9b1",
-          "markdownBytes": 5819,
-          "markdownTokens": 1229,
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "efb96ba1068cfb808a35decc0d74592f4f4115189ac98ecbf2178c22fe49650a",
+          "markdownBytes": 7938,
+          "markdownTokens": 1662,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -7090,53 +6750,17 @@
           "depth": 2,
           "markdownUrl": "/config.sections/related-reading.md",
           "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "9e87d542b02879a22941236825fc8bf0045d6208ef72b5c5e9de917f3a3c48d4",
+          "parentDigest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019",
+          "digest": "0acdfa64840d3fca68d48ed0d6761f8ba9372ccd0813e2db1dabe355459b40cf",
           "markdownBytes": 2428,
           "markdownTokens": 590,
           "markdownTokenEncoding": "cl100k_base"
-        },
-        {
-          "id": "agent-discovery-index",
-          "title": "Agent discovery index",
-          "depth": 2,
-          "markdownUrl": "/config.sections/agent-discovery-index.md",
-          "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "a9b12d3f96f961883674189d1f5c82e01312e57bb2cfa85a01363f458b7c0b74",
-          "markdownBytes": 4327,
-          "markdownTokens": 970,
-          "markdownTokenEncoding": "cl100k_base"
-        },
-        {
-          "id": "content-freshness",
-          "title": "Content freshness",
-          "depth": 2,
-          "markdownUrl": "/config.sections/content-freshness.md",
-          "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "3fc260c84e6a87f1bc190cd7d093d9d3a42bc41112bafb92c2d073432b7af89a",
-          "markdownBytes": 2828,
-          "markdownTokens": 663,
-          "markdownTokenEncoding": "cl100k_base"
-        },
-        {
-          "id": "agent-evaluation-reports",
-          "title": "Agent evaluation reports",
-          "depth": 2,
-          "markdownUrl": "/config.sections/agent-evaluation-reports.md",
-          "parentMarkdownUrl": "/config.md",
-          "parentDigest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f",
-          "digest": "1c778b40787acc59fed190cca8897ea69153f3dc88bd34b959f7b67037ae25f2",
-          "markdownBytes": 2956,
-          "markdownTokens": 696,
-          "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 58352,
-      "markdownTokens": 11783,
+      "markdownBytes": 55301,
+      "markdownTokens": 10933,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "9222b0ebf1835cde317a3bada169f2b5c3286a12984a39e99b802d14a35d436f"
+      "digest": "96f960a00051c097107dabe83fe364279d266035f1d7cd1e5fff569bda84a019"
     },
     {
       "id": "guide.configuration",
@@ -7166,7 +6790,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "330ee197c3d96530645b2ad028529059042f788448376e3d7a0762d755d54f16",
+      "contentDigest": "9bfeaf93522b75dd21a0ff75657931017fbcff653cdb07da66ccbb23e19f849b",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7185,12 +6809,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-configuration"
         ]
       },
       "cardTargets": [
@@ -7351,7 +6969,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "b451dcc0f4e79aae1f9d2ab47b46b778e01931e44cbc39fd2e43bb1e17194284",
+      "contentDigest": "9843cccdc3ed9f4c120dcc68e4e06783b532aba792d65b6de4bd0abe338b3bf0",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7367,14 +6985,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-mcp",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-mcp"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.agent-friendliness",
         "guide.mcp"
@@ -7423,14 +7034,14 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "f11a4d4337a066adbbdfbcd08be10ecc863363c3351a381fa1ee8e96a0034396",
+      "contentDigest": "b155a06e09528d9cb9121d81d756348a78fcb6aebf43a706faca2a1674f97c64",
       "breadcrumbs": [
         {
           "label": "Docs",
           "url": "/what-is-shoalrun"
         },
         {
-          "label": "Reference"
+          "label": "Publish"
         },
         {
           "label": "Content negotiation",
@@ -7442,12 +7053,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-agents"
         ]
       },
       "cardTargets": [
@@ -7472,9 +7077,9 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/why-this-matters.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "4cf7d0d1e8d88861c5d990a866ceb6f955e21cf5be0ea7d0c58481ce269d8335",
-          "markdownBytes": 3289,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "5f31435655d8f20651ade55f88caab6e53954e25e303ec138d2803b79b53d6bd",
+          "markdownBytes": 3287,
           "markdownTokens": 743,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -7484,9 +7089,9 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/what-shoalrun-builds-and-what-the-host-does.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "7052b2806b3a4493a2e73b5a7bf0434f532bb5ac37d468f6313f0ca43e75c599",
-          "markdownBytes": 3344,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "8b4bf8344446a4974a00045b9c11ba843b906b0e8505f21304808893d437e18f",
+          "markdownBytes": 3342,
           "markdownTokens": 785,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -7496,9 +7101,9 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/hosting-contract.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "64e26e0ce2605951be2ad8d6de9320e5f1b6f3dcce75141ee3a4498f7638aab3",
-          "markdownBytes": 4110,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "bdc310b4f0907203a38765bc179fe9f151e5b4e2f1f06507b18fb5ec4be07fe7",
+          "markdownBytes": 4108,
           "markdownTokens": 976,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -7508,9 +7113,9 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/validators-and-manifest-links.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "d89ea2b0353e6ca0caec30f08cc599b71bc601f79a4e213dae0bd9f895ce4c33",
-          "markdownBytes": 3949,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "f28518a12f68068dbc5be9722e946fc4e5da7a4c17c95b0b663569fa6aec2007",
+          "markdownBytes": 3947,
           "markdownTokens": 881,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -7520,9 +7125,9 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/missing-pages.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "c7fa39e46c859825a701c3d7eb05951e34e10a0308b19a084196f6e7a804b1ef",
-          "markdownBytes": 3671,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "2037dffa84a624eab4540216ab3a2600b4337f6a13f99d213aec6cc8258013ee",
+          "markdownBytes": 3669,
           "markdownTokens": 835,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -7532,9 +7137,9 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/what-if-the-host-cannot-negotiate.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "54e5577f7597b3e41dee98b03c673b373e7c1bee0d008a249b29dad1776880f3",
-          "markdownBytes": 3268,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "8c2784ab10045d9f426623e750237d7bd61faf50f08def5ac3ce474616e0fa5c",
+          "markdownBytes": 3266,
           "markdownTokens": 748,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -7544,9 +7149,9 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/verify-the-deployed-url.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "ec932523dfa52ce31f57b57cccf7590e62ffb3ac68a78c8e8b3e24b3cd3201eb",
-          "markdownBytes": 4246,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "d3fd08f94296ab4f3d0c522e91285821a075ffb0b93a2ac2448b5fd5d44ef4cf",
+          "markdownBytes": 4244,
           "markdownTokens": 981,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -7556,17 +7161,17 @@
           "depth": 2,
           "markdownUrl": "/publish/content-negotiation.sections/related-reading.md",
           "parentMarkdownUrl": "/publish/content-negotiation.md",
-          "parentDigest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b",
-          "digest": "07d2d6d452e324dc47f0e530ce973743bed4d485202bcbd27d5ea88c7af00a8e",
-          "markdownBytes": 2540,
+          "parentDigest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31",
+          "digest": "ac99d4d1eb32f2d13084a3c9c15997b22d9a69daf314b429b5e98a6e265ff529",
+          "markdownBytes": 2538,
           "markdownTokens": 592,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 11549,
+      "markdownBytes": 11547,
       "markdownTokens": 2605,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "e954308b50f9ea89f385c33b68230270d0be215abd3485faaf42d28e1450089b"
+      "digest": "dc0946de1ddb412efb2ae36e17019b9102b59a6689bbc06224e6ecd73b0e2f31"
     },
     {
       "id": "guide.content-identity",
@@ -7596,7 +7201,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "85cee0a5185104739e61ab3f7f5bc19b6130f2819dce34537f416f1c371a96a4",
+      "contentDigest": "54bbf41a6411e6e94f3ec604d820ae3d1d9e42a86d9e71bde1228edadbb753bc",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7615,12 +7220,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-pages"
         ]
       },
       "cardTargets": [
@@ -7673,7 +7272,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "7f2df72a1e7d64c9e6499e6c41216717ba1406bac851b06d9cf18abc893f0e08",
+      "contentDigest": "938585bde943ae6821bf4358e29765a3ef8da142e79a9064aba697f2cde4c61d",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7695,14 +7294,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-composition",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-composition"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "recipe.add-page",
         "guide.recipe-drafts",
@@ -7753,7 +7345,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "6540fac8252fd1c74971ea445bb20ac18cfb572192f1f713c42a5ab47fe2f9b5",
+      "contentDigest": "03cdf3df234d7158e4ad5fe858d898c024bd054203544232d567021f6278f316",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7775,14 +7367,7 @@
       ],
       "area": "publishing",
       "subarea": "publishing-builds",
-      "readerFilters": {
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-builds"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "recipe.audit-docs",
         "recipe.build-docs",
@@ -7833,7 +7418,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "94ce55c181c89aee152706070788e5e3b022126aeed9a231bff96ef484b720b8",
+      "contentDigest": "31e6f2b019fc52a660b0364cc0c78449ea301c0f77e2b53e18d9b94e5742af98",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7855,14 +7440,7 @@
       ],
       "area": "api",
       "subarea": "api-examples",
-      "readerFilters": {
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-examples"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.recipe-drafts",
         "recipe.send-welcome-email",
@@ -7912,7 +7490,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "8f93bc071ff5ca518f44027966d47db123b916dfd5b249d69546026f614447ff",
+      "contentDigest": "ac3c1633e16df4fd5f93314a369b53bd57f940eee9cfac93eabaf179ded93460",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7934,12 +7512,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-composition"
         ]
       },
       "cardTargets": [
@@ -8015,12 +7587,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-examples"
         ]
       },
       "cardTargets": [],
@@ -8083,12 +7649,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-themes"
         ]
       },
       "cardTargets": [],
@@ -8217,7 +7777,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "daeb18211da9da6a2b31d906d79a6f0eda0e20d3d6831c25d0d78f0afbe218f9",
+      "contentDigest": "a4e89d3f5970d402006c3ed0c8411a69dc52d9445d63c9d7a681743fe48a6e04",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -8242,12 +7802,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-custom"
         ]
       },
       "cardTargets": [
@@ -8370,7 +7924,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "afb52f4ce6595239f51e3d7878848386f1f0591787a9abc170d8d5c04594ae92",
+      "contentDigest": "71837cfba79b27a32dc3858d293855fdcdded6c2912e864981901fcea18d2a97",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -8395,12 +7949,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-custom"
         ]
       },
       "cardTargets": [
@@ -8452,7 +8000,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "930fc0a45222f17d171a6c5aeb14eab56c6141cf8eec5b18540d7fb378ff2700",
+      "contentDigest": "6e7fa0b4fde909cc7ec757ce15b0a0bb3c1c6a321df7ebf707dc8917a735675b",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -8471,12 +8019,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-metadata"
         ]
       },
       "cardTargets": [
@@ -8587,7 +8129,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "9990b4ebd4d1f8ba11a0ee7e7a50eb25463de839f298701e669e948078a533f4",
+      "contentDigest": "9c6a5bb6aa318927457d607e37b110c0118618e24054ad497041dba833c0d845",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -8612,12 +8154,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-visuals"
         ]
       },
       "cardTargets": [
@@ -8752,8 +8288,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "a6e5e7b621dc7c097c743636b75267aeb77b693e1039c10595ce9936cf1af822",
+      "updated": "2026-10-20",
+      "contentDigest": "313fc2a38ab3819d1807a28383c331240e11a7a269a6c2c9d94207d60ae3faa2",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -8772,12 +8308,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-audits"
         ]
       },
       "cardTargets": [
@@ -8795,10 +8325,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 4793,
-      "markdownTokens": 1107,
+      "markdownBytes": 4895,
+      "markdownTokens": 1132,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "b9b3e082cd9f39ab649263b447c6e4dede8860ab3c165f6208e1373fab0a5ce9"
+      "digest": "5ad10579839dc9804be96b38b401619061f54eff0d7d21a86a606423d29c7ee1"
     },
     {
       "id": "guide.design-templates",
@@ -8828,7 +8358,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "1096136e54416e6cc0709f7c006f60427b3f46c231dc0d2d2a5d0d653cb7e7cf",
+      "contentDigest": "596dec2067de1eb9e048fba4fffd8d77afc9aadf85e288a209c2fe34958b4d09",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -8856,12 +8386,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-templates"
         ]
       },
       "cardTargets": [
@@ -8912,7 +8436,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "597c6d6eea49324fabd6ea73b9f303823de2fb71308d2323d3f2fe309e706ba8",
+      "contentDigest": "4a19996836efae87dce8fe56cb9b3e4874612b5cae3d16704af3873f0b176f0e",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -8940,12 +8464,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-writing"
         ]
       },
       "cardTargets": [
@@ -8995,7 +8513,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "e960b65b2f72f0c188feec0c952f88cc255df74bb06cf3fed82890a91ba55b4d",
+      "contentDigest": "f54aa382db9a3fe20593b8cb358ccf22d57f2e7423b37e8a9e6a5fa175825edb",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -9020,12 +8538,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-visuals"
         ]
       },
       "cardTargets": [
@@ -9161,7 +8673,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "a702665971265f68d13423d53339ddb831b8405c75af956185241e8616aba65e",
+      "contentDigest": "cb19ff7b8ca4df42186d2c7cbc9b32aa7e7232aed1112d5a28b8b0ea1549a524",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -9180,12 +8692,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-evaluations"
         ]
       },
       "cardTargets": [
@@ -9333,7 +8839,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0ad4b82a8e74bcc0bf00208b9cef9cb54b966fc4c0c51fab86152455149fc292",
+      "contentDigest": "375530d170fe567e4122a6e0cc29769bc68542fdb7d5cd2179a9a80ef1ebd3cb",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -9352,12 +8858,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-configuration"
         ]
       },
       "cardTargets": [
@@ -9473,14 +8973,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-search",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-search"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -9522,7 +9015,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "de2c00f893f86323eca566155d6ddaf7ee3bc9f78753e64b42077da20f95e2ee",
+      "contentDigest": "5b02abfa18db170fe226f35c543254a8bd9ea3008a6889839da74cc3149c585e",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -9541,12 +9034,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-contracts"
         ]
       },
       "cardTargets": [
@@ -9616,12 +9103,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-navigation"
         ]
       },
       "cardTargets": [],
@@ -9669,7 +9150,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0c9257d72a38a66465434980c9e5cf52d7c95cceb2442de09311707e2b7a0710",
+      "contentDigest": "d4d81c5d4c348e31bd672364d171ea4fbd38a22b9a14021075cd7531b05acacb",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -9688,12 +9169,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-metadata"
         ]
       },
       "cardTargets": [
@@ -9717,7 +9192,7 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/identify-and-route-a-page.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "f156dc65987fa8df6660804b6406b7d6fd50992b4a2096dc0337124a7a9ef85d",
           "markdownBytes": 3171,
           "markdownTokens": 643,
@@ -9729,22 +9204,10 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/choose-a-publication-and-visibility.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "cc3a899a5d9cced7dbdf6502d288354633ebd78f000beb9066ed5e02e64db2d2",
           "markdownBytes": 4019,
           "markdownTokens": 771,
-          "markdownTokenEncoding": "cl100k_base"
-        },
-        {
-          "id": "categorize-connect-and-present-the-page",
-          "title": "Categorize, connect, and present the page",
-          "depth": 2,
-          "markdownUrl": "/author/frontmatter-reference.sections/categorize-connect-and-present-the-page.md",
-          "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
-          "digest": "4ad226355b9e967cd93f69ff54c3c843c3275b5b7ae3237cd5ef7fca1184bddd",
-          "markdownBytes": 9384,
-          "markdownTokens": 1457,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -9753,7 +9216,7 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/control-output-details.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "c3b5a211d309aa1fde3adb2bec048389186526e007956f7a56f62e47564b5c32",
           "markdownBytes": 3485,
           "markdownTokens": 688,
@@ -9765,7 +9228,7 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/project-defined-fields.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "a2057623089ae72d8b15dd895d56263f699033a1d6e9884564d0a05e085142fe",
           "markdownBytes": 3399,
           "markdownTokens": 692,
@@ -9777,7 +9240,7 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/global-defaults-and-enforced-values.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "db3135f7089f21706d0c217c7b185dd06e18cf1a7fa25cd63a2e70f650dc04da",
           "markdownBytes": 2181,
           "markdownTokens": 480,
@@ -9789,7 +9252,7 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/use-the-local-files-while-authoring.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "aec36a0069ede3cb9cd987caa2d53d5a394495bbf4d64dba55bca964820b3908",
           "markdownBytes": 2353,
           "markdownTokens": 529,
@@ -9801,7 +9264,7 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/when-the-files-update.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "8352651410f03c44fabdcc628e83fb84cf472ce9ca9c849d35624f91c7d23ddc",
           "markdownBytes": 2019,
           "markdownTokens": 466,
@@ -9813,7 +9276,7 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/point-agents-to-it.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "e9810a2bab77a30b23feba39bc53dc425de7c696ac5129cd59cc5ed0d5f7d2fd",
           "markdownBytes": 2207,
           "markdownTokens": 508,
@@ -9825,17 +9288,17 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/related-reading.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414",
+          "parentDigest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f",
           "digest": "303c0f032195b353b332860ee33395d01e0624e4ab75aa28c0f06da07f52ad50",
           "markdownBytes": 2056,
           "markdownTokens": 469,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 18923,
-      "markdownTokens": 3187,
+      "markdownBytes": 19799,
+      "markdownTokens": 3317,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "7b6698c44dae03a49136f38f10a842ceea57b1ffb5778d8635db08bfa2344414"
+      "digest": "dc6bbdc825e64c4c66617e277ea4071f4716f350c4c0255aa7e66f4fc91d513f"
     },
     {
       "id": "guide.frontmatter",
@@ -9864,8 +9327,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "9ff048e1348db29f42b781348c5972fc22b6df03ac103fa60a6d98c119fcea31",
+      "updated": "2026-10-20",
+      "contentDigest": "97a482d6f9c2f101c00a376c2372949feeafc9bd8692bebff8f11ae135885f3f",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -9888,12 +9351,6 @@
         "audience": [
           "authors",
           "maintainers"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-metadata"
         ]
       },
       "cardTargets": [
@@ -9922,8 +9379,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/required-after-inheritance.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "fb3e9279bb6fda7eb8326a7b017ca61da10757c5c7d90ac91d4fb737c10fd099",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "6a3c317d5c32705ccbab0aaa737e5325809885c1d028992b06a78a7f2415facf",
           "markdownBytes": 5041,
           "markdownTokens": 1051,
           "markdownTokenEncoding": "cl100k_base"
@@ -9934,8 +9391,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/publication-fields.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "7d0da9384c64692281d120d42656f98c05ae65ce93c92636796e130a76bcc521",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "4fb850b2a37df9c413b4564cc20ffe8a1bad7ef557fd6a8694ac63526c9f3aa4",
           "markdownBytes": 4979,
           "markdownTokens": 1035,
           "markdownTokenEncoding": "cl100k_base"
@@ -9946,8 +9403,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/publishing-policy.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "d8a91ed696280a9fc9e4092d8c5f11f13465c0403572a6984eecfa91eeb6e527",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "f9c7cc6148f30e7b28a1f0158e83d3eb8e0ec4026867dab555144aad452e3ebd",
           "markdownBytes": 3487,
           "markdownTokens": 812,
           "markdownTokenEncoding": "cl100k_base"
@@ -9958,8 +9415,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/global-defaults-and-enforced-values.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "886335e7c59975d51b87b22d7eec0ad254c0d1f0a00007b50f0b603042dd101a",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "72c15397fe6ef3ac0ac9b5fac95cfa4fb0040fa461bd26c338e782a6453e36be",
           "markdownBytes": 3335,
           "markdownTokens": 799,
           "markdownTokenEncoding": "cl100k_base"
@@ -9970,8 +9427,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/validation-rules.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "4c89e4206c1aa7e43892b8844874a2380d54e07b0b1c1a893395a379875eb8d7",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "a26232e111a283007fc54df297e5364c22ada6da59f0ab3ff197c8dce25af1a5",
           "markdownBytes": 4259,
           "markdownTokens": 1027,
           "markdownTokenEncoding": "cl100k_base"
@@ -9982,8 +9439,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/optional-native-fields.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "6e549455f73a8bf0014ae0c6244e00e4892013dfa44702010a1df34031af1ee2",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "e0a449c8b0b7a07c0e0e6da2664c4aac34704fb9a7f9c46618acd33e649ecba5",
           "markdownBytes": 9637,
           "markdownTokens": 1661,
           "markdownTokenEncoding": "cl100k_base"
@@ -9994,8 +9451,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/give-deprecation-guidance.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "33692aeb24d9bc1b4f8ca1937b24336e6c64a4b71b37ba513ab59a3218353ad8",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "2f9688a2efa125ac3baae2a424b6430a83b51b85d60e7d5ebb26149cdda5c7f6",
           "markdownBytes": 5078,
           "markdownTokens": 1122,
           "markdownTokenEncoding": "cl100k_base"
@@ -10006,8 +9463,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/audience-badges.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "a5ec24a9ff61d46917a3645e4ac88b16066b32aaf5d10e5e1073cca4a4b50b63",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "0a0887f329a001f4fa3023714e396733aa545628c6c8d16c87e94762429b1759",
           "markdownBytes": 3387,
           "markdownTokens": 820,
           "markdownTokenEncoding": "cl100k_base"
@@ -10018,58 +9475,22 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/seo-fields.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "2f409af429675594b0bd2dec48f30cea68ede7106f14c98f54bc013055bf9273",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "f705ac836c4c08748b51750ecc25152485a8c195de7f9f16649d89728ea7eff6",
           "markdownBytes": 3493,
           "markdownTokens": 833,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
-          "id": "add-a-custom-page-field",
-          "title": "Add a custom page field",
+          "id": "related-metadata-tasks",
+          "title": "Related metadata tasks",
           "depth": 2,
-          "markdownUrl": "/author/frontmatter.sections/add-a-custom-page-field.md",
+          "markdownUrl": "/author/frontmatter.sections/related-metadata-tasks.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "4c1c5916901fa92af7ecbde65ba27d554874ce9cda7279ca68c1017a3b399ee2",
-          "markdownBytes": 2718,
-          "markdownTokens": 669,
-          "markdownTokenEncoding": "cl100k_base"
-        },
-        {
-          "id": "choose-text-for-each-surface",
-          "title": "Choose text for each surface",
-          "depth": 2,
-          "markdownUrl": "/author/frontmatter.sections/choose-text-for-each-surface.md",
-          "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "c12da9429e648d93431935ca350f4fd37adaee3951a4063e213764a25c6e9d56",
-          "markdownBytes": 2736,
-          "markdownTokens": 675,
-          "markdownTokenEncoding": "cl100k_base"
-        },
-        {
-          "id": "read-metadata-from-a-project-module",
-          "title": "Read metadata from a project module",
-          "depth": 2,
-          "markdownUrl": "/author/frontmatter.sections/read-metadata-from-a-project-module.md",
-          "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "21dee0eff219dbb5aa37b83a95e2b75e6b45d2a7d206e3d2b6d1caa2e67a6bec",
-          "markdownBytes": 2723,
-          "markdownTokens": 670,
-          "markdownTokenEncoding": "cl100k_base"
-        },
-        {
-          "id": "choose-metadata-for-the-published-markdown-page",
-          "title": "Choose metadata for the published Markdown page",
-          "depth": 2,
-          "markdownUrl": "/author/frontmatter.sections/choose-metadata-for-the-published-markdown-page.md",
-          "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "2d8fcd892ba2f48f0a2f73baf138bfe5c5aa2f997727fe6c6c14e44035b4dca8",
-          "markdownBytes": 2926,
-          "markdownTokens": 708,
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "b2040900c984caff88b8083afacc1ddae6271a543aeac76e4ba4f48026b961d9",
+          "markdownBytes": 3709,
+          "markdownTokens": 826,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -10078,17 +9499,17 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter.sections/related-reading.md",
           "parentMarkdownUrl": "/author/frontmatter.md",
-          "parentDigest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd",
-          "digest": "221cd7ad69b5bca94a4e1e1e9f42301e5fd76803d04e1ad771c858eb28a03c38",
+          "parentDigest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d",
+          "digest": "140af8d84e2ad9faeced769b1055dec564991ea79aa0f0c17fd33261f2288b75",
           "markdownBytes": 3144,
           "markdownTokens": 758,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 23708,
-      "markdownTokens": 4397,
+      "markdownBytes": 23970,
+      "markdownTokens": 4400,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "8593111570a3f447c685590878b2d0c5438a6d3ba239e2d2059bec85d9b4a1dd"
+      "digest": "5047ad583c513f892d7a2c88fa19d956a59fde21a5834ffeaf7a96872ed8432d"
     },
     {
       "id": "reference.glossary",
@@ -10118,7 +9539,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "8c066585df744b5896302145c90f30f876da1554c299d91f737821e648cab00e",
+      "contentDigest": "d3cf5897a67877d89ce78c30ce662bf2559b9ac2ccc81d6ebc88afa804360c9f",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -10134,14 +9555,7 @@
       ],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.component.definition-list"
       ],
@@ -10189,7 +9603,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "7c7fb5c14e6f227c407e5c07d0288f5e6cf453861b0bb832ee1b54ecfc535570",
+      "contentDigest": "a11c994afe00e3958b57a62e5c2fbe703a707920f43a28eb96ed765d17b6ce71",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -10208,12 +9622,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-navigation"
         ]
       },
       "cardTargets": [
@@ -10253,18 +9661,11 @@
       "markdownUrl": "/index.md",
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "ab9a9d040781d8d7be3b8b63349b6aa5cc75e1527a8b91de062a326b920d84de",
+      "contentDigest": "d71e678f6b08b631aee3a79aad8df1697881770115a7d5f9331dc9591f2afce8",
       "breadcrumbs": [],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.audit",
         "guide.evals",
@@ -10315,8 +9716,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "72a08108c9f23ffca1ba8d8f95942cc85a0bd8ec93726dae0ddb7045fa075fdf",
+      "updated": "2026-10-20",
+      "contentDigest": "c4805b73367fcafb5443cee87cc1cf2a8071c47d4ea69196a39e6456c9202862",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -10335,12 +9736,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-hosting"
         ]
       },
       "cardTargets": [
@@ -10353,16 +9748,18 @@
           "component": "RelatedReading"
         }
       ],
-      "snippets": [],
+      "snippets": [
+        "hosting.subpath"
+      ],
       "apiEmbeds": [],
       "focusedContractUrl": null,
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 4190,
-      "markdownTokens": 1002,
+      "markdownBytes": 4506,
+      "markdownTokens": 1069,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "fa4f414f54fcfe105acf1cfa4ceb742309a89c4741a23e7f1bbf5b2fb00e2692"
+      "digest": "7f79ccdc3f4becec3418d8f8f922fc42cce019550791e047f39239ad9a3e1697"
     },
     {
       "id": "guide.host-chat",
@@ -10392,7 +9789,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "ddb75a44b5d1fa31b651058101b4dfdfa1e5079aa01d1cadd2ed196d2548bf97",
+      "contentDigest": "ddc372113c521b689752806e7cbecf54b7ec5c243424430b98acab34e3e2a192",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -10414,12 +9811,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-chat"
         ]
       },
       "cardTargets": [
@@ -10529,14 +9920,7 @@
       ],
       "area": "quality",
       "subarea": "quality-audits",
-      "readerFilters": {
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-audits"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -10600,14 +9984,7 @@
       ],
       "area": "publishing",
       "subarea": "publishing-builds",
-      "readerFilters": {
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-builds"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -10671,14 +10048,7 @@
       ],
       "area": "publishing",
       "subarea": "publishing-builds",
-      "readerFilters": {
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-builds"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -10742,14 +10112,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-pages",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-pages"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -10813,14 +10176,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-agents",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-agents"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -10884,14 +10240,7 @@
       ],
       "area": "quality",
       "subarea": "quality-audits",
-      "readerFilters": {
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-audits"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -10955,14 +10304,7 @@
       ],
       "area": "publishing",
       "subarea": "publishing-builds",
-      "readerFilters": {
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-builds"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -11026,14 +10368,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-agents",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-agents"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -11097,14 +10432,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-pages",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-pages"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -11146,7 +10474,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "27fde972531b89172d4da8801798785fd59a727d60c368cb445f30b62d6520d3",
+      "contentDigest": "c0a962cd496d7d197c7445051e11abd80afb51260e7e03c1bf0dc57c3a6f3407",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -11165,12 +10493,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-layouts"
         ]
       },
       "cardTargets": [
@@ -11293,7 +10615,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "fec4c05e9df9ca3a761bafc0f6f443f1501a0d3ee04970f9b8e1a265796f389d",
+      "contentDigest": "10a5b3046bc31534272850e81bd0e0699d11d9650e5c0c7f3acfa41d7fc665be",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -11312,12 +10634,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-metadata"
         ]
       },
       "cardTargets": [
@@ -11367,7 +10683,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "e55b966e1f63d6adba04ba54b70672d17e91cdb5b443241f72cadaf09d6a7cd2",
+      "contentDigest": "5db08e24ad65c12389124595c979de884e39233ce32b4a8c4d0070b7349b983d",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -11386,12 +10702,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-mcp"
         ]
       },
       "cardTargets": [
@@ -11527,7 +10837,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5fa73e3cd401aa45e73aa9e892dc395d1fb4e479455b84f2afea946940335449",
+      "contentDigest": "3ec52f6c2b1c4cb07f3c0aa91d1fa200ca3cfe95e1e1fb16052e0c2db9dce269",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -11546,12 +10856,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-mcp"
         ]
       },
       "cardTargets": [
@@ -11712,7 +11016,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "2c17911b933d99475d27edbf7b3ca731e057381b80442825c4ae82e76fd1c758",
+      "contentDigest": "9a1a53e26b2f9c2bcefa9ff4b0251c9f736255f7a2f6d526e7ec659100e49eec",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -11734,12 +11038,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-navigation"
         ]
       },
       "cardTargets": [
@@ -11912,7 +11210,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "9f49ce4d41919e9c9425c334d8817d6b9531aabf13225856330a6458f505fe52",
+      "contentDigest": "f7e8cedae5bc9c3f1545c2f4b3b5e8368e2cd983bcd8f50c3db25fb2bd598046",
       "breadcrumbs": [
         {
           "label": "Project updates",
@@ -11928,14 +11226,7 @@
       ],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.evals",
         "guide.agent-friendliness",
@@ -12005,12 +11296,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-contracts"
         ]
       },
       "cardTargets": [],
@@ -12054,7 +11339,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "728ffdd804404a228a12717155e52601308421802737da353af09247ad0d7393",
+      "contentDigest": "86dbdfb102a19d9e0fda1f9f78138f632963c1d849e6281b92106462a734230c",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -12073,12 +11358,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-contracts"
         ]
       },
       "cardTargets": [
@@ -12129,14 +11408,14 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "09e46603cbf40f0a9242d5f0c5d388bf97cbf3cb06fb360bff75ca4d8e4a194d",
+      "contentDigest": "fdb05222feb2f2879f074ce31e0603cd9c84c8c971a605456cc631d50d960783",
       "breadcrumbs": [
         {
           "label": "Docs",
           "url": "/what-is-shoalrun"
         },
         {
-          "label": "Reference"
+          "label": "Publish"
         },
         {
           "label": "Generated outputs",
@@ -12148,12 +11427,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-builds"
         ]
       },
       "cardTargets": [
@@ -12176,9 +11449,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/published-output-contract.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "2fbcd20fad0ad45fa5b4ca2e424ad4e1bd0a84ab76b0f5e99e77b3848931a1dc",
-          "markdownBytes": 6574,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "0adf2bbd463e805e1692ec313b1ce1ce70d25f362c2c383667d75be7087cb367",
+          "markdownBytes": 6572,
           "markdownTokens": 1143,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12188,9 +11461,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/page-formats.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "9326b638801a6fe541c5dfc63395b826dd7b36fba167f8282e32cb2bc0521ce7",
-          "markdownBytes": 4699,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "ebbc05635f304b88a1da3047ce8487c17c88ee3ffcd709ff5e601733e339cdf2",
+          "markdownBytes": 4697,
           "markdownTokens": 1030,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12200,9 +11473,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/where-files-go.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "00a9d402a58e5f495fb0aabb561d505c11b845bc3a468fbb408d705ce6e80f7a",
-          "markdownBytes": 4311,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "9674c26980afed5d45492ffa7ba42db19a8e071e632f60f05497fe693c994196",
+          "markdownBytes": 4309,
           "markdownTokens": 846,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12212,9 +11485,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/site-files.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "08e4f0cb6c9a844a7834e5e54e11ce414962633e4702d5cd5505de77a301da3e",
-          "markdownBytes": 7916,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "79799a3db5968001cef57953c90e411848ae667dc693aca27c69cfca2ad8dae9",
+          "markdownBytes": 7914,
           "markdownTokens": 1764,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12224,9 +11497,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/manifest-records-and-sections.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "eb976ae500d5de87dc773217d35dfc64f069c8f4a86c7019e2ca50a4a1c5e85c",
-          "markdownBytes": 4817,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "66b1d004573220fcc88795b67d391291f1ba67b219641f4c281330d7df68a4f5",
+          "markdownBytes": 4815,
           "markdownTokens": 1046,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12236,9 +11509,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/navigation-section-indexes.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "ea791aa15fc71e3f714b9da6ad08029d0662a4aac1ee5fe242a615286bab779f",
-          "markdownBytes": 3568,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "37a7b43bd7a0a7006653e30ee08b23fb0a4f59b64ccc577f3de64def55ec5511",
+          "markdownBytes": 3566,
           "markdownTokens": 778,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12248,9 +11521,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/response-identity.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "3b631ac441704f7694f9db68c021fa781e97b37f0b8c18f12f5fab0abf23156c",
-          "markdownBytes": 2820,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "5127cdbcd6d6fad3c6f16cac9dbd4d3c0dd04e3a35635f90c480025d3f7708a9",
+          "markdownBytes": 2818,
           "markdownTokens": 621,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12260,9 +11533,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/incremental-sync.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "899b23e0b2e63c69809a56d47f879fd255e7a3409b550e4f3245e8539f62a4ed",
-          "markdownBytes": 6208,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "d98497527fc7a9f18031df8a6063d339ac229a074706abd525901fb8dd9c30d2",
+          "markdownBytes": 6206,
           "markdownTokens": 1255,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12272,9 +11545,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/validate-an-existing-build-locally.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "e0ae97450b540a122ab8c5ccbfd40bb5b371632a94465e258c93c7161c43aa51",
-          "markdownBytes": 3688,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "9625962512ca9610b20962f54415a919d141f05c62a4e7e36a624b9a04d5a0d5",
+          "markdownBytes": 3686,
           "markdownTokens": 781,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12284,9 +11557,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/api-contracts.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "0723e15e0b9bfa7702e4ae92fb00b0664b9d5f135d445890d68400bb5bd6133f",
-          "markdownBytes": 3094,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "95cfb27e1e9952fca6e92ddb45dbcada4218676788ec3caf0e84c3a56fd6a0c1",
+          "markdownBytes": 3092,
           "markdownTokens": 688,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12296,9 +11569,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/current-limits.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "c331d60baf39b39f21db127a04777e6f6cfc46d77329d93698d32215d0d87dc4",
-          "markdownBytes": 2640,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "aacd0e04b0de3db37d73b702b348405b7166dc1937703d6c5d4cc47751c4b254",
+          "markdownBytes": 2638,
           "markdownTokens": 596,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12308,9 +11581,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/code-highlighting.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "26eca1b9ccc8988cfe4f1f64bbc7c2a51e9f8afb22412f4c4e6809cd8f3bfac0",
-          "markdownBytes": 2564,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "e3a66609631711c521d8de1841e1018ac2dc705221b385e61d2c0fedf8308a99",
+          "markdownBytes": 2562,
           "markdownTokens": 577,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12320,9 +11593,9 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/reader-appearance-and-controls.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "464e0937a1e1d921338d62e4b36b0a2d2b9392cdee014ee919315d9adf190834",
-          "markdownBytes": 4082,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "31667a50449c72b69c17437d31f9a7b8bf9505e3823fd1bea0eb57863daaee56",
+          "markdownBytes": 4080,
           "markdownTokens": 887,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -12332,17 +11605,17 @@
           "depth": 2,
           "markdownUrl": "/publish/output.sections/related-reading.md",
           "parentMarkdownUrl": "/publish/output.md",
-          "parentDigest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1",
-          "digest": "7d80e3f2191fcce7e1cab6172353bf52c6ad07ab5e8c807ca3cd8361e039d798",
-          "markdownBytes": 2123,
+          "parentDigest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2",
+          "digest": "631a650921ff9a99104f93369038c20411d5fcf1ce48806279b0fbe309b7a2ce",
+          "markdownBytes": 2121,
           "markdownTokens": 484,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 30891,
+      "markdownBytes": 30889,
       "markdownTokens": 6061,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "1a93d60cab623d2769ff48af4a31270d3e02e018a421d1abdb7fc3b952a2cfe1"
+      "digest": "ef1c4ebb686cd2e1fa44e0a61bf5bf9243c53405ea1a1909f2b6b1a060f903d2"
     },
     {
       "id": "guide.page-taxonomy",
@@ -12388,14 +11661,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-metadata",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-metadata"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -12437,7 +11703,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "bb8b08e28ec063a9e6b91656e081d27202d9955d432a8320e065435f4f125938",
+      "contentDigest": "e120bb0975d58cf88584e14a1107d181a216b89efbb9c66ab0bcfcd9e265426a",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -12456,12 +11722,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-themes"
         ]
       },
       "cardTargets": [
@@ -12534,12 +11794,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-search"
         ]
       },
       "cardTargets": [],
@@ -12672,7 +11926,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "4105265e05821f562deeffd27143e9fc74de85d0686c29d5c8ef5da9b500573d",
+      "contentDigest": "78275037b0c121d6715728556ae199d5d00f8804cda2dad6120f33d738f28080",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -12694,12 +11948,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-chat"
         ]
       },
       "cardTargets": [
@@ -12750,7 +11998,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "7ddac14b6130a7e9575fbcd40264381c320b5bd6309fbf129358dd16d9643b96",
+      "contentDigest": "a23823e26e3eb4663ce7c45f0f93410efea28215e1a28f474da8b942c74c8064",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -12769,12 +12017,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-versions"
         ]
       },
       "cardTargets": [
@@ -12824,8 +12066,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "d53028b3dacd1fa6058464d8c82243f323e1d71af5cadb84599650abb006e51f",
+      "updated": "2026-10-20",
+      "contentDigest": "7d765548eee919cc7b720105c3775de910d59af269854ac1c5435264cf2ac813",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -12844,12 +12086,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-hosting"
         ]
       },
       "cardTargets": [
@@ -12862,16 +12098,18 @@
           "component": "RelatedReading"
         }
       ],
-      "snippets": [],
+      "snippets": [
+        "hosting.subpath"
+      ],
       "apiEmbeds": [],
       "focusedContractUrl": null,
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 5550,
-      "markdownTokens": 1219,
+      "markdownBytes": 6155,
+      "markdownTokens": 1350,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "b36a7ccb65ffd991fb9ba11a46e34b54f214878ec2f1c964dcdf073d221bb3da"
+      "digest": "07433ff21550515ad2417812e7ca11ddc08906250ba38d4496a72d4db72ec6ce"
     },
     {
       "id": "guide.reader-filters",
@@ -12917,14 +12155,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-reader-views",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-reader-views"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -13051,7 +12282,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5462c1affc342ae7a79a3e59191137ffa104935b73ec8f26c9675712f2e2b831",
+      "contentDigest": "e84b51d1ba89af4e0dec2c58cbcd529520f79ccee02ab9fef43e0000e80f0ef8",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13073,14 +12304,7 @@
       ],
       "area": "authoring",
       "subarea": "authoring-pages",
-      "readerFilters": {
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-pages"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "cookbook.authoring"
       ],
@@ -13261,7 +12485,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "6eae4f5ebd9e20a72689815c0ae8f8e750bf71251ed08977e555df526e20f7b3",
+      "contentDigest": "dcef84c49ae7847a1db670937249d3498e195345b4b1c2d4403f37c87b0a6aa5",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13283,14 +12507,7 @@
       ],
       "area": "quality",
       "subarea": "quality-audits",
-      "readerFilters": {
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-audits"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "cookbook.site-workflows"
       ],
@@ -13338,7 +12555,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "7c25c5a1e7773ac29f249f7bad26de82b31dc7daef32ae72dc4fad399cc38a2d",
+      "contentDigest": "b14e8ab24b177cf788eeaf26e6d79657823e9793ed95fc82906f217cf6e9b689",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13360,14 +12577,7 @@
       ],
       "area": "publishing",
       "subarea": "publishing-builds",
-      "readerFilters": {
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-builds"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "cookbook.site-workflows"
       ],
@@ -13415,7 +12625,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "54ad56953314aedf56cc36d697df3c5bddc81fbd99b6c8d48464ac01fa0e632b",
+      "contentDigest": "d441f30513e957989796eaf1fd8b286739dbb89a579df5181dfea3b074b1d0f5",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13437,12 +12647,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-composition"
         ]
       },
       "cardTargets": [
@@ -13567,7 +12771,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "c7677c6cda43f94df7ed08709a19002419dc20ffa94e29785b1288bb7bb24a09",
+      "contentDigest": "5f7f3ff5b09c7ee2f58ffcc10b06f834dc33f8a67e823bfde53121d00b0d6e05",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13592,12 +12796,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-search"
         ]
       },
       "cardTargets": [
@@ -13647,7 +12845,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "b0c8ca015b4389c214fc02b75305aebaaf6b41765a904886d844b90e9d8b46e7",
+      "contentDigest": "d376b3293d7a3d57c0204a4d33dd182e7e52edd6a2d5a9465383a9d61b0fd17e",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13669,14 +12867,7 @@
       ],
       "area": "publishing",
       "subarea": "publishing-builds",
-      "readerFilters": {
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-builds"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "cookbook.authoring"
       ],
@@ -13746,14 +12937,7 @@
       ],
       "area": "api",
       "subarea": "api-examples",
-      "readerFilters": {
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-examples"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [],
       "cardQueries": [],
       "snippets": [],
@@ -13795,7 +12979,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "2873947802f49d1dc30b72b6392f021b3414805df8e26f2a5655b390589ab998",
+      "contentDigest": "d1ae4f35648c11391e47e267c67311e4abd7a6fbfc9773b7521597d16b5b644e",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13817,14 +13001,7 @@
       ],
       "area": "discovery",
       "subarea": "discovery-agents",
-      "readerFilters": {
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-agents"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "cookbook.authoring"
       ],
@@ -13872,7 +13049,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "9be27d9a6358625d580531f5d6a2a7a098c098118fb002fd444606d1dcda2700",
+      "contentDigest": "988f7d88aed2ca9045d7dc8e1ba072ae583a1d2476c6ab0f8f40e096963f8fdb",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13894,14 +13071,7 @@
       ],
       "area": "api",
       "subarea": "api-examples",
-      "readerFilters": {
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-examples"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "cookbook.welcome-email"
       ],
@@ -13949,7 +13119,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "622aa2aa8e88d223e2a67cd454268db73e9e1e9f50e28fd471c360ed3e382a7a",
+      "contentDigest": "00118a5eadc864c4ecfa85b2fc3f992e3abb7d0a0dbc84f83e382ed93e097288",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13971,12 +13141,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-composition"
         ]
       },
       "cardTargets": [
@@ -14125,7 +13289,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5301c000e894789fdd35d3e8753338e7405aa3f9aefeec06ec696536371c6b8b",
+      "contentDigest": "73934102f80c065329b8b5b225d9e2bc0b42a39f6a87752109bb5e39318737ba",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14144,12 +13308,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "components"
-        ],
-        "subarea": [
-          "components-navigation"
         ]
       },
       "cardTargets": [
@@ -14285,7 +13443,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "53bb60d6dfa0b4f273d9804bd5dec880022202d7462e8052723aabf31b2cd05f",
+      "contentDigest": "e70aaf352cc6da57f950ada1e3f5edae17bf064abe1b05645c046fbcbbb12155",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14304,12 +13462,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-releases"
         ]
       },
       "cardTargets": [
@@ -14362,7 +13514,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "c6345e961c139df8a953f66a94cd8e91eeeac68c707af2b3ed3d7bb135751f05",
+      "contentDigest": "a08a0b80514fdf92f98e1c1a06bbb4f366b709dc14137c12deca0e5c31628f7a",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14381,12 +13533,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-versions"
         ]
       },
       "cardTargets": [
@@ -14439,7 +13585,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5bee5cb29084070717d1777528154eab50c4abf3a4ca2457a3fc2d362b8c2a46",
+      "contentDigest": "2605f3749b505eb1fd00992eade6a1b44bf759540b05f511f0aa6bc2a84b8b80",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14461,12 +13607,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-chat"
         ]
       },
       "cardTargets": [
@@ -14522,7 +13662,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "f928becd77b7d16a80e3c55e1ad03a7f51ae656c686bb80cfba211a3819546bd",
+      "contentDigest": "8afa13f22a3d8852ac286902c498c0cd420f98d9a3c745d8a5362e152c657299",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14541,12 +13681,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-search"
         ]
       },
       "cardTargets": [
@@ -14600,7 +13734,7 @@
       "indexable": true,
       "updated": "2026-10-19",
       "verified": "2026-10-01",
-      "contentDigest": "ca37b62caf19829384939f82450cdcdd3cf71ea1d051bdd32b92742d91a48e65",
+      "contentDigest": "1d4181f46a4f8e93c86e65e1b60c09ed3cc1dca0c413b45a8200ca4d45839b4e",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14619,12 +13753,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-search"
         ]
       },
       "cardTargets": [
@@ -14844,12 +13972,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-branding"
         ]
       },
       "cardTargets": [],
@@ -14897,7 +14019,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5024ec8f407135cf57e725a87380d16af043ace898f5fbdf579ca5022c9f6601",
+      "contentDigest": "5646d75007f394a5d88fce17de9dbdd0ced92e143f81ca57bb8ceead95f61591",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14919,12 +14041,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "discovery"
-        ],
-        "subarea": [
-          "discovery-chat"
         ]
       },
       "cardTargets": [
@@ -14975,7 +14091,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0d82b30d09eeb8204bff91b4b451b4f5b5ed5efe53e5a4f3264c4636da45587f",
+      "contentDigest": "f44e540b7f69f132429236a20e147ecfb6619dd22fd686cba6e2099c651a69fc",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14994,12 +14110,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-branding"
         ]
       },
       "cardTargets": [
@@ -15049,7 +14159,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "557e184ea6ba2a9d3db8d439b2e3781d374b2d783412f8a2482c1f9c50f5db87",
+      "contentDigest": "3c57644eec2b40f84159171806581a7b3f6c1cca6779e30845b18fca89bbfeb0",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15068,12 +14178,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-composition"
         ]
       },
       "cardTargets": [
@@ -15126,7 +14230,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "0f17d93298db7a2505f630572c34b02d50af861a619a4f94918f8d24384795de",
+      "contentDigest": "ea9f7b92540330b5ed5f9aef89d0757d8ab3a2fd40c6adee4c901010a18e7ad6",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15142,14 +14246,7 @@
       ],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.agent-skills",
         "reference.cli",
@@ -15311,7 +14408,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "6228c209589bcc3209cffe50b42a8da2a40bc962d1924c93045f9a52dbc35319",
+      "contentDigest": "93253ce357241950c3097b27d63a13f98e3fd7cf04c01fe9a26e4ef93674b73d",
       "breadcrumbs": [
         {
           "label": "Project updates",
@@ -15327,14 +14424,7 @@
       ],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.evals",
         "guide.mcp",
@@ -15386,7 +14476,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "5c384bf4136a207d669a6a438754856a8123eacb3cf31ddc6670e2232ef714ee",
+      "contentDigest": "7dd178fca317fb22d2da3a04f0ee0e6e905042fb175b5d859f486e13a97393e3",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15408,12 +14498,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-templates"
         ]
       },
       "cardTargets": [
@@ -15588,7 +14672,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "828fb412c3cc7be72fc1a23a591a91d1d85c09fb50a89ded81375a4ba89207bc",
+      "contentDigest": "5f2cc7a36ebc83a5688503fa11d21fa6275dddc7adfbb4ec78470aceaabe736b",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15607,12 +14691,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-themes"
         ]
       },
       "cardTargets": [
@@ -15662,7 +14740,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "b00b265bbb2891dc4a735fb0360a511db869562c1cc5b3aca3bddb18ae3282a4",
+      "contentDigest": "2b95d95b03b511ef896e11d0fc7f51747e1ea49fc6163076b75b9181c198f5a8",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15681,12 +14759,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "appearance"
-        ],
-        "subarea": [
-          "appearance-themes"
         ]
       },
       "cardTargets": [
@@ -15739,7 +14811,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "e17aac8a9ebadcc7bf65bfa796e9be08abcf1fd3182cc9e615e1a1a4e14e7345",
+      "contentDigest": "d3e0661d9481a2e369253aaae9005fd6b93ee3dd598e090793afc057a2b1b7ec",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15758,12 +14830,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "quality"
-        ],
-        "subarea": [
-          "quality-audits"
         ]
       },
       "cardTargets": [
@@ -15814,7 +14880,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "290e6f800656017a9e773fa0b664ecc313cf240eda66f2ab2107f35446c58d4e",
+      "contentDigest": "fe5dd162a3b05559f5e68d711ef26d592ba2ba9f3c7a113645fdc3d187fc482a",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15833,12 +14899,6 @@
       "readerFilters": {
         "focus": [
           "configure"
-        ],
-        "area": [
-          "publishing"
-        ],
-        "subarea": [
-          "publishing-hosting"
         ]
       },
       "cardTargets": [
@@ -15939,7 +14999,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "df6eea4e623ea20e30e7e2c0e3dc36be76a99d800ea0da1f8f74b8fa5f7f0696",
+      "contentDigest": "862816f268b6fd0a3ceba7e280445960a581a95d0788cd58c98a844f9fb34e94",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15955,14 +15015,7 @@
       ],
       "area": "project",
       "subarea": "project-overview",
-      "readerFilters": {
-        "area": [
-          "project"
-        ],
-        "subarea": [
-          "project-overview"
-        ]
-      },
+      "readerFilters": {},
       "cardTargets": [
         "guide.concepts",
         "guide.about",
@@ -16012,7 +15065,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "56f1b0e776a061c3269833062c37a117e491ec485b10e806cd3bb134b41b7a6a",
+      "contentDigest": "c53aa16481b5a6c80d51a8fd8d089f5fe4ecd41dc28820900032dfff6388064f",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -16037,12 +15090,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-examples"
         ]
       },
       "cardTargets": [
@@ -16091,8 +15138,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-19",
-      "contentDigest": "a2291cdfc75edaad7a6d5c376a7bae13c147252c37a4def9df8aa0f76faeeebd",
+      "updated": "2026-10-20",
+      "contentDigest": "c17e7ce8108ef4718ea550680380e21bfc699fac022eec4ee45c24108c749e01",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -16117,12 +15164,6 @@
         ],
         "audience": [
           "authors"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-writing"
         ]
       },
       "cardTargets": [
@@ -16140,10 +15181,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 2883,
-      "markdownTokens": 656,
+      "markdownBytes": 3085,
+      "markdownTokens": 680,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "f5d76d504b14e6858973169e83da279c4f7533d9c4557d33d565771ed9027982"
+      "digest": "f70a8c9bf399b937f4c207cd23e37ed2f737f9b91dd4157c20f86e7731d7789c"
     },
     {
       "id": "reference.writing-style",
@@ -16173,7 +15214,7 @@
       },
       "indexable": true,
       "updated": "2026-10-19",
-      "contentDigest": "aee663c878962f978cd4eea67f57967f934802351a1558e67429220ae6a0d392",
+      "contentDigest": "52c26788fdc1b47cfc449fd82fd26b93fd5b812c25c32bf1cf375f8c1a5ed897",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -16198,12 +15239,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "authoring"
-        ],
-        "subarea": [
-          "authoring-writing"
         ]
       },
       "cardTargets": [
@@ -16415,12 +15450,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-reference"
         ]
       },
       "cardTargets": [],
@@ -16492,12 +15521,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-reference"
         ]
       },
       "cardTargets": [],
@@ -16569,12 +15592,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-reference"
         ]
       },
       "cardTargets": [],
@@ -16646,12 +15663,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-reference"
         ]
       },
       "cardTargets": [],
@@ -16723,12 +15734,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-reference"
         ]
       },
       "cardTargets": [],
@@ -16800,12 +15805,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-reference"
         ]
       },
       "cardTargets": [],
@@ -16877,12 +15876,6 @@
       "readerFilters": {
         "focus": [
           "write"
-        ],
-        "area": [
-          "api"
-        ],
-        "subarea": [
-          "api-reference"
         ]
       },
       "cardTargets": [],

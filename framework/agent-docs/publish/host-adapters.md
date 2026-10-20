@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Add Shoalrun to another build or host
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Shoalrun builds a complete static site without a host framework. To include its pages in another build system, run Shoalrun's CLI as a build step. Then copy the generated files into the host's output. The host does not need to parse Shoalrun's MDX or OpenAPI sources.
 
@@ -24,7 +24,11 @@ Shoalrun builds a complete static site without a host framework. To include its 
 shoalrun build docs.config.yaml ./shoalrun-dist
 ```
 
-The command replaces `./shoalrun-dist` on each build. Use a dedicated output directory. With an empty `site.basePath`, copy its **contents** to the root of the host's published output. For a site mounted at `/docs`, set `site.basePath: /docs` and copy the public `shoalrun-dist/docs/` subtree to the host's `/docs` mount. The build also keeps internal manifests at the output root for local commands.
+The command replaces `./shoalrun-dist` on each build. Use a dedicated output directory. With an empty `site.basePath`, copy its **contents** to the root of the host's published output.
+
+For a site hosted at `/docs`, set `site.basePath: /docs`. The Node and Vercel adapters serve the prefixed routes directly. On a static host that mounts a directory at `/docs`, publish the build output's `docs/` subtree as that directory's root. The build keeps internal manifests at the output root for local commands. Static hosts also need routing rules for [Markdown content negotiation](https://www.shoalrun.com/publish/content-negotiation.md).
+
+With the command above, the public subtree for `/docs` is `shoalrun-dist/docs/`.
 
 ## Add a build adapter
 

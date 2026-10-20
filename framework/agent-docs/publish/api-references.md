@@ -17,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Add an OpenAPI API
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
-Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
+Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). This walkthrough uses a fictional Notes API as its example. You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
 
-Run commands from your documentation project directory. `SHOALRUN_CLI` is the absolute path to `framework/dist/cli.js` set in the quickstart. Check [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) before importing a larger specification.
+Run commands from the documentation project directory created in the quickstart, where `@shoalrun/cli` is installed. The commands use that local package. Check [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) before importing a larger specification.
 
 ## Put the spec in your project
 
@@ -77,10 +77,10 @@ notes:
 
 `source.path` is relative to the config fragment that declares it. `notes` names this API, and `sourceOperationId` selects the spec's `operationId`. The stable operation ID `notes.create` connects the operation to authored pages; `reference` names the page that will present it. `focused: true` publishes a [one-operation contract](https://www.shoalrun.com/api-docs/focused-contracts.md).
 
-If the source lives at a public HTTPS URL, import it into a local snapshot first:
+For your own API, if the source lives at a public HTTPS URL, import it into a local snapshot first. Replace the example URL below with your actual OpenAPI URL:
 
 ```sh
-node "$SHOALRUN_CLI" api import https://api.example.com/openapi.yaml --output apis/remote
+npx --no-install shoalrun api import https://api.example.com/openapi.yaml --output apis/remote
 ```
 
 Point `source.path` at `../apis/remote/openapi.yaml` from `config/api.yaml`. Commit the snapshot and its `source-lock.json`. Normal builds use those local files and make no network request. To check for upstream changes, run `api refresh apis/remote --output apis/remote-next`. If the source changed, the command reports the changed hashes and writes a complete new snapshot while keeping `apis/remote` intact. Point `source.path` to `../apis/remote-next/openapi.yaml`, inspect a new `api review` candidate, and pin its digest before building. The [CLI reference](https://www.shoalrun.com/cli.md) lists import limits.
@@ -124,7 +124,7 @@ Shoalrun requires `publicReview.digest` for every API whose content appears in a
 
 ```sh
 API_REVIEW_DIR="$(mktemp -d /tmp/shoalrun-api-review.XXXXXX)"
-node "$SHOALRUN_CLI" api review docs.config.yaml --output "$API_REVIEW_DIR"
+npx --no-install shoalrun api review docs.config.yaml --output "$API_REVIEW_DIR"
 ```
 
 The command builds the candidate and reports each API's digest, page URLs, focused contracts, full-source downloads, and input hashes. Inspect the candidate files for private operations, fields, descriptions, examples, and credentials. For this example, check the Create a note HTML and Markdown page and its linked focused contract.
@@ -143,9 +143,9 @@ Replace the angle-bracket placeholder with the actual digest. Keep the candidate
 ## Build and verify the output
 
 ```sh
-node "$SHOALRUN_CLI" build docs.config.yaml site-dist
-node "$SHOALRUN_CLI" api focused-audit site-dist
-node "$SHOALRUN_CLI" serve site-dist
+npx --no-install shoalrun build docs.config.yaml site-dist
+npx --no-install shoalrun api focused-audit site-dist
+npx --no-install shoalrun serve site-dist --port 8765
 ```
 
 Open `http://127.0.0.1:8765/example-api/create-note/` and choose **Create a note** in the sidebar. Confirm the introduction, `POST /notes`, the `201` response with its required `id` field, and the named example. Open `http://127.0.0.1:8765/example-api/create-note.md` to check the same details as Markdown. Follow the focused contract link and check that it contains only this operation and its required contract data.
@@ -198,7 +198,7 @@ The [query syntax example](https://www.shoalrun.com/api-docs/generate.md) config
 
 Compare the authored [Create a note](https://www.shoalrun.com/example-api/create-note.md) and generated [Get a note](https://www.shoalrun.com/example-api/generated/get-note-cbedb319.md) with their [fictional source](https://www.shoalrun.com/api/notes/production/current/openapi.yaml), Markdown twins, and focused contracts.
 
-For a multi-file example with authentication, run `npm run demo` from the checkout's `framework/` directory and inspect `example/dist/v1/reference/create-payment/`. The [Cedar Parcel styling lab](https://www.shoalrun.com/example-api/cedar.md) exercises direct query filters, conditional bodies, JSON and file responses, server and authentication overrides, extension mappings, and a webhook. Its standalone project is `framework/example-configs/reference-stress/`.
+The [Cedar Parcel styling lab](https://www.shoalrun.com/example-api/cedar.md) exercises direct query filters, conditional bodies, JSON and file responses, server and authentication overrides, extension mappings, and a webhook.
 
 ## Related reading
 

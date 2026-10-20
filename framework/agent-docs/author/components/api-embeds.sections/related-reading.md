@@ -3,8 +3,12 @@ id: guide.component.api-embeds
 title: ApiExample and ApiSchema
 summary: Include named OpenAPI examples and selected schemas in authored pages.
 type: reference
-area: components
-subarea: components-api
+area:
+  - components
+  - api
+subarea:
+  - components-api
+  - api-contracts
 canonical: /author/components/api-embeds
 ---
 

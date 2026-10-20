@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/config.md)
 
@@ -109,3 +109,28 @@ outputs:
     highlighting: { provider: custom, module: ./highlight.mjs }
     search: { provider: custom, module: ./search/hosted.js }
 ```
+
+### Agent discovery index
+
+Every published page is included automatically, using its title and frontmatter summary. You do not need to list page IDs. Omit `outputs.llms` for automatic grouping, or choose a bare alphabetical list of links and summaries:
+
+```yaml title="docs.config.yaml"
+outputs:
+  llms:
+    format: flat
+```
+
+`format` accepts `grouped` (the default) or `flat`. Flat mode includes all pages under `Pages`, without optional groups or repeated type labels. Discovery resources and API contracts remain linked, and fictional labels still apply. Grouping overrides are optional; `primaryIds` is an exception list, not an inventory.
+
+`outputs.llms` controls grouping in `/llms.txt`. The build groups primary pages by type, puts secondary pages under `## Optional`, and lists `/search-index.json` under Discovery only when that file is generated. The complete manifest remains available for inventory. `fictionalPrefixes` also sets `demo: true` on matching pages in `documents.json`, `search-index.json`, and `search-index.min.json`. Matching uses the authored slug, including descendants, independently of publication or site path prefixes. Other pages receive `demo: false`, meaning unmarked rather than verified as a live service.
+
+```yaml title="docs.config.yaml"
+outputs:
+  llms:
+    primaryIds: [guide.components]
+    optionalTypes: [recipe, ingredient, cookbook]
+    optionalPrefixes: [/author/components]
+    fictionalPrefixes: [/example-api]
+```
+
+`primaryIds` keeps named document IDs in their primary type section even when an optional type or prefix matches; fictional examples remain optional. Entries sort alphabetically within each section or optional group. Type labels appear only in the mixed optional groups. `optionalTypes` defaults to recipe, ingredient, and cookbook. Both prefix lists default to empty. Prefixes match page slugs before publication and base-path prefixes, on path boundaries. Fictional entries are always optional, labeled in the index, and carry a disclaimer in their Markdown twins. Use fictional prefixes only for synthetic examples, not real product API references.

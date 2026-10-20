@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Add an OpenAPI API
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/publish/api-references.md)
 
@@ -27,9 +27,9 @@ Parent page: [Full Markdown page](/publish/api-references.md)
 
 - [ApiExample and ApiSchema](https://www.shoalrun.com/author/components/api-embeds.md) — Include named examples and selected schemas in your guides.
 
-Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
+Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). This walkthrough uses a fictional Notes API as its example. You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
 
-Run commands from your documentation project directory. `SHOALRUN_CLI` is the absolute path to `framework/dist/cli.js` set in the quickstart. Check [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) before importing a larger specification.
+Run commands from the documentation project directory created in the quickstart, where `@shoalrun/cli` is installed. The commands use that local package. Check [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) before importing a larger specification.
 
 ## Generate many pages selectively
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Add an OpenAPI API
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Parent page: [Full Markdown page](/publish/api-references.md)
 
@@ -27,16 +27,16 @@ Parent page: [Full Markdown page](/publish/api-references.md)
 
 - [ApiExample and ApiSchema](https://www.shoalrun.com/author/components/api-embeds.md) — Include named examples and selected schemas in your guides.
 
-Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
+Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). This walkthrough uses a fictional Notes API as its example. You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
 
-Run commands from your documentation project directory. `SHOALRUN_CLI` is the absolute path to `framework/dist/cli.js` set in the quickstart. Check [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) before importing a larger specification.
+Run commands from the documentation project directory created in the quickstart, where `@shoalrun/cli` is installed. The commands use that local package. Check [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) before importing a larger specification.
 
 ## Build and verify the output
 
 ```sh
-node "$SHOALRUN_CLI" build docs.config.yaml site-dist
-node "$SHOALRUN_CLI" api focused-audit site-dist
-node "$SHOALRUN_CLI" serve site-dist
+npx --no-install shoalrun build docs.config.yaml site-dist
+npx --no-install shoalrun api focused-audit site-dist
+npx --no-install shoalrun serve site-dist --port 8765
 ```
 
 Open `http://127.0.0.1:8765/example-api/create-note/` and choose **Create a note** in the sidebar. Confirm the introduction, `POST /notes`, the `201` response with its required `id` field, and the named example. Open `http://127.0.0.1:8765/example-api/create-note.md` to check the same details as Markdown. Follow the focused contract link and check that it contains only this operation and its required contract data.

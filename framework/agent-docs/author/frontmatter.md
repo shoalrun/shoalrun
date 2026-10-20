@@ -23,7 +23,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Page metadata
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-20.**
 
 Frontmatter is the YAML header between the first two `---` lines of a `.md` or `.mdx` page. It gives a page its identity, URL, and publication settings. Start with this complete header, then write the page body below it:
 
@@ -218,25 +218,17 @@ seo:
 
 There are no other supported `seo.*` fields yet. Configure social images separately in [share images](https://www.shoalrun.com/styling/share-images.md). Use global frontmatter for site-wide SEO defaults or enforced values. The compiler now rejects unsupported page-level SEO keys so they cannot silently have no effect.
 
-## Add a custom page field
+## Related metadata tasks
 
-[Declare field types and public export eligibility](https://www.shoalrun.com/author/custom-metadata.md) in the advanced metadata guides.
+Choose the guide for the metadata you want to configure:
 
-## Choose text for each surface
-
-[Select text for cards, page headers, search, and link previews](https://www.shoalrun.com/author/custom-metadata.md) in the advanced metadata guides.
-
-## Read metadata from a project module
-
-[Load metadata from a local provider module](https://www.shoalrun.com/author/custom-metadata.md) in the advanced metadata guides.
-
-## Choose metadata for the published Markdown page
-
-[Choose exported fields and named Markdown metadata profiles](https://www.shoalrun.com/author/markdown-metadata.md) in the advanced metadata guides.
-
-### Projection settings
-
-See [Markdown projection settings](https://www.shoalrun.com/author/markdown-metadata.md) for supported sources, protected fields, and precedence.
+| Task                                                           | Guide                                                                               |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Declare custom field types and public export eligibility       | [Custom page fields](https://www.shoalrun.com/author/custom-metadata.md)            |
+| Choose text for cards, page headers, search, and link previews | [Text for each surface](https://www.shoalrun.com/author/custom-metadata.md)         |
+| Load metadata from a local module                              | [Metadata providers](https://www.shoalrun.com/author/custom-metadata.md)            |
+| Choose exported fields and named Markdown profiles             | [Published Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md) |
+| Look up supported sources, protected fields, and precedence    | [Projection settings](https://www.shoalrun.com/author/markdown-metadata.md)         |
 
 ## Related reading
 
