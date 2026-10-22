@@ -50,6 +50,12 @@ test('a site mounted below /docs serves pages and framework resources from that 
   const output = path.join(directory, 'site-dist');
   const manifest = await compile(config, output);
   assert.equal(manifest.basePath, '/docs');
+  const resourceHeaders = JSON.parse(await readFile(path.join(output, 'docs/resource-headers.json'), 'utf8'));
+  for (const route of ['/documents.json', '/build-info.json', '/docs/documents.json', '/docs/build-info.json']) {
+    assert.equal(resourceHeaders[route]['Content-Type'], 'application/json', route);
+    assert.equal(resourceHeaders[route]['Cache-Control'], 'public, max-age=0, must-revalidate', route);
+  }
+  assert.match(await readFile(path.join(output, 'docs/llms.txt'), 'utf8'), /\[XML sitemap\]\(https:\/\/docs\.example\.test\/docs\/sitemap\.xml\)/);
   assert.ok(manifest.documents.some(page => page.url === '/docs' && page.markdownUrl === '/docs/index.md'));
   const html = await readFile(path.join(output, 'docs/index.html'), 'utf8');
   for (const url of ['/docs/index.md', '/docs/llms.min.txt', '/docs/assets/site.css']) assert.ok(html.includes(url), url);

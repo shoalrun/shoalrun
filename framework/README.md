@@ -64,6 +64,23 @@ npx shoalrun docs read guide.component.steps --json
 
 See the [authoring command reference](AUTHORING.md) for project inspection, validation, report schemas, and the public authoring API. Visit [shoalrun.com](https://www.shoalrun.com) for the full documentation; it may describe changes newer than your installed package.
 
+## Publish discovery files
+
+Set `site.origin` to the HTTPS origin (for example, `https://example.github.io`)
+and `site.basePath` to the mount path (for example, `/my-docs`). With indexing
+enabled, the origin enables canonical URLs and an XML sitemap. The generated
+`llms.txt` links to that sitemap when available. Without an origin, Shoalrun
+still publishes Markdown and documentation indexes, but omits the sitemap.
+
+For a site mounted below a path, the generated `robots.txt` lives under that
+path. Crawlers consult `/robots.txt` at the host root; configure that file at
+the host level if needed. A project-path robots file does not control the host.
+
+Shoalrun generates `llms.min.txt` and `llms.txt`, not `llms-full.txt`. Any custom
+full-document export must rewrite source-relative links to published URLs and
+retain each document's public source URL. Write page summaries that describe
+which questions the page answers; the generated indexes reuse those summaries.
+
 ## Status and development
 
 This alpha may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.

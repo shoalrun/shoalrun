@@ -74,8 +74,8 @@ export function buildPublicationManifest({ fictionalDocuments, configDigest, syn
     [publicPath('/llms.min.txt')]: { 'Content-Type': 'text/plain; charset=utf-8' },
     [publicPath('/llms.txt')]: { 'Content-Type': 'text/plain; charset=utf-8' },
     ...Object.fromEntries(tabs.map(tab => [tab.indexUrl, { 'Content-Type': 'text/plain; charset=utf-8' }])),
-    '/documents.json': { 'Content-Type': 'application/json' },
-    '/build-info.json': { 'Content-Type': 'application/json' },
+    ...Object.fromEntries(['/documents.json', '/build-info.json'].flatMap(route =>
+      [...new Set([route, publicPath(route)])].map(url => [url, { 'Content-Type': 'application/json' }]))),
     [publicPath('/robots.txt')]: { 'Content-Type': 'text/plain; charset=utf-8' },
     ...Object.fromEntries([...sitemaps.keys()].map(route => [route, { 'Content-Type': 'application/xml; charset=utf-8' }])),
     ...Object.fromEntries(rendered.map(({ doc }) => [doc.route, { 'Content-Type': 'text/html; charset=utf-8', Link: `<${doc.markdownRoute}>; rel="alternate"; type="text/markdown"` }])),
