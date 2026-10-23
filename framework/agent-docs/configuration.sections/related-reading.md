@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-23.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -26,6 +26,10 @@ Parent page: [Full Markdown page](/configuration.md)
 Use the [configuration reference](https://www.shoalrun.com/config.md) to look up individual fields. Use [example projects](https://www.shoalrun.com/config/examples.md) for complete configurations you can copy.
 
 ## Related reading
+
+### Next steps
+
+- [Build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) — Reuse shared configuration and content for separately selected sites.
 
 ### Reference while working
 

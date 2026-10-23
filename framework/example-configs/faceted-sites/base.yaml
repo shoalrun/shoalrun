@@ -1,0 +1,30 @@
+schemaVersion: 1
+site:
+  title: Acme resources
+  contentDir: content
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+readerFilters:
+  facets:
+    audience:
+      label: Audience
+      options: { developer: Developers, operator: Operators }
+    region:
+      label: Region
+      options: { eu: Europe, us: United States }
+outputs:
+  html:
+    shareImages: false
+    highlighting: { provider: none }

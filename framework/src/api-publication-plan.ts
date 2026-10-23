@@ -1,9 +1,10 @@
+import { matchesContentFilter } from './content-filter.js';
 import path from 'node:path';
 import { ApiReader, querySyntaxRules } from './api.js';
 import { generatedOperationIdentity } from './api-identity.js';
 import { type Document, type Variant, markdownRoute, routeFor } from './content.js';
 import type { PublicationRoutingConfig } from './content-source.js';
-import { type ReaderFiltersConfig, pageReaderFilters } from './reader-filters.js';
+import { type ReaderSelection, type ReaderFiltersConfig, pageReaderFilters } from './reader-filters.js';
 import { applyFormattingLocale, resolveFrontmatter, validateFrontmatter } from './frontmatter.js';
 import { explain, type loadConfig } from './config.js';
 import { isConfigMapping, type CompilerPublicationsConfig, type CompilerSiteConfig } from './compiler-config.js';
@@ -48,7 +49,7 @@ function validatedApiDefinitions(value: unknown): Record<string, ApiDefinition> 
   return definitions;
 }
 
-export async function materializeApiReferences({ config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters }: {
+export async function materializeApiReferences({ config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters, contentFilter }: {
   config: ApiPublicationConfig;
   loaded: Awaited<ReturnType<typeof loadConfig>>;
   variants: Variant[];
@@ -59,6 +60,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
   routeOwners: Map<string, string>;
   basePath: string;
   readerFilters?: ReaderFiltersConfig;
+  contentFilter?: ReaderSelection;
 }) {
   const definitions = validatedApiDefinitions(config.apis);
   const api = new ApiReader();
@@ -162,11 +164,13 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
             if (authored.frontmatter.type !== 'api-reference' || authored.frontmatter.operations?.length !== 1 || authored.frontmatter.operations[0] !== id) throw new Error(`Generated API reference ${reference} conflicts with an authored page`);
             continue;
           }
+          const marks = pageReaderFilters(page, readerFilters, binding.file);
+          if (!matchesContentFilter(marks, contentFilter)) continue;
           const pageRoute = routeFor(page, variant, config);
           const collision = routeOwners.get(pageRoute.toLowerCase());
           if (collision) throw new Error(`Route collision ${pageRoute}: ${collision} and ${key}`);
           routeOwners.set(pageRoute.toLowerCase(), key);
-          docs.set(key, { file: binding.file, frontmatter: page, body: webhook ? generatedWebhookBody : generatedReferenceBody, tree: null, variant, route: pageRoute, markdownRoute: markdownRoute(pageRoute, basePath), readerFilters: pageReaderFilters(page, readerFilters, binding.file) });
+          docs.set(key, { file: binding.file, frontmatter: page, body: webhook ? generatedWebhookBody : generatedReferenceBody, tree: null, variant, route: pageRoute, markdownRoute: markdownRoute(pageRoute, basePath), readerFilters: marks });
         }
       }
     }

@@ -10,7 +10,7 @@ From the project where you want to keep your documentation, authenticate with a 
 
 ```sh
 npm login --scope=@shoalrun --registry=https://npm.pkg.github.com --auth-type=legacy
-npm install --save-dev @shoalrun/cli@0.1.0-alpha.3 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-dev @shoalrun/cli@0.1.0-alpha.5 --@shoalrun:registry=https://npm.pkg.github.com
 ```
 
 ## Create and preview a site
@@ -63,6 +63,32 @@ npx shoalrun docs read guide.component.steps --json
 ```
 
 See the [authoring command reference](AUTHORING.md) for project inspection, validation, report schemas, and the public authoring API. Visit [shoalrun.com](https://www.shoalrun.com) for the full documentation; it may describe changes newer than your installed package.
+
+## Build sites from shared content
+
+Use separate entry configs with the same `site.contentDir` and shared `extends`
+presets. Each site can have its own title, origin, base path, theme, navigation,
+and output directory. `site.contentFilter` selects whole pages using any
+configured `readerFilters` facet, including audience, product, area, subarea,
+and custom facets. For example:
+
+```yaml
+extends: [./base.yaml]
+site:
+  title: Developer resources
+  origin: https://developers.example.com
+  contentFilter: { audience: [developer] }
+```
+
+Every named facet must match at least one selected choice. Unmarked pages are
+excluded; mark shared pages with all applicable choices. Unknown or empty
+selectors and selections with no published pages fail. Omit the selector to
+publish all otherwise eligible pages. Keep navigation and links inside the
+selected set. Selected pages retain their full body; this is page selection,
+not section redaction or host authorization.
+
+See [the runnable faceted-sites example](example-configs/faceted-sites/README.md)
+for main, developer, and regional sites built from one source directory.
 
 ## Publish discovery files
 

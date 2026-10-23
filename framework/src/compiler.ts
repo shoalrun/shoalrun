@@ -1,3 +1,4 @@
+import { validateContentFilter } from './content-filter.js';
 import { loadComponentPlugins } from './component-plugins.js';
 import { resolveTaxonomy } from './taxonomy.js';
 import { resolveMcp } from './mcp-config.js';
@@ -242,6 +243,7 @@ export async function compile(configFile: string, destination?: string, provenan
   const searchSetting = configField(htmlOptions, 'search');
   const search = validateSearch(searchSetting, searchSetting === undefined ? configFile : explainSegments(loaded, ['outputs', 'html', 'search']).source.file);
   const readerFilters = validateReaderFilters(config.readerFilters);
+  const contentFilter = validateContentFilter(config.site.contentFilter, readerFilters);
   const customReaderModule = readerFilters?.module ? path.resolve(path.dirname(explainSegments(loaded, ['readerFilters', 'module']).source.file), readerFilters.module) : undefined;
   const mcp = resolveMcp(config.mcp);
   const mcpAnalyticsModule = mcp?.analytics ? path.resolve(path.dirname(explainSegments(loaded, ['mcp', 'analytics', 'module']).source.file), mcp.analytics.module) : undefined;
@@ -314,7 +316,7 @@ export async function compile(configFile: string, destination?: string, provenan
   const editionLabel = (variant: Variant) => editionBadge === 'never' ? '' : (['channel', 'version', 'language'] as const)
     .filter(field => editionBadge === 'always' || varying(field)).map(field => variant[field]).join(' · ');
   const { docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir } = await planAuthoredDocuments({
-    base, basePath, config, variants, language, readerFilters, metadataProvider, metadataDependencies, sourceOverrides: options.sourceOverrides, authoringFiles: options.authoringFiles
+    base, basePath, config, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides: options.sourceOverrides, authoringFiles: options.authoringFiles
   });
   if (config.snippets !== undefined && (!config.snippets || typeof config.snippets !== 'object' || Array.isArray(config.snippets))) throw new Error('snippets must be a mapping');
   const snippets = new Map<string, SnippetDefinition>();
@@ -328,9 +330,10 @@ export async function compile(configFile: string, destination?: string, provenan
   }
   if (config.variables !== undefined && (!config.variables || typeof config.variables !== 'object' || Array.isArray(config.variables))) throw new Error('variables must be a mapping');
   const apiPlan = await materializeApiReferences({
-    config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters
+    config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters, contentFilter
   });
   const { api, sourceForVariant, knownOperations } = apiPlan;
+  if (contentFilter && !docs.size) throw new Error('site.contentFilter matched no published pages; check page facets and enabled publications');
   const relatedApiTargets = new Map<string, Document[]>();
   const guidesByApi = new Map<string, Document[]>();
   for (const doc of docs.values()) {

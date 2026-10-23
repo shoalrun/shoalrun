@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-23.**
 
 `docs.config.yaml` connects your content, presentation, and publication settings. Start with one file, then extract sections or share defaults when several projects need them. This guide explains how those choices interact and how to inspect the result.
 
@@ -363,7 +363,15 @@ node "$SHOALRUN_CLI" build docs.config.yaml dist
 
 Next, use the [configuration reference](https://www.shoalrun.com/config.md) for the feature you want to add. For content or publication failures, use [troubleshooting](https://www.shoalrun.com/publish/troubleshooting.md).
 
+## Build several sites from shared content
+
+Separate entry configs can share one content directory and base configuration. Use `site.contentFilter` to select pages by any configured facet, then give each site its own origin, navigation, branding, and output directory. See [build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) for a complete audience and region example.
+
 ## Related reading
+
+### Next steps
+
+- [Build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) — Reuse shared configuration and content for separately selected sites.
 
 ### Reference while working
 

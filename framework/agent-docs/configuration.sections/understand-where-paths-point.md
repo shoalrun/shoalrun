@@ -17,9 +17,15 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-23.**
 
 Parent page: [Full Markdown page](/configuration.md)
+
+**Page reading path** — these links apply to the full page.
+
+**Next steps**
+
+- [Build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) — Reuse shared configuration and content for separately selected sites.
 
 `docs.config.yaml` connects your content, presentation, and publication settings. Start with one file, then extract sections or share defaults when several projects need them. This guide explains how those choices interact and how to inspect the result.
 

@@ -248,6 +248,8 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Share images and favicon](https://www.shoalrun.com/styling/share-images.md) — ID: guide.share-images. Generated social images, metadata precedence, SVG placeholders, fonts, and favicon settings.
 
+- [Build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) — ID: guide.single-source-sites. Reuse one content source to publish sites selected by audience, product, region, or any configured facet.
+
 - [Reuse prose across pages](https://www.shoalrun.com/author/snippets.md) — ID: guide.snippets. Share validated prose across pages with typed variables.
 
 - [Getting started](https://www.shoalrun.com/start.md) — ID: guide.overview. Create a documentation site, scaffold your first page from a template, and preview its HTML and Markdown.

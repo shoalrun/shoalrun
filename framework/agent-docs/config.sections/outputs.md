@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-20.**
+**Updated: 2026-10-23.**
 
 Parent page: [Full Markdown page](/config.md)
 

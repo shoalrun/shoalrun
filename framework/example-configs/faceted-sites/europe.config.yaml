@@ -1,0 +1,9 @@
+extends: [./base.yaml]
+site:
+  title: Acme Europe resources
+  origin: https://eu.example.com
+  basePath: /resources
+  contentFilter: { region: [eu] }
+navigation:
+  - { id: home, doc: guide.home }
+  - { id: operations, doc: guide.operations }

@@ -17,11 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Share pages across documentation versions
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-23.**
 
 Say you support v1 and v2. Your setup instructions are mostly the same, but v2 has a new credential and one extra guide. You can keep the common instructions in **one source file**, show the right credential in each version, and publish the extra guide only in v2.
 
 Shoalrun calls each channel, version, and language combination a **publication**. You choose which publications a build makes. A Git branch or tag chooses *which revision of the repository to build*; it does not automatically create a docs version. For separate sites such as stable and next, see [publish separate docs sites from Git](https://www.shoalrun.com/publish/revisions.md).
+
+For separate sites selected by audience, product, region, or another configured facet, see [build sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md). That workflow shares one content directory and uses a separate entry config and output directory for each site.
 
 ## Choose which versions exist
 
@@ -147,3 +149,5 @@ Shoalrun does not translate text. Your translation pipeline writes the files, on
 ### Related topics
 
 - [Use Git branches for separate docs sites](https://www.shoalrun.com/publish/revisions.md) — Distinguish content editions from source revisions and retained builds.
+
+- [Build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) — Publish separate sites from one content source using facet selections.

@@ -1,0 +1,7 @@
+extends: [./base.yaml]
+site:
+  origin: https://docs.example.com
+navigation:
+  - { id: home, doc: guide.home }
+  - { id: api, doc: guide.api }
+  - { id: operations, doc: guide.operations }

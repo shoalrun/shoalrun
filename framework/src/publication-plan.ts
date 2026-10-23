@@ -1,10 +1,11 @@
+import { matchesContentFilter } from './content-filter.js';
 import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { markdownRoute, readDocument, routeFor, type Document, type Variant } from './content.js';
 import type { PublicationRoutingConfig } from './content-source.js';
 import { applyFormattingLocale, validateFrontmatter } from './frontmatter.js';
 import { mergeProvidedMetadata, type MetadataProvider } from './metadata-provider.js';
-import { pageReaderFilters, type ReaderFiltersConfig } from './reader-filters.js';
+import { pageReaderFilters, type ReaderSelection, type ReaderFiltersConfig } from './reader-filters.js';
 import { configField, type CompilerSiteConfig, type CompilerPublicationsConfig } from './compiler-config.js';
 
 export type AuthoredPublicationConfig = PublicationRoutingConfig & { site: CompilerSiteConfig; publications: CompilerPublicationsConfig; frontmatter?: unknown };
@@ -26,13 +27,14 @@ async function files(dir: string): Promise<string[]> {
   return nested.flat().sort();
 }
 
-export async function planAuthoredDocuments({ base, basePath, config, variants, language, readerFilters, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles }: {
+export async function planAuthoredDocuments({ base, basePath, config, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles }: {
   base: string;
   basePath: string;
   config: AuthoredPublicationConfig;
   variants: Variant[];
   language: string;
   readerFilters?: ReaderFiltersConfig;
+  contentFilter?: ReaderSelection;
   metadataProvider?: { provide: MetadataProvider };
   metadataDependencies: Set<string>;
   sourceOverrides?: ReadonlyMap<string, string>;
@@ -76,6 +78,8 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
     knownDocumentTypes.set(frontmatter.id, frontmatter.type);
     if (frontmatter.type === 'api-reference') for (const operation of frontmatter.operations ?? []) authoredOperationIds.add(operation);
     if (frontmatter.access?.policy !== 'public' && !authoringFiles?.has(file)) continue;
+    const marks = pageReaderFilters(frontmatter, readerFilters, file);
+    if (!matchesContentFilter(marks, contentFilter)) continue;
     if (/\[\[TODO:[\s\S]*?\]\]/.test(body) || /\[\[TODO:[\s\S]*?\]\]/.test(JSON.stringify(frontmatter)) || frontmatter.summary?.startsWith('Draft guide for ')) throw new Error(`${file}: unresolved scaffold placeholders cannot be published`);
     for (const variant of variants) {
       if (pagePublications ? !pagePublications.some(item => item.channel === variant.channel && item.version === variant.version) : (frontmatter.channel && frontmatter.channel !== variant.channel || frontmatter.version && frontmatter.version !== variant.version)) continue;
@@ -88,7 +92,7 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
       const collision = routeOwners.get(route.toLowerCase());
       if (collision) throw new Error(`Route collision ${route}: ${collision} and ${key}`);
       routeOwners.set(route.toLowerCase(), key);
-      docs.set(key, { file, frontmatter: publishedFrontmatter, body, tree: null, variant, route, markdownRoute: markdownRoute(route, basePath), readerFilters: pageReaderFilters(publishedFrontmatter, readerFilters, file) });
+      docs.set(key, { file, frontmatter: publishedFrontmatter, body, tree: null, variant, route, markdownRoute: markdownRoute(route, basePath), readerFilters: marks });
     }
   }
   return { contentDir, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners };

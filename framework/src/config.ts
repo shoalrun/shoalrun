@@ -1,3 +1,5 @@
+import { validateContentFilter } from './content-filter.js';
+import { validateReaderFilters } from './reader-filters.js';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -96,6 +98,7 @@ export async function loadConfig(file: string) {
   const value = valueOf(tree);
   if (!object(value) || value.schemaVersion !== 1) throw new ConfigError(`${root}: schemaVersion must be 1`);
   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new ConfigError(`${root}: unknown setting ${key}`);
+  if (object(value.site) && value.site.contentFilter !== undefined) validateContentFilter(value.site.contentFilter, validateReaderFilters(value.readerFilters));
   validateCookbooks(value.cookbooks, root);
   validateSearch(value.search);
   resolveTaxonomy(object(value.frontmatter) ? value.frontmatter.taxonomy : undefined);
