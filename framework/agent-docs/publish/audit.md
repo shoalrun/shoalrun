@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Audit a docs project
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-24.**
 
 Run `shoalrun audit` from a project directory before publishing. The command combines tests that your project configures with Shoalrun's build and API representation checks. It reports each result as JSON and exits with code `1` if any result fails.
 
@@ -148,6 +148,8 @@ These checks cover the rules Shoalrun implements and any tests you supply. A pas
 ### Next steps
 
 - [Evaluate agent tasks against your docs](https://www.shoalrun.com/publish/evals.md) — Add task definitions and reviewed result reports to the audit.
+
+- [Use Manni with Shoalrun](https://www.shoalrun.com/publish/manni.md) — Add conditional editorial metadata checks through an audit hook.
 
 ### Reference while working
 

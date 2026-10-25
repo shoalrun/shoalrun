@@ -1,8 +1,7 @@
 ---
 id: reference.config
 title: Configuration reference
-summary: Every top-level setting in docs.config.yaml, with defaults, validation
-  rules, and links to the full guides.
+summary: Configuration settings, defaults, validation rules, and related guides.
 type: reference
 area: publishing
 subarea: publishing-configuration
@@ -17,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > Configuration reference
 
-**Updated: 2026-10-23.**
+**Updated: 2026-10-24.**
 
 Parent page: [Full Markdown page](/config.md)
 

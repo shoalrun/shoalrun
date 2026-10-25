@@ -37,6 +37,7 @@ export const cliHelp = `Usage: shoalrun <command>
 Start and build:
   init [directory] [--starter minimal|api-docs]
   build [config] [output]
+  export [config] --out DIRECTORY [--target NAME]
   dev [config] [output] [--port PORT]
   serve <site-directory> [--host HOST] [--port PORT]
   check [config] [--json]

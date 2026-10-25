@@ -43,19 +43,24 @@ async function recoverOutput(target: string): Promise<void> {
   for (const file of abandoned) await rm(file, { recursive: true, force: true });
 }
 
-async function checkReplaceable(target: string): Promise<void> {
+async function checkReplaceable(target: string, kind: 'site' | 'export'): Promise<void> {
   const entries = await readdir(target).catch((error: NodeJS.ErrnoException) => { if (error.code === 'ENOENT') return [] as string[]; throw error; });
-  if (!entries.length || (entries.includes('documents.json') && entries.includes('resource-headers.json'))) return;
-  throw new Error(`Output directory ${target} already exists and is not an earlier Shoalrun build (it has no documents.json and resource-headers.json). The build replaces its output directory, so it stopped instead of deleting it. Choose a new or empty directory`);
+  if (!entries.length) return;
+  if (kind === 'site' && entries.includes('documents.json') && entries.includes('resource-headers.json')) return;
+  if (kind === 'export' && entries.includes('manifest.json')) {
+    const manifest = JSON.parse(await readFile(path.join(target, 'manifest.json'), 'utf8'));
+    if (manifest.kind === 'shoalrun-content-export' && manifest.schemaVersion === 1) return;
+  }
+  throw new Error(`Output directory ${target} already exists and is not an earlier Shoalrun ${kind === 'site' ? 'build (it has no documents.json and resource-headers.json)' : 'content export'}. The build replaces its output directory, so it stopped instead of deleting it. Choose a new or empty directory`);
 }
 
-export async function commitArtifacts(target: string, artifacts: Map<string, string | Buffer>, prepare?: () => Promise<void>): Promise<void> {
+export async function commitArtifacts(target: string, artifacts: Map<string, string | Buffer>, prepare?: () => Promise<void>, kind: 'site' | 'export' = 'site'): Promise<void> {
   const unlock = await lockOutput(target);
   const staging = `${target}.staging-${process.pid}-${randomUUID()}`;
   const previous = `${staging}-previous`;
   try {
     await recoverOutput(target);
-    await checkReplaceable(target);
+    await checkReplaceable(target, kind);
     await prepare?.();
     await mkdir(staging, { recursive: false });
     for (const [route, data] of artifacts) {

@@ -1,0 +1,29 @@
+---
+id: guide.billing
+title: Billing
+summary: Check usage before changing a plan.
+slug: /billing
+---
+
+## Review usage
+
+[API key help](doc:guide.keys) explains the credentials associated with requests.
+
+<Walkthrough title="Check usage">
+<Step title="Read the total">
+Read the current usage total.
+
+```js
+const usage = 12;
+```
+
+</Step>
+<Step title="Compare the allowance">
+Compare that total with your plan's allowance.
+
+```js
+const remaining = 100 - usage;
+```
+
+</Step>
+</Walkthrough>

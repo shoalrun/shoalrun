@@ -1,8 +1,7 @@
 ---
 id: reference.cli
 title: CLI reference
-summary: Every shoalrun command, its arguments and defaults, what it prints, and
-  when it fails.
+summary: Commands, arguments, defaults, output, and errors.
 type: reference
 area: authoring
 subarea: authoring-command-line
@@ -17,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > CLI reference
 
-**Updated: 2026-10-20.**
+**Updated: 2026-10-24.**
 
 Parent page: [Full Markdown page](/cli.md)
 

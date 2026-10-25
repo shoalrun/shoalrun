@@ -1,8 +1,7 @@
 ---
 id: reference.cli
 title: CLI reference
-summary: Every shoalrun command, its arguments and defaults, what it prints, and
-  when it fails.
+summary: Commands, arguments, defaults, output, and errors.
 type: reference
 area: authoring
 subarea: authoring-command-line
@@ -17,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > CLI reference
 
-**Updated: 2026-10-20.**
+**Updated: 2026-10-24.**
 
 The private `@shoalrun/cli` package supplies the `shoalrun` command. It needs Node.js 22.12 or newer. Follow [Getting started](https://www.shoalrun.com/start.md) to install it from GitHub Packages, then run commands as `npx --no-install shoalrun <command>`. Framework contributors can build the source checkout and run `node framework/dist/cli.js <command>` from its root.
 
@@ -48,6 +47,20 @@ Compiles the site. `output` defaults to `site-dist`. Prints `{ "status": "ok", "
 The build writes to a temporary directory, then **deletes `output` and replaces it**. Don't point it at a directory with other files. The build stops before deleting anything if `output` contains the project or content directory, sits inside the content directory, or holds a file the build reads. It also writes the [frontmatter reference](https://www.shoalrun.com/author/frontmatter-reference.md) to `.shoalrun/` beside the config; add `.shoalrun/` to `.gitignore`.
 
 Every build writes `/build-info.json` with the build ID and resolved config digest. `--source-commit` adds a full 40- or 64-character Git commit hash; `--release-label` adds a short, public release name. The command uses only the values you pass. Neither flag selects a publication or deployment destination. See [use Git branches for separate docs sites](https://www.shoalrun.com/publish/revisions.md).
+
+### `export`
+
+```sh
+shoalrun export [config] --out DIRECTORY [--target NAME]
+  [--format markdown|html|both] [--document ID]...
+  [--channel C --version V --language L] [--public-base /help/] [--review]
+```
+
+Exports whole public pages from source as resolved Markdown and passive HTML fragments, with a versioned manifest, referenced assets, and notices. No navigation, facets, website theme, or prior website build is required. `--out` is required. Without `--target`, the command exports all eligible pages in one enabled publication; select all three publication coordinates when more than one is enabled. `--document` can be repeated. Command options override the named target's formats, document selection, publication, and public base.
+
+Named targets live under `exports` in the project config. Their optional page-facet filter is independent of `site.contentFilter` and navigation. Public access, enabled publication, and language still determine eligibility. Invalid selections and missing link or asset dependencies fail before a previous export is replaced. An unrelated nonempty destination or a source directory cannot be replaced.
+
+The command prints JSON with status, absolute output directory, publication, formats, document count and IDs, asset count, bundle digest, API review digests, and diagnostics. `--review` can write a candidate with `status: needs-review` and exit code 2. Pin the reviewed digests and repeat the normal command before distributing it. See [export content into an application](https://www.shoalrun.com/publish/content-export.md) for target fields, output contracts, and the help-drawer example.
 
 ### `docs changes`
 

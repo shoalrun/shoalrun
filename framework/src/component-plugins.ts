@@ -13,7 +13,7 @@ export type ComponentAsset = { route: string; content: string };
 const object = (value: unknown): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
 const digest = (content: string) => createHash('sha256').update(content).digest('hex');
 
-export async function loadComponentPlugins(loaded: Awaited<ReturnType<typeof loadConfig>>) {
+export async function loadComponentPlugins(loaded: Awaited<ReturnType<typeof loadConfig>>, options: { browser?: boolean } = {}) {
   const discovery = await discoverComponents(loaded);
   const dependencies = new Set(discovery.dependencies);
   const registry: ComponentRegistry = new Map();
@@ -44,7 +44,7 @@ export async function loadComponentPlugins(loaded: Awaited<ReturnType<typeof loa
       if (typeof schema.default === 'number' && (!Number.isFinite(schema.default) || schema.integer && !Number.isInteger(schema.default) || schema.min !== undefined && schema.default < schema.min || schema.max !== undefined && schema.default > schema.max)) fail(`has invalid numeric default for ${key}`);
     }
     let browser: ComponentBrowser | undefined;
-    if (entry.browser) {
+    if (entry.browser && options.browser !== false) {
       const publish = (content: string, extension: string) => {
         const route = `/assets/components/${digest(content)}${extension}`;
         assets.set(route, { route, content });

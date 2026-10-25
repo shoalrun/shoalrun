@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { runExportCommand, exportHelp } from './content-export-command.js';
 import { cliHelp, docsHelp, skillsHelp, runSkillsCommand } from './cli-discovery.js';
 import { compareDocumentSnapshots } from './document-sync.js';
 import { validateAuthoringGuidance } from './authoring-guidance.js';
@@ -112,6 +113,13 @@ try {
       }
     }
     process.stdout.write(JSON.stringify(await initProject(directory, starter), null, 2) + '\n');
+  } else if (command === 'export') {
+    if (subcommand === '--help' && !rest.length) process.stdout.write(exportHelp);
+    else {
+      const result = await runExportCommand([subcommand, ...rest].filter((arg): arg is string => arg !== undefined));
+      process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+      if (result.status !== 'ok') process.exitCode = 2;
+    }
   } else if (command === 'build') {
     const { config, output, provenance } = buildArguments([subcommand, ...rest].filter((item): item is string => item !== undefined), 'site-dist');
     const manifest = await compile(config, output, provenance);

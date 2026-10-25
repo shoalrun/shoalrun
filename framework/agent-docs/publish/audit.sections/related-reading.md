@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Audit a docs project
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-24.**
 
 Parent page: [Full Markdown page](/publish/audit.md)
 
@@ -35,6 +35,8 @@ With no `audit` setting, Shoalrun runs the API source and focused-contract audit
 ### Next steps
 
 - [Evaluate agent tasks against your docs](https://www.shoalrun.com/publish/evals.md) — Add task definitions and reviewed result reports to the audit.
+
+- [Use Manni with Shoalrun](https://www.shoalrun.com/publish/manni.md) — Add conditional editorial metadata checks through an audit hook.
 
 ### Reference while working
 

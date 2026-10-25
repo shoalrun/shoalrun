@@ -1,8 +1,7 @@
 ---
 id: guide.overview
 title: Getting started
-summary: Create a documentation site, scaffold your first page from a template,
-  and preview its HTML and Markdown.
+summary: Create a site, publish a page, and check both formats.
 type: tutorial
 area: project
 subarea: project-overview
@@ -17,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
@@ -43,7 +42,7 @@ Install an exact version of the private alpha and initialize the minimal starter
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.2 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.5 --@shoalrun:registry=https://npm.pkg.github.com
 npx --no-install shoalrun init .
 ```
 
@@ -69,6 +68,22 @@ npx --no-install shoalrun scaffold how-to -n content/first-page.mdx \
 The command creates draft frontmatter and a body with prompts for outcomes, steps, checks, and recovery. It derives the slug `/first-page` and refuses to overwrite existing files. Use a registered project template when your team has one; [create a page](https://www.shoalrun.com/author/add-page.md) explains the choices.
 
 Open `content/first-page.mdx`. Set `updated` to today's date in `YYYY-MM-DD` format. Replace its generated summary with `Find the installation guide and check its Markdown page.` Keep `access.policy` set to `draft` while completing the prompts.
+
+For this example, replace the generated YAML header with the following completed header. It omits the optional `description` and `tags` fields, whose template prompts would otherwise prevent publication. Use today's date for `updated`:
+
+```yaml title="Completed page frontmatter"
+id: guide.first-page
+title: Your first page
+summary: Find the installation guide and check its Markdown page.
+type: how-to
+slug: /first-page
+channel: production
+version: current
+language: en
+updated: 2026-10-24
+access: { policy: draft }
+card: { icon: book-open }
+```
 
 For this small walkthrough, replace the template body below the closing frontmatter delimiter with this completed example. It keeps the introduction, actions, and verification together:
 

@@ -90,6 +90,55 @@ not section redaction or host authorization.
 See [the runnable faceted-sites example](example-configs/faceted-sites/README.md)
 for main, developer, and regional sites built from one source directory.
 
+## Export content into an application
+
+Export pages from the same source into a portable directory for an application's
+help drawer, onboarding screens, or other content surfaces:
+
+```sh
+npx shoalrun export docs.config.yaml --out app/public/help --public-base /help/
+```
+
+The command writes `manifest.json`, resolved Markdown, passive HTML fragments,
+referenced local assets, and `NOTICES.txt`. It does not require navigation,
+facets, a previous website build, or a Shoalrun runtime in the app. Your app maps
+stable document IDs to the exported files and owns its UI and routing.
+
+For a reusable selection, define an `exports` target:
+
+```yaml
+exports:
+  app-help:
+    formats: [markdown, html]
+    documents: [guide.api-keys, guide.billing]
+    publicBase: /help/
+```
+
+Run `shoalrun export docs.config.yaml --target app-help --out app/public/help`.
+Omit `documents` to export all eligible public pages in one enabled publication;
+select an explicit publication when more than one is enabled. Export selection
+is independent of the website's `site.contentFilter` and navigation. Selected
+pages retain all reader sections as labeled static content. Tabs and walkthroughs
+keep every panel or step. Interactive browser modules are not exported.
+
+Document links use bundle locations and typed manifest targets for in-app routing.
+Omitted documents need an eligible canonical website destination. `publicBase`
+must match the bundle's app mount so images work from arbitrary app routes.
+`/help/` is an example: choose another root-relative path, such as `/resources/`,
+and update the app's manifest URL and server mount to match. The `--out`
+filesystem directory can have a different name from the URL path.
+Local assets default to the content directory; explicit `assetRoots` extend that
+boundary. Remote images remain external and are reported. API material retains
+the source-review gate; `--review` produces a review candidate and exits 2 when
+approval is needed. Unavailable targets and unsupported content fail before an
+older export is replaced.
+
+See [the help-drawer example](examples/help-drawer/README.md) for a plain-JavaScript
+consumer and local preview. The [export manifest schema](schemas/content-export.schema.json)
+describes the file contract. Mount each document once per DOM; repeated instances
+need consumer-side ID and reference rewriting. Whole-page exports do not include
+website navigation, search/chat runtimes, themes, or heuristic section resources.
+
 ## Publish discovery files
 
 Set `site.origin` to the HTTPS origin (for example, `https://example.github.io`)

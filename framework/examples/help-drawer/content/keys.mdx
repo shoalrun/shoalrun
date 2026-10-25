@@ -1,0 +1,46 @@
+---
+id: guide.keys
+title: API keys
+summary: Create a key and choose its permissions.
+slug: /api-keys
+---
+
+Create a key for each integration. [Billing help](doc:guide.billing) explains usage costs.
+
+## Choose permissions
+
+<ReaderSection audience="developer">
+
+Use a separate key for each application.
+
+</ReaderSection>
+
+<ReaderSection audience="operator">
+
+Review unused keys before your scheduled access audit.
+
+</ReaderSection>
+
+![Key settings](./settings.svg)
+
+<Tabs label="Environment">
+<Tab label="Development">
+Use a key limited to your test workspace.
+</Tab>
+<Tab label="Production">
+Store the key in your deployment's secret store.
+</Tab>
+</Tabs>
+
+<Diagram title="Key setup" summary="Create the key, then send a request." engine="mermaid">
+
+```mermaid
+flowchart LR
+  Create --> Request
+```
+
+</Diagram>
+
+<SupportNote />
+
+[Full account guide](doc:guide.account)

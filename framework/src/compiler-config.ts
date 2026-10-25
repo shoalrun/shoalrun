@@ -9,6 +9,7 @@ export type ConfigMapping = Record<string, unknown>;
 
 export interface ResolvedCompilerConfig extends ConfigMapping {
   schemaVersion: 1;
+  exports?: unknown;
   site?: unknown;
   navigation?: unknown;
   redirects?: unknown;

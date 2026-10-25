@@ -16,11 +16,19 @@ Navigation section: [Changelog](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Changelog](https://www.shoalrun.com/changelog.md) > Changelog > All changes
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 Updates to Shoalrun's private prototype. Each entry groups changes planned to ship together.
 
 ## Latest changes
+
+- 2026-10-25
+
+  Version 0.1.0-alpha.6
+
+  [Content exports and documentation checks](https://www.shoalrun.com/changelog/2026-10-25.md)
+
+  Content exports and documentation checks.
 
 - 2026-10-19
 

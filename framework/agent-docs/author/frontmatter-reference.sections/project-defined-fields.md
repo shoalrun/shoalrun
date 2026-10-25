@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Generated frontmatter reference
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 Parent page: [Full Markdown page](/author/frontmatter-reference.md)
 
@@ -32,6 +32,7 @@ A project can add page fields by declaring them in `frontmatter.fields`. The dec
 
 | Field                        | Type   | Required | Agent metadata approved | Description                                                             |
 | ---------------------------- | ------ | -------- | ----------------------- | ----------------------------------------------------------------------- |
+| `concepts`                   | array  | No       | No                      | Explicit glossary references checked by the project terminology audit.  |
 | `agent.intent`               | string | No       | Yes                     | The reader task this page helps an agent complete.                      |
 | `editorial.reviewNote`       | string | No       | No                      | Internal note for documentation reviewers.                              |
 | `editorial.lastVerified`     | string | No       | No                      | Date the page's technical claims were last checked, in YYYY-MM-DD form. |

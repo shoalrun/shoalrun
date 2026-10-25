@@ -1,6 +1,6 @@
 {
   "name": "@shoalrun/cli",
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"
@@ -23,13 +23,15 @@
     "styles",
     "templates",
     "examples",
+    "!examples/help-drawer/public/**",
     "!examples/**/node_modules/**",
     "example-configs",
     "!example-configs/**/.shoalrun/**",
     "agent-docs",
     "skills",
     "README.md",
-    "AUTHORING.md"
+    "AUTHORING.md",
+    "schemas/content-export.schema.json"
   ],
   "bin": {
     "shoalrun": "./dist/cli.js"

@@ -1,3 +1,4 @@
+import { validateExports } from './content-export-config.js';
 import { validateContentFilter } from './content-filter.js';
 import { validateReaderFilters } from './reader-filters.js';
 import { readFile } from 'node:fs/promises';
@@ -11,7 +12,7 @@ import { validateCookbooks } from './cookbook-chooser.js';
 export type Source = { file: string; history: string[] };
 type Tree = { source: Source; value: unknown };
 type Directive = { kind: 'concat' | 'remove'; items: Tree[] | string[] };
-const allowed = new Set(['schemaVersion', 'site', 'navigation', 'redirects', 'apis', 'relationships', 'variables', 'snippets', 'callouts', 'badges', 'publications', 'outputs', 'templates', 'theme', 'frontmatter', 'metadata', 'audit', 'readerFilters', 'retrieval', 'chat', 'authoring', 'search', 'cookbooks', 'analytics', 'mcp', 'components']);
+const allowed = new Set(['exports', 'schemaVersion', 'site', 'navigation', 'redirects', 'apis', 'relationships', 'variables', 'snippets', 'callouts', 'badges', 'publications', 'outputs', 'templates', 'theme', 'frontmatter', 'metadata', 'audit', 'readerFilters', 'retrieval', 'chat', 'authoring', 'search', 'cookbooks', 'analytics', 'mcp', 'components']);
 const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const treeObject = (v: unknown): v is Record<string, Tree> => object(v) && !('kind' in v && 'items' in v);
 export class ConfigError extends Error {}
@@ -99,6 +100,7 @@ export async function loadConfig(file: string) {
   if (!object(value) || value.schemaVersion !== 1) throw new ConfigError(`${root}: schemaVersion must be 1`);
   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new ConfigError(`${root}: unknown setting ${key}`);
   if (object(value.site) && value.site.contentFilter !== undefined) validateContentFilter(value.site.contentFilter, validateReaderFilters(value.readerFilters));
+  validateExports(value.exports, value.readerFilters);
   validateCookbooks(value.cookbooks, root);
   validateSearch(value.search);
   resolveTaxonomy(object(value.frontmatter) ? value.frontmatter.taxonomy : undefined);

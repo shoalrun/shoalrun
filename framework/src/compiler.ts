@@ -1,3 +1,6 @@
+import { canonical, within, checkOutputDirectory } from './output-location.js';
+import { reviewApiPublication } from './api-publication-review.js';
+import { prepareContentWorkspace } from './content-workspace.js';
 import { validateContentFilter } from './content-filter.js';
 import { loadComponentPlugins } from './component-plugins.js';
 import { resolveTaxonomy } from './taxonomy.js';
@@ -15,7 +18,7 @@ import { buildInfo, type BuildProvenance } from './build-info.js';
 import { CardUse, publicationRelationships, resolveCardTree, validateRelationships } from './cards.js';
 import { resolveCookbookTree, validateCookbooks } from './cookbook-chooser.js';
 import { createHash } from 'node:crypto';
-import { existsSync, realpathSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { commitArtifacts } from './output-commit.js';
@@ -33,13 +36,10 @@ import { explain, explainSegments, loadConfig } from './config.js';
 import { focusedOpenApi } from './focused-openapi.js';
 import { frontmatterReference, frontmatterSchema, defaultLanguage } from './frontmatter.js';
 import { OperationNavEntry, navigationPath, resolveProjectNavigation, validateProjectNavigation } from './project-navigation.js';
-import { SnippetDefinition, SnippetUse, validateSnippetConfig } from './snippets.js';
 import { loadMetadataProvider } from './metadata-provider.js';
 import { surfaceText, validateTextSurfaces } from './surface-text.js';
 import { validateReaderFilters } from './reader-filters.js';
-import { planAuthoredDocuments } from './publication-plan.js';
 import { assembleArtifacts } from './artifact-bundle.js';
-import { materializeApiReferences } from './api-publication-plan.js';
 import { materializePages } from './page-materialization.js';
 import { renderPublicationPages } from './publication-render.js';
 import { buildPublicationManifest } from './publication-manifest.js';
@@ -54,29 +54,6 @@ const generatedWebhookBody = 'This webhook reference is generated from the OpenA
 
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
 const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
-// Real paths, resolved through the nearest existing parent so paths not yet created compare correctly.
-const canonical = (file: string): string => {
-  const resolved = path.resolve(file);
-  try { return realpathSync(resolved); }
-  catch {
-    const parent = path.dirname(resolved);
-    return parent === resolved ? resolved : path.join(canonical(parent), path.basename(resolved));
-  }
-};
-const within = (directory: string, file: string) => {
-  const relative = path.relative(directory, file);
-  return relative === '' || (relative !== '..' && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative));
-};
-// The build deletes its output directory, so that directory must not hold the project or anything the build reads.
-function checkOutputDirectory(destination: string, projectRoot: string, contentDir: string, inputs: string[]) {
-  const target = canonical(destination);
-  for (const [label, directory] of [['project directory', projectRoot], ['content directory', contentDir]]) {
-    if (within(target, canonical(directory))) throw new Error(`Output directory ${target} is or contains the ${label} ${canonical(directory)}; the build deletes its output, so choose a separate directory such as ${path.join(canonical(projectRoot), 'dist')}`);
-  }
-  if (within(canonical(contentDir), target)) throw new Error(`Output directory ${target} is inside the content directory; later builds would read its Markdown as pages`);
-  const input = inputs.map(canonical).find(file => within(target, file));
-  if (input) throw new Error(`Output directory ${target} contains build input ${input}; the build deletes its output, so choose a separate directory`);
-}
 type SearchSetup = { provider: 'lexical' | 'custom' | 'none'; module?: string; index: boolean };
 function validateSearch(value: unknown, declaringFile: string): SearchSetup {
   if (value === undefined) return { provider: 'lexical', module: builtInSearchProvider, index: true };
@@ -315,53 +292,12 @@ export async function compile(configFile: string, destination?: string, provenan
   const varying = (field: keyof Variant) => new Set(variants.map(variant => variant[field])).size > 1;
   const editionLabel = (variant: Variant) => editionBadge === 'never' ? '' : (['channel', 'version', 'language'] as const)
     .filter(field => editionBadge === 'always' || varying(field)).map(field => variant[field]).join(' · ');
-  const { docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir } = await planAuthoredDocuments({
-    base, basePath, config, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides: options.sourceOverrides, authoringFiles: options.authoringFiles
-  });
-  if (config.snippets !== undefined && (!config.snippets || typeof config.snippets !== 'object' || Array.isArray(config.snippets))) throw new Error('snippets must be a mapping');
-  const snippets = new Map<string, SnippetDefinition>();
-  for (const [id, definition] of Object.entries(config.snippets as Record<string, unknown> ?? {})) {
-    const variables = validateSnippetConfig(id, definition);
-    const source = explainSegments(loaded, ['snippets', id, 'file']).source.file;
-    const file = path.resolve(path.dirname(source), (definition as { file: string }).file);
-    const body = await readFile(file, 'utf8');
-    if (/^---\r?\n/.test(body)) throw new Error(`${file}: snippets use plain Markdown without page frontmatter`);
-    snippets.set(id, { file, tree: parse.parse(body), variables });
-  }
-  if (config.variables !== undefined && (!config.variables || typeof config.variables !== 'object' || Array.isArray(config.variables))) throw new Error('variables must be a mapping');
-  const apiPlan = await materializeApiReferences({
-    config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters, contentFilter
-  });
-  const { api, sourceForVariant, knownOperations } = apiPlan;
+  const { docs, knownDocumentIds, knownDocumentTypes, routeOwners, contentDir, snippets, apiPlan, api,
+    sourceForVariant, knownOperations, relatedApiTargets, guidesByApi, sourceForOperation } = await prepareContentWorkspace({
+      base, basePath, config, loaded, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies,
+      sourceOverrides: options.sourceOverrides, authoringFiles: options.authoringFiles
+    });
   if (contentFilter && !docs.size) throw new Error('site.contentFilter matched no published pages; check page facets and enabled publications');
-  const relatedApiTargets = new Map<string, Document[]>();
-  const guidesByApi = new Map<string, Document[]>();
-  for (const doc of docs.values()) {
-    const targets: Document[] = [];
-    for (const id of doc.frontmatter.relatedApiReferences ?? []) {
-      if (!knownDocumentIds.has(id)) throw new Error(`${doc.file}: unknown related API reference ${id}`);
-      if (knownDocumentTypes.get(id) !== 'api-reference') throw new Error(`${doc.file}: related API reference ${id} must identify an api-reference page`);
-      const target = docs.get(keyFor(id, doc.variant));
-      if (!target) continue;
-      targets.push(target);
-      const key = keyFor(target.frontmatter.id, target.variant);
-      const guides = guidesByApi.get(key) ?? [];
-      guides.push(doc);
-      guidesByApi.set(key, guides);
-    }
-    relatedApiTargets.set(keyFor(doc.frontmatter.id, doc.variant), targets);
-  }
-  const sourceForOperation = (operationId: string, variant: Variant) => {
-    const known = knownOperations.get(operationId);
-    if (!known) throw new Error(`unknown stable operation ${operationId}`);
-    const definition = apiPlan.apiDefinitions[known.apiId];
-    const operation = definition?.operations?.find(entry => entry.id === operationId);
-    if (!definition || !operation) throw new Error(`unknown stable operation ${operationId}`);
-    if (!operation.sourceOperationId) throw new Error(`API ${known.apiId} operation needs sourceOperationId`);
-    const binding = sourceForVariant(known.apiId, definition, variant);
-    if (!binding) throw new Error(`no OpenAPI source for ${variant.channel}/${variant.version} (${operationId})`);
-    return { ...binding, sourceOperationId: operation.sourceOperationId };
-  };
   let navigationSpec: ReturnType<typeof validateProjectNavigation>;
   try {
     navigationSpec = validateProjectNavigation(config.navigation ?? [], docs, knownOperations, new Set(Object.keys(config.apis ?? {})));
@@ -477,53 +413,7 @@ export async function compile(configFile: string, destination?: string, provenan
       ...discoverable.map(item => ({ anchor: item.endpoint, 'service-desc': [{ href: `${origin}${item.sourceUrl}`, type: item.mediaType }], 'service-doc': [{ href: `${origin}${item.referenceUrl}`, type: 'text/html' }] }))
     ] };
   }
-  // Pin the source bytes and the API selections exposed by public pages. Authored
-  // page copy can change without requiring a new review of imported material.
-  const apiPublicationReview: Array<{ apiId: string; digest: string; pages: Array<{ id: string; url: string; markdownUrl: string }>; focusedContracts: string[]; fullSources: string[]; inputs: Array<{ source: string; files: Array<{ path: string; digest: string }> }> }> = [];
-  for (const [apiId, definition] of Object.entries(apiPlan.apiDefinitions)) {
-    const pages = rendered.filter(({ doc }) => {
-      const reference = doc.frontmatter.type === 'api-reference' && doc.frontmatter.operations?.some(id => knownOperations.get(id)?.apiId === apiId);
-      const embedded = apiEmbedUses.some(use => use.documentKey === keyFor(doc.frontmatter.id, doc.variant) && (use.api === apiId || (use.operation && knownOperations.get(use.operation)?.apiId === apiId)));
-      return reference || embedded;
-    }).sort((a, b) => a.doc.route.localeCompare(b.doc.route) || keyFor(a.doc.frontmatter.id, a.doc.variant).localeCompare(keyFor(b.doc.frontmatter.id, b.doc.variant)));
-    if (!pages.length) continue;
-    const bindings = new Map<string, ReturnType<typeof sourceForVariant>>();
-    for (const { doc } of pages) {
-      const key = `${doc.variant.channel}|${doc.variant.version}`;
-      if (!bindings.has(key)) bindings.set(key, sourceForVariant(apiId, definition, doc.variant));
-    }
-    const inputs: Array<{ source: string; files: Array<{ path: string; digest: string }> }> = [];
-    for (const [publication, binding] of [...bindings].sort(([a], [b]) => a.localeCompare(b))) {
-      if (!binding) throw new Error(`Missing OpenAPI source for public API ${apiId} ${publication}`);
-      const files = await api.collectReferences(binding.file);
-      inputs.push({ source: publication, files: await Promise.all(files.map(async file => ({
-        path: path.relative(path.dirname(binding.file), file).split(path.sep).join('/'),
-        digest: createHash('sha256').update(await readFile(file)).digest('hex')
-      }))) });
-    }
-    const reviewedPages = pages.map(({ doc }) => ({ id: doc.frontmatter.id, url: doc.route, markdownUrl: doc.markdownRoute }));
-    const references = pages.filter(({ doc }) => doc.frontmatter.type === 'api-reference').flatMap(({ doc }) =>
-      (doc.frontmatter.operations ?? []).filter(id => knownOperations.get(id)?.apiId === apiId).map(id => ({
-        channel: doc.variant.channel, version: doc.variant.version, language: doc.variant.language,
-        operation: sourceForOperation(id, doc.variant).sourceOperationId
-      }))
-    ).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
-    const embeds = apiEmbedUses.filter(use => use.api === apiId || (use.operation && knownOperations.get(use.operation)?.apiId === apiId))
-      .map(({ sourceFile, documentKey, ...request }) => request)
-      .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
-    const contracts = [...new Set(pages.map(({ doc }) => doc.focusedContractUrl).filter((url): url is string => !!url))].sort().map(url => ({ url, digest: focusedContracts.get(url)!.digest }));
-    const fullSources = apiSources.filter(source => source.apiId === apiId).map(source => source.sourceUrl).sort();
-    const fingerprint = digest(JSON.stringify({ version: 2, apiId, inputs, references, embeds, contracts: contracts.map(item => item.digest), fullSourcePublished: fullSources.length > 0 }));
-    const review = definition.publicReview;
-    if (review !== undefined && (!isConfigMapping(review) || Object.keys(review).some(key => key !== 'digest') || typeof review.digest !== 'string' || !/^[a-f0-9]{64}$/.test(review.digest))) {
-      throw new Error(`apis.${apiId}.publicReview needs a lowercase SHA-256 digest`);
-    }
-    const reviewDigest = isConfigMapping(review) ? review.digest : undefined;
-    apiPublicationReview.push({ apiId, digest: fingerprint, pages: reviewedPages, focusedContracts: contracts.map(item => item.url), fullSources, inputs });
-    if (options.apiReview !== 'report' && reviewDigest !== fingerprint) {
-      throw new Error(`apis.${apiId}.publicReview.digest is ${review ? 'stale' : 'missing'}; run shoalrun api review ${configFile} --output <local-directory>, inspect the candidate site, and pin the reported digest`);
-    }
-  }
+  const apiPublicationReview = await reviewApiPublication(configFile, apiPlan, rendered, apiEmbedUses, focusedContracts, apiSources, sourceForOperation, options.apiReview);
   const manifestDependencies = [...new Set([...loaded.dependencies, ...componentPlugins.dependencies, ...externalManifestFiles, ...api.dependencies, ...(metadataProvider ? [metadataProvider.module] : []), ...metadataDependencies, ...(highlighter.dependency ? [highlighter.dependency] : []), ...styleFiles, ...(themeStyleFile ? [themeStyleFile] : []), ...palette.files, ...(search.module ? [search.module] : []), ...previewFiles, ...(customStyleFile ? [customStyleFile] : []), ...(customReaderModule ? [customReaderModule] : []), ...(analyticsModule ? [analyticsModule] : []), ...(mcpAnalyticsModule ? [mcpAnalyticsModule] : []), ...(shareImages.template ? [shareImages.template] : []), ...shareImages.fonts, ...(faviconFile ? [faviconFile] : []), ...heroImages.values(), ...walkthroughSources, ...fontFiles, ...fonts.faces.map(face => face.file), ...scriptFiles, iconLicenseFile, ...[...snippets.values()].map(s => s.file), ...[...docs.values()].map(d => d.file)])].sort();
   const llmsDiscovery = resolveLlmsDiscovery(configField(config.outputs, 'llms'));
   const { manifest, headers, sitemaps } = buildPublicationManifest({

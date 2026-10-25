@@ -40,7 +40,7 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Retrieval and chat settings](https://www.shoalrun.com/chat/settings.md) — ID: reference.chat-config. Look up embedding, chat-model, scoring, and answer-reuse configuration.
 
-- [CLI reference](https://www.shoalrun.com/cli.md) — ID: reference.cli. Every shoalrun command, its arguments and defaults, what it prints, and when it fails.
+- [CLI reference](https://www.shoalrun.com/cli.md) — ID: reference.cli. Commands, arguments, defaults, output, and errors.
 
 - [Use your coding agent](https://www.shoalrun.com/author/coding-agent.md) — ID: guide.coding-agent-authoring. Give your agent project guidance and draft a new documentation page.
 
@@ -102,11 +102,13 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [How Shoalrun works](https://www.shoalrun.com/concepts.md) — ID: guide.concepts. Follow a page from source file to published HTML and Markdown, and learn the terms the rest of these docs use.
 
-- [Configuration reference](https://www.shoalrun.com/config.md) — ID: reference.config. Every top-level setting in docs.config.yaml, with defaults, validation rules, and links to the full guides.
+- [Configuration reference](https://www.shoalrun.com/config.md) — ID: reference.config. Configuration settings, defaults, validation rules, and related guides.
 
 - [Organize project configuration](https://www.shoalrun.com/configuration.md) — ID: guide.configuration. Learn how Shoalrun resolves config files, layers presets, tracks path origins, and applies page defaults before building publications.
 
 - [Use this site's MCP](https://www.shoalrun.com/connect/mcp.md) — ID: guide.site-mcp. Connect your agent to Shoalrun's public documentation and ask it to search, read pages, or fetch sections.
+
+- [Export content into your application](https://www.shoalrun.com/publish/content-export.md) — ID: guide.content-export. Export shared content for application help.
 
 - [Content negotiation](https://www.shoalrun.com/publish/content-negotiation.md) — ID: guide.content-negotiation. Understand content negotiation, why it helps agents, and what a hosting provider needs to do.
 
@@ -128,7 +130,7 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Custom components](https://www.shoalrun.com/author/components/custom.md) — ID: guide.custom-components. Register trusted component plugins with shared HTML and Markdown content.
 
-- [Metadata customization](https://www.shoalrun.com/author/custom-metadata.md) — ID: guide.custom-metadata. Defaults, enforcement, custom field declarations, text selection, and provider contracts.
+- [Metadata customization](https://www.shoalrun.com/author/custom-metadata.md) — ID: guide.custom-metadata. Configure metadata defaults, enforcement, fields, and providers.
 
 - [D2 gallery](https://www.shoalrun.com/author/components/diagrams/d2-gallery.md) — ID: reference.d2-gallery. Browse D2 diagrams, layout engines, and basic shapes with copyable source.
 
@@ -154,7 +156,7 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Page metadata](https://www.shoalrun.com/author/frontmatter.md) — ID: guide.frontmatter. Set page identity, publication, and presentation fields before publishing.
 
-- [Glossary](https://www.shoalrun.com/glossary.md) — ID: reference.glossary. Look up documentation, publishing, search, and agent terminology, with links to the relevant guides.
+- [Glossary](https://www.shoalrun.com/glossary.md) — ID: reference.glossary. Documentation terms, definitions, and related guides.
 
 - [Header links](https://www.shoalrun.com/styling/header.md) — ID: guide.header. Add links and buttons to the site masthead.
 
@@ -180,7 +182,9 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Scaffold a new guide](https://www.shoalrun.com/ingredients/scaffold-page.md) — ID: ingredient.scaffold-page. Create a draft guide with a stable ID without overwriting an existing file.
 
-- [Page layouts, landing pages, and splash pages](https://www.shoalrun.com/styling/layouts.md) — ID: guide.layouts. Give a page more width, or build a landing or full-bleed splash page with a Hero and Sections, using the layout frontmatter field.
+- [Page layouts, landing pages, and splash pages](https://www.shoalrun.com/styling/layouts.md) — ID: guide.layouts. Configure wide, landing, and splash pages with Hero and Sections.
+
+- [Use Manni with Shoalrun](https://www.shoalrun.com/publish/manni.md) — ID: guide.manni. Use Manni in your documentation project.
 
 - [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md) — ID: guide.markdown-metadata. Public field projection, source paths, profiles, precedence, and required values.
 
@@ -248,11 +252,11 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Share images and favicon](https://www.shoalrun.com/styling/share-images.md) — ID: guide.share-images. Generated social images, metadata precedence, SVG placeholders, fonts, and favicon settings.
 
-- [Build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) — ID: guide.single-source-sites. Reuse one content source to publish sites selected by audience, product, region, or any configured facet.
+- [Build separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) — ID: guide.single-source-sites. Publish separate sites from shared content using optional facet selection.
 
 - [Reuse prose across pages](https://www.shoalrun.com/author/snippets.md) — ID: guide.snippets. Share validated prose across pages with typed variables.
 
-- [Getting started](https://www.shoalrun.com/start.md) — ID: guide.overview. Create a documentation site, scaffold your first page from a template, and preview its HTML and Markdown.
+- [Getting started](https://www.shoalrun.com/start.md) — ID: guide.overview. Create a site, publish a page, and check both formats.
 
 - [Templates](https://www.shoalrun.com/author/templates.md) — ID: guide.templates. Create and edit page starting points, then scaffold drafts from them.
 
@@ -260,7 +264,7 @@ Navigation section ID: docs. Publication: production/current/en.
 
 - [Themes](https://www.shoalrun.com/styling/themes.md) — ID: guide.themes. Pick a site shape, pair it with a color palette, and choose how light and dark mode behave.
 
-- [Troubleshooting](https://www.shoalrun.com/publish/troubleshooting.md) — ID: guide.troubleshooting. Troubleshoot a build, recover missing pages and fix document links, route collisions, MDX errors, API review digests, and diagram rendering.
+- [Troubleshooting](https://www.shoalrun.com/publish/troubleshooting.md) — ID: guide.troubleshooting. Resolve build and publishing errors.
 
 - [Publish on Vercel](https://www.shoalrun.com/publish/vercel.md) — ID: guide.vercel. Build a Vercel deployment with Markdown negotiation and correct discovery headers.
 

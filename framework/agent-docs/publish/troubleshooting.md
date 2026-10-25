@@ -1,8 +1,7 @@
 ---
 id: guide.troubleshooting
 title: Troubleshooting
-summary: Troubleshoot a build, recover missing pages and fix document links,
-  route collisions, MDX errors, API review digests, and diagram rendering.
+summary: Resolve build and publishing errors.
 type: how-to
 area: quality
 subarea: quality-audits
@@ -17,23 +16,29 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Troubleshooting
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
-Run these commands from your documentation project, with `SHOALRUN_CLI` pointing to the compiled CLI as in the [quickstart](https://www.shoalrun.com/start.md). Start by rebuilding so the error names the current source file:
+Run these commands from your documentation project, with Shoalrun installed as in the [quickstart](https://www.shoalrun.com/start.md). Start by rebuilding so the error names the current source file:
 
 ```sh
-node "$SHOALRUN_CLI" config validate docs.config.yaml
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun config validate docs.config.yaml
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 Config validation checks configuration; a full build also resolves content, links, routes, and API reviews. The messages below are compiler message fragments; file paths and document IDs vary by project.
 
 ## A page is missing
 
-Drafts and pages outside enabled publications can be excluded without a build error. Inspect both the effective config and the built page list:
+### Why it happens
+
+Drafts and pages outside enabled publications can be excluded without a build error.
+
+### What to do
+
+Inspect both the effective config and the built page list:
 
 ```sh
-node "$SHOALRUN_CLI" config resolve docs.config.yaml
+npx --no-install shoalrun config resolve docs.config.yaml
 node -e 'const m = require("./dist/documents.json"); console.log(JSON.stringify(m.documents, null, 2))'
 ```
 
@@ -53,7 +58,13 @@ If publishing instead fails with `unresolved scaffold placeholders cannot be pub
 
 ## An internal link fails
 
-`unknown document link doc:guide.install` means the target is unavailable in the linking page's publication. Check spelling against the target's `id`, its public access, and its publication fields. A source file in another version or language does not satisfy the link. Add the corresponding variant or link to an available page.
+### Why it happens
+
+`unknown document link doc:guide.install` means the target is unavailable in the linking page's publication.
+
+### What to do
+
+Check spelling against the target's `id`, its public access, and its publication fields. A source file in another version or language does not satisfy the link. Add the corresponding variant or link to an available page.
 
 Use `doc:` plus a document ID for internal links, for example `[Install](doc:guide.install)`. File paths are not document IDs. Rebuild after correcting the source and target.
 
@@ -75,7 +86,7 @@ Component validation errors name the source file and component. Check the compon
 
 ```sh
 API_REVIEW_DIR="$(mktemp -d)"
-node "$SHOALRUN_CLI" api review docs.config.yaml --output "$API_REVIEW_DIR"
+npx --no-install shoalrun api review docs.config.yaml --output "$API_REVIEW_DIR"
 ```
 
 Inspect the candidate pages, contracts, source downloads, and input hashes. Copy the reported digest into that API's `publicReview.digest`, then run the normal build again. Source changes, selections, embeds, and source-publication choices can change the digest. Do not copy a digest from another project or bypass the review by publishing the candidate output. See [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references.md).

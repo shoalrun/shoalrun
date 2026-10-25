@@ -23,6 +23,8 @@ try {
   for (const name of ['components.json', 'plugin.mjs', 'model.js', 'policy.json', 'browser.jsx', 'style.css', 'package-lock.json', 'LICENSE.react.txt']) assert.ok(pack.files.some(file => file.path === `examples/components/retry-budget/${name}`));
   assert.ok(!pack.files.some(file => file.path.includes('/node_modules/')));
   assert.ok(pack.files.some(file => file.path === 'dist/components.d.ts'));
+  assert.ok(pack.files.some(file => file.path === 'schemas/content-export.schema.json'));
+  assert.ok(pack.files.some(file => file.path === 'examples/help-drawer/preview.mjs'));
   assert.ok(!pack.files.some(file => file.path.endsWith('.test.js')), 'runtime tarballs must exclude compiled development tests');
   assert.ok(!pack.files.some(file => /experiments|langgraph/.test(file.path)));
   const consumer = path.join(temporary, 'consumer');
@@ -87,6 +89,17 @@ console.log(JSON.stringify({ pages: project.entries.length, schemaVersion: proje
     const read = JSON.parse(runCli(['skills', 'read', skill.name, '--json'], consumer));
     assert.equal(read.content, await readFile(skill.file, 'utf8'));
   }
+  const helpExample = path.join(consumer, 'help-example');
+  await cp(path.join(installed, 'examples/help-drawer'), helpExample, { recursive: true });
+  const helpOutput = path.join(consumer, 'help-export');
+  const exported = JSON.parse(runCli(['export', path.join(helpExample, 'docs.config.yaml'), '--target', 'app-help', '--out', helpOutput], consumer));
+  assert.equal(exported.status, 'ok');
+  assert.deepEqual(exported.documentIds, ['guide.billing', 'guide.keys']);
+  const helpManifest = JSON.parse(await readFile(path.join(helpOutput, 'manifest.json'), 'utf8'));
+  assert.equal(helpManifest.assets.length, 2);
+  const keyHelp = helpManifest.documents.find(document => document.id === 'guide.keys');
+  assert.match(await readFile(path.join(helpOutput, keyHelp.representations.html.path), 'utf8'), /Contact the workspace owner/);
+  console.log('Installed help-drawer content export and component/asset closure: passed.');
   for (const starter of ['minimal', 'api-docs']) {
     const project = path.join(consumer, starter);
     // Use the public packaged initializer, rather than a dist implementation import.

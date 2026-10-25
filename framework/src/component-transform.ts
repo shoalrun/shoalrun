@@ -538,10 +538,10 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
       }
       throw new Error(`${sourceFile}: <${node.name}> has no semantic/Markdown adapter`);
     }
-    if (node.type === 'link' && typeof node.url === 'string' && node.url.startsWith('doc:')) {
+    if (['link', 'definition'].includes(node.type) && typeof node.url === 'string' && node.url.startsWith('doc:')) {
       const target = registry.get(node.url.slice(4));
       if (!target) throw new Error(`${sourceFile}: unknown document link ${node.url}`);
-      return { ...node, url: target.route, children: childrenOf(node.children ?? [], scope, stack, sourceFile) };
+      return { ...node, url: target.route, exportDocumentId: target.frontmatter.id, children: childrenOf(node.children ?? [], scope, stack, sourceFile) };
     }
     const markdownImage = node.type === 'image' || (node.type === 'definition' && typeof node.identifier === 'string' && imageReferences.get(sourceFile)?.has(node.identifier));
     if (stack.length && (node.type === 'link' || markdownImage) && typeof node.url === 'string' && !/^(?:\/|#|[a-z][a-z0-9+.-]*:)/i.test(node.url)) throw new Error(`${sourceFile}: snippet links and assets need absolute or doc: URLs`);

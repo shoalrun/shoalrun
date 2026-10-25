@@ -1,7 +1,7 @@
 ---
 id: guide.status
 title: Project status
-summary: What Shoalrun can do today, what I want to add next, and where its limits are.
+summary: Current capabilities, planned features, and known limits.
 type: reference
 area: project
 subarea: project-overview
@@ -16,7 +16,7 @@ Navigation section: [Project updates](https://www.shoalrun.com/.well-known/shoal
 
 Breadcrumbs: [Project updates](https://www.shoalrun.com/status.md) > Project > Project status
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-24.**
 
 Shoalrun is a private prototype for publishing documentation for people and agents from the same source. This public site is built with it. The compiler and CLI are available as an invite-only alpha package; there is no public package release.
 
@@ -42,6 +42,7 @@ Shoalrun is a private prototype for publishing documentation for people and agen
 
 ## What I want to add next
 
+- **Optional vector-store connections.** Add adapters for customers’ own vector stores for semantic search. Keep file-based indexes as the default, and preserve document identity, publication filtering, updates, and deletions across storage options. Content exports should remain usable without a vector store.
 - **Improve visual navigation.** Refine layout sizing, label collisions, dense graph views, filtering, relationship explanations, and accessibility as we try the experimental explorer on larger documentation sets.
 - **Custom access control.** Add connectors for customers’ own role-based access control (RBAC) systems, with consistent access decisions across HTML, Markdown, search, downloads, and MCP.
 

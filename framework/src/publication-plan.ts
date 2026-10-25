@@ -27,7 +27,7 @@ async function files(dir: string): Promise<string[]> {
   return nested.flat().sort();
 }
 
-export async function planAuthoredDocuments({ base, basePath, config, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles }: {
+export async function planAuthoredDocuments({ base, basePath, config, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions }: {
   base: string;
   basePath: string;
   config: AuthoredPublicationConfig;
@@ -37,6 +37,7 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
   contentFilter?: ReaderSelection;
   metadataProvider?: { provide: MetadataProvider };
   metadataDependencies: Set<string>;
+  allowRouteCollisions?: boolean;
   sourceOverrides?: ReadonlyMap<string, string>;
   // Isolated authoring validation can render excluded pages without rewriting
   // their authored or resolved publication metadata. Ordinary builds are unchanged.
@@ -90,7 +91,7 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
       if (docs.has(key)) throw new Error(`Duplicate document identity ${key}`);
       const route = routeFor(publishedFrontmatter, variant, config);
       const collision = routeOwners.get(route.toLowerCase());
-      if (collision) throw new Error(`Route collision ${route}: ${collision} and ${key}`);
+      if (collision && !allowRouteCollisions) throw new Error(`Route collision ${route}: ${collision} and ${key}`);
       routeOwners.set(route.toLowerCase(), key);
       docs.set(key, { file, frontmatter: publishedFrontmatter, body, tree: null, variant, route, markdownRoute: markdownRoute(route, basePath), readerFilters: marks });
     }

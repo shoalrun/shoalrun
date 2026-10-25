@@ -1,8 +1,7 @@
 ---
 id: guide.single-source-sites
 title: Build separate sites from shared content
-summary: Reuse one content source to publish sites selected by audience,
-  product, region, or any configured facet.
+summary: Publish separate sites from shared content using optional facet selection.
 type: how-to
 area: publishing
 subarea: publishing-configuration
@@ -17,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Build separate sites from shared content
 
-**Updated: 2026-10-23.**
+**Updated: 2026-10-24.**
 
 You can keep one content directory and build separate sites for any configured facet: audience, product, area, subarea, or a custom facet such as region. Each entry config can have its own origin, base path, branding, navigation, and output directory. A developer portal is one example; the same workflow applies to an operations site, a product site, or regional resources.
 
@@ -148,6 +147,8 @@ Selection applies to whole authored and generated pages before rendering. A sele
 
 Configure API sources and operation selection separately. A published OpenAPI source may contain operations beyond the selected reference pages. Generated references use their resolved facet marks, including `readerFilters.typeDefaults`. This setting is a page publication selector, not authorization for private content; protect private deployments at the host.
 
+For a help drawer or another application surface, [export the shared content](https://www.shoalrun.com/publish/content-export.md) instead of building another website. Export targets choose their own documents and produce portable content without the website shell.
+
 ## Related reading
 
 ### Next steps
@@ -163,3 +164,5 @@ Configure API sources and operation selection separately. A published OpenAPI so
 ### Related topics
 
 - [Share pages across documentation versions](https://www.shoalrun.com/publish/publications.md) — Publish separate sites from one content source using facet selections.
+
+- [Export content into your application](https://www.shoalrun.com/publish/content-export.md) — Reuse the same authored content inside an application.

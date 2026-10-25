@@ -8,6 +8,8 @@ Navigation section ID: changelog-tab. Publication: production/current/en.
 
 - [Agent reading and evaluation](https://www.shoalrun.com/changelog/2026-10-15-evaluation-builds.md) — ID: change.evaluation-builds. Smaller Markdown reads, clearer lifecycle and change guidance, and exact-output evaluation comparisons.
 
+- [Content exports and documentation checks](https://www.shoalrun.com/changelog/2026-10-25.md) — ID: change.2026-10-25. Content exports and documentation checks.
+
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. Review affected pages, findings, coverage, and freshness beside an exact snapshot preview.
 
 - [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. Reviewed agent drafts, improved search results, and better context for documentation answers.

@@ -1,0 +1,30 @@
+schemaVersion: 1
+site:
+  title: Acme documentation
+  origin: https://docs.example.com
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+components:
+  - ./components/components.json
+readerFilters:
+  facets:
+    audience:
+      label: Audience
+      options: { developer: Developers, operator: Operators }
+exports:
+  app-help:
+    formats: [markdown, html]
+    documents: [guide.keys, guide.billing]
+    publicBase: /help/

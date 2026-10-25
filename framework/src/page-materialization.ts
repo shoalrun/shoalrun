@@ -34,11 +34,12 @@ export type MaterializedPage = {
   pageSamples?: CodeSample[];
 };
 
-export async function materializePages({ variables, frontmatterConfig, publications, docs, apiPlan, sourceForOperation, snippets, calloutTypes, badgeVariants, componentPlugins, readerFilters, base, publicPath, relatedApiTargets, guidesByApi }: {
+export async function materializePages({ variables, frontmatterConfig, publications, docs, linkDocuments = docs, apiPlan, sourceForOperation, snippets, calloutTypes, badgeVariants, componentPlugins, readerFilters, base, publicPath, relatedApiTargets, guidesByApi }: {
   variables: Record<string, unknown>;
   frontmatterConfig: unknown;
   publications: { channels: Record<string, unknown>; versions: Record<string, unknown> };
   docs: Map<string, Document>;
+  linkDocuments?: Map<string, Document>;
   apiPlan: ApiPlan;
   sourceForOperation: (operationId: string, variant: Variant) => SourceBinding & { sourceOperationId: string };
   snippets: Map<string, SnippetDefinition>;
@@ -66,7 +67,7 @@ export async function materializePages({ variables, frontmatterConfig, publicati
     let pageCurl: string | undefined;
     let pageSamples: CodeSample[] | undefined;
     const local = new Map<string, Document>();
-    for (const other of docs.values()) if (keyFor(other.frontmatter.id, doc.variant) === keyFor(other.frontmatter.id, other.variant)) local.set(other.frontmatter.id, other);
+    for (const other of linkDocuments.values()) if (keyFor(other.frontmatter.id, doc.variant) === keyFor(other.frontmatter.id, other.variant)) local.set(other.frontmatter.id, other);
     const parsed = parse.parse(doc.body);
     const tree = await resolveApiEmbedTree(transformMdx(parsed, doc, local, snippets, variables, snippetUses, calloutTypes, base, readerFilters, frontmatterConfig, publications, badgeVariants, componentPlugins), api, operationId => sourceForOperation(operationId, doc.variant), apiId => {
       const definition = apiPlan.apiDefinitions[apiId];

@@ -49,7 +49,7 @@ function validatedApiDefinitions(value: unknown): Record<string, ApiDefinition> 
   return definitions;
 }
 
-export async function materializeApiReferences({ config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters, contentFilter }: {
+export async function materializeApiReferences({ config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters, contentFilter, allowRouteCollisions }: {
   config: ApiPublicationConfig;
   loaded: Awaited<ReturnType<typeof loadConfig>>;
   variants: Variant[];
@@ -61,6 +61,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
   basePath: string;
   readerFilters?: ReaderFiltersConfig;
   contentFilter?: ReaderSelection;
+  allowRouteCollisions?: boolean;
 }) {
   const definitions = validatedApiDefinitions(config.apis);
   const api = new ApiReader();
@@ -168,7 +169,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
           if (!matchesContentFilter(marks, contentFilter)) continue;
           const pageRoute = routeFor(page, variant, config);
           const collision = routeOwners.get(pageRoute.toLowerCase());
-          if (collision) throw new Error(`Route collision ${pageRoute}: ${collision} and ${key}`);
+          if (collision && !allowRouteCollisions) throw new Error(`Route collision ${pageRoute}: ${collision} and ${key}`);
           routeOwners.set(pageRoute.toLowerCase(), key);
           docs.set(key, { file: binding.file, frontmatter: page, body: webhook ? generatedWebhookBody : generatedReferenceBody, tree: null, variant, route: pageRoute, markdownRoute: markdownRoute(pageRoute, basePath), readerFilters: marks });
         }

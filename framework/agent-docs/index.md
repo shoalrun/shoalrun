@@ -1,9 +1,7 @@
 ---
 id: guide.home
 title: Shoalrun
-summary: A preview of Shoalrun, a flexible framework for API and product docs
-  with fine-grained controls for what people see and what agents can discover
-  and read.
+summary: Preview API and product docs with content selection and agent discovery.
 type: overview
 area: project
 subarea: project-overview
@@ -14,7 +12,7 @@ canonical: /
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-24.**
 
 **Docs for people. Context for agents.**
 
@@ -244,7 +242,7 @@ shoalrun docs read guide.search
 
 - [Configuration reference](https://www.shoalrun.com/config.md)
 
-  Every top-level setting in docs.config.yaml, with defaults, validation rules, and links to the full guides.
+  Configuration settings, defaults, validation rules, and related guides.
 
 - [Deploy your documentation](https://www.shoalrun.com/publish.md)
 
