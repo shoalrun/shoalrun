@@ -14,12 +14,37 @@ jobs:
       - uses: actions/checkout@v4
         with: { persist-credentials: false }
       - uses: actions/setup-node@v4
+        id: node
         with: { node-version: '22', cache: npm, cache-dependency-path: framework/package-lock.json }
-      - run: npm ci --prefix framework
+      - uses: actions/cache@v4
+        id: pip
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ runner.arch }}-pip-${{ hashFiles('framework/scripts/requirements-skills.txt') }}
+          restore-keys: ${{ runner.os }}-${{ runner.arch }}-pip-
+      - uses: actions/cache@v4
+        id: browser
+        with:
+          path: ~/.cache/puppeteer
+          key: ${{ runner.os }}-${{ runner.arch }}-puppeteer-${{ hashFiles('framework/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-${{ runner.arch }}-puppeteer-
+      - name: Install dependencies
+        run: node .github/scripts/ci-phase.mjs run dependencies npm ci --prefix framework
       - name: Prepare skill validator
         run: |
           python3 -m venv "$RUNNER_TEMP/skill-validator"
-          "$RUNNER_TEMP/skill-validator/bin/python" -m pip install -r framework/scripts/requirements-skills.txt
+          node .github/scripts/ci-phase.mjs run skill-dependencies "$RUNNER_TEMP/skill-validator/bin/python" -m pip install -r framework/scripts/requirements-skills.txt
           echo "SKILL_VALIDATOR_PYTHON=$RUNNER_TEMP/skill-validator/bin/python" >> "$GITHUB_ENV"
-      - run: npm test
-      - run: node framework/scripts/package-authoring-smoke.mjs --clean-install
+      - name: Compile once
+        run: node .github/scripts/ci-phase.mjs run compile npm run build --prefix framework
+      - name: Run compiled regression tests and skill checks
+        run: node .github/scripts/ci-phase.mjs run tests npm run test:compiled
+      - name: Certify a clean package installation
+        run: node .github/scripts/ci-phase.mjs run package-install node framework/scripts/package-authoring-smoke.mjs --clean-install
+      - name: Report phase timings
+        if: ${{ always() }}
+        env:
+          CI_NPM_CACHE_HIT: ${{ steps.node.outputs.cache-hit }}
+          CI_PIP_CACHE_HIT: ${{ steps.pip.outputs.cache-hit }}
+          CI_BROWSER_CACHE_HIT: ${{ steps.browser.outputs.cache-hit }}
+        run: node .github/scripts/ci-phase.mjs summary

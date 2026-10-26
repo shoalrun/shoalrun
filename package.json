@@ -3,7 +3,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "npm --prefix framework test && node --test eval/scripts/*.test.mjs",
-    "test:compiled": "node --test framework/dist/*.test.js framework/scripts/*.test.mjs eval/scripts/*.test.mjs && npm run skills:check",
+    "test:compiled": "node --test --test-concurrency=4 framework/dist/*.test.js framework/scripts/*.test.mjs eval/scripts/*.test.mjs && npm run skills:check",
     "test:authoring-tools": "npm --prefix framework run test:authoring-tools",
     "authoring:package-check": "node framework/scripts/package-authoring-smoke.mjs --clean-install",
     "eval:test": "node --test eval/scripts/*.test.mjs",
