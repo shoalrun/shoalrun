@@ -22,6 +22,55 @@ async function fixture(t: any) {
 async function manifest(output: string) { return JSON.parse(await readFile(path.join(output, 'manifest.json'), 'utf8')); }
 const page = (id: string, body: string, fields = '') => `---\nid: ${id}\ntitle: ${id}\nsummary: Example help.\nslug: /${id}\n${fields}---\n${body}\n`;
 
+test('documents sharing a route export their own images in both representations', async t => {
+  const f = await fixture(t);
+  const images = new Map<string, string>();
+  for (const id of ['first', 'second']) {
+    const directory = path.join(f.root, 'content', id);
+    await mkdir(directory);
+    const image = `<svg xmlns="http://www.w3.org/2000/svg"><text>${id}</text></svg>`;
+    images.set(id, image);
+    await writeFile(path.join(directory, 'image.svg'), image);
+    const body = '![Inline](./image.svg)\n\n![Reference][picture]\n\n[picture]: ./image.svg\n\n<Image src="./image.svg" alt="Component" expand />\n\n<Hero tagline="Example images" image="./image.svg" imageAlt="Hero image" />\n';
+    await writeFile(path.join(directory, 'page.mdx'), page(id, body, 'layout: landing\n').replace(`slug: /${id}`, 'slug: /shared'));
+  }
+  await exportContent(f.config, f.output, { documents: [...images.keys()] });
+  const data = await manifest(f.output);
+  assert.equal(data.assets.length, 2);
+  for (const doc of data.documents) {
+    const expected = `assets/${exportDigest(images.get(doc.id)!)}.svg`;
+    assert.deepEqual(doc.assets, [expected]);
+    assert.equal(await readFile(path.join(f.output, expected), 'utf8'), images.get(doc.id));
+    for (const format of ['html', 'markdown']) {
+      const body = await readFile(path.join(f.output, doc.representations[format].path), 'utf8');
+      assert.ok(body.includes(`/${expected}`), `${doc.id}: ${format}`);
+      for (const [otherId, image] of images) if (otherId !== doc.id) assert.ok(!body.includes(exportDigest(image)));
+    }
+  }
+});
+
+test('generated links retain document identity when export routes overlap', async t => {
+  const f = await fixture(t);
+  for (const id of ['first', 'second']) {
+    await writeFile(path.join(f.root, `content/${id}.md`), page(id, 'Recipe instructions.', 'type: recipe\n').replace(`slug: /${id}`, 'slug: /shared'));
+  }
+  await writeFile(f.config, (await readFile(f.config, 'utf8')) + '\ncookbooks:\n  choices:\n    title: Recipes\n    options: [{ id: second, label: Second, doc: second }]\nrelationships: [{ id: next, from: notice, to: second, type: next-step, reason: Continue here. }]\n');
+  await writeFile(path.join(f.root, 'content/notice.mdx'), page('notice', '<DocCard doc="second" />\n\n<RelatedReading />\n\n<CookbookChooser id="choices" />\n',
+    'type: changelog-entry\ndate: "2026-10-25"\nsubjectLifecycle: deprecated\nsubjectDeprecation: { replacement: second, migration: second }\nchange: { kind: breaking, affects: [second], migration: second }\n'));
+  await exportContent(f.config, f.output, { documents: ['first', 'second', 'notice'] });
+  const data = await manifest(f.output);
+  const notice = data.documents.find((doc: any) => doc.id === 'notice');
+  const target = data.documents.find((doc: any) => doc.id === 'second');
+  for (const format of ['html', 'markdown']) {
+    const links = notice.representations[format].links;
+    assert.equal(links.length, 7);
+    assert.ok(links.every((link: any) => link.kind === 'document' && link.documentId === 'second' && link.href === `/${target.representations[format].path}`));
+    const body = await readFile(path.join(f.output, notice.representations[format].path), 'utf8');
+    assert.ok(body.includes(`/${target.representations[format].path}`));
+    assert.ok(!body.includes('/shared'));
+  }
+});
+
 test('whole-page portable bundle retains meaning, rebases assets, and has stable byte identities', async t => {
   const f = await fixture(t);
   const result = await exportContent(f.config, f.output, { target: 'app-help' });
@@ -227,6 +276,19 @@ test('export manifest follows its published JSON schema', async t => {
   const data = await manifest(f.output);
   assert.ok(validate(data), JSON.stringify(validate.errors));
   assert.equal(validate({ ...data, schemaVersion: 2 }), false);
+  for (const publicBase of ['/../', '/./', '/help/../', '//host/', '/help', '/help\\nested/']) {
+    assert.equal(validate({ ...data, publicBase }), false, publicBase);
+  }
+  for (const filename of ['assets/../../outside', 'content/./page.md', 'assets/', 'assets//image.svg', '/assets/image.svg', 'assets\\image.svg', 'assets/%2e%2e/outside', 'NOTICES.txt/extra']) {
+    const invalid = structuredClone(data);
+    invalid.files[0].path = filename;
+    assert.equal(validate(invalid), false, filename);
+  }
+  for (const filename of ['content/page.html', 'assets/nested/image.svg', 'NOTICES.txt']) {
+    const valid = structuredClone(data);
+    valid.files[0].path = filename;
+    assert.equal(validate(valid), true, filename);
+  }
 });
 
 test('one authored edit updates both the website and application export', async t => {

@@ -9,7 +9,7 @@
     "schemaVersion": { "const": 1 },
     "kind": { "const": "shoalrun-content-export" },
     "digest": { "$ref": "#/$defs/digest" },
-    "publicBase": { "type": "string", "pattern": "^/(?:[A-Za-z0-9_~.-]+/)*$" },
+    "publicBase": { "type": "string", "pattern": "^/(?:(?!\\.{1,2}/)[A-Za-z0-9_~.-]+/)*$" },
     "publication": { "$ref": "#/$defs/publication" },
     "review": {
       "type": "object", "additionalProperties": false, "required": ["status", "apis"],
@@ -39,7 +39,7 @@
   },
   "$defs": {
     "digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-    "path": { "type": "string", "pattern": "^(?:content/|assets/|NOTICES\\.txt$)[A-Za-z0-9_./-]*$" },
+    "path": { "type": "string", "pattern": "^(?:NOTICES\\.txt|(?:content|assets)/(?!\\.{1,2}(?:/|$))[A-Za-z0-9_.-]+(?:/(?!\\.{1,2}(?:/|$))[A-Za-z0-9_.-]+)*)$" },
     "publication": { "type": "object", "additionalProperties": false, "required": ["channel", "version", "language"], "properties": { "channel": { "type": "string", "minLength": 1 }, "version": { "type": "string", "minLength": 1 }, "language": { "type": "string", "minLength": 1 } } },
     "file": { "type": "object", "required": ["path", "bytes", "digest"], "properties": { "path": { "$ref": "#/$defs/path" }, "bytes": { "type": "integer", "minimum": 0 }, "digest": { "$ref": "#/$defs/digest" } } },
     "asset": { "allOf": [{ "$ref": "#/$defs/file" }], "type": "object", "required": ["mediaType"], "properties": { "mediaType": { "type": "string" } } },

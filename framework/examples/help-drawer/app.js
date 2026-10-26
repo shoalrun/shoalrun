@@ -12,6 +12,7 @@ const drawer = document.querySelector('#drawer');
 const content = document.querySelector('#content');
 let current;
 let request = 0;
+let opener;
 async function openHelp(id, fragment) {
   const document = manifest.documents.find(document => document.id === id);
   if (!document?.representations.html) throw new Error(`No HTML help for ${id}`);
@@ -23,12 +24,21 @@ async function openHelp(id, fragment) {
   current = document;
   content.innerHTML = html;
   drawer.hidden = false;
+  let focusTarget = content.querySelector('h1');
   if (fragment) {
     const anchor = document.representations.html.anchors.find(anchor => anchor.id === fragment || anchor.exportedId === fragment);
-    if (anchor) content.querySelector(`#${CSS.escape(anchor.exportedId)}`)?.scrollIntoView();
+    if (anchor) focusTarget = content.querySelector(`#${CSS.escape(anchor.exportedId)}`) ?? focusTarget;
   } else drawer.scrollTop = 0;
+  if (focusTarget) {
+    focusTarget.tabIndex = -1;
+    focusTarget.focus({ preventScroll: true });
+    if (fragment) focusTarget.scrollIntoView();
+  }
 }
-document.querySelectorAll('[data-help]').forEach(button => button.addEventListener('click', () => openHelp(button.dataset.help).catch(showError)));
+document.querySelectorAll('[data-help]').forEach(button => button.addEventListener('click', () => {
+  opener = button;
+  openHelp(button.dataset.help).catch(showError);
+}));
 content.addEventListener('click', event => {
   const anchor = event.target.closest('a[data-export-link]');
   if (!anchor) return;
@@ -37,5 +47,7 @@ content.addEventListener('click', event => {
   event.preventDefault();
   openHelp(link.documentId, link.fragment).catch(showError);
 });
-document.querySelector('#close').addEventListener('click', () => { request++; drawer.hidden = true; });
-function showError(error) { content.textContent = error.message; drawer.hidden = false; }
+function closeHelp() { request++; drawer.hidden = true; opener?.focus(); }
+document.querySelector('#close').addEventListener('click', closeHelp);
+drawer.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); closeHelp(); } });
+function showError(error) { content.textContent = error.message; drawer.hidden = false; document.querySelector('#close').focus(); }

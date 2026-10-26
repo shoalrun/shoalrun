@@ -90,6 +90,10 @@ for (const mode of ['legacy', 'auto'] as const) test(`HTTP MCP ${mode} clients d
   assert.match((section.structuredContent as any).content, /complete section/);
   for (const [name, args] of [['search_docs', { query: 'secret', channel: 'beta' }], ['get_page', { id: 'excluded' }], ['get_page', { id: 'private' }], ['get_outline', { id: 'intro', language: 'fr' }]] as const) assert.equal((await client.callTool({ name, arguments: args })).isError, true);
   assert.ok((await Promise.all(Array.from({ length: 4 }, () => client.callTool({ name: 'get_page', arguments: { id: 'intro' } })))).every(r => !r.isError));
+  const oversized = await client.callTool({ name: 'get_page', arguments: { id: 'intro', extra: Array(1025).fill(0) } });
+  assert.equal(oversized.isError, true);
+  assert.match(JSON.stringify(oversized.content), /maximum of 1024 elements/);
+  assert.ok(!(await client.callTool({ name: 'get_page', arguments: { id: 'intro' } })).isError, 'rejected inputs do not break later requests');
   assert.equal((await fetch(url, { method: 'POST', body: 'x'.repeat(65_537) })).status, 413);
   assert.equal((await fetch(url)).status, 405);
   assert.equal((await fetch(url, { method: 'DELETE' })).status, 405);

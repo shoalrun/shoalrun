@@ -45,7 +45,7 @@ export function subjectDeprecationNotice(value: ResolvedSubjectDeprecation | und
     ...(value.sunsetOn ? [paragraph(text(`Sunset date: ${value.sunsetOn}.`))] : []),
     ...(['replacement', 'migration'] as const).flatMap(key => {
       const target = value[key];
-      return target ? [paragraph(text(key === 'replacement' ? 'Replacement: ' : 'Migration guide: '), link(format === 'html' ? target.url : target.markdownUrl, target.title), text('.'))] : [];
+      return target ? [paragraph(text(key === 'replacement' ? 'Replacement: ' : 'Migration guide: '), { ...link(format === 'html' ? target.url : target.markdownUrl, target.title), exportDocumentId: target.id }, text('.'))] : [];
     }),
     paragraph(text('These details describe the documented subject, not the availability of this documentation page.'))
   ] }]);

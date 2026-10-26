@@ -33,7 +33,7 @@ export function resolveAuthoredChange(doc: Document, docs: Map<string, Document>
 
 export function authoredChangeNotice(value: ResolvedChange | undefined, format: 'html' | 'markdown') {
   if (!value) return root([]);
-  const targetLink = (target: Target) => link(format === 'html' ? target.url : target.markdownUrl, target.title);
+  const targetLink = (target: Target) => ({ ...link(format === 'html' ? target.url : target.markdownUrl, target.title), exportDocumentId: target.id });
   return root([{ type: 'blockquote', children: [
     paragraph({ type: 'strong', children: [text('Authored change')] }, text(`: ${labels[value.kind]}.`)),
     paragraph(text('Affected pages:')),

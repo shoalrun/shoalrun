@@ -154,7 +154,7 @@ export function resolveCardTree(tree: any, current: Document, documents: Map<str
     const render = (entries: typeof selected): any => {
       if (request.component === 'RelatedReading' && request.layout !== 'cards') {
         const links = list(entries.map(({ doc, reason }) => [paragraph(
-          link(doc.route, doc.frontmatter.title),
+          { ...link(doc.route, doc.frontmatter.title), exportDocumentId: doc.frontmatter.id },
           ...(reason ? [text(` — ${reason}`)] : []),
           ...(doc.frontmatter.subjectLifecycle ? [text(` (Status: ${doc.frontmatter.subjectLifecycle.replaceAll('-', ' ')}.)`)] : [])
         )]));
@@ -172,7 +172,7 @@ export function resolveCardTree(tree: any, current: Document, documents: Map<str
           ...(meta?.eyebrow ? [{ ...paragraph(text(meta.eyebrow)), data: { hProperties: { className: ['doc-card-eyebrow'] } } }] : []),
           ...(doc.frontmatter.date ? [{ ...paragraph(text(doc.frontmatter.date)), data: { hName: 'time', hProperties: { dateTime: doc.frontmatter.date, className: ['doc-card-date'] } } }] : []),
           ...(doc.frontmatter.releaseVersion ? [{ ...paragraph(text(`Version ${doc.frontmatter.releaseVersion}`)), data: { hProperties: { className: ['doc-card-version'] } } }] : []),
-          { ...paragraph(link(doc.route, meta?.title ?? doc.frontmatter.title)), data: { hProperties: { className: ['doc-card-title'] } } },
+          { ...paragraph({ ...link(doc.route, meta?.title ?? doc.frontmatter.title), exportDocumentId: doc.frontmatter.id }), data: { hProperties: { className: ['doc-card-title'] } } },
           ...(description ? [paragraph(text(description))] : []),
           ...(label ? [paragraph(text(`Status: ${label}.`))] : []),
           ...(reason ? [{ ...paragraph(text(reason)), data: { hProperties: { className: ['doc-card-reason'] } } }] : [])

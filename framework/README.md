@@ -156,6 +156,20 @@ full-document export must rewrite source-relative links to published URLs and
 retain each document's public source URL. Write page summaries that describe
 which questions the page answers; the generated indexes reuse those summaries.
 
+Compact discovery indexes have a 2,000-token limit (`cl100k_base`). Small sites
+list pages directly. Larger sites link to topic indexes, grouped by publication
+and primary taxonomy area (or page type when no area is declared). Growing topics
+split into narrower indexes automatically. Follow a matching topic or title range
+until you reach a page; every published page remains reachable, including pages
+outside navigation. Standalone sections retain their sizes and full-page links.
+Navigation-section indexes use the same limit. `llms.txt` remains the complete
+catalog and is optional for topic-based discovery. Consumers must follow index
+links instead of assuming every page appears directly in `llms.min.txt`.
+
+The limit applies to each index response, not an entire multi-step reading session.
+An individual title or summary too large to fit an index produces an explicit
+build error rather than silently dropping content.
+
 ## Status and development
 
 This alpha may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.

@@ -6,16 +6,18 @@ import { cp, mkdir, mkdtemp, readFile, realpath, rm, symlink, writeFile } from '
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkPackageInventory } from './package-inventory.mjs';
 
 const framework = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
-if (args.length > 1 || args.length === 1 && args[0] !== '--clean-install') throw new Error('Usage: node package-authoring-smoke.mjs [--clean-install]');
+if (args.some(arg => !['--clean-install', '--browser'].includes(arg)) || new Set(args).size !== args.length) throw new Error('Usage: node package-authoring-smoke.mjs [--clean-install] [--browser]');
 const cleanInstall = args.includes('--clean-install');
 const temporary = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-packed-authoring-'));
 const env = { ...Object.fromEntries(Object.entries(process.env).filter(([key]) => !/KEY|TOKEN|SECRET|PROVIDER|^NODE_PATH$/i.test(key))), PUPPETEER_EXECUTABLE_PATH: path.join(temporary, 'no-browser'), npm_config_cache: path.join(temporary, 'npm-cache'), ...(cleanInstall ? { npm_config_registry: 'https://registry.npmjs.org', npm_config_userconfig: '/dev/null' } : {}) };
 const run = (command, args, cwd) => execFileSync(command, args, { cwd, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 try {
   const [pack] = JSON.parse(run('npm', ['pack', framework, '--ignore-scripts', '--pack-destination', temporary, '--json'], temporary));
+  checkPackageInventory(pack.files.map(file => file.path));
   assert.ok(pack.files.some(file => file.path === 'dist/authoring-project.js'));
   assert.ok(pack.files.some(file => file.path === 'skills/shoalrun-component-author/SKILL.md'));
   assert.ok(pack.files.some(file => file.path === 'examples/components/comparison.mjs'));
@@ -100,6 +102,12 @@ console.log(JSON.stringify({ pages: project.entries.length, schemaVersion: proje
   const keyHelp = helpManifest.documents.find(document => document.id === 'guide.keys');
   assert.match(await readFile(path.join(helpOutput, keyHelp.representations.html.path), 'utf8'), /Contact the workspace owner/);
   console.log('Installed help-drawer content export and component/asset closure: passed.');
+  if (args.includes('--browser')) {
+    const browserEnv = { ...env, SHOALRUN_TEST_PACKAGE: installed };
+    if (process.env.PUPPETEER_EXECUTABLE_PATH) browserEnv.PUPPETEER_EXECUTABLE_PATH = process.env.PUPPETEER_EXECUTABLE_PATH;
+    else delete browserEnv.PUPPETEER_EXECUTABLE_PATH;
+    console.log(execFileSync(process.execPath, ['--test', path.join(framework, 'dist/content-export-browser.test.js')], { cwd: consumer, env: browserEnv, encoding: 'utf8' }));
+  }
   for (const starter of ['minimal', 'api-docs']) {
     const project = path.join(consumer, starter);
     // Use the public packaged initializer, rather than a dist implementation import.

@@ -658,36 +658,55 @@ test('dev rebuilds changed pages and keeps the last good site after an error', a
   assert.equal(events.headers.get('content-type'), 'text/event-stream');
   const reader = events.body!.getReader();
   await reader.read(); // Initial connection comment.
-  const waitFor = async (check: () => boolean | Promise<boolean>, label: string) => {
-    for (const deadline = Date.now() + 8000; Date.now() < deadline; await new Promise(resolve => setTimeout(resolve, 100))) if (await check()) return;
-    assert.fail(`Timed out waiting for ${label}`);
-  };
-  const served = async (text: string) => (await (await fetch(url)).text()).includes(text);
-  await writeFile(page, `${original}\n\nDev preview changed this page.\n`);
-  await waitFor(() => served('Dev preview changed this page.'), 'the rebuilt page');
-  const nextEvent = async (message: string) => {
+  const errors: string[] = [];
+  t.mock.method(process.stderr, 'write', (chunk: unknown) => { errors.push(String(chunk)); return true; });
+  const observed: string[] = [];
+  let pending = '';
+  const decoder = new TextDecoder();
+  const nextEvent = async (expected: 'built' | 'failed') => {
     let timeout: ReturnType<typeof setTimeout> | undefined;
+    const readEvent = async () => {
+      while (true) {
+        const boundary = pending.indexOf('\n\n');
+        if (boundary >= 0) {
+          const event = pending.slice(0, boundary);
+          pending = pending.slice(boundary + 2);
+          observed.push(event);
+          if (event.startsWith('event:')) return event;
+          continue;
+        }
+        const chunk = await reader.read();
+        assert.equal(chunk.done, false, 'Live reload stream closed before a build event');
+        pending += decoder.decode(chunk.value, { stream: true });
+      }
+    };
     try {
-      return await Promise.race([
-        reader.read(),
-        new Promise<never>((_resolve, reject) => { timeout = setTimeout(() => reject(new Error(message)), 5000); }),
+      const event = await Promise.race([
+        readEvent(),
+        new Promise<never>((_resolve, reject) => { timeout = setTimeout(() => reject(new Error(
+          `Timed out waiting for ${expected}. Events: ${JSON.stringify(observed)}; buffered: ${JSON.stringify(pending)}; diagnostics: ${errors.join('')}`
+        )), 8000); }),
       ]);
+      assert.ok(event.startsWith(`event: ${expected}\n`), `Expected ${expected}, received ${event}; diagnostics: ${errors.join('')}`);
+      return event;
     } finally {
       clearTimeout(timeout);
     }
   };
-  const reload = await nextEvent('Missing live reload event');
-  assert.match(new TextDecoder().decode(reload.value), /event: built/);
-  const errors: string[] = [];
-  t.mock.method(process.stderr, 'write', (chunk: unknown) => { errors.push(String(chunk)); return true; });
+  t.after(() => reader.cancel());
+  const served = async (text: string) => (await (await fetch(url)).text()).includes(text);
+  await writeFile(page, `${original}\n\nDev preview changed this page.\n`);
+  await nextEvent('built');
+  assert.ok(await served('Dev preview changed this page.'), 'built event follows publication of the changed page');
   await writeFile(page, `${original}\n\n<MissingComponent />\n`);
-  await waitFor(() => errors.some(line => line.startsWith('Build failed') && line.includes('MissingComponent')), 'the failed build report');
-  const failure = await nextEvent('Missing failed build event');
-  assert.match(new TextDecoder().decode(failure.value), /event: failed\ndata: .*MissingComponent/);
-  await reader.cancel();
+  const failure = await nextEvent('failed');
+  assert.match(failure, /MissingComponent/);
+  assert.ok(errors.some(line => line.startsWith('Build failed') && line.includes('MissingComponent')));
   assert.ok(await served('Dev preview changed this page.'), 'failed build leaves last good output');
   await writeFile(page, `${original}\n\nDev preview recovered.\n`);
-  await waitFor(() => served('Dev preview recovered.'), 'a rebuild after the error is fixed');
+  await nextEvent('built');
+  assert.ok(await served('Dev preview recovered.'), 'a rebuild after the error is fixed');
+  await reader.cancel();
 });
 
 test('D2 and Mermaid diagrams publish SVGs and preserve readable Markdown source', async t => {

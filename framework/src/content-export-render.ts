@@ -18,7 +18,7 @@ export function portableTree(tree: any, format: ExportFormat, routes: Set<string
     if (['docTooltip', 'docInfoHint'].includes(node.type)) return [node.inline ? text(`${node.label} (${node.definition})`) : paragraph(text(`${node.label}: ${node.definition}`))];
     if (node.type === 'docMath') return [node.display ? { type: 'code', lang: 'latex', value: node.expression } : { type: 'inlineCode', value: node.expression }];
     if (node.type === 'docDiagram') return [paragraph({ type: 'image', url: node.url, alt: node.title }), paragraph(text(`${node.title}: ${node.summary}`)), ...(format === 'markdown' ? [{ type: 'code', lang: node.engine, value: node.source }] : [])];
-    if (node.type === 'docCookbookChooser') return [paragraph(text(node.title)), ...node.options.flatMap((option: any) => [paragraph(link(option.route, option.title)), paragraph(text([option.when ?? option.summary, option.needs, option.outcome].filter(Boolean).join(' ')))])];
+    if (node.type === 'docCookbookChooser') return [paragraph(text(node.title)), ...node.options.flatMap((option: any) => [paragraph({ ...link(option.route, option.title), exportDocumentId: option.doc }), paragraph(text([option.when ?? option.summary, option.needs, option.outcome].filter(Boolean).join(' ')))])];
     if (node.type === 'docTable') return [{ ...node, filter: false, children: node.children.flatMap(walk) }];
     if (node.type === 'docDefinitionList') return [{ ...node, filter: false, items: node.items.map((item: any) => ({ ...item, term: item.term.flatMap(walk), definition: item.definition.flatMap(walk) })) }];
     if (node.type === 'docSteps' || node.type === 'docTimeline') return [{ ...node, items: node.items.map((item: any) => ({ ...item, children: item.children.flatMap(walk) })) }];

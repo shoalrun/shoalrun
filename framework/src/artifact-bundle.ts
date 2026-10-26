@@ -8,6 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { configField } from './compiler-config.js';
 import { fictionalDocument, optionalDocument, resolveLlmsDiscovery } from './llms-discovery.js';
+import { boundedDiscovery, type DiscoveryEntry } from './compact-discovery.js';
 import { iconLicenseFile } from './icons.js';
 import { peleLicenseFile } from './diagrams.js';
 import { fontsCss, type SiteFonts } from './fonts.js';
@@ -223,17 +224,8 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
   const tabs = manifest.navigationTabs ?? [];
   const tabLinks = tabs.length ? '\n\n## Navigation sections\n\n' + discoveryLinks(tabs.map(tab => ({
     title: `${tab.label} (${tab.variant.channel}/${tab.variant.version}/${tab.variant.language})`, url: tab.indexUrl,
-    summary: `Section ID: ${tab.id}. Scoped page index; all pages remain listed below.`
+    summary: `Section ID: ${tab.id}. Scoped page index.`
   }))) : '';
-  for (const tab of tabs) {
-    const members = manifest.documents.filter(doc => doc.navigationTab?.indexUrl === tab.indexUrl);
-    addArtifact(tab.indexUrl, renderMarkdown(root([
-      heading(1, tab.label),
-      paragraph(text(`Navigation section ID: ${tab.id}. Publication: ${tab.variant.channel}/${tab.variant.version}/${tab.variant.language}.`)),
-      paragraph(link(outputUrl(publicPath('/llms.min.txt'), '/', siteOrigin, 'markdown', documentRoutes, basePath), 'All sections and published pages'), text('. This index covers this section only; shared and unlisted pages remain in the global index. Reader views do not remove pages from this index.')),
-      list(members.map(doc => [paragraph(link(outputUrl(doc.markdownUrl, '/', siteOrigin, 'markdown', documentRoutes, basePath), doc.title), text(` — ID: ${doc.id}. ${doc.demo ? 'Fictional example. ' : ''}${doc.summary}`))]))
-    ])));
-  }
   const groups = new Map<string, ArtifactPage[]>();
   const optional: ArtifactPage[] = [];
   for (const page of rendered) {
@@ -286,7 +278,39 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     paragraph(text(publications.length === 1 ? `Publication (channel/version/language): ${publications[0]}.` : 'Choose the matching channel/version/language shown on each page; keep that publication when following links.')),
     paragraph(link(publicPath('/llms.txt'), 'Full documentation index'), text('. Full manifests and search indexes are optional. A missing match does not establish that a feature exists or does not exist.')),
   ])).trimEnd();
-  addPublicArtifact('/llms.min.txt', `${compactIntro}${tabLinks}\n\n${compactList}\n`);
+  const topicEntries: DiscoveryEntry[] = rendered.flatMap(page => {
+    const entry = discoveryEntry(page);
+    const publication = `${page.doc.variant.channel}/${page.doc.variant.version}/${page.doc.variant.language}`;
+    const area = Array.isArray(page.doc.frontmatter.area) ? page.doc.frontmatter.area[0] : page.doc.frontmatter.area;
+    const topic = JSON.stringify([publication, area ?? page.doc.frontmatter.type]);
+    const topicLabel = `${(area && manifest.taxonomy?.areas[area]?.label) || area || page.doc.frontmatter.type}${publications.length > 1 ? ` (${publication})` : ''}`;
+    const title = `${page.doc.frontmatter.id} · ${entry.title}${publications.length > 1 ? ` (${publication})` : ''}`;
+    const main = { key: entry.url, title, topic, topicLabel, markdown: renderMarkdown(root([list([[paragraph(link(entry.url, title), text(`: ${entry.summary}`))]])])) };
+    // Separate standalone records keep a page with many approved sections from
+    // becoming one unsplittable entry. Each retains its full-page fallback.
+    return [main, ...(page.sections ?? []).filter(section => section.standalone === true).map(section => ({
+      key: section.markdownUrl, title: `${title} · ${section.title}`, topic, topicLabel,
+      markdown: renderMarkdown(root([list([[paragraph(text(`${title} — Standalone section: `), link(section.markdownUrl, section.title), text(` — ${section.markdownTokens} tokens (${section.markdownTokenEncoding}), ${section.markdownBytes} UTF-8 bytes. `), link(entry.url, 'Full page'), text('.'))]])])),
+    }))];
+  });
+  const addIndexes = (indexes: Map<string, string>) => {
+    for (const [url, content] of indexes) {
+      addArtifact(url, content);
+      headers[url] = { 'Content-Type': 'text/plain; charset=utf-8' };
+    }
+  };
+  addIndexes(boundedDiscovery({ route: publicPath('/llms.min.txt'), directory: publicPath('/.well-known/shoalrun/discovery'), intro: compactIntro, flat: `${compactIntro}${tabLinks}\n\n${compactList}\n`, entries: topicEntries }));
+  for (const tab of tabs) {
+    const members = manifest.documents.filter(doc => doc.navigationTab?.indexUrl === tab.indexUrl);
+    const intro = renderMarkdown(root([
+      heading(1, tab.label),
+      paragraph(text(`Navigation section ID: ${tab.id}. Publication: ${tab.variant.channel}/${tab.variant.version}/${tab.variant.language}.`)),
+      paragraph(link(outputUrl(publicPath('/llms.min.txt'), '/', siteOrigin, 'markdown', documentRoutes, basePath), 'All sections and published pages'), text('. This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.')),
+    ])).trimEnd();
+    const memberUrls = new Set(members.flatMap(doc => [doc.markdownUrl, ...doc.sections.filter(section => section.standalone === true).map(section => section.markdownUrl)]));
+    const flat = intro + '\n\n' + renderMarkdown(root([list(members.map(doc => [paragraph(link(outputUrl(doc.markdownUrl, '/', siteOrigin, 'markdown', documentRoutes, basePath), doc.title), text(` — ID: ${doc.id}. ${doc.demo ? 'Fictional example. ' : ''}${doc.summary}`))]))]));
+    addIndexes(boundedDiscovery({ route: tab.indexUrl, directory: `${tab.indexUrl.slice(0, -4)}-indexes`, intro, flat, entries: topicEntries.filter(entry => memberUrls.has(entry.key)) }));
+  }
   for (const route of new Set(['/resource-headers.json', publicPath('/resource-headers.json')])) artifacts.set(route, JSON.stringify(headers, null, 2) + '\n');
   await addMcpArtifacts(artifacts, { ...config, searchSynonyms: synonyms }, manifest, rendered, headers, mcpAnalyticsModule);
   const buildId = publicationBuildId(artifacts);

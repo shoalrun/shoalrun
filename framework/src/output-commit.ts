@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { mkdir, open, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, open, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { canonical } from './output-location.js';
 
 const running = (pid: number) => { try { process.kill(pid, 0); return true; } catch (error) { return (error as NodeJS.ErrnoException).code === 'EPERM'; } };
 
@@ -55,11 +56,31 @@ async function checkReplaceable(target: string, kind: 'site' | 'export'): Promis
 }
 
 export async function commitArtifacts(target: string, artifacts: Map<string, string | Buffer>, prepare?: () => Promise<void>, kind: 'site' | 'export' = 'site'): Promise<void> {
+  // A leading slash denotes a public route, never an absolute filesystem path.
+  // Check every entry before acquiring a lock or running preparation callbacks.
+  const names = new Set<string>();
+  for (const route of artifacts.keys()) {
+    const relative = route.replace(/^\//, '');
+    if (!relative || /[\\\0:]/.test(relative) || relative.split('/').some(part => !part || part === '.' || part === '..')) {
+      throw new Error(`Unsafe output artifact path: ${route}`);
+    }
+    if (names.has(relative)) throw new Error(`Duplicate output artifact path: ${route}`);
+    names.add(relative);
+  }
+  // Aliases of the parent directory must share the same output lock. Refuse a
+  // symlink at the destination itself instead of following or replacing it.
+  target = path.join(canonical(path.dirname(path.resolve(target))), path.basename(target));
+  const checkDestination = async () => {
+    const info = await lstat(target).catch((error: NodeJS.ErrnoException) => { if (error.code === 'ENOENT') return undefined; throw error; });
+    if (info?.isSymbolicLink()) throw new Error(`Output directory must not be a symbolic link: ${target}`);
+  };
+  await checkDestination();
   const unlock = await lockOutput(target);
   const staging = `${target}.staging-${process.pid}-${randomUUID()}`;
   const previous = `${staging}-previous`;
   try {
     await recoverOutput(target);
+    await checkDestination();
     await checkReplaceable(target, kind);
     await prepare?.();
     await mkdir(staging, { recursive: false });
@@ -68,6 +89,7 @@ export async function commitArtifacts(target: string, artifacts: Map<string, str
       await mkdir(path.dirname(file), { recursive: true });
       await writeFile(file, data);
     }
+    await checkDestination();
     const hadPrevious = await rename(target, previous).then(() => true, (error: NodeJS.ErrnoException) => { if (error.code === 'ENOENT') return false; throw error; });
     try { await rename(staging, target); }
     catch (error) { if (hadPrevious) await rename(previous, target); throw error; }

@@ -119,8 +119,8 @@ export async function exportContent(configFile: string, destination: string, opt
   for (const asset of diagrams) assets.register(asset.route, { content: asset.svg });
   for (const [url, contract] of materialized.focusedContracts) assets.register(url, { content: contract.content });
   for (const doc of docs.values()) visitTree(doc.tree, node => {
-    if (typeof node.file === 'string' && typeof node.url === 'string' && ['docImage', 'image', 'definition'].includes(node.type)) assets.register(node.url, { file: node.file });
-    if (node.type === 'docHero' && node.image?.file) assets.register(node.image.url, { file: node.image.file });
+    if (typeof node.file === 'string' && typeof node.url === 'string' && ['docImage', 'image', 'definition'].includes(node.type)) assets.register(node.url, { file: node.file }, keyFor(doc));
+    if (node.type === 'docHero' && node.image?.file) assets.register(node.image.url, { file: node.image.file }, keyFor(doc));
   });
   const reviews = await reviewApiPublication(configFile, apiPlan, materialized.rendered, materialized.apiEmbedUses, materialized.focusedContracts, [...materialized.apiPublications.values()].map(source => ({ apiId: source.apiId, sourceUrl: source.sourceUrl })), sourceForOperation, 'report');
   const unreviewed = reviews.filter(review => (target.apiReview[review.apiId] ?? configField(apiPlan.apiDefinitions[review.apiId].publicReview, 'digest')) !== review.digest);
@@ -204,7 +204,7 @@ export async function exportContent(configFile: string, destination: string, opt
             if (node.type === 'image') externalDependencies.set(node.url, { url: node.url, kind: 'image' });
             else links.push({ key: `link-${links.length + 1}`, kind: 'external', href: node.url });
           } else {
-            const asset = await assets.resolve(value, doc.file);
+            const asset = await assets.resolve(value, doc.file, keyFor(doc));
             if (!asset) throw new Error(`Unresolved local export ${node.type === 'image' ? 'image' : 'link'} ${value} in ${doc.frontmatter.id}`);
             usedAssets.add(asset.path);
             node.url = `${target.publicBase}${asset.path}${parsed.search}${parsed.hash}`;

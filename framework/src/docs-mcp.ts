@@ -7,7 +7,7 @@ import * as z from 'zod/v4';
 import { bundledDocumentation, DocumentationError, documentationFailure, getDocumentationOutline, getDocumentationSection, getDocumentationPage, searchDocumentation } from './documentation-core.js';
 
 export function createDocsMcpServer(directory = bundledDocumentation, publication?: { channel: string; version: string; language: string }, analytics?: { clientMetadata?: boolean; buildId: string; capture(event: McpAnalyticsEvent): unknown }, discardAnalyticsArguments = false) {
-  const server = new McpServer({ name: 'shoalrun-docs', version: '0.0.0' });
+  const server = new McpServer({ name: 'shoalrun-docs', version: '0.0.0' }, { maxToolInputElements: 1024 });
   const scope = <T extends { channel?: string; version?: string; language?: string }>(filters: T): T => {
     if (!publication) return filters;
     for (const key of ['channel', 'version', 'language'] as const) if (filters[key] !== undefined && filters[key] !== publication[key]) throw new DocumentationError('invalid_input', 'This MCP endpoint serves a different publication');

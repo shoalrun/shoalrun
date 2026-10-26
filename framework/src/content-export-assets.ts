@@ -41,17 +41,20 @@ export class ExportAssets {
   private roots: string[] = [];
   constructor(readonly publicBase: string) {}
   async allow(roots: string[]) { this.roots = await Promise.all(roots.map(root => realpath(root))); }
-  register(url: string, value: { file?: string; content?: string | Buffer; extension?: string }) {
+  register(url: string, value: { file?: string; content?: string | Buffer; extension?: string }, documentKey?: string) {
     const key = url.split(/[?#]/)[0];
+    const registrationKey = JSON.stringify([documentKey ?? null, key]);
     const extension = value.extension ?? path.extname(value.file ?? key).toLowerCase();
-    const prior = this.registered.get(key);
+    const prior = this.registered.get(registrationKey);
     if (prior && (prior.file !== value.file || prior.content !== value.content)) throw new Error(`Ambiguous export asset ${key}`);
-    this.registered.set(key, { ...value, extension });
+    this.registered.set(registrationKey, { ...value, extension });
   }
-  async resolve(url: string, sourceFile: string): Promise<ExportAsset | undefined> {
-    const parsed = new URL(url, 'https://export.invalid/');
+  async resolve(url: string, sourceFile: string, documentKey?: string): Promise<ExportAsset | undefined> {
     const key = url.split(/[?#]/)[0];
-    let resource = this.registered.get(key);
+    // Authored assets belong to a document even when website routes overlap.
+    // Generated diagrams and contracts retain their shared registrations.
+    let resource = this.registered.get(JSON.stringify([documentKey ?? null, key]))
+      ?? this.registered.get(JSON.stringify([null, key]));
     if (!resource) {
       if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|\/)/i.test(url)) return undefined;
       let decoded: string;
