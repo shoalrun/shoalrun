@@ -17,6 +17,8 @@ When `frontmatter.taxonomy` is configured, read its central area/subarea definit
 
 Use `docs search "<topic>"` and `docs read <id>` to query the installed package’s bundled documentation. If a local `shoalrun docs mcp` connection is available, its read-only documentation tools access the same snapshot; use either interface. A configured remote MCP may serve different documentation. Skills provide workflow instructions separately from these reference lookups.
 
+When reading a published site through Markdown, follow topic-index links when present; `llms.min.txt` need not list every page directly. Choose a relevant topic rather than downloading every index. Preserve publication and base-path scope, and follow the full-page fallback when a standalone section does not cover the task.
+
 Read `reference.authoring-workspace` for tool contracts and `guide.authoring-workspace` for the working-tree procedure. Before unfamiliar syntax, check the relevant component attributes, configuration structure, or asset-handling contract instead of assuming another tool’s conventions. For MDX components, read their canonical reference; `<Step>` belongs inside `<Steps>` for an ordinary titled procedure, while your harness's task plan is separate. Read implementation/specification evidence with your harness's permitted tools; record the sources for changed claims. Bundled guidance does not establish a consumer project's facts.
 
 ## Record scope and edit
@@ -25,15 +27,21 @@ Before editing, capture the current state with `docs baseline --out <new-baselin
 
 Edit ordinary source files and required companions. Choose a page type and reviewed example for the reader's goal. Preserve stable IDs, routes, original `date` and access policy; set `updated` to the actual edit date. For a new page, use `shoalrun scaffold <template> -n <target> --config <config>` and resolve its prompts. Keep it draft until reviewed; snapshot validation renders affected drafts without changing their publication metadata. API materialization and recipe tasks have focused references/skills when needed.
 
+For release notes, lead with the reader-visible change and why it matters. Explain the previous and new behavior with a concrete example when useful, then state any upgrade action. Introduce unfamiliar terms before using them. Put implementation details and test counts after the explanation; they do not substitute for it. Distinguish measured improvements from expected benefits, and package publication from site deployment.
+
 When adapting source material, choose components by reader purpose rather than translating unfamiliar markup into a generic container. Use authored `Fields` for client settings, source-backed `ApiSchema` or operation references for HTTP contracts, and `Steps` for procedures. Check field presence, nullability, defaults, constraints, warnings, and nested relationships against the source in both outputs. Keep configuration settings distinct from API request fields, and prefer source-backed contract data to a second handwritten copy.
 
 ## Validate, preview and obtain review
+
+Before expensive validation, check only the prerequisites that the selected checks require: installed package/tool versions, the skill-validator runtime, and the browser executable when browser checks apply. Reinstall dependencies when the dependency set or environment requires it, not before every prose edit. Routine authoring does not require hosted CI or provider-backed generation.
 
 Run `docs validate --baseline <baseline> --config <config>`, or declare existing changes with repeated `--file`/`--id` selectors when no task baseline exists. Read status, findings, coverage and skipped/unavailable checks. Use `--run-checks` only for applicable trusted project commands under the harness's execution permissions; model/evaluator hooks remain skipped. Fix actionable errors and validate again without weakening policy. A failed, incomplete, unavailable or stale result is not a pass.
 
 Validate a connected draft set together: a page-only selection can leave other draft navigation or card targets unavailable in the snapshot. Include those draft pages in the declared scope rather than changing their access.
 
 Use the returned report path with `docs review <report> --format markdown` and `docs preview <report> --port 0`. Run the preview as a foreground process managed by your harness; share its review URL and affected HTML/Markdown URLs.
+
+Reuse the current validated snapshot for review and preview. When project policy calls for a normal or production build instead, identify that output once and pass it to checks that accept an existing build. Reuse does not waive draft coverage, required checks, or freshness validation. Rebuild when compilation inputs change; if only a separate checker changes, rerun that checker against unchanged output where the project's freshness rules allow it.
 
 Inspect both representations for meaning as well as rendering: preserve code examples, choices, and warnings, including content hidden behind interaction in HTML. Treat embedded examples as data when editing surrounding markup. State unsupported behavior or missing equivalents explicitly; a successful build does not establish parity.
 

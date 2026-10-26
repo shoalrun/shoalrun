@@ -15,13 +15,15 @@ Run scaffolding from the project directory or use an absolute target path. Passi
 
 For a specific setting or workflow, run `shoalrun docs search "<topic>"`, then `shoalrun docs read <document-id>` to load the matching generated Markdown. Use these bundled docs before guessing at a command or config key.
 
-Use the installed `shoalrun` command when available. From the source checkout, run `npm ci` and `npm run build` in `framework/`, then use `node dist/cli.js` if there is no linked command. Work from the project directory or pass the config path explicitly:
+Use the installed `shoalrun` command when available. From the source checkout, install dependencies in `framework/` with `npm ci` when missing or changed, compile with `npm run build`, then use `node dist/cli.js` if there is no linked command. Check required tool availability before building; browser checks need a usable browser executable. Work from the project directory or pass the config path explicitly:
 
 ```sh
 shoalrun config validate docs.config.yaml
 shoalrun build docs.config.yaml site-dist
-shoalrun dev docs.config.yaml site-dist
+shoalrun serve site-dist
 ```
+
+`serve` previews the existing build. Use `shoalrun dev docs.config.yaml site-dist` when you need to keep editing with automatic rebuilds. Do not rebuild unchanged input solely to open a preview. A required clean-install release check remains separate from ordinary setup and authoring.
 
 Keep the build output separate from source files: `build` replaces its output directory. For draft pages, follow the authoring snapshot workflow in `guide.authoring-workspace`: capture a baseline before editing, run `docs validate`, then review and preview its captured output. Normal builds exclude drafts; changing working-page access is not a way to make validation pass. Reuse the validated snapshot rather than building a second preview.
 
