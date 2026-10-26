@@ -29,6 +29,10 @@ button{cursor:pointer}
 ::selection{background:var(--color-nav-active);color:var(--color-ink)}
 .skip{position:absolute;left:-100vw;top:.6rem;background:var(--color-surface);padding:.5rem 1rem;z-index:10}
 .skip:focus{left:1rem}
+.page-shortcuts{max-width:var(--width-site);margin:auto;padding:1rem 2rem 0;display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;font-size:.85rem}
+.page-shortcuts a,.region-return{display:inline-block;padding:.5rem 0}
+.region-return{font-size:.85rem}
+:is(#main,#docs-navigation,#page-outline):focus{outline:2px solid var(--color-accent);outline-offset:4px}
 /* The masthead is its own stacking context (view-transition-name), so it needs a layer above sticky page parts for the search results to show over them; the expanded examples panel (30) still covers it. */
 .mast{position:relative;z-index:25;background:var(--color-surface);border-bottom:1px solid var(--color-border)}
 .mast-inner{max-width:var(--width-reference);margin:auto;min-height:4.5rem;padding:1rem 2rem;display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap}
@@ -63,6 +67,9 @@ button{cursor:pointer}
 .section-nav{border-bottom:1px solid var(--color-border);background:var(--color-page);font-family:var(--font-ui,var(--font-body))}
 .section-disclosure{max-width:var(--width-site);margin:auto;padding:0 2rem}
 .section-disclosure>summary{display:none}
+/* A focused mobile toggle must remain visible when the viewport grows. */
+:is(.nav-disclosure,.toc-disclosure,.section-disclosure)>summary:focus,
+:is(.nav-disclosure,.toc-disclosure,.section-disclosure):not([open])>summary{display:list-item}
 .section-nav-links{display:flex;gap:1.5rem;flex-wrap:wrap}
 .section-nav-links a{display:inline-flex;align-items:center;min-height:2.75rem;padding:.6rem .15rem;border-bottom:2px solid transparent;color:var(--color-nav-text);text-decoration:none;font-size:.85rem;font-weight:600}
 .section-nav-links a:hover{color:var(--color-link);border-bottom-color:var(--color-border)}
@@ -430,19 +437,10 @@ button{cursor:pointer}
   .layout.has-rail:not(.has-examples) .content{padding-right:3rem}
 }
 @media(max-width:72rem){
-  /* Once the side rail no longer fits, the menu and "On this page" become compact buttons above the article;
-     an open one takes the full row. This is the same treatment phones use, so the outline never drops below the page. */
-  .layout,.layout.has-examples{display:block}
-  .layout:not(.api-reference){display:flex;flex-wrap:wrap;align-items:flex-start;gap:.6rem}
-  .layout:not(.api-reference) :is(.side,.page-rail){flex:1 1 9rem;margin:0}
-  .layout:not(.api-reference) :is(.side,.page-rail):has(:is(.nav-disclosure,.toc-disclosure)[open]){flex-basis:100%}
-  .layout .side{order:0}
-  .layout.api-reference{display:flex;flex-direction:column}
-  .layout.api-reference>:is(.side,.content,.page-rail){width:100%}
-  .layout.api-reference .content{order:1}
-  .layout.api-reference .page-rail{order:2}
-  .layout:not(.api-reference) .page-rail{order:1}
-  .layout:not(.api-reference) .content{order:2;flex:1 1 100%;margin-top:1rem}
+  /* Follow source order on narrow screens: article, outline/API data, navigation.
+     Early fragment links provide direct access to the supporting regions. */
+  .layout,.layout.has-examples,.layout.api-reference{display:flex;flex-direction:column;gap:1.5rem}
+  .layout>:is(.side,.content,.page-rail){width:100%;margin:0}
   .page-rail{position:static;max-height:none;overflow:visible}
   .side{position:static;max-height:none;overflow:visible;border:1px solid var(--color-border);border-radius:var(--radius-small);padding:0;margin-bottom:1rem;background:var(--color-field-surface)}
   :is(.nav-disclosure,.toc-disclosure)>summary{display:list-item;cursor:pointer;padding:.75rem 1rem;min-height:2.75rem;font-size:.8rem;font-weight:650;color:var(--color-ink)}
@@ -460,6 +458,7 @@ button{cursor:pointer}
 }
 @media(max-width:48rem){
   .layout,.layout.has-examples{padding:1.25rem 1.1rem 3rem}
+  .page-shortcuts{padding:1rem 1.1rem 0}
   .mast-inner{padding:.9rem 1.1rem;gap:.65rem}
   .brand{font-size:.9rem}
   .edition{font-size:.65rem}
@@ -477,7 +476,7 @@ button{cursor:pointer}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 @media(forced-colors:active){.side a[aria-current=page]{outline:2px solid Highlight}.code-copy{border:1px solid ButtonText}}
 @media print{
-  .mast,.side,.page-toc,.formats,.code-toolbar,.skip,.heading-anchor{display:none}
+  .mast,.side,.page-toc,.page-shortcuts,.region-return,.formats,.code-toolbar,.skip,.heading-anchor{display:none}
   .layout,.layout.has-examples{display:flex;flex-direction:column;padding:0}
   .content{max-width:none}
   .page-rail{position:static;max-height:none;overflow:visible;order:2}

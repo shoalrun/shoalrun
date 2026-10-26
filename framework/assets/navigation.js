@@ -6,15 +6,44 @@ if (filter) filter.placeholder = 'Find a page…';
 const mobile = matchMedia('(max-width: 72rem)');
 const sections = document.querySelector('.section-disclosure');
 if (sections) {
-  const updateSections = () => { sections.open = !mobile.matches; };
+  const updateSections = () => { sections.open = !mobile.matches || sections.contains(document.activeElement); };
   updateSections();
   mobile.addEventListener('change', updateSections);
 }
-// On phones the menu and "On this page" start closed so the article is on the first screen.
+// Narrow-screen supporting regions start closed. Never hide the focused control on resize.
 for (const disclosure of document.querySelectorAll('.nav-disclosure, .toc-disclosure')) {
-  const updateLayout = () => { disclosure.open = !mobile.matches; };
+  const updateLayout = () => { disclosure.open = !mobile.matches || disclosure.contains(document.activeElement) || disclosure.parentElement === document.activeElement; };
   updateLayout();
   mobile.addEventListener('change', updateLayout);
+}
+
+
+// Real fragment links work without scripts. Enhancement also opens disclosures
+// and moves focus, so the next Tab stays with the region the reader requested.
+const regionOpeners = new WeakMap();
+for (const link of document.querySelectorAll('[data-region-jump], [data-region-return]')) {
+  link.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const region = document.getElementById(link.hash.slice(1));
+    if (!region) return;
+    const disclosure = region.querySelector(':scope > details');
+    if (disclosure) disclosure.open = true;
+    if (link.hasAttribute('data-region-jump')) regionOpeners.set(region, link);
+    // Preserve native URL/history behavior; the target is outside its disclosure.
+    region.focus({ preventScroll: true });
+  });
+}
+for (const region of document.querySelectorAll('#docs-navigation, #page-outline')) {
+  region.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || event.defaultPrevented || !mobile.matches) return;
+    const disclosure = region.querySelector(':scope > details');
+    if (!disclosure?.open) return;
+    event.preventDefault();
+    const opener = regionOpeners.get(region);
+    // Move focus before closing so it never remains in a hidden descendant.
+    (opener?.isConnected ? opener : region).focus();
+    disclosure.open = false;
+  });
 }
 
 if (tree && search && filter) {

@@ -125,7 +125,7 @@ test('agent blocks customize escaped text and mode while retaining generated lin
   assert.match(visible, /href="\/docs\/llms\.min\.txt">All docs<\/a>/);
   assert.match(visible, /href="\/docs\/index\.md">Plain text<\/a>/);
   assert.ok(visible.indexOf('class="skip"') < visible.indexOf('class="agent-discovery'));
-  assert.ok(visible.indexOf('<nav class="side"') < visible.indexOf('<main '));
+  assert.ok(visible.indexOf('<main ') < visible.indexOf('<nav class="side"'));
   config.site.agentDiscovery.mode = 'off';
   const off = await build();
   assert.doesNotMatch(off, /class="agent-discovery/);

@@ -61,7 +61,7 @@ test('a site mounted below /docs serves pages and framework resources from that 
   for (const url of ['/docs/index.md', '/docs/llms.min.txt', '/docs/assets/site.css']) assert.ok(html.includes(url), url);
   assert.match(html, /class="agent-discovery">For agents: <a href="#main">Skip to article<\/a>/);
   assert.match(html, /class="agent-discovery"[^>]*>[\s\S]*?href="\/docs\/llms\.min\.txt"/);
-  assert.ok(html.indexOf('<nav class="side"') < html.indexOf('<main '), 'navigation precedes the article in reading and keyboard order');
+  assert.ok(html.indexOf('<main ') < html.indexOf('<nav class="side"'), 'article precedes supporting navigation in reading and keyboard order');
   assert.match(await readFile(path.join(output, 'docs/index.md'), 'utf8'), /> Documentation index: \[llms\.min\.txt\]\(https:\/\/docs\.example\.test\/docs\/llms\.min\.txt\)/);
   await readFile(path.join(output, 'docs/search-index.json'));
   assert.ok(![...html.matchAll(/(?:href|src)="(\/[^"]+)/g)].some(match => !match[1].startsWith('/docs')));

@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Documentation pages put the article before the full navigation in HTML, so
+  readers and agents reach the page content sooner. Desktop sidebars stay on the
+  left. On smaller screens, the article is followed by the outline/API examples
+  and documentation navigation.
+- Top-of-page links open and focus navigation or the page outline, with links
+  back to the article. Keyboard focus stays visible across viewport changes;
+  native links and disclosures remain usable without JavaScript.
+
 ## 0.1.0-alpha.8 — 2026-10-26
 
 - Compact discovery now splits growing catalogs into topic indexes with a
