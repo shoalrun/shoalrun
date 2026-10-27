@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Navigation > Breadcrumbs
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Breadcrumbs are built into site navigation. Shoalrun generates them from the [navigation tree](https://www.shoalrun.com/author/navigation.md). Place a page under its intended groups in navigation; there is no `<Breadcrumbs>` tag to repeat in each MDX file.
 

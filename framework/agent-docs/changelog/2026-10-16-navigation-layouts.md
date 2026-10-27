@@ -1,8 +1,7 @@
 ---
 id: change.navigation-layouts
 title: Navigation, page layouts, and browser analytics
-summary: Navigation sections, reader controls, page layouts, and optional
-  browser interaction analytics.
+summary: Navigation sections, reader controls, layouts, and browser analytics.
 type: changelog-entry
 area: appearance
 subarea: appearance-layouts

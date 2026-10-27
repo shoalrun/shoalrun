@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Examples > Example Notes API > Prepare a note request
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 

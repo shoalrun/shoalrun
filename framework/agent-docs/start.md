@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-10-25.**
+**Updated: 2026-10-26.**
 
 This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
@@ -42,7 +42,7 @@ Install an exact version of the private alpha and initialize the minimal starter
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.5 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.8 --@shoalrun:registry=https://npm.pkg.github.com
 npx --no-install shoalrun init .
 ```
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Navigation > Overview
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-27.**
 
 The `navigation` setting controls the site's left menu. It can be a list in `docs.config.yaml` or import a separate YAML file. Add guides, tutorials, concepts, and reference pages by their stable document IDs. Nodes appear in the order you write them.
 
@@ -80,7 +80,7 @@ Replace the example IDs and API name with your project's values. A tab ID uses l
 
 Each tab links to its landing page. The current page's URL selects its tab and sidebar on the server. Opening a direct link, following a search result, or navigating without JavaScript selects the same section. Groups outside tabs remain shared navigation. A page outside every tab shows the shared navigation with no tab selected. Existing navigation lists work without adding tabs. Tab placement does not change page URLs or publication routes.
 
-The section links appear below the masthead on docs and wide pages. Landing and splash pages hide them by default. Set `showNavigationTabs: true` or `false` in page frontmatter to override the layout default; see [page layouts](https://www.shoalrun.com/styling/layouts.md). On smaller screens they use a Sections disclosure. They inherit each theme's typography and colors. Site-wide search still includes all sections; the sidebar filter searches only the current sidebar. Reader views can filter that sidebar without changing tab membership or agent discovery.
+The section links appear below the masthead on docs and wide pages. Landing and splash pages hide them by default. Set `showNavigationTabs: true` or `false` in page frontmatter to override the layout default; see [page layouts](https://www.shoalrun.com/styling/layouts.md). On smaller screens, Menu opens a drawer containing these section links and the current sidebar. Closing the drawer restores focus and the article's scroll position. Without JavaScript, Menu links to navigation below the article and section links remain in a native disclosure. They inherit each theme's typography and colors. Site-wide search still includes all sections; the sidebar filter searches only the current sidebar. Reader views can filter that sidebar without changing tab membership or agent discovery.
 
 ### Agent discovery across tabs
 
@@ -89,6 +89,12 @@ Both `/llms.min.txt` and `/llms.txt` keep every published page and add links to 
 Each member page's Markdown identifies its navigation section, stable tab ID, and scoped index. Its breadcrumbs include the tab. `documents.json` publishes a `navigationTabs` catalog and a matching `navigationTab` record on each member page. Records contain `id`, `label`, `variant`, `url`, `markdownUrl`, and `indexUrl`. Both search indexes carry page membership too. The generated offline documentation bundle includes the scoped indexes.
 
 Tab selection never removes page content from Markdown, filters the published inventory, or requires browser state. Navigation tabs provide links between pages; the [Tabs component](https://www.shoalrun.com/author/components/tabs.md) groups content inside one page. Neither replaces access policy or host authorization.
+
+## Reach navigation while reading
+
+Desktop pages keep the sidebar and page outline visible. Keyboard skip links appear on focus without adding a row above the article. The HTML places the article before the full site navigation.
+
+On smaller screens, the page outline moves into an **On this page** disclosure below the introduction. Selecting a heading closes the disclosure and focuses the heading. Escape closes the navigation drawer; when the navigation filter contains text, the first Escape clears it. Without JavaScript, the outline remains below the article and is reachable through a skip link.
 
 ## Hide group page counts
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Walkthroughs
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use `<Walkthrough>` to explain code step by step. Each step pairs an explanation with code built up across steps or read from a project file.
 

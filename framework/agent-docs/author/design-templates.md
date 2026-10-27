@@ -18,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Shared writing guidance > Design templates
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 A template defines the starting structure of a page. Use it for information that belongs in most pages of a particular kind. A writing guide explains how to write that information.
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Build and audit this documentation site
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Build current documentation, check its artifacts, and run the configured audits.
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Page layouts, landing pages, and splash pages
 
-**Updated: 2026-10-24.**
+**Updated: 2026-10-26.**
 
 Parent page: [Full Markdown page](/styling/layouts.md)
 

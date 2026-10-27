@@ -1,8 +1,7 @@
 ---
 id: change.working-tree-skill
 title: Portable working-tree authoring workflow
-summary: Guide existing coding agents through discovery, native editing,
-  validation, and snapshot review.
+summary: Agent discovery, native editing, validation, and snapshot review.
 type: changelog-entry
 area: authoring
 subarea: authoring-agent-workflows

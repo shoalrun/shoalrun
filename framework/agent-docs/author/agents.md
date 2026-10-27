@@ -19,7 +19,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Overview
 
-**Updated: 2026-10-20.**
+**Updated: 2026-10-26.**
 
 Use your existing coding agent to write and revise Shoalrun documentation. Start with the workflow that matches your task.
 

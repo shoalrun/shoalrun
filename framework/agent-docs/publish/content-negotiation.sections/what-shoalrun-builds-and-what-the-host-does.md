@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Content negotiation
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Try a theme
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Pick a shape, a palette, and a mode. This page restyles itself as you choose. Scroll down to see how each option styles the sample content, then copy the config into `docs.config.yaml`.
 

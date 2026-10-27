@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reusable snippets
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 A snippet is a shared Markdown or MDX fragment that the build expands into each page that includes it. Use one when the wording must stay in sync across pages. A [template](https://www.shoalrun.com/author/templates.md) creates a draft once; editing a template does not change existing pages.
 

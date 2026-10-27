@@ -1,8 +1,7 @@
 ---
 id: change.authoring-search
 title: Agent authoring, search, and documentation answers
-summary: Reviewed agent drafts, improved search results, and better context for
-  documentation answers.
+summary: Reviewed agent drafts, search improvements, and answer context.
 type: changelog-entry
 area: authoring
 subarea: authoring-agent-workflows

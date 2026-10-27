@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Steps
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 Use `<Steps>` when each part of a procedure needs a title and supporting content. For a simple sequence with no step titles, an ordinary Markdown numbered list is enough. For code that changes between steps, use a [Walkthrough](https://www.shoalrun.com/author/components/walkthroughs.md).
 

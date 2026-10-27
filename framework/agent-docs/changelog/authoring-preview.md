@@ -1,8 +1,7 @@
 ---
 id: change.authoring-preview
 title: Authoring snapshot previews and review reports
-summary: Review affected pages, findings, coverage, and freshness beside an
-  exact snapshot preview.
+summary: Snapshot previews with coverage and freshness reports.
 type: changelog-entry
 area: authoring
 subarea: authoring-agent-workflows

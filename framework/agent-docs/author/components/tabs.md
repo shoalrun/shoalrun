@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Tabs
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 `<Tabs>` presents alternate views, such as two output formats. Use it only when the choices are truly alternatives; a normal heading sequence is easier to read when readers need every section.
 

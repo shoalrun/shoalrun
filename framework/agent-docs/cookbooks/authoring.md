@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Authoring workflows
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Choose the outcome you need for Shoalrun's own documentation. Each recipe includes setup, ordered work, handoffs, and an observable final check.
 

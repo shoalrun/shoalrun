@@ -12,7 +12,7 @@ canonical: /about
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 I'm CT Smith, and I'm building Shoalrun cause there's no such thing as a perfect doc tool. I have opinions, undirected rage, and curiosity about doc-building tools. I built my first documentation generator back in 2015. It was based on Jekyll and relied heavily (probably too heavily) on general templating and... you guessed it... *page metadata*.
 

@@ -1,8 +1,7 @@
 ---
 id: change.search-and-tooltips
 title: Search results and tooltips
-summary: Improve search results with a prepared index and add separate hover and
-  focus tooltips.
+summary: Indexed search and hover and focus tooltips.
 type: changelog-entry
 area: discovery
 subarea: discovery-search

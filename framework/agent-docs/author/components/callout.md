@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Callouts
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 `<Callout>` highlights a short message in the reading flow. Use a type that matches the message's purpose. The type sets the HTML color and decorative icon, while a visible label carries the meaning in both HTML and Markdown.
 

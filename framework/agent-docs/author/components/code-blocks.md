@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Code blocks
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Fenced code is ordinary Markdown rather than an MDX component. It belongs in the component reference because authors use it beside components to show commands, configuration, and payloads.
 

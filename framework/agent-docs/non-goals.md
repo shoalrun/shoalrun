@@ -17,7 +17,7 @@ Navigation section: [Project updates](https://www.shoalrun.com/.well-known/shoal
 
 Breadcrumbs: [Project updates](https://www.shoalrun.com/status.md) > Project > Non-goals
 
-**Updated: 2026-10-24.**
+**Updated: 2026-10-26.**
 
 Shoalrun's scope includes publishing documentation that people and agents can discover and read. This page records capabilities we deliberately exclude and the reasoning behind those decisions.
 

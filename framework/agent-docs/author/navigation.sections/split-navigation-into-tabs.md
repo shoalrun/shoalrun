@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Navigation > Overview
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/navigation.md)
 
@@ -56,7 +56,7 @@ Replace the example IDs and API name with your project's values. A tab ID uses l
 
 Each tab links to its landing page. The current page's URL selects its tab and sidebar on the server. Opening a direct link, following a search result, or navigating without JavaScript selects the same section. Groups outside tabs remain shared navigation. A page outside every tab shows the shared navigation with no tab selected. Existing navigation lists work without adding tabs. Tab placement does not change page URLs or publication routes.
 
-The section links appear below the masthead on docs and wide pages. Landing and splash pages hide them by default. Set `showNavigationTabs: true` or `false` in page frontmatter to override the layout default; see [page layouts](https://www.shoalrun.com/styling/layouts.md). On smaller screens they use a Sections disclosure. They inherit each theme's typography and colors. Site-wide search still includes all sections; the sidebar filter searches only the current sidebar. Reader views can filter that sidebar without changing tab membership or agent discovery.
+The section links appear below the masthead on docs and wide pages. Landing and splash pages hide them by default. Set `showNavigationTabs: true` or `false` in page frontmatter to override the layout default; see [page layouts](https://www.shoalrun.com/styling/layouts.md). On smaller screens, Menu opens a drawer containing these section links and the current sidebar. Closing the drawer restores focus and the article's scroll position. Without JavaScript, Menu links to navigation below the article and section links remain in a native disclosure. They inherit each theme's typography and colors. Site-wide search still includes all sections; the sidebar filter searches only the current sidebar. Reader views can filter that sidebar without changing tab membership or agent discovery.
 
 ### Agent discovery across tabs
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Color palettes
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 A palette sets every color token on the site, with one set for light mode and one for dark mode. Choose a built-in palette by name, or extend one with your own colors.
 

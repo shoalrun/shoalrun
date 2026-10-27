@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Add Shoalrun to another build or host
 
-**Updated: 2026-10-20.**
+**Updated: 2026-10-26.**
 
 Shoalrun builds a complete static site without a host framework. To include its pages in another build system, run Shoalrun's CLI as a build step. Then copy the generated files into the host's output. The host does not need to parse Shoalrun's MDX or OpenAPI sources.
 

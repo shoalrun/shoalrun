@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > CookbookChooser
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use `<CookbookChooser>` to help a reader choose a complete recipe or combine compatible recipes. The author reviews each recipe and sets its place in the choice list. The browser loads the selected published recipe pages and displays their instructions. The component does not read ingredient files, generate a recipe, or execute commands. Start with [how recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md), then [configure a cookbook](https://www.shoalrun.com/author/cookbooks.md); this page lists the component's exact syntax.
 

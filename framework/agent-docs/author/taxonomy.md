@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Design and enforce a page taxonomy
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 Use `area` and `subarea` to describe a page's subject independently of its place in navigation. The same subject can appear in guides, reference pages, recipes, and change notes.
 

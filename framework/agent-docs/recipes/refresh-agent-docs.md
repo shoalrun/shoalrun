@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Refresh Shoalrun's bundled agent docs
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Regenerate offline docs, verify CLI search and read, and run project audits.
 

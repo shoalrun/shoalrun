@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Site workflows
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use these recipes on a local Shoalrun checkout after editing documentation. Choose the level of validation you need. The audit path already includes the build and artifact checks, so run one complete path.
 

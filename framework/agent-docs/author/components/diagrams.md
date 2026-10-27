@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Diagrams > Overview
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use `<Diagram>` for flowcharts, sequence diagrams, charts, and other graphs written as text. D2 is the default engine, with TALA as its default layout. Set `engine="mermaid"` for Mermaid syntax, rendered by [Pele](https://pele.run). Diagrams render to SVG during the build, so readers do not need a diagram script in their browser. Set a literal pixel `width`, such as `width="440"`, to cap the diagram's displayed width while allowing it to shrink on narrow screens.
 

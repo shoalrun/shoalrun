@@ -73,10 +73,11 @@ test('component controls preserve output, synchronize only matching groups, and 
   assert.equal(await page.$$eval('.doc-collapsible-group > details[open]', nodes => nodes.length), 2);
   assert.equal(await page.$eval('.doc-collapsible-group', node => { const [a,b] = node.children; return Math.round(b.getBoundingClientRect().top - a.getBoundingClientRect().bottom); }), 0);
   await page.click('[data-image-expand]');
-  assert.ok(await page.$eval('dialog', node => (node as HTMLDialogElement).open));
+  assert.ok(await page.$eval('.doc-image-viewer', node => (node as HTMLDialogElement).open));
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('aria-label')), 'Close image');
+  assert.equal(await page.$eval('.navigation-dialog', node => (node as HTMLDialogElement).open), false, 'image and navigation dialogs remain independent');
   await page.keyboard.press('Escape');
-  assert.equal(await page.$eval('dialog', node => (node as HTMLDialogElement).open), false);
+  assert.equal(await page.$eval('.doc-image-viewer', node => (node as HTMLDialogElement).open), false);
   assert.equal(await page.evaluate(() => document.activeElement?.hasAttribute('data-image-expand')), true);
   await page.setJavaScriptEnabled(false); await page.reload();
   assert.equal(await page.$$eval('.doc-tabpanel', nodes => nodes.filter(node => !(node as HTMLElement).hidden).length), 8);

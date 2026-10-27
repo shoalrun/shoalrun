@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Badges
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 `<Badge>` adds a compact label inside prose, a heading, or a table cell. Write the state in its text; color and the optional icon only reinforce it.
 

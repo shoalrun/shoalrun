@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Check a deployed site
 
-**Updated: 2026-10-20.**
+**Updated: 2026-10-26.**
 
 A local build verifies the generated files. After deployment, check what the host actually serves. This guide uses `scripts/check-deployment.mjs` from Shoalrun's docs repository; the script is not included in the `@shoalrun/cli` package. From the docs repository root, pass the deployed **site origin** to the checker:
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Deploy your documentation
 
-**Updated: 2026-10-20.**
+**Updated: 2026-10-26.**
 
 After the [quickstart](https://www.shoalrun.com/start.md), your documentation project has `@shoalrun/cli` installed. Run the commands below from that project directory, `my-docs/`.
 

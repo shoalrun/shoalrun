@@ -10,7 +10,7 @@ From the project where you want to keep your documentation, authenticate with a 
 
 ```sh
 npm login --scope=@shoalrun --registry=https://npm.pkg.github.com --auth-type=legacy
-npm install --save-dev @shoalrun/cli@0.1.0-alpha.5 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-dev @shoalrun/cli@0.1.0-alpha.9 --@shoalrun:registry=https://npm.pkg.github.com
 ```
 
 ## Create and preview a site

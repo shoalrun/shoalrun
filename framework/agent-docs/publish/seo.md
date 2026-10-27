@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > SEO and social previews
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-25.**
 
 When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you do not need to hand-write Open Graph or Twitter tags.
 

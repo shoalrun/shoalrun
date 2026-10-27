@@ -18,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Use your agent > Draft a page
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use an agent that can read project files and run commands. It writes with its own model; Shoalrun requires no additional authoring API key.
 

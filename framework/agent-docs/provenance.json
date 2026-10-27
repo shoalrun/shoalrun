@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "siteBuild": {
     "schemaVersion": 1,
-    "configDigest": "06ca7fe95d14d538e3d88efdfe4025cab52940179584ad55c1772dcdc42dc2d1",
-    "buildId": "90d0cdd780215b2742210cff61f9de45a38d65c4aca90a75f6e50d4f05ae83c2"
+    "configDigest": "7bcb26f39a0be64dcf5df247d37b7bc42e288c4df87236e1e1a5642ba484905c",
+    "buildId": "9ad48740e7aaf591f5a8e8b7b47e98a6c5c2b6bad9f3fca9ef0df50a7079f2f7"
   },
-  "packageIntegrity": "sha512-cgaLp7HgJWtrKI1pDdjs/eqvOGKYlCugvOiNfgjzq56VNFgKFM7FNn8bawfWiZudQGck5IqmKh9yaawmuoFP9w==",
-  "manifestDigest": "4bc3a8863ec9b99152742cd615283e418e04fb983c93a3a92a6b07fcd832806c"
+  "packageIntegrity": "sha512-o3tmHXBcQLzyBJCi1ho0CMSA4VmlIIJgD86eWrhk2PWQOOVv5HldFHsO8rkj91o/cuJcRUjlkFBznLMYZAKRiw==",
+  "manifestDigest": "9dbc02165d9433b73d2e366ddcc84099aa1a4db37ef664cd98a0b2c1490e35ad"
 }

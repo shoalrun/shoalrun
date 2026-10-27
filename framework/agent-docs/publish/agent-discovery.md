@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Configure the agent discovery block
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Configure the early HTML guidance so readers and agents can find the article, Markdown twin, and documentation index. Work in an existing Shoalrun project with a working local build.
 

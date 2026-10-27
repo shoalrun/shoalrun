@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Use the bundled agent skills
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Give an agent a bundled skill when you want it to follow Shoalrun's setup, authoring, recipe, component, or walkthrough workflow. You need an agent that can read the skill file and run commands, plus a Shoalrun checkout or installed CLI.
 

@@ -1,8 +1,7 @@
 ---
 id: change.agent-readiness
 title: Agent discovery, verified Markdown, and incremental sync
-summary: Find the right page with less context, verify its contents, and fetch
-  only what changed.
+summary: Compact discovery, content verification, and incremental fetching.
 type: changelog-entry
 area: discovery
 subarea: discovery-agents

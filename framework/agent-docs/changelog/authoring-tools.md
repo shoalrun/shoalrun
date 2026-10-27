@@ -1,7 +1,7 @@
 ---
 id: change.authoring-tools
 title: Working-tree authoring tools
-summary: Discover project context and validate working-tree edits in a separate capture.
+summary: Project discovery and captured working-tree validation.
 type: changelog-entry
 area: authoring
 subarea: authoring-agent-workflows

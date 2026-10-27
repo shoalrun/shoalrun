@@ -1,8 +1,7 @@
 ---
 id: change.evaluation-builds
 title: Agent reading and evaluation
-summary: Smaller Markdown reads, clearer lifecycle and change guidance, and
-  exact-output evaluation comparisons.
+summary: Smaller reads, lifecycle guidance, and reproducible evaluations.
 type: changelog-entry
 area: quality
 subarea: quality-evaluations

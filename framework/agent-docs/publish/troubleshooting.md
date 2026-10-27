@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Troubleshooting
 
-**Updated: 2026-10-25.**
+**Updated: 2026-10-26.**
 
 Run these commands from your documentation project, with Shoalrun installed as in the [quickstart](https://www.shoalrun.com/start.md). Start by rebuilding so the error names the current source file:
 

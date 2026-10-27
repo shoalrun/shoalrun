@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Cards and collections
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Parent page: [Full Markdown page](/author/components/cards.md)
 

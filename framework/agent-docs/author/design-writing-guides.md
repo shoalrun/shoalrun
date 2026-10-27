@@ -19,7 +19,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Shared writing guidance > Design a writing guide
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 A project writing guide explains your readers, terminology, and editorial decisions. Give your agent the guide's file path in project instructions so it can read the same rules as human authors.
 

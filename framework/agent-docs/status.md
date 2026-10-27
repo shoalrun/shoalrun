@@ -16,7 +16,7 @@ Navigation section: [Project updates](https://www.shoalrun.com/.well-known/shoal
 
 Breadcrumbs: [Project updates](https://www.shoalrun.com/status.md) > Project > Project status
 
-**Updated: 2026-10-24.**
+**Updated: 2026-10-26.**
 
 Shoalrun is a private prototype for publishing documentation for people and agents from the same source. This public site is built with it. The compiler and CLI are available as an invite-only alpha package; there is no public package release.
 

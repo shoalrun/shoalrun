@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > RelatedReading
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 `<RelatedReading>` presents connections declared in the central `relationships` config. Use it for prerequisites, next steps, references, related topics, and distinctions that need a reason.
 

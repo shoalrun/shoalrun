@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-23.**
+**Updated: 2026-10-25.**
 
 Parent page: [Full Markdown page](/author/reader-views.md)
 

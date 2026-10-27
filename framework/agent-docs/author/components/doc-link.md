@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > DocLink
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 `<DocLink>` resolves a document ID to its URL in the current publication. It is useful in MDX when the link should use a stable target and optionally inherit the target page's title.
 

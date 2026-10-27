@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Build this documentation site
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use the pinned Shoalrun package and confirm a chosen page has HTML and Markdown output.
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Content for one format
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use `<Only>` to author content for one output format. Shared material stays outside the blocks; a block can contain an instruction, explanation, example, or link that serves only one version:
 

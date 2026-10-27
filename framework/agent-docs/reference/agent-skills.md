@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Bundled agent skills
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Shoalrun ships five portable skill folders under `framework/skills/`. Each folder contains a `SKILL.md` with instructions for an agent that can read files and run the Shoalrun CLI. A skill supplies guidance; it does not run a separate authoring service.
 

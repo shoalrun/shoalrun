@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Let readers choose recipes with a cookbook
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 A cookbook combines an authored introduction with a list or chooser of **published recipe pages**. It does not read ingredient files. Ingredients have already been copied into the recipes during authoring.
 

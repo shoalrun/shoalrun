@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Light and dark mode
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Every [palette](https://www.shoalrun.com/styling/palettes.md) has a light set and a dark set. `theme.mode` decides which set readers see.
 

@@ -12,7 +12,7 @@ canonical: /
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-10-24.**
+**Updated: 2026-10-26.**
 
 **Docs for people. Context for agents.**
 

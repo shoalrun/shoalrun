@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Short definitions
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use `<InfoHint>` for a short definition that readers can open when they need it. It is a click-to-expand disclosure. Use a [tooltip](https://www.shoalrun.com/author/components/tooltips.md) for brief text that appears on hover or keyboard focus. Put longer explanations in a [callout](https://www.shoalrun.com/author/components/callout.md) or a linked page.
 

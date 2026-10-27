@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search and chat > Site search
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 **Verified: 2026-10-01.**
 
@@ -274,7 +274,7 @@ CLI and MCP search results include a ready-to-use `read` instruction: call `read
 
 The result's `markdownUrl` points to the recommended section or page, with its byte/token size when available. `pageMarkdownUrl` always points to the full page. Use that fallback when more context is needed. This is a lexical recommendation, not proof that the selected content answers the question. Page reads can still truncate at the maximum budget; inspect their budget metadata.
 
-Section resources exist only for pages of at least 2,000 `cl100k_base` tokens and only when they halve both bytes and tokens, including repeated context. Both search indexes include eligible section titles, URLs, sizes, and any `standalone: true` declaration without duplicating section bodies. Fetch-only agents should start with `/llms.min.txt`, which lists full pages and declared standalone section links with sizes and full-page fallbacks. The larger compact JSON index is optional when more headings are needed. The human search box continues to open HTML page or heading links. See [Markdown section resources](https://www.shoalrun.com/author/markdown-metadata.md).
+Section resources exist only for pages of at least 2,000 `cl100k_base` tokens and only when they halve both bytes and tokens, including repeated context. Both search indexes include eligible section titles, URLs, sizes, and any `standalone: true` declaration without duplicating section bodies. Fetch-only agents should start with `/llms.min.txt`, which links to full pages and declared standalone sections, directly or through topic indexes. Each compact index is limited to 2,000 `cl100k_base` tokens; growing topics split automatically. Standalone links retain sizes and full-page fallbacks. The larger compact JSON index is optional when more headings are needed. The human search box continues to open HTML page or heading links. See [Markdown section resources](https://www.shoalrun.com/author/markdown-metadata.md).
 
 ## HTML, Markdown, and agents
 

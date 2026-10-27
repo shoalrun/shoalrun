@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Definition lists
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Use `<DefinitionList>` for a compact glossary or configuration reference. Put alternating `<Term>` and `<Definition>` children inside it. Add `filter` when readers need to search a long list by term or definition text.
 

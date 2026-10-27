@@ -20,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > ApiExample and ApiSchema
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 `ApiExample` and `ApiSchema` reuse OpenAPI content in authored pages. Examples stay synchronized with named payloads; schemas expose selected field definitions in HTML and Markdown.
 

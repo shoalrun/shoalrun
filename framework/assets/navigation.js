@@ -4,47 +4,177 @@ const search = navigation?.querySelector('.nav-search');
 const filter = navigation?.querySelector('#nav-filter');
 if (filter) filter.placeholder = 'Find a page…';
 const mobile = matchMedia('(max-width: 72rem)');
-const sections = document.querySelector('.section-disclosure');
-if (sections) {
-  const updateSections = () => { sections.open = !mobile.matches || sections.contains(document.activeElement); };
-  updateSections();
-  mobile.addEventListener('change', updateSections);
-}
-// Narrow-screen supporting regions start closed. Never hide the focused control on resize.
-for (const disclosure of document.querySelectorAll('.nav-disclosure, .toc-disclosure')) {
-  const updateLayout = () => { disclosure.open = !mobile.matches || disclosure.contains(document.activeElement) || disclosure.parentElement === document.activeElement; };
-  updateLayout();
-  mobile.addEventListener('change', updateLayout);
+const sections = document.querySelector('.section-nav');
+const outline = document.querySelector('.page-toc');
+const outlineSlot = document.querySelector('.mobile-outline-slot');
+const outlineHome = outline ? document.createComment('Page outline') : null;
+outline?.before(outlineHome);
+const menuLink = document.querySelector('.mobile-menu');
+let openMenu;
+
+// Keep one copy of each navigation region. The static document stays readable
+// without scripts; only the enhanced mobile UI moves navigation into a dialog.
+if (menuLink && typeof HTMLDialogElement !== 'undefined' && HTMLDialogElement.prototype.showModal) {
+  const regions = [sections, navigation].filter(Boolean).map(node => {
+    const home = document.createComment('Navigation region');
+    node.before(home);
+    return { node, home };
+  });
+  const menu = document.createElement('button');
+  menu.type = 'button';
+  menu.className = menuLink.className;
+  menu.textContent = 'Menu';
+  menu.setAttribute('aria-haspopup', 'dialog');
+  menu.setAttribute('aria-controls', 'documentation-menu');
+  menu.setAttribute('aria-expanded', 'false');
+  menuLink.replaceWith(menu);
+  const dialog = document.createElement('dialog');
+  dialog.id = 'documentation-menu';
+  dialog.className = 'navigation-dialog';
+  dialog.setAttribute('aria-label', 'Documentation navigation');
+  const header = document.createElement('div');
+  header.className = 'navigation-dialog-header';
+  const title = document.createElement('strong');
+  title.textContent = 'Documentation';
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.textContent = 'Close';
+  close.setAttribute('aria-label', 'Close navigation');
+  close.autofocus = true;
+  header.append(title, close);
+  dialog.append(header);
+  document.body.append(dialog);
+  let readingPosition;
+  let opener;
+  const finishClose = (restoreFocus = true) => {
+    if (!readingPosition) return;
+    document.documentElement.classList.remove('navigation-open');
+    menu.setAttribute('aria-expanded', 'false');
+    if (restoreFocus) (opener?.isConnected ? opener : menu).focus({ preventScroll: true });
+    window.scrollTo({ ...readingPosition, behavior: 'instant' });
+    readingPosition = null;
+    opener = null;
+  };
+  const closeMenu = (restoreFocus = true) => {
+    if (dialog.open) dialog.close();
+    finishClose(restoreFocus);
+  };
+  openMenu = (trigger = menu) => {
+    if (!mobile.matches || dialog.open) return;
+    readingPosition = { left: scrollX, top: scrollY };
+    opener = trigger;
+    document.documentElement.classList.add('navigation-open');
+    menu.setAttribute('aria-expanded', 'true');
+    dialog.showModal();
+    // Reveal the current page without moving the underlying article.
+    const current = tree?.querySelector('[aria-current="page"]');
+    if (current) {
+      const top = header.getBoundingClientRect().bottom;
+      const rect = current.getBoundingClientRect();
+      if (rect.top < top || rect.bottom > innerHeight) dialog.scrollTop += rect.top - top - 16;
+    }
+  };
+  menu.addEventListener('click', () => openMenu(menu));
+  close.addEventListener('click', () => closeMenu());
+  dialog.addEventListener('cancel', event => { event.preventDefault(); closeMenu(); });
+  dialog.addEventListener('close', () => { if (!dialog.open) finishClose(); });
+  dialog.addEventListener('keydown', event => {
+    // Filtering consumes the first Escape; the next closes navigation.
+    if (event.key === 'Escape' && !event.defaultPrevented) {
+      event.preventDefault();
+      closeMenu();
+    }
+  });
+  const outside = event => {
+    const rect = dialog.getBoundingClientRect();
+    return event.target === dialog && (event.clientX < rect.left || event.clientX >= rect.right || event.clientY < rect.top || event.clientY >= rect.bottom);
+  };
+  let backdropPress = false;
+  dialog.addEventListener('pointerdown', event => { backdropPress = outside(event); });
+  dialog.addEventListener('click', event => {
+    if (backdropPress && outside(event)) closeMenu();
+    backdropPress = false;
+  });
+  const updateMenu = () => {
+    const active = document.activeElement;
+    const inRegion = regions.some(({ node }) => node.contains(active));
+    if (mobile.matches) {
+      for (const { node } of regions) {
+        dialog.append(node);
+        const disclosure = node.querySelector(':scope > details');
+        if (disclosure) disclosure.open = true;
+      }
+      // Do not hide a focused desktop control when shrinking the viewport.
+      if (inRegion) {
+        openMenu(menu);
+        const target = active.matches('.nav-disclosure > summary') ? close : active;
+        target.focus({ preventScroll: true });
+      }
+    } else {
+      closeMenu(false);
+      for (const { node, home } of regions) {
+        home.after(node);
+        const disclosure = node.querySelector(':scope > details');
+        if (disclosure) disclosure.open = true;
+      }
+      if (inRegion) active.focus({ preventScroll: true });
+      else if (active === menu || dialog.contains(active)) (navigation ?? sections).focus({ preventScroll: true });
+    }
+  };
+  updateMenu();
+  mobile.addEventListener('change', updateMenu);
 }
 
+const updateOutline = () => {
+  if (!outline || !outlineSlot) return;
+  const active = document.activeElement;
+  const focused = outline.contains(active);
+  if (mobile.matches) outlineSlot.append(outline);
+  else outlineHome.after(outline);
+  outline.querySelector('details').open = !mobile.matches || focused;
+  if (focused) active.focus({ preventScroll: true });
+};
+updateOutline();
+mobile.addEventListener('change', updateOutline);
 
-// Real fragment links work without scripts. Enhancement also opens disclosures
-// and moves focus, so the next Tab stays with the region the reader requested.
-const regionOpeners = new WeakMap();
+// Real fragment links remain the no-script fallback. Desktop skip links reveal
+// individually on focus, without inserting a new row into the reading layout.
 for (const link of document.querySelectorAll('[data-region-jump], [data-region-return]')) {
   link.addEventListener('click', event => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const region = document.getElementById(link.hash.slice(1));
     if (!region) return;
+    if (region === navigation && mobile.matches && openMenu) {
+      event.preventDefault();
+      openMenu(link);
+      return;
+    }
     const disclosure = region.querySelector(':scope > details');
     if (disclosure) disclosure.open = true;
-    if (link.hasAttribute('data-region-jump')) regionOpeners.set(region, link);
-    // Preserve native URL/history behavior; the target is outside its disclosure.
     region.focus({ preventScroll: true });
   });
 }
-for (const region of document.querySelectorAll('#docs-navigation, #page-outline')) {
-  region.addEventListener('keydown', event => {
-    if (event.key !== 'Escape' || event.defaultPrevented || !mobile.matches) return;
-    const disclosure = region.querySelector(':scope > details');
-    if (!disclosure?.open) return;
-    event.preventDefault();
-    const opener = regionOpeners.get(region);
-    // Move focus before closing so it never remains in a hidden descendant.
-    (opener?.isConnected ? opener : region).focus();
-    disclosure.open = false;
-  });
-}
+outline?.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || event.defaultPrevented || !mobile.matches) return;
+  const disclosure = outline.querySelector('details');
+  if (!disclosure.open) return;
+  event.preventDefault();
+  disclosure.querySelector('summary').focus({ preventScroll: true });
+  disclosure.open = false;
+});
+outline?.addEventListener('click', event => {
+  const link = event.target.closest('li a[href^="#"]');
+  if (!link || !mobile.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const heading = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+  if (!heading) return;
+  // Collapse before the native anchor scroll, so the destination does not move.
+  outline.querySelector('details').open = false;
+  if (!heading.hasAttribute('tabindex')) {
+    heading.tabIndex = -1;
+    heading.addEventListener('blur', () => heading.removeAttribute('tabindex'), { once: true });
+  }
+  heading.focus({ preventScroll: true });
+});
 
 if (tree && search && filter) {
   search.hidden = false;

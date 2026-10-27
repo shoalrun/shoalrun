@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Generated outputs
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -49,7 +49,7 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 - `/llms.txt` points agents to pages, contracts, and manifests. Every Markdown twin links back to the compact `/llms.min.txt` index and `/documents.json`; the compact index links to the detailed `/llms.txt` index.
 
-- `llms.min.txt` is the compact starting point for agents: one entry per published page variant with its stable ID, title, summary, and Markdown URL. Fictional examples retain their labels. Fetch a matching Markdown page next; a cold reader does not need the full manifest or search index. This site tests a discovery budget of 6,000 tokens with the `cl100k_base` tokenizer, excluding the selected page. Other sites and tokenizers can differ.
+- `llms.min.txt` is the compact starting point for agents. Small sites list page variants directly; larger sites link to topic indexes grouped by publication and primary taxonomy area, or page type when no area is declared. Growing topics split automatically. Each index stays within 2,000 `cl100k_base` tokens. Page entries retain stable IDs, titles, summaries, Markdown URLs, and fictional-example labels. Follow index links until you reach a matching page. All published pages remain reachable, including pages outside navigation; the complete catalog and search index remain optional.
 
 - `search-index.min.json` adds page headings to titles, summaries, IDs, types, publication variants, and URLs. It omits article text and reader segments. It is generated whenever the full search index is enabled. Both are static files, not query endpoints.
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Create a page
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Create a page from a template with `scaffold`. Templates prompt you for the page's frontmatter, an introduction, the main content, and related pages before you publish. This is the recommended authoring workflow for new pages.
 

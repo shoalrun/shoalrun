@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Focused OpenAPI contracts
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 A **focused contract** is a generated OpenAPI JSON file for one operation. It contains that operation's path and method, parameters, request and response definitions, named examples, and the schemas and security schemes those definitions use. The build resolves local references so the file stands on its own. Each API reference page links to its focused contract.
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Generated outputs
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -51,7 +51,7 @@ Consumers must tolerate unknown properties. Optional fields may be absent; absen
 | Sitemap                                                                                                           | Requires a site origin and enabled indexing.                                                        |
 | Markdown negotiation, redirect responses, caching, and HTTP 404 status                                            | Hosting behavior; the Node server and Vercel adapter implement it. Other hosts need matching rules. |
 
-Routes include the configured base path and publication prefixes. Start at `llms.min.txt` under that base path, choose a page by its ID, title, and summary, then fetch its Markdown URL. Fetch the manifest when you need structured metadata. Discovery cost depends on the corpus and tokenizer; the budget measured for this site is not a guarantee for every site.
+Routes include the configured base path and publication prefixes. Start at `llms.min.txt` under that base path, follow a matching topic index when present, then choose a page by its ID, title, and summary and fetch its Markdown URL. Fetch the manifest when you need structured metadata. Each compact index is limited to 2,000 `cl100k_base` tokens; total discovery cost depends on the number of indexes you read.
 
 A document's identity is `(id, channel, version, language)`, not its title, URL, or array position. The same ID in two publications identifies two records. That tuple must be unique in both the manifest and sync snapshot. Cite it with the resource URL; for sections, also retain section identity and parent/section digests. A manifest array pointer is a link into that snapshot, not a permanent document identifier.
 

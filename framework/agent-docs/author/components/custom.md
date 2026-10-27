@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Custom components > Overview
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 A component package adds a custom component, such as `<CopyText>`, that authors can use in their pages. Its `content()` function produces the content shown in both HTML and Markdown. An optional browser module adds interactive behavior.
 

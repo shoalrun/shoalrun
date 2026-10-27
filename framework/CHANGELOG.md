@@ -1,14 +1,17 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.9 — 2026-10-27
 
 - Documentation pages put the article before the full navigation in HTML, so
   readers and agents reach the page content sooner. Desktop sidebars stay on the
   left. On smaller screens, the article is followed by the outline/API examples
   and documentation navigation.
-- Top-of-page links open and focus navigation or the page outline, with links
-  back to the article. Keyboard focus stays visible across viewport changes;
-  native links and disclosures remain usable without JavaScript.
+- Desktop keyboard skip links appear on focus without adding a navigation row.
+  On narrow screens, one Menu button opens section links and page navigation in
+  a drawer; closing it restores focus and the article's scroll position.
+- The mobile page outline sits below the introduction in an On this page
+  disclosure. Navigation remains available through ordinary links and native
+  disclosures without JavaScript.
 
 ## 0.1.0-alpha.7 and 0.1.0-alpha.8 — 2026-10-26
 

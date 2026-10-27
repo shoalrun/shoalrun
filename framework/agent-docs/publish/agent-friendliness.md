@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Agent-friendly documentation
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-26.**
 
 Shoalrun lets people use an interactive documentation page while agents read a Markdown copy of the same instructions. Tabs, closed disclosures, and reader choices should not make essential content disappear from that copy.
 
@@ -97,18 +97,20 @@ The example is displayed as code here so you can read it. A test also runs it as
 
 ## Discover a page with a small context budget
 
-An agent does not need to download every discovery artifact. Start with [`/llms.min.txt`](https://www.shoalrun.com/llms.min.txt), select a matching page, and fetch its supplied Markdown URL. The compact list contains IDs, titles, summaries, publication labels, and full-page Markdown links. Nested section links appear only for author-declared standalone topics and include exact sizes plus a **Full page** fallback. Default to the full page for setup or broader questions. This site tests a 6,000-token discovery budget with the `cl100k_base` tokenizer, excluding the selected page. Other sites and tokenizers can differ.
+An agent does not need to download every discovery artifact. Start with [`/llms.min.txt`](https://www.shoalrun.com/llms.min.txt), follow a matching topic index when present, and fetch the supplied Markdown page URL. Small indexes list pages directly. Larger indexes group pages by publication and primary taxonomy area, or page type when no area is declared. Topics split into narrower indexes as they grow.
+
+Each compact or navigation-section index is limited to 2,000 `cl100k_base` tokens. This is a limit per response, not a fixed total for every reading task. Page entries retain IDs, titles, summaries, publication labels, and Markdown links. Author-declared standalone sections retain exact sizes and a **Full page** fallback. Default to the full page for setup or broader questions. Every published page remains reachable, including pages outside navigation.
 
 Choose another artifact only when the task needs it:
 
-| Resource                                                                  | When to use it                                                                              |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| [`llms.min.txt`](https://www.shoalrun.com/llms.min.txt)                   | Find full pages and declared standalone sections from a text list; follow the supplied URL. |
-| [`search-index.min.json`](https://www.shoalrun.com/search-index.min.json) | Inspect page headings as well as summaries, without article text.                           |
-| [`llms.txt`](https://www.shoalrun.com/llms.txt)                           | Browse grouped page links, API downloads, and discovery resources.                          |
-| [`documents.json`](https://www.shoalrun.com/documents.json)               | Read complete page metadata, digests, relationships, and contract links.                    |
-| [`documents.sync.json`](https://www.shoalrun.com/documents.sync.json)     | Compare a saved inventory with the current build.                                           |
-| [`build-info.json`](https://www.shoalrun.com/build-info.json)             | Check whether the assembled build has changed.                                              |
+| Resource                                                                  | When to use it                                                           |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [`llms.min.txt`](https://www.shoalrun.com/llms.min.txt)                   | Follow topic indexes to full pages and declared standalone sections.     |
+| [`search-index.min.json`](https://www.shoalrun.com/search-index.min.json) | Inspect page headings as well as summaries, without article text.        |
+| [`llms.txt`](https://www.shoalrun.com/llms.txt)                           | Browse grouped page links, API downloads, and discovery resources.       |
+| [`documents.json`](https://www.shoalrun.com/documents.json)               | Read complete page metadata, digests, relationships, and contract links. |
+| [`documents.sync.json`](https://www.shoalrun.com/documents.sync.json)     | Compare a saved inventory with the current build.                        |
+| [`build-info.json`](https://www.shoalrun.com/build-info.json)             | Check whether the assembled build has changed.                           |
 
 Both search indexes are generated when search indexing is enabled. The full `/search-index.json` includes bounded article text for browser search, CLI search, and custom lexical fallbacks. It remains available, but it is not needed to find a page through the compact list. These files are downloadable indexes, not query endpoints. Shoalrun does not produce `llms-full.txt`.
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Glossary
 
-**Updated: 2026-10-25.**
+**Updated: 2026-10-26.**
 
 This page defines the terms used across Shoalrun's documentation. Look a term up when a guide uses a word you don't know. Terms are sorted A to Z, and each definition links to the full guide. Filter the list by a term or a word in its definition, for example `publication` or `agent`. In the Markdown version, use your reader's Find command. To see how the main terms fit together, read [How Shoalrun works](https://www.shoalrun.com/concepts.md).
 

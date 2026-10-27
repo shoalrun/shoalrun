@@ -1,8 +1,7 @@
 ---
 id: change.mcp-hosting
 title: MCP hosting, analytics, and component improvements
-summary: Serve documentation tools, measure MCP calls, and build custom
-  components with shared HTML and Markdown content.
+summary: MCP hosting, analytics, and shared component content.
 type: changelog-entry
 area: discovery
 subarea: discovery-mcp
