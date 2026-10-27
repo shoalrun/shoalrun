@@ -13,9 +13,9 @@ date: 2026-10-13
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Changelog](https://www.shoalrun.com/.well-known/shoalrun/navigation/changelog-tab-50f26fe22670.txt) (ID: changelog-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Changelog](https://www.shoalrun.com/changelog.md) > Changelog > Portable working-tree authoring workflow
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Portable working-tree authoring workflow
 
 **Published: 2026-10-13.**
 

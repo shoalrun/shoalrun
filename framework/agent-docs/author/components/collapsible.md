@@ -13,11 +13,11 @@ canonical: /author/components/collapsible
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Collapsibles
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Collapsibles
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 `<Collapsible>` keeps supporting detail near the main instructions. Use it for material readers may need, but do not need to see before taking the next step. Its body is present in the initial HTML even when closed, and fully expanded in the Markdown twin.
 
@@ -32,6 +32,10 @@ Pages with draft access stay out of the public build.
 ### Why is this page a draft?
 
 Pages with draft access stay out of the public build.
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute | Required | Meaning                                                     |
 | --------- | -------- | ----------------------------------------------------------- |

@@ -12,11 +12,11 @@ canonical: /author/components/timeline
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Timelines
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Timelines
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-27.**
 
 Use `<Timeline>` to show progress through an ordered set of milestones. Set `current` to the `id` of the milestone in progress. Earlier milestones become complete; later milestones become upcoming.
 
@@ -28,7 +28,9 @@ This is a **read-only progress display**. Readers can see the current stage, but
 - Show where a proposal sits in a draft, review, and approval process.
 - Show progress through a published migration or deprecation plan.
 
-An optional simulation mode could let readers move through the milestones to see each stage of a process. The current component shows only the published state; it has no next, previous, or reset controls.
+The component shows only the published state; it has no next, previous, or reset controls.
+
+## Syntax
 
 ```mdx
 <Timeline current="review">
@@ -59,6 +61,10 @@ Make the approved guide available to readers.
    Make the approved guide available to readers.
 
 The bar counts **completed** milestones. In this example it shows 1 of 3 complete; Review is still in progress. The current milestone also has a visible status label, and the HTML list marks it with `aria-current="step"`. The bar uses a native `<progress>` element with an accessible name. Markdown includes the same progress summary and status labels.
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute | Where       | Required | Meaning                                                                         |
 | --------- | ----------- | -------- | ------------------------------------------------------------------------------- |

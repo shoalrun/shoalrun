@@ -9,13 +9,13 @@ This package provides the `shoalrun` CLI, starter projects, agent skills, and of
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.11
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.12
 ```
 
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.11 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.12 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
@@ -25,15 +25,15 @@ Commit the updated package manifest and lockfile together. Check that the lockfi
 Run these commands from the directory where you installed the package:
 
 ```sh
-npx shoalrun init my-docs --starter showcase
-npx shoalrun build my-docs/docs.config.yaml my-docs/site-dist
-npx shoalrun serve my-docs/site-dist --port 8770
+npx --no-install shoalrun init my-docs --starter showcase
+npx --no-install shoalrun build my-docs/docs.config.yaml my-docs/site-dist
+npx --no-install shoalrun serve my-docs/site-dist --port 8770
 ```
 
 Open <http://127.0.0.1:8770/>. Edit the pages in `my-docs/content/` and the site settings and navigation in `my-docs/docs.config.yaml`. Rebuild to update the preview, or use the development server to rebuild on changes:
 
 ```sh
-npx shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
+npx --no-install shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
 ```
 
 Stop the existing preview with Ctrl-C before starting the development server on the same port. Choose **Explore the starter**, the first item in the left navigation, to find component examples, diagrams, reader views, themes, and generated API references. The service and API hosts are fictional; replace them before sending requests. Choose `--starter minimal` for a smaller starting point or `--starter api-docs` for a focused OpenAPI example. All three starters build without provider credentials.
@@ -43,8 +43,8 @@ Stop the existing preview with Ctrl-C before starting the development server on 
 Shoalrun works with your existing coding agent. Its packaged skills explain how to set up a site, edit pages, and develop components:
 
 ```sh
-npx shoalrun skills list
-npx shoalrun skills read shoalrun-setup
+npx --no-install shoalrun skills list
+npx --no-install shoalrun skills read shoalrun-setup
 ```
 
 Ask your agent to read the skill for the task. `skills list` returns names, descriptions, and local instruction-file paths. These commands read the skills; installing the npm package does not automatically install them into your agent.
@@ -52,9 +52,9 @@ Ask your agent to read the skill for the task. `skills list` returns names, desc
 The usual editing workflow is to capture a baseline, edit source files, validate the changes, then review a local preview. From your documentation project directory:
 
 ```sh
-npx shoalrun docs baseline --out .shoalrun/task-baseline.json
+npx --no-install shoalrun docs baseline --out .shoalrun/task-baseline.json
 # Edit your pages and configuration.
-npx shoalrun docs validate --baseline .shoalrun/task-baseline.json
+npx --no-install shoalrun docs validate --baseline .shoalrun/task-baseline.json
 ```
 
 Validation returns a report path. Pass that path to `shoalrun docs review` and `shoalrun docs preview`. Snapshot validation can render affected draft pages while preserving their draft access; ordinary site builds exclude drafts. Supply your own project writing and review requirements—the starter does not define them for you.
@@ -64,10 +64,12 @@ Validation returns a report path. Pass that path to `shoalrun docs review` and `
 Read the documentation bundled with your installed version without a provider key or website connection:
 
 ```sh
-npx shoalrun --help
-npx shoalrun docs search "Steps" --json
-npx shoalrun docs read guide.component.steps --json
+npx --no-install shoalrun --help
+npx --no-install shoalrun docs search "Steps" --json
+npx --no-install shoalrun docs read guide.component.steps --json
 ```
+
+Alpha.12 includes the reviewed documentation refresh: clearer organization, installed-package workflows, and consistent explanations of HTML, Markdown, and agent behavior. The bundled snapshot stays fixed until you upgrade the package.
 
 See the [authoring command reference](AUTHORING.md) for project inspection, validation, report schemas, and the public authoring API. Visit [shoalrun.com](https://www.shoalrun.com) for the full documentation; it may describe changes newer than your installed package.
 
@@ -103,7 +105,7 @@ Export pages from the same source into a portable directory for an application's
 help drawer, onboarding screens, or other content surfaces:
 
 ```sh
-npx shoalrun export docs.config.yaml --out app/public/help --public-base /help/
+npx --no-install shoalrun export docs.config.yaml --out app/public/help --public-base /help/
 ```
 
 The command writes `manifest.json`, resolved Markdown, passive HTML fragments,

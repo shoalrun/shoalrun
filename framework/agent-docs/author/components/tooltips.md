@@ -13,11 +13,11 @@ canonical: /author/components/tooltips
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Tooltips
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Tooltips
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<Tooltip>` for brief supporting text beside a term. The text appears when readers hover over or focus the label. Use [Short definitions](https://www.shoalrun.com/author/components/info-hint.md) for click-to-expand explanations, or a [callout](https://www.shoalrun.com/author/components/callout.md) for warnings and instructions that belong in the reading path.
 
@@ -28,6 +28,10 @@ Compare the <Tooltip label="build digest">A fingerprint of the published build's
 ```
 
 Compare the build digest (A fingerprint of the published build's content.) before refreshing your cache.
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute | Required | Meaning                                       |
 | --------- | -------- | --------------------------------------------- |

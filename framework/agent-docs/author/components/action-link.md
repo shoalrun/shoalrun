@@ -13,13 +13,15 @@ canonical: /author/components/action-link
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Action links
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Action links
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-27.**
 
 `<ActionLink>` styles a navigation link as a prominent action. `<Button>` is an alias for authors migrating button-like links. Both render a real `<a>` element, so they work with keyboard navigation and without JavaScript.
+
+## Syntax
 
 ```mdx
 <ActionLink doc="guide.add-page">Create a page</ActionLink>
@@ -28,6 +30,10 @@ Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write docume
 
 [Create a page](https://www.shoalrun.com/author/add-page.md)
 [Download example](https://example.com/download)
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute       | Required | Meaning                                                                    |
 | --------------- | -------- | -------------------------------------------------------------------------- |

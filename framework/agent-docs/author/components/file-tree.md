@@ -12,13 +12,15 @@ canonical: /author/components/file-tree
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > File trees
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > File trees
 
-**Updated: 2026-10-19.**
+**Updated: 2026-10-27.**
 
 `<FileTree>` shows a file layout or other hierarchy. `<Tree>` is an alias. Add `<Folder>` branches and `<File>` leaves; folders may contain more folders or files.
+
+## Syntax
 
 ```mdx
 <FileTree>
@@ -51,6 +53,8 @@ Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write docume
   - docs.config.yaml
 
 - package.json
+
+## Attributes
 
 Every node needs a nonempty `name`. Folders and files get icons automatically, and a folder’s icon changes when it opens. Optional `doc` or `href` makes its label a link; use only one. Optional `icon` accepts a lowercase Lucide name to override the default. `<File>` cannot have children.
 

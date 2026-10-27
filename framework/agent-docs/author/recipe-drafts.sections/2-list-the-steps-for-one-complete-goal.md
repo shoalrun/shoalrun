@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/recipe-drafts.md)
 
@@ -45,7 +45,7 @@ title: Build and audit this documentation site
 summary: Build current documentation and run the configured audits.
 slug: /recipes/audit-docs
 inputs:
-  repositoryCheckout: A local Shoalrun checkout with dependencies installed.
+  repositoryCheckout: The documentation repository and its package lockfile.
   DOC_ID: Set the stable ID of the page you want to check.
 ingredients:
   - ../content/ingredient-compile-framework.mdx
@@ -55,6 +55,6 @@ ingredients:
 outcome: The build succeeds, both page formats exist, and configured audits pass.
 ```
 
-Paths are relative to this spec file. The initial `inputs` are available before the first ingredient. The compile ingredient produces `frameworkCli`; the build ingredient requires it and produces `builtSite`; the artifact-check ingredient requires that build and `DOC_ID`.
+Paths are relative to this spec file. The initial `inputs` are available before the first ingredient. The installation ingredient produces `frameworkCli`; the build ingredient requires it and produces `builtSite`; the artifact-check ingredient requires that build and `DOC_ID`.
 
 The assembler rejects a missing input, repeated output name, repeated ingredient ID, or publication mismatch. It does not choose an order for you or verify that an output has the described value. The `outcome` is the final check for the complete recipe; omitting it leaves a prompt for the author to complete.

@@ -15,9 +15,9 @@ canonical: /configuration
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -93,11 +93,11 @@ The project inherits publications, page defaults, the stylesheet, variables, and
 Check the final values and build:
 
 ```sh
-node "$SHOALRUN_CLI" config explain site.title docs.config.yaml
-node "$SHOALRUN_CLI" config explain site.header.links docs.config.yaml
-node "$SHOALRUN_CLI" config explain site.customCss docs.config.yaml
-node "$SHOALRUN_CLI" config validate docs.config.yaml
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun config explain site.title docs.config.yaml
+npx --no-install shoalrun config explain site.header.links docs.config.yaml
+npx --no-install shoalrun config explain site.customCss docs.config.yaml
+npx --no-install shoalrun config validate docs.config.yaml
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 `site.title` comes from the local file, with the preset in its replacement history. `site.customCss` comes from `shared/base.yaml`, so `./brand.css` resolves beside that preset.

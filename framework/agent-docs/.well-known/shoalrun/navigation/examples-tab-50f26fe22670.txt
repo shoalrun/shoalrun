@@ -1,0 +1,22 @@
+# Examples
+
+Full-page token counts use cl100k_base. Navigation section ID: examples-tab. Publication: production/current/en.
+
+[All sections and published pages](https://www.shoalrun.com/llms.min.txt). This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.
+
+Choose a topic index below, then follow a matching page or narrower index. All published pages in this scope remain reachable, including pages outside navigation.
+
+
+- [API documentation](/.well-known/shoalrun/navigation/examples-tab-50f26fe22670-indexes/ea97da4000b0c4ddfd69fa8c.txt): scoped index.
+
+- [Site appearance](/.well-known/shoalrun/navigation/examples-tab-50f26fe22670-indexes/ccbd7ed463b8cd3112e9740e.txt): scoped index.
+
+- [Authoring](/.well-known/shoalrun/navigation/examples-tab-50f26fe22670-indexes/b240b4f0095dcac710d3d244.txt): scoped index.
+
+- [Content components](/.well-known/shoalrun/navigation/examples-tab-50f26fe22670-indexes/0192a1b49bb31c8f8d9bce80.txt): scoped index.
+
+- [Search & discovery](/.well-known/shoalrun/navigation/examples-tab-50f26fe22670-indexes/adbd3bda7ff4c15a893b0dbd.txt): scoped index.
+
+- [Publishing](/.well-known/shoalrun/navigation/examples-tab-50f26fe22670-indexes/90e999b5c3e3ef0d2bd3ce4e.txt): scoped index.
+
+- [Quality & measurement](/.well-known/shoalrun/navigation/examples-tab-50f26fe22670-indexes/e27cd9625df147549caa6261.txt): scoped index.

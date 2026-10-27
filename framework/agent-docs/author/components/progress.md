@@ -12,11 +12,11 @@ canonical: /author/components/progress
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Progress
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Progress
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<Progress>` for a published count in a tutorial or migration guide. It shows the amount completed as text and as a bar. Update the source and rebuild the site when the shared state changes.
 
@@ -27,6 +27,10 @@ Use `<Progress>` for a published count in a tutorial or migration guide. It show
 ```
 
 Migration tasks: 3 of 5 complete.
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute | Required | Meaning                                                                     |
 | --------- | -------- | --------------------------------------------------------------------------- |

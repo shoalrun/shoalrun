@@ -12,11 +12,11 @@ canonical: /author/components/callout
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Callouts
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Callouts
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 `<Callout>` highlights a short message in the reading flow. Use a type that matches the message's purpose. The type sets the HTML color and decorative icon, while a visible label carries the meaning in both HTML and Markdown.
 
@@ -32,6 +32,8 @@ Choose a callout type that matches the information readers need to notice.
 | `warning`   | A possible problem readers can avoid.                         |
 | `caution`   | A higher-risk action or consequence that needs extra care.    |
 
+## Syntax
+
 ```mdx
 <Callout type="warning">Use a fresh idempotency key for a new payment.</Callout>
 ```
@@ -46,7 +48,9 @@ Choose a callout type that matches the information readers need to notice.
 
 > **Caution:** Review the target environment before deleting data.
 
-## Attributes and defaults
+## Attributes
+
+### Attributes and defaults
 
 Use these attributes to set the callout type and its visible title.
 

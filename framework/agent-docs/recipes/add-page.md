@@ -13,9 +13,9 @@ canonical: /recipes/add-page
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Add a page to this documentation site
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Add a page to this documentation site
 
 **Updated: 2026-10-27.**
 
@@ -27,7 +27,6 @@ Create a guide, add navigation, build and audit it, then refresh its agent docum
 - `repositoryCheckout`: This documentation repository with its pinned package and lockfile.
 - Run commands from the documentation repository root.
 - Use Node.js 22.12 or newer.
-- Use Node.js 22.12 or newer and install site dependencies with `npm ci` if needed.
 - Install Vale 3.20 or newer for this repository's configured formatting check.
 
 ## Install the site dependencies
@@ -150,6 +149,7 @@ Save `auditPassed`: A successful audit report with no failed configured checks.
 ## Regenerate the agent documentation bundle
 
 - Use `frameworkCli` from **Install the site dependencies**: The pinned Shoalrun package installed for this site.
+- Use `builtSite` from **Build the Shoalrun docs site**: The successful current site build at docs/dist.
 
 Export the already built site for the framework’s next documentation snapshot:
 

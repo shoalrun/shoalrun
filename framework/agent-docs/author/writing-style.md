@@ -13,11 +13,11 @@ canonical: /author/writing-style
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Shared writing guidance > Example writing guide
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
 
@@ -44,7 +44,15 @@ Choose the page type by the reader's goal and the actual content. Keep one prima
 | Cookbook        | Choose between complete recipes.               | Explain who each path is for, what it needs, and what it produces; link to the published recipe pages. State whether choices are alternatives or can be combined.                       |
 | Changelog entry | Understand a dated change.                     | User-visible behavior, scope, migration when needed, and limitations. Say when a change concerns the private prototype; claim a release only with release evidence.                     |
 
-These are editorial shapes, not mandatory heading names. Follow the [template rules](https://www.shoalrun.com/author/templates.md) and adapt the outline to the reader's need. Headings in a page body start at level two because the renderer supplies the title. Do not add step numbers to authored headings. For a procedure with titled steps, use the [Steps component](https://www.shoalrun.com/author/components/steps.md); it supplies the numbering in HTML and Markdown.
+Use **Before you begin**, **Check the result**, and **Next steps** for recurring task sections when revising a procedure. Keep action headings specific to the task. Existing tutorials can retain established headings when tools or incoming fragments depend on them. A short procedure may put prerequisites in its introduction; omit sections that add no useful information.
+
+Component references use **Syntax**, **Attributes**, and **HTML, Markdown, and agents** for predictable lookup. Document required values, defaults, accepted types, and constraints in Attributes; say when a component takes no attributes. Keep feature-specific examples and errors under descriptive headings. Fenced-code options and configured site features can use their own precise labels. Preserve old fragment IDs when changing a heading.
+
+Use **Next steps** to continue a task and **Related reading** for supporting reference or explanation. Describe why to follow each link. Keep demo headings separate from the page's instructional outline where possible.
+
+Run customer commands from a project with the pinned npm package installed, using `npx --no-install shoalrun`. Label contributor-only paths and repository scripts explicitly. Do not assume the quickstart compiled a framework checkout. Recipes maintained through composition must declare every required artifact, including a current build before an export.
+
+These are editorial shapes, not a reason to add empty boilerplate. Follow the [template rules](https://www.shoalrun.com/author/templates.md) and adapt the outline to the reader's need. Headings in a page body start at level two because the renderer supplies the title. Do not add step numbers to authored headings. For a procedure with titled steps, use the [Steps component](https://www.shoalrun.com/author/components/steps.md); it supplies the numbering in HTML and Markdown.
 
 ## Voice and explanations
 
@@ -97,7 +105,9 @@ Choose the structure that helps readers use the information or complete the task
 
 Introduce every table with a sentence explaining what readers should use it for. Never place a table directly after a heading. The formatting check enforces this rule with `DocShape.TableIntroduction`.
 
-Do not hide an essential instruction inside decoration. For component references, include supported syntax, attributes and limits, and an **HTML, Markdown, and agents** section. Explain keyboard behavior when there are controls, behavior without JavaScript, and the content available in Markdown. Check both rendered outputs.
+Do not hide an essential instruction inside decoration. Every page documenting a component or presentation feature needs an **HTML, Markdown, and agents** section, or an existing clearly named equivalent. Explain what HTML shows or lets readers do, what Markdown retains or omits, and how an agent gets the information needed for the task. Include limitations and keyboard or JavaScript behavior when relevant. Check both rendered outputs.
+
+A page that merely uses a callout, link, or Steps component needs the section only when that use changes access to information. Avoid generic claims that both formats are identical: explain the actual representation. Cookbook pages must distinguish their recipe links from the complete instructions in the linked recipes or a downloaded selection.
 
 ## Evidence and uncertainty
 

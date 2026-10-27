@@ -15,9 +15,9 @@ canonical: /styling/share-images
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Share images and favicon
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Share images and favicon
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 When someone pastes a page link into Slack, LinkedIn, or X, the preview shows an image. Shoalrun draws one for every page at build time and adds the tags those apps read. It also generates a favicon. Both follow the site's preset and palette, so they need no setup.
 
@@ -97,6 +97,10 @@ site:
 ```
 
 A missing file or another format fails the build.
+
+## HTML, Markdown, and agents
+
+Share images are generated image files referenced by the HTML page's social metadata. The image is not a substitute for the page's authored title, summary, or instructions. Agents reading Markdown receive the text and any metadata selected for that format, without needing to interpret a social preview image. Keep information needed for a task in the page body.
 
 ## Related reading
 

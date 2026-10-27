@@ -13,11 +13,11 @@ canonical: /author/css
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > CSS and theme reference
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > CSS and theme reference
 
-**Updated: 2026-10-25.**
+**Updated: 2026-10-27.**
 
 The built site loads `/assets/site.css`, which imports `/assets/tokens.css`. To customize a project, set `site.customCss` to a local stylesheet. The build copies it to `/assets/project.css` and links it after the framework CSS on every HTML page. Paths resolve from the config file that declares them, including imported config fragments. The stylesheet is a build dependency, so changes are picked up on rebuild.
 
@@ -194,7 +194,6 @@ Use these selectors when a change needs to target a specific region or component
 | `.walkthrough-step-number`, `.walkthrough-lines`, `.walkthrough-code`, `.line`, `.line.is-highlighted`, `pre[data-focus]`                                                                                                | Step labels, walkthrough code, and highlighted lines. Set `--walkthrough-highlight`, `--walkthrough-highlight-edge`, and `--walkthrough-dim` on `.walkthrough` to change the highlight color, its left edge, and the opacity of other lines. |
 | `.walkthrough.is-split`, `.walkthrough-step.is-active`, `.walkthrough-pane`, `.walkthrough-bar`, `.walkthrough-status`, `.walkthrough-stage`, `[data-k]`, `.walkthrough-ghost`, `.walkthrough-step-button`               | The side-by-side layout the walkthrough script adds on wide screens. It covers the active step, the sticky code pane and its toolbar, the moving tokens, and spotlight step buttons.                                                         |
 | `.related-reading`                                                                                                                                                                                                       | [RelatedReading](https://www.shoalrun.com/author/components/related-reading.md) wrapper.                                                                                                                                                     |
-| `.theme-preview`, `[data-theme-preview]`, `.theme-preview-title`, `.theme-preview-controls`, `.theme-preview-fields`, `.theme-preview-config`, `.theme-preview-status`                                                   | [Theme previewer](https://www.shoalrun.com/styling/try.md) panel. Its styles load from `/assets/theme-preview.css` only on pages that use it.                                                                                                |
 | `.example-choices`                                                                                                                                                                                                       | Example selector in the API panel.                                                                                                                                                                                                           |
 | `.doc-diagram`, `.doc-diagram-svg`, `.pele`, `.diagram-light`, `.diagram-dark`, `.doc-diagram figcaption`                                                                                                                | [Diagram](https://www.shoalrun.com/author/components/diagrams.md) frame, inline Pele SVG, D2 color-mode images, and caption.                                                                                                                 |
 
@@ -204,12 +203,12 @@ The navigation filter appears when JavaScript runs; without it, the navigation t
 
 The `html` element carries attributes that project CSS can use to target one theme, mode, or layout:
 
-| Attribute                    | Set when                                                                                                                                         | Values                         |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
-| `data-theme`, `data-palette` | The site uses a preset, palette, or mode other than the defaults. The [theme previewer](https://www.shoalrun.com/styling/try.md) also sets them. | Preset and palette names.      |
-| `data-mode`                  | A reader chose light or dark with the [mode toggle](https://www.shoalrun.com/styling/color-modes.md).                                            | `light` or `dark`.             |
-| `data-masthead`              | The preset has an inked masthead: `ledger` and `vice`.                                                                                           | `inked`                        |
-| `data-layout`                | The page sets `layout: wide`, `landing`, or `splash`.                                                                                            | `wide`, `landing`, or `splash` |
+| Attribute                    | Set when                                                                                              | Values                         |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `data-theme`, `data-palette` | The site uses a preset, palette, or mode other than the defaults.                                     | Preset and palette names.      |
+| `data-mode`                  | A reader chose light or dark with the [mode toggle](https://www.shoalrun.com/styling/color-modes.md). | `light` or `dark`.             |
+| `data-masthead`              | The preset has an inked masthead: `ledger` and `vice`.                                                | `inked`                        |
+| `data-layout`                | The page sets `layout: wide`, `landing`, or `splash`.                                                 | `wide`, `landing`, or `splash` |
 
 `shoal` is the default preset, so a default site has no `data-theme`. To target `shoal` either way, use `:root:is(:not([data-theme]), [data-theme="shoal"])`:
 
@@ -236,3 +235,7 @@ In browsers that support cross-document view transitions, the reading column fad
 ```
 
 The publication label adjusts automatically. A single channel, version, and language leaves the top-right spot empty. When one dimension varies, only that dimension appears. Set `site.editionBadge: always` to show all three values or `site.editionBadge: never` to hide the label. `auto` is the default.
+
+## HTML, Markdown, and agents
+
+Project CSS changes the HTML presentation. It is not included in Markdown twins, and a text-reading agent does not apply selectors, pseudo-elements, or responsive rules. Put essential instructions and labels in authored content rather than CSS-generated text. Hiding an element with CSS does not remove its content from the published Markdown or protect it from access.

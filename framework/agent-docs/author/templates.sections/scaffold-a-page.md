@@ -14,11 +14,11 @@ canonical: /author/templates
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Templates
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/templates.md)
 
@@ -34,18 +34,18 @@ Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose
 
 ## Scaffold a page
 
-Use a built-in template, or a template registered by your project. From the project directory, with `SHOALRUN_CLI` set as in the [quickstart](https://www.shoalrun.com/start.md):
+Use a built-in template, or a template registered by your project. From the project directory, with `@shoalrun/cli` installed as in the [quickstart](https://www.shoalrun.com/start.md):
 
 ```sh
-node "$SHOALRUN_CLI" scaffold how-to -n content/track-parcel.mdx
+npx --no-install shoalrun scaffold how-to -n content/track-parcel.mdx
 ```
 
 Follow [create a page](https://www.shoalrun.com/author/add-page.md) to complete the draft, review it, set public access, and add it to navigation. Register a custom template only when your project needs a different starting structure.
 
-The built-in `api-reference` template needs `--operation`. To scaffold from it, run this explicit form from the **repository root**:
+The built-in `api-reference` template needs `--operation`. To scaffold from it, run this form from your documentation project after [registering the operation](https://www.shoalrun.com/publish/api-references.md):
 
 ```sh
-node framework/dist/cli.js scaffold api-reference docs/docs.config.yaml docs/content/new-operation.mdx \
+npx --no-install shoalrun scaffold api-reference docs.config.yaml content/new-operation.mdx \
   --id reference.new --title 'New operation' --summary 'Create a thing.' --slug /reference/new \
   --operation notes.create
 ```

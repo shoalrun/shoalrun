@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use ingredients when several recipes share instructions you want to maintain in one place. This guide follows Shoalrun's **Build and audit this documentation site** recipe from its source files to its published page.
 
@@ -49,18 +49,18 @@ language: en
 access: { policy: public }
 workflow:
   inputs:
-    frameworkCli: The CLI compiled from this checkout.
+    frameworkCli: The pinned Shoalrun package installed for this site.
   outputs:
     builtSite: The successful site build at docs/dist.
   prerequisites:
-    - Run commands from the Shoalrun repository root.
+    - Run commands from the documentation repository root.
   check: "The build reports status: ok."
 ---
 
-Use the compiled CLI to build the documentation:
+Use the installed CLI to build the documentation:
 
 ```sh
-node framework/dist/cli.js build docs/docs.config.yaml docs/dist
+npx --no-install shoalrun build docs/docs.config.yaml docs/dist
 ```
 
 If the build fails, fix the named source or configuration issue and rerun it.
@@ -90,7 +90,7 @@ title: Build and audit this documentation site
 summary: Build current documentation and run the configured audits.
 slug: /recipes/audit-docs
 inputs:
-  repositoryCheckout: A local Shoalrun checkout with dependencies installed.
+  repositoryCheckout: The documentation repository and its package lockfile.
   DOC_ID: Set the stable ID of the page you want to check.
 ingredients:
   - ../content/ingredient-compile-framework.mdx
@@ -100,17 +100,17 @@ ingredients:
 outcome: The build succeeds, both page formats exist, and configured audits pass.
 ```
 
-Paths are relative to this spec file. The initial `inputs` are available before the first ingredient. The compile ingredient produces `frameworkCli`; the build ingredient requires it and produces `builtSite`; the artifact-check ingredient requires that build and `DOC_ID`.
+Paths are relative to this spec file. The initial `inputs` are available before the first ingredient. The installation ingredient produces `frameworkCli`; the build ingredient requires it and produces `builtSite`; the artifact-check ingredient requires that build and `DOC_ID`.
 
 The assembler rejects a missing input, repeated output name, repeated ingredient ID, or publication mismatch. It does not choose an order for you or verify that an output has the described value. The `outcome` is the final check for the complete recipe; omitting it leaves a prompt for the author to complete.
 
 ## 3. Generate a draft and review it
 
-From this repository's root, compile the CLI and preview the draft using the existing spec:
+This example uses Shoalrun's documentation repository and its recipe sources. From that repository's root, install its dependencies and preview a draft:
 
 ```sh
-npm --prefix framework run build
-node framework/dist/cli.js recipe draft \
+npm ci
+npx --no-install shoalrun recipe draft \
   --config docs/docs.config.yaml \
   --spec docs/recipe-specs/audit-docs.yaml \
   --out /tmp/shoalrun-audit-recipe.mdx --check
@@ -139,7 +139,7 @@ This repository maintains five recipes from specs under `docs/recipe-specs/`. Th
 After reviewing ingredient or spec changes, run:
 
 ```sh
-node framework/scripts/build-shoalrun-recipes.mjs --write
+node scripts/build-shoalrun-recipes.mjs --write
 git diff -- docs/content/recipe-*.mdx
 npm run docs:build
 npm run agent-docs:build
@@ -150,19 +150,19 @@ The script replaces the five recipe bodies with their compositions and related-r
 To check freshness without changing files:
 
 ```sh
-node framework/scripts/build-shoalrun-recipes.mjs --check
+node scripts/build-shoalrun-recipes.mjs --check
 ```
 
 The test suite runs that check too. General `recipe draft` output has no automatic synchronization: it is an editable snapshot. The maintenance script above is this repository's explicit workflow for keeping its published recipes in sync.
 
 ## Start an ingredient from an API example
 
-`ingredient draft` creates starting material from one configured outgoing API operation and a named request example. For the included notification fixture:
+`ingredient draft` creates starting material from one configured outgoing API operation and a named request example. From a project with Shoalrun installed, use the bundled notification example:
 
 ```sh
-node framework/dist/cli.js ingredient draft \
-  --config framework/example-configs/notifications/docs.config.yaml \
-  --spec framework/example-configs/notifications/ingredient-specs/queue-welcome-email.yaml \
+npx --no-install shoalrun ingredient draft \
+  --config node_modules/@shoalrun/cli/example-configs/notifications/docs.config.yaml \
+  --spec node_modules/@shoalrun/cli/example-configs/notifications/ingredient-specs/queue-welcome-email.yaml \
   --out /tmp/shoalrun-email-ingredient.mdx --check
 ```
 

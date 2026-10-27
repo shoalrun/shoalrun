@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/recipe-drafts.md)
 
@@ -51,18 +51,18 @@ language: en
 access: { policy: public }
 workflow:
   inputs:
-    frameworkCli: The CLI compiled from this checkout.
+    frameworkCli: The pinned Shoalrun package installed for this site.
   outputs:
     builtSite: The successful site build at docs/dist.
   prerequisites:
-    - Run commands from the Shoalrun repository root.
+    - Run commands from the documentation repository root.
   check: "The build reports status: ok."
 ---
 
-Use the compiled CLI to build the documentation:
+Use the installed CLI to build the documentation:
 
 ```sh
-node framework/dist/cli.js build docs/docs.config.yaml docs/dist
+npx --no-install shoalrun build docs/docs.config.yaml docs/dist
 ```
 
 If the build fails, fix the named source or configuration issue and rerun it.

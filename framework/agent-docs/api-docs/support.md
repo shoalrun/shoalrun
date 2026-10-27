@@ -13,11 +13,11 @@ canonical: /api-docs/support
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > OpenAPI support and limits
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > API support > OpenAPI support and limits
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Shoalrun renders a defined subset of OpenAPI into HTML, Markdown, and focused contracts. Check these limits before importing a large specification. A supported OpenAPI version does not mean every feature in that version can be rendered.
 
@@ -77,7 +77,7 @@ Avoid removing source semantics silently. If your API needs an unsupported featu
 With the CLI built as in the [quickstart](https://www.shoalrun.com/start.md), run:
 
 ```sh
-node "$SHOALRUN_CLI" api audit apis/notes/openapi.yaml
+npx --no-install shoalrun api audit apis/notes/openapi.yaml
 ```
 
 The audit renders every operation in the supplied source and checks field anchors and named examples across HTML and Markdown. It reports every unsupported schema keyword it finds for each operation, with the source file and schema location, before the strict renderer runs. It can reveal unsupported features beyond the operations you initially plan to publish. It does not call a live API or establish complete semantic fidelity.

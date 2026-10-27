@@ -14,9 +14,9 @@ canonical: /styling/color-modes
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Light and dark mode
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Light and dark mode
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Every [palette](https://www.shoalrun.com/styling/palettes.md) has a light set and a dark set. `theme.mode` decides which set readers see.
 
@@ -75,6 +75,10 @@ Target a mode in project CSS with `[data-mode="dark"]`, or with `prefers-color-s
 ```
 
 Code blocks stay dark in both modes. By default, their syntax colors come from the palette's dark set. The [code block guide](https://www.shoalrun.com/author/components/code-blocks.md) explains how to change it.
+
+## HTML, Markdown, and agents
+
+Light and dark mode change HTML colors, not the authored content. Without JavaScript, system mode follows the operating system preference and the toggle stays hidden. Markdown has no color toggle or saved browser preference; agents receive the same text, code, and links regardless of the chosen mode. Use visible labels for meaning that color reinforces.
 
 ## Related reading
 

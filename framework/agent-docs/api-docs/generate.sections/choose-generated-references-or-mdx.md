@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/api-docs/generate.md)
 
@@ -31,7 +31,7 @@ Parent page: [Full Markdown page](/api-docs/generate.md)
 
 - [Organize site navigation](https://www.shoalrun.com/author/navigation.md) — Arrange selected operations in the site menu.
 
-Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references.md). Use generation when you want references for many operations without writing an MDX page for each one. The commands below run in your documentation project with `SHOALRUN_CLI` set as in the quickstart.
+Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references.md). Use generation when you want references for many operations without writing an MDX page for each one. The commands below run in your documentation project with `@shoalrun/cli` installed as in the [quickstart](https://www.shoalrun.com/start.md).
 
 ## Choose generated references or MDX
 
@@ -40,9 +40,9 @@ Use build-time generated references when the OpenAPI contract already gives read
 The one-time `api materialize` command creates draft MDX references for every endpoint or selected source operation IDs or method/path routes. It does not change config or navigation and never rewrites an existing page. For example:
 
 ```sh
-node "$SHOALRUN_CLI" api materialize notes docs.config.yaml --all
-node "$SHOALRUN_CLI" api materialize notes docs.config.yaml --operation getNote
-node "$SHOALRUN_CLI" api materialize notes docs.config.yaml --route 'GET /notes/{id}'
+npx --no-install shoalrun api materialize notes docs.config.yaml --all
+npx --no-install shoalrun api materialize notes docs.config.yaml --operation getNote
+npx --no-install shoalrun api materialize notes docs.config.yaml --route 'GET /notes/{id}'
 ```
 
 The default destination is `content/api/<api-id>/`; use `--output` for another directory inside the configured content tree. Selectors use the OpenAPI `operationId` or exact uppercase method and path. Repeating a command reports the existing matching page as skipped. A file with a conflicting identity stops the job before it writes anything. Existing authored references also count as skipped.

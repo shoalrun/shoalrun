@@ -12,11 +12,11 @@ canonical: /author/components/fields
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Fields
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Fields
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<Fields>` and `<Field>` to describe fields that are not selected from an OpenAPI schema, or to explain a small task-specific subset in your own words. The list uses the same field styling as generated schemas. If the exact contract already exists in OpenAPI, [ApiSchema](https://www.shoalrun.com/author/components/api-embeds.md) can include the source schema or one of its fields.
 
@@ -69,7 +69,9 @@ Use a shorter layout.
 
 `Fields` takes no attributes and needs direct `Field` children. A `Field` body accepts ordinary Markdown and supported MDX, including a nested `Fields` list. A standalone `Field` or other direct child of `Fields` fails the build.
 
-## Attribute reference
+## Attributes
+
+### Attribute reference
 
 All values are literal MDX attributes. Text and numbers use quoted strings; flags are bare attributes. These declarations describe fields in the published page. They do not validate user input at runtime.
 

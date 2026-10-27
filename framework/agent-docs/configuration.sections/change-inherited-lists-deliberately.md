@@ -15,9 +15,9 @@ canonical: /configuration
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -53,9 +53,9 @@ navigation: { $include: ./config/nav.yaml }
 The header now contains Support followed by Status. The variable map retains `company` and drops `legacyLabel`.
 
 ```sh
-node "$SHOALRUN_CLI" config explain site.header.links docs.config.yaml
-node "$SHOALRUN_CLI" config explain variables docs.config.yaml
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun config explain site.header.links docs.config.yaml
+npx --no-install shoalrun config explain variables docs.config.yaml
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 ### Know the directive limits

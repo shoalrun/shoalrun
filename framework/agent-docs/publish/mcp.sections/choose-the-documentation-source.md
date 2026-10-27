@@ -15,7 +15,7 @@ canonical: /publish/mcp
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > MCP > Connect an MCP client
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Connect an MCP client
 
 **Updated: 2026-10-27.**
 
@@ -35,17 +35,17 @@ You need Node.js 22.12 or newer, the installed Shoalrun CLI, and a client that s
 
 ## Choose the documentation source
 
-From `framework/`, start a server for Shoalrun's bundled documentation:
+From your documentation project with the CLI installed, start a server for Shoalrun's bundled documentation:
 
 ```sh
-node dist/cli.js docs mcp
+npx --no-install shoalrun docs mcp
 ```
 
-For your site's documentation, build it first and pass the output directory. The following example runs from the repository root:
+For your site's documentation, build it first and pass the output directory. The following example runs from your documentation project root:
 
 ```sh
-node framework/dist/cli.js build docs/docs.config.yaml docs/dist
-node framework/dist/cli.js docs mcp --site docs/dist
+npx --no-install shoalrun build docs.config.yaml site-dist
+npx --no-install shoalrun docs mcp --site site-dist
 ```
 
 Search needs `search-index.json`; page reads need `documents.json` and the generated Markdown files. The server does not rebuild the site or fetch remote pages. Rebuild after editing your site's sources. The shared core reads the built files on each call.

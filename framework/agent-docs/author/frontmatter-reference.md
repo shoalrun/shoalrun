@@ -12,11 +12,11 @@ canonical: /author/frontmatter-reference
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Generated frontmatter reference
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Generated frontmatter reference
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 This is the field inventory for this documentation site. The tables below are built from Shoalrun's native field definitions and this site's `frontmatter.fields` declarations on each build. They describe source page headers, not the shorter YAML header selected for a published Markdown page.
 
@@ -136,6 +136,10 @@ Before editing page frontmatter, read docs/.shoalrun/frontmatter-reference.md fo
 ```
 
 The reference describes source fields. To choose which of them appear in each page's Markdown twin, see [choose metadata for the published Markdown page](https://www.shoalrun.com/author/markdown-metadata.md).
+
+## HTML, Markdown, and agents
+
+`FrontmatterReference` writes the project's field definitions into both the HTML page and its Markdown twin. An agent can read those tables without running JavaScript or opening the local schema file. The tables describe accepted source fields; they do not expose each page's private metadata values. The separate `.shoalrun` files are local authoring resources, not public routes.
 
 ## Related reading
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Related reading
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 A relationship is an authored connection between two pages, with a reason to follow the link. Use related reading for prerequisites, next steps, references, and distinctions that help readers choose where to go. The links use stable document IDs and remain in the current publication. For curated cards and filtered collections, see [cards and collections](https://www.shoalrun.com/author/components/cards.md).
 
@@ -104,6 +104,10 @@ For optional cards, change the presentation:
 ```
 
 The [RelatedReading component page](https://www.shoalrun.com/author/components/related-reading.md) lists every attribute. `<DocCards relation="next-step" />` remains supported as an explicit card view; `DocCards` also supports curated `docs` arrays. `RelatedReading` accepts relationship queries only.
+
+## HTML, Markdown, and agents
+
+HTML and Markdown present the declared relationships with their authored reasons and links to available pages. Card layout adds previews; an agent still receives links and explanations without operating a browser control. Markdown destinations point to the corresponding Markdown pages. Section extracts carry eligible prerequisite and next-step links as described below. These links let an agent recover the reading path from part of a page.
 
 ## Reading paths in section Markdown
 

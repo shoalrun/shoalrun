@@ -15,9 +15,9 @@ canonical: /styling/palettes
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Color palettes
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Color palettes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 A palette sets every color token on the site, with one set for light mode and one for dark mode. Choose a built-in palette by name, or extend one with your own colors.
 
@@ -128,6 +128,10 @@ On success, its JSON output includes `"contrast": { "status": "ok", "palette": "
 [`shoalrun audit`](https://www.shoalrun.com/publish/audit.md) also fails on a contrast problem, because it builds the site.
 
 The check covers palette colors only. Colors you set in [project CSS](https://www.shoalrun.com/author/css.md), and syntax colors from a named Shiki theme, are not checked. Test those yourself. The default `site` code theme derives its syntax colors from the palette and replaces any that fall below 4.5:1 with plain code text.
+
+## HTML, Markdown, and agents
+
+Palette tokens style the HTML page in light and dark modes. Markdown retains the content without palette colors, so agents cannot infer a status or distinction from a color choice. Pair color with a text label, such as a badge's status. Palette contrast checks assess the configured color pairs; they do not establish that the page's meaning is complete in either format.
 
 ## Related reading
 

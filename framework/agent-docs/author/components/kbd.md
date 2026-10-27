@@ -12,11 +12,11 @@ canonical: /author/components/kbd
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Keyboard shortcuts
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Keyboard shortcuts
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<Kbd>` to name a key or shortcut in a sentence. Include the action in the sentence; key styling alone does not explain what the shortcut does.
 
@@ -29,6 +29,8 @@ Press <Kbd>⌘</Kbd> + <Kbd>C</Kbd> to copy selected text.
 ```
 
 Press ⌘ + C to copy selected text.
+
+## Attributes
 
 `<Kbd>` takes nonempty plain text and no attributes. It works inside prose, headings, and table cells.
 

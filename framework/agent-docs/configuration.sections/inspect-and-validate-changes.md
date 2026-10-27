@@ -15,9 +15,9 @@ canonical: /configuration
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -45,7 +45,7 @@ Use these commands while reorganizing configuration:
 | `config validate docs.config.yaml`           | Successful configuration loading and theme contrast checks                 |
 | `build docs.config.yaml dist`                | Whether content, navigation, APIs, routes, and output can compile together |
 
-Prefix each command with `node "$SHOALRUN_CLI"`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot cannot be addressed unambiguously through this CLI syntax.
+Prefix each command with `npx --no-install shoalrun`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot cannot be addressed unambiguously through this CLI syntax.
 
 `graph` reports dependencies, not an edge-by-edge visual graph. Its list covers loaded configuration files, not every content or API input. The resolved digest hashes effective values; it is not a digest of all referenced file contents.
 
@@ -69,9 +69,9 @@ Match the build message or symptom to the corresponding correction.
 Finish the running example with:
 
 ```sh
-node "$SHOALRUN_CLI" config graph docs.config.yaml
-node "$SHOALRUN_CLI" config validate docs.config.yaml
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun config graph docs.config.yaml
+npx --no-install shoalrun config validate docs.config.yaml
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 Next, use the [configuration reference](https://www.shoalrun.com/config.md) for the feature you want to add. For content or publication failures, use [troubleshooting](https://www.shoalrun.com/publish/troubleshooting.md).

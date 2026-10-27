@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/recipe-drafts.md)
 
@@ -36,11 +36,11 @@ See [templates](https://www.shoalrun.com/author/templates.md) for their outlines
 
 ## 3. Generate a draft and review it
 
-From this repository's root, compile the CLI and preview the draft using the existing spec:
+This example uses Shoalrun's documentation repository and its recipe sources. From that repository's root, install its dependencies and preview a draft:
 
 ```sh
-npm --prefix framework run build
-node framework/dist/cli.js recipe draft \
+npm ci
+npx --no-install shoalrun recipe draft \
   --config docs/docs.config.yaml \
   --spec docs/recipe-specs/audit-docs.yaml \
   --out /tmp/shoalrun-audit-recipe.mdx --check

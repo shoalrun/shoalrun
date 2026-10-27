@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/recipe-drafts.md)
 
@@ -49,7 +49,7 @@ This repository maintains five recipes from specs under `docs/recipe-specs/`. Th
 After reviewing ingredient or spec changes, run:
 
 ```sh
-node framework/scripts/build-shoalrun-recipes.mjs --write
+node scripts/build-shoalrun-recipes.mjs --write
 git diff -- docs/content/recipe-*.mdx
 npm run docs:build
 npm run agent-docs:build
@@ -60,7 +60,7 @@ The script replaces the five recipe bodies with their compositions and related-r
 To check freshness without changing files:
 
 ```sh
-node framework/scripts/build-shoalrun-recipes.mjs --check
+node scripts/build-shoalrun-recipes.mjs --check
 ```
 
 The test suite runs that check too. General `recipe draft` output has no automatic synchronization: it is an editable snapshot. The maintenance script above is this repository's explicit workflow for keeping its published recipes in sync.

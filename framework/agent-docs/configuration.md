@@ -15,9 +15,9 @@ canonical: /configuration
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 `docs.config.yaml` connects your content, presentation, and publication settings. Start with one file, then extract sections or share defaults when several projects need them. This guide explains how those choices interact and how to inspect the result.
 
@@ -52,13 +52,15 @@ Every entry config resolves to a YAML mapping with `schemaVersion: 1`. Duplicate
 
 ## Start with one working file
 
-The examples use the compiled CLI from the [quickstart](https://www.shoalrun.com/start.md). From the Shoalrun checkout root, create a separate minimal project:
+The examples use a separate project so you can replace its configuration as you follow along. Install the same pinned package used in [getting started](https://www.shoalrun.com/start.md):
 
 ```sh
-SHOALRUN_CLI="$PWD/framework/dist/cli.js"
 CONFIG_DEMO="$(mktemp -d)"
-node "$SHOALRUN_CLI" init "$CONFIG_DEMO/site" --starter minimal
+mkdir "$CONFIG_DEMO/site"
 cd "$CONFIG_DEMO/site"
+npm init -y
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.11
+npx --no-install shoalrun init . --starter minimal
 ```
 
 The starter has two pages and this basic configuration structure:
@@ -94,7 +96,7 @@ navigation:
 Build once before reorganizing:
 
 ```sh
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 This produces the same two pages after each reorganization below. Keep `dist/` separate from content and configuration inputs.
@@ -136,8 +138,8 @@ Includes work at any depth and can include other files. Paths in `$include` are 
 Inspect the substituted value and its source:
 
 ```sh
-node "$SHOALRUN_CLI" config resolve docs.config.yaml
-node "$SHOALRUN_CLI" config explain navigation.0.doc docs.config.yaml
+npx --no-install shoalrun config resolve docs.config.yaml
+npx --no-install shoalrun config explain navigation.0.doc docs.config.yaml
 ```
 
 The first command prints the effective value, digest, and configuration dependencies. The second identifies `config/nav.yaml` as the source of `guide.welcome`.
@@ -204,11 +206,11 @@ The project inherits publications, page defaults, the stylesheet, variables, and
 Check the final values and build:
 
 ```sh
-node "$SHOALRUN_CLI" config explain site.title docs.config.yaml
-node "$SHOALRUN_CLI" config explain site.header.links docs.config.yaml
-node "$SHOALRUN_CLI" config explain site.customCss docs.config.yaml
-node "$SHOALRUN_CLI" config validate docs.config.yaml
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun config explain site.title docs.config.yaml
+npx --no-install shoalrun config explain site.header.links docs.config.yaml
+npx --no-install shoalrun config explain site.customCss docs.config.yaml
+npx --no-install shoalrun config validate docs.config.yaml
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 `site.title` comes from the local file, with the preset in its replacement history. `site.customCss` comes from `shared/base.yaml`, so `./brand.css` resolves beside that preset.
@@ -253,9 +255,9 @@ navigation: { $include: ./config/nav.yaml }
 The header now contains Support followed by Status. The variable map retains `company` and drops `legacyLabel`.
 
 ```sh
-node "$SHOALRUN_CLI" config explain site.header.links docs.config.yaml
-node "$SHOALRUN_CLI" config explain variables docs.config.yaml
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun config explain site.header.links docs.config.yaml
+npx --no-install shoalrun config explain variables docs.config.yaml
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 ### Know the directive limits
@@ -332,7 +334,7 @@ Use these commands while reorganizing configuration:
 | `config validate docs.config.yaml`           | Successful configuration loading and theme contrast checks                 |
 | `build docs.config.yaml dist`                | Whether content, navigation, APIs, routes, and output can compile together |
 
-Prefix each command with `node "$SHOALRUN_CLI"`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot cannot be addressed unambiguously through this CLI syntax.
+Prefix each command with `npx --no-install shoalrun`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot cannot be addressed unambiguously through this CLI syntax.
 
 `graph` reports dependencies, not an edge-by-edge visual graph. Its list covers loaded configuration files, not every content or API input. The resolved digest hashes effective values; it is not a digest of all referenced file contents.
 
@@ -356,9 +358,9 @@ Match the build message or symptom to the corresponding correction.
 Finish the running example with:
 
 ```sh
-node "$SHOALRUN_CLI" config graph docs.config.yaml
-node "$SHOALRUN_CLI" config validate docs.config.yaml
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun config graph docs.config.yaml
+npx --no-install shoalrun config validate docs.config.yaml
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 Next, use the [configuration reference](https://www.shoalrun.com/config.md) for the feature you want to add. For content or publication failures, use [troubleshooting](https://www.shoalrun.com/publish/troubleshooting.md).

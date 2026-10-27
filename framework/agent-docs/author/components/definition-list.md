@@ -12,11 +12,11 @@ canonical: /author/components/definition-list
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Definition lists
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Definition lists
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<DefinitionList>` for a compact glossary or configuration reference. Put alternating `<Term>` and `<Definition>` children inside it. Add `filter` when readers need to search a long list by term or definition text.
 
@@ -38,6 +38,8 @@ Use `<DefinitionList>` for a compact glossary or configuration reference. Put al
 - **Slug**
 
   The page's public path. See [Page metadata](https://www.shoalrun.com/author/frontmatter.md).
+
+## Attributes
 
 `filter` is an optional bare attribute on `<DefinitionList>`. The other tags have no attributes. Terms and definitions must have content; definitions can contain links and rich text. See the [site glossary](https://www.shoalrun.com/glossary.md) for a longer filtered list.
 

@@ -13,9 +13,9 @@ canonical: /recipes/audit-docs
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Build and audit this documentation site
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Build and audit this documentation site
 
 **Updated: 2026-10-27.**
 
@@ -27,7 +27,6 @@ Build current documentation, check its artifacts, and run the configured audits.
 - `repositoryCheckout`: This documentation repository with its pinned package and lockfile.
 - Run commands from the documentation repository root.
 - Use Node.js 22.12 or newer.
-- Use Node.js 22.12 or newer and install site dependencies with `npm ci` if needed.
 - Install Vale 3.20 or newer for this repository's configured formatting check.
 
 ## Install the site dependencies

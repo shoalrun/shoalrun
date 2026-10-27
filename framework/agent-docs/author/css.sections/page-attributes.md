@@ -13,11 +13,11 @@ canonical: /author/css
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > CSS and theme reference
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > CSS and theme reference
 
-**Updated: 2026-10-25.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/css.md)
 
@@ -53,12 +53,12 @@ Inline [badges](https://www.shoalrun.com/author/components/badge.md) use `--colo
 
 The `html` element carries attributes that project CSS can use to target one theme, mode, or layout:
 
-| Attribute                    | Set when                                                                                                                                         | Values                         |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
-| `data-theme`, `data-palette` | The site uses a preset, palette, or mode other than the defaults. The [theme previewer](https://www.shoalrun.com/styling/try.md) also sets them. | Preset and palette names.      |
-| `data-mode`                  | A reader chose light or dark with the [mode toggle](https://www.shoalrun.com/styling/color-modes.md).                                            | `light` or `dark`.             |
-| `data-masthead`              | The preset has an inked masthead: `ledger` and `vice`.                                                                                           | `inked`                        |
-| `data-layout`                | The page sets `layout: wide`, `landing`, or `splash`.                                                                                            | `wide`, `landing`, or `splash` |
+| Attribute                    | Set when                                                                                              | Values                         |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `data-theme`, `data-palette` | The site uses a preset, palette, or mode other than the defaults.                                     | Preset and palette names.      |
+| `data-mode`                  | A reader chose light or dark with the [mode toggle](https://www.shoalrun.com/styling/color-modes.md). | `light` or `dark`.             |
+| `data-masthead`              | The preset has an inked masthead: `ledger` and `vice`.                                                | `inked`                        |
+| `data-layout`                | The page sets `layout: wide`, `landing`, or `splash`.                                                 | `wide`, `landing`, or `splash` |
 
 `shoal` is the default preset, so a default site has no `data-theme`. To target `shoal` either way, use `:root:is(:not([data-theme]), [data-theme="shoal"])`:
 

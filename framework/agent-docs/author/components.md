@@ -12,11 +12,11 @@ canonical: /author/components
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Overview
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Overview
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, footnotes, and autolinks) and the MDX components below. Each component family has a page with syntax, attributes, HTML and Markdown behavior, and limits. Component names and attributes are case-sensitive. Unknown components, dynamic MDX expressions, and exports fail the build because they have no shared HTML and Markdown representation. The build drops `import` lines, so imported components are not available.
 
@@ -48,7 +48,6 @@ Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, fo
 - [Walkthroughs](https://www.shoalrun.com/author/components/walkthroughs.md) — code explained step by step beside a scrolling code pane.
 - [Hero](https://www.shoalrun.com/styling/layouts.md) — a landing page opener with a title, tagline, and action buttons.
 - [Section](https://www.shoalrun.com/styling/layouts.md) — a full-width band on a splash page.
-- [ThemePreview](https://www.shoalrun.com/styling/try.md) — a live switcher for trying presets, palettes, and color modes.
 - [ReaderSection, ReaderChoice, and ReaderFilter](https://www.shoalrun.com/author/reader-views.md) — marked sections, choice buttons, and in-page filter controls.
 - [FrontmatterReference](https://www.shoalrun.com/author/frontmatter-reference.md) — publish this project's built-in and declared page fields as a live reference.
 
@@ -66,6 +65,10 @@ Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, fo
 - [Fields](https://www.shoalrun.com/author/components/fields.md) — authored field lists that match schema formatting.
 
 [Code highlighting](https://www.shoalrun.com/author/components/code-blocks.md) explains Shiki, theme selection, plain output, and custom adapters. Tabs and collapsibles accept ordinary Markdown and supported MDX components in their bodies; their subpages explain the exact nesting rules.
+
+## HTML, Markdown, and agents
+
+Each supported component has a defined HTML and Markdown representation. Browser controls can reveal or rearrange information, while the Markdown form exposes the content described in that component's reference. Agents can follow document links and read examples without operating those controls. Check each reference's **HTML, Markdown, and agents** section for exceptions, such as content deliberately limited to one format with `Only`.
 
 ## Related reading
 

@@ -14,9 +14,9 @@ canonical: /styling/layouts
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Page layouts, landing pages, and splash pages
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Page layouts, landing pages, and splash pages
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Every page uses the `docs` layout unless its frontmatter sets `layout`. Layouts change the HTML page only. The Markdown twin, search, and `llms.txt` stay the same.
 
@@ -104,7 +104,7 @@ Or put one fenced code block in the body. It appears in an editor-style window w
   [Start building](doc:guide.overview)
 
   ```sh title="Build and preview this site"
-  npm ci --prefix framework
+  npm ci
   npm run docs:dev
   ```
 </Hero>
@@ -185,6 +185,10 @@ To change it for your site, use [project CSS](https://www.shoalrun.com/author/cs
 ```
 
 Keep text readable against any background you choose. The build checks palette colors for contrast, but not project CSS.
+
+## HTML, Markdown, and agents
+
+Layouts control HTML sidebars, outlines, column widths, and full-width bands. They do not create separate content for agents. In Markdown, a `Hero` retains its tagline, action links, and supported image or code content; `Section` retains its body in source order without the visual wrapper. Agents can follow the links and read the content without interpreting the layout or running browser scripts. Keep essential meaning in the authored text rather than background styling or motion.
 
 ## Related reading
 

@@ -32,4 +32,4 @@ This quickstart takes you from installing Shoalrun to your own working documenta
 
 ## Build this site
 
-Shoalrun's documentation repository installs the package too. From that repository's root, run `npm ci` and `npm run docs:dev`. It serves these docs at `http://127.0.0.1:8770/`.
+If you maintain Shoalrun’s documentation source, follow [Build this documentation site](https://www.shoalrun.com/recipes/build-docs.md). That workflow uses the docs repository and its npm scripts.

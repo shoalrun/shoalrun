@@ -12,11 +12,11 @@ canonical: /glossary
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Glossary
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Glossary
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 This page defines the terms used across Shoalrun's documentation. Look a term up when a guide uses a word you don't know. Terms are sorted A to Z, and each definition links to the full guide. Filter the list by a term or a word in its definition, for example `publication` or `agent`. In the Markdown version, use your reader's Find command. To see how the main terms fit together, read [How Shoalrun works](https://www.shoalrun.com/concepts.md).
 
@@ -767,10 +767,6 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 - **Theme preset**
 
   The shape of the site. Built-in presets are `shoal`, `reef`, `ledger`, and `vice`. See [Themes](https://www.shoalrun.com/styling/themes.md).
-
-- **`ThemePreview`**
-
-  A component that lets a reader try every preset, palette, and color mode on the page. See [Try a theme](https://www.shoalrun.com/styling/try.md).
 
 - **`Timeline`, `Milestone`**
 

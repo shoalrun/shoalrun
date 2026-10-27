@@ -13,9 +13,9 @@ date: 2026-10-03
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Changelog](https://www.shoalrun.com/.well-known/shoalrun/navigation/changelog-tab-50f26fe22670.txt) (ID: changelog-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Changelog](https://www.shoalrun.com/changelog.md) > Changelog > Agent authoring, search, and documentation answers
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Agent authoring, search, and documentation answers
 
 **Published: 2026-10-03.**
 
@@ -30,7 +30,7 @@ Prepared for the next prototype release:
 
 ### Next steps
 
-- [Apply a checked edit plan](https://www.shoalrun.com/author/authoring-agent.md) — Prepare and review a page update with your own model key. (Status: experimental.)
+- [Apply a checked edit plan](https://www.shoalrun.com/author/authoring-agent.md) — Apply a checked edit plan when your client uses that workflow. (Status: experimental.)
 
 ### Related topics
 

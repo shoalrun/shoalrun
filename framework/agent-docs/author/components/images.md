@@ -13,17 +13,19 @@ canonical: /author/components/images
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Images
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Images
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<Image>` to show an image with optional sizing, a caption, or click-to-expand viewing. Plain Markdown image syntax also works when you only need an image and alt text.
 
 ## Basic image
 
 Provide a source and alt text. Local paths are relative to the page's MDX file; Shoalrun copies the image into the build. HTTPS URLs work too.
+
+## Syntax
 
 ```mdx
 <Image src="./assets/image-example.svg" alt="A documentation page with navigation, content, and a table of contents" />

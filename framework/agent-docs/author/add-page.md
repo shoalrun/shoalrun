@@ -17,11 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Create a page
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Create a page from a template with `scaffold`. Templates prompt you for the page's frontmatter, an introduction, the main content, and related pages before you publish. This is the recommended authoring workflow for new pages.
 
-This guide assumes you have completed [getting started](https://www.shoalrun.com/start.md) and are working in `my-docs/`. Keep `SHOALRUN_CLI` pointing to the checkout's `framework/dist/cli.js`.
+## Before you begin
+
+Complete [getting started](https://www.shoalrun.com/start.md), then run the commands from `my-docs/`, where `@shoalrun/cli` is installed. You will create a page at `/track-parcel` and verify both published formats.
 
 ## Choose a template
 
@@ -49,7 +51,7 @@ Use the project's template for the document type when one exists. Project templa
 From the project directory:
 
 ```sh
-node "$SHOALRUN_CLI" scaffold how-to -n content/track-parcel.mdx \
+npx --no-install shoalrun scaffold how-to -n content/track-parcel.mdx \
   --id how-to.track-parcel --title 'Track a parcel'
 ```
 
@@ -99,13 +101,13 @@ A public page can have a working URL without appearing in the sidebar. Adding th
 From the project directory:
 
 ```sh
-node "$SHOALRUN_CLI" build docs.config.yaml site-dist
-node "$SHOALRUN_CLI" serve site-dist --port 8765
+npx --no-install shoalrun build docs.config.yaml site-dist
+npx --no-install shoalrun serve site-dist --port 8765
 ```
 
 Open `http://127.0.0.1:8765/track-parcel` and confirm that the page appears in navigation and that its links work. Then open `http://127.0.0.1:8765/track-parcel.md` and confirm that the same prose is available and internal links point to Markdown pages. Press **Ctrl+C** to stop the server.
 
-If you use another publication or a language prefix, inspect the built `documents.json` for the resolved URLs. To preview edits continuously, use `node "$SHOALRUN_CLI" dev docs.config.yaml site-dist --port 8765`.
+If you use another publication or a language prefix, inspect the built `documents.json` for the resolved URLs. To preview edits continuously, use `npx --no-install shoalrun dev docs.config.yaml site-dist --port 8765`.
 
 Next, [organize your navigation](https://www.shoalrun.com/author/navigation.md) as the site grows.
 

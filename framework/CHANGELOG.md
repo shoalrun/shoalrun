@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-alpha.12 — 2026-10-27
+
+- Refresh the bundled documentation from the reviewed public site: organize navigation into Docs, Reference, Examples, and Project; use installed-package commands in customer workflows; and standardize component reference sections.
+- Explain HTML, Markdown, and agent behavior across feature references, and remove customer-facing embedding instructions for the site’s theme demo.
+
+Upgrade to alpha.12 to use the refreshed offline documentation through the CLI and MCP tools. Runtime behavior, components, and configuration are unchanged from alpha.11.
+
 ## 0.1.0-alpha.11 — 2026-10-27
 
 - Move package distribution to the public npm registry. New installations need no GitHub package access or token. Existing users should remove the old `@shoalrun` registry override and update their manifest and lockfile together; see the README.

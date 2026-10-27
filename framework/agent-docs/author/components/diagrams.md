@@ -13,11 +13,11 @@ canonical: /author/components/diagrams
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Diagrams > Overview
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Overview
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<Diagram>` for flowcharts, sequence diagrams, charts, and other graphs written as text. D2 is the default engine, with TALA as its default layout. Set `engine="mermaid"` for Mermaid syntax, rendered by [Pele](https://pele.run). Diagrams render to SVG during the build, so readers do not need a diagram script in their browser. Set a literal pixel `width`, such as `width="440"`, to cap the diagram's displayed width while allowing it to shrink on narrow screens.
 
@@ -25,7 +25,11 @@ For the diagram languages themselves, use the official [D2 tour](https://d2lang.
 
 Every diagram needs a short `title` and `summary`. The summary states the point of the diagram; it does not need to repeat every connection. For a complex diagram, add a fuller explanation in nearby prose so readers can understand its meaning without the graphic.
 
-## D2
+## Syntax
+
+Choose D2 or Mermaid for the source language.
+
+### D2
 
 Copy the complete component, including its fenced source:
 
@@ -67,7 +71,7 @@ Browse the [D2 gallery](https://www.shoalrun.com/author/components/diagrams/d2-g
 
 The official [D2 layout guide](https://d2lang.com/tour/layouts/) compares the engines. The [D2 style guide](https://d2lang.com/tour/style/) and [theme guide](https://d2lang.com/tour/themes/) cover source-level shape styles and theme options.
 
-## Mermaid
+### Mermaid
 
 Set the engine explicitly and keep the fence language `mermaid`:
 
@@ -94,6 +98,10 @@ flowchart LR
   author[Author] --> review[Review]
   review --> publish[Publish]
 ```
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute | Required | Meaning                                                                                                            |
 | --------- | -------- | ------------------------------------------------------------------------------------------------------------------ |

@@ -13,11 +13,11 @@ canonical: /cookbooks/authoring
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Authoring workflows
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Authoring workflows
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Choose the outcome you need for Shoalrun's own documentation. Each recipe includes setup, ordered work, handoffs, and an observable final check.
 
@@ -52,6 +52,10 @@ What are you working on?. Choose one recipe.
 Adding a guide includes manual writing and review. The recipe then builds and audits the page and refreshes the agent bundle. Previewing an existing change starts a local server; refreshing the bundle verifies what the CLI can search and read. Choose one task at a time so shared setup runs once within that recipe.
 
 Use **Link to this path** to share the selected instructions, **Download Markdown** to work from a saved copy, or **Print this path** for a checklist. These workflows prepare local changes for review; they do not commit or deploy them.
+
+## HTML, Markdown, and agents
+
+In HTML, the chooser loads and displays the selected published recipes. Without JavaScript, readers can follow the recipe links. This page's Markdown lists the choices and their destinations; it does not contain the selected recipes' full instructions. Give an agent a recipe's Markdown page or the chooser's **Download Markdown** file to follow the complete task.
 
 ## Related reading
 

@@ -12,11 +12,11 @@ canonical: /author/components/tabs
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Tabs
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Tabs
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 `<Tabs>` presents alternate views, such as two output formats. Use it only when the choices are truly alternatives; a normal heading sequence is easier to read when readers need every section.
 
@@ -44,6 +44,10 @@ The page has navigation and controls.
 ### Markdown
 
 The page keeps the content as text.
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Element | Attribute     | Meaning                                                                                                                     |
 | ------- | ------------- | --------------------------------------------------------------------------------------------------------------------------- |

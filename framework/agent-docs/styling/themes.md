@@ -15,9 +15,9 @@ canonical: /styling/themes
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Themes
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Themes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 The `theme` setting controls how the HTML site looks. It has five keys, and each has a default:
 
@@ -96,7 +96,6 @@ Fonts set here become the `--font-body`, `--font-heading`, and `--font-code` [CS
 The HTML page links stylesheets in this order. Later files override earlier ones.
 
 1. `/assets/site.css`, which imports the base tokens and header styles.
-   - `/assets/theme-preview.css` follows it, on pages that use the [theme previewer](https://www.shoalrun.com/styling/try.md).
 2. `/assets/theme.css`, for a preset other than `shoal`.
 3. `/assets/palette.css`, generated for any palette or mode other than `kelp` in light mode.
 4. `/assets/fonts.css`, generated from `theme.fonts`, unless it's `system` and sets nothing.
@@ -107,6 +106,10 @@ When a site uses a non-default preset, palette, or mode, the `html` element carr
 ```css title="styles/project.css"
 [data-theme="ledger"] .page-head h1 { letter-spacing: 0; }
 ```
+
+## HTML, Markdown, and agents
+
+Presets and fonts style the HTML page through generated stylesheets. They do not change its Markdown text or add font and layout instructions to the Markdown twin. An agent reading Markdown receives the authored content without needing the theme assets. Keep labels, hierarchy, and instructions meaningful without relying on typography or position alone.
 
 ## Related reading
 

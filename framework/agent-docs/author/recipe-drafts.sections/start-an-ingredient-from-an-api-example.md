@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/recipe-drafts.md)
 
@@ -36,12 +36,12 @@ See [templates](https://www.shoalrun.com/author/templates.md) for their outlines
 
 ## Start an ingredient from an API example
 
-`ingredient draft` creates starting material from one configured outgoing API operation and a named request example. For the included notification fixture:
+`ingredient draft` creates starting material from one configured outgoing API operation and a named request example. From a project with Shoalrun installed, use the bundled notification example:
 
 ```sh
-node framework/dist/cli.js ingredient draft \
-  --config framework/example-configs/notifications/docs.config.yaml \
-  --spec framework/example-configs/notifications/ingredient-specs/queue-welcome-email.yaml \
+npx --no-install shoalrun ingredient draft \
+  --config node_modules/@shoalrun/cli/example-configs/notifications/docs.config.yaml \
+  --spec node_modules/@shoalrun/cli/example-configs/notifications/ingredient-specs/queue-welcome-email.yaml \
   --out /tmp/shoalrun-email-ingredient.mdx --check
 ```
 

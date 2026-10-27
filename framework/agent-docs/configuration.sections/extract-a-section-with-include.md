@@ -15,9 +15,9 @@ canonical: /configuration
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -68,8 +68,8 @@ Includes work at any depth and can include other files. Paths in `$include` are 
 Inspect the substituted value and its source:
 
 ```sh
-node "$SHOALRUN_CLI" config resolve docs.config.yaml
-node "$SHOALRUN_CLI" config explain navigation.0.doc docs.config.yaml
+npx --no-install shoalrun config resolve docs.config.yaml
+npx --no-install shoalrun config explain navigation.0.doc docs.config.yaml
 ```
 
 The first command prints the effective value, digest, and configuration dependencies. The second identifies `config/nav.yaml` as the source of `guide.welcome`.

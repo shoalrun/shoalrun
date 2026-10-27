@@ -26,7 +26,7 @@ This quickstart takes you from installing Shoalrun to your own working documenta
 
 Install Node.js 22.12 or newer and npm. Use the npm that comes with Node.js; Shoalrun sets no separate npm version. The commands below use a POSIX shell, such as Bash or Zsh.
 
-The public npm package needs no account or token. If you used the earlier GitHub Packages alpha, run `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. To explicitly select npm during migration, add `--@shoalrun:registry=https://registry.npmjs.org` to the install command below. Commit the updated manifest and lockfile together, and check that Shoalrun resolves from `registry.npmjs.org`.
+The public npm package needs no account or token.
 
 ## Start your own project
 
@@ -40,7 +40,7 @@ npm install --save-exact @shoalrun/cli@0.1.0-alpha.11
 npx --no-install shoalrun init .
 ```
 
-[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) build without Chrome. The starter puts `docs.config.yaml` and `content/` in your project. Initialization refuses to overwrite starter files, and preserves unrelated files such as the package manifest and lockfile.
+The starter puts `docs.config.yaml` and `content/` in your project. Initialization refuses to overwrite starter files, and preserves unrelated files such as the package manifest and lockfile.
 
 Preview the starter:
 
@@ -168,9 +168,13 @@ Change `site.title` in `docs.config.yaml`, replace the Acme example content, and
 
 Continue by [adding an OpenAPI API](https://www.shoalrun.com/publish/api-references.md), or [publish your site](https://www.shoalrun.com/publish.md).
 
+## Migrating from GitHub Packages
+
+The public npm package needs no account or token. If you used the earlier GitHub Packages alpha, run `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. To explicitly select npm during migration, add `--@shoalrun:registry=https://registry.npmjs.org` to the install command below. Commit the updated manifest and lockfile together, and check that Shoalrun resolves from `registry.npmjs.org`.
+
 ## Build this site
 
-Shoalrun's documentation repository installs the package too. From that repository's root, run `npm ci` and `npm run docs:dev`. It serves these docs at `http://127.0.0.1:8770/`.
+If you maintain Shoalrun’s documentation source, follow [Build this documentation site](https://www.shoalrun.com/recipes/build-docs.md). That workflow uses the docs repository and its npm scripts.
 
 ## Check writing style
 

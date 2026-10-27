@@ -16,11 +16,11 @@ canonical: /author/components/api-embeds
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > ApiExample and ApiSchema
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > ApiExample and ApiSchema
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 `ApiExample` and `ApiSchema` reuse OpenAPI content in authored pages. Examples stay synchronized with named payloads; schemas expose selected field definitions in HTML and Markdown.
 
@@ -33,6 +33,10 @@ Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write docume
 ```mdx
 <ApiExample operation="notes.create" kind="response" status="201" mediaType="application/json" example="saved" />
 ```
+
+### Attributes
+
+Use these attributes to configure the component.
 
 | Attribute   | Required      | Meaning                                          |
 | ----------- | ------------- | ------------------------------------------------ |
@@ -117,6 +121,10 @@ An OpenAPI description appears between the context line and payload when present
 ```mdx
 <ApiSchema operation="notes.create" kind="response" status="201" mediaType="application/json" />
 ```
+
+### Attributes
+
+These attributes select the source schema.
 
 | Attribute   | Required                | Meaning                                                                                         |
 | ----------- | ----------------------- | ----------------------------------------------------------------------------------------------- |

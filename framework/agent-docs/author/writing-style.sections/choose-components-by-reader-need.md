@@ -13,11 +13,11 @@ canonical: /author/writing-style
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Shared writing guidance > Example writing guide
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 
@@ -39,4 +39,6 @@ Choose the structure that helps readers use the information or complete the task
 
 Introduce every table with a sentence explaining what readers should use it for. Never place a table directly after a heading. The formatting check enforces this rule with `DocShape.TableIntroduction`.
 
-Do not hide an essential instruction inside decoration. For component references, include supported syntax, attributes and limits, and an **HTML, Markdown, and agents** section. Explain keyboard behavior when there are controls, behavior without JavaScript, and the content available in Markdown. Check both rendered outputs.
+Do not hide an essential instruction inside decoration. Every page documenting a component or presentation feature needs an **HTML, Markdown, and agents** section, or an existing clearly named equivalent. Explain what HTML shows or lets readers do, what Markdown retains or omits, and how an agent gets the information needed for the task. Include limitations and keyboard or JavaScript behavior when relevant. Check both rendered outputs.
+
+A page that merely uses a callout, link, or Steps component needs the section only when that use changes access to information. Avoid generic claims that both formats are identical: explain the actual representation. Cookbook pages must distinguish their recipe links from the complete instructions in the linked recipes or a downloaded selection.

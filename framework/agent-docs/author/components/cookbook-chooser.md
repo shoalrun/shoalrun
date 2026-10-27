@@ -12,11 +12,11 @@ canonical: /author/components/cookbook-chooser
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > CookbookChooser
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > CookbookChooser
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<CookbookChooser>` to help a reader choose a complete recipe or combine compatible recipes. The author reviews each recipe and sets its place in the choice list. The browser loads the selected published recipe pages and displays their instructions. The component does not read ingredient files, generate a recipe, or execute commands. Start with [how recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md), then [configure a cookbook](https://www.shoalrun.com/author/cookbooks.md); this page lists the component's exact syntax.
 
@@ -60,6 +60,10 @@ How much validation do you need?. Choose one recipe.
   You need: A Shoalrun checkout with dependencies installed and the page's stable ID.
 
   You will have: A successful build, checked artifacts, and no failed configured audits.
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Value               | Rule                                                                                                                            |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------- |

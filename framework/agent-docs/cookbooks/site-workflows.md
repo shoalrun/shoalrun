@@ -12,11 +12,11 @@ canonical: /cookbooks/site-workflows
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Site workflows
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Site workflows
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use these recipes on a local Shoalrun checkout after editing documentation. Choose the level of validation you need. The audit path already includes the build and artifact checks, so run one complete path.
 
@@ -40,7 +40,11 @@ How much validation do you need?. Choose one recipe.
 
   You will have: A successful build, checked artifacts, and no failed configured audits.
 
-These recipes use the same compile, build, and artifact-check ingredients. The audit recipe adds the configured project and API checks. Neither path deploys the site. Use the preview workflow to inspect the rendered result before publishing.
+These recipes use the same installation, build, and artifact-check ingredients. The audit recipe adds the configured project and API checks. Neither path deploys the site. Use the preview workflow to inspect the rendered result before publishing.
+
+## HTML, Markdown, and agents
+
+The HTML chooser displays the complete recipe you select; its recipe links also work without JavaScript. The cookbook's Markdown lists the build and audit choices with links to their recipe pages. It does not contain a browser-selected workflow. An agent should read the chosen recipe's Markdown or receive the file from **Download Markdown** before carrying out its steps.
 
 ## Related reading
 

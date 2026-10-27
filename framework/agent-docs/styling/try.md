@@ -13,11 +13,11 @@ canonical: /styling/try
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Try a theme
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Visual examples > Try a theme
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Pick a shape, a palette, and a mode. This page restyles itself as you choose. Scroll down to see how each option styles the sample content, then copy the config into `docs.config.yaml`.
 
@@ -86,18 +86,6 @@ Readers always see the dark set.
 ### System
 
 The site follows each reader's system setting, with an optional toggle.
-
-## Add the previewer to a page
-
-Place the component on its own line in any MDX page:
-
-```mdx
-<ThemePreview />
-```
-
-The component takes no attributes. The build then publishes every preset and palette under `/assets/themes/`, so the previewer works on a static host. Sites that don't use the component don't publish those files.
-
-Without JavaScript, and in the Markdown twin, the component shows the preset and palette tables and an example config.
 
 ## Related reading
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/author/recipes.md)
 
@@ -39,7 +39,7 @@ Readers can open a recipe directly. Ingredients help authors maintain instructio
 
 Suppose you need two sets of instructions:
 
-- **Build and check a page.** Compile the CLI, build the docs, and check the HTML and Markdown files.
+- **Build and check a page.** Install the dependencies, build the docs, and check the HTML and Markdown files.
 - **Build and audit the site.** Do those same three steps, then run the project audits.
 
 Both recipes need the same build instructions. We keep those instructions in ingredient files and use them in both recipe specs:
@@ -48,11 +48,11 @@ Both recipes need the same build instructions. We keep those instructions in ing
 
 The compile, build, and artifact-check ingredients are used in both recipes. The build-and-audit recipe also includes the audit ingredient. These arrows describe authoring reuse; they do not run commands.
 
-[View Two recipes reuse the same source instructions diagram](https://www.shoalrun.com/assets/diagrams/mermaid-62592d6197a75626c36a-light.svg)
+[View Two recipes reuse the same source instructions diagram](https://www.shoalrun.com/assets/diagrams/mermaid-c05dd546346549597149-light.svg)
 
 ```mermaid
 flowchart TD
- shared["Shared ingredients<br/>Compile CLI → Build docs → Check artifacts"]
+ shared["Shared ingredients<br/>Install dependencies → Build docs → Check artifacts"]
  audit["Audit ingredient<br/>Run project audits"]
  build_recipe["Recipe page<br/>Build and check a page"]
  audit_recipe["Recipe page<br/>Build and audit the site"]

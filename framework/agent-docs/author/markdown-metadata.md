@@ -13,11 +13,11 @@ canonical: /author/markdown-metadata
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Metadata > Markdown metadata
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Markdown metadata
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 The build publishes [the page metadata guide as Markdown](https://www.shoalrun.com/author/frontmatter.md) alongside its HTML page. That `.md` file starts with a YAML header containing selected values from the source page header. Source headers can grow long and contain review notes or other details that do not help an agent read the page. Selecting a small set of useful fields keeps the agent's context focused and avoids exposing internal metadata in that header. Compare the two custom values in that guide's source:
 
@@ -194,8 +194,8 @@ Section IDs use normalized lowercase title text, ASCII letters and digits, and h
 From the repository root, inspect and read the agent-friendliness example's sections with the local CLI:
 
 ```sh
-node framework/dist/cli.js docs outline guide.agent-friendliness --site docs/dist --max-tokens 10000
-node framework/dist/cli.js docs section guide.agent-friendliness try-the-page-controls --site docs/dist --max-tokens 10000
+npx --no-install shoalrun docs outline guide.agent-friendliness --max-tokens 10000
+npx --no-install shoalrun docs section guide.agent-friendliness try-the-page-controls --max-tokens 10000
 ```
 
 For ordinary retrieval, start with `docs search` and follow the result’s `read` instruction; the outline command is optional. Search returns a recommended `markdownUrl` and a `pageMarkdownUrl` fallback. Both commands above return JSON. Select `--channel`, `--version`, and `--language` when a page has multiple publications. The outline and section must fit the requested token budget in full; increase `--max-tokens` when they do not. Section reads verify the file digest and its link to the parent record. [MCP clients](https://www.shoalrun.com/publish/mcp.md) can use `get_outline` and `get_section` for the same operations. Rebuild older sites to add section resources.

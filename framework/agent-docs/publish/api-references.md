@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Add an OpenAPI API
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). This walkthrough uses a fictional Notes API as its example. You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
 
@@ -162,31 +162,33 @@ An authored reference adds editorial context to the operation contract. A [gener
 
 Response status and media type share a heading row. Descriptions remain visible above property disclosures; enum choices appear below field descriptions. Markdown includes all of this without interactive controls. OpenAPI `deprecated: true` sets the page's status to deprecated; conflicting authored status values fail the build.
 
-## Publish several versions
+## Next steps
+
+### Publish several versions
 
 [Put multiple versions on one site](https://www.shoalrun.com/publish/publications.md) explains sources for each publication and stable operation bindings across versions.
 
-## Map extension values to Shoalrun status
+### Map extension values to Shoalrun status
 
 Use the [extension mappings reference](https://www.shoalrun.com/publish/openapi-extension-mappings.md) to map vendor `x-*` values to status badges.
 
-## Describe filters that do not use their OpenAPI parameter name
+### Describe filters that do not use their OpenAPI parameter name
 
 The [query syntax example](https://www.shoalrun.com/api-docs/generate.md) configures direct query expressions and generated cURL.
 
-## Generate many pages selectively
+### Generate many pages selectively
 
 [Generate and select API pages](https://www.shoalrun.com/api-docs/generate.md) covers include/exclude lists, stable generated IDs, webhooks, interactive selection, and tag navigation.
 
-## Use a template for editorial context
+### Use a template for editorial context
 
 [API reference templates](https://www.shoalrun.com/api-docs/generate.md) add editorial prompts without duplicating contract fields.
 
-## Add useful examples
+### Add useful examples
 
 [Named examples and generated commands](https://www.shoalrun.com/api-docs/generate.md) explains example selection, JSON shapes, and cURL behavior.
 
-## Link guides to API references
+### Link guides to API references
 
 [Related API references](https://www.shoalrun.com/api-docs/generate.md) connects guides and references in both directions using stable page IDs.
 

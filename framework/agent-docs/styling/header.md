@@ -14,9 +14,9 @@ canonical: /styling/header
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Customize > Header links
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Header links
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 The masthead shows the site title, the publication label, the [search box](https://www.shoalrun.com/author/search.md), the [dark mode toggle](https://www.shoalrun.com/styling/color-modes.md) when it's on, and any links you configure. Add links under `site.header.links`:
 
@@ -50,7 +50,9 @@ External `http` and `https` links get `rel="noopener"`. The build rejects any ot
 
 On narrow screens, the search box and links wrap onto their own row below the site title. Each [theme preset](https://www.shoalrun.com/styling/themes.md) restyles them to match its shape. The [CSS and theme reference](https://www.shoalrun.com/author/css.md) lists their classes.
 
-Header links are part of the HTML page only. Markdown twins and `/llms.txt` do not include them.
+## HTML, Markdown, and agents
+
+Header links appear in HTML as ordinary links, including links styled as buttons. They remain usable without JavaScript. Markdown twins and `/llms.txt` omit the masthead, so agents reading those files do not receive its links. Put a task's essential next step in the article or its reading relationships as well as the header.
 
 ## Related reading
 

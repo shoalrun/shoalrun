@@ -34,4 +34,4 @@ This quickstart takes you from installing Shoalrun to your own working documenta
 
 Install Node.js 22.12 or newer and npm. Use the npm that comes with Node.js; Shoalrun sets no separate npm version. The commands below use a POSIX shell, such as Bash or Zsh.
 
-The public npm package needs no account or token. If you used the earlier GitHub Packages alpha, run `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. To explicitly select npm during migration, add `--@shoalrun:registry=https://registry.npmjs.org` to the install command below. Commit the updated manifest and lockfile together, and check that Shoalrun resolves from `registry.npmjs.org`.
+The public npm package needs no account or token.

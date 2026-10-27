@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reusable snippets
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 A snippet is a shared Markdown or MDX fragment that the build expands into each page that includes it. Use one when the wording must stay in sync across pages. A [template](https://www.shoalrun.com/author/templates.md) creates a draft once; editing a template does not change existing pages.
 
@@ -106,6 +106,10 @@ The included Markdown and supported MDX components render in both HTML and Markd
 ## Check the shared text
 
 Build your project and open each page that includes the snippet. Confirm that HTML and Markdown both contain the resolved text and that no variable tags remain. Change the snippet source and rebuild; every including page should receive that change. If validation fails, correct the named variable, include, or type before publishing.
+
+## HTML, Markdown, and agents
+
+The build expands snippets and variables into the containing page before rendering HTML and Markdown. Agents read the resolved text, not a `Snippet` or `Var` instruction to execute. Components inside a snippet retain their own output behavior; for example, an interactive control can become ordinary text in Markdown. Verify the including page in both formats after changing shared content.
 
 ## Related reading
 

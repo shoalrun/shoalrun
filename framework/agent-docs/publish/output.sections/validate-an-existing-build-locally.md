@@ -13,11 +13,11 @@ canonical: /publish/output
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Generated outputs
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -35,10 +35,10 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 ## Validate an existing build locally
 
-From a repository checkout with development dependencies installed and the framework compiled, run:
+This checker belongs to Shoalrun’s documentation repository; it is not an installed CLI command. From that repository with its dependencies installed, run:
 
 ```sh
-node framework/scripts/check-output-contract.mjs docs/dist
+node scripts/check-output-contract.mjs docs/dist
 ```
 
 Replace `docs/dist` with an already-built site's directory. The checker loads both schemas locally and makes no network requests. It checks field shapes, unique document identities, manifest/sync correspondence, build/config identity agreement, record and metadata hashes, same-publication change/deprecation targets, section parent linkage, and exact Markdown byte counts, token counts, and digests. It also verifies referenced focused-contract bytes. Unknown fields remain allowed and participate in the applicable record or metadata hash.

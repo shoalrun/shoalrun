@@ -1,9 +1,37 @@
-# Project updates
+# Project
 
 Full-page token counts use cl100k_base. Navigation section ID: project-updates. Publication: production/current/en.
 
 [All sections and published pages](https://www.shoalrun.com/llms.min.txt). This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.
 
-- [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. explanation; 823 tokens. Scope limits for skill generation, agent orchestration, and reader-view authorization.
+- [Agent discovery, verified Markdown, and incremental sync](https://www.shoalrun.com/changelog/2026-10-14-agent-readiness.md) — ID: change.agent-readiness. changelog-entry; 546 tokens. Compact discovery, content verification, and incremental fetching.
 
-- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1653 tokens. Current capabilities, planned features, and known limits.
+- [Agent reading and evaluation](https://www.shoalrun.com/changelog/2026-10-15-evaluation-builds.md) — ID: change.evaluation-builds. changelog-entry; 1696 tokens. Smaller reads, lifecycle guidance, and reproducible evaluations.
+
+- [Content exports and documentation checks](https://www.shoalrun.com/changelog/2026-10-25.md) — ID: change.2026-10-25. changelog-entry; 668 tokens. Content exports and documentation checks.
+
+- [Safer exports and easier discovery for AI assistants](https://www.shoalrun.com/changelog/2026-10-26.md) — ID: change.2026-10-26. changelog-entry; 1288 tokens. Keep exported images and links with their pages, and help AI assistants find docs by topic.
+
+- [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md) — ID: change.2026-10-27. changelog-entry; 1223 tokens. Explore a complete starter, read clearer controls, and find focused configuration references alongside the new mobile navigation.
+
+- [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 551 tokens. Snapshot previews with coverage and freshness reports.
+
+- [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 466 tokens. Reviewed agent drafts, search improvements, and answer context.
+
+- [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 378 tokens. Project discovery and captured working-tree validation.
+
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 999 tokens. Compiler, CLI, and reader changes.
+
+- [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1145 tokens. MCP hosting, analytics, and shared component content.
+
+- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — ID: change.navigation-layouts. changelog-entry; 1092 tokens. Navigation sections, reader controls, layouts, and browser analytics.
+
+- [Search results and tooltips](https://www.shoalrun.com/changelog/2026-10-18-search-and-tooltips.md) — ID: change.search-and-tooltips. changelog-entry; 668 tokens. Indexed search and hover and focus tooltips.
+
+- [Experimental visual navigation and taxonomy enforcement](https://www.shoalrun.com/changelog/2026-10-19-visual-navigation.md) — ID: change.visual-navigation. changelog-entry; 746 tokens. Visual navigation and taxonomy validation.
+
+- [Portable working-tree authoring workflow](https://www.shoalrun.com/changelog/working-tree-skill.md) — ID: change.working-tree-skill. changelog-entry; 478 tokens. Agent discovery, native editing, validation, and snapshot review.
+
+- [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. explanation; 821 tokens. Scope limits for skill generation, agent orchestration, and reader-view authorization.
+
+- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1651 tokens. Current capabilities, planned features, and known limits.

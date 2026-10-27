@@ -12,11 +12,11 @@ canonical: /author/components/code-blocks
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Code blocks
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Code blocks
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Fenced code is ordinary Markdown rather than an MDX component. It belongs in the component reference because authors use it beside components to show commands, configuration, and payloads.
 
@@ -35,6 +35,10 @@ fields:
   agent.intent:
     type: string
 ```
+
+## Fence options
+
+A fence can declare a language, a title, and a filename.
 
 | Fence option                         | Required | Meaning                                                                    |
 | ------------------------------------ | -------- | -------------------------------------------------------------------------- |
@@ -60,7 +64,7 @@ outputs:
       theme: site
 ```
 
-The default is equivalent to that configuration. The `site` theme takes code colors from the site [palette](https://www.shoalrun.com/styling/palettes.md). Keywords use the accent color. Strings, numbers, and functions use the palette's green, amber, and blue. Code colors change with the palette, including in the [theme previewer](https://www.shoalrun.com/styling/try.md). A color below 4.5:1 contrast on the code background falls back to plain code text.
+The default is equivalent to that configuration. The `site` theme takes code colors from the site [palette](https://www.shoalrun.com/styling/palettes.md). Keywords use the accent color. Strings, numbers, and functions use the palette's green, amber, and blue. Code colors change with the palette, including in the [theme demo](https://www.shoalrun.com/styling/try.md). A color below 4.5:1 contrast on the code background falls back to plain code text.
 
 To use a theme you know from your editor, set `theme` to a bundled Shiki theme name, such as `github-dark`, `dracula`, or `one-dark-pro`. A dark theme sets the syntax colors, and the palette still sets the block background so it matches the toolbar. A light theme, such as `github-light`, sets both its colors and its background. [Shiki's theme list](https://shiki.style/themes) shows available names. Site typography and surrounding colors still come from [CSS tokens](https://www.shoalrun.com/author/css.md). An unknown theme fails the build.
 

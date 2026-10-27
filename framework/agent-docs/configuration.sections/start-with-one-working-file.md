@@ -15,9 +15,9 @@ canonical: /configuration
 
 Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Configure your project
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -33,13 +33,15 @@ Use the [configuration reference](https://www.shoalrun.com/config.md) to look up
 
 ## Start with one working file
 
-The examples use the compiled CLI from the [quickstart](https://www.shoalrun.com/start.md). From the Shoalrun checkout root, create a separate minimal project:
+The examples use a separate project so you can replace its configuration as you follow along. Install the same pinned package used in [getting started](https://www.shoalrun.com/start.md):
 
 ```sh
-SHOALRUN_CLI="$PWD/framework/dist/cli.js"
 CONFIG_DEMO="$(mktemp -d)"
-node "$SHOALRUN_CLI" init "$CONFIG_DEMO/site" --starter minimal
+mkdir "$CONFIG_DEMO/site"
 cd "$CONFIG_DEMO/site"
+npm init -y
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.11
+npx --no-install shoalrun init . --starter minimal
 ```
 
 The starter has two pages and this basic configuration structure:
@@ -75,7 +77,7 @@ navigation:
 Build once before reorganizing:
 
 ```sh
-node "$SHOALRUN_CLI" build docs.config.yaml dist
+npx --no-install shoalrun build docs.config.yaml dist
 ```
 
 This produces the same two pages after each reorganization below. Keep `dist/` separate from content and configuration inputs.

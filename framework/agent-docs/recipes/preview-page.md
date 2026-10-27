@@ -12,9 +12,9 @@ canonical: /recipes/preview-page
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Preview a documentation change locally
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Preview a documentation change locally
 
 **Updated: 2026-10-27.**
 
@@ -26,7 +26,6 @@ Build current documentation and inspect its HTML and Markdown over local HTTP.
 - `repositoryCheckout`: This documentation repository with its pinned package and lockfile.
 - Run commands from the documentation repository root.
 - Use Node.js 22.12 or newer.
-- Use Node.js 22.12 or newer and install site dependencies with `npm ci` if needed.
 
 ## Install the site dependencies
 

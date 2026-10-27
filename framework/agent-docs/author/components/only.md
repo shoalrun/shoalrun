@@ -12,13 +12,15 @@ canonical: /author/components/only
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Content for one format
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Content for one format
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<Only>` to author content for one output format. Shared material stays outside the blocks; a block can contain an instruction, explanation, example, or link that serves only one version:
+
+## Syntax
 
 ```mdx
 Shared setup steps appear in both formats.
@@ -42,6 +44,10 @@ The same mechanism can hold a larger section. An HTML section might teach throug
 
 This sentence appears only in the Markdown twin.
 
+## Attributes
+
+The build validates the contents of both blocks, including their links and supported components. `<Only>` needs block content and exactly one literal `format` attribute: `html` or `markdown`. Dynamic expressions and other values fail the build.
+
 ## HTML, Markdown, and agents
 
 An agent that fetches the direct `.md` URL, or requests this page with `Accept: text/markdown` on a host that supports [content negotiation](https://www.shoalrun.com/publish/content-negotiation.md), receives the shared text and `format="markdown"` blocks. It does not receive `format="html"` blocks. For the live example above, the relevant Markdown line is:
@@ -49,8 +55,6 @@ An agent that fetches the direct `.md` URL, or requests this page with `Accept: 
 ```md
 This sentence appears only in the Markdown twin.
 ```
-
-The build validates the contents of both blocks, including their links and supported components. `<Only>` needs block content and exactly one literal `format` attribute: `html` or `markdown`. Dynamic expressions and other values fail the build.
 
 Keep facts, warnings, and task steps that both readers need outside `<Only>`, or provide suitable versions in both formats. You can add or suppress content in either output when that helps its intended reader. Check that each version remains accurate and usable for its task; see [Shoalrun's position on shared and format-specific content](https://www.shoalrun.com/publish/agent-friendliness.md). The browser search index uses the HTML output, so Markdown-only text is not included in that search. See [publishing and agent representations](https://www.shoalrun.com/publish/output.md) for the full output contract.
 

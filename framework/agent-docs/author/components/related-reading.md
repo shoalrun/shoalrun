@@ -12,11 +12,11 @@ canonical: /author/components/related-reading
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > RelatedReading
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > RelatedReading
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 `<RelatedReading>` presents connections declared in the central `relationships` config. Use it for prerequisites, next steps, references, related topics, and distinctions that need a reason.
 
@@ -25,6 +25,10 @@ Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write docume
 ```mdx
 <RelatedReading relation="next-step" />
 ```
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute   | Meaning                                                                                     |
 | ----------- | ------------------------------------------------------------------------------------------- |

@@ -13,11 +13,11 @@ canonical: /publish/output
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Generated outputs
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -37,4 +37,4 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 Focused export supports local OpenAPI 3.0.x and 3.1.x files, including multi-file references. JSON Schema IDs and anchors that change the base URI need a separate adapter. Remote sources still need a pinned local snapshot.
 
-For config provenance, run `node framework/dist/cli.js config explain site.title docs/docs.config.yaml` from the repository root. The [CLI reference](https://www.shoalrun.com/cli.md) covers this and the other inspection commands.
+For config provenance, run `npx --no-install shoalrun config explain site.title docs.config.yaml` from your documentation project root. The [CLI reference](https://www.shoalrun.com/cli.md) covers this and the other inspection commands.

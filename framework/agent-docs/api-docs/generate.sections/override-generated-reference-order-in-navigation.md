@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/api-docs/generate.md)
 
@@ -31,7 +31,7 @@ Parent page: [Full Markdown page](/api-docs/generate.md)
 
 - [Organize site navigation](https://www.shoalrun.com/author/navigation.md) — Arrange selected operations in the site menu.
 
-Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references.md). Use generation when you want references for many operations without writing an MDX page for each one. The commands below run in your documentation project with `SHOALRUN_CLI` set as in the quickstart.
+Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references.md). Use generation when you want references for many operations without writing an MDX page for each one. The commands below run in your documentation project with `@shoalrun/cli` installed as in the [quickstart](https://www.shoalrun.com/start.md).
 
 ## Override generated reference order in navigation
 
@@ -52,7 +52,7 @@ Here `GET /Query/widgets` may have the OpenAPI tag `Query`, but its generated re
 To review the default publication's spec operation by operation, run:
 
 ```sh
-node "$SHOALRUN_CLI" api select notes docs.config.yaml --output config/notes-pages.yaml
+npx --no-install shoalrun api select notes docs.config.yaml --output config/notes-pages.yaml
 ```
 
 The command shows the method, path, ID, and summary for each operation and asks **yes** or **no**. It shows operations with authored pages but does not replace them. After the choices are complete, it writes the `pathPrefix` and `include` list to the selection file; `q` cancels without writing. Run `api review` again, inspect the candidate, and update `publicReview.digest` before rebuilding to apply the choices. Add `{ id: notes-generated, api: notes, generated: tags }` under a navigation group to display the generated pages by their first OpenAPI tag, or place selected operations explicitly in navigation. This site's [Example Notes API subnav](https://www.shoalrun.com/author/navigation.md) uses the tag generator.

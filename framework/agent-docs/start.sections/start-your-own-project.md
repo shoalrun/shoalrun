@@ -42,7 +42,7 @@ npm install --save-exact @shoalrun/cli@0.1.0-alpha.11
 npx --no-install shoalrun init .
 ```
 
-[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) build without Chrome. The starter puts `docs.config.yaml` and `content/` in your project. Initialization refuses to overwrite starter files, and preserves unrelated files such as the package manifest and lockfile.
+The starter puts `docs.config.yaml` and `content/` in your project. Initialization refuses to overwrite starter files, and preserves unrelated files such as the package manifest and lockfile.
 
 Preview the starter:
 

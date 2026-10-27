@@ -12,11 +12,11 @@ canonical: /author/components/info-hint
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Components > Short definitions
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Short definitions
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Use `<InfoHint>` for a short definition that readers can open when they need it. It is a click-to-expand disclosure. Use a [tooltip](https://www.shoalrun.com/author/components/tooltips.md) for brief text that appears on hover or keyboard focus. Put longer explanations in a [callout](https://www.shoalrun.com/author/components/callout.md) or a linked page.
 
@@ -31,6 +31,10 @@ The preferred address for a page when several addresses show the same content.
 ```
 
 Canonical URL: The preferred address for a page when several addresses show the same content.
+
+## Attributes
+
+Use these attributes to configure the component.
 
 | Attribute | Required | Meaning                                        |
 | --------- | -------- | ---------------------------------------------- |

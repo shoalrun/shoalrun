@@ -12,11 +12,11 @@ canonical: /cookbooks/welcome-email
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Cookbooks > Email simulation
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Email simulation > Email simulation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 An accepted request is the first checkpoint. Choose how far you want to follow the message. Both paths use a local simulation that sends no email.
 
@@ -43,6 +43,10 @@ What do you need to confirm?. Choose one recipe.
   You will have: A delivery status tied to the message you queued, with a failure check.
 
 The delivery path includes the queue step, so choose one path. Use **Link to this path** to share your selection, **Download Markdown** to keep the instructions, or **Print this path** for a paper copy. Shared links contain your recipe choice only; they do not contain a message ID.
+
+## HTML, Markdown, and agents
+
+The HTML chooser loads the selected email recipes, while ordinary recipe links remain available without JavaScript. Markdown lists the choices and links rather than the browser-selected recipe bodies. An agent must follow those links or read the chooser's **Download Markdown** file for the complete simulator instructions. Selecting a recipe does not send an email or execute its commands.
 
 ## Related reading
 
