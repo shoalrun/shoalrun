@@ -35,7 +35,7 @@ These commands do not install skills or require a project or provider key.
 export const cliHelp = `Usage: shoalrun <command>
 
 Start and build:
-  init [directory] [--starter minimal|api-docs]
+  init [directory] [--starter minimal|api-docs|showcase]
   build [config] [output]
   export [config] --out DIRECTORY [--target NAME]
   dev [config] [output] [--port PORT]

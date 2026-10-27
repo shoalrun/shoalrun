@@ -108,7 +108,7 @@ console.log(JSON.stringify({ pages: project.entries.length, schemaVersion: proje
     else delete browserEnv.PUPPETEER_EXECUTABLE_PATH;
     console.log(execFileSync(process.execPath, ['--test', path.join(framework, 'dist/content-export-browser.test.js')], { cwd: consumer, env: browserEnv, encoding: 'utf8' }));
   }
-  for (const starter of ['minimal', 'api-docs']) {
+  for (const starter of ['minimal', 'api-docs', 'showcase']) {
     const project = path.join(consumer, starter);
     // Use the public packaged initializer, rather than a dist implementation import.
     runCli(['init', project, '--starter', starter], consumer);

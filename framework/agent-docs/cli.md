@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Reference > CLI reference
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 The private `@shoalrun/cli` package supplies the `shoalrun` command. It needs Node.js 22.12 or newer. Follow [Getting started](https://www.shoalrun.com/start.md) to install it from GitHub Packages, then run commands as `npx --no-install shoalrun <command>`. Framework contributors can build the source checkout and run `node framework/dist/cli.js <command>` from its root.
 
@@ -29,10 +29,10 @@ Commands that return data print JSON to standard output. On an error, the CLI pr
 ### `init`
 
 ```sh
-shoalrun init [directory] [--starter minimal|api-docs]
+shoalrun init [directory] [--starter minimal|api-docs|showcase]
 ```
 
-Copies a bundled starter into `directory` (default `.`). `minimal` is the default; `api-docs` includes the fictional Cedar Parcel API, an overview and quickstart, a local OpenAPI file, generated references, search, and a color-mode toggle. Its README explains customization and deployment. Existing unrelated files stay in place, but any destination file collision stops the command before it copies anything. Existing destination directories must be real directories, not symlinks or files. The command prints JSON with the starter, absolute directory, copied files, and the next validate and build commands. Run those commands from the created directory, then replace fixture content and example domains. `init` does not install packages or deploy the site.
+Copies a bundled starter into `directory` (default `.`). `minimal` is the default; `api-docs` includes the fictional Cedar Parcel API, an overview and quickstart, a local OpenAPI file, generated references, search, and a color-mode toggle. The `showcase` starter adds a component handbook, diagrams, code walkthroughs, reader views, a landing page, and a local-workflow cookbook to that API example. All three build without provider credentials. The API and showcase README files explain customization. Existing unrelated files stay in place, but any destination file collision stops the command before it copies anything. Existing destination directories must be real directories, not symlinks or files. The command prints JSON with the starter, absolute directory, copied files, and the next validate and build commands. Run those commands from the created directory, then replace fixture content and example domains. `init` does not install packages or deploy the site.
 
 ## Build and serve
 

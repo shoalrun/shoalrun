@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/start.md)
 
@@ -38,7 +38,7 @@ Install an exact version of the private alpha and initialize the minimal starter
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.8 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.10 --@shoalrun:registry=https://npm.pkg.github.com
 npx --no-install shoalrun init .
 ```
 

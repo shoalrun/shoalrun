@@ -29,7 +29,7 @@ Open <http://127.0.0.1:8770/>. Edit the pages in `my-docs/content/` and the site
 npx shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
 ```
 
-Stop the existing preview with Ctrl-C before starting the development server on the same port. Use the `api-docs` starter instead of `minimal` for an example site with an OpenAPI source.
+Stop the existing preview with Ctrl-C before starting the development server on the same port. Use the `api-docs` starter instead of `minimal` for an example site with an OpenAPI source. Choose `--starter showcase` for a fuller fictional service handbook with component examples, diagrams, reader views, themes, and generated API references. All three starters build without provider credentials.
 
 ## Work with an agent
 

@@ -17,9 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Example projects
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
-Each example below is a complete project in the repository's `framework/example-configs/` directory, with pages and any OpenAPI files it needs. The test suite builds every one, and checks that the configs on this page match the files, so they stay correct. Start with the bundled `minimal` or `api-docs` project, then build it:
+Each example below is a complete project in the repository's `framework/example-configs/` directory, with pages and any OpenAPI files it needs. The test suite builds every one, and checks that the configs on this page match the files, so they stay correct. Start with the bundled `minimal`, `api-docs`, or `showcase` project, then build it:
 
 ```sh
 shoalrun init my-docs --starter minimal
@@ -28,7 +28,7 @@ shoalrun build docs.config.yaml site-dist
 shoalrun serve site-dist
 ```
 
-Use `--starter api-docs` for the Cedar Parcel API example. The other examples remain available to copy from `framework/example-configs/`.
+Use `--starter api-docs` for the Cedar Parcel API example, or `--starter showcase` for a complete component handbook built around that fictional service. The other examples remain available to copy from `framework/example-configs/`.
 
 The `notifications` project demonstrates an optional [cookbook chooser](https://www.shoalrun.com/author/components/cookbook-chooser.md) with email, push, and SMS choices. Its YAML maps supported selections to prebuilt recipe pages. It also includes unpublished ingredient and recipe drafts to show the authoring path. Build it from the repository root:
 
@@ -38,6 +38,19 @@ node framework/dist/cli.js serve /tmp/notifications-site
 ```
 
 The [configuration reference](https://www.shoalrun.com/config.md) explains every key.
+
+## Feature showcase
+
+The `showcase` starter provides 18 connected pages. Its component examples cover callouts, badges, definitions, tables, field lists, steps, timelines, collapsibles, file trees, code tabs, walkthroughs, and snippets. Other pages demonstrate reader controls, themes, diagrams, images, math, a landing page, cookbook choices, and generated API references. **Explore the starter**, first in the left navigation, maps the examples to their source pages.
+
+```sh
+shoalrun init my-handbook --starter showcase
+cd my-handbook
+shoalrun build docs.config.yaml site-dist
+shoalrun serve site-dist
+```
+
+It needs no provider credentials to build. Replace fictional service names, hostnames, and examples before using it for a real product. Hosted chat, remote search, and analytics need your own services; the starter does not connect to a demonstration account.
 
 ## Minimal site
 

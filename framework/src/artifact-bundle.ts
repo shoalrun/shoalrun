@@ -1,3 +1,4 @@
+import { markdownTokenEncoding } from './markdown-size.js';
 import { addMcpArtifacts } from './mcp-artifacts.js';
 import { mcpRuntimePath } from './mcp-integrity.js';
 import { documentSnapshot, publicationBuildId } from './document-sync.js';
@@ -261,11 +262,16 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
   const discovery = [renderMarkdown(root([heading(1, String(config.site.title))])).trimEnd(), '', '> Documentation and API contracts published by this site.', ...(readerFilters ? ['', 'Reader views affect the interactive HTML only. This index lists every published page, and each Markdown page includes all reader-marked sections with readable labels. The document manifest records configured reader facets and each page’s marks.'] : []), ...(llms.fictionalPrefixes.length ? ['', 'Entries labeled Fictional example demonstrate documentation features. Their operations and API contracts do not describe a live service.'] : []), '', '## Discovery', '', discoveryLinks([{ title: 'Compact documentation index', url: publicPath('/llms.min.txt'), summary: 'Start here: full-page Markdown links and author-declared standalone section links with sizes and full-page fallbacks. No tools or JSON processing required.' }, ...(search.index ? [{ title: 'Compact heading index', url: publicPath('/search-index.min.json'), summary: 'Page summaries, headings, and smaller section Markdown URLs with sizes; no article text.' }] : []), { title: 'Resource response headers', url: publicPath('/resource-headers.json'), summary: 'Published hosting metadata: content types and representation Link headers for host adapters.' }, { title: 'Document sync snapshot', url: publicPath('/documents.sync.json'), summary: 'Save and compare compact page signatures between builds; build-info.json identifies the current build.' }, { title: 'Structured document manifest', url: publicPath('/documents.json'), summary: 'Stable page IDs, HTML and Markdown URLs, and content digests.' }, ...(sitemaps.size ? [{ title: 'XML sitemap', url: publicPath('/sitemap.xml'), summary: 'Canonical URLs for indexable pages.' }] : []), ...(search.index ? [{ title: 'Lexical search index', url: publicPath('/search-index.json'), summary: 'Downloadable page titles, summaries, headings, and bounded HTML article text. It is an index file, not a query endpoint.' }] : []), ...(catalog ? [{ title: 'API catalog', url: publicPath('/.well-known/api-catalog'), summary: '' }] : [])]), ...sections, ...(apiSources.some(item => llms.format === 'flat' || !fictionalApis.has(item.apiId)) ? ['', '## API contracts', '', discoveryLinks(apiSources.filter(item => llms.format === 'flat' || !fictionalApis.has(item.apiId)).map(item => ({ title: `${fictionalApis.has(item.apiId) ? 'Fictional example: ' : ''}${item.apiId} ${item.channel} ${item.version} OpenAPI`, url: item.sourceUrl, summary: `Pinned ${item.mediaType} source used for the reference.` })))] : []), ...(llms.format === 'grouped' && optional.length ? ['', '## Optional', '', optionalList] : [])].join('\n') + '\n';
   addPublicArtifact('/llms.txt', discovery + tabLinks + (tabLinks ? '\n' : ''));
   const publications = [...new Set(rendered.map(page => `${page.doc.variant.channel}/${page.doc.variant.version}/${page.doc.variant.language}`))].sort();
+  const pageSizes = new Map(manifest.documents.map(page => [page.markdownUrl, page]));
+  const compactSummary = (page: ArtifactPage) => {
+    const size = pageSizes.get(page.doc.markdownRoute)!;
+    return `${page.doc.frontmatter.type}; ${size.markdownTokens} tokens. ${discoveryEntry(page).summary}`;
+  };
   const compactEntries = [...rendered].sort((a, b) => a.doc.route.localeCompare(b.doc.route)).map(page => {
     const entry = discoveryEntry(page);
     const publication = `${page.doc.variant.channel}/${page.doc.variant.version}/${page.doc.variant.language}`;
     const approved = (page.sections ?? []).filter(section => section.standalone === true);
-    return [paragraph(link(entry.url, `${page.doc.frontmatter.id} · ${entry.title}${publications.length > 1 ? ` (${publication})` : ''}`), text(`: ${entry.summary}`)),
+    return [paragraph(link(entry.url, `${page.doc.frontmatter.id} · ${entry.title}${publications.length > 1 ? ` (${publication})` : ''}`), text(`: ${compactSummary(page)}`)),
       ...(approved.length ? [list(approved.map(section => [paragraph(
         text('Standalone section: '), link(section.markdownUrl, section.title),
         text(` — ${section.markdownTokens} tokens (${section.markdownTokenEncoding}), ${section.markdownBytes} UTF-8 bytes. `),
@@ -274,7 +280,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
   const compactList = renderMarkdown(root([list(compactEntries)])).trimEnd();
   const compactIntro = renderMarkdown(root([
     heading(1, String(config.site.title)),
-    paragraph(text('Fetch a matching full Markdown page by default. Use a listed standalone section only for its stated topic; for setup, broader questions, or missing context, follow Full page. Standalone is an author declaration, not proof of completeness.')),
+    paragraph(text(`Full-page token counts use ${markdownTokenEncoding}. Fetch a matching full Markdown page by default. Use a listed standalone section only for its stated topic; for setup, broader questions, or missing context, follow Full page. Standalone is an author declaration, not proof of completeness.`)),
     paragraph(text(publications.length === 1 ? `Publication (channel/version/language): ${publications[0]}.` : 'Choose the matching channel/version/language shown on each page; keep that publication when following links.')),
     paragraph(link(publicPath('/llms.txt'), 'Full documentation index'), text('. Full manifests and search indexes are optional. A missing match does not establish that a feature exists or does not exist.')),
   ])).trimEnd();
@@ -285,7 +291,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     const topic = JSON.stringify([publication, area ?? page.doc.frontmatter.type]);
     const topicLabel = `${(area && manifest.taxonomy?.areas[area]?.label) || area || page.doc.frontmatter.type}${publications.length > 1 ? ` (${publication})` : ''}`;
     const title = `${page.doc.frontmatter.id} · ${entry.title}${publications.length > 1 ? ` (${publication})` : ''}`;
-    const main = { key: entry.url, title, topic, topicLabel, markdown: renderMarkdown(root([list([[paragraph(link(entry.url, title), text(`: ${entry.summary}`))]])])) };
+    const main = { key: entry.url, title, topic, topicLabel, markdown: renderMarkdown(root([list([[paragraph(link(entry.url, title), text(`: ${compactSummary(page)}`))]])])) };
     // Separate standalone records keep a page with many approved sections from
     // becoming one unsplittable entry. Each retains its full-page fallback.
     return [main, ...(page.sections ?? []).filter(section => section.standalone === true).map(section => ({
@@ -304,11 +310,11 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     const members = manifest.documents.filter(doc => doc.navigationTab?.indexUrl === tab.indexUrl);
     const intro = renderMarkdown(root([
       heading(1, tab.label),
-      paragraph(text(`Navigation section ID: ${tab.id}. Publication: ${tab.variant.channel}/${tab.variant.version}/${tab.variant.language}.`)),
+      paragraph(text(`Full-page token counts use ${markdownTokenEncoding}. Navigation section ID: ${tab.id}. Publication: ${tab.variant.channel}/${tab.variant.version}/${tab.variant.language}.`)),
       paragraph(link(outputUrl(publicPath('/llms.min.txt'), '/', siteOrigin, 'markdown', documentRoutes, basePath), 'All sections and published pages'), text('. This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.')),
     ])).trimEnd();
     const memberUrls = new Set(members.flatMap(doc => [doc.markdownUrl, ...doc.sections.filter(section => section.standalone === true).map(section => section.markdownUrl)]));
-    const flat = intro + '\n\n' + renderMarkdown(root([list(members.map(doc => [paragraph(link(outputUrl(doc.markdownUrl, '/', siteOrigin, 'markdown', documentRoutes, basePath), doc.title), text(` — ID: ${doc.id}. ${doc.demo ? 'Fictional example. ' : ''}${doc.summary}`))]))]));
+    const flat = intro + '\n\n' + renderMarkdown(root([list(members.map(doc => [paragraph(link(outputUrl(doc.markdownUrl, '/', siteOrigin, 'markdown', documentRoutes, basePath), doc.title), text(` — ID: ${doc.id}. ${doc.type}; ${doc.markdownTokens} tokens. ${doc.demo ? 'Fictional example. ' : ''}${doc.summary}`))]))]));
     addIndexes(boundedDiscovery({ route: tab.indexUrl, directory: `${tab.indexUrl.slice(0, -4)}-indexes`, intro, flat, entries: topicEntries.filter(entry => memberUrls.has(entry.key)) }));
   }
   for (const route of new Set(['/resource-headers.json', publicPath('/resource-headers.json')])) artifacts.set(route, JSON.stringify(headers, null, 2) + '\n');

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-alpha.10 — 2026-10-27
+
+- Let mobile header tools share a row when space permits; anchor search results within the available header width.
+- Raise small reader, code, and API control labels and navigation metadata; keep ordinary list prose within the same reading measure as paragraphs.
+- Include page type and full-page token count in compact discovery and navigation indexes while preserving the 2,000-token index budget.
+- Add `shoalrun init --starter showcase`: an editable Cedar Parcel handbook with component examples, diagrams, reader views, a landing page, local-workflow cookbook, and generated API references.
+
 ## 0.1.0-alpha.9 — 2026-10-27
 
 - Documentation pages put the article before the full navigation in HTML, so

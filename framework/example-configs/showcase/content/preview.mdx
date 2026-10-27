@@ -1,0 +1,35 @@
+---
+id: showcase.preview
+title: Build and preview in a browser
+summary: Inspect the local site and open a page in Markdown.
+type: recipe
+slug: /handbook/preview
+updated: 2026-10-27
+---
+
+## Before you start
+
+Install the Shoalrun CLI and open a terminal in this starter's directory, beside `docs.config.yaml`. Use `site-dist` only for generated output: the build replaces that directory. The build needs no provider credentials and sends no parcel requests.
+
+## Build the site
+
+```sh
+shoalrun config validate docs.config.yaml
+shoalrun build docs.config.yaml site-dist
+```
+
+Both commands must finish successfully. If either reports an error, correct the named source file and rerun it before treating the output as current.
+
+## Start the preview
+
+```sh
+shoalrun serve site-dist
+```
+
+Open the address printed by the command. If its port is occupied, stop the old preview or choose another port with `--port 8788`.
+
+## Check the reading experience
+
+Open **Prepare a dispatch** from the Handbook navigation. Filter the service table for `Local` and confirm that only the matching row remains. Clear the filter to restore the table. Switch between light and dark modes, then use **Read as Markdown** and confirm the same three services appear.
+
+The task is complete when the site loads, the filter works, and the Markdown link opens the page text. Stop the server with Control+C when finished.

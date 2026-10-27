@@ -3,7 +3,7 @@ import { copyFile, lstat, mkdir, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export type Starter = 'minimal' | 'api-docs';
+export type Starter = 'minimal' | 'api-docs' | 'showcase';
 
 type StarterEntry = { relative: string; kind: 'directory' | 'file' };
 
@@ -34,7 +34,7 @@ async function entriesUnder(root: string, relative = ''): Promise<StarterEntry[]
 }
 
 export async function initProject(targetDirectory: string, starter: Starter = 'minimal') {
-  if (starter !== 'minimal' && starter !== 'api-docs') throw new Error(`Unknown starter ${starter}; choose minimal or api-docs`);
+  if (starter !== 'minimal' && starter !== 'api-docs' && starter !== 'showcase') throw new Error(`Unknown starter ${starter}; choose minimal, api-docs, or showcase`);
   const directory = path.resolve(targetDirectory);
   const source = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../example-configs', starter);
   const entries = await entriesUnder(source);

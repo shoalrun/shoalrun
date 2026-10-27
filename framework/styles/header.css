@@ -43,10 +43,13 @@
 .mode-toggle .mode-icon-dark,.mode-toggle[aria-pressed=true] .mode-icon-light{display:none}
 .mode-toggle[aria-pressed=true] .mode-icon-dark{display:block}
 @media(max-width:48rem){
-  .mast-tools{order:3;width:100%;flex-wrap:wrap;margin-left:0}
-  .site-search{flex:1 1 100%;width:auto}
+  .mast-tools{position:relative;order:3;width:100%;flex-wrap:wrap;margin-left:0}
+  .site-search{position:static;flex:1 1 10rem;min-width:0;width:auto}
+  .site-search-results{left:0;right:auto;width:100%}
+  .mode-toggle{flex:none}
   .site-search-key{display:none}
-  .header-actions{flex:1 1 100%}
+  .header-actions{flex:0 1 auto;min-width:0}
+  .header-actions a{white-space:normal;overflow-wrap:anywhere}
   .header-actions a{min-height:2.25rem;font-size:.8rem}
 }
 @media(forced-colors:active){.site-search-results [aria-selected=true] a{outline:2px solid Highlight}}

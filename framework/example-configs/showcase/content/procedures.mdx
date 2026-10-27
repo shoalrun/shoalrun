@@ -1,0 +1,88 @@
+---
+id: showcase.procedures
+title: Run a dispatch review
+summary: Guide a reader through steps, milestones, optional detail, and related pages.
+type: how-to
+slug: /handbook/procedures
+---
+
+Use this fictional checklist to review a dispatch before handing it to a courier.
+
+## Review the manifest
+
+<Steps headingLevel="3">
+<Step title="Count the parcels" icon="package">
+
+Compare the manifest with the parcels in the collection area.
+
+</Step>
+<Step title="Review exceptions" icon="clipboard-check">
+
+Resolve missing labels and destination mismatches before continuing.
+
+</Step>
+<Step title="Save the receipt" icon="archive">
+
+Keep the receipt alongside the reviewed manifest.
+
+</Step>
+</Steps>
+
+## Track the review
+
+<Progress label="Dispatch checks complete" value="2" max="3" />
+
+<Timeline current="review">
+<Milestone id="prepare" title="Prepared">
+
+The manifest and parcels are ready.
+
+</Milestone>
+<Milestone id="review" title="Under review">
+
+The operator is checking exceptions.
+
+</Milestone>
+<Milestone id="handoff" title="Handed over">
+
+The courier receives the reviewed dispatch.
+
+</Milestone>
+</Timeline>
+
+## Resolve an exception
+
+<CollapsibleGroup>
+
+
+<Collapsible title="A parcel is missing">
+
+Leave the handoff incomplete until the operator records an explanation and updates the manifest.
+
+</Collapsible>
+<Collapsible title="The destination changed">
+
+Replace the label and compare it with the revised manifest before resuming the review.
+
+</Collapsible>
+
+
+</CollapsibleGroup>
+
+## Organize the files
+
+<FileTree controls>
+<Folder name="dispatch">
+<File name="manifest.csv" />
+<File name="receipt.json" />
+<Folder name="notes" collapsed>
+<File name="review.md" doc="showcase.reading" />
+</Folder>
+</Folder>
+</FileTree>
+
+## Continue
+
+<DocLink doc="guide.quickstart" />
+
+<DocCollection type="reference" limit={3} />

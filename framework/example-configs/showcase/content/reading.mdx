@@ -1,0 +1,99 @@
+---
+id: showcase.reading
+title: Prepare a dispatch
+summary: Use callouts, definitions, tables, and field lists to explain a dispatch clearly.
+type: reference
+slug: /handbook/reading
+---
+
+A dispatch groups parcels collected during one pickup window. Check the destination and service before printing a manifest. The examples on this page illustrate documentation components; they are not additional API operations.
+
+## Before you begin
+
+<Callout type="note">All parcel IDs on this site are fictional.</Callout>
+<Callout type="tip">Group parcels by pickup window to make the handoff easier to check.</Callout>
+<Callout type="important">Keep the dispatch receipt until every parcel is reconciled.</Callout>
+<Callout type="warning">Changing a destination after printing a label can produce a mismatch.</Callout>
+<Callout type="caution">Do not put real addresses or credentials in this public example.</Callout>
+
+## Understand the labels
+
+The example workflow is <Badge variant="success" icon="check">Ready to review</Badge>.
+Press <Kbd>Control</Kbd> + <Kbd>K</Kbd> to open search.
+
+<InfoHint label="Pickup window">
+
+The agreed interval during which a courier collects a dispatch.
+
+</InfoHint>
+
+Compare the <Tooltip label="manifest digest">A fingerprint used to detect changes to the manifest file.</Tooltip> before handing over the file.
+
+<DefinitionList filter>
+<Term>Dispatch</Term>
+<Definition>
+
+A group of parcels prepared for one pickup.
+
+</Definition>
+<Term>Receipt</Term>
+<Definition>
+
+The record returned when an enrollment is accepted. Acceptance does not prove delivery.
+
+</Definition>
+<Term>Reconciliation</Term>
+<Definition>
+
+Matching every parcel to its recorded outcome.
+
+</Definition>
+</DefinitionList>
+
+## Choose a service
+
+<Table filter sticky>
+
+| Service | Pickup | Tracking | Best for |
+| --- | --- | --- | --- |
+| Local | Same city | Every handoff | Nearby shops |
+| Regional | Next scheduled run | Depot and delivery | Neighboring cities |
+| Scheduled | Agreed window | Every handoff | Repeat collections |
+
+</Table>
+
+## Prepare the handoff
+
+- Check that each parcel has a readable label and that the destination matches the manifest. If a label is damaged, replace it before moving the parcel into the collection area.
+- Count the parcels against the dispatch record. Investigate missing or extra parcels before confirming the handoff, and record the reason for any correction.
+- Keep the receipt with the dispatch record so the operations team can trace a discrepancy without relying on a conversation or a temporary browser session.
+
+## Describe configuration
+
+These fields describe a fictional local checklist, not the API request schema.
+
+<Fields>
+<Field name="dispatchName" type="string" required minLength="1" maxLength="80" example="Tuesday pickup">
+
+
+A label for the operations team.
+
+
+</Field>
+<Field name="notifications" type="object" optional nullable>
+
+
+Optional local notification settings.
+<Fields>
+<Field name="enabled" type="boolean" optional default="false">
+
+Enable checklist reminders.
+
+</Field>
+</Fields>
+
+
+</Field>
+</Fields>
+
+<ActionLink doc="showcase.procedures">Follow the dispatch checklist</ActionLink>

@@ -1,6 +1,6 @@
 {
   "name": "@shoalrun/cli",
-  "version": "0.1.0-alpha.9",
+  "version": "0.1.0-alpha.10",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"

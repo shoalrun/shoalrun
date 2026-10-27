@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { markdownTokens } from './markdown-size.js';
+import { markdownTokens, markdownTokenEncoding } from './markdown-size.js';
 import { heading, link, list, paragraph, renderMarkdown, root, text } from './semantic-markdown.js';
 
 export const compactDiscoveryTokenLimit = 2000;
@@ -23,7 +23,7 @@ export function boundedDiscovery(options: {
   const preamble = (label: string) => renderMarkdown(root([
     heading(1, short(label)),
     paragraph(link(route, 'Index overview'), text('. Follow a matching page or a narrower index. All pages in this scope remain reachable.')),
-    paragraph(text('Prefer the full page. Use a standalone section only for its stated topic; follow Full page for broader questions or missing context. Standalone is an author declaration, not proof of completeness.')),
+    paragraph(text(`Full-page token counts use ${markdownTokenEncoding}. Prefer the full page. Use a standalone section only for its stated topic; follow Full page for broader questions or missing context. Standalone is an author declaration, not proof of completeness.`)),
   ])).trimEnd();
   const body = (header: string, items: Item[]) => `${header}\n\n${items.map(item => item.markdown.trim()).join('\n\n')}\n`;
   const range = (items: Item[]) => items.length === 1 ? short(items[0].title) : `${short(items[0].title)} … ${short(items.at(-1)!.title)}`;

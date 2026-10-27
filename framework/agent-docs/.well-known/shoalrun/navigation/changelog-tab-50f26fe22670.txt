@@ -12,7 +12,7 @@ Navigation section ID: changelog-tab. Publication: production/current/en.
 
 - [Safer exports and easier discovery for AI assistants](https://www.shoalrun.com/changelog/2026-10-26.md) — ID: change.2026-10-26. Keep exported images and links with their pages, and help AI assistants find docs by topic.
 
-- [Read first and navigate without losing your place](https://www.shoalrun.com/changelog/2026-10-27.md) — ID: change.2026-10-27. Open mobile navigation without leaving your reading position, and reach articles before the full site menu.
+- [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md) — ID: change.2026-10-27. Explore a complete starter, read clearer controls, and find focused configuration references alongside the new mobile navigation.
 
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. Snapshot previews with coverage and freshness reports.
 

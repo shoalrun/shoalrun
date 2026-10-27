@@ -1,0 +1,27 @@
+---
+id: showcase.verify
+title: Build and inspect both outputs
+summary: Check that a content edit produces HTML and Markdown.
+type: recipe
+slug: /handbook/verify
+updated: 2026-10-27
+---
+
+## Before you start
+
+Install the Shoalrun CLI and open a terminal in this starter's directory, beside `docs.config.yaml`. Use `site-dist` only for generated output: the build replaces that directory. The build needs no provider credentials and sends no parcel requests.
+
+## Build the site
+
+```sh
+shoalrun config validate docs.config.yaml
+shoalrun build docs.config.yaml site-dist
+```
+
+Both commands must finish successfully. If either reports an error, correct the named source file and rerun it before treating the output as current.
+
+## Inspect the result
+
+Open `site-dist/handbook/reading/index.html` and `site-dist/handbook/reading.md`. Confirm both include the five messages under **Before you begin**, the service table, and the handoff checklist. The HTML includes visual icons; the Markdown retains message labels and their text.
+
+The task is complete when the build succeeds and both files contain the expected content. A successful build alone does not establish that the advice is correct.

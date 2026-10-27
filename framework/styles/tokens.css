@@ -40,7 +40,9 @@
   --color-experimental-text: #245b55;
   --color-emphasis: #256d52;
   --color-summary: #52685c;
+  /* Inline code uses this surface and inherits the surrounding text color. */
   --color-code-bg: #f0f4f1;
+  /* Fenced blocks use code-text on the palette code-block surface. */
   --color-code-text: #e4f2e9;
   --color-code-muted: #b8ccbf;
   --color-code-border: #405c4f;

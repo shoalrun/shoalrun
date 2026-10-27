@@ -1,0 +1,100 @@
+---
+id: showcase.code
+title: Inspect a dispatch receipt
+summary: Compare language examples and follow a small code walkthrough.
+type: tutorial
+slug: /handbook/code
+---
+
+These snippets inspect local fictional data. They do not send a request or imply that an API endpoint exists.
+
+<Snippet id="cedar.sandbox" values={{ task: "receipt inspection" }} />
+
+## Read the same data in two languages
+
+<Tabs label="Programming language">
+<Tab label="JavaScript">
+
+```js title="receipt.mjs"
+const receipt = { id: "dispatch_demo_001", parcels: 3 };
+console.log(`${receipt.id}: ${receipt.parcels} parcels`);
+```
+
+</Tab>
+<Tab label="Python">
+
+```python title="receipt.py"
+receipt = {"id": "dispatch_demo_001", "parcels": 3}
+print(f"{receipt['id']}: {receipt['parcels']} parcels")
+```
+
+</Tab>
+</Tabs>
+
+## Keep data and commands distinct
+
+```json title="receipt.json"
+{
+  "id": "dispatch_demo_001",
+  "parcels": 3
+}
+```
+
+```sh title="Read a saved receipt"
+cat receipt.json
+```
+
+```yaml title="checklist.yaml"
+dispatch: dispatch_demo_001
+checks:
+  labels: complete
+  destinations: complete
+  receipt: pending
+```
+
+## Validate before displaying
+
+<Walkthrough title="Read a parcel count">
+<Step title="Read the field">
+
+
+Start with fictional local data.
+
+```ts
+const receipt = { parcels: 3 };
+const count = receipt.parcels;
+console.log(count);
+```
+
+</Step>
+<Step title="Reject invalid counts" highlight="3-5">
+
+
+Require a nonnegative integer before displaying the count.
+
+```ts
+const receipt = { parcels: 3 };
+const count = receipt.parcels;
+if (!Number.isInteger(count) || count < 0) {
+  throw new Error("Invalid parcel count");
+}
+console.log(count);
+```
+
+</Step>
+</Walkthrough>
+
+## Read in either format
+
+<Only format="html">
+
+Use the language tabs to switch examples. Read as Markdown includes both languages as labeled sections.
+
+</Only>
+<Only format="markdown">
+
+Both language examples are included above. Browser tabs and copy controls are presentation conveniences.
+
+</Only>
+
+The [enrollment quickstart](doc:guide.quickstart) demonstrates source-backed API examples instead of authored local data.

@@ -1,0 +1,149 @@
+# Cedar Parcel API: guides, generated references, and agent-friendly contracts.
+schemaVersion: 1
+
+site:
+  title: Cedar Parcel
+  origin: https://docs.cedar-parcel.example
+  # Hidden visually until focused; present in HTML for agents and screen readers.
+  agentDiscovery:
+    mode: focus
+    message: Use Markdown for complete examples and the linked focused API contracts.
+  header:
+    links:
+      - { label: Quickstart, href: /quickstart, style: primary }
+  footer:
+    columns:
+      - title: Start building
+        links:
+          - { label: Overview, href: / }
+          - { label: Quickstart, href: /quickstart }
+          - { label: Enrollment reference, href: /reference/create-enrollment }
+    text: Cedar Parcel is a fictional example API.
+
+theme:
+  preset: shoal
+  palette: kelp
+  mode: system
+  toggle: true
+
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current, language: en }
+
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    language: en
+    access: { policy: public }
+
+apis:
+  cedar:
+    source: { kind: file, path: ./apis/cedar-parcel.yaml, publish: true }
+    discovery: { endpoint: https://api.cedar-parcel.example/v1 }
+    publicReview:
+      digest: a7a7e8eb427a7481f1c1f357d03db40319ad2e79bdeea926501da744cbecfd6f
+    mappings:
+      subjectLifecycle:
+        from: x-docs-availability.phase
+        values:
+          limited: beta
+          building: in-development
+          retired: deprecated
+    querySyntax:
+      - parameter: parameters
+        pathPrefixes: [/Search/]
+        style: unwrapped
+        example: declaredValue(gt)=100
+    operations:
+      - id: cedar.createEnrollment
+        sourceOperationId: createEnrollment
+        reference: reference.create-enrollment
+    generateReferences:
+      pathPrefix: /reference
+
+navigation:
+  - { id: features, doc: showcase.features }
+  - { id: overview, doc: guide.overview }
+  - { id: quickstart, doc: guide.quickstart }
+  - id: handbook
+    label: Handbook
+    items:
+      - { id: reading, doc: showcase.reading }
+      - { id: procedures, doc: showcase.procedures }
+      - { id: code, doc: showcase.code }
+      - { id: visuals, doc: showcase.visuals }
+      - { id: personalization, doc: showcase.personalization }
+      - { id: workflows, doc: showcase.workflows }
+      - { id: landing, doc: showcase.landing }
+  - id: reference
+    label: API reference
+    api: cedar
+    items:
+      - { id: create-enrollment, operation: cedar.createEnrollment }
+      - { id: generated, generated: tags }
+
+relationships:
+  - id: overview-to-quickstart
+    from: guide.overview
+    to: guide.quickstart
+    type: next-step
+    reason: Prepare a local-shop enrollment and inspect its receipt.
+  - id: quickstart-to-reference
+    from: guide.quickstart
+    to: reference.create-enrollment
+    type: next-step
+    reason: Compare all four program shapes and their required fields.
+
+outputs:
+  markdown:
+    metadata:
+      format: yaml-frontmatter
+      fields:
+        id: frontmatter.id
+        title: frontmatter.title
+        summary: frontmatter.summary
+        canonical: publication.canonicalUrl
+      byType:
+        api-reference:
+          addFields: { operations: frontmatter.operations }
+
+readerFilters:
+  facets:
+    audience:
+      label: Reader
+      options:
+        operator: Operations team
+        developer: Developer
+  controls:
+    sidebar: false
+
+snippets:
+  cedar.sandbox:
+    file: ./snippets/sandbox.mdx
+    variables:
+      task: { type: string, required: true }
+
+cookbooks:
+  local-checks:
+    title: What do you want to check?
+    mode: single
+    options:
+      - id: artifacts
+        label: Build and inspect both outputs
+        doc: showcase.verify
+        when: You edited content and want to check its HTML and Markdown.
+        needs: This starter and the Shoalrun CLI.
+        outcome: A successful build with both representations present.
+      - id: browser
+        label: Build and preview in a browser
+        doc: showcase.preview
+        when: You want to inspect layout and interactive controls.
+        needs: This starter, the Shoalrun CLI, and a browser.
+        outcome: A local preview with a working page and Markdown link.

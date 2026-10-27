@@ -1,0 +1,47 @@
+---
+id: showcase.visuals
+title: Follow the parcel journey
+summary: Explain a flow with diagrams, a local image, and a simple equation.
+type: explanation
+slug: /handbook/visuals
+---
+
+A dispatch moves from preparation through review to handoff. Keep the explanation alongside the graphic so it remains useful in Markdown and without JavaScript.
+
+## Review flow
+
+<Diagram engine="mermaid" title="Dispatch review" summary="Prepare the manifest, resolve exceptions, then hand it to the courier." width="720">
+
+```mermaid
+flowchart LR
+  prepare[Prepare manifest] --> review[Review exceptions]
+  review --> handoff[Courier handoff]
+```
+
+</Diagram>
+
+## Data flow
+
+<Diagram title="Dispatch records" summary="The reviewed manifest and courier receipt both feed reconciliation." layout="elk" width="720">
+
+```d2
+manifest: Reviewed manifest
+receipt: Courier receipt
+reconcile: Reconciliation
+manifest -> reconcile
+receipt -> reconcile
+```
+
+</Diagram>
+
+## Collection area
+
+<Image src="./assets/collection.svg" alt="Three labeled parcel boxes inside a marked collection area" caption="Keep reviewed parcels together until the handoff." width="640" expand />
+
+## Reconcile the counts
+
+The unresolved count is <Math expression="u = p - d" />, where p is the number of prepared parcels and d is the number with recorded delivery outcomes.
+
+<Math display expression="p = 3,\quad d = 2,\quad u = 1" />
+
+A count alone does not prove delivery; inspect each parcel's recorded outcome.

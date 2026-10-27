@@ -12,7 +12,7 @@ canonical: /
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 **Docs for people. Context for agents.**
 
@@ -242,7 +242,7 @@ shoalrun docs read guide.search
 
 - [Configuration reference](https://www.shoalrun.com/config.md)
 
-  Configuration settings, defaults, validation rules, and related guides.
+  Find configuration settings by topic and compose a project configuration.
 
 - [Deploy your documentation](https://www.shoalrun.com/publish.md)
 

@@ -1,0 +1,38 @@
+---
+id: showcase.personalization
+title: Choose your reading view
+summary: Try reader controls and themes while keeping every instruction available in Markdown.
+type: reference
+slug: /handbook/personalization
+---
+
+Reader views tailor what the browser shows. They do not restrict access or remove content from the Markdown output.
+
+## Choose a role
+
+<ReaderFilter facet="audience" display="checks" scope="page" />
+
+<ReaderChoice audience="operator" scope="page" label="I handle dispatches" />
+<ReaderChoice audience="developer" scope="page" label="I build integrations" />
+
+<ReaderSection audience="operator">
+
+### Operations team
+
+Use the [dispatch checklist](doc:showcase.procedures) to review labels, exceptions, and receipts.
+
+</ReaderSection>
+
+<ReaderSection audience="developer">
+
+### Developer
+
+Use the [API quickstart](doc:guide.quickstart) to inspect the request and its receipt. The API host is fictional.
+
+</ReaderSection>
+
+## Compare themes
+
+<ThemePreview />
+
+Check the callouts, code samples, and API reference in light and dark modes. Theme choices change presentation; both outputs retain the same underlying instructions.

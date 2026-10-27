@@ -1,0 +1,42 @@
+---
+id: guide.overview
+title: Cedar Parcel API
+summary: Enroll a parcel program, search records, and follow delivery events.
+slug: /
+card: { icon: package }
+---
+
+Build a parcel integration with guides and API references from the same OpenAPI source. Start with an enrollment example, then explore parcel records, dispatch manifests, and delivery events.
+
+<Callout type="note" label="Example API">
+Cedar Parcel is a fictional API. Its `.example` hosts do not accept requests, and its OpenAPI examples have not been executed. Replace the source and server URLs before sending requests.
+</Callout>
+
+## Explore the handbook
+
+This starter pairs a fictional parcel API with a complete component handbook. Use the examples as editable source, then replace the fictional service with your own.
+
+<DocCards docs={["showcase.reading", "showcase.procedures", "showcase.code", "showcase.visuals", "showcase.personalization", "showcase.features"]} />
+
+## Start building
+
+<DocCards docs={["guide.quickstart", "reference.create-enrollment"]} />
+
+## Explore the API
+
+- [Create a parcel enrollment](doc:reference.create-enrollment): compare four program shapes with different required fields and nested objects.
+- [List parcel records](doc:reference.cedar.listParcels): use direct query filters and inspect JSON, CSV, and spreadsheet responses.
+- [Get a parcel](doc:reference.cedar.getParcel): look up a record on its dedicated server without authentication.
+- [Upload a manifest](doc:reference.cedar.uploadManifest): send dispatch data and a checksum as binary files.
+- [Parcel delivered event](doc:reference.cedar.parcelDelivered): inspect a webhook with photo and signature proof alternatives.
+- [Legacy parcel lookup](doc:reference.cedar.getLegacyParcel): see a deprecated route and its replacement.
+
+Search finds guides and reference fields. The color-mode toggle follows your system preference until you choose a mode.
+
+## Work with agents
+
+Every page has a **Read as Markdown** link. API reference pages also link to a focused OpenAPI contract for that operation. The site publishes the complete OpenAPI source and API catalog as well. Use these links when working with an agent or another tool.
+
+## Related reading
+
+<RelatedReading />

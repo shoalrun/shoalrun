@@ -24,11 +24,11 @@ Updates to Shoalrun's private prototype. Each entry groups changes planned to sh
 
 - 2026-10-27
 
-  Version 0.1.0-alpha.9
+  Version 0.1.0-alpha.10
 
-  [Read first and navigate without losing your place](https://www.shoalrun.com/changelog/2026-10-27.md)
+  [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md)
 
-  Open mobile navigation without leaving your reading position, and reach articles before the full site menu.
+  Explore a complete starter, read clearer controls, and find focused configuration references alongside the new mobile navigation.
 
 - 2026-10-26
 
