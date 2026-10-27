@@ -1,6 +1,6 @@
 # Docs
 
-Navigation section ID: docs. Publication: production/current/en.
+Full-page token counts use cl100k_base. Navigation section ID: docs. Publication: production/current/en.
 
 [All sections and published pages](https://www.shoalrun.com/llms.min.txt). This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.
 

@@ -2668,8 +2668,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-26",
-      "contentDigest": "0019f9d84c357716c1029fb0aea63ada64bfeef686d5345d5f64ec80a3bf658a",
+      "updated": "2026-10-27",
+      "contentDigest": "0c3b34a5a5289620bf6beaa679aa6050c713e3283c00521adbb86b64f372cf19",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2716,10 +2716,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 5936,
-      "markdownTokens": 1288,
+      "markdownBytes": 5916,
+      "markdownTokens": 1286,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "5d197bc0a16bb1da6ebf61d7ebdef577f38833e74f30e968030b7c332ebe97ff"
+      "digest": "659109381c371e46d174b145a257bdf3d173c27307467a06a85694e0b8e8fe3b"
     },
     {
       "id": "guide.cards",
@@ -15227,7 +15227,7 @@
       },
       "indexable": true,
       "updated": "2026-10-27",
-      "contentDigest": "af9bd10f267b00849572a00aa2e540fedf3831836abaf4dec560c85b435e35e6",
+      "contentDigest": "7bcf60806b2ec7a7ff03ccd5d226c7e96eb6ffc846ccf4c55182acbfb98e4092",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15269,10 +15269,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/prerequisites.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "a04843ad8b36b57012f6d02ccd1dee70ad4c2c11c8e98200f7a93f1554ae95ef",
-          "markdownBytes": 1842,
-          "markdownTokens": 461,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "38cc8fef989e9113c9f3a763a01a40edb714bec7ec7608479f777a42d0059f62",
+          "markdownBytes": 1955,
+          "markdownTokens": 488,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15281,10 +15281,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/start-your-own-project.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "0b1116c690610b9155691a3747754b664ba38b7636f20ad6f522dc6037bd7927",
-          "markdownBytes": 2134,
-          "markdownTokens": 553,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "e8adb19dcc43a430c31e8db2e567acf0a5dc5f22261139e21883ba21d60cf211",
+          "markdownBytes": 2070,
+          "markdownTokens": 529,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15293,10 +15293,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/create-a-page.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "854d32f6e57726fc154bcb86a113416713f2657327a1cc5cd395f678a46e17ee",
-          "markdownBytes": 4415,
-          "markdownTokens": 1004,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "291c5569f8a7c3f2173ce55757d8fb1b7628ddca7b4fb702edc869ddfad5608f",
+          "markdownBytes": 4407,
+          "markdownTokens": 995,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15305,10 +15305,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/add-the-page-to-navigation.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "26be39536fa570cfcd8af8893ca8cabcceb727ff2b930639bd8d374431e4f865",
-          "markdownBytes": 1809,
-          "markdownTokens": 460,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "4b6db3086c52bb176960fcb60fb1577a56f552d4e159872176456bf9daeb0bc9",
+          "markdownBytes": 1801,
+          "markdownTokens": 451,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15317,10 +15317,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/build-and-check-both-outputs.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "61f0d1ecb1370b1d7796b21b4e5ce5f0ac002192706272c571a9e9a9c8c70e76",
-          "markdownBytes": 2351,
-          "markdownTokens": 601,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "aac7f9f5f90fb6eb7a3af77ad0ff949771faec104ff4012672d0f44587c1192f",
+          "markdownBytes": 2343,
+          "markdownTokens": 592,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15329,10 +15329,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/make-it-yours.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "f84e05dbf2ff44410fbfe4b4b2abf21b6b0897d80568d7d87f675869b0178395",
-          "markdownBytes": 1960,
-          "markdownTokens": 502,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "5d032d81884368bb5d779c8b2dbb0301a1a3828914d91a735d48d312024dc6fd",
+          "markdownBytes": 1952,
+          "markdownTokens": 493,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15341,10 +15341,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/build-this-site.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "a9781ea3b488c4b33a487018379009888604b741164ef13191eb3e516a19c35f",
-          "markdownBytes": 1481,
-          "markdownTokens": 388,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "53127eca6974b629276dbe0f4aad75fafc9f07d58a2fb26a4985228f997fa7a0",
+          "markdownBytes": 1473,
+          "markdownTokens": 379,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15353,10 +15353,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/check-writing-style.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "24993251b2a1c0156991cb1b83e4b50cac67e07bcbb81475f21b028bed2e24b4",
-          "markdownBytes": 1412,
-          "markdownTokens": 364,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "b65f7894fba1e69af21b06e3674a6d14852d5e62148c23e8fa55991797c3e191",
+          "markdownBytes": 1404,
+          "markdownTokens": 355,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15365,17 +15365,17 @@
           "depth": 2,
           "markdownUrl": "/start.sections/related-reading.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565",
-          "digest": "8f1c2fb525af25d929ad019d5a43a800d0e468fc578d151a6c3de1fcdad3ce16",
-          "markdownBytes": 1933,
-          "markdownTokens": 498,
+          "parentDigest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27",
+          "digest": "f78e7d57b619a23b9fce3f7dfcbd092aff556747c68f92f79432d799bb4341e4",
+          "markdownBytes": 1925,
+          "markdownTokens": 489,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 9035,
-      "markdownTokens": 2163,
+      "markdownBytes": 9092,
+      "markdownTokens": 2175,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "19bea11647da4d138642e553955faa539b7286e7e3b641c1d0927e534be9b565"
+      "digest": "35227c4bfca3150c5328ad4890c752b9aa7144c910627703dbfef3bca43d7a27"
     },
     {
       "id": "guide.status",
@@ -15876,8 +15876,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-26",
-      "contentDigest": "723ffc06e73b116b333a9d787b1b13ef71affd776ffeda6d9bf313c549fca903",
+      "updated": "2026-10-27",
+      "contentDigest": "76b8f798fd78e2bcec408a1bb15f94c9c7cdf0f95c97a593240248840819607c",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15920,10 +15920,10 @@
           "depth": 2,
           "markdownUrl": "/publish/vercel.sections/prepare-your-project.md",
           "parentMarkdownUrl": "/publish/vercel.md",
-          "parentDigest": "a9cf760eabf0c1d5a9a17565ef204dcc5a306c76363a943bec0e6659fdc77eb0",
-          "digest": "275199952d6f8eea2e39e367ca17058c4972eb82506cccb86c1eb9465e5a6beb",
-          "markdownBytes": 2226,
-          "markdownTokens": 550,
+          "parentDigest": "bbe8012977388053a4d92d270cd4c949bc5d24fdad87a9c121a8e458e6538f02",
+          "digest": "495427876fa66f5940b4ca5f3e73f21672f29c8b22c8f79674d86fbecba9ed14",
+          "markdownBytes": 2222,
+          "markdownTokens": 547,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15932,8 +15932,8 @@
           "depth": 2,
           "markdownUrl": "/publish/vercel.sections/include-an-mcp-endpoint.md",
           "parentMarkdownUrl": "/publish/vercel.md",
-          "parentDigest": "a9cf760eabf0c1d5a9a17565ef204dcc5a306c76363a943bec0e6659fdc77eb0",
-          "digest": "64174a68419465b91184a1d9c2c6d05c861d27882dfee6ac9d038ddac5bfb37b",
+          "parentDigest": "bbe8012977388053a4d92d270cd4c949bc5d24fdad87a9c121a8e458e6538f02",
+          "digest": "00fb21de04535d5e5c2e9fcf46cad0cd9f27103161dd2b12a2357f9c3ffe89a6",
           "markdownBytes": 2230,
           "markdownTokens": 546,
           "markdownTokenEncoding": "cl100k_base"
@@ -15944,8 +15944,8 @@
           "depth": 2,
           "markdownUrl": "/publish/vercel.sections/check-the-deployment.md",
           "parentMarkdownUrl": "/publish/vercel.md",
-          "parentDigest": "a9cf760eabf0c1d5a9a17565ef204dcc5a306c76363a943bec0e6659fdc77eb0",
-          "digest": "690894f37bf0dc1fd79dfb8f027df4788b0dcc1cedf371cea658d8d44b2a61d3",
+          "parentDigest": "bbe8012977388053a4d92d270cd4c949bc5d24fdad87a9c121a8e458e6538f02",
+          "digest": "56692657099c208c62c8a1daede7d98593dfa26f02a0f25f5550f4dd865d37a3",
           "markdownBytes": 3221,
           "markdownTokens": 812,
           "markdownTokenEncoding": "cl100k_base"
@@ -15956,17 +15956,17 @@
           "depth": 2,
           "markdownUrl": "/publish/vercel.sections/related-reading.md",
           "parentMarkdownUrl": "/publish/vercel.md",
-          "parentDigest": "a9cf760eabf0c1d5a9a17565ef204dcc5a306c76363a943bec0e6659fdc77eb0",
-          "digest": "222d9b1135fc1bea3a1f36913cb994cd6914b22c6aa923dae331663f2b2939e0",
+          "parentDigest": "bbe8012977388053a4d92d270cd4c949bc5d24fdad87a9c121a8e458e6538f02",
+          "digest": "41c566fcd0d0d8b12a6f4c8536591fb6b781bd2565a6599ea8fdf7b8a79993ec",
           "markdownBytes": 1934,
           "markdownTokens": 495,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 10327,
-      "markdownTokens": 2360,
+      "markdownBytes": 10091,
+      "markdownTokens": 2294,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "a9cf760eabf0c1d5a9a17565ef204dcc5a306c76363a943bec0e6659fdc77eb0"
+      "digest": "bbe8012977388053a4d92d270cd4c949bc5d24fdad87a9c121a8e458e6538f02"
     },
     {
       "id": "guide.what-is-shoalrun",

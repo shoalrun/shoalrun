@@ -1,9 +1,9 @@
 {
   "name": "@shoalrun/cli",
-  "version": "0.1.0-alpha.10",
+  "version": "0.1.0-alpha.11",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "engines": {
     "node": ">=22.12.0"

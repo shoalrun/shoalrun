@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/start.md)
 
 This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
-> **Private alpha:** Your GitHub account needs access to the private `@shoalrun/cli` package. You do not need access to the framework source repository.
+> **Alpha:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between alpha releases.
 
 ## Build this site
 

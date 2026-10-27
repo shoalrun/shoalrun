@@ -20,11 +20,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Project tools > Check edits
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 **Status: Experimental.**
 
-Use this procedure from your documentation project directory, containing `docs.config.yaml`, with `@shoalrun/cli` installed. [Getting started](https://www.shoalrun.com/start.md) explains how to install the private alpha package from GitHub Packages. You need Node.js 22.12 or newer; a framework source checkout and a separate authoring provider key are not required. Your coding agent uses its own model and file tools. Replace the example page path with your project's path.
+Use this procedure from your documentation project directory, containing `docs.config.yaml`, with `@shoalrun/cli` installed. [Getting started](https://www.shoalrun.com/start.md) explains how to install the alpha package from npm. You need Node.js 22.12 or newer; a framework source checkout and a separate authoring provider key are not required. Your coding agent uses its own model and file tools. Replace the example page path with your project's path.
 
 Framework contributors can instead build the source checkout and run `node framework/dist/cli.js <command>` from its root. The examples below use the installed package.
 

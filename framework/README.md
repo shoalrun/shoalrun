@@ -2,16 +2,23 @@
 
 Shoalrun turns Markdown and MDX into a documentation website and Markdown pages from the same content. People can browse the site; agents can read the Markdown. Native components such as steps, tabs, and API references preserve their content in both formats.
 
-This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. This is a private alpha distributed through GitHub Packages; your account needs package read access.
+This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. This alpha is distributed through the public npm registry. Installation requires no npm account or package token.
 
 ## Install
 
-From the project where you want to keep your documentation, authenticate with a GitHub classic personal access token that has `read:packages`. Enter the token at the password prompt:
+From the project where you want to keep your documentation:
 
 ```sh
-npm login --scope=@shoalrun --registry=https://npm.pkg.github.com --auth-type=legacy
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.10 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.11
 ```
+
+If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
+
+```sh
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.11 --@shoalrun:registry=https://registry.npmjs.org
+```
+
+Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
 
 ## Create and preview a site
 

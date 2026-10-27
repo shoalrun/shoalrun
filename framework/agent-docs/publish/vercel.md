@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Publish on Vercel
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Shoalrun can produce a [Vercel Build Output API](https://vercel.com/docs/build-output-api) directory. It contains the compiled static site and routing rules for each published page. Vercel serves HTML to browsers and the generated Markdown twin when a request includes `Accept: text/markdown`. The route rules also set `Vary: Accept` and an HTTP `Link` header to the `.md` page. Explicit `.md` URLs remain available.
 
@@ -25,10 +25,9 @@ The [content negotiation guide](https://www.shoalrun.com/publish/content-negotia
 
 ## Prepare your project
 
-Start with the [quickstart](https://www.shoalrun.com/start.md). Your documentation repository installs the private package and keeps its own content and configuration. It needs no framework source checkout:
+Start with the [quickstart](https://www.shoalrun.com/start.md). Your documentation repository installs the public npm package and keeps its own content and configuration. It needs no framework source checkout:
 
 ```text
-.npmrc
 package.json
 package-lock.json
 docs.config.yaml
@@ -46,14 +45,7 @@ Generating output does not deploy it.
 
 ## Configure the project
 
-For host installs, commit a project `.npmrc` containing only the registry and an environment-variable placeholder:
-
-```ini title=".npmrc"
-@shoalrun:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-```
-
-Set `NODE_AUTH_TOKEN` in Vercel's build environment to a GitHub classic token with `read:packages`, owned by an account with access to the package. Set it for each environment that should install the package, including Preview if enabled. Keep the token out of the repository. Local `npm ci` with this `.npmrc` also requires that environment variable.
+Public Shoalrun packages install with `npm ci` using your committed manifest and lockfile; no registry token is needed. If you previously used GitHub Packages, follow the migration instructions in [Getting started](https://www.shoalrun.com/start.md) and commit the updated lockfile before deploying. Keep credentials required by any other private dependencies.
 
 Set the Vercel project root to the documentation repository root and choose the **Other** framework preset. Add:
 

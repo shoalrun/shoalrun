@@ -3,8 +3,8 @@
   "siteBuild": {
     "schemaVersion": 1,
     "configDigest": "065539411111138fc6db7a8e30cb2b29fe39b25a1ffc13857a63015fb815d7ca",
-    "buildId": "9ac8c409bca8d798a057a27a2cf93f49902e4ec05b0f2d70f37b84bd5b8305f8"
+    "buildId": "9f6615528128a75d90b7ee1f25f15db913e04e51c01ed306d997b84d4cc52287"
   },
-  "packageIntegrity": "sha512-g5fZqDy50HS3i72iA39/xPBmGkq5Dm8kDcvQCg4OArX6ecZOrUpEBZW1fTCK7OfKk1g+AeAjWu3wDXw/guwIdA==",
-  "manifestDigest": "fcc1f5be06a2b505f294e59e8abe872388b5756fd1d0068b134b98d2bf8dd2c6"
+  "packageIntegrity": "sha512-rmqYv+uNY4P/fdwJAlJNfODcRQdLxgWJpVcdT20a/7MdDRfqO3GTYR7sZxF7Dbqw+zVQhvmjPQDnUs5A60VktQ==",
+  "manifestDigest": "c8b93b7ef4f1a3a818951abf2bc721ad204349439119666fbaffb2027d1ae469"
 }

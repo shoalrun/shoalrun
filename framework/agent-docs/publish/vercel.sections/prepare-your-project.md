@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish > Publish on Vercel
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/publish/vercel.md)
 
@@ -33,10 +33,9 @@ The [content negotiation guide](https://www.shoalrun.com/publish/content-negotia
 
 ## Prepare your project
 
-Start with the [quickstart](https://www.shoalrun.com/start.md). Your documentation repository installs the private package and keeps its own content and configuration. It needs no framework source checkout:
+Start with the [quickstart](https://www.shoalrun.com/start.md). Your documentation repository installs the public npm package and keeps its own content and configuration. It needs no framework source checkout:
 
 ```text
-.npmrc
 package.json
 package-lock.json
 docs.config.yaml

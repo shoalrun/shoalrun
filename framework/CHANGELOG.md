@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.11 — 2026-10-27
+
+- Move package distribution to the public npm registry. New installations need no GitHub package access or token. Existing users should remove the old `@shoalrun` registry override and update their manifest and lockfile together; see the README.
+- Lead the quickstart with the showcase and explain how to replace the fictional API without leaving broken Cedar operation bindings.
+- Add package homepage, repository, and issue links, and document the maintainer-led contribution policy and alpha expectations.
+
+This release changes distribution and onboarding. Existing site configuration and output contracts remain compatible with alpha.10.
+
 ## 0.1.0-alpha.10 — 2026-10-27
 
 - Let mobile header tools share a row when space permits; anchor search results within the available header width.

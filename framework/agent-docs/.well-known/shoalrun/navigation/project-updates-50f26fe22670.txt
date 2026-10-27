@@ -1,9 +1,9 @@
 # Project updates
 
-Navigation section ID: project-updates. Publication: production/current/en.
+Full-page token counts use cl100k_base. Navigation section ID: project-updates. Publication: production/current/en.
 
 [All sections and published pages](https://www.shoalrun.com/llms.min.txt). This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.
 
-- [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. Scope limits for skill generation, agent orchestration, and reader-view authorization.
+- [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. explanation; 823 tokens. Scope limits for skill generation, agent orchestration, and reader-view authorization.
 
-- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. Current capabilities, planned features, and known limits.
+- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1649 tokens. Current capabilities, planned features, and known limits.

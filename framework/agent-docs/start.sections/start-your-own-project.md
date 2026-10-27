@@ -28,17 +28,17 @@ Parent page: [Full Markdown page](/start.md)
 
 This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
-> **Private alpha:** Your GitHub account needs access to the private `@shoalrun/cli` package. You do not need access to the framework source repository.
+> **Alpha:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between alpha releases.
 
 ## Start your own project
 
-Install an exact version of the private alpha and initialize the minimal starter:
+Install an exact version of the alpha and initialize the minimal starter:
 
 ```sh
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.10 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.11
 npx --no-install shoalrun init .
 ```
 

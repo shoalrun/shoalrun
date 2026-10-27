@@ -22,7 +22,7 @@ Open <http://127.0.0.1:8770/> and choose **Explore the starter**, the first item
 
 Edit a page in `my-docs/content/`, then run the build command again and refresh the preview. Configure the site and navigation in `my-docs/docs.config.yaml`. Choose `minimal` for a small starting point or `api-docs` for a focused OpenAPI example. All three starters build without provider credentials.
 
-For a separate documentation project, follow the [package installation instructions](framework/README.md). The CLI is currently a private alpha on GitHub Packages and requires package read access. A basic local site needs no model provider.
+For a separate documentation project, follow the [package installation instructions](framework/README.md). The alpha CLI is distributed through the public npm registry; installing it needs no account or token. A basic local site needs no model provider.
 
 ## Work with an agent
 
@@ -66,7 +66,7 @@ Shoalrun is an alpha. Configuration, commands, programmatic APIs, and generated 
 
 Local site builds, previews, lexical search, and bundled documentation do not need a model provider. Semantic search and generated answers require separately configured services and credentials. Browser-based checks require Chrome; ordinary site builds do not. Custom plugins and configured validation commands execute trusted project code; see the [security policy](SECURITY.md).
 
-The [release checklist](RELEASING.md) records the checks needed before a public release. Package installation remains a private-alpha workflow for now.
+The [release checklist](RELEASING.md) records the checks needed before a public release. The package README includes migration instructions for users of the earlier GitHub Packages alpha.
 
 ## License
 

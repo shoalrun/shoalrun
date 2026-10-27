@@ -28,16 +28,10 @@ Parent page: [Full Markdown page](/start.md)
 
 This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
-> **Private alpha:** Your GitHub account needs access to the private `@shoalrun/cli` package. You do not need access to the framework source repository.
+> **Alpha:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between alpha releases.
 
 ## Prerequisites
 
 Install Node.js 22.12 or newer and npm. Use the npm that comes with Node.js; Shoalrun sets no separate npm version. The commands below use a POSIX shell, such as Bash or Zsh.
 
-Authenticate to GitHub Packages with a classic personal access token that has `read:packages`. Enter it at the password prompt; keep it out of files you commit:
-
-```sh
-npm login --scope=@shoalrun --registry=https://npm.pkg.github.com --auth-type=legacy
-```
-
-Your account also needs permission to read the package. A token scope alone does not grant package access.
+The public npm package needs no account or token. If you used the earlier GitHub Packages alpha, run `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. To explicitly select npm during migration, add `--@shoalrun:registry=https://registry.npmjs.org` to the install command below. Commit the updated manifest and lockfile together, and check that Shoalrun resolves from `registry.npmjs.org`.

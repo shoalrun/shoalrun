@@ -1,33 +1,33 @@
 # Changelog
 
-Navigation section ID: changelog-tab. Publication: production/current/en.
+Full-page token counts use cl100k_base. Navigation section ID: changelog-tab. Publication: production/current/en.
 
 [All sections and published pages](https://www.shoalrun.com/llms.min.txt). This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.
 
-- [Agent discovery, verified Markdown, and incremental sync](https://www.shoalrun.com/changelog/2026-10-14-agent-readiness.md) — ID: change.agent-readiness. Compact discovery, content verification, and incremental fetching.
+- [Agent discovery, verified Markdown, and incremental sync](https://www.shoalrun.com/changelog/2026-10-14-agent-readiness.md) — ID: change.agent-readiness. changelog-entry; 549 tokens. Compact discovery, content verification, and incremental fetching.
 
-- [Agent reading and evaluation](https://www.shoalrun.com/changelog/2026-10-15-evaluation-builds.md) — ID: change.evaluation-builds. Smaller reads, lifecycle guidance, and reproducible evaluations.
+- [Agent reading and evaluation](https://www.shoalrun.com/changelog/2026-10-15-evaluation-builds.md) — ID: change.evaluation-builds. changelog-entry; 1699 tokens. Smaller reads, lifecycle guidance, and reproducible evaluations.
 
-- [Content exports and documentation checks](https://www.shoalrun.com/changelog/2026-10-25.md) — ID: change.2026-10-25. Content exports and documentation checks.
+- [Content exports and documentation checks](https://www.shoalrun.com/changelog/2026-10-25.md) — ID: change.2026-10-25. changelog-entry; 671 tokens. Content exports and documentation checks.
 
-- [Safer exports and easier discovery for AI assistants](https://www.shoalrun.com/changelog/2026-10-26.md) — ID: change.2026-10-26. Keep exported images and links with their pages, and help AI assistants find docs by topic.
+- [Safer exports and easier discovery for AI assistants](https://www.shoalrun.com/changelog/2026-10-26.md) — ID: change.2026-10-26. changelog-entry; 1291 tokens. Keep exported images and links with their pages, and help AI assistants find docs by topic.
 
-- [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md) — ID: change.2026-10-27. Explore a complete starter, read clearer controls, and find focused configuration references alongside the new mobile navigation.
+- [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md) — ID: change.2026-10-27. changelog-entry; 1100 tokens. Explore a complete starter, read clearer controls, and find focused configuration references alongside the new mobile navigation.
 
-- [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. Snapshot previews with coverage and freshness reports.
+- [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 554 tokens. Snapshot previews with coverage and freshness reports.
 
-- [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. Reviewed agent drafts, search improvements, and answer context.
+- [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 469 tokens. Reviewed agent drafts, search improvements, and answer context.
 
-- [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. Project discovery and captured working-tree validation.
+- [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 381 tokens. Project discovery and captured working-tree validation.
 
-- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. Compiler, CLI, and reader changes.
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 990 tokens. Compiler, CLI, and reader changes.
 
-- [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. MCP hosting, analytics, and shared component content.
+- [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1148 tokens. MCP hosting, analytics, and shared component content.
 
-- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — ID: change.navigation-layouts. Navigation sections, reader controls, layouts, and browser analytics.
+- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — ID: change.navigation-layouts. changelog-entry; 1097 tokens. Navigation sections, reader controls, layouts, and browser analytics.
 
-- [Search results and tooltips](https://www.shoalrun.com/changelog/2026-10-18-search-and-tooltips.md) — ID: change.search-and-tooltips. Indexed search and hover and focus tooltips.
+- [Search results and tooltips](https://www.shoalrun.com/changelog/2026-10-18-search-and-tooltips.md) — ID: change.search-and-tooltips. changelog-entry; 671 tokens. Indexed search and hover and focus tooltips.
 
-- [Experimental visual navigation and taxonomy enforcement](https://www.shoalrun.com/changelog/2026-10-19-visual-navigation.md) — ID: change.visual-navigation. Visual navigation and taxonomy validation.
+- [Experimental visual navigation and taxonomy enforcement](https://www.shoalrun.com/changelog/2026-10-19-visual-navigation.md) — ID: change.visual-navigation. changelog-entry; 749 tokens. Visual navigation and taxonomy validation.
 
-- [Portable working-tree authoring workflow](https://www.shoalrun.com/changelog/working-tree-skill.md) — ID: change.working-tree-skill. Agent discovery, native editing, validation, and snapshot review.
+- [Portable working-tree authoring workflow](https://www.shoalrun.com/changelog/working-tree-skill.md) — ID: change.working-tree-skill. changelog-entry; 481 tokens. Agent discovery, native editing, validation, and snapshot review.
