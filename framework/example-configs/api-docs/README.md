@@ -7,20 +7,34 @@ This fictional parcel API uses the same OpenAPI source as the Shoalrun docs site
 With the Shoalrun CLI installed, run these commands from this directory:
 
 ```sh
-shoalrun check docs.config.yaml
-shoalrun build docs.config.yaml site-dist
+shoalrun config validate docs.config.yaml
 shoalrun dev docs.config.yaml site-dist --port 8772
 ```
 
 Open `http://127.0.0.1:8772/`. Editing a page or config rebuilds the preview. The CLI retains the last successful build if a change fails.
 
+The development server builds the site before serving it. To inspect a fixed build instead, run `shoalrun build docs.config.yaml site-dist`, then `shoalrun serve site-dist --port 8772`.
+
 ## Make it yours
 
 1. Change the title, header, footer, and `site.origin` in `docs.config.yaml`. Set the origin to the site's public URL before deployment.
-2. Replace `apis/cedar-parcel.yaml` with your own API description. Replace the fictional server URLs before sending requests.
-3. Update the authored pages in `content/`. Stable document IDs connect cards, navigation, and related reading.
+2. If you keep the Cedar example, customize its descriptions and examples together with the authored pages. Replace the fictional server URLs before sending requests. To use a different API, follow **Bring your own API** below; replacing the file alone is not enough.
+3. Update the authored pages in `content/`. Stable document IDs connect cards, navigation, and related reading. Keep their operation bindings consistent with `apis.cedar.operations`.
 4. Review the API content for public release. Run `shoalrun api review docs.config.yaml --output review`, inspect the candidate, and update `apis.cedar.publicReview.digest` with the reported digest when API content changes.
 5. Build again and inspect the overview, quickstart, and generated reference pages. Search for a field and try the color-mode toggle.
+
+## Bring your own API
+
+For a first import, start with `shoalrun init my-api-docs --starter minimal` and follow [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references). That guide supplies a complete small example: a local spec, operation registration, an authored reference, navigation, source review, and checks for both outputs. You can read the version bundled with your CLI using `shoalrun docs read guide.api-references`.
+
+To adapt this Cedar demo instead, update these connected parts before running the review:
+
+- Replace the source file and update its `source.path` if the filename changes. Remove the old `publicReview.digest`; it approves the Cedar source, not your replacement.
+- Replace `apis.cedar.operations` entries with operations from your spec. Each `sourceOperationId` must exist in that spec. Update the corresponding page's `operations` list and the registry's `reference` page ID together.
+- Update navigation operation IDs, authored API embeds, document links, related-reading relationships, header links, and footer links. Rewrite or remove the Cedar-specific guides and reference page as a connected set.
+- Update or remove `mappings`, `querySyntax`, and `discovery.endpoint` when they do not describe your API. Review `generateReferences` and whether publishing the complete source with `source.publish: true` is appropriate.
+
+Then run `shoalrun api review docs.config.yaml --output review`, inspect the candidate's HTML, Markdown, and contracts, and record the new digest. Rebuild and run `shoalrun api focused-audit site-dist`. A `Missing OpenAPI operationId createEnrollment` error means a Cedar operation binding still points into your replacement spec.
 
 ## Explore the reference features
 

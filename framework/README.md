@@ -10,7 +10,7 @@ From the project where you want to keep your documentation, authenticate with a 
 
 ```sh
 npm login --scope=@shoalrun --registry=https://npm.pkg.github.com --auth-type=legacy
-npm install --save-dev @shoalrun/cli@0.1.0-alpha.9 --@shoalrun:registry=https://npm.pkg.github.com
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.10 --@shoalrun:registry=https://npm.pkg.github.com
 ```
 
 ## Create and preview a site
@@ -18,7 +18,7 @@ npm install --save-dev @shoalrun/cli@0.1.0-alpha.9 --@shoalrun:registry=https://
 Run these commands from the directory where you installed the package:
 
 ```sh
-npx shoalrun init my-docs --starter minimal
+npx shoalrun init my-docs --starter showcase
 npx shoalrun build my-docs/docs.config.yaml my-docs/site-dist
 npx shoalrun serve my-docs/site-dist --port 8770
 ```
@@ -29,7 +29,7 @@ Open <http://127.0.0.1:8770/>. Edit the pages in `my-docs/content/` and the site
 npx shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
 ```
 
-Stop the existing preview with Ctrl-C before starting the development server on the same port. Use the `api-docs` starter instead of `minimal` for an example site with an OpenAPI source. Choose `--starter showcase` for a fuller fictional service handbook with component examples, diagrams, reader views, themes, and generated API references. All three starters build without provider credentials.
+Stop the existing preview with Ctrl-C before starting the development server on the same port. Choose **Explore the starter**, the first item in the left navigation, to find component examples, diagrams, reader views, themes, and generated API references. The service and API hosts are fictional; replace them before sending requests. Choose `--starter minimal` for a smaller starting point or `--starter api-docs` for a focused OpenAPI example. All three starters build without provider credentials.
 
 ## Work with an agent
 
@@ -174,7 +174,9 @@ build error rather than silently dropping content.
 
 This alpha may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
 
-To contribute to the framework, use the [repository development instructions](https://github.com/shoalrun/shoalrun#develop-the-framework). Those commands run in a source checkout.
+Shoalrun is maintainer-led and does not accept unsolicited pull requests at this time. The [repository development instructions](https://github.com/shoalrun/shoalrun#develop-the-framework) explain how to build and test your own checkout or fork.
+
+Pin an exact package version and read the [changelog](CHANGELOG.md) before upgrading. Rebuild and check HTML, Markdown, links, and any application consuming exported content before deploying. See the [contribution policy](https://github.com/shoalrun/shoalrun/blob/main/CONTRIBUTING.md) and [security policy](https://github.com/shoalrun/shoalrun/blob/main/SECURITY.md) for reporting problems and project trust boundaries.
 
 ## License
 
