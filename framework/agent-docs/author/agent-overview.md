@@ -20,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Project tools > Tools overview
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 **Status: Experimental.**
 
@@ -40,7 +40,7 @@ Existing checked plan/apply commands remain available for clients that need them
 
 Compiler checks establish structural validity. They do not establish factual accuracy, clear writing, or a successful reader task. Review the diff, supporting evidence, and rendered documentation before using your project's release process.
 
-Local previews serve the exact captured build and show its freshness. Review reports list task scope, affected HTML/Markdown, findings, checks, and dependencies. The portable authoring skill guides this working-tree workflow. Independent author trials remain a separate release gate. No public package release is claimed here.
+Local previews serve the exact captured build and show its freshness. Review reports list task scope, affected HTML/Markdown, findings, checks, and dependencies. The portable authoring skill guides this working-tree workflow. Independent author trials remain separate from these checks. Install the alpha CLI through [Getting started](https://www.shoalrun.com/start.md).
 
 ## Related reading
 

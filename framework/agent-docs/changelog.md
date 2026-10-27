@@ -18,13 +18,13 @@ Breadcrumbs: [Changelog](https://www.shoalrun.com/changelog.md) > Changelog > Al
 
 **Updated: 2026-10-27.**
 
-Updates to Shoalrun's private prototype. Each entry groups changes planned to ship together.
+Updates to Shoalrun and its documentation. Each entry identifies the affected versions and any upgrade steps. Earlier entries retain their private-prototype release context.
 
 ## Latest changes
 
 - 2026-10-27
 
-  Version 0.1.0-alpha.10
+  Version 0.1.0-alpha.11
 
   [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md)
 

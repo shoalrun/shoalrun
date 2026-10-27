@@ -16,9 +16,9 @@ Navigation section: [Project updates](https://www.shoalrun.com/.well-known/shoal
 
 Breadcrumbs: [Project updates](https://www.shoalrun.com/status.md) > Project > Project status
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
-Shoalrun is a private prototype for publishing documentation for people and agents from the same source. This public site is built with it. The compiler and CLI are available as an invite-only alpha package; there is no public package release.
+Shoalrun is an alpha for publishing documentation for people and agents from the same source. This site is built with it. Install the public `@shoalrun/cli` npm package through [Getting started](https://www.shoalrun.com/start.md). No account or package token is needed.
 
 ## What works today
 
@@ -46,11 +46,11 @@ Shoalrun is a private prototype for publishing documentation for people and agen
 - **Improve visual navigation.** Refine layout sizing, label collisions, dense graph views, filtering, relationship explanations, and accessibility as we try the experimental explorer on larger documentation sets.
 - **Custom access control.** Add connectors for customers’ own role-based access control (RBAC) systems, with consistent access decisions across HTML, Markdown, search, downloads, and MCP.
 
-These are intended additions, without a promised release date or a commitment to public package or source distribution.
+These are intended additions, without a promised release date.
 
 ## Current limits
 
-- **Prototype stability.** Configuration, extension points, and output formats can still change. There is no stable release or compatibility promise yet.
+- **Alpha stability.** Configuration, extension points, and output formats can still change. There is no stable release or compatibility promise yet.
 - **Component extensibility.** [Trusted custom components](https://www.shoalrun.com/author/components/custom.md) lower into shared content, with a portable authoring skill. Arbitrary executable MDX remains unsupported. Project CSS, browser modules, and configured build extensions are trusted project code.
 - **API coverage.** OpenAPI and JSON Schema support is partial; check the [support reference](https://www.shoalrun.com/api-docs/support.md) against your source. Request examples are copyable, but Shoalrun does not provide a live API explorer that sends requests.
 - **Private content.** Reader views do not restrict access to published files. Shoalrun has no built-in reader authentication, and its HTTP MCP endpoint currently serves one selected public publication. Host-level authorization is a separate responsibility.
@@ -72,4 +72,4 @@ Automatic skill generation and general agent orchestration are [deliberate non-g
 
 - [Changelog](https://www.shoalrun.com/changelog.md) — Check implemented capabilities and the remaining release work.
 
-- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — Check the private prototype's capabilities and remaining release limits.
+- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — Check the alpha's capabilities and current limits.

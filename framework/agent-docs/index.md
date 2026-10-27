@@ -21,9 +21,9 @@ One source, with control over how each audience reads it. Build interactive docs
 - [See what an agent gets](https://www.shoalrun.com/publish/agent-friendliness.md)
 - [See what works today](https://www.shoalrun.com/status.md)
 
-> **Prototype preview:** Explore the docs today. Shoalrun's compiler and CLI are still a private prototype, so installation isn't available yet.
+> **Try the alpha:** Install `@shoalrun/cli` from npm and build your own site. No account or package token is needed. Pin an exact version while the alpha evolves.
 >
-> [See what works today →](https://www.shoalrun.com/status.md)
+> [Install Shoalrun →](https://www.shoalrun.com/start.md)
 
 ## Readable output, with checks you can inspect
 

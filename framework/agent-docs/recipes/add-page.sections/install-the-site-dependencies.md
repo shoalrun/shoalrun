@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Add a page to this documentation site
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/recipes/add-page.md)
 
@@ -34,7 +34,7 @@ npm ci
 npx --no-install shoalrun config validate docs/docs.config.yaml
 ```
 
-This site pins a private registry package in its manifest and lockfile. Your account needs package read access, and the install environment must provide `NODE_AUTH_TOKEN` for the committed `.npmrc`. It needs no framework checkout. Update and validate the dependency and lockfile together when upgrading.
+The manifest and lockfile pin the CLI version and registry artifact. Public npm releases need no package token or framework checkout. If your checkout still pins an older GitHub Packages release, follow [Getting started](https://www.shoalrun.com/start.md) to migrate registries. That older dependency still needs its original registry access until upgraded. Update and validate the dependency and lockfile together.
 
 Save `frameworkCli`: The installed shoalrun executable in node_modules/.bin.
 

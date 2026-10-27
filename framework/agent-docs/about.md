@@ -1,7 +1,7 @@
 ---
 id: guide.about
 title: About Shoalrun
-summary: Learn what Shoalrun is exploring and where the private prototype stands.
+summary: Learn what Shoalrun is exploring and where the alpha stands.
 type: overview
 area: project
 subarea: project-overview
@@ -12,7 +12,7 @@ canonical: /about
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-10-25.**
+**Updated: 2026-10-27.**
 
 I'm CT Smith, and I'm building Shoalrun cause there's no such thing as a perfect doc tool. I have opinions, undirected rage, and curiosity about doc-building tools. I built my first documentation generator back in 2015. It was based on Jekyll and relied heavily (probably too heavily) on general templating and... you guessed it... *page metadata*.
 
@@ -42,7 +42,7 @@ API content follows the same approach. Local OpenAPI files can supply reference 
 
 I'm building Shoalrun for tinkerers like me, who will never be fully satisfied with a mass market docs tool. Docs are never one-size-fits-all, on any level.
 
-As for project's current status and future -- right now, only this documentation site is public. The compiler and CLI remain private prototype code and are not available to install.
+You can try the alpha CLI from npm: [Getting started](https://www.shoalrun.com/start.md) walks through installation and your first page. The [project status](https://www.shoalrun.com/status.md) describes what works and what still needs work.
 
 yee haw forever,
 

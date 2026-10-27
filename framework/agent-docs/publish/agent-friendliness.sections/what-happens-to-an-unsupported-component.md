@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Agent-friendly documentation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/publish/agent-friendliness.md)
 
@@ -51,7 +51,7 @@ This instruction must not disappear.
 </UnregisteredPanel>
 ```
 
-Running `shoalrun check docs.config.yaml` in the private prototype reports a diagnostic containing:
+Running `shoalrun check docs.config.yaml` reports a diagnostic containing:
 
 ```text
 <UnregisteredPanel> has no semantic/Markdown adapter

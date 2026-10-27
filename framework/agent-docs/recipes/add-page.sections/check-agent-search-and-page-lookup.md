@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Recipes > Add a page to this documentation site
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/recipes/add-page.md)
 

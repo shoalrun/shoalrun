@@ -6,4 +6,4 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. explanation; 823 tokens. Scope limits for skill generation, agent orchestration, and reader-view authorization.
 
-- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1649 tokens. Current capabilities, planned features, and known limits.
+- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1653 tokens. Current capabilities, planned features, and known limits.

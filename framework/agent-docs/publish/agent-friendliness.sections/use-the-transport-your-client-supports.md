@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Agent-friendly documentation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Parent page: [Full Markdown page](/publish/agent-friendliness.md)
 
@@ -43,7 +43,7 @@ Try the example below. Switch the client tab, open **Retry detail**, and choose 
 
 A fetch-only agent can read the published files over HTTP. It needs no CLI, repository access, JavaScript, or MCP connection. Hosts must serve Markdown with the correct media type and apply content negotiation at HTML page URLs. Missing Markdown pages return HTTP `404` with compact recovery links. The [hosting and negotiation reference](https://www.shoalrun.com/publish/content-negotiation.md) describes the contract; verify it on the deployed host.
 
-The private Shoalrun package also bundles this framework's own documentation. `shoalrun docs search` and `shoalrun docs read` use that bundle by default; `--site DIRECTORY` selects another built site. These are local tools for users with the package, not requirements imposed on public readers.
+The Shoalrun npm package also bundles this framework's own documentation. `shoalrun docs search` and `shoalrun docs read` use that bundle by default; `--site DIRECTORY` selects another built site. These are local tools for users with the package, not requirements imposed on public readers.
 
 `shoalrun docs mcp` exposes the local search/read core over stdio. You can also [connect to this site’s public HTTP MCP endpoint](https://www.shoalrun.com/connect/mcp.md). The local read tool applies a token budget and can truncate a response; fetch the published twin when you need complete bytes for digest verification. See [the MCP reference](https://www.shoalrun.com/publish/mcp.md) for its current contract.
 

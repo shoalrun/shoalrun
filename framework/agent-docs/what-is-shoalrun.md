@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > What is Shoalrun?
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-27.**
 
 Shoalrun is a documentation compiler for product and API docs. It reads project configuration, Markdown and supported MDX pages, and optional local OpenAPI files. From those sources, it builds a site for people and readable Markdown pages for agents. The normal build is deterministic: it makes no model calls or network requests.
 
@@ -41,7 +41,7 @@ Optional ingredients, recipes, and cookbooks extend the same idea to tasks. An i
 
 ## Where it stands
 
-The public documentation site shows output built by Shoalrun. The compiler and CLI are still a private prototype and are not available to install. The [project status](https://www.shoalrun.com/status.md) lists implemented capabilities and current limits.
+The public documentation site shows output built by Shoalrun. Install the alpha CLI from npm using [Getting started](https://www.shoalrun.com/start.md). The [project status](https://www.shoalrun.com/status.md) lists implemented capabilities and current limits.
 
 ## Related reading
 
