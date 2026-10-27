@@ -10,7 +10,13 @@
   back to the article. Keyboard focus stays visible across viewport changes;
   native links and disclosures remain usable without JavaScript.
 
-## 0.1.0-alpha.8 — 2026-10-26
+## 0.1.0-alpha.7 and 0.1.0-alpha.8 — 2026-10-26
+
+These releases keep exported images and links with the correct document and let
+AI assistants find documentation through smaller topic directories. Upgrade to
+alpha.8 and rebuild to receive both sets of changes.
+
+### Topic discovery (alpha.8)
 
 - Compact discovery now splits growing catalogs into topic indexes with a
   2,000-token limit per index. Topics use publication and primary taxonomy area,
@@ -19,9 +25,8 @@
 - `llms.txt` remains the complete catalog. Consumers of `llms.min.txt` must follow
   topic-index links when present instead of expecting every page in the first read.
 
-## 0.1.0-alpha.7 — 2026-10-26
+### Export and package hardening (alpha.7)
 
-This release hardens portable content exports and the package release checks.
 The export manifest remains at schema version 1.
 
 - Pages sharing a website route retain their own local images and document links
