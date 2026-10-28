@@ -1,7 +1,7 @@
 ---
 id: guide.content-export
 title: Export content into your application
-summary: Export shared content for application help.
+summary: Export selected documentation and assets for your application.
 type: how-to
 area: publishing
 subarea: publishing-builds
@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-28.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 

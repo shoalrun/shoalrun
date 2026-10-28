@@ -3,6 +3,7 @@ import { validateSubjectDeprecation } from './subject-deprecation.js';
 import { validateCardMetadata } from './cards.js';
 import { resolveTaxonomy, validateTaxonomy, taxonomySchema } from './taxonomy.js';
 import type { Frontmatter } from './content.js';
+import { validateStandaloneSectionDeclarations } from './section-identity.js';
 
 export const nativePublicFields = new Set(['id', 'title', 'type', 'summary', 'description', 'language', 'locale', 'date', 'updated', 'verified', 'releaseVersion', 'product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'audiences', 'readerFilters', 'tags', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle']);
 export const protectedMetadataRoots = new Set(['standaloneSections', 'access', 'seo', 'markdownMetadata', 'variables', 'tocDepth', 'layout', 'showNavigationTabs', 'image', 'private', 'internal', 'card', 'displayText', 'publications']);
@@ -99,10 +100,7 @@ export function validateFrontmatter(frontmatter: Frontmatter, config: any, file:
   validateCardMetadata(frontmatter.card, file);
   validateSubjectDeprecation(frontmatter.subjectDeprecation, file);
   validateAuthoredChange(frontmatter, file);
-  const standalone = frontmatter.standaloneSections;
-  if (standalone !== undefined && (!Array.isArray(standalone) || standalone.some(title => typeof title !== 'string' || !title.trim() || title !== title.trim()) || new Set(standalone).size !== standalone.length)) {
-    throw new Error(`${file}: standaloneSections must be a unique list of nonempty, trimmed heading titles`);
-  }
+  validateStandaloneSectionDeclarations(frontmatter.standaloneSections, file);
   const mode = config?.changelogIdentifier ?? 'either';
   if (frontmatter.type === 'changelog-entry' &&
     (mode === 'date' && frontmatter.date === undefined || mode === 'version' && frontmatter.releaseVersion === undefined || mode === 'either' && frontmatter.date === undefined && frontmatter.releaseVersion === undefined))
@@ -207,7 +205,7 @@ export function frontmatterSchema(config: any): any {
     subjectDeprecation: { type: 'object', minProperties: 1, additionalProperties: false, description: 'Page-specific subject retirement dates and stable document IDs; requires deprecated subjectLifecycle, including OpenAPI inference. Dates do not change status automatically.', properties: { deprecatedOn: { type: 'string', format: 'date' }, sunsetOn: { type: 'string', format: 'date' }, replacement: { type: 'string', minLength: 1 }, migration: { type: 'string', minLength: 1 } } },
     subjectLifecycle: { type: 'string', enum: ['deprecated', 'in-development', 'beta', 'experimental'], description: 'Displays a content status badge in the page and navigation.' },
     lifecycle: { type: 'string', minLength: 1, description: 'Editorial lifecycle of the document; validated by an opted-in external vocabulary.' },
-    standaloneSections: { type: 'array', items: { type: 'string' }, uniqueItems: true, description: 'Page-specific exact level-two heading titles reviewed by the author as self-contained with the page introduction. Allows eligible sections to be recommended alone; omitted means full-page reads.' },
+    standaloneSections: { type: 'array', items: { oneOf: [{ type: 'string', minLength: 1 }, { type: 'object', additionalProperties: false, required: ['id', 'context'], properties: { id: { type: 'string', pattern: '^[a-z0-9][a-z0-9-]{0,511}$' }, context: { const: 'section' } } }] }, uniqueItems: true, description: 'Page-specific standalone approval: a heading title approves contextual discovery with the page introduction; {id, context: section} approves the root level-two section slice for content export. IDs may be derived or explicitly anchored. Omitted means full-page reads.' },
     tocDepth: { type: 'integer', enum: [0, 2, 3, 4, 5, 6], description: 'Deepest heading shown in the page table of contents; 0 hides it. Defaults to 3.' },
     showNavigationTabs: { type: 'boolean', description: 'Show the HTML navigation section bar when tabs are configured. Defaults to true for docs and wide layouts, false for landing and splash. Does not change agent discovery or section membership.' },
     image: { type: 'string', pattern: '\\.(?:png|jpe?g)$', description: 'Local .png or .jpg shown in link previews for this page, relative to the page file; replaces the generated share image. Best at 1200×630.' },

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Connect an MCP client
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-28.**
 
 Connect an MCP client to built documentation through four read-only tools. Use stdio for a client-launched local process, or enable an HTTP endpoint on Node or in a generated Vercel function. Both use the same search and Markdown reading core.
 
@@ -186,5 +186,7 @@ The tools are read-only and do not expose authoring commands. Stdio makes them a
 - [CLI reference](https://www.shoalrun.com/cli.md) — Look up shared search and read flags and error behavior.
 
 ### Related topics
+
+- [Content delivery and agents](https://www.shoalrun.com/content-delivery/agents.md) — Use existing documentation MCP tools for contextual reads. (Status: in development.)
 
 - [Agent-friendly documentation](https://www.shoalrun.com/publish/agent-friendliness.md) — Understand the published Markdown and discovery surfaces alongside MCP.

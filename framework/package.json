@@ -11,9 +11,11 @@
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
+    "./content": "./dist/content-delivery.js",
     "./authoring": "./dist/authoring-api.js",
     "./*": "./*",
-    "./components": "./dist/components.js"
+    "./components": "./dist/components.js",
+    "./content/server": "./dist/content-rest-server.js"
   },
   "files": [
     "dist",
@@ -23,7 +25,7 @@
     "styles",
     "templates",
     "examples",
-    "!examples/help-drawer/public/**",
+    "!examples/**/public/**",
     "!examples/**/node_modules/**",
     "example-configs",
     "!example-configs/**/.shoalrun/**",
@@ -32,6 +34,7 @@
     "README.md",
     "AUTHORING.md",
     "schemas/content-export.schema.json",
+    "schemas/content-rest.openapi.json",
     "CHANGELOG.md",
     "!**/*.local.md",
     "!**/*.override.md",

@@ -1,7 +1,7 @@
 ---
 id: guide.content-export
 title: Export content into your application
-summary: Export shared content for application help.
+summary: Export selected documentation and assets for your application.
 type: how-to
 area: publishing
 subarea: publishing-builds
@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-28.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
@@ -38,6 +38,6 @@ Exports resolve snippets, supported components, and API material before renderin
 
 HTML contains no site navigation, theme, required scripts, or app-wide stylesheet. It remains readable without CSS; your app styles its content container. HTML and Markdown are rendered independently from the same resolved source, so [representation-specific blocks](https://www.shoalrun.com/author/components/only.md) retain their intended differences.
 
-HTML heading, footnote, and other IDs are namespaced per document. Mount each exported document once per DOM. Repeated simultaneous instances require the application to rewrite IDs and all corresponding fragment and ARIA references. Markdown heading anchors depend on the customer's renderer; the export does not promise identical anchor generation across Markdown libraries.
+HTML heading, footnote, and other IDs are namespaced per resource. Directly inserting the same HTML more than once can duplicate IDs. Use [mountContent](https://www.shoalrun.com/content-delivery/render.md) for simultaneous instances; it rewrites IDs and their fragment and ARIA references for each mount. Markdown heading anchors depend on the customer's renderer; the export does not promise identical anchor generation across Markdown libraries.
 
-Whole pages are the supported units. The website's size-based section resources are not exported as stable application-help IDs.
+Exports support pages, explicitly approved sections, and named snippet instances. Application section fragments use `{ id, context: section }` approval; they are separate from the website's size-based contextual agent sections. See [select content resources](https://www.shoalrun.com/content-delivery/select.md) for configuration and approval examples.

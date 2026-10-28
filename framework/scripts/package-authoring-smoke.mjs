@@ -27,6 +27,7 @@ try {
   assert.ok(pack.files.some(file => file.path === 'dist/components.d.ts'));
   assert.ok(pack.files.some(file => file.path === 'schemas/content-export.schema.json'));
   assert.ok(pack.files.some(file => file.path === 'examples/help-drawer/preview.mjs'));
+  for (const file of ['dist/content-delivery.js', 'dist/content-delivery.d.ts', 'dist/content-delivery-contract.js', 'dist/content-mount.js', 'dist/content-rest-client.js', 'dist/content-rest-server.js', 'dist/content-rest-contract.js', 'schemas/content-rest.openapi.json', 'examples/content-delivery/preview.mjs']) assert.ok(pack.files.some(entry => entry.path === file), `Missing public content delivery file: ${file}`);
   assert.ok(!pack.files.some(file => file.path.endsWith('.test.js')), 'runtime tarballs must exclude compiled development tests');
   assert.ok(!pack.files.some(file => /experiments|langgraph/.test(file.path)));
   const consumer = path.join(temporary, 'consumer');
@@ -55,6 +56,13 @@ try {
   await writeFile(path.join(consumer, 'inspect.mjs'), `import { inspectAuthoringProject, searchDocumentation, getDocumentationPage, bundledDocumentation, authoringApiVersion, authoringCapabilities, validateAuthoringChanges, authoringValidationStatus, authoringReview, startAuthoringPreview } from '@shoalrun/cli/authoring';
 import assert from 'node:assert/strict';
 import { componentApiVersion } from '@shoalrun/cli/components';
+import { openManifestContentSource, openRestContentSource, contentResourceKey, mountContent } from '@shoalrun/cli/content';
+import { createContentRestHandler } from '@shoalrun/cli/content/server';
+assert.equal(typeof openRestContentSource, 'function');
+assert.equal(typeof createContentRestHandler({ sources: [] }), 'function');
+assert.match(contentResourceKey({kind:'page',documentId:'example'}), /^k_/);
+assert.equal(typeof openManifestContentSource, 'function');
+assert.equal(typeof mountContent, 'function');
 assert.equal(componentApiVersion, 1);
 assert.equal(authoringApiVersion, 1);
 assert.ok(authoringCapabilities.includes('project-discovery'));
@@ -99,14 +107,24 @@ console.log(JSON.stringify({ pages: project.entries.length, schemaVersion: proje
   assert.deepEqual(exported.documentIds, ['guide.billing', 'guide.keys']);
   const helpManifest = JSON.parse(await readFile(path.join(helpOutput, 'manifest.json'), 'utf8'));
   assert.equal(helpManifest.assets.length, 2);
-  const keyHelp = helpManifest.documents.find(document => document.id === 'guide.keys');
+  const keyHelp = helpManifest.resources.find(document => document.ref.documentId === 'guide.keys');
   assert.match(await readFile(path.join(helpOutput, keyHelp.representations.html.path), 'utf8'), /Contact the workspace owner/);
   console.log('Installed help-drawer content export and component/asset closure: passed.');
+  const deliveryExample = path.join(consumer, 'content-delivery-example');
+  await cp(path.join(installed, 'examples/content-delivery'), deliveryExample, { recursive: true });
+  const deliveryOutput = path.join(consumer, 'content-delivery-export');
+  runCli(['export', path.join(deliveryExample, 'docs.config.yaml'), '--target', 'app-help', '--out', deliveryOutput], consumer);
+  const deliveryManifest = JSON.parse(await readFile(path.join(deliveryOutput, 'manifest.json'), 'utf8'));
+  assert.deepEqual(deliveryManifest.resources.map(resource => resource.ref.kind).sort(), ['page', 'section', 'snippet']);
+  const deliverySection = deliveryManifest.resources.find(resource => resource.ref.kind === 'section');
+  assert.equal(deliverySection.ref.sectionId, 'refunds');
+  assert.match(await readFile(path.join(deliveryOutput, deliverySection.representations.markdown.path), 'utf8'), /refund/i);
+  console.log('Installed content delivery page, section and snippet export: passed.');
   if (args.includes('--browser')) {
     const browserEnv = { ...env, SHOALRUN_TEST_PACKAGE: installed };
     if (process.env.PUPPETEER_EXECUTABLE_PATH) browserEnv.PUPPETEER_EXECUTABLE_PATH = process.env.PUPPETEER_EXECUTABLE_PATH;
     else delete browserEnv.PUPPETEER_EXECUTABLE_PATH;
-    console.log(execFileSync(process.execPath, ['--test', path.join(framework, 'dist/content-export-browser.test.js')], { cwd: consumer, env: browserEnv, encoding: 'utf8' }));
+    console.log(execFileSync(process.execPath, ['--test', path.join(framework, 'dist/content-export-browser.test.js'), path.join(framework, 'dist/content-delivery-example.test.js')], { cwd: consumer, env: browserEnv, encoding: 'utf8' }));
   }
   for (const starter of ['minimal', 'api-docs', 'showcase']) {
     const project = path.join(consumer, starter);

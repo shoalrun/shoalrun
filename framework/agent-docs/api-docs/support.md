@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > API support > OpenAPI support and limits
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-28.**
 
 Shoalrun renders a defined subset of OpenAPI into HTML, Markdown, and focused contracts. Check these limits before importing a large specification. A supported OpenAPI version does not mean every feature in that version can be rendered.
 
@@ -60,15 +60,16 @@ Exclusive bounds follow the entry document's version even when a schema lives in
 
 These features have limits that may require adapting the source or authored documentation.
 
-| Feature                         | Current limit and recovery                                                                                                                                                                                                                |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Remote `$ref` in a normal build | Fails with `Remote $ref requires a pinned snapshot`. Use `api import` for public HTTPS sources with same-origin relative references, then build from its local snapshot. Cross-origin references need a separately prepared local source. |
-| Local `externalValue`           | Fails with `local externalValue needs a pinned adapter`. Use a local inline example value, or an HTTPS external example link.                                                                                                             |
-| Callbacks                       | Operation callbacks fail with an unsupported feature diagnostic. Top-level 3.1 webhooks are supported separately.                                                                                                                         |
-| Response headers and links      | Fail with `Response headers or links need an adapter`. Prepare a supported documentation source while retaining the original contract separately.                                                                                         |
-| Parameter `content`             | Requires an adapter; use supported parameter schemas in the documentation source.                                                                                                                                                         |
-| Request media `encoding`        | Fails with `Request encoding needs an adapter`. Multipart binary fields have limited generated upload commands, but media encoding settings are not rendered.                                                                             |
-| Other schema keywords           | Fail with `Unsupported schema keyword`. Adapt the documentation source without claiming omitted constraints are represented.                                                                                                              |
+| Feature                         | Current limit and recovery                                                                                                                                                                                                                               |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Remote `$ref` in a normal build | Fails with `Remote $ref requires a pinned snapshot`. Use `api import` for public HTTPS sources with same-origin relative references, then build from its local snapshot. Cross-origin references need a separately prepared local source.                |
+| Local `externalValue`           | Fails with `local externalValue needs a pinned adapter`. Use a local inline example value, or an HTTPS external example link.                                                                                                                            |
+| Callbacks                       | Operation callbacks fail with an unsupported feature diagnostic. Top-level 3.1 webhooks are supported separately.                                                                                                                                        |
+| Response headers                | Schema-based headers and local references render descriptions, required/deprecated status, constraints, examples, and simple serialization. Content-style headers remain unsupported. `Content-Type` header definitions are ignored as OpenAPI requires. |
+| Response links                  | Require an adapter; prepare a supported documentation source while retaining the original contract separately.                                                                                                                                           |
+| Parameter `content`             | Requires an adapter; use supported parameter schemas in the documentation source.                                                                                                                                                                        |
+| Request media `encoding`        | Fails with `Request encoding needs an adapter`. Multipart binary fields have limited generated upload commands, but media encoding settings are not rendered.                                                                                            |
+| Other schema keywords           | Fail with `Unsupported schema keyword`. Adapt the documentation source without claiming omitted constraints are represented.                                                                                                                             |
 
 Avoid removing source semantics silently. If your API needs an unsupported feature, describe that limitation in the authored page and keep the authoritative contract available to readers where appropriate.
 

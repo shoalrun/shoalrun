@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Generated frontmatter reference
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-28.**
 
 Parent page: [Full Markdown page](/author/frontmatter-reference.md)
 
@@ -25,6 +25,8 @@ This is the field inventory for this documentation site. The tables below are bu
 `agent.intent` in the project-defined table is an optional string. This site's authors use it to describe the task a page helps an agent complete. It is **not** a required Shoalrun field or an instruction to an agent. `editorial.reviewNote` is another site-specific field for internal review notes. A different project can declare different fields.
 
 To publish an equivalent inventory on your site, place `<FrontmatterReference />` on a page. It takes no attributes or child content and renders the current project's native and declared fields in HTML and Markdown.
+
+For section exports, declare `standaloneSections` with `{ id, context: section }` objects after reviewing each section without its page introduction. Older heading-title strings remain supported for contextual discovery. See [section identity and compatibility](https://www.shoalrun.com/content-delivery/sections.md) before changing an existing declaration.
 
 ## When the files update
 

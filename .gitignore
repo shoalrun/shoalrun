@@ -28,3 +28,6 @@ coverage/
 SOURCE-INVENTORY.local.json
 
 .venv/
+
+# Generated application example content
+/framework/examples/*/public/

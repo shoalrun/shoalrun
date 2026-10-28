@@ -1,5 +1,39 @@
 # Changelog
 
+## Unreleased
+
+Applications and agents can select whole pages, independently approved sections,
+and named snippet instances from one export. Previously, export targets selected
+whole documents. The new browser-safe `@shoalrun/cli/content` client lists and
+retrieves these resources from an approved static manifest; the separate mount
+helper scopes IDs and links when content appears more than once in an app.
+
+- Section IDs default to heading-derived names. An optional trailing
+  `<Anchor id="refunds" />` preserves a reference when its heading changes.
+  Declare `{ id: refunds, context: section }` in `standaloneSections` before
+  exporting that section without its parent introduction.
+- Export targets can select typed `resources`. Existing `documents` selectors
+  remain shorthand for pages, but the manifest now uses `resources[]` and typed
+  `ref` objects. Update custom manifest consumers and rebuild their exports.
+- Compare against `--previous-manifest FILE` to report removed references; add
+  `--fail-on-removed` to reject them before replacing output. Publish complete
+  revisions under immutable paths for clients that remain open during updates.
+- A runnable content-delivery example demonstrates page and section retrieval,
+  repeated snippets, cancellation, keyboard focus, and application-owned styling.
+
+- Read the same snapshots over HTTP with `openRestContentSource` and the
+  Fetch-style `createContentRestHandler` server adapter. HTTP contract v1 provides
+  resource lists, metadata, HTML and Markdown, explicit publication/revision
+  selection, ETags, and conditional requests. The package includes its OpenAPI
+  contract. The local example demonstrates both transports.
+
+The reference adapter serves supplied public snapshots. Authentication, search,
+editing, revision storage, and production hosting remain application concerns.
+
+API references now render schema-based OpenAPI response headers, including
+descriptions, constraints, and examples. These contracts previously stopped the
+build. Content-style headers and response links still require adaptation.
+
 ## 0.1.0-alpha.12 — 2026-10-27
 
 - Refresh the bundled documentation from the reviewed public site: organize navigation into Docs, Reference, Examples, and Project; use installed-package commands in customer workflows; and standardize component reference sections.

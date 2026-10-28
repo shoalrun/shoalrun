@@ -1,7 +1,7 @@
 ---
 id: guide.content-export
 title: Export content into your application
-summary: Export shared content for application help.
+summary: Export selected documentation and assets for your application.
 type: how-to
 area: publishing
 subarea: publishing-builds
@@ -16,15 +16,26 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-28.**
 
 Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It does not need a Shoalrun browser runtime.
 
 ## Prerequisites
 
-Content exports require Shoalrun CLI `0.1.0-alpha.6` or later.
+Install Shoalrun in the documentation project. This guide uses the resource-based export manifest described in the [manifest reference](https://www.shoalrun.com/content-delivery/manifest.md).
 
 Start with a Shoalrun project and public pages assigned to an enabled publication. Navigation, facets, a site title, and a previous website build are optional. A site origin is needed only when links must fall back to pages on the documentation website. The export does not generate embeddings or run documentation chat.
+
+## Upgrade an existing integration
+
+If an existing bundle contains `manifest.documents`, upgrade the CLI and rebuild the export before using this guide's loader. Update custom consumers to the resource contract:
+
+- Read `manifest.resources` instead of `manifest.documents`.
+- Select page resources with `ref.kind === 'page'` and `ref.documentId` instead of a document's `id`.
+- Route links with `kind: resource` through their typed `ref`, rather than `kind: document` and `documentId`.
+- Read file paths from the rebuilt manifest; do not retain paths from the old bundle.
+
+The `documents` configuration selector remains shorthand for whole pages. Use [resource selectors](https://www.shoalrun.com/content-delivery/select.md) when selecting approved sections or named snippet instances.
 
 ## Export selected pages
 
@@ -40,7 +51,7 @@ Start with a Shoalrun project and public pages assigned to an enabled publicatio
        publicBase: /help/
    ```
 
-   Omit `documents` to export all eligible public pages in one enabled publication. If more than one publication is enabled, select all three coordinates:
+   Omit both `documents` and `resources` to export all eligible public pages in one enabled publication. If more than one publication is enabled, select all three coordinates:
 
    ```yaml
    exports:
@@ -60,7 +71,7 @@ Start with a Shoalrun project and public pages assigned to an enabled publicatio
    From the documentation project, run:
 
    ```sh
-   shoalrun export docs.config.yaml --target app-help --out ../app/public/help
+   npx --no-install shoalrun export docs.config.yaml --target app-help --out ../app/public/help
    ```
 
    Replace the output path with the directory your application will distribute. The command prints JSON with its publication, formats, selected document IDs, asset count, digest, API review requirements, and diagnostics. A successful export replaces an earlier export in that directory. A failure preserves it. Source directories, unrelated nonempty directories, and previous website builds cannot be used as the export destination.
@@ -77,12 +88,12 @@ Start with a Shoalrun project and public pages assigned to an enabled publicatio
      NOTICES.txt
    ```
 
-   File names derive from stable document identity and publication, not titles or source-file names. Read paths from the manifest rather than constructing them in your app.
+   File names derive from typed resource identity and publication, not titles or source-file names. Read paths from the manifest rather than constructing them in your app.
 
    For a one-off export without a named target:
 
    ```sh
-   shoalrun export docs.config.yaml --out ../app/public/help \
+   npx --no-install shoalrun export docs.config.yaml --out ../app/public/help \
      --format html --document guide.api-keys --document guide.billing \
      --public-base /help/
    ```
@@ -97,10 +108,13 @@ Start with a Shoalrun project and public pages assigned to an enabled publicatio
 
    ```js
    const manifest = await fetch('/help/manifest.json').then(response => response.json());
-   if (manifest.schemaVersion !== 1 || manifest.review.status !== 'ok') {
+   if (manifest.schemaVersion !== 1 || manifest.review?.status !== 'ok' ||
+       !Array.isArray(manifest.resources)) {
      throw new Error('Unsupported or unreviewed help export');
    }
-   const help = manifest.documents.find(document => document.id === 'guide.api-keys');
+   const help = manifest.resources.find(resource =>
+     resource.ref.kind === 'page' && resource.ref.documentId === 'guide.api-keys');
+   if (!help?.representations.html) throw new Error('API-key HTML is unavailable');
    const html = await fetch(manifest.publicBase + help.representations.html.path)
      .then(response => response.text());
    helpContainer.innerHTML = html;
@@ -112,7 +126,7 @@ Start with a Shoalrun project and public pages assigned to an enabled publicatio
 
 4. ## Handle document links and check the result
 
-   Links to other exported pages have `data-export-link` markers. Each marker identifies a record in that representation's `links` array. For `kind: document`, your app can prevent ordinary navigation and open `documentId` in the drawer. `fragment` identifies the original heading or anchor; the HTML representation's `anchors` array maps it to its namespaced `exportedId`.
+   Links to other exported pages have `data-export-link` markers. Each marker identifies a record in that representation's `links` array. For `kind: resource`, your app can prevent ordinary navigation and retrieve the target using its typed `ref`. A page reference contains `kind: page` and `documentId`; section and snippet references have their own identity fields. `fragment` identifies the original heading or anchor; the HTML representation's `anchors` array maps it to its namespaced `exportedId`.
 
    A link to an omitted document uses its canonical website URL only when that document is public, enabled, and selected for the website. Without an eligible destination and a configured origin, the export fails. Linked pages are never silently added to the export. Explicit external links retain their destinations.
 
@@ -136,9 +150,9 @@ Exports resolve snippets, supported components, and API material before renderin
 
 HTML contains no site navigation, theme, required scripts, or app-wide stylesheet. It remains readable without CSS; your app styles its content container. HTML and Markdown are rendered independently from the same resolved source, so [representation-specific blocks](https://www.shoalrun.com/author/components/only.md) retain their intended differences.
 
-HTML heading, footnote, and other IDs are namespaced per document. Mount each exported document once per DOM. Repeated simultaneous instances require the application to rewrite IDs and all corresponding fragment and ARIA references. Markdown heading anchors depend on the customer's renderer; the export does not promise identical anchor generation across Markdown libraries.
+HTML heading, footnote, and other IDs are namespaced per resource. Directly inserting the same HTML more than once can duplicate IDs. Use [mountContent](https://www.shoalrun.com/content-delivery/render.md) for simultaneous instances; it rewrites IDs and their fragment and ARIA references for each mount. Markdown heading anchors depend on the customer's renderer; the export does not promise identical anchor generation across Markdown libraries.
 
-Whole pages are the supported units. The website's size-based section resources are not exported as stable application-help IDs.
+Exports support pages, explicitly approved sections, and named snippet instances. Application section fragments use `{ id, context: section }` approval; they are separate from the website's size-based contextual agent sections. See [select content resources](https://www.shoalrun.com/content-delivery/select.md) for configuration and approval examples.
 
 ## Assets, downloads, and notices
 
@@ -155,14 +169,14 @@ exports:
 
 Supported files include PNG, JPEG, GIF, WebP, AVIF, passive SVG, PDF, plain text, CSV, JSON, and YAML. Local assets use content-hashed paths. Unsupported asset types, missing files, symlink escapes, active SVG, and unresolved local links fail the export. Asset directories are not copied wholesale. Self-contained focused OpenAPI downloads are included when referenced.
 
-Remote images are not downloaded. The manifest records them in each document's `externalDependencies`, and the command reports them in diagnostics. A document with a remote image is not offline-complete. Explicit notice files and applicable diagram-renderer notices are retained in `NOTICES.txt`.
+Remote images are not downloaded. The manifest records them in each resource's `externalDependencies`, and the command reports them in diagnostics. A document with a remote image is not offline-complete. Explicit notice files and applicable diagram-renderer notices are retained in `NOTICES.txt`.
 
 ## Review exported API material
 
 The export preserves the API source-review gate. If its selected API material has no matching review digest, the normal command fails before replacing the previous bundle. Produce a candidate for inspection with:
 
 ```sh
-shoalrun export docs.config.yaml --target app-help --out review/app-help --review
+npx --no-install shoalrun export docs.config.yaml --target app-help --out review/app-help --review
 ```
 
 A candidate needing review reports `status: needs-review`, sets `manifest.review.status: required`, and exits with code 2. Inspect its references and downloads, then pin the reported API digests to the target:
@@ -180,7 +194,9 @@ Run the normal export command again. Changed source bytes or exposed API selecti
 
 ## Inspect the manifest
 
-The versioned `manifest.json` identifies documents by ID and publication. It includes titles, summaries, types, eligible canonical URLs, representation paths and digests, typed links, HTML anchor maps, local assets, external image dependencies, and diagnostics. It does not copy raw source frontmatter, configuration, local dependency paths, or browser runtime payloads.
+The manifest uses typed `resources` for pages, sections, and snippet instances. See the [manifest contract](https://www.shoalrun.com/content-delivery/manifest.md) and [content client](https://www.shoalrun.com/content-delivery/client.md) for resource lookup and retrieval.
+
+The versioned `manifest.json` identifies resources by typed reference and publication. It includes titles, summaries, types, eligible canonical URLs, representation paths and digests, typed links, HTML anchor maps, local assets, external image dependencies, and diagnostics. It does not copy raw source frontmatter, configuration, local dependency paths, or browser runtime payloads.
 
 The bundle's `digest` is the SHA-256 of `JSON.stringify` of the parsed manifest with its own `digest` field removed. The `files` list records byte counts and SHA-256 digests for every payload file, including notices. All text is UTF-8. The manifest itself is excluded from that list. Deterministic output lets applications compare bundles and invalidate cached content.
 
@@ -189,7 +205,7 @@ The bundle's `digest` is the SHA-256 of `JSON.stringify` of the parsed manifest 
 The package's `examples/help-drawer` directory contains a small application with two help documents, an image, a diagram, reader sections, tabs, a walkthrough, and a custom component. Copy it into a project with Shoalrun installed, then run from that example directory:
 
 ```sh
-shoalrun export docs.config.yaml --target app-help --out public/help
+npx --no-install shoalrun export docs.config.yaml --target app-help --out public/help
 node preview.mjs
 ```
 

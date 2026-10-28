@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-28.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -78,7 +78,7 @@ These fields categorize pages, add connections, or change presentation. `product
 | `subjectDeprecation`   | object                             | Page-specific deprecation and sunset dates, replacement ID, and migration guide ID for a deprecated subject; see below.                                                                      |
 | `change`               | object                             | Optional authored kind, affected page IDs, and migration guide ID on a changelog entry; see [describe what changed](https://www.shoalrun.com/author/release-notes.md).                       |
 | `lifecycle`            | string                             | Editorial state of the document. Shoalrun preserves it; a project can validate its values with a separate vocabulary tool.                                                                   |
-| `tocDepth`             | integer                            | Deepest heading in the HTML table of contents; `0` hides it.                                                                                                                                 |
+| `tocDepth`             | integer                            | Deepest heading in the HTML table of contents; `0` hides it. To remove the outline and give content more room, use [`layout: wide`](https://www.shoalrun.com/styling/layouts.md).            |
 | `card`                 | object                             | Optional `title`, `description`, `eyebrow`, and Lucide `icon` for metadata-driven cards.                                                                                                     |
 | `seo`                  | object                             | Page-level HTML title and description overrides; see below.                                                                                                                                  |
 | `markdownMetadata`     | string or object                   | Named profile or page override for the Markdown twin's YAML preamble.                                                                                                                        |
@@ -86,5 +86,7 @@ These fields categorize pages, add connections, or change presentation. `product
 | `variables`            | object                             | Page-level public values for registered snippets.                                                                                                                                            |
 
 For example, a page can use `product: payments`, `area: reporting`, and `subarea: settlements`. Those resolved values appear in `documents.json` and `search-index.json`. If the site config defines reader facets with those names, each value must be a configured choice ID and becomes that page's reader filter. Do not also set `readerFilters.product`, `.area`, or `.subarea` for the same field. Without a matching facet, the category is metadata only. A site's Markdown metadata projection can also select `frontmatter.product`, `frontmatter.area`, and `frontmatter.subarea`.
+
+Choose the [page layout](https://www.shoalrun.com/styling/layouts.md) before adjusting the outline. Use `layout: wide` to remove “On this page” and give interactive content more space while keeping navigation. Use `tocDepth: 0` when you only need to hide the outline within the current layout.
 
 The default ToC includes headings through level 3. This page sets `tocDepth: 2`, so its ToC lists only the main sections. Use `tocDepth: 0` to suppress the ToC, or choose a depth from 2 through 6. Headings still appear in the page and Markdown twin when they are left out of the ToC.

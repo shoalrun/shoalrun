@@ -7,7 +7,19 @@ import type { ExportFormat } from './content-export-config.js';
 
 /** Lower interactions while representation-specific source blocks still exist. */
 export function portableTree(tree: any, format: ExportFormat, routes: Set<string>, basePath: string): any {
+  // Provenance is internal export metadata. Keep it when component lowering
+  // synthesizes headings so a slice can retain its full-source identities.
+  const inherit = (node: any, key: string) => {
+    if (!node || typeof node !== 'object') return;
+    node.data = { ...node.data, exportSourceKey: node.data?.exportSourceKey ?? key };
+    for (const [index, child] of (node.children ?? []).entries()) inherit(child, `${node.data.exportSourceKey}/${index}`);
+  };
   const walk = (node: any): any[] => {
+    const result = lower(node);
+    if (node.data?.exportSourceKey) result.forEach((child, index) => inherit(child, `${node.data.exportSourceKey}:${index}`));
+    return result;
+  };
+  const lower = (node: any): any[] => {
     if (node.type === 'docRepresentation') return node.representation === format ? node.children.flatMap(walk) : [];
     if (node.type === 'docComponent') return node.children.flatMap(walk);
     if (['docReaderFilter', 'docReaderChoice'].includes(node.type)) return [];
@@ -27,7 +39,11 @@ export function portableTree(tree: any, format: ExportFormat, routes: Set<string
   const lowered = publicTree(root((tree.children ?? []).flatMap(walk)), format, routes, 'light', basePath);
   const definitions = new Map<string, any>();
   const collectDefinitions = (node: any) => {
-    if (node.type === 'definition') definitions.set(node.identifier, node);
+    if (node.type === 'definition') {
+      const previous = definitions.get(node.identifier);
+      if (previous && (previous.url !== node.url || previous.title !== node.title)) throw new Error(`Ambiguous export definition ${node.identifier}`);
+      definitions.set(node.identifier, node);
+    }
     for (const child of node.children ?? []) collectDefinitions(child);
   };
   collectDefinitions(lowered);

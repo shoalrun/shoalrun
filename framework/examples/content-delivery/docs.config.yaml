@@ -1,0 +1,36 @@
+schemaVersion: 1
+site:
+  title: Acme billing help
+  origin: https://docs.example.com
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+snippets:
+  shared.refund-window:
+    file: ./snippets/refund-window.mdx
+    variables:
+      days: { type: number, default: 30 }
+exports:
+  app-help:
+    formats: [html, markdown]
+    publicBase: /help/releases/demo/
+    resources:
+      - { kind: page, documentId: guide.billing }
+      - { kind: section, documentId: guide.billing, sectionId: refunds }
+      - kind: snippet
+        id: billing.refund-window
+        snippetId: shared.refund-window
+        title: Refund window
+        summary: When a workspace can request a refund.
+        values: { days: 30 }

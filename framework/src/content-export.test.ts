@@ -37,14 +37,14 @@ test('documents sharing a route export their own images in both representations'
   await exportContent(f.config, f.output, { documents: [...images.keys()] });
   const data = await manifest(f.output);
   assert.equal(data.assets.length, 2);
-  for (const doc of data.documents) {
-    const expected = `assets/${exportDigest(images.get(doc.id)!)}.svg`;
+  for (const doc of data.resources) {
+    const expected = `assets/${exportDigest(images.get(doc.ref.documentId)!)}.svg`;
     assert.deepEqual(doc.assets, [expected]);
-    assert.equal(await readFile(path.join(f.output, expected), 'utf8'), images.get(doc.id));
+    assert.equal(await readFile(path.join(f.output, expected), 'utf8'), images.get(doc.ref.documentId));
     for (const format of ['html', 'markdown']) {
       const body = await readFile(path.join(f.output, doc.representations[format].path), 'utf8');
-      assert.ok(body.includes(`/${expected}`), `${doc.id}: ${format}`);
-      for (const [otherId, image] of images) if (otherId !== doc.id) assert.ok(!body.includes(exportDigest(image)));
+      assert.ok(body.includes(`/${expected}`), `${doc.ref.documentId}: ${format}`);
+      for (const [otherId, image] of images) if (otherId !== doc.ref.documentId) assert.ok(!body.includes(exportDigest(image)));
     }
   }
 });
@@ -59,12 +59,12 @@ test('generated links retain document identity when export routes overlap', asyn
     'type: changelog-entry\ndate: "2026-10-25"\nsubjectLifecycle: deprecated\nsubjectDeprecation: { replacement: second, migration: second }\nchange: { kind: breaking, affects: [second], migration: second }\n'));
   await exportContent(f.config, f.output, { documents: ['first', 'second', 'notice'] });
   const data = await manifest(f.output);
-  const notice = data.documents.find((doc: any) => doc.id === 'notice');
-  const target = data.documents.find((doc: any) => doc.id === 'second');
+  const notice = data.resources.find((doc: any) => doc.ref.documentId === 'notice');
+  const target = data.resources.find((doc: any) => doc.ref.documentId === 'second');
   for (const format of ['html', 'markdown']) {
     const links = notice.representations[format].links;
     assert.equal(links.length, 7);
-    assert.ok(links.every((link: any) => link.kind === 'document' && link.documentId === 'second' && link.href === `/${target.representations[format].path}`));
+    assert.ok(links.every((link: any) => link.kind === 'resource' && link.ref?.documentId === 'second' && link.href === `/${target.representations[format].path}`));
     const body = await readFile(path.join(f.output, notice.representations[format].path), 'utf8');
     assert.ok(body.includes(`/${target.representations[format].path}`));
     assert.ok(!body.includes('/shared'));
@@ -80,7 +80,7 @@ test('whole-page portable bundle retains meaning, rebases assets, and has stable
   assert.equal(data.kind, 'shoalrun-content-export');
   const { digest, ...payload } = data;
   assert.equal(digest, exportDigest(JSON.stringify(payload)));
-  const keys = data.documents.find((doc: any) => doc.id === 'guide.keys');
+  const keys = data.resources.find((doc: any) => doc.ref.documentId === 'guide.keys');
   const html = await readFile(path.join(f.output, keys.representations.html.path), 'utf8');
   const md = await readFile(path.join(f.output, keys.representations.markdown.path), 'utf8');
   for (const body of [html, md]) {
@@ -90,7 +90,7 @@ test('whole-page portable bundle retains meaning, rebases assets, and has stable
   }
   assert.match(html, /src="\/help\/assets\/[a-f0-9]+\.svg"/);
   assert.match(html, /data-export-link="link-1"/);
-  assert.ok(keys.representations.html.links.some((link: any) => link.kind === 'document' && link.documentId === 'guide.billing'));
+  assert.ok(keys.representations.html.links.some((link: any) => link.kind === 'resource' && link.ref?.documentId === 'guide.billing'));
   assert.ok(keys.representations.html.links.some((link: any) => link.kind === 'canonical' && link.href === 'https://docs.example.com/account'));
   assert.ok(keys.representations.html.anchors.every((anchor: any) => anchor.exportedId.startsWith('sr-')));
   assert.equal(keys.assets.length, 2);
@@ -101,7 +101,7 @@ test('whole-page portable bundle retains meaning, rebases assets, and has stable
   await exportContent(f.config, f.output, { target: 'app-help' });
   data = await manifest(f.output);
   assert.notEqual(data.digest, digest);
-  assert.equal(data.documents.find((doc: any) => doc.id === 'guide.keys').representations.html.path, keys.representations.html.path);
+  assert.equal(data.resources.find((doc: any) => doc.ref.documentId === 'guide.keys').representations.html.path, keys.representations.html.path);
 });
 
 test('export ignores website nav, theme, and contentFilter but enforces independent selection', async t => {
@@ -114,7 +114,7 @@ test('export ignores website nav, theme, and contentFilter but enforces independ
   const result = await exportContent(f.config, f.output, { target: 'app-help' });
   assert.equal(result.documents, 2);
   const data = await manifest(f.output);
-  assert.ok(data.documents.every((doc: any) => doc.canonicalUrl === undefined));
+  assert.ok(data.resources.every((doc: any) => doc.canonicalUrl === undefined));
   await assert.rejects(exportContent(f.config, path.join(f.root, 'missing'), { documents: ['guide.no-such-page'] }), /missing, non-public/);
   await writeFile(f.config, (await readFile(f.config, 'utf8')).replace('documents: [guide.keys, guide.billing]', 'documents: [guide.keys, guide.billing]\n    contentFilter: { audience: [developer] }'));
   await assert.rejects(exportContent(f.config, path.join(f.root, 'excluded'), { target: 'app-help' }), /excluded by the export contentFilter/);
@@ -154,7 +154,7 @@ test('representations remain independent and footnote/section anchors are scoped
   const f = await fixture(t);
   await writeFile(path.join(f.root, 'content/keys.mdx'), page('guide.keys', '<Only format="html">\n\nHTML-only wording.\n\n</Only>\n\n<Only format="markdown">\n\nMarkdown-only wording.\n\n</Only>\n\n## Scopes\n\n[Scopes](#scopes) have limits.[^limit]\n\n[^limit]: Review all permissions.\n'));
   await exportContent(f.config, f.output, { target: 'app-help' });
-  const keys = (await manifest(f.output)).documents.find((doc: any) => doc.id === 'guide.keys');
+  const keys = (await manifest(f.output)).resources.find((doc: any) => doc.ref.documentId === 'guide.keys');
   const html = await readFile(path.join(f.output, keys.representations.html.path), 'utf8');
   const md = await readFile(path.join(f.output, keys.representations.markdown.path), 'utf8');
   assert.ok(html.includes('HTML-only wording') && !html.includes('Markdown-only wording'));
@@ -170,7 +170,7 @@ test('remote render dependencies are declared and copied assets do not expose lo
   await writeFile(keys, (await readFile(keys, 'utf8')) + '\n![Remote](https://images.example.com/guide.png)\n');
   await exportContent(f.config, f.output, { target: 'app-help' });
   const data = await manifest(f.output);
-  assert.deepEqual(data.documents.find((doc: any) => doc.id === 'guide.keys').externalDependencies, [{ url: 'https://images.example.com/guide.png', kind: 'image' }]);
+  assert.deepEqual(data.resources.find((doc: any) => doc.ref.documentId === 'guide.keys').externalDependencies, [{ url: 'https://images.example.com/guide.png', kind: 'image' }]);
   assert.ok(!JSON.stringify(data).includes(f.root));
   assert.ok(data.diagnostics.some((diagnostic: any) => diagnostic.code === 'external-render-dependencies'));
 });
@@ -194,7 +194,7 @@ test('no facets, no site shell, and no prior website build are required', async 
   await writeFile(path.join(f.root, 'content/billing.mdx'), page('guide.billing', 'All help stays in the app.'));
   const result = await exportContent(f.config, f.output);
   assert.equal(result.documents, 3);
-  assert.ok((await manifest(f.output)).documents.every((doc: any) => !doc.canonicalUrl));
+  assert.ok((await manifest(f.output)).resources.every((doc: any) => !doc.canonicalUrl));
 });
 
 test('API review candidates retain focused downloads and require explicit digest approval', async t => {
@@ -247,10 +247,10 @@ test('reference links and images preserve typed app routing and dependency track
   const keys = path.join(f.root, 'content/keys.mdx');
   await writeFile(keys, page('guide.keys', '[Billing][billing]\n\n![Settings][settings]\n\n![Remote][remote]\n\n[billing]: doc:guide.billing\n[settings]: ./settings.svg\n[remote]: https://images.example.com/settings.png\n'));
   await exportContent(f.config, f.output, { target: 'app-help' });
-  const doc = (await manifest(f.output)).documents.find((doc: any) => doc.id === 'guide.keys');
+  const doc = (await manifest(f.output)).resources.find((doc: any) => doc.ref.documentId === 'guide.keys');
   const html = await readFile(path.join(f.output, doc.representations.html.path), 'utf8');
   assert.match(html, /data-export-link="link-1"/);
-  assert.ok(doc.representations.html.links.some((link: any) => link.documentId === 'guide.billing'));
+  assert.ok(doc.representations.html.links.some((link: any) => link.ref?.documentId === 'guide.billing'));
   assert.deepEqual(doc.externalDependencies, [{ url: 'https://images.example.com/settings.png', kind: 'image' }]);
   assert.equal(doc.assets.length, 1);
 });
@@ -263,7 +263,7 @@ test('D2 visuals retain embedded fonts and renderer notices without external ass
   assert.match(await readFile(path.join(f.output, 'NOTICES.txt'), 'utf8'), /D2 THIRD_PARTY_NOTICES/);
   const data = await manifest(f.output);
   assert.equal(data.assets.length, 2);
-  assert.ok(data.documents.every((doc: any) => doc.externalDependencies.length === 0));
+  assert.ok(data.resources.every((doc: any) => doc.externalDependencies.length === 0));
 });
 
 test('export manifest follows its published JSON schema', async t => {
@@ -300,7 +300,7 @@ test('one authored edit updates both the website and application export', async 
   await writeFile(file, (await readFile(file, 'utf8')).replace('Create a key for each integration.', 'Create a separate key for each application.'));
   await compile(f.config, site);
   await exportContent(f.config, f.output, { target: 'app-help' });
-  const doc = (await manifest(f.output)).documents.find((doc: any) => doc.id === 'guide.keys');
+  const doc = (await manifest(f.output)).resources.find((doc: any) => doc.ref.documentId === 'guide.keys');
   for (const file of [path.join(site, 'api-keys/index.html'), path.join(f.output, doc.representations.html.path), path.join(f.output, doc.representations.markdown.path)]) {
     assert.match(await readFile(file, 'utf8'), /Create a separate key for each application/);
   }
@@ -311,7 +311,7 @@ test('native static output keeps disclosure and definition content without hidde
   const content = `<Callout type="warning">\nReview permissions before continuing.\n</Callout>\n\n<Tooltip label="Quota">100 requests</Tooltip>\n\n<InfoHint label="Allowance">\n\n100 requests per workspace.\n\n</InfoHint>\n\n<Table filter sticky>\n\n| Key | Value |\n| --- | --- |\n| Limit | 100 |\n\n</Table>\n\n<DefinitionList filter>\n<Term>Budget</Term>\n<Definition>100 requests for each workspace.</Definition>\n</DefinitionList>\n\n<Collapsible title="More details">\n\nPermissions apply to every request.\n\n</Collapsible>\n`;
   await writeFile(path.join(f.root, 'content/keys.mdx'), page('guide.keys', content));
   await exportContent(f.config, f.output, { target: 'app-help' });
-  const doc = (await manifest(f.output)).documents.find((doc: any) => doc.id === 'guide.keys');
+  const doc = (await manifest(f.output)).resources.find((doc: any) => doc.ref.documentId === 'guide.keys');
   for (const format of ['html', 'markdown']) {
     const body = await readFile(path.join(f.output, doc.representations[format].path), 'utf8');
     for (const phrase of ['Review permissions', '100 requests per workspace', 'Budget', 'Permissions apply']) assert.ok(body.includes(phrase), `${format}: ${phrase}`);
@@ -327,7 +327,7 @@ test('exports lower component content without bundling browser-only imports or s
   await exportContent(f.config, f.output, { target: 'app-help' });
   const data = await manifest(f.output);
   assert.ok(data.files.every((file: any) => !/\.(?:js|css)$/.test(file.path)));
-  const doc = data.documents.find((doc: any) => doc.id === 'guide.keys');
+  const doc = data.resources.find((doc: any) => doc.ref.documentId === 'guide.keys');
   const html = await readFile(path.join(f.output, doc.representations.html.path), 'utf8');
   assert.match(html, /Contact the workspace owner/);
   assert.doesNotMatch(html, /browser\.css|data-component|<script/);

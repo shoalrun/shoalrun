@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Connect an MCP client
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-28.**
 
 Parent page: [Full Markdown page](/publish/mcp.md)
 
@@ -38,5 +38,7 @@ You need Node.js 22.12 or newer, the installed Shoalrun CLI, and a client that s
 - [CLI reference](https://www.shoalrun.com/cli.md) — Look up shared search and read flags and error behavior.
 
 ### Related topics
+
+- [Content delivery and agents](https://www.shoalrun.com/content-delivery/agents.md) — Use existing documentation MCP tools for contextual reads. (Status: in development.)
 
 - [Agent-friendly documentation](https://www.shoalrun.com/publish/agent-friendliness.md) — Understand the published Markdown and discovery surfaces alongside MCP.
