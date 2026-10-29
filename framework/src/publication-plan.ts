@@ -1,3 +1,4 @@
+import { hasScaffoldPlaceholders } from './scaffold-placeholders.js';
 import { matchesContentFilter } from './content-filter.js';
 import { readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -81,7 +82,7 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
     if (frontmatter.access?.policy !== 'public' && !authoringFiles?.has(file)) continue;
     const marks = pageReaderFilters(frontmatter, readerFilters, file);
     if (!matchesContentFilter(marks, contentFilter)) continue;
-    if (/\[\[TODO:[\s\S]*?\]\]/.test(body) || /\[\[TODO:[\s\S]*?\]\]/.test(JSON.stringify(frontmatter)) || frontmatter.summary?.startsWith('Draft guide for ')) throw new Error(`${file}: unresolved scaffold placeholders cannot be published`);
+    if (hasScaffoldPlaceholders(body) || /\[\[TODO:[\s\S]*?\]\]/.test(JSON.stringify(frontmatter)) || frontmatter.summary?.startsWith('Draft guide for ')) throw new Error(`${file}: unresolved scaffold placeholders cannot be published`);
     for (const variant of variants) {
       if (pagePublications ? !pagePublications.some(item => item.channel === variant.channel && item.version === variant.version) : (frontmatter.channel && frontmatter.channel !== variant.channel || frontmatter.version && frontmatter.version !== variant.version)) continue;
       if (frontmatter.language && frontmatter.language !== variant.language) continue;

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Navigation > Overview
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/author/navigation.md)
 

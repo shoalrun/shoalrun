@@ -14,7 +14,7 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md) — ID: change.2026-10-27. changelog-entry; 1223 tokens. Explore a complete starter, read clearer controls, and find focused configuration references alongside the new mobile navigation.
 
-- [Content delivery, verification dates, and clearer references](https://www.shoalrun.com/changelog/2026-10-28.md) — ID: change.2026-10-28. changelog-entry; 1214 tokens. Reuse documentation through static bundles or REST, display technical verification dates, and find clearer API and layout guidance.
+- [Content delivery, verification dates, and clearer references](https://www.shoalrun.com/changelog/2026-10-28.md) — ID: change.2026-10-28. changelog-entry; 1351 tokens. Reuse documentation through static bundles or REST, display technical verification dates, and find clearer API and layout guidance.
 
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 551 tokens. Snapshot previews with coverage and freshness reports.
 

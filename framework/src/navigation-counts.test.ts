@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { navigationCounts } from './compiler-config.js';
+import { navigationCounts, navigationHeading } from './compiler-config.js';
 import { buildHtmlPage, parse } from './content.js';
 import type { Document, NavigationNode } from './content-source.js';
 
@@ -40,4 +40,17 @@ test('group counts can be omitted without removing nested or API navigation', ()
       assert.match(hidden, /method-get/);
     }
   }
+});
+
+
+test('navigation heading can be hidden or renamed while the filter retains its accessible label', () => {
+  const doc = { file: 'page.md', route: '/page', frontmatter: { id: 'page', title: 'Page', summary: 'Summary', type: 'reference' }, variant: { channel: 'production', version: 'current', language: 'en' } } as Document;
+  const page = (heading?: unknown) => buildHtmlPage(doc, parse.parse('Body.'), '/page.md', 'Site', [{ id: 'page', label: 'Page', route: '/page' }], [], [], undefined, '', false, {}, undefined, undefined,
+    { outputs: { html: { navigation: heading === undefined ? {} : { heading } } } });
+  assert.match(page(), /<h2>Explore<\/h2>/);
+  assert.doesNotMatch(page(false), /<h2>Explore<\/h2>/);
+  assert.match(page(false), /<label for="nav-filter">Filter navigation<\/label>/);
+  assert.match(page(false), /id="nav-filter" type="search"/);
+  assert.match(page('Browse & learn'), /<h2>Browse &amp; learn<\/h2>/);
+  for (const heading of [true, '', '  ', null, 3, {}]) assert.throws(() => navigationHeading({ html: { navigation: { heading } } }), /heading must be nonempty text or false/);
 });

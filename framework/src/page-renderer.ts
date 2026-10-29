@@ -1,5 +1,5 @@
 import { resolveAgentDiscovery } from './agent-discovery.js';
-import { navigationCounts } from './compiler-config.js';
+import { navigationCounts, navigationHeading } from './compiler-config.js';
 import { navigationTab } from './project-navigation.js';
 import type { Document, Frontmatter, NavigationNode, Variant } from './content-source.js';
 import type { ApiShape, NamedExample } from './api.js';
@@ -120,7 +120,8 @@ export function buildHtmlPage(doc: Document, tree: any, markdownUrl: string, sit
     return `<li class="nav-entry${deprecated ? ' nav-deprecated' : ''}" data-search="${esc(search)}"${config.readerFilters ? ` data-reader-filters="${esc(readerFilterAttribute(item.readerFilters ?? {}))}"` : ''}><a href="${esc(item.route)}"${item.route === doc.route ? ' aria-current="page"' : ''}>${method}${label}${status}</a></li>`;
   }).join('');
   const readerControls = readerConfig?.controls.sidebar ? readerFilterSlot({ display: 'checks', label: 'Reader view' }, esc) : '';
-  const nav = `<details class="nav-disclosure" open><summary>Menu</summary><div class="nav-body"><a class="region-return" href="#main" data-region-return>Back to article</a><div class="nav-tools"><h2>Explore</h2>${readerControls}<div class="nav-search" hidden><label for="nav-filter">Filter navigation</label><input id="nav-filter" type="search" autocomplete="off"><p class="nav-filter-status" role="status" aria-live="polite"></p></div></div><ul class="nav-tree">${renderNav(sidebarNavigation)}</ul></div></details>`;
+  const heading = navigationHeading(config.outputs);
+  const nav = `<details class="nav-disclosure" open><summary>Menu</summary><div class="nav-body"><a class="region-return" href="#main" data-region-return>Back to article</a><div class="nav-tools">${heading === false ? '' : `<h2>${esc(heading)}</h2>`}${readerControls}<div class="nav-search" hidden><label for="nav-filter">Filter navigation</label><input id="nav-filter" type="search" autocomplete="off"><p class="nav-filter-status" role="status" aria-live="polite"></p></div></div><ul class="nav-tree">${renderNav(sidebarNavigation)}</ul></div></details>`;
   const readerBanner = readerConfig ? '<aside class="reader-outside-view" role="status" hidden></aside>' : '';
 const readerBootstrap = readerConfig ? `<script type="application/json" id="reader-filter-config">${JSON.stringify({ facets: readerConfig.facets, storageKey: `shoalrun-reader-view:${basePath || '/'}`, moduleUrl: readerConfig.module ? sitePath(basePath, '/assets/reader-view-custom.js') : null }).replaceAll('<', '\\u003c')}</script><script type="module" src="/assets/reader-filters.js"></script>` : '';
   const groups = new Map<string, { label: string; entries: NamedExample[] }>();

@@ -1,3 +1,4 @@
+import { authoringHints } from './authoring-hints.js';
 import { createHash } from 'node:crypto';
 import { readFile, readdir, realpath } from 'node:fs/promises';
 import path from 'node:path';
@@ -103,6 +104,7 @@ export async function inspectAuthoringProject(configFile: string, options: Proje
             publication: { channel: fm.channel ?? value.publications?.defaults?.channel, version: fm.version ?? value.publications?.defaults?.version, language: fm.language ?? defaultLanguage(value), ...(fm.publications ? { publications: fm.publications } : {}) },
             access: fm.access ?? null, aliases: [] });
           bodies.set(relative(file), doc.body);
+          findings.push(...authoringHints(doc.body, relative(file)).map(({ location, ...hint }) => hint));
         } catch (error) {
           findings.push({ code: 'project.invalid-page', severity: 'error', file: relative(file), explanation: (error as Error).message, nextAction: 'Repair the page metadata and inspect again.', reference: 'guide.frontmatter' });
         }

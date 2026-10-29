@@ -29,6 +29,8 @@ Edit ordinary source files and required companions. Choose a page type and revie
 
 For release notes, lead with the reader-visible change and why it matters. Explain the previous and new behavior with a concrete example when useful, then state any upgrade action. Introduce unfamiliar terms before using them. Put implementation details and test counts after the explanation; they do not substitute for it. Distinguish measured improvements from expected benefits, and package publication from site deployment.
 
+When importing a related-reading or related-material section, inspect native relationships and `RelatedReading` before translating it to manual links. Choose the purpose and reason for each connection; an authoring hint is a suggestion, not authorization to create relationships automatically.
+
 When adapting source material, choose components by reader purpose rather than translating unfamiliar markup into a generic container. Use authored `Fields` for client settings, source-backed `ApiSchema` or operation references for HTTP contracts, and `Steps` for procedures. Check field presence, nullability, defaults, constraints, warnings, and nested relationships against the source in both outputs. Keep configuration settings distinct from API request fields, and prefer source-backed contract data to a second handwritten copy.
 
 ## Validate, preview and obtain review

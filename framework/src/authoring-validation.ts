@@ -1,3 +1,4 @@
+import { authoringHints } from './authoring-hints.js';
 import { chmod, mkdir, mkdtemp, readFile, readdir, realpath, stat, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -161,6 +162,7 @@ export async function validateAuthoringChangesWithHooks(configFile: string, opti
       for (const file of affected) {
         try {
           const doc = await readDocument(path.join(shadow, file), loaded.value.frontmatter, undefined, capture.buffers.get(file)!.toString('utf8'));
+          report.findings.push(...authoringHints(doc.body, file));
           if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(doc.frontmatter.id)) report.findings.push({ ...finding('validation.identity', 'Page IDs must begin with a letter/digit and contain only letters, digits, dots, underscores or hyphens.', 'Choose a stable ID and update its references.'), file, reference: 'guide.frontmatter-reference' });
         } catch (error) { addError(error); }
       }

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Navigation > Overview
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 The `navigation` setting controls the site's left menu. It can be a list in `docs.config.yaml` or import a separate YAML file. Add guides, tutorials, concepts, and reference pages by their stable document IDs. Nodes appear in the order you write them.
 
@@ -97,6 +97,17 @@ Desktop pages keep the sidebar and page outline visible. Keyboard skip links app
 On smaller screens, the page outline moves into an **On this page** disclosure below the introduction. Selecting a heading closes the disclosure and focuses the heading. Escape closes the navigation drawer; when the navigation filter contains text, the first Escape clears it. Without JavaScript, the outline remains below the article and is reachable through a skip link.
 
 ## Hide group page counts
+
+To hide the “Explore” heading above the navigation filter, set `outputs.html.navigation.heading` to `false`. Available since `0.1.0-alpha.13`.
+
+```yaml
+outputs:
+  html:
+    navigation:
+      heading: false
+```
+
+Use a nonempty string, such as `heading: Browse`, to replace the heading. Omitting the setting keeps “Explore”. The filter retains its separate “Filter navigation” label, and navigation links remain available. This changes HTML presentation only.
 
 Navigation groups show their page counts by default. To omit the counts from the HTML menu, set `outputs.html.navigation.showCounts` to `false`:
 

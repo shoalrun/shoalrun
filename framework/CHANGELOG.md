@@ -26,6 +26,16 @@ whole-page exports, with a shared client interface for static bundles and REST.
   choices in the bundled docs. The layout guide explains `layout: wide` versus
   `tocDepth: 0`; section guidance explains what the author declaration means.
 
+- Preserve literal scaffold TODO examples inside fenced code in both outputs;
+  unfinished prompts in prose and frontmatter still block publication.
+- Suggest native relationships during project discovery and validation when
+  related-reading sections contain document links. Hints are nonblocking and
+  never create relationships automatically. The component index maps tasks to
+  native features.
+
+- Hide or rename the sidebar’s “Explore” heading with
+  `outputs.html.navigation.heading`; `false` hides it while retaining the filter label.
+
 **Upgrade:** Rebuild exports and update custom consumers from `manifest.documents`
 to `manifest.resources` with typed `ref` objects. Existing `documents` selectors
 remain page-selection shorthand. Read paths from the new manifest; do not retain
