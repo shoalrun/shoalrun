@@ -36,6 +36,9 @@ whole-page exports, with a shared client interface for static bundles and REST.
 - Hide or rename the sidebar’s “Explore” heading with
   `outputs.html.navigation.heading`; `false` hides it while retaining the filter label.
 
+- Remove the page-sized focus rectangle after clicking article content. Keyboard
+  jumps still focus the article and indicate the destination at its title.
+
 **Upgrade:** Rebuild exports and update custom consumers from `manifest.documents`
 to `manifest.resources` with typed `ref` objects. Existing `documents` selectors
 remain page-selection shorthand. Read paths from the new manifest; do not retain

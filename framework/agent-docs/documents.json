@@ -3228,7 +3228,7 @@
       },
       "indexable": true,
       "updated": "2026-10-29",
-      "contentDigest": "cafe1963446b3a72b933e44c206228c6e31216b8db76bc0b772f9322078b181e",
+      "contentDigest": "291256550150d65949b12db48c0bcd063a4fe445eddba75e99afdcbe35ed5b71",
       "breadcrumbs": [
         {
           "label": "Project",
@@ -3261,10 +3261,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 6753,
-      "markdownTokens": 1351,
+      "markdownBytes": 6980,
+      "markdownTokens": 1393,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "f3792d619103f164cea223e924363b60d0dd124b06561d3e7f1aec1a9d079397"
+      "digest": "4014108462f6e162dd863539dcf5482c6a95d1950609052a59efd2bf91d2c99f"
     },
     {
       "id": "change.authoring-preview",
