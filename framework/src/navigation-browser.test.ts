@@ -85,6 +85,10 @@ ${extraPages.map(id => `      - { id: ${id}, doc: ${id} }`).join('\n')}
   await page.goto(`${origin}/docs/`, { waitUntil: 'networkidle0' });
   assert.deepEqual(await page.$$eval('.layout > *', nodes => nodes.map(node => node.classList.contains('content') ? 'main' : node.classList.contains('page-rail') ? 'rail' : 'side')), ['main', 'rail', 'side']);
   assert.ok(await page.evaluate(() => document.querySelector('.side')!.getBoundingClientRect().right < document.querySelector('main')!.getBoundingClientRect().left));
+  await page.click('main h1');
+  assert.equal(await active(), 'main', 'pointer interaction can focus the article landmark');
+  assert.equal(await page.$eval('main', node => getComputedStyle(node).outlineStyle), 'none', 'pointer focus never draws an article-sized box');
+  assert.equal(await page.$eval('main h1', node => getComputedStyle(node).textDecorationLine), 'none', 'pointer focus does not show a keyboard destination marker');
   const mainTop = await page.$eval('main', node => node.getBoundingClientRect().top);
   await page.focus('.page-shortcuts a');
   assert.equal(await page.$eval('main', node => node.getBoundingClientRect().top), mainTop, 'skip links never shift the layout');
@@ -94,6 +98,8 @@ ${extraPages.map(id => `      - { id: ${id}, doc: ${id} }`).join('\n')}
   assert.equal(await page.evaluate(() => document.activeElement?.textContent), 'Back to article');
   await page.keyboard.press('Enter');
   assert.equal(await active(), 'main');
+  assert.equal(await page.$eval('main', node => getComputedStyle(node).outlineStyle), 'none');
+  assert.equal(await page.$eval('main h1', node => getComputedStyle(node).textDecorationLine), 'underline', 'keyboard jumps identify the title instead of boxing the article');
   await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(() => !!document.activeElement?.closest('main')), true, 'returning to the article resumes its keyboard order');
   await page.goto(`${origin}/docs/`, { waitUntil: 'networkidle0' });

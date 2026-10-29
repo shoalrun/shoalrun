@@ -18,10 +18,10 @@ billing help buttons; follow the in-drawer links and inspect the images.
 The full account guide is omitted from the export and links to the configured
 example documentation host; replace that origin for your own project.
 
-`manifest.json` maps stable document IDs to representation files. `app.js`
+`manifest.json` maps typed page references to representation files in its `resources` array. `app.js`
 fetches the HTML, inserts it into one content container, and intercepts anchors
 marked `data-export-link`. The corresponding manifest link supplies the target
-document ID and original fragment. Other links use their ordinary destinations.
+page reference and original fragment. Other links use their ordinary destinations.
 
 `/help/` is an example path, not a required Shoalrun directory. You can choose
 another root-relative path, such as `/resources/`. Set `publicBase` to that path,

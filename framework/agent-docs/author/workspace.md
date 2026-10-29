@@ -20,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Check edits
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 **Status: Experimental.**
 
@@ -63,6 +63,12 @@ npx --no-install shoalrun docs validate --file content/install.mdx --config docs
 ```
 
 Validation compiles a separate capture. Read the returned status, coverage, findings, skipped checks, and artifact paths. A failure needs correction and another validation. An incomplete or unavailable result needs investigation; it is not a passing result. Configured shell checks require explicit `--run-checks` and your harness's execution authorization.
+
+### Inspect authoring suggestions
+
+Available since `0.1.0-alpha.13`.
+
+Project discovery and validation can report `authoring.related-reading` when a “Related reading” or “Related material” section contains document links. This is a nonblocking suggestion to inspect [native relationships](https://www.shoalrun.com/author/related-reading.md) and [RelatedReading](https://www.shoalrun.com/author/components/related-reading.md). It does not create relationships or change your source. Choose each connection's purpose and reason yourself; keep manual links when they fit better. Pages already using `RelatedReading` do not receive this hint.
 
 ## Confirm the result still applies
 

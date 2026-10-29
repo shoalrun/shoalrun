@@ -9,13 +9,13 @@ This package provides the `shoalrun` CLI, starter projects, agent skills, and of
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.12
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.13
 ```
 
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.12 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.13 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
@@ -124,7 +124,7 @@ exports:
 ```
 
 Run `shoalrun export docs.config.yaml --target app-help --out app/public/help`.
-Omit `documents` to export all eligible public pages in one enabled publication;
+Omit both `documents` and `resources` to export all eligible public pages in one enabled publication;
 select an explicit publication when more than one is enabled. Export selection
 is independent of the website's `site.contentFilter` and navigation. Selected
 pages retain all reader sections as labeled static content. Tabs and walkthroughs
@@ -144,9 +144,30 @@ older export is replaced.
 
 See [the help-drawer example](examples/help-drawer/README.md) for a plain-JavaScript
 consumer and local preview. The [export manifest schema](schemas/content-export.schema.json)
-describes the file contract. Mount each document once per DOM; repeated instances
-need consumer-side ID and reference rewriting. Whole-page exports do not include
+describes the file contract. Direct HTML insertion requires consumer-side ID and
+reference rewriting for repeated instances; the content-delivery mount helper
+provides that rewriting. Whole-page exports do not include
 website navigation, search/chat runtimes, themes, or heuristic section resources.
+
+## Content delivery
+
+Content delivery extends export to selected pages, standalone sections, and named snippet instances. Applications can use the browser-safe client with a static manifest or a read-only REST endpoint. Static delivery requires no server or model provider.
+
+```ts
+import { openManifestContentSource } from '@shoalrun/cli/content';
+
+const source = await openManifestContentSource({
+  manifestUrl: '/content/releases/r42/manifest.json',
+});
+const resource = await source.get(
+  { kind: 'section', documentId: 'guide.billing', sectionId: 'refunds' },
+  { format: 'html' },
+);
+```
+
+Heading-derived section IDs are the default. Optional explicit IDs preserve references across heading renames. Export comparisons report removed references when a previous manifest is supplied. Each opened source stays on one publication and revision; open a new source to update it.
+
+See the [content-delivery example](examples/content-delivery/README.md) for resource selection, instance-safe HTML mounting, and a complete local preview. The example also runs the REST adapter and demonstrates `openRestContentSource` with the same reading interface. See the [OpenAPI contract](schemas/content-rest.openapi.json) for the HTTP API. Authentication, search, and production hosting remain application concerns.
 
 ## Publish discovery files
 
@@ -190,3 +211,22 @@ Pin an exact package version and read the [changelog](CHANGELOG.md) before upgra
 ## License
 
 Copyright 2026 Casey Smith. This package is licensed under [Apache-2.0](LICENSE). Your authored site content keeps its own license. Built sites contain runtime assets and may contain copied template text; retain applicable licenses and third-party notices when distributing them.
+
+## Verification dates
+
+Set `verified` only after checking a page's technical claims. It is separate from
+`updated`, which records content revision. Both appear as labeled `<time>` elements
+in the standard HTML page header, and as dates in Markdown and `documents.json`.
+Builds never assign `verified`.
+
+```yaml
+updated: 2026-10-28
+verified: 2026-10-27
+showVerified: false
+```
+
+`showVerified` defaults to `true`. Set it to `false` to hide the verification date
+in HTML only; Markdown and manifest metadata retain it. Set
+`frontmatter.defaults.showVerified: false` in project configuration for a shared
+default, then override it with `showVerified: true` on individual pages. A layout
+with a Hero replaces the standard page header and does not display its dates.

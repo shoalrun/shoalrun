@@ -1,5 +1,50 @@
 # Changelog
 
+## 0.1.0-alpha.13 — 2026-10-28
+
+Use documentation as content for applications, agents, services, and publishing
+workflows. Content delivery adds selected sections and named snippet instances to
+whole-page exports, with a shared client interface for static bundles and REST.
+
+- Read reviewed HTML or Markdown with `@shoalrun/cli/content`. The mount helper
+  rewrites IDs and links so the same content can appear more than once in an app.
+- Use heading-derived section IDs or preserve a reference with a trailing
+  `<Anchor id="refunds" />`. Declare `{ id: refunds, context: section }` in
+  `standaloneSections` after reviewing that section without the rest of its page.
+- Serve the same snapshots with `createContentRestHandler` and read them with
+  `openRestContentSource`. HTTP contract v1 covers resource lists, metadata,
+  representations, explicit publication and revision selection, and ETags.
+  Authentication, search, editing, and production hosting remain host concerns.
+- Compare exports using `--previous-manifest`; add `--fail-on-removed` to reject
+  removed references. Use immutable revision directories for running clients.
+- Render schema-based OpenAPI response headers in native API references. Generated
+  request samples handle HEAD responses and text representations correctly.
+- Show authored `verified` dates as labeled semantic dates in HTML page headers,
+  independently of `updated`. Set `showVerified: false` on a page or through
+  frontmatter defaults to hide verification in HTML only. Builds never assign it.
+- Find content-delivery guides, client and HTTP references, and clearer layout
+  choices in the bundled docs. The layout guide explains `layout: wide` versus
+  `tocDepth: 0`; section guidance explains what the author declaration means.
+
+- Preserve literal scaffold TODO examples inside fenced code in both outputs;
+  unfinished prompts in prose and frontmatter still block publication.
+- Suggest native relationships during project discovery and validation when
+  related-reading sections contain document links. Hints are nonblocking and
+  never create relationships automatically. The component index maps tasks to
+  native features.
+
+- Hide or rename the sidebar’s “Explore” heading with
+  `outputs.html.navigation.heading`; `false` hides it while retaining the filter label.
+
+- Remove the page-sized focus rectangle after clicking article content. Keyboard
+  jumps still focus the article and indicate the destination at its title.
+
+**Upgrade:** Rebuild exports and update custom consumers from `manifest.documents`
+to `manifest.resources` with typed `ref` objects. Existing `documents` selectors
+remain page-selection shorthand. Read paths from the new manifest; do not retain
+old payload paths. Whole-page consumers can use the updated help-drawer example;
+the content-delivery example demonstrates both transports and repeated mounts.
+
 ## 0.1.0-alpha.12 — 2026-10-27
 
 - Refresh the bundled documentation from the reviewed public site: organize navigation into Docs, Reference, Examples, and Project; use installed-package commands in customer workflows; and standardize component reference sections.

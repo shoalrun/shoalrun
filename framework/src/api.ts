@@ -181,7 +181,7 @@ export class ApiReader {
           const entries = Object.entries(example.value);
           if (entries.length === 1 && /^[^?&#\s=]+$/.test(entries[0][0]) && ['string', 'number', 'boolean'].includes(typeof entries[0][1])) queryExpression = `${entries[0][0]}=${encodeURIComponent(String(entries[0][1]))}`;
         }
-        if (location.startsWith('parameter:')) {
+        if (location.startsWith('parameter:') || location.startsWith('response-header:')) {
           const value = example.externalValue ? link(example.externalValue, 'Open external example') : inline(queryRule && location === `parameter:query:${queryRule.parameter}` ? queryExpression ?? JSON.stringify(example.value) : JSON.stringify(example.value));
           const sample = paragraph({ type: 'strong', children: [text(example.title)] }, text(': '), value, ...(example.description ? [text(` — ${example.description}`)] : []));
           sample.data = { hProperties: { className: ['api-parameter-example'] } };
@@ -361,13 +361,56 @@ export class ApiReader {
     blocks.push(heading(3, 'Responses'));
     for (const [status, initial] of Object.entries<any>(op.responses ?? {})) {
       const { value: response, source: responseSource } = await this.deref(pathSource, initial);
-      if (response.headers || response.links) throw new Error(`Response headers or links need an adapter: ${status}`);
+      if (response.links) throw new Error(`Response links need an adapter: ${status}`);
       const description = String(response.description ?? '').trim();
       const mediaEntries = Object.entries<any>(response.content ?? {});
       const responseBlocks: any[] = [];
       const responseHeading = { ...heading(4, ''), children: [span(status, 'api-status-code'), span(': ', 'api-separator'), text(status === 'default' ? 'Default response' : STATUS_CODES[Number(status)] ?? 'Response')] };
       responseBlocks.push({ type: 'docApiResponseHeader', data: { hName: 'div', hProperties: { className: ['api-response-header'] } }, children: [responseHeading, ...mediaEntries.map(([mediaType]) => ({ ...paragraph(inline(mediaType)), data: { hProperties: { className: ['api-response-media'] } } }))] });
       if (description) responseBlocks.push(...parsePlainMarkdown(description));
+      if (response.headers !== undefined && (!response.headers || typeof response.headers !== 'object' || Array.isArray(response.headers))) throw new Error(`Response headers must be a mapping: ${status}`);
+      const headerNames = new Set<string>();
+      const headers: any[] = [];
+      for (const [name, initialHeader] of Object.entries<any>(response.headers ?? {})) {
+        // OpenAPI explicitly excludes Content-Type: response.content describes it.
+        if (name.toLowerCase() === 'content-type') continue;
+        if (!/^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/.test(name)) throw new Error(`Invalid response header name: ${name}`);
+        if (headerNames.has(name.toLowerCase())) throw new Error(`Duplicate response header name (case-insensitive): ${name}`);
+        headerNames.add(name.toLowerCase());
+        let header = initialHeader, headerSource = responseSource;
+        let overrideDescription: string | undefined;
+        const seen = new Set<string>();
+        while (header?.$ref) {
+          if (typeof header.$ref !== 'string') throw new Error(`Response header reference must be a string: ${name}`);
+          const allowed = schemaVersion === '3.1' ? ['$ref', 'description', 'summary'] : ['$ref'];
+          if (Object.keys(header).some(key => !allowed.includes(key))) throw new Error(`Response header reference ${name} has unsupported siblings`);
+          for (const field of ['description', 'summary']) if (header[field] !== undefined && typeof header[field] !== 'string') throw new Error(`Invalid response header reference ${field}: ${name}`);
+          // Reference summary has no Header Object counterpart; OAS ignores it.
+          if (overrideDescription === undefined && header.description !== undefined) overrideDescription = header.description;
+          const resolved = await this.ref(headerSource, header.$ref);
+          if (seen.has(resolved.identity)) throw new Error(`Recursive response header reference: ${name}`);
+          seen.add(resolved.identity);
+          header = resolved.value; headerSource = resolved.source;
+        }
+        if (!header || typeof header !== 'object' || Array.isArray(header)) throw new Error(`Invalid response Header Object: ${name}`);
+        if (header.content !== undefined) throw new Error(`Response header content needs an adapter: ${name}`);
+        const fields = new Set(['description', 'required', 'deprecated', 'schema', 'style', 'explode', 'example', 'examples']);
+        for (const field of Object.keys(header)) if (!fields.has(field) && !field.startsWith('x-')) throw new Error(`Unsupported response header field ${field}: ${name}`);
+        for (const field of ['required', 'deprecated', 'explode']) if (header[field] !== undefined && typeof header[field] !== 'boolean') throw new Error(`Response header ${field} must be boolean: ${name}`);
+        if (header.description !== undefined && typeof header.description !== 'string') throw new Error(`Response header description must be a string: ${name}`);
+        if (header.style !== undefined && header.style !== 'simple') throw new Error(`Response header style must be simple: ${name}`);
+        if (header.schema === undefined) throw new Error(`Response header requires a schema: ${name}`);
+        if (header.examples !== undefined && (!header.examples || typeof header.examples !== 'object' || Array.isArray(header.examples))) throw new Error(`Response header examples must be a mapping: ${name}`);
+        const headerDescription = overrideDescription ?? header.description;
+        const detail = [heading(6, name), tagged(paragraph(text(header.required ? 'Required' : 'Optional')), 'api-parameter-presence', { 'data-required': header.required ? 'true' : 'false' })];
+        if (header.deprecated) detail.push(tagged(paragraph(text('Deprecated response header.')), 'api-deprecated-note'));
+        if (headerDescription) detail.push(...parsePlainMarkdown(headerDescription));
+        detail.push(paragraph(text(`Serialization: simple; explode: ${header.explode ?? false}.`)));
+        detail.push(...await this.schemaBlocks(headerSource, header.schema, schemaVersion, 6, new Set(), ['response', status, 'header', name], [], headerDescription));
+        await addExamples(headerSource, header, `response-header:${name}`, null, status, detail);
+        headers.push({ type: 'docApiParameter', data: { hName: 'section', hProperties: { className: ['api-parameter', 'api-response-header-field'] } }, children: detail });
+      }
+      if (headers.length) responseBlocks.push(heading(5, 'Response headers'), ...headers);
       for (const [mediaType, media] of mediaEntries) {
         if (mediaEntries.length > 1) responseBlocks.push(tagged(heading(5, mediaType), 'api-media-heading'));
         if (media.schema !== undefined) {

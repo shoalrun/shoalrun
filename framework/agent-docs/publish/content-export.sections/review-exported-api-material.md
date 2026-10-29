@@ -1,7 +1,7 @@
 ---
 id: guide.content-export
 title: Export content into your application
-summary: Export shared content for application help.
+summary: Export selected documentation and assets for your application.
 type: how-to
 area: publishing
 subarea: publishing-builds
@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
@@ -27,7 +27,7 @@ Keep application help and your documentation website in one content source. `sho
 The export preserves the API source-review gate. If its selected API material has no matching review digest, the normal command fails before replacing the previous bundle. Produce a candidate for inspection with:
 
 ```sh
-shoalrun export docs.config.yaml --target app-help --out review/app-help --review
+npx --no-install shoalrun export docs.config.yaml --target app-help --out review/app-help --review
 ```
 
 A candidate needing review reports `status: needs-review`, sets `manifest.review.status: required`, and exits with code 2. Inspect its references and downloads, then pin the reported API digests to the target:

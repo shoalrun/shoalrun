@@ -2545,7 +2545,7 @@ test('changelog identifiers are configurable while release notes can cover a per
   assert.doesNotMatch(html, /Updated <time/);
   assert.doesNotMatch(markdown, /\*\*Updated:/);
   assert.equal(manifest.documents.find(doc => doc.id === 'recent')?.updated, '2026-09-25');
-  assert.doesNotMatch(html, /class="verified"|Verified <time/);
+  assert.match(html, /Verified <time datetime="2026-09-26">2026-09-26<\/time>/);
   assert.match(markdown, /Verified: 2026-09-26/);
   const oldHtml = await readFile(path.join(f.output, 'old/index.html'), 'utf8');
   const oldHeader = oldHtml.split('<header class="page-head">')[1].split('</header>')[0];

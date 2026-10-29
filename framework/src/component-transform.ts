@@ -16,6 +16,7 @@ import { walkthroughComponent } from './walkthrough.js';
 import { procedureComponent } from './procedure-components.js';
 import type { Document, Variant } from './content-source.js';
 import { parsePlainMarkdown, paragraph, link, text } from './semantic-markdown.js';
+import { lowerSectionMarkers, sectionIdentities } from './section-identity.js';
 
 type MdxAttribute =
   | { type: 'mdxJsxAttribute'; name: string; value: string | null | Record<string, unknown> }
@@ -94,6 +95,7 @@ function literalAttributes(attributes: MdxAttribute[]): attributes is Array<MdxA
 
 export function transformMdx(tree: unknown, current: Document, registry: Map<string, Document>, snippets: Map<string, SnippetDefinition> = new Map(), projectValues: Record<string, unknown> = {}, uses: SnippetUse[] = [], calloutTypes: CalloutTypes = resolveCalloutTypes(undefined, current.file), projectRoot?: string, readerConfig?: ReaderFiltersConfig, frontmatterConfig: unknown = {}, publicationConfig?: { channels: Record<string, unknown>; versions: Record<string, unknown> }, badgeVariants: BadgeVariants = resolveBadgeVariants(undefined, current.file), componentPlugins: ComponentRegistry = new Map()): unknown {
   if (!isMdxRoot(tree)) throw new Error(`${current.file}: parsed content must be a root with children`);
+  tree = lowerSectionMarkers(tree, current.file);
   let pluginDepth = 0;
   let tabsIndex = 0;
   let walkthroughIndex = 0;
@@ -126,6 +128,7 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
     if (node.type === 'mdxFlowExpression' || node.type === 'mdxTextExpression' || node.type === 'mdxjsEsm') throw new Error(`${sourceFile}: dynamic MDX expression has no semantic adapter`);
     if (node.type === 'heading' && stack.length) throw new Error(`${sourceFile}: snippet headings need an anchor adapter; put headings in the page`);
     if (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') {
+      if (node.name === 'Anchor') throw new Error(`${sourceFile}: <Anchor> must be the single trailing marker of an authored root level-two heading`);
       if (node.name && componentPlugins.has(node.name)) {
         const start = (node.position as any)?.start;
         const location = `${sourceFile}${start ? `:${start.line}:${start.column}` : ''}: <${node.name}>`;
@@ -565,5 +568,7 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
     }
     return node;
   }
-  return walk(tree, {}, [], current.file);
+  const transformed = walk(tree, {}, [], current.file);
+  sectionIdentities(transformed, current.file);
+  return transformed;
 }

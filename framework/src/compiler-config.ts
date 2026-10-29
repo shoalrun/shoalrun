@@ -71,6 +71,16 @@ export function configMappingAt(value: unknown, setting: string): ConfigMapping 
   return value;
 }
 
+export function navigationHeading(outputs: unknown): string | false {
+  const navigation = configField(configField(outputs, 'html'), 'navigation');
+  if (navigation === undefined) return 'Explore';
+  const heading = configMappingAt(navigation, 'outputs.html.navigation').heading;
+  if (heading === undefined) return 'Explore';
+  if (heading === false) return false;
+  if (typeof heading !== 'string' || !heading.trim()) throw new Error('outputs.html.navigation.heading must be nonempty text or false');
+  return heading.trim();
+}
+
 export function navigationCounts(outputs: unknown): boolean {
   const navigation = configField(configField(outputs, 'html'), 'navigation');
   if (navigation === undefined) return true;

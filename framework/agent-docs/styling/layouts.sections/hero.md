@@ -1,7 +1,8 @@
 ---
 id: guide.layouts
 title: Page layouts, landing pages, and splash pages
-summary: Configure wide, landing, and splash pages with Hero and Sections.
+summary: Hide the table of contents, give interactive content more space, or
+  build landing and splash pages.
 type: reference
 area: appearance
 subarea: appearance-layouts
@@ -16,11 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Page layouts, landing pages, and splash pages
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-28.**
 
 Parent page: [Full Markdown page](/styling/layouts.md)
 
-Every page uses the `docs` layout unless its frontmatter sets `layout`. Layouts change the HTML page only. The Markdown twin, search, and `llms.txt` stay the same.
+Use `layout: wide` to hide “On this page” and give interactive content more space while keeping navigation. Use `tocDepth: 0` when you only want to hide the table of contents within the current layout.
+
+Every page uses the `docs` layout unless its frontmatter sets `layout`. Choose the page structure first, then adjust individual visibility settings. Layouts change the HTML page only. The Markdown twin, search, and `llms.txt` stay the same.
 
 | Layout    | Sidebar | On this page | Use it for                                                                                                               |
 | --------- | ------- | ------------ | ------------------------------------------------------------------------------------------------------------------------ |

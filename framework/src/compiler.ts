@@ -7,7 +7,7 @@ import { resolveTaxonomy } from './taxonomy.js';
 import { resolveMcp } from './mcp-config.js';
 import { fictionalDocument, resolveLlmsDiscovery } from './llms-discovery.js';
 import { resolveAnalytics } from './analytics.js';
-import { navigationCounts } from './compiler-config.js';
+import { navigationCounts, navigationHeading } from './compiler-config.js';
 import { validateAuthoringGuidance } from './authoring-guidance.js';
 import { loadFreshness } from './freshness.js';
 import { resolveAgentDiscovery } from './agent-discovery.js';
@@ -197,6 +197,7 @@ export async function compile(configFile: string, destination?: string, provenan
   // `demo` ships it hidden until a page is opened with ?theme-switcher.
   const themeSwitcherSetting = configField(htmlOptions, 'themeSwitcher') ?? false;
   navigationCounts(config.outputs);
+  navigationHeading(config.outputs);
   if (typeof themeSwitcherSetting !== 'boolean' && themeSwitcherSetting !== 'demo') throw new Error('outputs.html.themeSwitcher must be true, false, or demo');
   const themeSwitcher = themeSwitcherSetting !== false;
   const themeSwitcherData = themeSwitcher ? JSON.stringify({ presets: presetCatalog.map(({ name, palette, masthead }) => ({ name, palette, masthead })), palettes: paletteCatalog.map(palette => palette.name), demo: themeSwitcherSetting === 'demo' }) : undefined;

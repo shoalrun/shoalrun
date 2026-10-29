@@ -14,7 +14,7 @@ let current;
 let request = 0;
 let opener;
 async function openHelp(id, fragment) {
-  const document = manifest.documents.find(document => document.id === id);
+  const document = manifest.resources.find(resource => resource.ref.kind === 'page' && resource.ref.documentId === id);
   if (!document?.representations.html) throw new Error(`No HTML help for ${id}`);
   const ticket = ++request;
   const response = await fetch(manifest.publicBase + document.representations.html.path);
@@ -43,9 +43,9 @@ content.addEventListener('click', event => {
   const anchor = event.target.closest('a[data-export-link]');
   if (!anchor) return;
   const link = current?.representations.html.links.find(link => link.key === anchor.dataset.exportLink);
-  if (link?.kind !== 'document') return; // Canonical fallbacks open as ordinary links.
+  if (link?.kind !== 'resource' || link.ref?.kind !== 'page') return; // Canonical fallbacks open as ordinary links.
   event.preventDefault();
-  openHelp(link.documentId, link.fragment).catch(showError);
+  openHelp(link.ref.documentId, link.fragment).catch(showError);
 });
 function closeHelp() { request++; drawer.hidden = true; opener?.focus(); }
 document.querySelector('#close').addEventListener('click', closeHelp);

@@ -46,7 +46,10 @@ button{cursor:pointer}
 .navigation-dialog .section-disclosure{padding:.75rem 1rem}
 .navigation-dialog .section-nav-links{display:flex;flex-direction:column;gap:0}
 .navigation-dialog .section-nav-links a{overflow-wrap:anywhere}
-:is(#main,#docs-navigation,#page-outline):focus{outline:2px solid var(--color-accent);outline-offset:4px}
+/* Article focus is a reading destination, not a page-sized interactive control. */
+#main:focus{outline:none}
+#main:focus-visible h1{text-decoration-line:underline;text-decoration-color:var(--color-focus);text-decoration-thickness:3px;text-underline-offset:.2em}
+:is(#docs-navigation,#page-outline):focus{outline:2px solid var(--color-accent);outline-offset:4px}
 /* The masthead is its own stacking context (view-transition-name), so it needs a layer above sticky page parts for the search results to show over them; the expanded examples panel (30) still covers it. */
 .mast{position:relative;z-index:25;background:var(--color-surface);border-bottom:1px solid var(--color-border)}
 .mast-inner{max-width:var(--width-reference);margin:auto;min-height:4.5rem;padding:1rem 2rem;display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap}

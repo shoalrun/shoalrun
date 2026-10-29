@@ -16,13 +16,25 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Overview
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, footnotes, and autolinks) and the MDX components below. Each component family has a page with syntax, attributes, HTML and Markdown behavior, and limits. Component names and attributes are case-sensitive. Unknown components, dynamic MDX expressions, and exports fail the build because they have no shared HTML and Markdown representation. The build drops `import` lines, so imported components are not available.
 
 [Custom components](https://www.shoalrun.com/author/components/custom.md) let trusted project plugins lower into the shared content pipeline.
 
 [Navigation and breadcrumbs](https://www.shoalrun.com/author/navigation.md) are configured site features. Their guides live under Customize.
+
+## Choose by task
+
+Start with the reader's task, then open the linked reference before choosing syntax.
+
+| Task                                                 | Feature                                                                                                                                                 |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Link related pages with a reason for each connection | [Relationships](https://www.shoalrun.com/author/related-reading.md) and [RelatedReading](https://www.shoalrun.com/author/components/related-reading.md) |
+| Explain a procedure with titled steps                | [Steps](https://www.shoalrun.com/author/components/steps.md)                                                                                            |
+| Explain how code changes step by step                | [Walkthrough](https://www.shoalrun.com/author/components/walkthroughs.md)                                                                               |
+| Show configuration fields and their constraints      | [Fields](https://www.shoalrun.com/author/components/fields.md)                                                                                          |
+| Offer alternate views of the same topic              | [Tabs](https://www.shoalrun.com/author/components/tabs.md)                                                                                              |
 
 ## Reading and layout
 

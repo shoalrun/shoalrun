@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Acme billing · Content delivery example</title>
+<style>
+  *{box-sizing:border-box}body{font:16px/1.6 system-ui,sans-serif;color:#193b2c;background:#f4f7f4;margin:0}main{max-width:60rem;margin:3rem auto;padding:0 1.5rem}h1{line-height:1.2}button,a{color:#205b3b}button{font:inherit;cursor:pointer;padding:.5rem .8rem;border:1px solid #aac5b2;border-radius:.4rem;background:white}button:focus-visible,a:focus-visible{outline:3px solid #47926b;outline-offset:3px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1rem}.card{padding:1.5rem;border:1px solid #d6e3d9;border-radius:.75rem;background:white}.card h2{margin-top:0}.help-content{font-size:.95rem}.help-content h2{font-size:1.3rem}.help-content a{overflow-wrap:anywhere}#drawer{position:fixed;inset:0 0 0 auto;width:min(36rem,95vw);padding:1.5rem;background:white;overflow:auto;box-shadow:-1rem 0 3rem #193b2c22}#drawer[hidden]{display:none}.drawer-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid #d6e3d9;padding-bottom:1rem}.muted{color:#526f5d}#status{min-height:1.5em}
+</style>
+<main>
+  <p class="muted">Acme workspace</p>
+  <h1>Billing</h1>
+  <p>Manage your plan and recent payments.</p>
+  <p><button id="page-help">Billing guide</button> <button id="section-help">How to request a refund</button></p>
+  <div class="cards">
+    <section class="card" aria-labelledby="plan-title"><h2 id="plan-title">Current plan</h2><p>Team · $24 per month</p><div id="plan-note" class="help-content" aria-label="Plan refund policy"></div></section>
+    <section class="card" aria-labelledby="invoice-title"><h2 id="invoice-title">Recent payment</h2><p>Invoice INV-1042 · $24</p><div id="invoice-note" class="help-content" aria-label="Invoice refund policy"></div></section>
+  </div>
+  <p id="status" role="status" class="muted"></p>
+</main>
+<aside id="drawer" aria-label="Billing help" hidden>
+  <div class="drawer-header"><strong>Billing help</strong><button id="close">Close help</button></div>
+  <div id="help-content" class="help-content" aria-live="polite"></div>
+</aside>
+<script type="module" src="/app.js"></script>
+</html>

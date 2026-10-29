@@ -1,5 +1,5 @@
 import { resolveAgentDiscovery } from './agent-discovery.js';
-import { navigationCounts } from './compiler-config.js';
+import { navigationCounts, navigationHeading } from './compiler-config.js';
 import { navigationTab } from './project-navigation.js';
 import type { Document, Frontmatter, NavigationNode, Variant } from './content-source.js';
 import type { ApiShape, NamedExample } from './api.js';
@@ -94,8 +94,9 @@ export function buildHtmlPage(doc: Document, tree: any, markdownUrl: string, sit
   const date = doc.frontmatter.date ? `<time class="page-date" datetime="${esc(doc.frontmatter.date)}">${esc(doc.frontmatter.date)}</time>` : '';
   const changelogEntry = doc.frontmatter.type === 'changelog-entry';
   const updated = doc.frontmatter.updated && !(changelogEntry && doc.frontmatter.date) ? `<span class="page-date">Updated <time datetime="${esc(doc.frontmatter.updated)}">${esc(doc.frontmatter.updated.slice(0, 10))}</time></span>` : '';
+  const verified = doc.frontmatter.verified && doc.frontmatter.showVerified !== false ? `<span class="page-date">Verified <time datetime="${esc(doc.frontmatter.verified)}">${esc(doc.frontmatter.verified)}</time></span>` : '';
   const releaseVersion = doc.frontmatter.releaseVersion ? `<span class="page-version">Version ${esc(doc.frontmatter.releaseVersion)}</span>` : '';
-  const pageDates = changelogEntry ? `<div class="page-meta">${date}${updated}${releaseVersion}</div>` : `${date}${updated}${releaseVersion}`;
+  const pageDates = changelogEntry ? `<div class="page-meta">${date}${updated}${verified}${releaseVersion}</div>` : `${date}${updated}${verified}${releaseVersion}`;
   const containsCurrent = (item: NavigationNode): boolean => item.route === doc.route || !!item.items?.some(containsCurrent);
   const activeTab = navigationTab(navigation, doc.route);
   const analyticsBootstrap = config.analytics ? `<script type="application/json" id="analytics-config">${JSON.stringify({ pageId: doc.frontmatter.id, pageUrl: doc.route, documentType: doc.frontmatter.type, channel: doc.variant.channel, version: doc.variant.version, language: doc.variant.language, ...(activeTab ? { navigationSectionId: activeTab.id } : {}) }).replaceAll('<', '\\u003c')}</script><script type="module" src="/assets/analytics.js"></script>` : '';
@@ -119,7 +120,8 @@ export function buildHtmlPage(doc: Document, tree: any, markdownUrl: string, sit
     return `<li class="nav-entry${deprecated ? ' nav-deprecated' : ''}" data-search="${esc(search)}"${config.readerFilters ? ` data-reader-filters="${esc(readerFilterAttribute(item.readerFilters ?? {}))}"` : ''}><a href="${esc(item.route)}"${item.route === doc.route ? ' aria-current="page"' : ''}>${method}${label}${status}</a></li>`;
   }).join('');
   const readerControls = readerConfig?.controls.sidebar ? readerFilterSlot({ display: 'checks', label: 'Reader view' }, esc) : '';
-  const nav = `<details class="nav-disclosure" open><summary>Menu</summary><div class="nav-body"><a class="region-return" href="#main" data-region-return>Back to article</a><div class="nav-tools"><h2>Explore</h2>${readerControls}<div class="nav-search" hidden><label for="nav-filter">Filter navigation</label><input id="nav-filter" type="search" autocomplete="off"><p class="nav-filter-status" role="status" aria-live="polite"></p></div></div><ul class="nav-tree">${renderNav(sidebarNavigation)}</ul></div></details>`;
+  const heading = navigationHeading(config.outputs);
+  const nav = `<details class="nav-disclosure" open><summary>Menu</summary><div class="nav-body"><a class="region-return" href="#main" data-region-return>Back to article</a><div class="nav-tools">${heading === false ? '' : `<h2>${esc(heading)}</h2>`}${readerControls}<div class="nav-search" hidden><label for="nav-filter">Filter navigation</label><input id="nav-filter" type="search" autocomplete="off"><p class="nav-filter-status" role="status" aria-live="polite"></p></div></div><ul class="nav-tree">${renderNav(sidebarNavigation)}</ul></div></details>`;
   const readerBanner = readerConfig ? '<aside class="reader-outside-view" role="status" hidden></aside>' : '';
 const readerBootstrap = readerConfig ? `<script type="application/json" id="reader-filter-config">${JSON.stringify({ facets: readerConfig.facets, storageKey: `shoalrun-reader-view:${basePath || '/'}`, moduleUrl: readerConfig.module ? sitePath(basePath, '/assets/reader-view-custom.js') : null }).replaceAll('<', '\\u003c')}</script><script type="module" src="/assets/reader-filters.js"></script>` : '';
   const groups = new Map<string, { label: string; entries: NamedExample[] }>();

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Navigation > Overview
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/author/navigation.md)
 
@@ -32,6 +32,17 @@ Each node has a stable `id` for the menu entry. It needs exactly one of these ta
 The menu follows document IDs rather than file paths or slugs. Moving a source file or changing a page URL does not require a navigation edit. A `doc` node uses the page title by default; set `label` when the menu needs a shorter name. Pages omitted from navigation can still be built and linked from other pages.
 
 ## Hide group page counts
+
+To hide the “Explore” heading above the navigation filter, set `outputs.html.navigation.heading` to `false`. Available since `0.1.0-alpha.13`.
+
+```yaml
+outputs:
+  html:
+    navigation:
+      heading: false
+```
+
+Use a nonempty string, such as `heading: Browse`, to replace the heading. Omitting the setting keeps “Explore”. The filter retains its separate “Filter navigation” label, and navigation links remain available. This changes HTML presentation only.
 
 Navigation groups show their page counts by default. To omit the counts from the HTML menu, set `outputs.html.navigation.showCounts` to `false`:
 

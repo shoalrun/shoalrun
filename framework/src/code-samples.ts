@@ -52,10 +52,11 @@ function resolve(sample: RequestSample): Resolved {
   if (sample.contentType && !headers.some(([name]) => name.toLowerCase() === 'content-type')) headers.push(['Content-Type', sample.contentType]);
   return { headers, notes };
 }
+const isHead = (sample: RequestSample): boolean => sample.method.toUpperCase() === 'HEAD';
 const hasBody = (sample: RequestSample): boolean => !!sample.body && !sample.body.formFields.length;
 
 function curl(sample: RequestSample): string {
-  const parts = [`curl --request ${sample.method.toUpperCase()}`, `--url ${shellQuote(sample.url)}`];
+  const parts = [isHead(sample) ? 'curl --head' : `curl --request ${sample.method.toUpperCase()}`, `--url ${shellQuote(sample.url)}`];
   for (const auth of sample.auth) {
     if (auth.kind === 'header') parts.push(`--header ${shellQuote(`${auth.name}: ${auth.value}`)}`);
     else if (auth.kind === 'cookie') parts.push(`--header ${shellQuote(`Cookie: ${auth.name}=${auth.value}`)}`);
@@ -79,7 +80,9 @@ function javascript(sample: RequestSample, node: boolean): string {
   if (hasBody(sample)) options.push(`  body: ${JSON.stringify(sample.body!.text)}`);
   const lines = notes.map(note => `// ${note}`);
   if (node) lines.push('// Node.js 18 or newer provides a global fetch.');
-  lines.push(`const response = await fetch(${JSON.stringify(sample.url)}, {`, options.join(',\n'), '});', '', 'const data = await response.json();', 'console.log(data);');
+  lines.push(`const response = await fetch(${JSON.stringify(sample.url)}, {`, options.join(',\n'), '});', '');
+  if (isHead(sample)) lines.push('console.log(response.status, Object.fromEntries(response.headers));');
+  else lines.push('const body = await response.text();', "const mediaType = (response.headers.get('content-type') ?? '').split(';')[0].trim().toLowerCase();", "const data = body && (mediaType === 'application/json' || mediaType.endsWith('+json')) ? JSON.parse(body) : body;", 'console.log(data);');
   return lines.join('\n');
 }
 
@@ -89,13 +92,15 @@ function python(sample: RequestSample): string {
   if (headers.length) lines.push(`headers = {\n${headers.map(([name, value]) => `    ${JSON.stringify(name)}: ${JSON.stringify(value)}`).join(',\n')}\n}`);
   if (hasBody(sample)) lines.push(`data = ${JSON.stringify(sample.body!.text)}`);
   const args = ['url', ...(headers.length ? ['headers=headers'] : []), ...(hasBody(sample) ? ['data=data'] : [])];
-  lines.push('', `response = requests.${sample.method.toLowerCase()}(${args.join(', ')})`, 'print(response.json())');
+  lines.push('', `response = requests.${sample.method.toLowerCase()}(${args.join(', ')})`);
+  if (isHead(sample)) lines.push('print(response.status_code, dict(response.headers))');
+  else lines.push('body = response.text', "media_type = response.headers.get('Content-Type', '').split(';')[0].strip().lower()", "data = response.json() if body and (media_type == 'application/json' or media_type.endswith('+json')) else body", 'print(data)');
   return lines.join('\n');
 }
 
 function go(sample: RequestSample): string {
   const { headers, notes } = resolve(sample);
-  const imports = ['"fmt"', '"io"', '"net/http"', ...(hasBody(sample) ? ['"strings"'] : [])].sort();
+  const imports = ['"fmt"', ...(isHead(sample) ? [] : ['"io"']), '"net/http"', ...(hasBody(sample) ? ['"strings"'] : [])].sort();
   const bodyVar = hasBody(sample) ? [`body := strings.NewReader(${goString(sample.body!.text)})`, ''] : [];
   const bodyArg = hasBody(sample) ? 'body' : 'nil';
   const lines = [
@@ -106,8 +111,7 @@ function go(sample: RequestSample): string {
     '\tif err != nil {', '\t\tpanic(err)', '\t}',
     ...headers.map(([name, value]) => `\treq.Header.Set(${JSON.stringify(name)}, ${JSON.stringify(value)})`),
     '\tres, err := http.DefaultClient.Do(req)', '\tif err != nil {', '\t\tpanic(err)', '\t}',
-    '\tdefer res.Body.Close()', '\tdata, err := io.ReadAll(res.Body)', '\tif err != nil {', '\t\tpanic(err)', '\t}',
-    '\tfmt.Println(string(data))', '}'
+    '\tdefer res.Body.Close()', ...(isHead(sample) ? ['\tfmt.Println(res.StatusCode, res.Header)'] : ['\tdata, err := io.ReadAll(res.Body)', '\tif err != nil {', '\t\tpanic(err)', '\t}', '\tfmt.Println(string(data))']), '}'
   ];
   return lines.join('\n');
 }
@@ -121,13 +125,14 @@ function java(sample: RequestSample): string {
     'import java.net.URI;', 'import java.net.http.HttpClient;', 'import java.net.http.HttpRequest;', 'import java.net.http.HttpResponse;', '',
     'public class Main {', '    public static void main(String[] args) throws Exception {', '        HttpClient client = HttpClient.newHttpClient();',
     '        HttpRequest request = HttpRequest.newBuilder()', `            .uri(URI.create(${JSON.stringify(sample.url)}))`, ...builder, bodyMethod, '            .build();',
-    '        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());', '        System.out.println(response.body());', '    }', '}'
+    '        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());', ...(isHead(sample) ? ['        System.out.println(response.statusCode());', '        System.out.println(response.headers().map());'] : ['        System.out.println(response.body());']), '    }', '}'
   ].join('\n');
 }
 
 function php(sample: RequestSample): string {
   const { headers, notes } = resolve(sample);
   const array = ['    CURLOPT_URL => ' + phpString(sample.url), `    CURLOPT_CUSTOMREQUEST => ${phpString(sample.method.toUpperCase())}`, '    CURLOPT_RETURNTRANSFER => true'];
+  if (isHead(sample)) array.push('    CURLOPT_NOBODY => true', '    CURLOPT_HEADER => true');
   if (headers.length) array.push(`    CURLOPT_HTTPHEADER => [\n${headers.map(([name, value]) => `        ${phpString(`${name}: ${value}`)}`).join(',\n')}\n    ]`);
   if (hasBody(sample)) array.push(['    CURLOPT_POSTFIELDS => <<<\'JSON\'', sample.body!.text, 'JSON'].join('\n'));
   return [
@@ -140,15 +145,16 @@ function php(sample: RequestSample): string {
 
 function ruby(sample: RequestSample): string {
   const { headers, notes } = resolve(sample);
-  const klass = sample.method.toLowerCase() === 'get' ? 'Get' : sample.method[0].toUpperCase() + sample.method.slice(1);
+  const method = sample.method.toLowerCase();
+  const klass = method[0].toUpperCase() + method.slice(1);
   const lines = [
     ...notes.map(note => `# ${note}`),
     "require 'net/http'", "require 'uri'", '',
-    `uri = URI(${rubyString(sample.url)})`, 'http = Net::HTTP.new(uri.host, uri.port)', 'http.use_ssl = true', '',
+    `uri = URI(${rubyString(sample.url)})`, 'http = Net::HTTP.new(uri.host, uri.port)', 'http.use_ssl = uri.scheme == \'https\'', '',
     `request = Net::HTTP::${klass}.new(uri)`,
     ...headers.map(([name, value]) => `request[${rubyString(name)}] = ${rubyString(value)}`),
     ...(hasBody(sample) ? [`request.body = ${rubyString(sample.body!.text)}`] : []),
-    '', 'response = http.request(request)', 'puts response.body'
+    '', 'response = http.request(request)', ...(isHead(sample) ? ['puts response.code', 'puts response.to_hash'] : ['puts response.body'])
   ];
   return lines.join('\n');
 }
@@ -164,7 +170,7 @@ function csharp(sample: RequestSample): string {
     `        var request = new HttpRequestMessage(new HttpMethod(${JSON.stringify(sample.method.toUpperCase())}), ${JSON.stringify(sample.url)});`,
     ...contentHeaders.map(([name, value]) => `        request.Headers.TryAddWithoutValidation(${JSON.stringify(name)}, ${JSON.stringify(value)});`),
     ...(hasBody(sample) ? [`        request.Content = new StringContent(${csharpString(sample.body!.text)}, Encoding.UTF8, ${JSON.stringify(contentType)});`] : []),
-    '        var response = await client.SendAsync(request);', '        Console.WriteLine(await response.Content.ReadAsStringAsync());', '    }', '}'
+    '        var response = await client.SendAsync(request);', ...(isHead(sample) ? ['        Console.WriteLine((int)response.StatusCode);', '        Console.WriteLine(response.Headers);', '        Console.WriteLine(response.Content.Headers);'] : ['        Console.WriteLine(await response.Content.ReadAsStringAsync());']), '    }', '}'
   ].join('\n');
 }
 

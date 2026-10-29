@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-28.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 

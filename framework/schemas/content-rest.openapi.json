@@ -1,0 +1,1627 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Shoalrun content REST API",
+    "version": "1.0.0",
+    "description": "Read-only delivery of reviewed content snapshots. This is HTTP contract v1, independent of the Shoalrun package version. The reference adapter serves one supplied revision per publication. It retains no revision history. Exported HTML/Markdown bytes are unchanged: host their original static asset and link mount alongside the API."
+  },
+  "servers": [
+    {
+      "url": "/content/v1"
+    }
+  ],
+  "paths": {
+    "/resources": {
+      "get": {
+        "operationId": "listContentResources",
+        "summary": "List resource metadata",
+        "description": "Query parameters are single-valued; unknown or duplicate parameters are rejected. Publication and revision checks run before conditional ETag checks. No pagination, search, writes, authentication, or cross-origin policy is supplied by this reference adapter.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/version"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/optionalRevision"
+          },
+          {
+            "$ref": "#/components/parameters/ifNoneMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The selected resource or inventory.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceList"
+                },
+                "examples": {
+                  "illustrative": {
+                    "summary": "Illustrative content; discover keys and revision from your own host.",
+                    "value": {
+                      "schemaVersion": 1,
+                      "revision": "0770e6d70db51967fac8dcc7bb4ff5a5bff87378eb2e2bbb63dea93d090c82e8",
+                      "publication": {
+                        "channel": "production",
+                        "version": "current",
+                        "language": "en"
+                      },
+                      "resources": [
+                        {
+                          "key": "k_WyJwYWdlIiwiZ3VpZGUuYmlsbGluZyJd",
+                          "resource": {
+                            "ref": {
+                              "kind": "page",
+                              "documentId": "guide.billing"
+                            },
+                            "publication": {
+                              "channel": "production",
+                              "version": "current",
+                              "language": "en"
+                            },
+                            "title": "Billing",
+                            "summary": "Contact billing support.",
+                            "type": "guide",
+                            "representations": {
+                              "html": {
+                                "path": "content/resource-example.html",
+                                "mediaType": "text/html",
+                                "bytes": 24,
+                                "digest": "0a97b73701c659be016f97a7be571c14c1cdad440cf79dfc1c8a0238a8b4787f",
+                                "anchors": [],
+                                "links": []
+                              },
+                              "markdown": {
+                                "path": "content/resource-example.md",
+                                "mediaType": "text/markdown",
+                                "bytes": 17,
+                                "digest": "d37729e92d86a1133926632326a5d61a3e65610a169d65211726924af02dac5c",
+                                "anchors": [],
+                                "links": []
+                              }
+                            },
+                            "assets": [],
+                            "externalDependencies": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The validated selected response matches If-None-Match. No response body.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_request: missing, duplicate, unknown, or malformed query parameter.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not_found: unknown publication, resource, or route.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method_not_allowed: only GET and HEAD are supported; Allow lists both.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "unsupported_format: unsupported or unavailable representation format.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "stale_revision: revision unavailable, or source bytes no longer match the pinned snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal_error: the source could not complete the request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "operationId": "listContentResourcesHead",
+        "summary": "List resource metadata headers",
+        "description": "Query parameters are single-valued; unknown or duplicate parameters are rejected. Publication and revision checks run before conditional ETag checks. No pagination, search, writes, authentication, or cross-origin policy is supplied by this reference adapter. HEAD returns the GET status and headers without a response body.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/version"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/optionalRevision"
+          },
+          {
+            "$ref": "#/components/parameters/ifNoneMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The selected resource or inventory.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The validated selected response matches If-None-Match. No response body.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_request: missing, duplicate, unknown, or malformed query parameter.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not_found: unknown publication, resource, or route.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method_not_allowed: only GET and HEAD are supported; Allow lists both.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "unsupported_format: unsupported or unavailable representation format.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "stale_revision: revision unavailable, or source bytes no longer match the pinned snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal_error: the source could not complete the request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/{key}": {
+      "get": {
+        "operationId": "getContentResource",
+        "summary": "Read resource metadata",
+        "description": "Query parameters are single-valued; unknown or duplicate parameters are rejected. Publication and revision checks run before conditional ETag checks. No pagination, search, writes, authentication, or cross-origin policy is supplied by this reference adapter.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/version"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/revision"
+          },
+          {
+            "$ref": "#/components/parameters/key"
+          },
+          {
+            "$ref": "#/components/parameters/ifNoneMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The selected resource or inventory.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceMetadata"
+                },
+                "examples": {
+                  "illustrative": {
+                    "summary": "Illustrative content; discover keys and revision from your own host.",
+                    "value": {
+                      "schemaVersion": 1,
+                      "revision": "0770e6d70db51967fac8dcc7bb4ff5a5bff87378eb2e2bbb63dea93d090c82e8",
+                      "publication": {
+                        "channel": "production",
+                        "version": "current",
+                        "language": "en"
+                      },
+                      "key": "k_WyJwYWdlIiwiZ3VpZGUuYmlsbGluZyJd",
+                      "resource": {
+                        "ref": {
+                          "kind": "page",
+                          "documentId": "guide.billing"
+                        },
+                        "publication": {
+                          "channel": "production",
+                          "version": "current",
+                          "language": "en"
+                        },
+                        "title": "Billing",
+                        "summary": "Contact billing support.",
+                        "type": "guide",
+                        "representations": {
+                          "html": {
+                            "path": "content/resource-example.html",
+                            "mediaType": "text/html",
+                            "bytes": 24,
+                            "digest": "0a97b73701c659be016f97a7be571c14c1cdad440cf79dfc1c8a0238a8b4787f",
+                            "anchors": [],
+                            "links": []
+                          },
+                          "markdown": {
+                            "path": "content/resource-example.md",
+                            "mediaType": "text/markdown",
+                            "bytes": 17,
+                            "digest": "d37729e92d86a1133926632326a5d61a3e65610a169d65211726924af02dac5c",
+                            "anchors": [],
+                            "links": []
+                          }
+                        },
+                        "assets": [],
+                        "externalDependencies": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The validated selected response matches If-None-Match. No response body.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_request: missing, duplicate, unknown, or malformed query parameter.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not_found: unknown publication, resource, or route.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method_not_allowed: only GET and HEAD are supported; Allow lists both.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "unsupported_format: unsupported or unavailable representation format.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "stale_revision: revision unavailable, or source bytes no longer match the pinned snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal_error: the source could not complete the request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "operationId": "getContentResourceHead",
+        "summary": "Read resource metadata headers",
+        "description": "Query parameters are single-valued; unknown or duplicate parameters are rejected. Publication and revision checks run before conditional ETag checks. No pagination, search, writes, authentication, or cross-origin policy is supplied by this reference adapter. HEAD returns the GET status and headers without a response body.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/version"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/revision"
+          },
+          {
+            "$ref": "#/components/parameters/key"
+          },
+          {
+            "$ref": "#/components/parameters/ifNoneMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The selected resource or inventory.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The validated selected response matches If-None-Match. No response body.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_request: missing, duplicate, unknown, or malformed query parameter.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not_found: unknown publication, resource, or route.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method_not_allowed: only GET and HEAD are supported; Allow lists both.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "unsupported_format: unsupported or unavailable representation format.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "stale_revision: revision unavailable, or source bytes no longer match the pinned snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal_error: the source could not complete the request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/{key}/representations/{format}": {
+      "get": {
+        "operationId": "getContentRepresentation",
+        "summary": "Read HTML or Markdown",
+        "description": "Query parameters are single-valued; unknown or duplicate parameters are rejected. Publication and revision checks run before conditional ETag checks. No pagination, search, writes, authentication, or cross-origin policy is supplied by this reference adapter.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/version"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/revision"
+          },
+          {
+            "$ref": "#/components/parameters/key"
+          },
+          {
+            "$ref": "#/components/parameters/format"
+          },
+          {
+            "$ref": "#/components/parameters/ifNoneMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The selected resource or inventory.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "illustrative": {
+                    "summary": "Illustrative content; discover keys and revision from your own host.",
+                    "value": "<p>Contact support.</p>\n"
+                  }
+                }
+              },
+              "text/markdown": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "illustrative": {
+                    "summary": "Illustrative content; discover keys and revision from your own host.",
+                    "value": "Contact support.\n"
+                  }
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The validated selected response matches If-None-Match. No response body.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_request: missing, duplicate, unknown, or malformed query parameter.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not_found: unknown publication, resource, or route.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method_not_allowed: only GET and HEAD are supported; Allow lists both.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "unsupported_format: unsupported or unavailable representation format.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "stale_revision: revision unavailable, or source bytes no longer match the pinned snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal_error: the source could not complete the request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "operationId": "getContentRepresentationHead",
+        "summary": "Read HTML or Markdown headers",
+        "description": "Query parameters are single-valued; unknown or duplicate parameters are rejected. Publication and revision checks run before conditional ETag checks. No pagination, search, writes, authentication, or cross-origin policy is supplied by this reference adapter. HEAD returns the GET status and headers without a response body.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/channel"
+          },
+          {
+            "$ref": "#/components/parameters/version"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/revision"
+          },
+          {
+            "$ref": "#/components/parameters/key"
+          },
+          {
+            "$ref": "#/components/parameters/format"
+          },
+          {
+            "$ref": "#/components/parameters/ifNoneMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The selected resource or inventory.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "The validated selected response matches If-None-Match. No response body.",
+            "headers": {
+              "ETag": {
+                "description": "Strong SHA-256 validator of the exact UTF-8 response bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "description": "Unpinned discovery uses no-cache. Revision-pinned success uses public, max-age=31536000, immutable. Errors use no-store.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid_request: missing, duplicate, unknown, or malformed query parameter.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not_found: unknown publication, resource, or route.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method_not_allowed: only GET and HEAD are supported; Allow lists both.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "unsupported_format: unsupported or unavailable representation format.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "stale_revision: revision unavailable, or source bytes no longer match the pinned snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal_error: the source could not complete the request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "digest": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      },
+      "path": {
+        "type": "string",
+        "pattern": "^(?:NOTICES\\.txt|(?:content|assets)/(?!\\.{1,2}(?:/|$))[A-Za-z0-9_.-]+(?:/(?!\\.{1,2}(?:/|$))[A-Za-z0-9_.-]+)*)$"
+      },
+      "publication": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "channel",
+          "version",
+          "language"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "language": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "file": {
+        "type": "object",
+        "required": [
+          "path",
+          "bytes",
+          "digest"
+        ],
+        "properties": {
+          "path": {
+            "$ref": "#/components/schemas/path"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "digest": {
+            "$ref": "#/components/schemas/digest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "asset": {
+        "type": "object",
+        "required": [
+          "path",
+          "bytes",
+          "digest",
+          "mediaType"
+        ],
+        "properties": {
+          "path": {
+            "$ref": "#/components/schemas/path"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "digest": {
+            "$ref": "#/components/schemas/digest"
+          },
+          "mediaType": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "representation": {
+        "type": "object",
+        "required": [
+          "path",
+          "bytes",
+          "digest",
+          "mediaType",
+          "anchors",
+          "links"
+        ],
+        "properties": {
+          "path": {
+            "$ref": "#/components/schemas/path"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "digest": {
+            "$ref": "#/components/schemas/digest"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "anchors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "exportedId"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "exportedId": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "key",
+                    "kind",
+                    "href",
+                    "ref"
+                  ],
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "enum": [
+                        "resource"
+                      ]
+                    },
+                    "href": {
+                      "type": "string"
+                    },
+                    "fragment": {
+                      "type": "string"
+                    },
+                    "query": {
+                      "type": "string"
+                    },
+                    "ref": {
+                      "$ref": "#/components/schemas/contentRef"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "key",
+                    "kind",
+                    "href",
+                    "asset"
+                  ],
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "enum": [
+                        "asset"
+                      ]
+                    },
+                    "href": {
+                      "type": "string"
+                    },
+                    "fragment": {
+                      "type": "string"
+                    },
+                    "query": {
+                      "type": "string"
+                    },
+                    "asset": {
+                      "$ref": "#/components/schemas/path"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "key",
+                    "kind",
+                    "href"
+                  ],
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "enum": [
+                        "canonical",
+                        "external"
+                      ]
+                    },
+                    "href": {
+                      "type": "string"
+                    },
+                    "fragment": {
+                      "type": "string"
+                    },
+                    "query": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "contentRef": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "documentId"
+            ],
+            "properties": {
+              "kind": {
+                "const": "page"
+              },
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "documentId",
+              "sectionId"
+            ],
+            "properties": {
+              "kind": {
+                "const": "section"
+              },
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sectionId": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]{0,511}$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "id"
+            ],
+            "properties": {
+              "kind": {
+                "const": "snippet"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$"
+              }
+            }
+          }
+        ]
+      },
+      "ContentResource": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ref",
+          "publication",
+          "title",
+          "summary",
+          "type",
+          "representations",
+          "assets",
+          "externalDependencies"
+        ],
+        "properties": {
+          "publication": {
+            "$ref": "#/components/schemas/publication"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "canonicalUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "representations": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+              "html": {
+                "$ref": "#/components/schemas/representation"
+              },
+              "markdown": {
+                "$ref": "#/components/schemas/representation"
+              }
+            }
+          },
+          "assets": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/path"
+            }
+          },
+          "externalDependencies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "url",
+                "kind"
+              ],
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "kind": {
+                  "const": "image"
+                }
+              }
+            }
+          },
+          "ref": {
+            "$ref": "#/components/schemas/contentRef"
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "snippetId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "valuesDigest": {
+                "$ref": "#/components/schemas/digest"
+              }
+            }
+          }
+        }
+      },
+      "ResourceKey": {
+        "type": "string",
+        "pattern": "^k_[A-Za-z0-9_-]+$",
+        "description": "Opaque stable typed-reference key. Use the returned key. It is k_ followed by unpadded base64url of UTF-8 JSON for [\"page\",documentId], [\"section\",documentId,sectionId], or [\"snippet\",id]. Publication and revision are separate selectors."
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "enum": [
+                  "invalid_request",
+                  "not_found",
+                  "unsupported_format",
+                  "stale_revision",
+                  "method_not_allowed",
+                  "internal_error"
+                ]
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ResourceEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "resource"
+        ],
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/ResourceKey"
+          },
+          "resource": {
+            "$ref": "#/components/schemas/ContentResource"
+          }
+        }
+      },
+      "ResourceList": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "revision",
+          "publication",
+          "resources"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "revision": {
+            "$ref": "#/components/schemas/digest"
+          },
+          "publication": {
+            "$ref": "#/components/schemas/publication"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceEntry"
+            }
+          }
+        }
+      },
+      "ResourceMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "revision",
+          "publication",
+          "key",
+          "resource"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "revision": {
+            "$ref": "#/components/schemas/digest"
+          },
+          "publication": {
+            "$ref": "#/components/schemas/publication"
+          },
+          "key": {
+            "$ref": "#/components/schemas/ResourceKey"
+          },
+          "resource": {
+            "$ref": "#/components/schemas/ContentResource"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "channel": {
+        "name": "channel",
+        "in": "query",
+        "required": true,
+        "description": "Exact publication channel. No default or fallback.",
+        "example": "production",
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "version": {
+        "name": "version",
+        "in": "query",
+        "required": true,
+        "description": "Exact publication version. No default or fallback.",
+        "example": "current",
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "language": {
+        "name": "language",
+        "in": "query",
+        "required": true,
+        "description": "Exact publication language. No default or fallback.",
+        "example": "en",
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "revision": {
+        "name": "revision",
+        "in": "query",
+        "required": true,
+        "description": "Exact revision returned by the list endpoint. A different revision returns 409; it never silently reads newer content.",
+        "schema": {
+          "$ref": "#/components/schemas/digest"
+        },
+        "example": "0770e6d70db51967fac8dcc7bb4ff5a5bff87378eb2e2bbb63dea93d090c82e8"
+      },
+      "optionalRevision": {
+        "name": "revision",
+        "in": "query",
+        "required": false,
+        "description": "Omit to discover the currently supplied snapshot. Supply to require that exact revision.",
+        "schema": {
+          "$ref": "#/components/schemas/digest"
+        },
+        "example": "0770e6d70db51967fac8dcc7bb4ff5a5bff87378eb2e2bbb63dea93d090c82e8"
+      },
+      "key": {
+        "name": "key",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ResourceKey"
+        },
+        "example": "k_WyJwYWdlIiwiZ3VpZGUuYmlsbGluZyJd"
+      },
+      "format": {
+        "name": "format",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "html",
+            "markdown"
+          ]
+        },
+        "example": "markdown"
+      },
+      "ifNoneMatch": {
+        "name": "If-None-Match",
+        "in": "header",
+        "required": false,
+        "description": "An ETag, comma-separated ETags, or *. Weak comparison is supported for GET and HEAD.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "HTTP conditional request semantics",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html#name-if-none-match"
+  }
+}

@@ -16,11 +16,19 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > All changes
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 Updates to Shoalrun and its documentation. Each entry identifies the affected versions and any upgrade steps. Earlier entries retain their private-prototype release context.
 
 ## Latest changes
+
+- 2026-10-28
+
+  Version 0.1.0-alpha.13
+
+  [Content delivery, verification dates, and clearer references](https://www.shoalrun.com/changelog/2026-10-28.md)
+
+  Reuse documentation through static bundles or REST, display technical verification dates, and find clearer API and layout guidance.
 
 - 2026-10-27
 

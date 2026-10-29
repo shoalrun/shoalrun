@@ -1,7 +1,7 @@
 ---
 id: guide.content-export
 title: Export content into your application
-summary: Export shared content for application help.
+summary: Export selected documentation and assets for your application.
 type: how-to
 area: publishing
 subarea: publishing-builds
@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
@@ -24,6 +24,8 @@ Keep application help and your documentation website in one content source. `sho
 
 ## Inspect the manifest
 
-The versioned `manifest.json` identifies documents by ID and publication. It includes titles, summaries, types, eligible canonical URLs, representation paths and digests, typed links, HTML anchor maps, local assets, external image dependencies, and diagnostics. It does not copy raw source frontmatter, configuration, local dependency paths, or browser runtime payloads.
+The manifest uses typed `resources` for pages, sections, and snippet instances. See the [manifest contract](https://www.shoalrun.com/content-delivery/manifest.md) and [content client](https://www.shoalrun.com/content-delivery/client.md) for resource lookup and retrieval.
+
+The versioned `manifest.json` identifies resources by typed reference and publication. It includes titles, summaries, types, eligible canonical URLs, representation paths and digests, typed links, HTML anchor maps, local assets, external image dependencies, and diagnostics. It does not copy raw source frontmatter, configuration, local dependency paths, or browser runtime payloads.
 
 The bundle's `digest` is the SHA-256 of `JSON.stringify` of the parsed manifest with its own `digest` field removed. The `files` list records byte counts and SHA-256 digests for every payload file, including notices. All text is UTF-8. The manifest itself is excluded from that list. Deterministic output lets applications compare bundles and invalidate cached content.

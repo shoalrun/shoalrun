@@ -1,7 +1,7 @@
 ---
 id: guide.content-export
 title: Export content into your application
-summary: Export shared content for application help.
+summary: Export selected documentation and assets for your application.
 type: how-to
 area: publishing
 subarea: publishing-builds
@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
@@ -27,7 +27,7 @@ Keep application help and your documentation website in one content source. `sho
 The package's `examples/help-drawer` directory contains a small application with two help documents, an image, a diagram, reader sections, tabs, a walkthrough, and a custom component. Copy it into a project with Shoalrun installed, then run from that example directory:
 
 ```sh
-shoalrun export docs.config.yaml --target app-help --out public/help
+npx --no-install shoalrun export docs.config.yaml --target app-help --out public/help
 node preview.mjs
 ```
 

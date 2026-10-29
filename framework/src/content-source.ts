@@ -6,14 +6,16 @@ import { defaultLanguage, resolveFrontmatter } from './frontmatter.js';
 import { validatePageText } from './surface-text.js';
 import { normalizeBasePath } from './site-path.js';
 import type { ReaderSelection } from './reader-filters.js';
+import type { StandaloneSectionDeclaration } from './section-identity.js';
 
 export type Variant = { channel: string; version: string; language: string };
 export type Frontmatter = {
   id: string; title: string; type: string; summary: string; description?: string; slug: string; date?: string; updated?: string; verified?: string; releaseVersion?: string;
   channel?: string; version?: string; publications?: Array<{ channel: string; version: string }>; language?: string; locale?: string; operations?: string[]; relatedApiReferences?: string[];
-  change?: AuthoredChange; subjectDeprecation?: SubjectDeprecation; product?: string; area?: string | string[]; subarea?: string | string[]; standaloneSections?: string[];
+  change?: AuthoredChange; subjectDeprecation?: SubjectDeprecation; product?: string; area?: string | string[]; subarea?: string | string[]; standaloneSections?: StandaloneSectionDeclaration[];
   access?: { policy: string }; audiences?: string[]; readerFilters?: ReaderSelection; seo?: Record<string, unknown>; subjectLifecycle?: 'deprecated' | 'in-development' | 'beta' | 'experimental'; lifecycle?: string; tocDepth?: 0 | 2 | 3 | 4 | 5 | 6; layout?: 'docs' | 'wide' | 'landing' | 'splash'; image?: string;
   showNavigationTabs?: boolean;
+  showVerified?: boolean;
   [key: string]: unknown;
 };
 export type Document = { change?: ResolvedChange; subjectDeprecation?: ResolvedSubjectDeprecation; file: string; frontmatter: Frontmatter; body: string; tree: unknown; variant: Variant; route: string; markdownRoute: string; readerFilters?: ReaderSelection; focusedContractUrl?: string; contentDigest?: string; endpoint?: { method: string; path: string; webhook?: boolean } };

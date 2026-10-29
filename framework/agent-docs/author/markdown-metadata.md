@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Markdown metadata
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-28.**
 
 The build publishes [the page metadata guide as Markdown](https://www.shoalrun.com/author/frontmatter.md) alongside its HTML page. That `.md` file starts with a YAML header containing selected values from the source page header. Source headers can grow long and contain review notes or other details that do not help an agent read the page. Selecting a small set of useful fields keeps the agent's context focused and avoids exposing internal metadata in that header. Compare the two custom values in that guide's source:
 
@@ -159,20 +159,28 @@ Use the record's `markdownUrl` and publication coordinates to select the file. T
 
 ## Declare sections that can be read alone
 
-Search recommends a section only when its heading uniquely matches the query and the author has listed that exact heading text in the page's `standaloneSections` frontmatter:
+For a section that is complete without the page introduction, use its ID and an explicit context:
 
 ```yaml
 standaloneSections:
-  - Try the page controls
+  - { id: try-the-page-controls, context: section }
 ```
 
-Review the section together with the introduction that every section file repeats. All required setup, definitions, warnings, and steps for the section's stated purpose must be present there. A procedure that depends on configuration elsewhere in the page should use a full-page read. For example, the reader-views section about marking content needs facet configuration from another section, so this site leaves it undeclared.
+This declaration approves the section for contextual discovery and for section-only content export. Exporting it still requires selection in an export target. Review the section alone: its required setup, definitions, warnings, and steps must be present. If it depends on other parts of the page, leave it undeclared and use a full-page read.
 
-This field is page-specific; site defaults and enforced values cannot set it. Each value must match exactly one top-level level-two heading's text, including case. Missing or duplicate headings fail the build, even on short pages. The compiler checks identity and size eligibility; it cannot verify the author's claim about completeness. Re-review declarations when the content or its prerequisites change. Do not mark every section merely to obtain smaller reads.
+Search recommends a declared section only when its heading uniquely matches the query and the section meets size requirements. Discovery files still repeat the page introduction and reading-path context; the object does not change that response format.
+
+This field is page-specific; site defaults and enforced values cannot set it. Each ID must match exactly one root-level H2 heading. Missing or duplicate declarations fail the build, even on short pages. The compiler checks identity and size eligibility; it cannot verify the author's claim about completeness. Re-review declarations when content or prerequisites change.
+
+### Compatibility with contextual-only approvals
+
+Older declarations use exact heading titles, such as `standaloneSections: [Try the page controls]`. They approve a discovery read with its repeated page context, not a section-only export. Keep existing declarations when the section depends on that context. The [compatibility guidance](https://www.shoalrun.com/content-delivery/sections.md) explains the review required before changing to an ID-based object.
 
 Omitting the list, using an empty list, or reading an older search index makes search use full pages for those headings. Size eligibility still applies to declared headings. Undeclared resources remain available through outlines and explicit section reads for callers that already have the context. Fetch-only consumers should require `standalone: true` before automatically choosing a section. A declaration does not guarantee relevance to every question; use the full-page fallback for broader tasks.
 
 ## Fetch one section
+
+The section resources described here are contextual agent reads. [Content delivery](https://www.shoalrun.com/content-delivery/agents.md) provides separately approved application fragments. Its ID-based approval does not change the meaning of existing title declarations.
 
 Each page record in `documents.json` now includes a `sections` outline. Entries describe top-level level-two headings in the normalized content tree. A section includes its nested headings and components through the next top-level heading of the same or higher level. Headings inside tabs, reader sections, lists, or disclosures do not become separate resources. Section files are generated only when the full page has at least 2,000 `cl100k_base` tokens and the complete section, including repeated context, uses at most half the page’s bytes and tokens. Other pages and sections use the full Markdown page; their outlines can be empty.
 

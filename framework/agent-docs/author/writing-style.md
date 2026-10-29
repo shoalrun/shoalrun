@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-28.**
 
 This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
 
@@ -108,6 +108,18 @@ Introduce every table with a sentence explaining what readers should use it for.
 Do not hide an essential instruction inside decoration. Every page documenting a component or presentation feature needs an **HTML, Markdown, and agents** section, or an existing clearly named equivalent. Explain what HTML shows or lets readers do, what Markdown retains or omits, and how an agent gets the information needed for the task. Include limitations and keyboard or JavaScript behavior when relevant. Check both rendered outputs.
 
 A page that merely uses a callout, link, or Steps component needs the section only when that use changes access to information. Avoid generic claims that both formats are identical: explain the actual representation. Cookbook pages must distinguish their recipe links from the complete instructions in the linked recipes or a downloaded selection.
+
+## Feature availability
+
+Use the sentence “Available since `VERSION`.” to record the first package release that supports a feature. Replace `VERSION` with the exact assigned release number, including any prerelease suffix. This is ordinary prose, preserved in HTML and Markdown.
+
+Put the note immediately after the introduction on the feature's main guide and reference page. If only an option or behavior is newer, put its note beside that option or behavior. Add a prerequisite to a how-to only when readers need that version to complete the task.
+
+Use the release record or approved release plan as evidence. Never infer the next release number, use `latest`, or publish a placeholder. For coordinated package and documentation releases, add the assigned version before publication. Leave the note out while the release number is undecided; track that work in release preparation.
+
+Keep the original availability version when editing the page. Do not change it to the current release. Link to release notes when readers need migration details, and name the package if the page covers more than one product.
+
+This note describes feature availability. Frontmatter `version` selects a documentation edition, `releaseVersion` identifies a changelog release, and `subjectLifecycle` describes feature status. Do not repurpose those fields or add a badge solely for availability.
 
 ## Evidence and uncertainty
 

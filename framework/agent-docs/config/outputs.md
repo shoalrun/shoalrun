@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Output and export
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 Configure metadata providers, application exports, Markdown headers, and discovery indexes. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
 
@@ -35,20 +35,23 @@ The path is relative to the config file that declares it. `provider` accepts onl
 
 ## `exports`
 
+Use [resource selectors](https://www.shoalrun.com/content-delivery/select.md) to select pages, approved sections, and named snippet instances.
+
 Optional named targets for `shoalrun export`. They select portable application content independently of website navigation and `site.contentFilter`. The normal website build does not emit export bundles automatically. See [export content into an application](https://www.shoalrun.com/publish/content-export.md).
 
 Each target accepts these fields:
 
-| Field           | Default                             | Meaning                                                                                                                  |
-| --------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `formats`       | `[markdown, html]`                  | A nonempty unique list of `markdown` and/or `html`.                                                                      |
-| `documents`     | All eligible pages                  | Explicit document IDs. Missing, inaccessible, or export-filtered IDs fail.                                               |
-| `publication`   | The only enabled publication        | One complete `{ channel, version, language }` combination. Required when selection is ambiguous.                         |
-| `contentFilter` | None                                | Optional configured reader facets; every facet must match any listed choice. Unmarked pages do not match.                |
-| `publicBase`    | `/`                                 | Root-relative mount with a trailing slash, such as `/help/`. It locates bundle content and assets in the app.            |
-| `assetRoots`    | Content directory only              | Extra local asset directories, relative to the declaring config file. Only referenced supported files are copied.        |
-| `notices`       | Renderer notices only               | Local text or Markdown license/notice files to retain in `NOTICES.txt`. Paths are relative to the declaring config file. |
-| `apiReview`     | Matching API-level approval, if any | API IDs mapped to reviewed SHA-256 digests for this export selection.                                                    |
+| Field           | Default                                         | Meaning                                                                                                                  |
+| --------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `formats`       | `[markdown, html]`                              | A nonempty unique list of `markdown` and/or `html`.                                                                      |
+| `documents`     | All eligible pages when neither selector is set | Explicit document IDs. Missing, inaccessible, or export-filtered IDs fail. Mutually exclusive with `resources`.          |
+| `resources`     | None                                            | Typed page, section, or snippet selectors. Mutually exclusive with `documents`.                                          |
+| `publication`   | The only enabled publication                    | One complete `{ channel, version, language }` combination. Required when selection is ambiguous.                         |
+| `contentFilter` | None                                            | Optional configured reader facets; every facet must match any listed choice. Unmarked pages do not match.                |
+| `publicBase`    | `/`                                             | Root-relative mount with a trailing slash, such as `/help/`. It locates bundle content and assets in the app.            |
+| `assetRoots`    | Content directory only                          | Extra local asset directories, relative to the declaring config file. Only referenced supported files are copied.        |
+| `notices`       | Renderer notices only                           | Local text or Markdown license/notice files to retain in `NOTICES.txt`. Paths are relative to the declaring config file. |
+| `apiReview`     | Matching API-level approval, if any             | API IDs mapped to reviewed SHA-256 digests for this export selection.                                                    |
 
 ```yaml
 exports:
@@ -69,6 +72,7 @@ Use `outputs` to configure the HTML, Markdown, discovery, and text artifacts pro
 | `markdown.metadata`          | The Markdown twin's YAML header: `format`, `fields`, `addFields`, `removeFields`, `omitNull`, `byType`, and `profiles`. `format` defaults to `none`. See [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md). |
 | `html.shareImages`           | `true`: a generated 1200×630 link-preview image per page. `false` turns them off; a mapping with `template` and `fonts` replaces the design. See [share images and favicon](https://www.shoalrun.com/styling/share-images.md).      |
 | `html.highlighting`          | Code highlighting `provider`, `theme`, and `module`. Defaults to Shiki with the `site` theme, which takes code colors from the palette. See [code blocks](https://www.shoalrun.com/author/components/code-blocks.md).               |
+| `html.navigation.heading`    | Heading above the sidebar filter. Defaults to `Explore`; use nonempty text to replace it or `false` to hide it. Available since `0.1.0-alpha.13`.                                                                                   |
 | `html.navigation.showCounts` | Show page counts beside navigation groups. Defaults to `true`; set `false` to omit them. See [navigation](https://www.shoalrun.com/author/navigation.md).                                                                           |
 | `html.search`                | Search `provider`, `module`, and `index`. See [search](https://www.shoalrun.com/author/search.md).                                                                                                                                  |
 | `text`                       | Ordered frontmatter field paths for `card`, `pageHeader`, `search`, `htmlDescription`, and `socialCard`. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md).                                                 |

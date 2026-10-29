@@ -1,7 +1,7 @@
 ---
 id: guide.content-export
 title: Export content into your application
-summary: Export shared content for application help.
+summary: Export selected documentation and assets for your application.
 type: how-to
 area: publishing
 subarea: publishing-builds
@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-26.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
@@ -36,7 +36,7 @@ Keep application help and your documentation website in one content source. `sho
        publicBase: /help/
    ```
 
-   Omit `documents` to export all eligible public pages in one enabled publication. If more than one publication is enabled, select all three coordinates:
+   Omit both `documents` and `resources` to export all eligible public pages in one enabled publication. If more than one publication is enabled, select all three coordinates:
 
    ```yaml
    exports:
@@ -56,7 +56,7 @@ Keep application help and your documentation website in one content source. `sho
    From the documentation project, run:
 
    ```sh
-   shoalrun export docs.config.yaml --target app-help --out ../app/public/help
+   npx --no-install shoalrun export docs.config.yaml --target app-help --out ../app/public/help
    ```
 
    Replace the output path with the directory your application will distribute. The command prints JSON with its publication, formats, selected document IDs, asset count, digest, API review requirements, and diagnostics. A successful export replaces an earlier export in that directory. A failure preserves it. Source directories, unrelated nonempty directories, and previous website builds cannot be used as the export destination.
@@ -73,12 +73,12 @@ Keep application help and your documentation website in one content source. `sho
      NOTICES.txt
    ```
 
-   File names derive from stable document identity and publication, not titles or source-file names. Read paths from the manifest rather than constructing them in your app.
+   File names derive from typed resource identity and publication, not titles or source-file names. Read paths from the manifest rather than constructing them in your app.
 
    For a one-off export without a named target:
 
    ```sh
-   shoalrun export docs.config.yaml --out ../app/public/help \
+   npx --no-install shoalrun export docs.config.yaml --out ../app/public/help \
      --format html --document guide.api-keys --document guide.billing \
      --public-base /help/
    ```
@@ -93,10 +93,13 @@ Keep application help and your documentation website in one content source. `sho
 
    ```js
    const manifest = await fetch('/help/manifest.json').then(response => response.json());
-   if (manifest.schemaVersion !== 1 || manifest.review.status !== 'ok') {
+   if (manifest.schemaVersion !== 1 || manifest.review?.status !== 'ok' ||
+       !Array.isArray(manifest.resources)) {
      throw new Error('Unsupported or unreviewed help export');
    }
-   const help = manifest.documents.find(document => document.id === 'guide.api-keys');
+   const help = manifest.resources.find(resource =>
+     resource.ref.kind === 'page' && resource.ref.documentId === 'guide.api-keys');
+   if (!help?.representations.html) throw new Error('API-key HTML is unavailable');
    const html = await fetch(manifest.publicBase + help.representations.html.path)
      .then(response => response.text());
    helpContainer.innerHTML = html;
@@ -108,6 +111,6 @@ Keep application help and your documentation website in one content source. `sho
 
 4. ## Handle document links and check the result
 
-   Links to other exported pages have `data-export-link` markers. Each marker identifies a record in that representation's `links` array. For `kind: document`, your app can prevent ordinary navigation and open `documentId` in the drawer. `fragment` identifies the original heading or anchor; the HTML representation's `anchors` array maps it to its namespaced `exportedId`.
+   Links to other exported pages have `data-export-link` markers. Each marker identifies a record in that representation's `links` array. For `kind: resource`, your app can prevent ordinary navigation and retrieve the target using its typed `ref`. A page reference contains `kind: page` and `documentId`; section and snippet references have their own identity fields. `fragment` identifies the original heading or anchor; the HTML representation's `anchors` array maps it to its namespaced `exportedId`.
 
    A link to an omitted document uses its canonical website URL only when that document is public, enabled, and selected for the website. Without an eligible destination and a configured origin, the export fails. Linked pages are never silently added to the export. Explicit external links retain their destinations.

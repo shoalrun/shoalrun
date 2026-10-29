@@ -401,3 +401,32 @@ test('a removed configuration dependency is not mislabeled as a deleted sibling 
   await writeFile(path.join(parent, 'shared.yaml'), 'variables: { shared: Changed }\n');
   assert.equal((await authoringValidationStatus(report.artifacts.report)).status, 'stale');
 });
+
+test('manual related reading surfaces a nonblocking hint in project discovery and validation', async t => {
+  const { inspectAuthoringProject } = await import('./authoring-project.js');
+  const { root, config, validate } = await fixture(t);
+  const source = newPage('guide.new', '/new', '## Related reading\n\n[Install](doc:guide.install)');
+  await writeFile(path.join(root, 'content/new.mdx'), source);
+  const project = await inspectAuthoringProject(config, { section: 'findings' });
+  assert.match(JSON.stringify(project), /authoring.related-reading/);
+  const report = await validate({ files: ['content/new.mdx'] });
+  assert.equal(report.status, 'ok', JSON.stringify(report.findings));
+  assert.equal(report.findings.find(item => item.code === 'authoring.related-reading')?.severity, 'warning');
+  assert.equal(await readFile(path.join(root, 'content/new.mdx'), 'utf8'), source);
+});
+
+test('literal scaffold prompts survive public HTML and Markdown code examples but unresolved metadata and prose fail', async t => {
+  const { root, config } = await fixture(t);
+  const file = path.join(root, 'content/new.mdx');
+  const source = newPage('guide.new', '/new', '## Template syntax\n\n```md\n[[TODO: Explain the task.]]\n```').replace('policy: draft', 'policy: public');
+  await writeFile(file, source);
+  const output = path.join(root, 'dist');
+  await compile(config, output);
+  assert.match(await readFile(path.join(output, 'new.md'), 'utf8'), /\[\[TODO: Explain the task\.\]\]/);
+  const html = await readFile(path.join(output, 'new/index.html'), 'utf8');
+  assert.match(html.replace(/<[^>]+>/g, ''), /\[\[TODO: Explain the task\.\]\]/);
+  await writeFile(file, source + '\n[[TODO: Finish the explanation.]]\n');
+  await assert.rejects(compile(config, output), /unresolved scaffold placeholders/);
+  await writeFile(file, source.replace('summary: A reviewed procedure.', 'summary: "[[TODO: Finish the summary.]]"'));
+  await assert.rejects(compile(config, output), /unresolved scaffold placeholders/);
+});

@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-27.**
+**Updated: 2026-10-29.**
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 
@@ -143,7 +143,15 @@ Frontmatter comments do not reach the published page, so they never appear in th
 
 ### Write the body
 
-Write each prompt for the facts and checks an author must supply as a placeholder: `[[TODO:`, the prompt text, then two closing square brackets. Do not use braces, angle brackets, or two closing square brackets inside a placeholder, because the MDX parser and the placeholder check read them. A public page fails the build while a complete placeholder remains in its body or frontmatter, or while its summary still starts with `Draft guide for `. Ordinary Markdown and the supported [components](https://www.shoalrun.com/author/components.md) can appear in the body.
+Write each prompt for the facts and checks an author must supply as a placeholder: `[[TODO:`, the prompt text, then two closing square brackets. Do not use braces, angle brackets, or two closing square brackets inside a placeholder, because the MDX parser and the placeholder check read them. A public page fails the build while a complete placeholder remains in its prose or frontmatter, or while its summary still starts with `Draft guide for `. Ordinary Markdown and the supported [components](https://www.shoalrun.com/author/components.md) can appear in the body.
+
+Fenced code blocks can teach the placeholder syntax without blocking publication. Available since `0.1.0-alpha.13`. For example, this code is preserved literally in HTML and Markdown:
+
+```md
+[[TODO: Explain the task and how to check the result.]]
+```
+
+Prompts outside code blocks and in frontmatter still block publication. Keep unfinished examples on draft pages until they have been reviewed.
 
 Each placeholder should say what to write, the length or format limit, and an example. For an optional section, start the prompt with `OPTIONAL SECTION` and say when to keep it. The unresolved placeholder forces the author to keep the section or delete it.
 
