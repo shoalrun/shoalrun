@@ -6,7 +6,6 @@ summary: Look up resource references, representations, assets, revision digests,
 type: reference
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/manifest
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content manifest
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 `manifest.json` is the entry point for a content export. The resource-aware implementation uses `kind: shoalrun-content-export`, `schemaVersion: 1`, and a `resources` array. Earlier whole-page exports use a `documents` array; rebuild those exports before opening them with the resource client.
+
+Available since `0.1.0-alpha.13`.
 
 ## Bundle fields
 
@@ -73,8 +72,8 @@ The manifest records each representation separately because anchors, links, and 
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 
-- [Publish and update content](https://www.shoalrun.com/content-delivery/publish.md) — Inspect revision and representation metadata. (Status: in development.)
+- [Publish and update content](https://www.shoalrun.com/content-delivery/publish.md) — Inspect revision and representation metadata.

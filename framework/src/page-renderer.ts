@@ -94,8 +94,9 @@ export function buildHtmlPage(doc: Document, tree: any, markdownUrl: string, sit
   const date = doc.frontmatter.date ? `<time class="page-date" datetime="${esc(doc.frontmatter.date)}">${esc(doc.frontmatter.date)}</time>` : '';
   const changelogEntry = doc.frontmatter.type === 'changelog-entry';
   const updated = doc.frontmatter.updated && !(changelogEntry && doc.frontmatter.date) ? `<span class="page-date">Updated <time datetime="${esc(doc.frontmatter.updated)}">${esc(doc.frontmatter.updated.slice(0, 10))}</time></span>` : '';
+  const verified = doc.frontmatter.verified && doc.frontmatter.showVerified !== false ? `<span class="page-date">Verified <time datetime="${esc(doc.frontmatter.verified)}">${esc(doc.frontmatter.verified)}</time></span>` : '';
   const releaseVersion = doc.frontmatter.releaseVersion ? `<span class="page-version">Version ${esc(doc.frontmatter.releaseVersion)}</span>` : '';
-  const pageDates = changelogEntry ? `<div class="page-meta">${date}${updated}${releaseVersion}</div>` : `${date}${updated}${releaseVersion}`;
+  const pageDates = changelogEntry ? `<div class="page-meta">${date}${updated}${verified}${releaseVersion}</div>` : `${date}${updated}${verified}${releaseVersion}`;
   const containsCurrent = (item: NavigationNode): boolean => item.route === doc.route || !!item.items?.some(containsCurrent);
   const activeTab = navigationTab(navigation, doc.route);
   const analyticsBootstrap = config.analytics ? `<script type="application/json" id="analytics-config">${JSON.stringify({ pageId: doc.frontmatter.id, pageUrl: doc.route, documentType: doc.frontmatter.type, channel: doc.variant.channel, version: doc.variant.version, language: doc.variant.language, ...(activeTab ? { navigationSectionId: activeTab.id } : {}) }).replaceAll('<', '\\u003c')}</script><script type="module" src="/assets/analytics.js"></script>` : '';

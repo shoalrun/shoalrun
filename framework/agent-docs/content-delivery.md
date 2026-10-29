@@ -6,7 +6,6 @@ summary: Deliver pages, sections, and snippet instances to applications from one
 type: explanation
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery
 ---
 
@@ -18,9 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Overview
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Content delivery makes your documentation a reusable content source for applications, agents, services, and workflows. They can retrieve whole pages, individual sections, or reusable snippets in HTML or Markdown. You control how the content is displayed, combined, or processed; Shoalrun supplies the content and its metadata.
 
@@ -32,6 +29,8 @@ For example:
 - A service feeds the documentation into its own search or retrieval index.
 
 These are starting points. The consuming system decides what to build with the content.
+
+Available since `0.1.0-alpha.13`.
 
 ## Choose a resource
 
@@ -77,4 +76,4 @@ HTML exports contain passive fragments that the application styles. Markdown exp
 
 ### Related topics
 
-- [Select content resources](https://www.shoalrun.com/content-delivery/select.md) — Choose which resources the application receives. (Status: in development.)
+- [Select content resources](https://www.shoalrun.com/content-delivery/select.md) — Choose which resources the application receives.

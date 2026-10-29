@@ -6,7 +6,6 @@ summary: Publish complete revisions, compare removed references, and replace
 type: how-to
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/publish
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Publish and update content
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Publish a complete export as one revision. The manifest and representation files must agree; replacing only the manifest or only an article can leave a running application with mismatched content.
+
+Available since `0.1.0-alpha.13`.
 
 ## Build a revision
 
@@ -64,10 +63,10 @@ Publish both representations together when both are selected. Agents and applica
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 
-- [Render content in an application](https://www.shoalrun.com/content-delivery/render.md) — Publish complete revisions and update the client. (Status: in development.)
+- [Render content in an application](https://www.shoalrun.com/content-delivery/render.md) — Publish complete revisions and update the client.
 
-- [Content manifest](https://www.shoalrun.com/content-delivery/manifest.md) — Inspect revision and representation metadata. (Status: in development.)
+- [Content manifest](https://www.shoalrun.com/content-delivery/manifest.md) — Inspect revision and representation metadata.

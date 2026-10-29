@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > SEO and social previews
 
-**Updated: 2026-10-25.**
+**Updated: 2026-10-29.**
 
 When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you do not need to hand-write Open Graph or Twitter tags.
 
@@ -106,7 +106,21 @@ Set native frontmatter `verified` only when someone checks the page's technical 
 verified: 2026-10-01
 ```
 
-The HTML page, Markdown twin, and manifest expose this date independently of Updated. A build never assigns it. This project also declares private `editorial.lastVerified` and `editorial.verificationNote` fields for internal review notes; use native `verified` when the date should be public. A rebuild or unchanged-content file touch establishes neither a content change nor verification.
+The standard HTML page header displays `Verified` with a semantic `<time>` element. Markdown and `documents.json` expose the same date independently of `Updated`, which records content revision. A build never assigns `verified`; a build or editorial review alone does not establish technical verification.
+
+The HTML verification-date display and `showVerified` setting are available since `0.1.0-alpha.13`.
+
+Set `showVerified: false` in a page's frontmatter to hide the verification date in HTML only. It remains in Markdown and the manifest. The default is `true`. To hide it throughout a project, set a shared default:
+
+```yaml title="docs.config.yaml"
+frontmatter:
+  defaults:
+    showVerified: false
+```
+
+An individual page can override that default with `showVerified: true`. A page using a Hero replaces the standard header, so its header dates are not displayed.
+
+This project also declares private `editorial.lastVerified` and `editorial.verificationNote` fields for internal review notes; use native `verified` when the date should be public. A rebuild or unchanged-content file touch establishes neither a content change nor verification.
 
 Search indexing still depends on the public host and crawler access; metadata alone does not guarantee it. If Slack does not unfurl after a corrected deployment, confirm the page and image are public, then try sharing the link in a new conversation. [Slack may omit a preview](https://slack.com/help/articles/204399343-Share-links-and-set-preview-preferences) when the same link was recently posted in that conversation.
 

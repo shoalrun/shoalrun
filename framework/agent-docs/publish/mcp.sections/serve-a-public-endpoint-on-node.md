@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Connect an MCP client
 
-**Updated: 2026-10-28.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/publish/mcp.md)
 

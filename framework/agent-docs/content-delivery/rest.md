@@ -6,7 +6,6 @@ summary: Expose reviewed content snapshots over HTTP and read them through the
 type: how-to
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/rest
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Serve content through REST
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Serve the same reviewed pages, sections, and snippet instances through the Content REST API. The reference adapter accepts already-open snapshots and exposes a Fetch-style request handler. Your host provides the HTTP listener, request routing, and any access controls.
+
+Available since `0.1.0-alpha.13`.
 
 ## Prepare a snapshot
 
@@ -100,10 +99,10 @@ Agents can list resources, keep the returned revision, and fetch Markdown withou
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand reviewed resources and snapshots. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand reviewed resources and snapshots.
 
 ### Related topics
 
-- [Content REST API](https://www.shoalrun.com/content-delivery/http-api.md) — Look up HTTP routes and revision handling. (Status: in development.)
+- [Content REST API](https://www.shoalrun.com/content-delivery/http-api.md) — Look up HTTP routes and revision handling.
 
-- [Content client API](https://www.shoalrun.com/content-delivery/api.md) — Use the shared snapshot methods and client limits. (Status: in development.)
+- [Content client API](https://www.shoalrun.com/content-delivery/api.md) — Use the shared snapshot methods and client limits.

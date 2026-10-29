@@ -6,7 +6,6 @@ summary: Choose between portable resource delivery and documentation discovery
 type: explanation
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/agents
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Content delivery and agents
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Content delivery and documentation discovery serve different reading tasks. Delivery gives an application a reviewed collection of resources. Discovery helps an agent find and read documentation across a published site or installed snapshot.
+
+Available since `0.1.0-alpha.13`.
 
 ## Choose the reading contract
 
@@ -80,7 +79,7 @@ Agents can read the manifest and Markdown directly. HTML contains passive conten
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 

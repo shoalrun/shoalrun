@@ -6,7 +6,6 @@ summary: Open a content revision and read typed resources without depending on
 type: how-to
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/client
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Read content with a client
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Use the content client in an application to read a static export. Serve the bundle from the application's origin and use your normal JavaScript build tooling to import `@shoalrun/cli/content`.
+
+Available since `0.1.0-alpha.13`.
 
 ## Open a revision
 
@@ -69,12 +68,12 @@ Request HTML for [application rendering](https://www.shoalrun.com/content-delive
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 
-- [Select content resources](https://www.shoalrun.com/content-delivery/select.md) — Read a reviewed export from an application. (Status: in development.)
+- [Select content resources](https://www.shoalrun.com/content-delivery/select.md) — Read a reviewed export from an application.
 
-- [Content client API](https://www.shoalrun.com/content-delivery/api.md) — Look up client methods, limits, and errors. (Status: in development.)
+- [Content client API](https://www.shoalrun.com/content-delivery/api.md) — Look up client methods, limits, and errors.
 
-- [Render content in an application](https://www.shoalrun.com/content-delivery/render.md) — Mount trusted HTML and route its links. (Status: in development.)
+- [Render content in an application](https://www.shoalrun.com/content-delivery/render.md) — Mount trusted HTML and route its links.

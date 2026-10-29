@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-28.**
+**Updated: 2026-10-29.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
@@ -24,6 +24,6 @@ Keep application help and your documentation website in one content source. `sho
 
 ## Prerequisites
 
-Install Shoalrun in the documentation project. This guide uses the resource-based export manifest described in the [manifest reference](https://www.shoalrun.com/content-delivery/manifest.md).
+Install Shoalrun `0.1.0-alpha.13` or newer in the documentation project. This guide uses the resource-based export manifest described in the [manifest reference](https://www.shoalrun.com/content-delivery/manifest.md).
 
 Start with a Shoalrun project and public pages assigned to an enabled publication. Navigation, facets, a site title, and a previous website build are optional. A site origin is needed only when links must fall back to pages on the documentation website. The export does not generate embeddings or run documentation chat.

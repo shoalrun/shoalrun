@@ -6,7 +6,6 @@ summary: Understand when a section can be exported on its own, declare it, and
 type: reference
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/sections
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Section identity and compatibility
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 A section is a heading and the content beneath it. For content delivery, Shoalrun selects sections beginning at a top-level `##` heading, including nested subsections, and ending before the next `##` or `#` heading. Exporting a section extracts that part of the page so an application can use it separately.
+
+Available since `0.1.0-alpha.13`.
 
 ## Why a section needs a declaration
 
@@ -104,8 +103,8 @@ HTML preserves the existing heading-derived anchor and adds an explicit ID as an
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 
-- [Select content resources](https://www.shoalrun.com/content-delivery/select.md) — Approve section slices and preserve their references. (Status: in development.)
+- [Select content resources](https://www.shoalrun.com/content-delivery/select.md) — Approve section slices and preserve their references.

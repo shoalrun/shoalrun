@@ -6,7 +6,6 @@ summary: Look up resource routes, publication parameters, revision checks,
 type: reference
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/http-api
 ---
 
@@ -18,13 +17,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content REST API > Overview
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Content REST contract v1 exposes one reviewed resource inventory per configured publication. The default base path is `/content/v1`. Protocol v1 is independent of the package release and publication version.
 
 The host application supplies the API origin. The relative server URL `/content/v1` describes a mount, not a live endpoint on this documentation site. Use the [local example](https://www.shoalrun.com/content-delivery/rest.md) to try requests.
+
+Available since `0.1.0-alpha.13`.
 
 ## Operations
 
@@ -72,8 +71,8 @@ Each native operation reference presents its source-backed request and response 
 
 ### Read first
 
-- [Serve content through REST](https://www.shoalrun.com/content-delivery/rest.md) — Set up the reference HTTP adapter. (Status: in development.)
+- [Serve content through REST](https://www.shoalrun.com/content-delivery/rest.md) — Set up the reference HTTP adapter.
 
 ### Related topics
 
-- [Serve content through REST](https://www.shoalrun.com/content-delivery/rest.md) — Look up HTTP routes and revision handling. (Status: in development.)
+- [Serve content through REST](https://www.shoalrun.com/content-delivery/rest.md) — Look up HTTP routes and revision handling.

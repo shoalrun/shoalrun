@@ -6,7 +6,6 @@ summary: Mount passive HTML and keep application styling, navigation, and
 type: how-to
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/render
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Render content in an application
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Your application can display a resource in a panel, onboarding surface, article view, or help drawer. Fetch the resource through a [content snapshot](https://www.shoalrun.com/content-delivery/client.md), then mount its HTML in a container you own.
+
+Available since `0.1.0-alpha.13`.
 
 ## Mount the result
 
@@ -65,10 +64,10 @@ HTML fragments retain static content but omit component browser enhancements. Th
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 
-- [Read content with a client](https://www.shoalrun.com/content-delivery/client.md) — Mount trusted HTML and route its links. (Status: in development.)
+- [Read content with a client](https://www.shoalrun.com/content-delivery/client.md) — Mount trusted HTML and route its links.
 
-- [Publish and update content](https://www.shoalrun.com/content-delivery/publish.md) — Publish complete revisions and update the client. (Status: in development.)
+- [Publish and update content](https://www.shoalrun.com/content-delivery/publish.md) — Publish complete revisions and update the client.

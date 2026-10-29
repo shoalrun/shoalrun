@@ -6,7 +6,6 @@ summary: Choose pages, approved sections, and named snippet instances for a
 type: how-to
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/select
 ---
 
@@ -18,13 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Select content resources
 
-**Updated: 2026-10-28.**
+**Updated: 2026-10-29.**
 
-**Status: In development.**
-
-Use an export target to choose exactly which content an application receives. Work from a Shoalrun project with public pages in an enabled publication. Whole pages need no section declaration. To export just one section, first read it without the rest of its page and check that it includes the context needed to understand or follow it. Record that review in the source page's `standaloneSections` frontmatter; [declare a section ready for separate use](https://www.shoalrun.com/content-delivery/sections.md) explains why and shows the syntax.
+Use an export target to choose exactly which content an application receives. Work from a Shoalrun project with public pages in an enabled publication. Whole pages need no section declaration. To export just one section, first read it without the rest of its page. Check that it includes the context needed to understand or follow it. Record that review in the source page's `standaloneSections` frontmatter; [declare a section ready for separate use](https://www.shoalrun.com/content-delivery/sections.md) explains why and shows the syntax.
 
 The declaration says the section can be used on its own. The export target below says which content to include in this bundle. Both are required for a section export.
+
+Available since `0.1.0-alpha.13`.
 
 ## Define the target
 
@@ -90,12 +89,12 @@ Both formats receive the selected resources, with their own links and anchor met
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Choose which resources the application receives. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Choose which resources the application receives.
 
-- [Section identity and compatibility](https://www.shoalrun.com/content-delivery/sections.md) — Approve section slices and preserve their references. (Status: in development.)
+- [Section identity and compatibility](https://www.shoalrun.com/content-delivery/sections.md) — Approve section slices and preserve their references.
 
-- [Read content with a client](https://www.shoalrun.com/content-delivery/client.md) — Read a reviewed export from an application. (Status: in development.)
+- [Read content with a client](https://www.shoalrun.com/content-delivery/client.md) — Read a reviewed export from an application.

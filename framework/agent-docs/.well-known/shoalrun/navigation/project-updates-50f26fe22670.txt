@@ -14,13 +14,15 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Clearer defaults, a feature showcase, and easier navigation](https://www.shoalrun.com/changelog/2026-10-27.md) — ID: change.2026-10-27. changelog-entry; 1223 tokens. Explore a complete starter, read clearer controls, and find focused configuration references alongside the new mobile navigation.
 
+- [Content delivery, verification dates, and clearer references](https://www.shoalrun.com/changelog/2026-10-28.md) — ID: change.2026-10-28. changelog-entry; 1214 tokens. Reuse documentation through static bundles or REST, display technical verification dates, and find clearer API and layout guidance.
+
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 551 tokens. Snapshot previews with coverage and freshness reports.
 
 - [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 466 tokens. Reviewed agent drafts, search improvements, and answer context.
 
 - [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 378 tokens. Project discovery and captured working-tree validation.
 
-- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 999 tokens. Compiler, CLI, and reader changes.
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1074 tokens. Compiler, CLI, and reader changes.
 
 - [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1145 tokens. MCP hosting, analytics, and shared component content.
 

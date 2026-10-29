@@ -6,7 +6,6 @@ summary: Look up the content client entry point, snapshot methods, limits,
 type: reference
 area: publishing
 subarea: publishing-content-delivery
-subjectLifecycle: in-development
 canonical: /content-delivery/api
 ---
 
@@ -18,11 +17,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content client API
 
-**Updated: 2026-10-28.**
-
-**Status: In development.**
+**Updated: 2026-10-29.**
 
 Import the browser-safe delivery API from `@shoalrun/cli/content`. It reads exports and mounts trusted HTML without loading the compiler. Browser use requires HTTPS or localhost for Web Crypto.
+
+Available since `0.1.0-alpha.13`.
 
 ## Open a source
 
@@ -122,10 +121,10 @@ The same typed reference selects either available representation. HTML mounting 
 
 ### Read first
 
-- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary. (Status: in development.)
+- [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
 
 ### Related topics
 
-- [Read content with a client](https://www.shoalrun.com/content-delivery/client.md) — Look up client methods, limits, and errors. (Status: in development.)
+- [Read content with a client](https://www.shoalrun.com/content-delivery/client.md) — Look up client methods, limits, and errors.
 
-- [Serve content through REST](https://www.shoalrun.com/content-delivery/rest.md) — Use the shared snapshot methods and client limits. (Status: in development.)
+- [Serve content through REST](https://www.shoalrun.com/content-delivery/rest.md) — Use the shared snapshot methods and client limits.
