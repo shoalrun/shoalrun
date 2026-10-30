@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-alpha.14 — 2026-10-30
+
+- Keep selected text readable in light and dark modes by pairing the selection
+  background with its contrasting foreground color.
+- Let paragraphs and ordinary lists fill their containers in wide, landing, and
+  splash layouts, including nested sections. Standard pages retain the 68ch
+  reading measure; hero text and other components keep their own limits.
+
+Upgrade to alpha.14 and rebuild your site to receive these styling fixes.
+
 ## 0.1.0-alpha.13 — 2026-10-28
 
 Use documentation as content for applications, agents, services, and publishing
