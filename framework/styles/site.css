@@ -26,7 +26,7 @@ a.brand{text-decoration:none}
 :where(a,button,input,summary,[tabindex]):focus-visible{outline:3px solid var(--color-focus);outline-offset:4px;border-radius:3px}
 button,input{font:inherit}
 button{cursor:pointer}
-::selection{background:var(--color-nav-active);color:var(--color-ink)}
+::selection{background:var(--color-nav-active);color:var(--color-nav-active-text)}
 .skip,.page-shortcuts a{position:fixed;left:-100vw;top:.6rem;background:var(--color-surface);padding:.5rem 1rem;z-index:50}
 .skip:focus,.page-shortcuts a:focus{left:1rem;max-width:calc(100vw - 2rem)}
 .region-return{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -306,10 +306,10 @@ button{cursor:pointer}
 .content article>h2:first-child{margin-top:0;padding-top:0;border-top:0}
 .content h3{font-size:1.1rem;line-height:1.4;letter-spacing:-.015em;margin:2rem 0 .75rem}
 .content h4{font-size:.92rem;line-height:1.5;margin:1.5rem 0 .65rem;color:var(--color-section-heading)}
-.content p{max-width:68ch;line-height:1.8;margin:.85rem 0 1.2rem}
+.content p{max-width:var(--prose-max-width,68ch);line-height:1.8;margin:.85rem 0 1.2rem}
 .content article>ul{margin:1rem 0 1.5rem}
 /* Limit ordinary list prose without constraining steps, fields, or file trees. */
-.content article :where(ul,ol):not([class]):not(:has([data-field])):not(.doc-file-tree ul){max-width:68ch}
+.content article :where(ul,ol):not([class]):not(:has([data-field])):not(.doc-file-tree ul){max-width:var(--prose-max-width,68ch)}
 .content li{margin:.5rem 0}
 .content li>p{margin:.35rem 0}
 .content ul,.content ol{padding-left:1.4rem}
@@ -600,6 +600,8 @@ button{cursor:pointer}
 @media print{.content .walkthrough-pane{display:none}.content .walkthrough.is-split{display:block}.content .walkthrough.is-split[data-layout=scroll]{height:auto}.content .walkthrough.is-split[data-layout=scroll]>.walkthrough-steps{overflow:visible;padding-bottom:0}.content .walkthrough.is-split .walkthrough-code{position:static;width:auto;height:auto;clip-path:none;white-space:normal}}
 
 /* Page layouts: wide drops the outline; landing drops the sidebar too and lets a Hero open the page. */
+/* Expanded layouts let ordinary prose fill its container, including nested Sections. */
+:is(.layout-wide,.layout-landing,.layout-splash){--prose-max-width:none}
 .layout.layout-wide:not(.has-examples){grid-template-areas:"side main";grid-template-columns:minmax(12rem,14rem) minmax(0,1fr)}
 .layout.layout-wide:not(.has-examples) .content article,.layout-wide .content{max-width:none}
 .layout.layout-landing{display:block;max-width:var(--landing-width);padding-top:1.5rem}
