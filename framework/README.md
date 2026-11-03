@@ -9,13 +9,13 @@ This package provides the `shoalrun` CLI, starter projects, agent skills, and of
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.14
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.15
 ```
 
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.14 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.15 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
@@ -98,6 +98,9 @@ not section redaction or host authorization.
 
 See [the runnable faceted-sites example](example-configs/faceted-sites/README.md)
 for main, developer, and regional sites built from one source directory.
+
+For deployment-owned SKU selections, direct or grandfathered feature grants, and
+branding supplied outside the shared repository, see [deployment profiles](DEPLOYMENT-PROFILES.md).
 
 ## Export content into an application
 

@@ -1,4 +1,5 @@
 import { hasScaffoldPlaceholders } from './scaffold-placeholders.js';
+import { validateFeatureClassification, matchesFeatures, type FeatureContext } from './deployment-profile.js';
 import { matchesContentFilter } from './content-filter.js';
 import { readdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -28,7 +29,7 @@ async function files(dir: string): Promise<string[]> {
   return nested.flat().sort();
 }
 
-export async function planAuthoredDocuments({ base, basePath, config, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions }: {
+export async function planAuthoredDocuments({ base, basePath, config, variants, language, readerFilters, contentFilter, featureContext, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions }: {
   base: string;
   basePath: string;
   config: AuthoredPublicationConfig;
@@ -36,6 +37,7 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
   language: string;
   readerFilters?: ReaderFiltersConfig;
   contentFilter?: ReaderSelection;
+  featureContext?: FeatureContext;
   metadataProvider?: { provide: MetadataProvider };
   metadataDependencies: Set<string>;
   allowRouteCollisions?: boolean;
@@ -79,10 +81,18 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
     knownDocumentIds.add(frontmatter.id);
     knownDocumentTypes.set(frontmatter.id, frontmatter.type);
     if (frontmatter.type === 'api-reference') for (const operation of frontmatter.operations ?? []) authoredOperationIds.add(operation);
-    if (frontmatter.access?.policy !== 'public' && !authoringFiles?.has(file)) continue;
+    const classificationVariants = featureContext?.classificationPublications ?? variants;
+    const classificationEligible = frontmatter.access?.policy === 'public' && classificationVariants.some(variant =>
+      (pagePublications ? pagePublications.some(item => item.channel === variant.channel && item.version === variant.version) : frontmatter.channel === variant.channel && frontmatter.version === variant.version) && frontmatter.language === variant.language);
+    if (classificationEligible) validateFeatureClassification(sourceFrontmatter, featureContext, `${file}: ${frontmatter.id}`);
+    const included = matchesFeatures(frontmatter.requires, featureContext, `${file}: ${frontmatter.id}`);
+    const decision = featureContext?.decisions.at(-1);
+    if (!included) continue;
+    if (frontmatter.access?.policy !== 'public' && !authoringFiles?.has(file)) { if (decision) decision.included = false; continue; }
     const marks = pageReaderFilters(frontmatter, readerFilters, file);
-    if (!matchesContentFilter(marks, contentFilter)) continue;
+    if (!matchesContentFilter(marks, contentFilter)) { if (decision) decision.included = false; continue; }
     if (hasScaffoldPlaceholders(body) || /\[\[TODO:[\s\S]*?\]\]/.test(JSON.stringify(frontmatter)) || frontmatter.summary?.startsWith('Draft guide for ')) throw new Error(`${file}: unresolved scaffold placeholders cannot be published`);
+    let selectedPublication = false;
     for (const variant of variants) {
       if (pagePublications ? !pagePublications.some(item => item.channel === variant.channel && item.version === variant.version) : (frontmatter.channel && frontmatter.channel !== variant.channel || frontmatter.version && frontmatter.version !== variant.version)) continue;
       if (frontmatter.language && frontmatter.language !== variant.language) continue;
@@ -94,8 +104,10 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
       const collision = routeOwners.get(route.toLowerCase());
       if (collision && !allowRouteCollisions) throw new Error(`Route collision ${route}: ${collision} and ${key}`);
       routeOwners.set(route.toLowerCase(), key);
-      docs.set(key, { file, frontmatter: publishedFrontmatter, body, tree: null, variant, route, markdownRoute: markdownRoute(route, basePath), readerFilters: marks });
+      selectedPublication = true;
+      docs.set(key, { featureContext, file, frontmatter: publishedFrontmatter, body, tree: null, variant, route, markdownRoute: markdownRoute(route, basePath), readerFilters: marks });
     }
+    if (!selectedPublication && decision) decision.included = false;
   }
   return { contentDir, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners };
 }

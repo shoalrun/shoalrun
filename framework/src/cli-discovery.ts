@@ -10,13 +10,13 @@ Read bundled references (no project or provider key required):
   read <document-id> [--json]
 
 Inspect a project:
-  project [--config FILE] [--section pages|guidance|configuration|navigation|relationships|templates|findings]
-  source FILE [--config FILE]
+  project [--config FILE] [--profile FILE] [--section pages|guidance|configuration|navigation|relationships|templates|findings]
+  source FILE [--config FILE] [--profile FILE]
   context <document-id> [--config FILE]
 
 Validate and preview edits:
-  baseline --out FILE [--config FILE]
-  validate (--baseline FILE | --file FILE | --id ID) [--config FILE]
+  baseline --out FILE [--config FILE] [--profile FILE]
+  validate (--baseline FILE | --file FILE | --id ID) [--config FILE] [--profile FILE]
   validation-status REPORT
   review REPORT [--format json|markdown]
   preview REPORT [--port PORT]
@@ -36,8 +36,8 @@ export const cliHelp = `Usage: shoalrun <command>
 
 Start and build:
   init [directory] [--starter minimal|api-docs|showcase]
-  build [config] [output]
-  export [config] --out DIRECTORY [--target NAME]
+  build [config] [output] [--profile FILE]
+  export [config] --out DIRECTORY [--target NAME] [--profile FILE]
   dev [config] [output] [--port PORT]
   serve <site-directory> [--host HOST] [--port PORT]
   check [config] [--json]
@@ -49,9 +49,9 @@ Agent guidance and offline documentation:
   skills read <name> [--json]
   docs search <query> [--json]
   docs read <document-id> [--json]
-  docs project [--config FILE]
-  docs baseline --out FILE [--config FILE]
-  docs validate (--baseline FILE | --file FILE | --id ID) [--config FILE]
+  docs project [--config FILE] [--profile FILE]
+  docs baseline --out FILE [--config FILE] [--profile FILE]
+  docs validate (--baseline FILE | --file FILE | --id ID) [--config FILE] [--profile FILE]
   docs review REPORT [--format json|markdown]
   docs preview REPORT [--port PORT]
 

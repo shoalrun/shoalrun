@@ -1,3 +1,6 @@
+import { validateHeader, validateFooter } from './site-identity.js';
+import { profileSelection } from './deployment-profile.js';
+import { profileNavigation } from './project-navigation.js';
 import { canonical, within, checkOutputDirectory } from './output-location.js';
 import { reviewApiPublication } from './api-publication-review.js';
 import { prepareContentWorkspace } from './content-workspace.js';
@@ -29,7 +32,7 @@ import { resolveDiagramTrees } from './diagrams.js';
 import { ApiShape, NamedExample } from './api.js';
 import { ApiEmbedUse, resolveApiEmbedTree } from './api-embeds.js';
 import { calloutToneProblems, contrastProblems, Mode, paletteCatalog, paletteCss, presetCatalog, resolvePalette } from './palettes.js';
-import { buildHtmlPage, Document, FooterConfig, HeaderConfig, SiteLink, heading, link, list, markdownRoute, parse, paragraph, projectMetadata, renderMarkdown, root, text, transformMdx, Variant } from './content.js';
+import { buildHtmlPage, Document, heading, link, list, markdownRoute, parse, paragraph, projectMetadata, renderMarkdown, root, text, transformMdx, Variant } from './content.js';
 import { resolveCalloutTypes } from './callouts.js';
 import { badgeContrastProblems, badgeCss, resolveBadgeVariants } from './badges.js';
 import { explain, explainSegments, loadConfig } from './config.js';
@@ -74,58 +77,6 @@ const builtInSearchProvider = path.resolve(path.dirname(fileURLToPath(import.met
 // Each shape preset has a default palette; palettes live in styles/themes/palettes.
 export const themePresets: Record<string, string> = Object.fromEntries(presetCatalog.map(preset => [preset.name, preset.palette]));
 
-function validateHeader(value: unknown): HeaderConfig {
-  if (value === undefined) return { links: [] };
-  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('site.header must be a mapping');
-  const { links = [], ...extra } = value as Record<string, unknown>;
-  if (Object.keys(extra).length) throw new Error(`site.header does not accept ${Object.keys(extra).join(', ')}`);
-  if (!Array.isArray(links)) throw new Error('site.header.links must be a list');
-  return {
-    links: links.map((link, index) => {
-      const where = `site.header.links[${index}]`;
-      const { style = 'link', ...rest } = (link && typeof link === 'object' && !Array.isArray(link) ? link : {}) as Record<string, unknown>;
-      const checked = validateSiteLink(link, where, rest);
-      if (style !== 'link' && style !== 'button' && style !== 'primary') throw new Error(`${where}.style must be link, button, or primary`);
-      return { ...checked, style };
-    })
-  };
-}
-
-// Header and footer links share one rule: a label and a site path, http(s) URL, or mailto link.
-function validateSiteLink(link: unknown, where: string, fields = link as Record<string, unknown>): SiteLink {
-  if (!link || typeof link !== 'object' || Array.isArray(link)) throw new Error(`${where} must be a mapping`);
-  const { label, href, ...rest } = fields;
-  if (Object.keys(rest).length) throw new Error(`${where} does not accept ${Object.keys(rest).join(', ')}`);
-  if (typeof label !== 'string' || !label.trim()) throw new Error(`${where}.label is required`);
-  if (typeof href !== 'string' || !/^(\/|https?:\/\/|mailto:)/.test(href)) throw new Error(`${where}.href must be a site path, http(s) URL, or mailto link`);
-  return { label, href };
-}
-
-function validateFooter(value: unknown): FooterConfig | undefined {
-  if (value === undefined) return undefined;
-  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('site.footer must be a mapping');
-  const { columns = [], links = [], text, ...extra } = value as Record<string, unknown>;
-  if (Object.keys(extra).length) throw new Error(`site.footer does not accept ${Object.keys(extra).join(', ')}`);
-  if (!Array.isArray(columns)) throw new Error('site.footer.columns must be a list');
-  if (!Array.isArray(links)) throw new Error('site.footer.links must be a list');
-  if (text !== undefined && (typeof text !== 'string' || !text.trim())) throw new Error('site.footer.text must be non-empty text');
-  const footer: FooterConfig = {
-    columns: columns.map((column, index) => {
-      const where = `site.footer.columns[${index}]`;
-      if (!column || typeof column !== 'object' || Array.isArray(column)) throw new Error(`${where} must be a mapping`);
-      const { title, links: columnLinks, ...rest } = column as Record<string, unknown>;
-      if (Object.keys(rest).length) throw new Error(`${where} does not accept ${Object.keys(rest).join(', ')}`);
-      if (typeof title !== 'string' || !title.trim()) throw new Error(`${where}.title is required`);
-      if (!Array.isArray(columnLinks) || !columnLinks.length) throw new Error(`${where}.links must list at least one link`);
-      return { title, links: columnLinks.map((link, linkIndex) => validateSiteLink(link, `${where}.links[${linkIndex}]`)) };
-    }),
-    links: links.map((link, index) => validateSiteLink(link, `site.footer.links[${index}]`)),
-    ...(typeof text === 'string' ? { text } : {})
-  };
-  if (!footer.columns.length && !footer.links.length && !footer.text) throw new Error('site.footer needs columns, links, or text');
-  return footer;
-}
-
 const contrastFailuresFor = (palette: Awaited<ReturnType<typeof resolvePalette>>, modes: Mode[], calloutTypes: ReturnType<typeof resolveCalloutTypes>, badgeVariants: ReturnType<typeof resolveBadgeVariants>) => {
   const customTones = new Map([...calloutTypes.values()].flatMap(type => type.colors ? [[type.tone, type.colors] as const] : []));
   return [...contrastProblems(palette, modes), ...calloutToneProblems(customTones, palette, modes), ...badgeContrastProblems(badgeVariants, palette, modes)];
@@ -146,8 +97,8 @@ export async function checkThemeContrast(configFile: string): Promise<{ modes: M
   return { modes, palette: palette.name };
 }
 
-export async function compile(configFile: string, destination?: string, provenance: BuildProvenance = {}, options: { apiReview?: 'report'; sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string> } = {}) {
-  const loaded = await loadConfig(configFile);
+export async function compile(configFile: string, destination?: string, provenance: BuildProvenance = {}, options: { apiReview?: 'report'; sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; profile?: string } = {}) {
+  const loaded = await loadConfig(configFile, { profile: options.profile });
   const componentPlugins = await loadComponentPlugins(loaded);
   const provenanceRecord = buildInfo(loaded.digest, provenance);
   const resolvedConfig = resolvedCompilerConfig(loaded.value);
@@ -211,6 +162,9 @@ export async function compile(configFile: string, destination?: string, provenan
   const faviconFile = config.site.favicon === undefined ? undefined : path.resolve(path.dirname(explainSegments(loaded, ['site', 'favicon']).source.file), config.site.favicon);
   if (faviconFile && !existsSync(faviconFile)) throw new Error(`site.favicon: file not found: ${faviconFile}`);
   const faviconRoute = publicPath(faviconFile?.toLowerCase().endsWith('.png') ? '/favicon.png' : '/favicon.svg');
+  if (config.site.logo !== undefined && (typeof config.site.logo !== 'string' || !/\.(?:svg|png)$/i.test(config.site.logo))) throw new Error('site.logo must be a local .svg or .png file');
+  const logoFile = config.site.logo === undefined ? undefined : path.resolve(path.dirname(explainSegments(loaded, ['site', 'logo']).source.file), config.site.logo);
+  const logoRoute = logoFile ? publicPath(`/assets/brand-logo${path.extname(logoFile).toLowerCase()}`) : undefined;
   const shareFontFiles = [...bundledShareFonts(), ...shareImages.fonts, ...fonts.faces.map(face => face.file).filter(file => /\.(?:ttf|otf)$/i.test(file))];
   const shareCache = path.join(base, '.shoalrun/cache/share-images');
   const fontDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../styles/fonts');
@@ -301,7 +255,7 @@ export async function compile(configFile: string, destination?: string, provenan
   if (contentFilter && !docs.size) throw new Error('site.contentFilter matched no published pages; check page facets and enabled publications');
   let navigationSpec: ReturnType<typeof validateProjectNavigation>;
   try {
-    navigationSpec = validateProjectNavigation(config.navigation ?? [], docs, knownOperations, new Set(Object.keys(config.apis ?? {})));
+    navigationSpec = validateProjectNavigation(loaded.deployment?.context.grants && loaded.deployment.context.pruneNavigation ? profileNavigation(config.navigation ?? [], docs, knownDocumentIds, knownOperations, new Set(Object.keys(config.apis ?? {}))) : config.navigation ?? [], docs, knownOperations, new Set(Object.keys(config.apis ?? {})));
   } catch (error) {
     const source = config.navigation === undefined ? configFile : explain(loaded, 'navigation').source.file;
     throw new Error(`${(error as Error).message} (navigation source: ${source})`);
@@ -334,9 +288,15 @@ export async function compile(configFile: string, destination?: string, provenan
   };
   // Local component and Markdown images publish beside their page under /assets/pages.
   const heroImages = new Map<string, string>();
+  if (logoFile && logoRoute) heroImages.set(logoRoute, logoFile);
   const walkthroughSources = new Set<string>();
+  const usedComponentAssets = new Set<string>();
   const collectPageAssets = (value: unknown) => {
     if (!isConfigMapping(value)) return;
+    if (value.type === 'docComponent' && isConfigMapping(value.browser)) {
+      if (typeof value.browser.moduleUrl === 'string') usedComponentAssets.add(value.browser.moduleUrl);
+      for (const route of Array.isArray(value.browser.styleUrls) ? value.browser.styleUrls : []) if (typeof route === 'string') usedComponentAssets.add(route);
+    }
     const image = value.image;
     if (value.type === 'docHero' && isConfigMapping(image) && typeof image.url === 'string' && typeof image.file === 'string') {
       const route = publicPath(image.url);
@@ -366,7 +326,7 @@ export async function compile(configFile: string, destination?: string, provenan
     rendered, docs, relationships, knownOperations, cardUses, publishedRelationships, cookbooks, documentRoutes,
     basePath, siteOrigin, colorMode, config, highlighter, editionLabel, customStyleFile, themePreset, palette,
     themeStyleFile, generatedPaletteCss, generatedBadgeCss, themeSwitcherData, generatedFontsCss, fontsPreload: fonts.preload,
-    shareFor, faviconRoute, modeToggle, header, footer, search, readerFilters, variants, externalDocuments,
+    shareFor, faviconRoute, logoRoute, modeToggle, header, footer, search, readerFilters, variants, externalDocuments,
     externalSiteLinks, navigationSpec, navigationEntries, navigationTagOrder
   });
   // The theme previewer and switcher re-theme pages in the browser, so every preset and palette ships only when one is used.
@@ -427,11 +387,12 @@ export async function compile(configFile: string, destination?: string, provenan
   const artifactConfig = options.authoringFiles ? { ...config, mcp: false } : config;
   const { artifacts, buildId } = await assembleArtifacts({
     base, basePath, publicPath, canonical, siteOrigin, manifest, provenanceRecord, rendered, sitemaps,
+    privateDependencies: new Set([...(loaded.deployment?.file ? [loaded.deployment.file] : []), ...(loaded.deployment?.assetFiles ?? [])]),
     diagramAssets, heroImages, focusedContracts, styleFiles, themeStyleFile, generatedPaletteCss,
     generatedBadgeCss, search, synonyms, config: artifactConfig, builtInSearchProvider, customReaderModule, analyticsModule, mcpAnalyticsModule,
     previewFiles, assetDirectory, themeSwitcher, themeDirectory, palette, colorMode, generatedFontsCss,
     fontFiles, fonts, shareImages, shareFor, themePreset, shareFontFiles, shareCache, faviconFile,
-    faviconRoute, customStyleFile, scriptFiles, componentAssets: componentPlugins.assets, redirects, apiPublications, api, catalog, headers,
+    faviconRoute, customStyleFile, scriptFiles, componentAssets: loaded.deployment?.context.grants ? componentPlugins.assets.filter(asset => usedComponentAssets.has(asset.route)) : componentPlugins.assets, redirects, apiPublications, api, catalog, headers,
     documentRoutes, readerFilters, apiSources
   });
   if (destination) {
@@ -442,9 +403,10 @@ export async function compile(configFile: string, destination?: string, provenan
       await mkdir(localGuide, { recursive: true });
       await writeFile(path.join(localGuide, 'frontmatter-reference.md'), frontmatterReference(config.frontmatter));
       await writeFile(path.join(localGuide, 'frontmatter.schema.json'), JSON.stringify(frontmatterSchema(config.frontmatter), null, 2) + '\n');
+      if (loaded.deployment?.context.grants && !options.authoringFiles) await writeFile(path.join(localGuide, 'profile-selection.json'), JSON.stringify({ ...profileSelection(loaded.deployment), buildId, configDigest: loaded.digest }, null, 2) + '\n');
     });
     // Authoring captures resolve revision dates without changing captured inputs.
     if (!options.authoringFiles) await freshness?.commit();
   }
-  return { ...manifest, buildId, apiPublicationReview, ...(options.authoringFiles ? { authoringSources: rendered.map(({ doc }) => ({ id: doc.frontmatter.id, file: doc.file, url: doc.route, markdownUrl: doc.markdownRoute })) } : {}) };
+  return { ...manifest, buildId, apiPublicationReview, profileSelection: profileSelection(loaded.deployment), ...(options.authoringFiles ? { authoringSources: rendered.map(({ doc }) => ({ id: doc.frontmatter.id, file: doc.file, url: doc.route, markdownUrl: doc.markdownRoute })) } : {}) };
 }

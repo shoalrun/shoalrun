@@ -1,3 +1,4 @@
+import { matchesFeatures, validateFeatureClassification } from './deployment-profile.js';
 import { matchesContentFilter } from './content-filter.js';
 import path from 'node:path';
 import { ApiReader, querySyntaxRules } from './api.js';
@@ -17,7 +18,7 @@ type ApiDefinition = {
   source?: { kind: string; path: string; [key: string]: unknown };
   publications?: Array<{ channel: string; version: string; source: { kind: string; path: string; [key: string]: unknown }; discovery?: { endpoint?: string }; [key: string]: unknown }>;
   discovery?: { endpoint?: string };
-  operations?: Array<{ id: string; reference: string; sourceOperationId?: string }>;
+  operations?: Array<{ id: string; reference: string; sourceOperationId?: string; shared?: unknown; requires?: unknown }>;
   generateReferences?: boolean | { pathPrefix?: string; include?: string[]; exclude?: string[] };
   mappings?: unknown;
   [key: string]: unknown;
@@ -64,6 +65,12 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
   allowRouteCollisions?: boolean;
 }) {
   const definitions = validatedApiDefinitions(config.apis);
+  for (const [id, definition] of Object.entries(definitions)) {
+    validateFeatureClassification(definition, loaded.deployment ? { ...loaded.deployment.context, requireClassification: false } : undefined, `API ${id}`);
+    for (const operation of definition.operations ?? []) validateFeatureClassification(operation, loaded.deployment ? { ...loaded.deployment.context, requireClassification: false } : undefined, `Operation ${operation.id}`);
+    if (loaded.deployment?.context.grants && [definition.source, ...(definition.publications ?? []).map(entry => entry.source)].some(source => source?.publish === true)) throw new Error(`API ${id}: profiled builds cannot publish a full OpenAPI source; use focused contracts (source.publish: false, source.focused: true)`);
+  }
+  const operationRequirements = new Map<string, unknown>();
   const api = new ApiReader();
   const queryRules = new Map(Object.entries(definitions).map(([id, definition]) => [id, querySyntaxRules(definition.querySyntax)]));
   const lifecycleMappings = new Map<string, { from: string; values: Record<string, 'beta' | 'in-development' | 'deprecated' | 'experimental'> }>();
@@ -119,7 +126,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
       explicit.add(operation.sourceOperationId);
     }
     definition.operations ??= [];
-    for (const variant of variants) {
+    for (const variant of loaded.deployment?.context.classificationPublications ?? variants) {
       const binding = sourceForVariant(apiId, definition, variant);
       if (!binding) continue;
       const rawSpec: unknown = (await api.load(binding.file)).value;
@@ -148,7 +155,17 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
             knownOperations.set(id, { apiId, reference });
             definition.operations.push({ id, sourceOperationId, reference });
           }
-          if (!selected) continue;
+          if (selected) { knownDocumentIds.add(reference); knownDocumentTypes.set(reference, 'api-reference'); }
+          const requirements = isConfigMapping(operation) ? operation['x-shoalrun-requires'] : undefined;
+          const shared = isConfigMapping(operation) ? operation['x-shoalrun-shared'] : undefined;
+          if (selected) {
+            const classification = requirements !== undefined || shared !== undefined ? { requires: requirements, shared } : definition;
+            validateFeatureClassification(classification, loaded.deployment?.context, `${binding.file}: ${sourceOperationId} (generated reference)`);
+          }
+          if (!variants.some(item => item.channel === variant.channel && item.version === variant.version && item.language === variant.language)) continue;
+          operationRequirements.set(keyFor(id, variant), requirements);
+          const featureSelected = matchesFeatures(requirements, loaded.deployment?.context, `${binding.file}: ${sourceOperationId}`) && matchesFeatures(definition.requires, loaded.deployment?.context, `API ${apiId}`);
+          if (!selected || !featureSelected) continue;
           const page = resolveFrontmatter({
             id: reference, title: String(isConfigMapping(operation) && operation.summary || `${webhook ? 'Webhook' : method.toUpperCase()} ${route}`),
             summary: webhook ? `Webhook event: ${route}` : `${method.toUpperCase()} ${route}`, type: 'api-reference',
@@ -158,6 +175,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
           validateFrontmatter(page, config.frontmatter, binding.file);
           knownDocumentIds.add(reference);
           knownDocumentTypes.set(reference, page.type);
+          if (!matchesFeatures(page.requires, loaded.deployment?.context, `${binding.file}: ${reference}`)) continue;
           if (page.access?.policy !== 'public' || page.channel !== variant.channel || page.version !== variant.version || page.language !== variant.language) continue;
           const key = keyFor(reference, variant);
           const authored = docs.get(key);
@@ -165,6 +183,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
             if (authored.frontmatter.type !== 'api-reference' || authored.frontmatter.operations?.length !== 1 || authored.frontmatter.operations[0] !== id) throw new Error(`Generated API reference ${reference} conflicts with an authored page`);
             continue;
           }
+          if (loaded.deployment?.context.grants && authoredOperationIds.has(id)) continue;
           const marks = pageReaderFilters(page, readerFilters, binding.file);
           if (!matchesContentFilter(marks, contentFilter)) continue;
           const pageRoute = routeFor(page, variant, config);
@@ -177,5 +196,5 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
     }
     for (const id of [...(include ?? []), ...(exclude ?? [])]) if (!available.has(id)) throw new Error(`apis.${apiId}.generateReferences names unknown source operationId ${id}`);
   }
-  return { api, queryRules, lifecycleMappings, extensionValue, sourceForVariant, knownOperations, apiDefinitions: definitions };
+  return { api, operationRequirements, queryRules, lifecycleMappings, extensionValue, sourceForVariant, knownOperations, apiDefinitions: definitions };
 }

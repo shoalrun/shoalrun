@@ -16,13 +16,17 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Content delivery, verification dates, and clearer references](https://www.shoalrun.com/changelog/2026-10-28.md) — ID: change.2026-10-28. changelog-entry; 1393 tokens. Reuse documentation through static bundles or REST, display technical verification dates, and find clearer API and layout guidance.
 
+- [Readable selections and wider layouts](https://www.shoalrun.com/changelog/2026-10-30.md) — ID: change.2026-10-30. changelog-entry; 507 tokens. Keep selected text readable and let paragraphs and lists fill expanded layouts.
+
+- [Customer documentation editions](https://www.shoalrun.com/changelog/2026-11-03.md) — ID: change.2026-11-03. changelog-entry; 779 tokens. Build branded customer editions from purchased and grandfathered features without storing customer profiles in the shared repository.
+
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 551 tokens. Snapshot previews with coverage and freshness reports.
 
 - [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 466 tokens. Reviewed agent drafts, search improvements, and answer context.
 
 - [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 378 tokens. Project discovery and captured working-tree validation.
 
-- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1074 tokens. Compiler, CLI, and reader changes.
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1202 tokens. Compiler, CLI, and reader changes.
 
 - [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1145 tokens. MCP hosting, analytics, and shared component content.
 

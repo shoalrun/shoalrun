@@ -13,11 +13,12 @@ import { auditReference } from './reference-audit.js';
 import { iconLicenseFile } from './icons.js';
 import { parseAuditSettings, runAuditTest } from './audit.js';
 import { configFindingLocation, validationFinding, type ValidationFinding } from './authoring-findings.js';
-import { authoringArtifactPath, captureSnapshotInputs, collectSnapshotInputs, confirmSnapshotInputs, excludedNames, isWithin, parseAuthoringBaseline, relativeInput, sha256, SnapshotError, validatorInputs, type SnapshotCapture, type SnapshotInput } from './authoring-snapshot.js';
+import { authoringArtifactPath, captureSnapshotInputs, collectSnapshotInputs, confirmSnapshotInputs, excludedNames, isWithin, parseAuthoringBaseline, relativeInput, sha256, SnapshotError, validatorInputs, type SnapshotCapture, type SnapshotInput, validateProfileCapture, readProfileInput } from './authoring-snapshot.js';
 
-export type ValidationOptions = { files?: string[]; ids?: string[]; baselineFile?: string; artifactsDirectory?: string; runConfiguredChecks?: boolean };
+export type ValidationOptions = { profile?: string; files?: string[]; ids?: string[]; baselineFile?: string; artifactsDirectory?: string; runConfiguredChecks?: boolean };
 export type ValidationCheck = { id: string; status: 'passed' | 'failed' | 'skipped' | 'unavailable'; explanation?: string; documents?: number; findings?: number };
 export type ValidationReport = {
+  profile?: SnapshotCapture['profile'];
   schemaVersion: 1; kind: 'shoalrun-authoring-validation'; status: 'ok' | 'failed' | 'incomplete' | 'unavailable' | 'stale'; snapshotId: string;
   project: string; config: string; baseline: { kind: 'explicit-declaration' | 'task-baseline'; file?: string; digest?: string };
   changed: Array<{ file: string; operation: 'created' | 'modified' | 'deleted' | 'declared'; beforeDigest: string | null; digest: string | null }>;
@@ -62,7 +63,7 @@ export async function validateAuthoringChanges(configFile: string, options: Vali
 // Internal injection boundary for deterministic capture/check race fixtures.
 export async function validateAuthoringChangesWithHooks(configFile: string, options: ValidationOptions, hooks: { afterCapture?: () => Promise<void>; afterChecks?: () => Promise<void> } = {}): Promise<ValidationReport> {
   checkedOptions(options);
-  const capture = await captureSnapshotInputs(configFile);
+  const capture = await captureSnapshotInputs(configFile, { profile: options.profile });
   const runtime = await validatorInputs();
   let baseline: ValidationReport['baseline'] = { kind: 'explicit-declaration' };
   const previous = new Map<string, SnapshotInput>();
@@ -70,22 +71,36 @@ export async function validateAuthoringChangesWithHooks(configFile: string, opti
     const raw = await readFile(options.baselineFile);
     const value = parseAuthoringBaseline(JSON.parse(raw.toString('utf8')), capture.root, capture.config);
     baseline = { kind: 'task-baseline', file: await realpath(options.baselineFile), digest: sha256(raw) };
+    if (value.profile?.file !== capture.profile?.file) throw new SnapshotError('invalid_input', 'Baseline and validation must use the same deployment profile path');
+    // Retain previously declared profile assets just like other baseline
+    // dependencies, even when a profile no longer references an extant file.
+    for (const [file, source] of Object.entries(value.profile?.sources ?? {})) {
+      if (!capture.profile || Object.hasOwn(capture.profile.sources, file)) continue;
+      const input = await readProfileInput(source).catch(error => { if (error.code === 'ENOENT') return undefined; throw error; });
+      if (!input) continue;
+      capture.profile.sources[file] = source;
+      capture.inputs.push({ file, digest: input.digest, mode: input.mode });
+      capture.buffers.set(file, input.bytes);
+    }
+    capture.inputs.sort((a, b) => a.file.localeCompare(b.file));
     for (const input of value.inputs) previous.set(input.file, input);
     // A dependency removed from config is not necessarily a deleted file. Retain
     // baseline scope for extant sibling inputs so change classification is honest.
     const oldExternal: string[] = [];
-    for (const input of value.inputs) if ((!isWithin(capture.root, path.resolve(capture.root, input.file)) || input.file.split(path.sep).includes('node_modules')) && await stat(relativeInput(capture.root, input.file)).then(() => true, () => false)) oldExternal.push(input.file);
+    for (const input of value.inputs) if (!Object.hasOwn(capture.profile?.sources ?? {}, input.file) && (!isWithin(capture.root, path.resolve(capture.root, input.file)) || input.file.split(path.sep).includes('node_modules')) && await stat(relativeInput(capture.root, input.file)).then(() => true, () => false)) oldExternal.push(input.file);
     const oldDirectories: string[] = [];
     for (const directory of value.externalDirectories) if (await stat(relativeInput(capture.root, directory)).then(() => true, () => false)) oldDirectories.push(directory);
     const combinedDirectories = [...new Set([...capture.externalDirectories, ...oldDirectories])].sort();
-    const combined = await collectSnapshotInputs(capture.root, [...new Set([...oldExternal, ...capture.inputs.filter(input => (!isWithin(capture.root, path.resolve(capture.root, input.file)) || input.file.split(path.sep).includes('node_modules'))).map(input => input.file)])], combinedDirectories);
+    const combined = await collectSnapshotInputs(capture.root, [...new Set([...oldExternal, ...capture.inputs.filter(input => !Object.hasOwn(capture.profile?.sources ?? {}, input.file) && (!isWithin(capture.root, path.resolve(capture.root, input.file)) || input.file.split(path.sep).includes('node_modules'))).map(input => input.file)])], combinedDirectories);
+    for (const input of capture.inputs.filter(input => Object.hasOwn(capture.profile?.sources ?? {}, input.file))) { combined.inputs.push(input); combined.buffers.set(input.file, capture.buffers.get(input.file)!); }
+    combined.inputs.sort((a, b) => a.file.localeCompare(b.file));
     for (const input of capture.inputs) if (combined.inputs.find(current => current.file === input.file)?.digest !== input.digest) throw new SnapshotError('stale_input', `Input changed while comparing the task baseline: ${input.file}`);
     Object.assign(capture, combined, { externalDirectories: combinedDirectories });
   }
   let loaded: Awaited<ReturnType<typeof loadConfig>> | undefined;
   // Loading configuration is read-only. Compilation and executable extensions
   // are never run on the original project.
-  try { loaded = await loadConfig(path.join(capture.root, capture.config)); } catch { /* Snapshot compiler diagnoses invalid YAML/config. */ }
+  try { loaded = await loadConfig(path.join(capture.root, capture.config), { profile: options.profile }); } catch { /* Snapshot compiler diagnoses invalid YAML/config. */ }
   const contentDir = path.resolve(capture.root, String((loaded?.value.site as any)?.contentDir ?? 'content'));
   if (!isWithin(capture.root, contentDir) || contentDir === capture.root) throw new SnapshotError('unsafe_path', 'Authoring validation requires content inside the project configuration directory.');
   const authored = capture.inputs.filter(input => isWithin(contentDir, path.resolve(capture.root, input.file)) && /\.mdx?$/.test(input.file)).map(input => input.file);
@@ -127,7 +142,7 @@ export async function validateAuthoringChangesWithHooks(configFile: string, opti
   const directory = options.artifactsDirectory ? await authoringArtifactPath(capture.root, options.artifactsDirectory) : await realpath(await mkdtemp(path.join(os.tmpdir(), 'shoalrun-validation-')));
   if (options.artifactsDirectory) { await mkdir(path.dirname(directory), { recursive: true }); await mkdir(directory); }
   const tree = path.join(directory, 'tree'), shadow = path.join(tree, path.basename(capture.root)), site = path.join(directory, 'site');
-  const report: ValidationReport = { schemaVersion: 1, kind: 'shoalrun-authoring-validation', status: 'incomplete', snapshotId, project: capture.root, config: capture.config, baseline, changed, inputs: capture.inputs, excluded: capture.excluded, externalDirectories: capture.externalDirectories, contentDigest, configDigest: capture.configDigest, validatorDigest: runtime.digest, runtimeDependencies: [], dependencies: [], checks: [], findings: [],
+  const report: ValidationReport = { profile: capture.profile, schemaVersion: 1, kind: 'shoalrun-authoring-validation', status: 'incomplete', snapshotId, project: capture.root, config: capture.config, baseline, changed, inputs: capture.inputs, excluded: capture.excluded, externalDirectories: capture.externalDirectories, contentDigest, configDigest: capture.configDigest, validatorDigest: runtime.digest, runtimeDependencies: [], dependencies: [], checks: [], findings: [],
     coverage: { scope: 'complete-captured-project', authored, affected, rendered: [], notRendered: [...affected] },
     artifacts: { directory, project: shadow, site, report: path.join(directory, 'report.json'), digest: null, lifecycle: 'Retained local validation artifacts. Remove this artifact directory when finished; it is separate from working-tree source. No preview service is started.' },
     freshness: { current: true, checkedAt: new Date().toISOString() } };
@@ -150,7 +165,8 @@ export async function validateAuthoringChangesWithHooks(configFile: string, opti
     await hooks.afterCapture?.();
     if (!await confirmSnapshotInputs(capture) || !await absentInputsUnchanged()) throw new SnapshotError('stale_input', 'Working tree changed during snapshot capture; retry validation.');
     const stagedConfig = path.join(shadow, capture.config);
-    loaded = await loadConfig(stagedConfig);
+    const stagedProfile = capture.profile ? path.resolve(shadow, capture.profile.file) : undefined;
+    loaded = await loadConfig(stagedConfig, { profile: stagedProfile });
     if (capture.configDigest && loaded.digest !== capture.configDigest) throw new SnapshotError('stale_input', 'Captured configuration does not match the inspected configuration; retry.');
     // Local executable metadata/highlighting modules are not a provider-free
     // inspection primitive. Report unavailable instead of executing unknown code.
@@ -167,7 +183,7 @@ export async function validateAuthoringChangesWithHooks(configFile: string, opti
         } catch (error) { addError(error); }
       }
       try {
-        const manifest = await compile(stagedConfig, site, {}, { authoringFiles: new Set(affected.map(file => path.join(shadow, file))) });
+        const manifest = await compile(stagedConfig, site, {}, { profile: stagedProfile, authoringFiles: new Set(affected.map(file => path.join(shadow, file))) });
         report.dependencies = manifest.dependencies.map(file => isWithin(tree, file) ? path.relative(shadow, file) : file);
         for (const dependency of manifest.dependencies) {
           if (isWithin(tree, dependency)) {
@@ -177,7 +193,12 @@ export async function validateAuthoringChangesWithHooks(configFile: string, opti
         }
         report.coverage.rendered = (manifest.authoringSources ?? []).map(doc => ({ id: doc.id, file: path.relative(shadow, doc.file), route: doc.url, markdown: doc.markdownUrl }));
         report.coverage.notRendered = affected.filter(file => !report.coverage.rendered.some(doc => doc.file === file));
-        for (const file of report.coverage.notRendered) report.findings.push({ ...finding('validation.excluded-page', 'This affected authored page did not render in any enabled publication.', 'Correct its publication/locale selection or enable an isolated review publication and validate again.'), file });
+        for (const file of report.coverage.notRendered) {
+          const profileExcluded = manifest.profileSelection?.decisions.some(decision => !decision.included && decision.id.startsWith(path.join(shadow, file) + ': '));
+          report.findings.push(profileExcluded
+            ? { ...finding('validation.profile-excluded', 'This affected page is excluded from the selected deployment edition; its rendered content was not checked.', 'Validate a profile/publication that includes this page before accepting changes to its content.', 'warning'), file }
+            : { ...finding('validation.excluded-page', 'This affected authored page did not render in any enabled publication.', 'Correct its publication/locale selection or enable an isolated review publication and validate again.'), file });
+        }
         report.checks.push({ id: 'compile', status: 'passed', documents: manifest.documents.length });
         const settings = parseAuditSettings(config.audit);
         if (settings.links) {
@@ -258,6 +279,7 @@ export async function readValidationReport(reportFile: string): Promise<Validati
   catch { throw new SnapshotError('invalid_input', 'Validation report must be valid JSON'); }
   if (!report || report.schemaVersion !== 1 || report.kind !== 'shoalrun-authoring-validation' || !Array.isArray(report.inputs) || !Array.isArray(report.externalDirectories) || !Array.isArray(report.runtimeDependencies) || !Array.isArray(report.changed) || report.changed.some(item => !item || !modes.has(item.operation))) throw new SnapshotError('invalid_input', 'Expected a version-1 authoring validation report');
   if (!report.baseline || !report.coverage || !Array.isArray(report.coverage.rendered) || !Array.isArray(report.coverage.affected) || !Array.isArray(report.coverage.notRendered) || !Array.isArray(report.checks) || !Array.isArray(report.findings) || !report.artifacts || !report.freshness || typeof report.project !== 'string' || !path.isAbsolute(report.project) || typeof report.snapshotId !== 'string' || !/^[a-f0-9]{64}$/.test(report.snapshotId)) throw new SnapshotError('invalid_input', 'Malformed authoring validation report');
+  validateProfileCapture(report.project, report.profile);
   for (const input of report.inputs) relativeInput(report.project, input.file);
   return report;
 }
@@ -267,7 +289,7 @@ export async function authoringValidationStatus(reportFile: string) {
   const report = await readValidationReport(reportFile);
   let missingInputCreated = false;
   for (const input of report.changed) if (input.digest === null && await stat(relativeInput(report.project, input.file)).then(() => true, () => false)) missingInputCreated = true;
-  const changed = missingInputCreated || sha256(JSON.stringify(report.inputs)) !== report.contentDigest || !await confirmSnapshotInputs({ root: report.project, inputs: report.inputs, externalDirectories: report.externalDirectories });
+  const changed = missingInputCreated || sha256(JSON.stringify(report.inputs)) !== report.contentDigest || !await confirmSnapshotInputs({ root: report.project, inputs: report.inputs, externalDirectories: report.externalDirectories, profile: report.profile });
   const runtime = await validatorInputs();
   let baselineChanged = false, dependencyChanged = false;
   if (report.baseline.file) baselineChanged = sha256(await readFile(report.baseline.file).catch(() => Buffer.alloc(0))) !== report.baseline.digest;

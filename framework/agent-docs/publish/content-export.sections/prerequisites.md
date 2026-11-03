@@ -27,3 +27,14 @@ Keep application help and your documentation website in one content source. `sho
 Install Shoalrun `0.1.0-alpha.13` or newer in the documentation project. This guide uses the resource-based export manifest described in the [manifest reference](https://www.shoalrun.com/content-delivery/manifest.md).
 
 Start with a Shoalrun project and public pages assigned to an enabled publication. Navigation, facets, a site title, and a previous website build are optional. A site origin is needed only when links must fall back to pages on the documentation website. The export does not generate embeddings or run documentation chat.
+
+### Upgrade an existing integration
+
+If an existing bundle contains `manifest.documents`, upgrade the CLI and rebuild the export before using this guide's loader. Update custom consumers to the resource contract:
+
+- Read `manifest.resources` instead of `manifest.documents`.
+- Select page resources with `ref.kind === 'page'` and `ref.documentId` instead of a document's `id`.
+- Route links with `kind: resource` through their typed `ref`, rather than `kind: document` and `documentId`.
+- Read file paths from the rebuilt manifest; do not retain paths from the old bundle.
+
+The `documents` configuration selector remains shorthand for whole pages. Use [resource selectors](https://www.shoalrun.com/content-delivery/select.md) when selecting approved sections or named snippet instances.

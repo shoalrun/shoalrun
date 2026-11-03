@@ -1,3 +1,4 @@
+import { resolveDeploymentProfile } from './deployment-profile.js';
 import { validateExports } from './content-export-config.js';
 import { validateContentFilter } from './content-filter.js';
 import { validateReaderFilters } from './reader-filters.js';
@@ -12,7 +13,7 @@ import { validateCookbooks } from './cookbook-chooser.js';
 export type Source = { file: string; history: string[] };
 type Tree = { source: Source; value: unknown };
 type Directive = { kind: 'concat' | 'remove'; items: Tree[] | string[] };
-const allowed = new Set(['exports', 'schemaVersion', 'site', 'navigation', 'redirects', 'apis', 'relationships', 'variables', 'snippets', 'callouts', 'badges', 'publications', 'outputs', 'templates', 'theme', 'frontmatter', 'metadata', 'audit', 'readerFilters', 'retrieval', 'chat', 'authoring', 'search', 'cookbooks', 'analytics', 'mcp', 'components']);
+const allowed = new Set(['profiles', 'exports', 'schemaVersion', 'site', 'navigation', 'redirects', 'apis', 'relationships', 'variables', 'snippets', 'callouts', 'badges', 'publications', 'outputs', 'templates', 'theme', 'frontmatter', 'metadata', 'audit', 'readerFilters', 'retrieval', 'chat', 'authoring', 'search', 'cookbooks', 'analytics', 'mcp', 'components']);
 const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const treeObject = (v: unknown): v is Record<string, Tree> => object(v) && !('kind' in v && 'items' in v);
 export class ConfigError extends Error {}
@@ -54,7 +55,7 @@ function merge(base: Tree | undefined, overlay: Tree): Tree {
   return { value: overlay.value, source: { file: overlay.source.file, history: [base.source.file, ...base.source.history] } };
 }
 
-export async function loadConfig(file: string) {
+export async function loadConfig(file: string, options: { profile?: string } = {}) {
   const dependencies = new Set<string>();
   const root = path.resolve(file);
   async function read(current: string, stack: string[], rootFile = false): Promise<Tree> {
@@ -95,8 +96,19 @@ export async function loadConfig(file: string) {
     const local = { ...parsed }; delete local.extends;
     return merge(result, await resolve(local));
   }
-  const tree = finalize(await read(root, [], true));
-  const value = valueOf(tree);
+  let tree = finalize(await read(root, [], true));
+  let value = valueOf(tree);
+  if (!object(value) || value.schemaVersion !== 1) throw new ConfigError(`${root}: schemaVersion must be 1`);
+  const raw = value as Record<string, any>;
+  const profileSettings = treeObject(tree.value) ? tree.value.profiles : undefined;
+  const manifestNode = profileSettings && treeObject(profileSettings.value) ? profileSettings.value.manifest : undefined;
+  const deployment = await resolveDeploymentProfile(raw.profiles, raw, manifestNode?.source.file ?? root, options.profile);
+  if (deployment) {
+    for (const file of deployment.dependencies) dependencies.add(file);
+    const node = (value: unknown): Tree => ({ source: { file: deployment.file ?? root, history: [] }, value: Array.isArray(value) ? value.map(node) : object(value) ? Object.fromEntries(Object.entries(value).map(([key, child]) => [key, node(child)])) : value });
+    tree = finalize(merge(tree, node(deployment.overlay)));
+    value = valueOf(tree);
+  }
   if (!object(value) || value.schemaVersion !== 1) throw new ConfigError(`${root}: schemaVersion must be 1`);
   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new ConfigError(`${root}: unknown setting ${key}`);
   if (object(value.site) && value.site.contentFilter !== undefined) validateContentFilter(value.site.contentFilter, validateReaderFilters(value.readerFilters));
@@ -105,7 +117,7 @@ export async function loadConfig(file: string) {
   validateSearch(value.search);
   resolveTaxonomy(object(value.frontmatter) ? value.frontmatter.taxonomy : undefined);
   if (object(value.publications) && ((object(value.publications.defaults) && Object.hasOwn(value.publications.defaults, 'locale')) || (Array.isArray(value.publications.enabled) && value.publications.enabled.some(item => object(item) && Object.hasOwn(item, 'locale'))))) throw new ConfigError(`${root}: publications.locale is now publications.language; page locale is reserved for formatting conventions`);
-  return { value, tree, dependencies: [...dependencies].sort(), digest: createHash('sha256').update(JSON.stringify(value)).digest('hex') };
+  return { value, tree, dependencies: [...dependencies].sort(), deployment, digest: createHash('sha256').update(JSON.stringify(deployment ? [value, deployment.digest] : value)).digest('hex') };
 }
 
 export function explain(config: Awaited<ReturnType<typeof loadConfig>>, key: string) {

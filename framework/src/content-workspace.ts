@@ -1,3 +1,4 @@
+import { matchesFeatures } from './deployment-profile.js';
 import path from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { type Document, type Variant, parse } from './content.js';
@@ -18,7 +19,7 @@ export async function prepareContentWorkspace({ base, basePath, config, loaded, 
   sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; allowRouteCollisions?: boolean;
 }) {
   const { docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir } = await planAuthoredDocuments({
-    base, basePath, config, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions
+    base, basePath, config, variants, language, readerFilters, contentFilter, featureContext: loaded.deployment?.context, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions
   });
   if (config.snippets !== undefined && (!config.snippets || typeof config.snippets !== 'object' || Array.isArray(config.snippets))) throw new Error('snippets must be a mapping');
   const snippets = new Map<string, SnippetDefinition>();
@@ -35,6 +36,19 @@ export async function prepareContentWorkspace({ base, basePath, config, loaded, 
     config, loaded, variants, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, basePath, readerFilters, contentFilter, allowRouteCollisions
   });
   const { api, sourceForVariant, knownOperations } = apiPlan;
+  for (const [key, doc] of docs) {
+    doc.featureContext = loaded.deployment?.context;
+    for (const operationId of doc.frontmatter.operations ?? []) {
+      const known = knownOperations.get(operationId);
+      const definition = known && apiPlan.apiDefinitions[known.apiId];
+      const operation = definition?.operations?.find(entry => entry.id === operationId);
+      if (!matchesFeatures(definition?.requires, loaded.deployment?.context, `API ${known?.apiId}`) || !matchesFeatures(operation?.requires, loaded.deployment?.context, `Operation ${operationId}`) || !matchesFeatures(apiPlan.operationRequirements.get(keyFor(operationId, doc.variant)), loaded.deployment?.context, `Operation ${operationId} (${doc.variant.version})`)) {
+        docs.delete(key);
+        const decision = loaded.deployment?.context.decisions.find(decision => decision.id === `${doc.file}: ${doc.frontmatter.id}`);
+        if (decision) decision.included = false;
+      }
+    }
+  }
   const relatedApiTargets = new Map<string, Document[]>();
   const guidesByApi = new Map<string, Document[]>();
   for (const doc of docs.values()) {
@@ -58,6 +72,7 @@ export async function prepareContentWorkspace({ base, basePath, config, loaded, 
     const definition = apiPlan.apiDefinitions[known.apiId];
     const operation = definition?.operations?.find(entry => entry.id === operationId);
     if (!definition || !operation) throw new Error(`unknown stable operation ${operationId}`);
+    if (!matchesFeatures(definition.requires, loaded.deployment?.context, `API ${known.apiId}`) || !matchesFeatures(operation.requires, loaded.deployment?.context, `Operation ${operationId}`) || !matchesFeatures(apiPlan.operationRequirements.get(keyFor(operationId, variant)), loaded.deployment?.context, `Operation ${operationId} (${variant.version})`) || (loaded.deployment?.context.grants && knownDocumentIds.has(known.reference) && !docs.has(keyFor(known.reference, variant)))) throw new Error(`Operation ${operationId} is excluded from this profile/publication`);
     if (!operation.sourceOperationId) throw new Error(`API ${known.apiId} operation needs sourceOperationId`);
     const binding = sourceForVariant(known.apiId, definition, variant);
     if (!binding) throw new Error(`no OpenAPI source for ${variant.channel}/${variant.version} (${operationId})`);

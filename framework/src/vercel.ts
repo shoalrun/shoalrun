@@ -30,10 +30,11 @@ async function removeStaleFunctions(directory: string, keep = new Set<string>())
   await visit(directory);
 }
 
-export async function buildVercel(configFile: string, outputDirectory: string, provenance: BuildProvenance = {}, options: { chat?: boolean } = {}): Promise<{ documents: number; output: string; chat?: AskFunctionResult; mcp?: McpFunctionResult }> {
+export async function buildVercel(configFile: string, outputDirectory: string, provenance: BuildProvenance = {}, options: { chat?: boolean; profile?: string } = {}): Promise<{ documents: number; output: string; chat?: AskFunctionResult; mcp?: McpFunctionResult }> {
   const output = path.resolve(outputDirectory);
   const staticDirectory = path.join(output, 'static');
-  const manifest = await compile(configFile, staticDirectory, provenance);
+  if (options.profile && options.chat) throw new Error('Profiled Vercel builds do not support chat functions yet');
+  const manifest = await compile(configFile, staticDirectory, provenance, { profile: options.profile });
   const basePath = manifest.basePath;
   const functionsDirectory = path.join(output, 'functions');
   const mcp = await addMcpFunction({ staticDirectory, functionsDirectory });

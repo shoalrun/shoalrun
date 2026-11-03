@@ -26,7 +26,7 @@ Install Shoalrun `0.1.0-alpha.13` or newer in the documentation project. This gu
 
 Start with a Shoalrun project and public pages assigned to an enabled publication. Navigation, facets, a site title, and a previous website build are optional. A site origin is needed only when links must fall back to pages on the documentation website. The export does not generate embeddings or run documentation chat.
 
-## Upgrade an existing integration
+### Upgrade an existing integration
 
 If an existing bundle contains `manifest.documents`, upgrade the CLI and rebuild the export before using this guide's loader. Update custom consumers to the resource contract:
 

@@ -11,10 +11,11 @@ export function parseProjectOptions(command: 'project' | 'source', args: string[
     if (seen.has(flag)) throw new ProjectToolError('invalid_input', `Duplicate ${flag}`);
     seen.add(flag);
     if (flag === '--json') continue;
-    const allowed = command === 'project' ? ['--config', '--section', '--id', '--file', '--query', '--offset', '--limit', '--max-tokens'] : ['--config', '--offset', '--max-tokens'];
+    const allowed = command === 'project' ? ['--profile', '--config', '--section', '--id', '--file', '--query', '--offset', '--limit', '--max-tokens'] : ['--profile', '--config', '--offset', '--max-tokens'];
     const value = args[++i];
     if (!allowed.includes(flag) || !value || value.startsWith('--')) throw new ProjectToolError('invalid_input', `Unknown option or missing value for ${flag}`);
-    if (flag === '--config') config = value;
+    if (flag === '--profile') options.profile = value;
+    else if (flag === '--config') config = value;
     else if (['--offset', '--limit', '--max-tokens'].includes(flag)) {
       if (!/^\d+$/.test(value)) throw new ProjectToolError('invalid_input', `${flag} must be an integer`);
       options[flag === '--max-tokens' ? 'maxTokens' : flag === '--limit' ? 'limit' : 'offset'] = Number(value);

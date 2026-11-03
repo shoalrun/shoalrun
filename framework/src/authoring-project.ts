@@ -14,7 +14,7 @@ import { phraseMatches, queryUnits, validateSearchSynonyms } from './search-syno
 export const projectToolSchemaVersion = 1;
 export const projectSections = ['pages', 'guidance', 'configuration', 'navigation', 'relationships', 'templates', 'findings'] as const;
 export type ProjectSection = typeof projectSections[number];
-export type ProjectOptions = { section?: ProjectSection; id?: string; file?: string; query?: string; offset?: number; limit?: number; maxTokens?: number };
+export type ProjectOptions = { profile?: string; section?: ProjectSection; id?: string; file?: string; query?: string; offset?: number; limit?: number; maxTokens?: number };
 export type ProjectFinding = { code: string; severity: 'error' | 'warning' | 'review-needed'; file?: string; location?: string; explanation: string; nextAction: string; reference?: string };
 export class ProjectToolError extends Error {
   constructor(public readonly code: 'invalid_input' | 'unknown_source' | 'unsafe_path' | 'invalid_project' | 'internal_error', message: string) { super(message); }
@@ -51,11 +51,11 @@ async function safeFile(root: string, file: string) {
   if (!inside(root, actual)) throw new ProjectToolError('unsafe_path', `Source escapes project: ${file}`);
   return actual;
 }
-async function openProject(configFile: string) {
+async function openProject(configFile: string, profile?: string) {
   try {
     const config = await realpath(path.resolve(configFile));
     const root = path.dirname(config);
-    const loaded = await loadConfig(config);
+    const loaded = await loadConfig(config, { profile });
     const guidance = validateAuthoringGuidance(loaded.value.authoring);
     return { config, root, loaded, guidance };
   } catch (error) {
@@ -74,7 +74,7 @@ export async function inspectAuthoringProject(configFile: string, options: Proje
   const offset = integer(options.offset, 0, 0, Number.MAX_SAFE_INTEGER, 'offset');
   const limit = integer(options.limit, 20, 1, 100, 'limit');
   const maxTokens = integer(options.maxTokens, 8192, 1024, 100000, 'maxTokens');
-  const { root, config, loaded, guidance } = await openProject(configFile);
+  const { root, config, loaded, guidance } = await openProject(configFile, options.profile);
   const value: any = loaded.value;
   const relative = (file: string) => path.relative(root, file);
   const digests = new Map<string, string>();
@@ -213,10 +213,10 @@ export async function inspectAuthoringProject(configFile: string, options: Proje
 }
 
 /** Exact project-relative passage; role is context, not evidence approval. */
-export async function readAuthoringSource(configFile: string, file: string, options: { offset?: number; maxTokens?: number } = {}) {
+export async function readAuthoringSource(configFile: string, file: string, options: { profile?: string; offset?: number; maxTokens?: number } = {}) {
   const offset = integer(options.offset, 0, 0, Number.MAX_SAFE_INTEGER, 'offset');
   const maxTokens = integer(options.maxTokens, 4096, 1024, 100000, 'maxTokens');
-  const { root, loaded, guidance } = await openProject(configFile);
+  const { root, loaded, guidance } = await openProject(configFile, options.profile);
   const actual = await safeFile(root, file);
   const raw = await readFile(actual, 'utf8');
   const chars = [...raw];

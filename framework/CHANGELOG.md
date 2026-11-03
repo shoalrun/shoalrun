@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.1.0-alpha.15 — 2026-11-03
+
+- Opt into `profiles.requireClassification` to reject unclassified public pages
+  before customer selection. Declare `shared: true` or page feature requirements;
+  shared pages can retain feature-gated sections. Generated API references accept
+  explicit API or OpenAPI operation declarations.
+- Packaged authoring, setup, and recipe skills explain customer-edition workflows,
+  including external profiles, SKU revisions, grandfathered grants, strict page
+  classification, conditional sections, and checks for excluded content.
+
+- Build customer-specific documentation from an external deployment profile.
+  Resolve versioned SKU mappings and direct feature grants, including
+  grandfathered features without a SKU; select pages and conditional sections
+  consistently in websites and content exports.
+- Supply deployment-owned titles, logos, favicons, theme choices, links, and
+  publication subsets without storing customer profiles in the shared repo.
+  Capture declared external inputs for validation and preview, and keep profile
+  sources out of published dependency metadata.
+- Profiled API builds support selected references and focused operation contracts;
+  full-source downloads and standalone schema embeds are rejected.
+
+See [deployment profiles](DEPLOYMENT-PROFILES.md) for configuration and current limits.
+
 ## 0.1.0-alpha.14 — 2026-10-30
 
 - Keep selected text readable in light and dark modes by pairing the selection

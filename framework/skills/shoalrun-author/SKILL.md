@@ -1,6 +1,6 @@
 ---
 name: shoalrun-author
-description: Write or revise documentation in an existing Shoalrun project using the agent's own model, native file edits, and provider-free project, validation, and preview tools. Use for pages and their required navigation, relationships, API links, snippets, or project checks.
+description: Write or revise documentation in an existing Shoalrun project using the agent's own model, native file edits, and provider-free project, validation, and preview tools. Use for pages and their required navigation, relationships, API links, snippets, customer editions, or project checks.
 ---
 
 # Author Shoalrun documentation
@@ -20,6 +20,10 @@ Use `docs search "<topic>"` and `docs read <id>` to query the installed packageâ
 When reading a published site through Markdown, follow topic-index links when present; `llms.min.txt` need not list every page directly. Choose a relevant topic rather than downloading every index. Preserve publication and base-path scope, and follow the full-page fallback when a standalone section does not cover the task.
 
 Read `reference.authoring-workspace` for tool contracts and `guide.authoring-workspace` for the working-tree procedure. Before unfamiliar syntax, check the relevant component attributes, configuration structure, or asset-handling contract instead of assuming another toolâ€™s conventions. For MDX components, read their canonical reference; `<Step>` belongs inside `<Steps>` for an ordinary titled procedure, while your harness's task plan is separate. Read implementation/specification evidence with your harness's permitted tools; record the sources for changed claims. Bundled guidance does not establish a consumer project's facts.
+
+## Customer editions and feature selection
+
+For SKU-selected or white-label documentation, read [references/customer-editions.md](references/customer-editions.md) before editing requirements, manifests, profiles, branding, or edition validation. Use the deployment's external profile, keep customer records out of shared source, and classify pages by feature IDs. Shared pages can use `<ForFeature>` for product-specific sections. Preserve the project's strict-classification policy and pass the same `--profile` to baseline, validation, build, and export; a default-context pass does not verify a customer edition.
 
 ## Record scope and edit
 

@@ -18,7 +18,7 @@ export type Frontmatter = {
   showVerified?: boolean;
   [key: string]: unknown;
 };
-export type Document = { change?: ResolvedChange; subjectDeprecation?: ResolvedSubjectDeprecation; file: string; frontmatter: Frontmatter; body: string; tree: unknown; variant: Variant; route: string; markdownRoute: string; readerFilters?: ReaderSelection; focusedContractUrl?: string; contentDigest?: string; endpoint?: { method: string; path: string; webhook?: boolean } };
+export type Document = { featureContext?: import('./deployment-profile.js').FeatureContext; change?: ResolvedChange; subjectDeprecation?: ResolvedSubjectDeprecation; file: string; frontmatter: Frontmatter; body: string; tree: unknown; variant: Variant; route: string; markdownRoute: string; readerFilters?: ReaderSelection; focusedContractUrl?: string; contentDigest?: string; endpoint?: { method: string; path: string; webhook?: boolean } };
 export type NavigationNode = { id: string; label: string; route?: string; tab?: boolean; search?: string; subjectLifecycle?: Frontmatter['subjectLifecycle']; method?: string; webhook?: boolean; readerFilters?: ReaderSelection; items?: NavigationNode[] };
 export type PublicationRoutingConfig = {
   site: { basePath?: unknown };

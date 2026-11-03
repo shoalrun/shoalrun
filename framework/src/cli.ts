@@ -63,7 +63,7 @@ async function discoverConfig(start: string): Promise<string> {
   }
 }
 
-function buildArguments(args: string[], defaultOutput: string): { config: string; output: string; provenance: BuildProvenance } {
+function buildArguments(args: string[], defaultOutput: string): { config: string; output: string; provenance: BuildProvenance; profile?: string } {
   const positional: string[] = [];
   const flags: Record<string, string> = {};
   for (let index = 0; index < args.length; index++) {
@@ -72,14 +72,14 @@ function buildArguments(args: string[], defaultOutput: string): { config: string
       positional.push(value);
       continue;
     }
-    if (!['--source-commit', '--release-label'].includes(value)) throw new Error(`Unknown build option ${value}`);
+    if (!['--source-commit', '--release-label', '--profile'].includes(value)) throw new Error(`Unknown build option ${value}`);
     if (flags[value] !== undefined) throw new Error(`Duplicate build option ${value}`);
     const next = args[++index];
     if (!next || next.startsWith('--')) throw new Error(`Build option ${value} needs a value`);
     flags[value] = next;
   }
   if (positional.length > 2) throw new Error('Build accepts at most a config and output directory');
-  return { config: positional[0] ?? 'docs.config.yaml', output: positional[1] ?? defaultOutput, provenance: { sourceCommit: flags['--source-commit'], releaseLabel: flags['--release-label'] } };
+  return { profile: flags['--profile'], config: positional[0] ?? 'docs.config.yaml', output: positional[1] ?? defaultOutput, provenance: { sourceCommit: flags['--source-commit'], releaseLabel: flags['--release-label'] } };
 }
 
 // An unset or empty PORT means the default; serveSite rejects anything else that is not a port number.
@@ -121,8 +121,8 @@ try {
       if (result.status !== 'ok') process.exitCode = 2;
     }
   } else if (command === 'build') {
-    const { config, output, provenance } = buildArguments([subcommand, ...rest].filter((item): item is string => item !== undefined), 'site-dist');
-    const manifest = await compile(config, output, provenance);
+    const { config, output, provenance, profile } = buildArguments([subcommand, ...rest].filter((item): item is string => item !== undefined), 'site-dist');
+    const manifest = await compile(config, output, provenance, { profile });
     process.stdout.write(JSON.stringify({ status: 'ok', documents: manifest.documents.length, operations: Object.keys(manifest.operations).length }, null, 2) + '\n');
   } else if (command === 'dev') {
     const args = [subcommand, ...rest].filter((item): item is string => item !== undefined);
@@ -140,8 +140,9 @@ try {
   } else if (command === 'vercel' && subcommand === 'build') {
     // --chat adds the optional answer function: it needs chat and retrieval settings and the embedding key at build time.
     const chat = rest.includes('--chat');
-    const { config, output, provenance } = buildArguments(rest.filter(item => item !== '--chat'), '.vercel/output');
-    const result = await buildVercel(config, output, provenance, { chat });
+    const { config, output, provenance, profile } = buildArguments(rest.filter(item => item !== '--chat'), '.vercel/output');
+    if (profile && chat) throw new Error('Profiled Vercel builds do not support --chat yet; build the selected static edition without --chat');
+    const result = await buildVercel(config, output, provenance, { chat, profile });
     // Asking for the chat and not getting it must fail the deploy. Otherwise a site would look ready and have no chat.
     if (chat && result.chat && !result.chat.added) throw new Error(`The chat was requested but not added: ${result.chat.reason}`);
     process.stdout.write(JSON.stringify({ status: 'ok', ...result }, null, 2) + '\n');

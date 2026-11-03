@@ -48,6 +48,7 @@ export type ArtifactAssemblyInput = {
   mcpAnalyticsModule?: string;
   previewFiles: string[];
   assetDirectory: string;
+  privateDependencies?: ReadonlySet<string>;
   themeSwitcher: boolean;
   themeDirectory: string;
   palette: Palette;
@@ -151,7 +152,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     if (framework) return `shoalrun:${framework}`;
     return `external:${path.basename(resolved)}`;
   };
-  addMetadataArtifact('/documents.json', JSON.stringify({ ...manifest, dependencies: [...new Set(manifest.dependencies.map(publicDependency))].sort() }, null, 2) + '\n');
+  addMetadataArtifact('/documents.json', JSON.stringify({ ...manifest, dependencies: [...new Set(manifest.dependencies.filter(file => !input.privateDependencies?.has(file)).map(publicDependency))].sort() }, null, 2) + '\n');
   addMetadataArtifact('/build-info.json', JSON.stringify(provenanceRecord, null, 2) + '\n');
   for (const styleFile of styleFiles) addPublicArtifact(`/assets/${path.basename(styleFile)}`, await readFile(styleFile, 'utf8'));
   if (themeStyleFile) addPublicArtifact('/assets/theme.css', await readFile(themeStyleFile, 'utf8'));

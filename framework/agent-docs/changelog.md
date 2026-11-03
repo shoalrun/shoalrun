@@ -16,11 +16,27 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > All changes
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-03.**
 
 Updates to Shoalrun and its documentation. Each entry identifies the affected versions and any upgrade steps. Earlier entries retain their private-prototype release context.
 
 ## Latest changes
+
+- 2026-11-03
+
+  Version 0.1.0-alpha.15
+
+  [Customer documentation editions](https://www.shoalrun.com/changelog/2026-11-03.md)
+
+  Build branded customer editions from purchased and grandfathered features without storing customer profiles in the shared repository.
+
+- 2026-10-30
+
+  Version 0.1.0-alpha.14
+
+  [Readable selections and wider layouts](https://www.shoalrun.com/changelog/2026-10-30.md)
+
+  Keep selected text readable and let paragraphs and lists fill expanded layouts.
 
 - 2026-10-28
 

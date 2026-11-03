@@ -1,6 +1,6 @@
 {
   "name": "@shoalrun/cli",
-  "version": "0.1.0-alpha.14",
+  "version": "0.1.0-alpha.15",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
@@ -33,6 +33,7 @@
     "skills",
     "README.md",
     "AUTHORING.md",
+    "DEPLOYMENT-PROFILES.md",
     "schemas/content-export.schema.json",
     "schemas/content-rest.openapi.json",
     "CHANGELOG.md",

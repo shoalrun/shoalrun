@@ -20,7 +20,7 @@ const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${var
 export function renderPublicationPages({ rendered, docs, relationships, knownOperations, cardUses, publishedRelationships, cookbooks, documentRoutes,
   basePath, siteOrigin, colorMode, config, highlighter, editionLabel, customStyleFile, themePreset, palette,
   themeStyleFile, generatedPaletteCss, generatedBadgeCss, themeSwitcherData, generatedFontsCss, fontsPreload,
-  shareFor, faviconRoute, modeToggle, header, footer, search, readerFilters, variants, externalDocuments,
+  shareFor, faviconRoute, logoRoute, modeToggle, header, footer, search, readerFilters, variants, externalDocuments,
   externalSiteLinks, navigationSpec, navigationEntries, navigationTagOrder, freshness }: {
   freshness?: Freshness;
   rendered: MaterializedPage[];
@@ -48,6 +48,7 @@ export function renderPublicationPages({ rendered, docs, relationships, knownOpe
   fontsPreload?: string;
   shareFor: (doc: Document) => { route: string; generated: boolean; file?: string } | undefined;
   faviconRoute: string;
+  logoRoute?: string;
   modeToggle: boolean;
   header: HeaderConfig;
   footer?: FooterConfig;
@@ -131,7 +132,7 @@ export function renderPublicationPages({ rendered, docs, relationships, knownOpe
       label: `${item.label}${item.label.toLowerCase() === item.variant.channel.toLowerCase() ? '' : ` · ${item.variant.channel}`} · ${item.variant.version}${languageSuffix(item.variant)}`,
       url: item.url, current: false
     }))];
-    page.html = buildHtmlPage(page.doc, page.htmlTree, page.doc.markdownRoute, config.site.title, navigation, page.pageExamples, page.pageShapes, highlighter, editionLabel(page.doc.variant), !!customStyleFile, { preset: themePreset, palette: palette.name, themeCss: !!themeStyleFile, paletteCss: !!generatedPaletteCss, badgesCss: !!generatedBadgeCss, themeSwitcher: themeSwitcherData, fontsCss: !!generatedFontsCss, preloadFont: fontsPreload, masthead: presetCatalog.find(preset => preset.name === themePreset)?.masthead, share: shareFor(page.doc), favicon: faviconRoute, touchIcon: !faviconRoute.endsWith('.png'), origin: siteOrigin, indexing: config.site.indexing !== false, home: hasHome, mode: colorMode, toggle: modeToggle, header, footer, search: search.provider !== 'none', publicationAlternates, breadcrumbs }, page.pageCurl, page.pageSamples, { ...config, readerFilters });
+    page.html = buildHtmlPage(page.doc, page.htmlTree, page.doc.markdownRoute, config.site.title, navigation, page.pageExamples, page.pageShapes, highlighter, editionLabel(page.doc.variant), !!customStyleFile, { preset: themePreset, palette: palette.name, themeCss: !!themeStyleFile, paletteCss: !!generatedPaletteCss, badgesCss: !!generatedBadgeCss, themeSwitcher: themeSwitcherData, fontsCss: !!generatedFontsCss, preloadFont: fontsPreload, masthead: presetCatalog.find(preset => preset.name === themePreset)?.masthead, share: shareFor(page.doc), favicon: faviconRoute, logo: logoRoute, touchIcon: !faviconRoute.endsWith('.png'), origin: siteOrigin, indexing: config.site.indexing !== false, home: hasHome, mode: colorMode, toggle: modeToggle, header, footer, search: search.provider !== 'none', publicationAlternates, breadcrumbs }, page.pageCurl, page.pageSamples, { ...config, readerFilters });
   }
   return resolvedNavigation;
 }

@@ -1,3 +1,4 @@
+import { pruneFeatureTree } from './deployment-profile.js';
 import { lowerComponent, type ComponentRegistry } from './component-plugins.js';
 import { cardComponent } from './cards.js';
 import { cookbookChooserComponent } from './cookbook-chooser.js';
@@ -95,7 +96,8 @@ function literalAttributes(attributes: MdxAttribute[]): attributes is Array<MdxA
 
 export function transformMdx(tree: unknown, current: Document, registry: Map<string, Document>, snippets: Map<string, SnippetDefinition> = new Map(), projectValues: Record<string, unknown> = {}, uses: SnippetUse[] = [], calloutTypes: CalloutTypes = resolveCalloutTypes(undefined, current.file), projectRoot?: string, readerConfig?: ReaderFiltersConfig, frontmatterConfig: unknown = {}, publicationConfig?: { channels: Record<string, unknown>; versions: Record<string, unknown> }, badgeVariants: BadgeVariants = resolveBadgeVariants(undefined, current.file), componentPlugins: ComponentRegistry = new Map()): unknown {
   if (!isMdxRoot(tree)) throw new Error(`${current.file}: parsed content must be a root with children`);
-  tree = lowerSectionMarkers(tree, current.file);
+  tree = lowerSectionMarkers(pruneFeatureTree(tree, current.featureContext, current.file), current.file);
+  snippets = new Map([...snippets].map(([id, definition]) => [id, { ...definition, tree: pruneFeatureTree(definition.tree, current.featureContext, definition.file) }]));
   let pluginDepth = 0;
   let tabsIndex = 0;
   let walkthroughIndex = 0;
@@ -149,6 +151,10 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
       if (node.name === 'FrontmatterReference') {
         if (node.type !== 'mdxJsxFlowElement' || node.children?.length || node.attributes?.length) throw new Error(`${sourceFile}: <FrontmatterReference> must be an empty block`);
         return childrenOf(parsePlainMarkdown(frontmatterReference(frontmatterConfig, true)), scope, stack, sourceFile);
+      }
+      if (node.name === 'ForFeature') {
+        const selected = pruneFeatureTree({ type: 'root', children: [node] }, current.featureContext, sourceFile);
+        return childrenOf(selected.children, scope, stack, sourceFile);
       }
       if (node.name === 'ForPublication') {
         const attributes = node.attributes ?? [];

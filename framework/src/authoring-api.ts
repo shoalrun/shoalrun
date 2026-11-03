@@ -18,4 +18,4 @@ export { startAuthoringPreview } from './authoring-preview.js';
 export type { AuthoringPreview, AuthoringPreviewOptions } from './authoring-preview.js';
 // Optional capabilities let private authoring clients reject an older package
 // before spending provider budget. Existing version-1 update clients still work.
-export const authoringCapabilities = ['create-page', 'complete-bundle-validation', 'project-discovery', 'project-source-read', 'documentation-search-read', 'working-tree-validation', 'task-baseline', 'validation-freshness', 'snapshot-preview', 'authoring-review-report'] as const;
+export const authoringCapabilities = ['create-page', 'complete-bundle-validation', 'project-discovery', 'project-source-read', 'documentation-search-read', 'working-tree-validation', 'task-baseline', 'validation-freshness', 'snapshot-preview', 'authoring-review-report', 'deployment-profiles'] as const;

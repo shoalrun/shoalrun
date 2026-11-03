@@ -6,7 +6,7 @@ import type { Frontmatter } from './content.js';
 import { validateStandaloneSectionDeclarations } from './section-identity.js';
 
 export const nativePublicFields = new Set(['id', 'title', 'type', 'summary', 'description', 'language', 'locale', 'date', 'updated', 'verified', 'releaseVersion', 'product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'audiences', 'readerFilters', 'tags', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle']);
-export const protectedMetadataRoots = new Set(['standaloneSections', 'access', 'seo', 'markdownMetadata', 'variables', 'tocDepth', 'layout', 'showNavigationTabs', 'showVerified', 'image', 'private', 'internal', 'card', 'displayText', 'publications']);
+export const protectedMetadataRoots = new Set(['shared', 'requires', 'standaloneSections', 'access', 'seo', 'markdownMetadata', 'variables', 'tocDepth', 'layout', 'showNavigationTabs', 'showVerified', 'image', 'private', 'internal', 'card', 'displayText', 'publications']);
 const fieldTypes = new Set(['string', 'number', 'integer', 'boolean', 'object', 'array']);
 const safePath = (value: string) => /^[A-Za-z_][A-Za-z0-9_-]*(?:\.[A-Za-z_][A-Za-z0-9_-]*)*$/.test(value);
 type Definition = { type: string; description?: string; public?: boolean; required?: boolean; items?: string; enum?: unknown[] };
@@ -32,7 +32,7 @@ export function frontmatterLayers(config: any = {}) {
   for (const name of ['defaults', 'enforced']) {
     const layer = config[name] === undefined ? {} : config[name];
     if (!object(layer)) throw new Error(`frontmatter.${name} must be a mapping`);
-    for (const field of ['id', 'slug', 'publications', 'standaloneSections', 'subjectDeprecation', 'change']) if (Object.hasOwn(layer, field)) throw new Error(`frontmatter.${name}.${field} must stay page-specific`);
+    for (const field of ['id', 'slug', 'shared', 'publications', 'standaloneSections', 'subjectDeprecation', 'change']) if (Object.hasOwn(layer, field)) throw new Error(`frontmatter.${name}.${field} must stay page-specific`);
     layers[name] = mergeMetadata({}, layer);
   }
   return { defaults: layers.defaults, enforced: layers.enforced };
@@ -97,6 +97,8 @@ function matchesType(value: unknown, type: string): boolean {
 export function validateFrontmatter(frontmatter: Frontmatter, config: any, file: string, source?: Record<string, unknown>): void {
   const taxonomy = resolveTaxonomy(config?.taxonomy);
   validateTaxonomy(frontmatter, taxonomy, file, source);
+  if (frontmatter.shared !== undefined && frontmatter.shared !== true) throw new Error(`${file}: shared must be true; use requires for restricted content`);
+  if (frontmatter.shared === true && frontmatter.requires !== undefined) throw new Error(`${file}: declare shared: true or requires, not both`);
   validateCardMetadata(frontmatter.card, file);
   validateSubjectDeprecation(frontmatter.subjectDeprecation, file);
   validateAuthoredChange(frontmatter, file);
@@ -200,6 +202,8 @@ export function frontmatterSchema(config: any): any {
     operations: { type: 'array', items: { type: 'string' }, description: 'Stable API operation IDs that connect this page to endpoint references and related documents.' },
     relatedApiReferences: { type: 'array', items: { type: 'string' }, description: 'API reference page IDs linked automatically from this guide and back from each reference, within the same publication.' },
     audiences: { type: 'array', items: { type: 'string' }, description: 'Readers this page is intended for; does not control who can access it.' },
+    shared: { type: 'boolean', const: true, description: 'Explicitly classify this page as shared across customer editions. Page-specific; cannot combine with requires. Sections may still use ForFeature.' },
+    requires: { type: 'object', minProperties: 1, additionalProperties: false, properties: Object.fromEntries(['allOf', 'anyOf'].map(name => [name, { type: 'array', minItems: 1, items: { type: 'string', minLength: 1 } }])), description: 'Build-time feature requirements from the shared SKU manifest. Both clauses must pass when present; omitted means shared within existing publication/access eligibility. Requires an explicit deployment profile.' },
     readerFilters: { type: 'object', additionalProperties: { type: 'array', items: { type: 'string' } }, description: 'Configured reader filter choices for this page. Missing facets are shared.' },
     tags: { type: 'array', items: { type: 'string' }, description: 'Editorial labels used to select pages in document collections.' },
     change: { type: 'object', additionalProperties: false, required: ['kind', 'affects'], description: 'Page-specific authored change meaning on a changelog-entry: kind, affected document IDs, and optional migration guide ID in the same publication. Omission means unclassified, not nonbreaking.', properties: { kind: { type: 'string', enum: [...changeKinds] }, affects: { type: 'array', minItems: 1, uniqueItems: true, items: { type: 'string', minLength: 1 } }, migration: { type: 'string', minLength: 1 } } },
@@ -270,18 +274,19 @@ export function frontmatterReference(config: any, sectionsOnly = false): string 
     'This generated file is a project-wide field guide for authors and agents working with the repository. The build writes it to `.shoalrun/frontmatter-reference.md` beside the project config. Link to that local file from repository instructions when agents need it.', '',
     'Frontmatter is the YAML header between the first pair of `---` lines in a `.md` or `.mdx` source page. It tells the compiler what the page is, where to publish it, and how to connect it to other content. The prose below the second `---` is the page body. This example header illustrates the fields; it is not necessarily the header of the page linking here.', '',
     '```yaml', '---', 'id: guide.create-payment', 'title: Create a payment', 'summary: Submit a payment with the example API.', 'type: how-to', 'slug: /guides/create-payment', 'channel: production', 'version: v1', 'access: { policy: public }', '---', '```', '',
-    'This header describes one page. Its `id` stays stable when `slug` changes; `channel` and `version` select the publication in which that page appears. A **publication** is an enabled combination of channel, version, and language in project config. A public page also needs `access.policy: public`. The “Needed” column below refers to the *resolved* header after project defaults and enforced values are merged. Only `id` and `slug` must be written on each source page.', '',
+    'This header describes one page. Its `id` stays stable when `slug` changes; `channel` and `version` select the publication in which that page appears. A **publication** is an enabled combination of channel, version, and language in project config. A public page also needs `access.policy: public`. The “Needed” column below refers to the *resolved* header after project defaults and enforced values are merged. IDs and slugs must be written on each source page; optional explicit-classification and taxonomy policies can require additional source fields.', '',
     '## Identify and route a page', '',
     'Use the page ID for links and cards that should survive a URL change. The slug supplies the page part of the URL; publication prefixes may be added around it. Summary is short preview text; description is a separate, optional fuller account. Project output rules choose which field supplies each surface.', '',
     ...table, ...nativeRows(['id', 'title', 'summary', 'description', 'type', 'slug']), '',
     '## Choose a publication and visibility', '',
     'The project enables specific channel/version/language combinations. A page is built only for combinations matching its resolved values. `audiences` and `readerFilters` select reader views when the site config enables them; `access.policy` determines whether the page enters this public build. A draft page is excluded.', '',
-    ...table, ...nativeRows(['channel', 'version', 'language', 'locale', 'access', 'audiences', 'readerFilters']), '',
+    ...table, ...nativeRows(['channel', 'version', 'language', 'locale', 'access', 'shared', 'requires', 'audiences', 'readerFilters']), '',
     'Language is the content language and selects a publication. Locale describes formatting conventions in the content and does not select a publication. `frontmatter.locales` can set a project locale for each language; pages may override it.', '',
     '## Categorize, connect, and present the page', '',
     'By default, `product`, `area`, and `subarea` are optional, nonempty string categories. They can come from project defaults and appear in the document manifest and search index. A matching configured reader facet makes each category a page filter; without that facet it remains taxonomy only. `operations` links a guide or reference to stable API operation IDs. On a guide or how-to page, `relatedApiReferences` names API reference page IDs to add cross links in both directions within the same publication. Tags help document collections find the page. Card settings change its preview when another page links to it; they do not change the destination. `subjectLifecycle` displays the status of the documented API or feature; `lifecycle` is available for the document\'s editorial state. `tocDepth` limits the HTML page table of contents; use 0 to hide it. `layout` picks the HTML page layout: `docs`, `wide`, `landing`, or `splash`. `showNavigationTabs` overrides the navigation tab bar for this page; landing and splash pages hide it by default. `image` replaces the generated link-preview image. `date` and `releaseVersion` can identify a changelog entry under the project\'s `frontmatter.changelogIdentifier` rule.', '',
     ...table, ...nativeRows(['product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'tags', 'date', 'releaseVersion', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle', 'card', 'standaloneSections', 'tocDepth', 'layout', 'showNavigationTabs', 'showVerified', 'image']), '',
     'Projects can opt into built-in category enforcement with `frontmatter.taxonomy`. It declares areas and their allowed subareas, optional required fields, and optional explicit-field requirements for authored pages. Its `multiple` list permits arrays for selected category fields; otherwise each field allows one value. Defaults and enforced values still apply; generated API references use resolved categories. Definitions appear in the document manifest and constrain the generated frontmatter schema. Omit taxonomy or set it to false to preserve optional category behavior.', '',
+    'With `profiles.requireClassification: true`, every public source page in the shared enabled publications needs an explicit `shared: true` or `requires` declaration before customer selection. Defaults do not count. Shared pages may contain feature-specific sections wrapped in `<ForFeature>`; unwrapped text remains shared.', '',
     '## Control output details', '',
     '`seo` changes the browser title or HTML meta description. `displayText` overrides the text chosen for one output surface on this page. `variables` supplies values to registered snippets before they expand into the page body. `markdownMetadata` selects or overrides the YAML preamble of the generated Markdown twin—the machine-readable copy of this page. That generated preamble is separate from the source frontmatter shown above.', '',
     ...table, ...nativeRows(['seo', 'displayText', 'variables', 'markdownMetadata']), '',

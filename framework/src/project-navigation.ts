@@ -150,3 +150,17 @@ export function navigationPath(nodes: NavigationNode[], route: string): Array<{ 
   }
   return [];
 }
+
+/** Prune only after validating every authored node against known source identities. */
+export function profileNavigation(layout: unknown, docs: Map<string, Document>, knownIds: Set<string>, operations: Map<string, { apiId: string; reference: string }>, apiIds: Set<string>) {
+  const known = new Map(docs);
+  for (const id of knownIds) if (![...known.values()].some(doc => doc.frontmatter.id === id)) known.set(id, { frontmatter: { id } } as Document);
+  const validated = validateProjectNavigation(layout, known, operations, apiIds);
+  const available = new Set([...docs.values()].map(doc => doc.frontmatter.id));
+  const prune = (nodes: NavSpec[]): NavSpec[] => nodes.flatMap(node => {
+    if (node.doc && !available.has(node.doc) || node.operation && !available.has(operations.get(node.operation)!.reference) || node.tab && !available.has(node.landing!)) return [];
+    if (node.items) { const items = prune(node.items); return items.length ? [{ ...node, items }] : []; }
+    return [node];
+  });
+  return prune(validated);
+}

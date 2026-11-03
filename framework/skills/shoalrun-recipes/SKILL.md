@@ -11,6 +11,8 @@ The CLI includes overrideable `recipe`, `ingredient`, and `cookbook` templates; 
 
 Read `shoalrun docs read guide.recipes-overview`, then `guide.recipe-drafts` for composition or `guide.cookbooks` for choices. In a source checkout, use `node framework/dist/cli.js` in place of `shoalrun` after compiling the framework. Inspect the target project's config, neighboring pages, and existing ingredients before writing.
 
+When recipes or ingredients vary by purchased features, read [the customer-edition workflow](../shoalrun-author/references/customer-editions.md). Apply page classification to the final recipe source, use `<ForFeature>` for feature-specific sections, and validate editions that include each changed conditional branch. Do not assume a shared-page build checks an excluded recipe or ingredient branch.
+
 Choose only the layers the task needs:
 
 - **Recipe:** write a complete page with prerequisites, ordered actions, explicit value handoffs, failure guidance, and a final success check. A recipe can be authored directly; ingredients are optional.

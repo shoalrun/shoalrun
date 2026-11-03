@@ -1,3 +1,4 @@
+import { pruneFeatureTree, profileSelection } from './deployment-profile.js';
 import { readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -33,7 +34,7 @@ import { selectSection } from './section-identity.js';
 import { compareContentManifests } from './content-export-comparison.js';
 import type { ContentRef, ContentResource, ContentLink } from './content-delivery-contract.js';
 
-export type ContentExportOptions = { target?: string; formats?: ExportFormat[]; documents?: string[]; publication?: Variant; publicBase?: string; review?: boolean; previousManifest?: string; failOnRemoved?: boolean };
+export type ContentExportOptions = { profile?: string; target?: string; formats?: ExportFormat[]; documents?: string[]; publication?: Variant; publicBase?: string; review?: boolean; previousManifest?: string; failOnRemoved?: boolean };
 type ExportLink = ContentLink;
 type Representation = { path: string; mediaType: string; bytes: number; digest: string; anchors: Array<{ id: string; exportedId: string; title?: string }>; links: ExportLink[] };
 const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
@@ -54,7 +55,7 @@ const visitTree = (node: any, visit: (node: any) => void) => {
 
 /** Export selected source content; never invoke the website shell/compiler. */
 export async function exportContent(configFile: string, destination: string, options: ContentExportOptions = {}) {
-  const loaded = await loadConfig(configFile);
+  const loaded = await loadConfig(configFile, { profile: options.profile });
   const resolved = resolvedCompilerConfig(loaded.value);
   // Export has no masthead, so a website title is optional in a content-only project.
   if (resolved.site !== undefined && !isConfigMapping(resolved.site)) throw new Error('site must be a mapping when provided');
@@ -135,13 +136,13 @@ export async function exportContent(configFile: string, destination: string, opt
       if (!definition) throw new Error(`Unknown export snippet ${selection.snippetId}`);
       // This is an explicit isolated context. It has no containing page, operations,
       // relationships, page variables, or inherited publication/access metadata.
-      const snippetDocument: Document = { file: definition.file, body: '', tree: root([]), variant: publication,
+      const snippetDocument: Document = { featureContext: loaded.deployment?.context, file: definition.file, body: '', tree: root([]), variant: publication,
         route: `/__content_snippets/${encodeURIComponent(selection.id)}`, markdownRoute: '',
         frontmatter: { id: selection.id, title: selection.title, summary: selection.summary, type: 'snippet', slug: '/', access: { policy: 'public' } } };
       const checkSnippet = (id: string, seen = new Set<string>()) => {
         if (seen.has(id)) return; seen.add(id);
         const source = snippets.get(id); if (!source) throw new Error(`Unknown snippet ${id}`);
-        visitTree(source.tree, node => {
+        visitTree(pruneFeatureTree(source.tree, loaded.deployment?.context, source.file), node => {
           if (['RelatedReading', 'DocCard', 'DocCards', 'DocCollection', 'CookbookChooser', 'ApiExample', 'ApiSchema', 'FrontmatterReference', 'Anchor'].includes(node.name)) throw new Error(`Snippet instance ${selection.id}: <${node.name}> needs page context`);
           if (node.name === 'Snippet') { const child = node.attributes?.find((a: any) => a.name === 'id')?.value; if (typeof child === 'string') checkSnippet(child, seen); }
         });
@@ -382,6 +383,6 @@ export async function exportContent(configFile: string, destination: string, opt
   }
   await commitArtifacts(path.resolve(destination), artifacts, undefined, 'export');
   return { status: unreviewed.length ? 'needs-review' : 'ok', output: path.resolve(destination), publication, formats: target.formats,
-    resources: records.length, documents: records.filter(item => item.ref.kind === 'page').length, documentIds: records.flatMap(item => item.ref.kind === 'page' ? [item.ref.documentId] : []), comparison, assets: assets.records.size, digest: bundleDigest,
+    profileSelection: profileSelection(loaded.deployment), resources: records.length, documents: records.filter(item => item.ref.kind === 'page').length, documentIds: records.flatMap(item => item.ref.kind === 'page' ? [item.ref.documentId] : []), comparison, assets: assets.records.size, digest: bundleDigest,
     apiReview: reviews.map(row => ({ apiId: row.apiId, digest: row.digest })), diagnostics };
 }
