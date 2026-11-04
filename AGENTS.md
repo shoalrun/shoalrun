@@ -11,3 +11,9 @@ The docs snapshot in framework/agent-docs is an explicit pinned import. Never fe
 Before advising on feature availability, check `framework/package.json`, `framework/CHANGELOG.md`, and the installed package version when working in a consumer project. Unreleased branch changes are not published features. Bundled docs are pinned: inspect `framework/agent-docs/SNAPSHOT.json` and use the current README and source/tests when newer features are absent from that snapshot.
 
 After publishing a package, synchronize its reviewed source and matching version tag to the public repository. Keep unfinished follow-up work on a separate branch. Verify the public default branch and installation examples are current; npm publication alone does not update GitHub. See RELEASING.md.
+
+Release completion requires `framework/scripts/check-release.mjs` with the exact
+version, artifact source commit and reviewed integrity. It checks the registry,
+remote tag target and remote main ancestry. A local tag or registry-only retry
+does not complete source synchronization. Keep the successful report; verify
+coordinated website deployment separately before calling the docs live.
