@@ -1,7 +1,8 @@
 import { readFile, realpath, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
-import { aiDirectory, type Chunk, type ChunkIndex } from './index-build.js';
+import { aiDirectory } from './ai-directory.js';
+import type { Chunk, ChunkIndex } from './index-build.js';
 import { postJson, throwIfCancelled, type Transport } from './provider-http.js';
 
 export type EmbedInputType = 'document' | 'query';

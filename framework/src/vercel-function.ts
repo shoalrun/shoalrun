@@ -100,8 +100,15 @@ export async function addAskFunction(input: { configFile: string; staticDirector
   await writeFile(path.join(func, 'index.js'), `import { createAskFunction, nodeAdapter } from './lib/ask-function.js';\n\nconst directory = new URL('.', import.meta.url).pathname;\nexport default nodeAdapter(() => createAskFunction(directory));\n`);
   // The answer can take about a minute. Hobby allows up to 300 seconds with Fluid compute, so 120 leaves room.
   await writeFile(path.join(func, '.vc-config.json'), JSON.stringify({ runtime: 'nodejs22.x', handler: 'index.js', launcherType: 'Nodejs', shouldAddHelpers: false, maxDuration: 120, memory: 1024 }, null, 2) + '\n');
-  await cp(func, searchFunc, { recursive: true });
-  await writeFile(path.join(searchFunc, 'index.js'), `import { createHostedSearchFunction, nodeAdapter } from './lib/ask-function.js';\n\nconst directory = new URL('.', import.meta.url).pathname;\nexport default nodeAdapter(() => createHostedSearchFunction(directory));\n`);
+  // Build Search from its own runtime closure and private retrieval data. It
+  // must not inherit chat generation, cards, logging, or compiler dependencies.
+  await mkdir(path.join(searchFunc, 'site', 'ai'), { recursive: true });
+  for (const name of ['chunks.json', 'embeddings.json', 'embeddings.bin']) await cp(path.join(site, 'ai', name), path.join(searchFunc, 'site', 'ai', name));
+  const { chat: _chat, ...searchSettings } = runtime.settings;
+  await writeFile(path.join(searchFunc, 'runtime.json'), JSON.stringify({ ...runtime, settings: searchSettings, searchStore: chat.budget.store }, null, 2) + '\n');
+  await writeFile(path.join(searchFunc, 'package.json'), JSON.stringify({ type: 'module' }) + '\n');
+  await copyFunctionRuntime(dist, 'search-function.js', searchFunc);
+  await writeFile(path.join(searchFunc, 'index.js'), `import { createHostedSearchFunction } from './lib/search-function.js';\nimport { nodeAdapter } from './lib/function-runtime.js';\n\nconst directory = new URL('.', import.meta.url).pathname;\nexport default nodeAdapter(() => createHostedSearchFunction(directory));\n`);
   await writeFile(path.join(searchFunc, '.vc-config.json'), JSON.stringify({ runtime: 'nodejs22.x', handler: 'index.js', launcherType: 'Nodejs', shouldAddHelpers: false, maxDuration: 30, memory: 1024 }, null, 2) + '\n');
   await readdir(func);
   return { added: true, directory: func, chunks: built.index.chunks.length, embedded: true, embeddingCounts: { embedded: embedded.embedded, reused: embedded.reused } };

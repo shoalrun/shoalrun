@@ -1,5 +1,7 @@
+import { aiDirectory } from './ai-directory.js';
+export { aiDirectory } from './ai-directory.js';
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
+import { readFile, realpath, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { validateSearchSynonyms } from './search-synonyms.js';
 import { prepareSearchPassage, type PreparedSearchPassage } from './search-snippet.js';
@@ -160,16 +162,6 @@ async function readJson<T>(file: string): Promise<T | undefined> {
 
 // The directory that holds the passage and vector files. It is created on demand, and it must stay inside the site even if
 // `ai` is a symlink.
-export async function aiDirectory(directory: string): Promise<string> {
-  const root = path.resolve(directory);
-  const target = path.join(root, 'ai');
-  await mkdir(target, { recursive: true });
-  const real = await realpath(root);
-  const inside = await realpath(target);
-  if (inside !== real && !inside.startsWith(real + path.sep)) throw new Error('The ai directory leaves the site directory');
-  return target;
-}
-
 export async function buildChunkIndex(directory: string, options: ChunkOptions = {}): Promise<{ index: ChunkIndex; output: string; documents: number }> {
   const root = path.resolve(directory);
   const manifest = await readJson<{ documents?: ManifestDocument[]; searchSynonyms?: string[][] }>(path.join(root, 'documents.json'));

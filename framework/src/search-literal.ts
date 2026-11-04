@@ -1,4 +1,4 @@
-import { searchIdentifiers } from './search-identifier.js';
+import { searchIdentifiers } from './search-identifier-core.js';
 
 const escape = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const boundary = (value: string) => new RegExp(`(?<![\\w$.-])${escape(value)}(?![\\w$-]|\\.[\\w$])`, 'i');

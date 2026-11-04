@@ -48,4 +48,8 @@ export async function copyFunctionRuntime(dist: string, entry: string, target: s
   }
   const done = new Set<string>();
   for (const name of packages) await copyPackage(name, dist, target, done);
+  // Preserve the runtime author's license as well as the licenses retained in
+  // copied dependency packages. Custom runtime directories may have no parent license.
+  const license = path.join(dist, '..', 'LICENSE');
+  if (await stat(license).then(info => info.isFile(), () => false)) await cp(license, path.join(target, 'LICENSE.shoalrun'));
 }

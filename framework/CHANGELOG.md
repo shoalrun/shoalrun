@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+- Package hosted Ask and Search without importing source configuration or its
+  component compiler, icon, syntax-highlighting, math-rendering, and esbuild
+  dependencies. Hosted functions consume resolved settings; local commands
+  retain source-config loading.
+- Build Search from its own dependency closure and private retrieval files,
+  without chat generation, answer cards, or third-party runtime packages.
+  Preserve existing hosted metadata and deep imports for compatibility.
+- Keep prepared search scoring and snippets separate from Markdown preparation,
+  and retain runtime and dependency licenses in function packages.
+- Test isolated function imports and requests, enforce per-runtime file/byte
+  budgets, and reject build-only dependencies in hosted runtime packages.
+
 ## 0.1.0-alpha.16 — 2026-11-04
 
 - Set `outputs.html.search.provider: semantic` to connect the search box to

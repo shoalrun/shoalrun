@@ -3,7 +3,7 @@ import path from 'node:path';
 import { parse } from 'yaml';
 import { cacheable, normalizeQuestion } from './answer-cache.js';
 import type { AskResult, Source } from './ask.js';
-import { aiDirectory } from './index-build.js';
+import { aiDirectory } from './ai-directory.js';
 
 // Answer cards are answers written ahead of time, from a list of questions a person chose. Each question is run once through the full
 // pipeline, and only an answer that passes every check becomes a card. A card records the digest of each passage behind it, so it is

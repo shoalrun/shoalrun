@@ -2,8 +2,8 @@ import type { Retriever, ReaderSelection } from './retrieval.js';
 import { compareHits, type Hit } from './retrieval.js';
 import type { ReaderFiltersConfig } from './reader-filters.js';
 import { validateReaderSelection } from './reader-filters.js';
-import { searchSnippetFromParagraphs } from './search-snippet.js';
-import { identifierMatch } from './search-identifier.js';
+import { searchSnippetFromParagraphs } from './search-text.js';
+import { identifierMatch } from './search-identifier-core.js';
 import type { DailyBudget, SharedRateLimit } from './budget.js';
 import { createSearchResultSelector } from './search-results.js';
 

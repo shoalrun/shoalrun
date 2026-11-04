@@ -1,7 +1,7 @@
 import type { Hit, LexicalOptions, Retriever } from './retrieval.js';
 import { compareHits, tokenize } from './retrieval.js';
 import { literalSearch } from './search-literal.js';
-import { identifierRescue } from './search-identifier.js';
+import { identifierRescue } from './search-identifier-core.js';
 
 type SearchHit = Hit & { literalSummary?: string };
 
