@@ -36,6 +36,12 @@ node framework/dist/cli.js docs search "Steps" --json
 
 The authoring tools let an agent inspect a project, validate changes in an isolated copy, and produce a local preview. See the [package README](framework/README.md#work-with-an-agent) for the editing workflow and the [command reference](framework/AUTHORING.md) for detailed contracts.
 
+## Match documentation to your version
+
+Check [package.json](framework/package.json) and the [changelog](framework/CHANGELOG.md) for this checkout's version and feature availability. The current framework includes external deployment profiles and the built-in `semantic` search provider; see the [semantic setup](framework/README.md#enable-semantic-search).
+
+`shoalrun docs` reads a pinned offline snapshot. It does not query the live website. [Snapshot provenance](framework/agent-docs/SNAPSHOT.json) records the source commit and build identity. Unreleased branch code is not a published feature. Use your project's exact installed version when configuring a consumer site.
+
 ## Develop the framework
 
 The CLI source is in `framework/src/`. Runnable starters are in `framework/example-configs/`, and component examples are in `framework/examples/`. The [documentation website](https://www.shoalrun.com) is maintained separately. Report documentation problems in this repository's issues; access to the website source is not required to report a problem.

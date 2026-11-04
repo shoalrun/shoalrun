@@ -18,6 +18,7 @@ Shoalrun is an alpha. This checklist describes release preparation; checked sour
 3. Build once for the final source inputs. Run compiled regression tests and skill validation, then certify the isolated package installation with `npm run authoring:package-check`. Check affected HTML, Markdown, accessibility, and output consumers.
 4. Inspect the actual package inventory and archive. Exclude credentials, local instructions, caches, test output, and unintended files; retain required notices. Verify the archive's version and integrity.
 5. Publish the reviewed artifact through the authorized release process. Confirm the registry version and integrity and test the installed package. Record a matching source tag and release notes; do not label an unpublished artifact as released.
+6. Synchronize the reviewed release source to the public default branch through a fast-forward or reviewed PR. Push the tag for the exact artifact source commit. Keep unfinished follow-up work separate. Verify GitHub's package version, install examples, changelog and bundled-documentation provenance; publishing to npm does not update the repository. Do not force-push over intervening work.
 
 Repository publication, package publication, and website deployment are separate operations. Hosted workflows remain manual. Do not enable automatic releases or deploy the website as a side effect of a source change.
 

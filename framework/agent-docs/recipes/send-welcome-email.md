@@ -15,9 +15,9 @@ canonical: /recipes/send-welcome-email
 
 Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Email simulation > Send a welcome email and confirm delivery
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Cookbook example > Send a welcome email and confirm delivery
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-04.**
 
 Follow one message from an accepted request through delivery, and inspect a simulated failure.
 
@@ -89,4 +89,4 @@ The final response contains the same message ID you saved and `status: delivered
 
 ### Related topics
 
-- [Welcome email workflows](https://www.shoalrun.com/cookbooks/welcome-email.md) — Compare the complete delivery path with the acceptance-only path.
+- [Cookbook example](https://www.shoalrun.com/cookbooks/welcome-email.md) — Compare the complete delivery path with the acceptance-only path.

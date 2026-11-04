@@ -7,3 +7,7 @@ Validate relevant behavior locally before every push. Build once per final input
 Both workflows are manual-only. Do not enable automatic triggers, add runner matrices, or dispatch hosted jobs without explicit authorization. Do not commit credentials, private notes/corpora, historical run dumps, dependencies, caches, or generated build output. Inspect staged files and package inventories before sharing. Retain required licenses/notices.
 
 The docs snapshot in framework/agent-docs is an explicit pinned import. Never fetch arbitrary latest site content during a package build. Run source fixtures locally; site-specific integration tests belong in the docs repository.
+
+Before advising on feature availability, check `framework/package.json`, `framework/CHANGELOG.md`, and the installed package version when working in a consumer project. Unreleased branch changes are not published features. Bundled docs are pinned: inspect `framework/agent-docs/SNAPSHOT.json` and use the current README and source/tests when newer features are absent from that snapshot.
+
+After publishing a package, synchronize its reviewed source and matching version tag to the public repository. Keep unfinished follow-up work on a separate branch. Verify the public default branch and installation examples are current; npm publication alone does not update GitHub. See RELEASING.md.

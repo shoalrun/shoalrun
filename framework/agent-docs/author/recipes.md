@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-04.**
 
 A **recipe** is the complete page someone follows to finish a task. An **ingredient** is a reusable piece of source documentation used to write that page. A **cookbook** is a page that helps readers choose a recipe.
 
@@ -114,7 +114,7 @@ A recipe's **Read as Markdown** link contains its complete published instruction
 
 Use the [Authoring workflows cookbook](https://www.shoalrun.com/cookbooks/authoring.md) to add a guide, preview a change, or refresh the agent bundle in this repository. Each choice is a complete recipe with its own setup and final check.
 
-The [email example](https://www.shoalrun.com/cookbooks/welcome-email.md) demonstrates passing a returned message ID into a delivery check. It runs against a local simulator and sends no email.
+The [worked cookbook example](https://www.shoalrun.com/cookbooks/welcome-email.md) demonstrates two recipe choices that reuse the same queue step. Its longer workflow passes a returned message ID into a delivery check. Email supplies the sample task; a local simulator runs both recipes without sending a message.
 
 ## Related reading
 
@@ -124,4 +124,4 @@ The [email example](https://www.shoalrun.com/cookbooks/welcome-email.md) demonst
 
 - [Authoring workflows](https://www.shoalrun.com/cookbooks/authoring.md) — Use complete workflows for Shoalrun documentation work.
 
-- [Welcome email workflows](https://www.shoalrun.com/cookbooks/welcome-email.md) — Try an acceptance check or follow a message ID through delivery and failure handling.
+- [Cookbook example](https://www.shoalrun.com/cookbooks/welcome-email.md) — Try an acceptance check or follow a message ID through delivery and failure handling.

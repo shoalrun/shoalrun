@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Generated frontmatter reference
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-04.**
 
 Parent page: [Full Markdown page](/author/frontmatter-reference.md)
 

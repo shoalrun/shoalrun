@@ -18,15 +18,15 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Passage index
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-04.**
 
 **Status: Experimental.**
 
 Parent page: [Full Markdown page](/chat/passage-index.md)
 
-A passage index splits built Markdown pages into smaller pieces for retrieval. Each passage keeps its page title, heading path, and source link. [Chat](https://www.shoalrun.com/chat.md) and custom passage-search providers use it to find relevant parts of a page.
+A passage index splits built Markdown pages into smaller pieces for retrieval. Each passage keeps its page title, heading path, and source link. [Chat](https://www.shoalrun.com/chat.md) and the optional semantic search endpoint use it to find relevant parts of a page.
 
-The built-in [search box](https://www.shoalrun.com/author/search.md) uses the separate page-level `search-index.json`. You do not need a passage index for normal static-site search.
+The default keyword [search box](https://www.shoalrun.com/author/search.md) uses the separate page-level `search-index.json`. The included `semantic` provider connects that box to the passage-search endpoint. You do not need a passage index for normal static-site keyword search.
 
 Create the files after building the site:
 
@@ -43,7 +43,7 @@ Each entry in `chunks` describes one passage:
 
 ```json title="ai/chunks.json"
 {
-  "id": "guide.configuration#understand-the-three-stages",
+  "id": "production%7Ccurrent%7Cen:guide.configuration#understand-the-three-stages",
   "docId": "guide.configuration",
   "title": "Organize project configuration",
   "type": "how-to",
@@ -74,7 +74,7 @@ Each entry in `chunks` describes one passage:
 | `digest`                 | A SHA-256 hash of the passage's embedding input.                                                                                                                        |
 | `search`                 | Prepared result content: `schemaVersion: 1`, explanatory `paragraphs`, and code/table `literalLines`. Generated navigation lists are excluded from the paragraphs.      |
 
-The file also records `schemaVersion` and a `sourceDigest` that changes when any page's digest changes.
+The file also records `schemaVersion` and a `sourceDigest`. Since `0.1.0-alpha.16`, this digest identifies passage content, publication membership, routes, reader marks, and prepared search evidence. Metadata changes can change this digest without requiring new embeddings.
 
 ### Embedding input
 

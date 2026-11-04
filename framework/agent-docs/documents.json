@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "configDigest": "e6facf6d76a90c838fde73e4bc4a253bc30f7fa0eb67547b4f89386abd3a0378",
+  "configDigest": "dbf7c31e789550be5349dea0d314dfdc2b97ba70c7b1b3f1eebf6122c622be27",
   "searchSynonyms": [
     [
       "walkthrough",
@@ -348,6 +348,7 @@
     "package:@shoalrun/cli/assets/reader-filters.js",
     "package:@shoalrun/cli/assets/reader.js",
     "package:@shoalrun/cli/assets/search-highlight.js",
+    "package:@shoalrun/cli/assets/search-semantic.js",
     "package:@shoalrun/cli/assets/search.js",
     "package:@shoalrun/cli/assets/table-filter.js",
     "package:@shoalrun/cli/assets/tabs.js",
@@ -1000,7 +1001,6 @@
     "package:scheduler/cjs/scheduler.production.js",
     "package:scheduler/index.js",
     "package:scheduler/package.json",
-    "search/hybrid.js",
     "site-interactions.js",
     "snippets/build-check.mdx",
     "snippets/hosting-subpath.mdx"
@@ -8972,8 +8972,8 @@
       "id": "cookbook.welcome-email",
       "demo": false,
       "type": "cookbook",
-      "title": "Welcome email workflows",
-      "summary": "Choose an acceptance check or follow the same message through delivery.",
+      "title": "Cookbook example",
+      "summary": "Compare recipe choices and see how a cookbook reuses instructions across workflows.",
       "subjectLifecycle": null,
       "variant": {
         "channel": "production",
@@ -8995,23 +8995,23 @@
         "indexUrl": "/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-27",
-      "contentDigest": "260c8332ebed71c4c04702dfc9291206256d429ecee556c4737cc02724cf1cd0",
+      "updated": "2026-11-04",
+      "contentDigest": "088b3e172bc749a9558c192a052e03b34f471a411b3f76e65f390a6fd2b47b10",
       "breadcrumbs": [
         {
           "label": "Examples",
           "url": "/config/examples"
         },
         {
-          "label": "Email simulation"
+          "label": "Cookbook example"
         },
         {
-          "label": "Email simulation",
+          "label": "Cookbook example",
           "url": "/cookbooks/welcome-email"
         }
       ],
-      "area": "api",
-      "subarea": "api-examples",
+      "area": "authoring",
+      "subarea": "authoring-composition",
       "readerFilters": {},
       "cardTargets": [
         "guide.recipe-drafts",
@@ -9029,10 +9029,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 2939,
-      "markdownTokens": 676,
+      "markdownBytes": 3232,
+      "markdownTokens": 729,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "abf7db1a8d793a9847fd928cb19c33f54cb361733cfe0226034d78ce7e6e58da"
+      "digest": "a3e61e01031807946c8eab41a91107ec99bcd52d1967e4f4c43b8ec45d1f7a73"
     },
     {
       "id": "guide.cookbooks",
@@ -10927,8 +10927,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-28",
-      "contentDigest": "91e871dfa4d69c2f212c71438a4315a4719e11368c2099aafd5b36b167747fd1",
+      "updated": "2026-11-04",
+      "contentDigest": "d266129f74f5cd645f827a8b9191ac0d6478f8f85863e3914d80e51ecf143d7c",
       "breadcrumbs": [
         {
           "label": "Reference",
@@ -10970,8 +10970,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/identify-and-route-a-page.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "ef9c6961ce73fad5f1793c73bc93a30de14678680a7db1f4438c7a2199324d27",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "c9cbe0b48de3bc725aaf83c71cc6642c9af8827b65cb04008fd05bb154312833",
           "markdownBytes": 3550,
           "markdownTokens": 707,
           "markdownTokenEncoding": "cl100k_base"
@@ -10982,10 +10982,10 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/choose-a-publication-and-visibility.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "738ac7b9d18ad426ac3ee2a5fe3acd3cd8562949a0cd81cdb2a42a8703c25afc",
-          "markdownBytes": 4398,
-          "markdownTokens": 835,
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "8ae73d679a130898858c27b62ab889d04cdd33c501887ec2e1fe14b9bfd4e6ff",
+          "markdownBytes": 5738,
+          "markdownTokens": 936,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -10994,8 +10994,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/control-output-details.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "b76bfa7a82e0bb9eb972ed800804c83cc24f702abd4d6a7834a2ace96a3f0d3f",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "af093ba80e68b05c6ec7b4aee471c943a88f24dee1d4e3b96789e89b2f7f6517",
           "markdownBytes": 3864,
           "markdownTokens": 752,
           "markdownTokenEncoding": "cl100k_base"
@@ -11006,8 +11006,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/project-defined-fields.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "07ff7bec4e645ee5f430b8b9419c10aecbccb912aa59c0a44e7b6e3b0d4f9b6f",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "f40d5700c34be8403bf0a5513bb1b8f006d17139e690691c441e709b94a15c6d",
           "markdownBytes": 3931,
           "markdownTokens": 785,
           "markdownTokenEncoding": "cl100k_base"
@@ -11018,8 +11018,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/global-defaults-and-enforced-values.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "d8f250bcb909c04f19d5aefe0b455ba10d3e3d16fea7b9c88977db13f44638d4",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "342cac9080c943d8d1a42d466b30d0333b41e5c5f5aff9c9c636fc01aecb4f9b",
           "markdownBytes": 2560,
           "markdownTokens": 544,
           "markdownTokenEncoding": "cl100k_base"
@@ -11030,8 +11030,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/use-the-local-files-while-authoring.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "84c266d387aef3230f9bd3453fd7c9bac1e103927c12d4433d9c7fc680246758",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "e631ee33648149bfbbad2adbb44c3c2237411aa34afeb3d4779e27be764d7067",
           "markdownBytes": 2732,
           "markdownTokens": 593,
           "markdownTokenEncoding": "cl100k_base"
@@ -11042,8 +11042,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/when-the-files-update.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "d986f336534a36a420c2bcd009cfcee0483c0777f9cafb24e05ab12cb79bbcd9",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "981dd48ccab4e0f751efc1b55c1926ca02c37f6763cc479b14d97de6b4dd50f7",
           "markdownBytes": 2398,
           "markdownTokens": 530,
           "markdownTokenEncoding": "cl100k_base"
@@ -11054,8 +11054,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/point-agents-to-it.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "47f29049cbe320af339f8b9c2007af2b6c0403dabd1863a2a58bfbfbd3df96ad",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "8f5056a121bf0e9820abd9e12bce0b2dc8e7f9315de8918e78323829ba1f5ecd",
           "markdownBytes": 2586,
           "markdownTokens": 572,
           "markdownTokenEncoding": "cl100k_base"
@@ -11066,8 +11066,8 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/html-markdown-and-agents.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "76d1f943b8996412be825c46cada233cd0d67cf5610ee231b042fd2a04ed429a",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "e8015fe62c8d0148ffebd56d5b9891421f3ca7cc42351e722479e4ec377d955e",
           "markdownBytes": 2491,
           "markdownTokens": 535,
           "markdownTokenEncoding": "cl100k_base"
@@ -11078,17 +11078,17 @@
           "depth": 2,
           "markdownUrl": "/author/frontmatter-reference.sections/related-reading.md",
           "parentMarkdownUrl": "/author/frontmatter-reference.md",
-          "parentDigest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf",
-          "digest": "08710a2fd2778a08f91b28b47037e0cd3db24d7298460d4a74d4f266a57e7bc2",
+          "parentDigest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0",
+          "digest": "f880857d527c0bcdc1cc1324f056b0a2903d4b4554d9be9ccb5319b19d218900",
           "markdownBytes": 2435,
           "markdownTokens": 533,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 22275,
-      "markdownTokens": 3567,
+      "markdownBytes": 23939,
+      "markdownTokens": 3727,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "2736e62f6361c8f9d784fa24a20c625812e95bdbccfefc511aef40b890b496cf"
+      "digest": "0f2b38fbcf9315b1a7f4805013d38e5289f280ec54fa63e6c04724756192bfc0"
     },
     {
       "id": "guide.frontmatter",
@@ -13696,8 +13696,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-25",
-      "contentDigest": "492a299a48e63d510de2afab99619f7f012bb9ab6a456b736bf9d99a80c6c355",
+      "updated": "2026-11-04",
+      "contentDigest": "9459a273bb61c13bfad9393d080920936e2cf479f85cd7a47dd04e8d3a3ea482",
       "breadcrumbs": [
         {
           "label": "Reference",
@@ -13736,10 +13736,10 @@
           "depth": 2,
           "markdownUrl": "/chat/passage-index.sections/build-the-index.md",
           "parentMarkdownUrl": "/chat/passage-index.md",
-          "parentDigest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48",
-          "digest": "3de2165e1e7b90190e53c84f6427183362585288c635f7305d07a1a0d7528711",
-          "markdownBytes": 3590,
-          "markdownTokens": 744,
+          "parentDigest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731",
+          "digest": "ef57d701398c3a075d4564565b954f0abf5efe97cede6dd37a3386bccc16fa51",
+          "markdownBytes": 3694,
+          "markdownTokens": 761,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -13748,10 +13748,10 @@
           "depth": 2,
           "markdownUrl": "/chat/passage-index.sections/how-the-default-chunker-splits-a-page.md",
           "parentMarkdownUrl": "/chat/passage-index.md",
-          "parentDigest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48",
-          "digest": "d9669612448a1ad7b8b662fb2c642885f46dc1ffa51237de3d0a508aba50cb4a",
-          "markdownBytes": 3328,
-          "markdownTokens": 731,
+          "parentDigest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731",
+          "digest": "aac44d22f507858ed08c68e0868f3b5b95b655cbd43726166651c9b7c047c573",
+          "markdownBytes": 3432,
+          "markdownTokens": 748,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -13760,10 +13760,10 @@
           "depth": 2,
           "markdownUrl": "/chat/passage-index.sections/what-a-passage-contains.md",
           "parentMarkdownUrl": "/chat/passage-index.md",
-          "parentDigest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48",
-          "digest": "0a3caae8b92bb697149c37614c50c61db620d39ce5a9b34e36db0ff491c61bdf",
-          "markdownBytes": 5884,
-          "markdownTokens": 1118,
+          "parentDigest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731",
+          "digest": "749d7cb77e4017b3cb450e9fd14569ded52de8bc56b12344069085fbed70fbe2",
+          "markdownBytes": 6184,
+          "markdownTokens": 1177,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -13772,10 +13772,10 @@
           "depth": 2,
           "markdownUrl": "/chat/passage-index.sections/passage-ids-and-links.md",
           "parentMarkdownUrl": "/chat/passage-index.md",
-          "parentDigest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48",
-          "digest": "0484f3948d4708716d87ce246c80dd7c050d3546c5f2432816f76b94801771f6",
-          "markdownBytes": 3226,
-          "markdownTokens": 663,
+          "parentDigest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731",
+          "digest": "02f0d611f308035d311fbff518e484929ce1729798ea01c855b2c3568957b406",
+          "markdownBytes": 4495,
+          "markdownTokens": 908,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -13784,10 +13784,10 @@
           "depth": 2,
           "markdownUrl": "/chat/passage-index.sections/embed-passages.md",
           "parentMarkdownUrl": "/chat/passage-index.md",
-          "parentDigest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48",
-          "digest": "a810572dbb8f1480158a099add4b858edfd529fc1a5565043f9747124c6df1c7",
-          "markdownBytes": 5686,
-          "markdownTokens": 1174,
+          "parentDigest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731",
+          "digest": "fd6212965032031f3d06f0e672bc26cb3d658b4a8ec864c609d97fcbff3254db",
+          "markdownBytes": 5790,
+          "markdownTokens": 1191,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -13796,10 +13796,10 @@
           "depth": 2,
           "markdownUrl": "/chat/passage-index.sections/limits.md",
           "parentMarkdownUrl": "/chat/passage-index.md",
-          "parentDigest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48",
-          "digest": "2a257f5203450d506a8f0858bcdc9612b23ddbc43de4122faadea18a30147b9f",
-          "markdownBytes": 2617,
-          "markdownTokens": 572,
+          "parentDigest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731",
+          "digest": "4edf384d04d7f9939124b53a021006bc81b61c164b3bf2690c7817067fb12322",
+          "markdownBytes": 2721,
+          "markdownTokens": 589,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -13808,17 +13808,17 @@
           "depth": 2,
           "markdownUrl": "/chat/passage-index.sections/related-reading.md",
           "parentMarkdownUrl": "/chat/passage-index.md",
-          "parentDigest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48",
-          "digest": "a498a4db84b1efd8a419eb36da36d90be27228ad92a1f4a2d52d6f96dba49aa3",
-          "markdownBytes": 2075,
-          "markdownTokens": 445,
+          "parentDigest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731",
+          "digest": "c08a91a1729196b94770876294cae0fdf2084ca809da8c237d54b7ae05ecc167",
+          "markdownBytes": 2179,
+          "markdownTokens": 462,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 14115,
-      "markdownTokens": 2785,
+      "markdownBytes": 15580,
+      "markdownTokens": 3072,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "4d856eefb89f609d3ecb4afda659771d28c603b28a07e301fb78f0dcc3240b48"
+      "digest": "3c9a682dd3f9bc1001ecd6787902ecd62922838e88d4ac353191f47a00ac3731"
     },
     {
       "id": "guide.prepared-answers",
@@ -14529,8 +14529,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-27",
-      "contentDigest": "dda7140936cb9157e14b9b6f59e0c53d7a244da7600d44b25498056b817e641b",
+      "updated": "2026-11-04",
+      "contentDigest": "20b0cba36121cc0ae91e9107c341c08378359673ce6bdde09c201a788a6cefd1",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -14576,8 +14576,8 @@
           "depth": 2,
           "markdownUrl": "/author/recipe-drafts.sections/1-write-one-reusable-step.md",
           "parentMarkdownUrl": "/author/recipe-drafts.md",
-          "parentDigest": "e02f2804fdd79f0acda43e2e2403a762bddebc57d6defc1304285db1830e52ca",
-          "digest": "1b9b426ddd657a48e38e0faffdf2076e07e1dd557f7cce72606652f7b56905c3",
+          "parentDigest": "48ec69d51b60fcdefecfc75f9d50b2aa4268f9e8fd81e66a3a14b0413bc58e9a",
+          "digest": "470a14358f22eb8ca4534d718124c46fcb43a401b3d4584a325cdffc003ae917",
           "markdownBytes": 4360,
           "markdownTokens": 920,
           "markdownTokenEncoding": "cl100k_base"
@@ -14588,8 +14588,8 @@
           "depth": 2,
           "markdownUrl": "/author/recipe-drafts.sections/2-list-the-steps-for-one-complete-goal.md",
           "parentMarkdownUrl": "/author/recipe-drafts.md",
-          "parentDigest": "e02f2804fdd79f0acda43e2e2403a762bddebc57d6defc1304285db1830e52ca",
-          "digest": "8bf62130c6827a06209fbfaca00a6b662d24ee2ceb0f7bb43525e2356d72792d",
+          "parentDigest": "48ec69d51b60fcdefecfc75f9d50b2aa4268f9e8fd81e66a3a14b0413bc58e9a",
+          "digest": "23eee41314aff1399835e495573e4d7c0f3771d816e424b04ca18cb8778db208",
           "markdownBytes": 3138,
           "markdownTokens": 746,
           "markdownTokenEncoding": "cl100k_base"
@@ -14600,8 +14600,8 @@
           "depth": 2,
           "markdownUrl": "/author/recipe-drafts.sections/3-generate-a-draft-and-review-it.md",
           "parentMarkdownUrl": "/author/recipe-drafts.md",
-          "parentDigest": "e02f2804fdd79f0acda43e2e2403a762bddebc57d6defc1304285db1830e52ca",
-          "digest": "02cc985e1aa52e43742cc3a9f356e2f3b0bb6a18a72143d3b10517ee683a4168",
+          "parentDigest": "48ec69d51b60fcdefecfc75f9d50b2aa4268f9e8fd81e66a3a14b0413bc58e9a",
+          "digest": "8c6082914ebf920de9e6a65369cef94f6f175894afbf90a7b0e73fca8b55b87b",
           "markdownBytes": 3206,
           "markdownTokens": 767,
           "markdownTokenEncoding": "cl100k_base"
@@ -14612,8 +14612,8 @@
           "depth": 2,
           "markdownUrl": "/author/recipe-drafts.sections/4-maintain-shoalrun-s-published-recipe-snapshots.md",
           "parentMarkdownUrl": "/author/recipe-drafts.md",
-          "parentDigest": "e02f2804fdd79f0acda43e2e2403a762bddebc57d6defc1304285db1830e52ca",
-          "digest": "7eea4e200b738ca518bb363a867e50a4f772c5075e3b198ea7688f24a897a000",
+          "parentDigest": "48ec69d51b60fcdefecfc75f9d50b2aa4268f9e8fd81e66a3a14b0413bc58e9a",
+          "digest": "673984bd2ec62dac81c88f386828cb6d726461132eb0307dec649ec17a142af0",
           "markdownBytes": 3599,
           "markdownTokens": 803,
           "markdownTokenEncoding": "cl100k_base"
@@ -14624,10 +14624,10 @@
           "depth": 2,
           "markdownUrl": "/author/recipe-drafts.sections/start-an-ingredient-from-an-api-example.md",
           "parentMarkdownUrl": "/author/recipe-drafts.md",
-          "parentDigest": "e02f2804fdd79f0acda43e2e2403a762bddebc57d6defc1304285db1830e52ca",
-          "digest": "5d85c9bbb38a255235bf14a88f24853d60d0954537d6f059ed67210d6dfb842d",
-          "markdownBytes": 3027,
-          "markdownTokens": 714,
+          "parentDigest": "48ec69d51b60fcdefecfc75f9d50b2aa4268f9e8fd81e66a3a14b0413bc58e9a",
+          "digest": "58565807d0713b7fc298baa9ba488786be4f39be39992444962a75c9c4b24287",
+          "markdownBytes": 3078,
+          "markdownTokens": 722,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -14636,17 +14636,17 @@
           "depth": 2,
           "markdownUrl": "/author/recipe-drafts.sections/related-reading.md",
           "parentMarkdownUrl": "/author/recipe-drafts.md",
-          "parentDigest": "e02f2804fdd79f0acda43e2e2403a762bddebc57d6defc1304285db1830e52ca",
-          "digest": "02745a3dfa5c12c0b5be88bdcb864c008a597fea047d7fa1e4e79f2f30abb780",
+          "parentDigest": "48ec69d51b60fcdefecfc75f9d50b2aa4268f9e8fd81e66a3a14b0413bc58e9a",
+          "digest": "01a5491bccb2f5c887edf64c3919182e3dcb321163739bbf2c9337dbdcb516f7",
           "markdownBytes": 2247,
           "markdownTokens": 557,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 10841,
-      "markdownTokens": 2305,
+      "markdownBytes": 10892,
+      "markdownTokens": 2313,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "e02f2804fdd79f0acda43e2e2403a762bddebc57d6defc1304285db1830e52ca"
+      "digest": "48ec69d51b60fcdefecfc75f9d50b2aa4268f9e8fd81e66a3a14b0413bc58e9a"
     },
     {
       "id": "recipe.preview-hybrid-search",
@@ -14815,7 +14815,7 @@
           "url": "/config/examples"
         },
         {
-          "label": "Email simulation"
+          "label": "Cookbook example"
         },
         {
           "label": "Queue a welcome email",
@@ -14836,7 +14836,7 @@
       "markdownBytes": 2047,
       "markdownTokens": 515,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "fc8c609da8f0f195c821dbadd85b417e3e9097c205f0c4d9e1d3620f6b3b81ed"
+      "digest": "32b0e349d5b71e62ee42fc83908b85a2f2c64f5fb63488eb67f9d0254bceaf53"
     },
     {
       "id": "recipe.refresh-agent-docs",
@@ -14929,15 +14929,15 @@
         "indexUrl": "/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-26",
-      "contentDigest": "6ffd48bd4cfdcaa8cf9d5860b11962fe8a49da1f66618d8f04d32043e604ace9",
+      "updated": "2026-11-04",
+      "contentDigest": "d541d05f93a4e2755898c4d12c5eb992646b8c8d1e44373b079c7499b0084929",
       "breadcrumbs": [
         {
           "label": "Examples",
           "url": "/config/examples"
         },
         {
-          "label": "Email simulation"
+          "label": "Cookbook example"
         },
         {
           "label": "Send a welcome email and confirm delivery",
@@ -14961,10 +14961,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 5039,
+      "markdownBytes": 5032,
       "markdownTokens": 1082,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "428c8694a9616b7290ac63467253280a8bd09b2c131d53273bebb73c7efd78e9"
+      "digest": "5f6b42238f4b17b5f63ff7754dcf4d8894d0ee78911a89860ab58059999072c2"
     },
     {
       "id": "guide.recipes-overview",
@@ -14993,8 +14993,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-27",
-      "contentDigest": "7c06e6046ad1878ffc123abd5c27c1bdad9d1675774990d34bafa219788b5614",
+      "updated": "2026-11-04",
+      "contentDigest": "8f2e86500dcc8a277d9d4b701e9e468a4d7c5b8ff6e555076e7b5dc2f3132df8",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15040,9 +15040,9 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/use-recipes-for-task-oriented-how-tos.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "beb43b3d402fe9d60933564e3027cff226a67276e33f8478c31265f6e9c07e28",
-          "markdownBytes": 3623,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "af461e7692941849021fda6ea1286f46d2c86b5c2ea4069a31f62e1f6bcf3925",
+          "markdownBytes": 3616,
           "markdownTokens": 773,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -15052,9 +15052,9 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/one-example-from-shoalrun.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "31b6691d52e4de84da43b4448fcc4c67f1311b601941826abf12bf24e6e668b6",
-          "markdownBytes": 3357,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "6fbb54d41982119c0cad64efb0298c41cd0771abd8b68223473a5606a480442f",
+          "markdownBytes": 3350,
           "markdownTokens": 765,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -15064,9 +15064,9 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/what-each-file-does.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "290b37c5b03312d6139b4fb33e43ac9cb28b527a028ca8000dcce3b5b6031a3b",
-          "markdownBytes": 3543,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "d2d2d3541b090e67599b45c435b41849c885a44239e8a8f0c45bb4cc5286cd15",
+          "markdownBytes": 3536,
           "markdownTokens": 689,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -15076,9 +15076,9 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/what-happens-and-when.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "c37f5e65ddca7768f8d5b377db723dcecfa339e7ba2f421813dce7930c9b33b2",
-          "markdownBytes": 2969,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "63d1c21ba459d393d1fe9709626b75b6a0300d782f6f1782701e7f0e0407e0ea",
+          "markdownBytes": 2962,
           "markdownTokens": 662,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -15088,9 +15088,9 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/what-changing-an-ingredient-updates.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "4eed275c8d54bda70541643cbb50bc58d6913d95cd27f168d2e137a50fb26817",
-          "markdownBytes": 2646,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "1b8074a4eaab96b39fe79146c624b098ddddb597a374415768ab23832f8c0680",
+          "markdownBytes": 2639,
           "markdownTokens": 592,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -15100,9 +15100,9 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/how-agents-use-this.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "22a029797dd5e14ed8dfbcb021212645855e3d8c44343681ad778dbc67532dfd",
-          "markdownBytes": 3573,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "48aa372827fdf2dc24bc3a41e9afcfc08b47ae29db892e45ee6eff40fbf0b000",
+          "markdownBytes": 3566,
           "markdownTokens": 707,
           "markdownTokenEncoding": "cl100k_base"
         },
@@ -15112,10 +15112,10 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/try-a-complete-workflow.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "7d283443cdefc38681fd1d209f7ed7626be947de2461e2b8aac6b67bdd839a3e",
-          "markdownBytes": 2365,
-          "markdownTokens": 555,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "7fa40b1908664b67ddf5d9c1a5fd86e972030b01e1d2a2a1f9ce202250e40070",
+          "markdownBytes": 2479,
+          "markdownTokens": 575,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15124,17 +15124,17 @@
           "depth": 2,
           "markdownUrl": "/author/recipes.sections/related-reading.md",
           "parentMarkdownUrl": "/author/recipes.md",
-          "parentDigest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817",
-          "digest": "fb8a24c003a7ecd634c77381cbccd6166177664a2f9c003f0cf31e31af18cb9d",
-          "markdownBytes": 1860,
+          "parentDigest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6",
+          "digest": "cf571106db9b5aea4c2cefadd04ff9d4d1f4b9509fae01c66a692d0f38060f92",
+          "markdownBytes": 1853,
           "markdownTokens": 441,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 10560,
-      "markdownTokens": 2013,
+      "markdownBytes": 10674,
+      "markdownTokens": 2033,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "edbec0616ea0b70e0f011aecded3425bc326fa3942ef4bd7c1b5af5dd570a817"
+      "digest": "5ca8c17f61e29b8b2719350f22b49542e8fd2e4e53d6d4cb52cfb7c0d90cb0c6"
     },
     {
       "id": "guide.related-reading",
@@ -15619,9 +15619,9 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-26",
+      "updated": "2026-11-04",
       "verified": "2026-10-01",
-      "contentDigest": "68f8b19d08000fff9fee27e7bfcf079726b4c740e1753421e508b293c61b7869",
+      "contentDigest": "7cfef6aacf4f0612ffb15e84c7dc5068fc152d886377184cb61e5fdb9b7cf6ed",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -15666,10 +15666,22 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/choose-a-provider.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "2f08208dcfa031dd0012f3fc31845d48f5308d37f7c357d7a1d7c6daec1c2266",
-          "markdownBytes": 2246,
-          "markdownTokens": 517,
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "29ae75fd2380ba5f569a60a5f62d54f46b622ab2c5aed74382ad3701aece736a",
+          "markdownBytes": 2570,
+          "markdownTokens": 553,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "enable-included-semantic-search",
+          "title": "Enable included semantic search",
+          "depth": 2,
+          "markdownUrl": "/author/search.sections/enable-included-semantic-search.md",
+          "parentMarkdownUrl": "/author/search.md",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "ef886ba52dd2dd62834205769eae3f54c7503f542206a74ebd4395262429d41a",
+          "markdownBytes": 3258,
+          "markdownTokens": 749,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15678,8 +15690,8 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/use-the-search-box.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "574ef2f7c1e3cc366bb28fd9ee95c8323d95b95e18349dbf22e70ba987152103",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "f262c17c737e49e95550cd59d548a84b7733645696b7615f288f6f2d03fb88a3",
           "markdownBytes": 1901,
           "markdownTokens": 471,
           "markdownTokenEncoding": "cl100k_base"
@@ -15690,8 +15702,8 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/lexical-search.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "980a5f7a3bab97bb4fe7e5b98c69ad1aa7d081690cc6caff35e30d8e5af58b84",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "f5f0678dd7f7393f27006f3441f293c2444510c034b18ba9b232fb0c28ae68a7",
           "markdownBytes": 4554,
           "markdownTokens": 1011,
           "markdownTokenEncoding": "cl100k_base"
@@ -15702,8 +15714,8 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/hosted-semantic-search-limits.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "5e3df70f205cdbc39784120d5ae8b9709ef880c11b56c8bcbb1f4f5ed0a239e0",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "f044db585690396e9428d70f2a120e085b9b58d6ed3f13c08feb27cddea47509",
           "markdownBytes": 3359,
           "markdownTokens": 749,
           "markdownTokenEncoding": "cl100k_base"
@@ -15715,8 +15727,8 @@
           "standalone": true,
           "markdownUrl": "/author/search.sections/write-a-custom-provider.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "1c7110b831c975bda6fc3ae0e5db7b86e3112ba8df62ebd6f426fd401cba615a",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "24b78bbbcc3aa0110e852cc1b386a35ea20a0e1a8136de3eaa1e832c59096474",
           "markdownBytes": 5300,
           "markdownTokens": 1054,
           "markdownTokenEncoding": "cl100k_base"
@@ -15727,8 +15739,8 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/reuse-the-lexical-index.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "20fb9f3c812151cb14aa56acdfa73e5106b0b1db0f8938dd3afa8b9cfd04ca82",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "d59b23d658ca754c538c4efbb2b00cd4cfc274257e38b810d99daca415e02c16",
           "markdownBytes": 3912,
           "markdownTokens": 916,
           "markdownTokenEncoding": "cl100k_base"
@@ -15740,8 +15752,8 @@
           "standalone": true,
           "markdownUrl": "/author/search.sections/turn-search-off.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "a16032a42a32174b11c64cd00e91628236555618d987d52f20fb897590e9a6bd",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "a4461b8401bfc8dbdd0c3e971b638a51e094dd448a83e02fb6aa738c37c7e317",
           "markdownBytes": 2140,
           "markdownTokens": 510,
           "markdownTokenEncoding": "cl100k_base"
@@ -15752,10 +15764,22 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/local-semantic-preview.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "781231e76765ecf6615f9d44f3e4a9d32d5a4b1914a8123bd24d0ce55858e820",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "bf76414fd15129a2334662dd7bf6f69b89c81df264424ba2b54d6a0abfba47fc",
           "markdownBytes": 2575,
           "markdownTokens": 569,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "agent-and-mcp-search-scope",
+          "title": "Agent and MCP search scope",
+          "depth": 2,
+          "markdownUrl": "/author/search.sections/agent-and-mcp-search-scope.md",
+          "parentMarkdownUrl": "/author/search.md",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "9644fe6ceb4540f532c3a37fe8b5aa35db0e2522f068d41b8e1629119240d150",
+          "markdownBytes": 2542,
+          "markdownTokens": 579,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -15764,8 +15788,8 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/cli-and-mcp-ranking-details.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "3044aafd20c6af51d0ec38e7b3cf9cf449a8bcfae3621cb8af20658e8890a752",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "7818e0613208a4234779ce43394eabd756959e087417cb952150cd376e0d5139",
           "markdownBytes": 3268,
           "markdownTokens": 712,
           "markdownTokenEncoding": "cl100k_base"
@@ -15776,8 +15800,8 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/read-a-search-result-with-an-agent.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "e46e31b34f5b39cb61ff515fea0a3477a17ff683ec496f2b4e662028ee6c220d",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "40efeb1083024720fb40e385dd18136825cbb97d0ec980511ad6b4983898bfd9",
           "markdownBytes": 3270,
           "markdownTokens": 727,
           "markdownTokenEncoding": "cl100k_base"
@@ -15788,8 +15812,8 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/html-markdown-and-agents.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "e389e90d9d9810cee6b1f3a7918dd4979f2a1051dd9758750495a5126b25884f",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "e829c5db107afe02bcb8dfc345b30a2245f7c83fc9f0004ebb083f2ca0388a79",
           "markdownBytes": 1995,
           "markdownTokens": 473,
           "markdownTokenEncoding": "cl100k_base"
@@ -15800,17 +15824,17 @@
           "depth": 2,
           "markdownUrl": "/author/search.sections/related-reading.md",
           "parentMarkdownUrl": "/author/search.md",
-          "parentDigest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031",
-          "digest": "be62d8f52bbff0b6b14439f9f8b3d75bff5a43047d10d546d3340c4414677be9",
+          "parentDigest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59",
+          "digest": "1dc27d84fec50b1cd47e8caf942d56845737d7be2e68c123c60c4443a0e205fd",
           "markdownBytes": 2074,
           "markdownTokens": 504,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 20095,
-      "markdownTokens": 4108,
+      "markdownBytes": 23229,
+      "markdownTokens": 4728,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "8156b45dd94f213d16fce7f9a253531e7be66eba5004111dabd6d832120dc031"
+      "digest": "6405a601d406164f525f734b4326353146054feacf87806b16ad416360c8eb59"
     },
     {
       "id": "guide.seo",
@@ -16249,8 +16273,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-10-30",
-      "contentDigest": "adc37eb0634cedbf4fde183f2d5dfdecfa8f2edfacad7f8375038c843467363a",
+      "updated": "2026-11-04",
+      "contentDigest": "5ba3cdbc532a4bbdcad01ec5b34f1f8f3e583ba95866ad0328f441747dd33745",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -16292,8 +16316,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/prerequisites.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "5b6a9183046c36fc130f0ee5b51d49451646c26154316b2b62cc8ea7753e5bc7",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "241661e1a55735918d0856c19575af5aa0c0444ca75c218df4d0762c5c83da35",
           "markdownBytes": 1519,
           "markdownTokens": 382,
           "markdownTokenEncoding": "cl100k_base"
@@ -16304,8 +16328,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/start-your-own-project.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "f171385ce7ecaf1b40317ba0f9e2043945cb41603ae1673988f4c02cf77cf777",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "ee5ad9bb1add56f70db4b4397cdbe8b43afc27540cd5fb5c61440bf1d79d4503",
           "markdownBytes": 1981,
           "markdownTokens": 505,
           "markdownTokenEncoding": "cl100k_base"
@@ -16316,8 +16340,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/create-a-page.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "b33986d43d5d1a5282eca600f8081811d24d1f3dcac5596f32dc8f42b78b56fb",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "dad157d36e429685b9c9caf6469df1532aa046ab8d15fe3c4098928797aa60fd",
           "markdownBytes": 4407,
           "markdownTokens": 995,
           "markdownTokenEncoding": "cl100k_base"
@@ -16328,8 +16352,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/add-the-page-to-navigation.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "cac1ab071a82326421507d10b5f9a304444b7db9d8fa068fdc21e677dc5deada",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "fd1548102f4fec8eee574c7d8f67ab7d7dfe36519e29a3c145d21c46e51d7ac4",
           "markdownBytes": 1801,
           "markdownTokens": 451,
           "markdownTokenEncoding": "cl100k_base"
@@ -16340,8 +16364,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/build-and-check-both-outputs.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "9e0c639889d4d85a0bd148efa545db29f2773e4f8ea418ef9f194a4a7674186e",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "8d5cbca891a822e6f08a61bf1c137a900f1c11c05b56e40a79d704e54186b80c",
           "markdownBytes": 2343,
           "markdownTokens": 592,
           "markdownTokenEncoding": "cl100k_base"
@@ -16352,8 +16376,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/make-it-yours.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "04132663f73b58c60747c84c2d7e9487bf97f93625194b3dfa72961b7f69c853",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "bf3adde8ce7bd59ceb723d4cd039dc62e229bd1df3248cda2340856f3ea183d0",
           "markdownBytes": 1952,
           "markdownTokens": 493,
           "markdownTokenEncoding": "cl100k_base"
@@ -16364,8 +16388,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/migrating-from-github-packages.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "03ec133433ff9782e9c13db58562f74c443321cb88810cbb187eec4d5e2a0ae8",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "f037c5a43e9d92448b7fdda827b17c5e7bf4b144e366e14b47593b96d1a41c12",
           "markdownBytes": 1796,
           "markdownTokens": 447,
           "markdownTokenEncoding": "cl100k_base"
@@ -16376,8 +16400,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/build-this-site.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "bd18be1904fb6d1b62a409281cbbab9d5486a78eaf46569d8e8f7a8c3ab4053a",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "6dbcd2b5927108da775457195fc002a61fdc9ac2d5cbca90dcad87db56549944",
           "markdownBytes": 1494,
           "markdownTokens": 371,
           "markdownTokenEncoding": "cl100k_base"
@@ -16388,8 +16412,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/check-writing-style.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "293aa60249aa2d413685b9eecdb0857740fc88de0cdf745d413479598c80247c",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "0d0ca24f0484562bcf84a26e817f2b024902449ed104c13d8ac50e85e810fa7f",
           "markdownBytes": 1404,
           "markdownTokens": 355,
           "markdownTokenEncoding": "cl100k_base"
@@ -16400,8 +16424,8 @@
           "depth": 2,
           "markdownUrl": "/start.sections/related-reading.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90",
-          "digest": "491fd3f42117428cd3671a82e6174682a5f1c84ce8cd8d3f63772718e02558dd",
+          "parentDigest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901",
+          "digest": "2f85fe097d2fbf2edc606ab7ee4d72938a848bf48b89326074a47e33556393f6",
           "markdownBytes": 1925,
           "markdownTokens": 489,
           "markdownTokenEncoding": "cl100k_base"
@@ -16410,7 +16434,7 @@
       "markdownBytes": 9110,
       "markdownTokens": 2161,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "142c7ca575c4aabb3d4dde9bc555def0bbe1adf4ffa7bb9ce17f781d7bfdaa90"
+      "digest": "e8fee5d57b67130baac9d59ccbfdf113ae78872e6cf566b84389f7ee330d9901"
     },
     {
       "id": "guide.status",

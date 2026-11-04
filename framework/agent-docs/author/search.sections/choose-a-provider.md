@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-04.**
 
 **Verified: 2026-10-01.**
 
@@ -43,10 +43,11 @@ outputs:
       provider: lexical
 ```
 
-| Provider  | Behavior                                                                |
-| --------- | ----------------------------------------------------------------------- |
-| `lexical` | The default. Builds `/search-index.json` and matches it in the browser. |
-| `custom`  | Loads your browser module. Needs `module`; `index` is optional.         |
-| `none`    | Removes the search box. Writes no index or provider file.               |
+| Provider   | Behavior                                                                                                      |
+| ---------- | ------------------------------------------------------------------------------------------------------------- |
+| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                                       |
+| `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Available since `0.1.0-alpha.16`. |
+| `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                               |
+| `none`     | Removes the search box. Writes no index or provider file.                                                     |
 
 The build copies the provider module to `/assets/search-provider.js`. The search box imports that file when a reader first focuses the box or types.

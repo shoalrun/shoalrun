@@ -1,28 +1,31 @@
 ---
 id: cookbook.welcome-email
-title: Welcome email workflows
-summary: Choose an acceptance check or follow the same message through delivery.
+title: Cookbook example
+summary: Compare recipe choices and see how a cookbook reuses instructions
+  across workflows.
 type: cookbook
-area: api
-subarea: api-examples
+area: authoring
+subarea: authoring-composition
 canonical: /cookbooks/welcome-email
 ---
 
-# Welcome email workflows
+# Cookbook example
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
 Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Email simulation > Email simulation
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Cookbook example > Cookbook example
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-04.**
 
-An accepted request is the first checkpoint. Choose how far you want to follow the message. Both paths use a local simulation that sends no email.
+This worked example shows how a cookbook presents complete recipes and reuses instructions across them. Choose a short acceptance check or a longer delivery workflow; the delivery recipe includes the same queue step.
+
+Email is the sample task. Both recipes use a local simulator that sends no email. The reusable pattern is choosing an outcome, following the selected recipe, and carrying one step’s output into the next step.
 
 Each recipe includes the setup command, inputs, and success check. You need a Shoalrun checkout, cURL, and Node.js. The demo runs on your own computer at `127.0.0.1:8787`.
 
-## Choose your outcome
+## Choose a recipe
 
 What do you need to confirm?. Choose one recipe.
 

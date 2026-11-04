@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Generated frontmatter reference
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-04.**
 
 Parent page: [Full Markdown page](/author/frontmatter-reference.md)
 
@@ -32,15 +32,17 @@ For section exports, declare `standaloneSections` with `{ id, context: section }
 
 The project enables specific channel/version/language combinations. A page is built only for combinations matching its resolved values. `audiences` and `readerFilters` select reader views when the site config enables them; `access.policy` determines whether the page enters this public build. A draft page is excluded.
 
-| Field           | Type   | Needed      | What it changes                                                                                                                |
-| --------------- | ------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `channel`       | string | Public page | Publication environment, such as sandbox or production; selects an enabled publication and API source.                         |
-| `version`       | string | Public page | API or documentation edition, such as v1; selects an enabled publication and API source.                                       |
-| `language`      | string | Optional    | Content language; uses frontmatter defaults/enforced values, then publications.defaults.language, then en.                     |
-| `locale`        | string | Optional    | Formatting conventions used in the content; can inherit a project locale for the page language and can be overridden per page. |
-| `access`        | object | Public page | Controls whether the page enters a public build; this object is not exported to Markdown metadata.                             |
-| `access.policy` | string | With access | Use public to publish this page; draft pages are excluded from the built site.                                                 |
-| `audiences`     | array  | Optional    | Readers this page is intended for; does not control who can access it.                                                         |
-| `readerFilters` | object | Optional    | Configured reader filter choices for this page. Missing facets are shared.                                                     |
+| Field           | Type    | Needed      | What it changes                                                                                                                                                                                                  |
+| --------------- | ------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `channel`       | string  | Public page | Publication environment, such as sandbox or production; selects an enabled publication and API source.                                                                                                           |
+| `version`       | string  | Public page | API or documentation edition, such as v1; selects an enabled publication and API source.                                                                                                                         |
+| `language`      | string  | Optional    | Content language; uses frontmatter defaults/enforced values, then publications.defaults.language, then en.                                                                                                       |
+| `locale`        | string  | Optional    | Formatting conventions used in the content; can inherit a project locale for the page language and can be overridden per page.                                                                                   |
+| `access`        | object  | Public page | Controls whether the page enters a public build; this object is not exported to Markdown metadata.                                                                                                               |
+| `access.policy` | string  | With access | Use public to publish this page; draft pages are excluded from the built site.                                                                                                                                   |
+| `shared`        | boolean | Optional    | Explicitly classify this page as shared across customer editions. Page-specific; cannot combine with requires. Sections may still use ForFeature.                                                                |
+| `requires`      | object  | Optional    | Build-time feature requirements from the shared SKU manifest. Both clauses must pass when present; omitted means shared within existing publication/access eligibility. Requires an explicit deployment profile. |
+| `audiences`     | array   | Optional    | Readers this page is intended for; does not control who can access it.                                                                                                                                           |
+| `readerFilters` | object  | Optional    | Configured reader filter choices for this page. Missing facets are shared.                                                                                                                                       |
 
 Language is the content language and selects a publication. Locale describes formatting conventions in the content and does not select a publication. `frontmatter.locales` can set a project locale for each language; pages may override it.

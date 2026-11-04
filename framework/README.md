@@ -9,13 +9,13 @@ This package provides the `shoalrun` CLI, starter projects, agent skills, and of
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.15
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.16
 ```
 
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.15 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.16 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
@@ -69,7 +69,7 @@ npx --no-install shoalrun docs search "Steps" --json
 npx --no-install shoalrun docs read guide.component.steps --json
 ```
 
-Alpha.12 includes the reviewed documentation refresh: clearer organization, installed-package workflows, and consistent explanations of HTML, Markdown, and agent behavior. The bundled snapshot stays fixed until you upgrade the package.
+The bundled documentation is a reviewed, pinned snapshot. Its provenance lives in `agent-docs/SNAPSHOT.json`; it does not automatically follow the live site.
 
 See the [authoring command reference](AUTHORING.md) for project inspection, validation, report schemas, and the public authoring API. Visit [shoalrun.com](https://www.shoalrun.com) for the full documentation; it may describe changes newer than your installed package.
 

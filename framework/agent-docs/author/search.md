@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-04.**
 
 **Verified: 2026-10-01.**
 
@@ -35,13 +35,47 @@ outputs:
       provider: lexical
 ```
 
-| Provider  | Behavior                                                                |
-| --------- | ----------------------------------------------------------------------- |
-| `lexical` | The default. Builds `/search-index.json` and matches it in the browser. |
-| `custom`  | Loads your browser module. Needs `module`; `index` is optional.         |
-| `none`    | Removes the search box. Writes no index or provider file.               |
+| Provider   | Behavior                                                                                                      |
+| ---------- | ------------------------------------------------------------------------------------------------------------- |
+| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                                       |
+| `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Available since `0.1.0-alpha.16`. |
+| `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                               |
+| `none`     | Removes the search box. Writes no index or provider file.                                                     |
 
 The build copies the provider module to `/assets/search-provider.js`. The search box imports that file when a reader first focuses the box or types.
+
+## Enable included semantic search
+
+Available since `0.1.0-alpha.16`.
+
+Choose the included semantic provider to connect the search box to Shoalrun's endpoint without writing a browser adapter:
+
+```yaml title="docs.config.yaml"
+outputs:
+  html:
+    search:
+      provider: semantic
+retrieval:
+  embeddings:
+    provider: voyage
+    model: voyage-4-large
+    queryModel: voyage-4-lite
+    dimension: 1024
+```
+
+Set `VOYAGE_API_KEY` in the terminal environment, then build the site, embed its passages, and start the local endpoint:
+
+```sh
+npx --no-install shoalrun build docs.config.yaml site-dist
+npx --no-install shoalrun index site-dist --embed --config docs.config.yaml
+npx --no-install shoalrun serve site-dist --search --config docs.config.yaml
+```
+
+Keys remain server-side. Each semantic query calls the embedding provider; no chat model is required. The browser sends the selected publication and reader view with each request. A missing or unavailable endpoint uses the included browser keyword index. Requests cancelled by further typing do not start fallback searches.
+
+Confirm `mode: vector` in the endpoint response to verify semantic retrieval. Rebuild and reindex edited content, then restart the local server. The [passage index](https://www.shoalrun.com/chat/passage-index.md) explains input reuse and release-specific passage identities.
+
+This setting selects the browser connection; it does not provision production hosting. The current [Vercel integration](https://www.shoalrun.com/publish/vercel.md) supplies search through its chat-function deployment. Profiled Vercel chat-function builds remain unsupported. Static deployments retain keyword search when no endpoint is present. Custom search services can continue to use `provider: custom`.
 
 ## Use the search box
 
@@ -251,6 +285,21 @@ For dotted configuration keys or command flags, the endpoint can add an exact-id
 Result snippets prefer prose matching the substantive words in your question, omit generated discovery text, and keep a matching term visible in a long paragraph. Code-only and table-only passages use the page summary.
 
 [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) covers the embedding provider key, passage index, local endpoint, lexical fallback, and Network inspector checks.
+
+## Agent and MCP search scope
+
+`outputs.html.search.provider: semantic` changes the website search box. It does not change CLI or MCP search into semantic retrieval. Those tools retain keyword search and explicit publication selection.
+
+For a multi-version Windows build, select the release when searching:
+
+```sh
+npx --no-install shoalrun search windows-site "missing events" \
+  --channel production --version 7.1 --language en
+```
+
+A local MCP server's `search_docs` tool accepts the same `channel`, `version`, and `language` fields. Follow the returned `read.tool` and `read.arguments` to read the matching page or section in that publication. Do not substitute a current-release page with the same logical ID.
+
+A hosted MCP build packages one configured publication, so its endpoint rejects requests for a different release. Product selection currently comes from the chosen build or endpoint. A combined product/version catalog is not part of this release. Customer-specific builds should expose only their selected edition to these tools.
 
 ## CLI and MCP ranking details
 

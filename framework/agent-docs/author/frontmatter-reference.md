@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Generated frontmatter reference
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-04.**
 
 This is the field inventory for this documentation site. The tables below are built from Shoalrun's native field definitions and this site's `frontmatter.fields` declarations on each build. They describe source page headers, not the shorter YAML header selected for a published Markdown page.
 
@@ -43,16 +43,18 @@ Use the page ID for links and cards that should survive a URL change. The slug s
 
 The project enables specific channel/version/language combinations. A page is built only for combinations matching its resolved values. `audiences` and `readerFilters` select reader views when the site config enables them; `access.policy` determines whether the page enters this public build. A draft page is excluded.
 
-| Field           | Type   | Needed      | What it changes                                                                                                                |
-| --------------- | ------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `channel`       | string | Public page | Publication environment, such as sandbox or production; selects an enabled publication and API source.                         |
-| `version`       | string | Public page | API or documentation edition, such as v1; selects an enabled publication and API source.                                       |
-| `language`      | string | Optional    | Content language; uses frontmatter defaults/enforced values, then publications.defaults.language, then en.                     |
-| `locale`        | string | Optional    | Formatting conventions used in the content; can inherit a project locale for the page language and can be overridden per page. |
-| `access`        | object | Public page | Controls whether the page enters a public build; this object is not exported to Markdown metadata.                             |
-| `access.policy` | string | With access | Use public to publish this page; draft pages are excluded from the built site.                                                 |
-| `audiences`     | array  | Optional    | Readers this page is intended for; does not control who can access it.                                                         |
-| `readerFilters` | object | Optional    | Configured reader filter choices for this page. Missing facets are shared.                                                     |
+| Field           | Type    | Needed      | What it changes                                                                                                                                                                                                  |
+| --------------- | ------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `channel`       | string  | Public page | Publication environment, such as sandbox or production; selects an enabled publication and API source.                                                                                                           |
+| `version`       | string  | Public page | API or documentation edition, such as v1; selects an enabled publication and API source.                                                                                                                         |
+| `language`      | string  | Optional    | Content language; uses frontmatter defaults/enforced values, then publications.defaults.language, then en.                                                                                                       |
+| `locale`        | string  | Optional    | Formatting conventions used in the content; can inherit a project locale for the page language and can be overridden per page.                                                                                   |
+| `access`        | object  | Public page | Controls whether the page enters a public build; this object is not exported to Markdown metadata.                                                                                                               |
+| `access.policy` | string  | With access | Use public to publish this page; draft pages are excluded from the built site.                                                                                                                                   |
+| `shared`        | boolean | Optional    | Explicitly classify this page as shared across customer editions. Page-specific; cannot combine with requires. Sections may still use ForFeature.                                                                |
+| `requires`      | object  | Optional    | Build-time feature requirements from the shared SKU manifest. Both clauses must pass when present; omitted means shared within existing publication/access eligibility. Requires an explicit deployment profile. |
+| `audiences`     | array   | Optional    | Readers this page is intended for; does not control who can access it.                                                                                                                                           |
+| `readerFilters` | object  | Optional    | Configured reader filter choices for this page. Missing facets are shared.                                                                                                                                       |
 
 Language is the content language and selects a publication. Locale describes formatting conventions in the content and does not select a publication. `frontmatter.locales` can set a project locale for each language; pages may override it.
 
@@ -87,6 +89,8 @@ By default, `product`, `area`, and `subarea` are optional, nonempty string categ
 | `image`                | string          | Optional     | Local .png or .jpg shown in link previews for this page, relative to the page file; replaces the generated share image. Best at 1200×630.                                                                                                                                   |
 
 Projects can opt into built-in category enforcement with `frontmatter.taxonomy`. It declares areas and their allowed subareas, optional required fields, and optional explicit-field requirements for authored pages. Its `multiple` list permits arrays for selected category fields; otherwise each field allows one value. Defaults and enforced values still apply; generated API references use resolved categories. Definitions appear in the document manifest and constrain the generated frontmatter schema. Omit taxonomy or set it to false to preserve optional category behavior.
+
+With `profiles.requireClassification: true`, every public source page in the shared enabled publications needs an explicit `shared: true` or `requires` declaration before customer selection. Defaults do not count. Shared pages may contain feature-specific sections wrapped in `<ForFeature>`; unwrapped text remains shared.
 
 ## Control output details
 

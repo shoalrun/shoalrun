@@ -14,7 +14,7 @@ canonical: /recipes/queue-email
 
 Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt) (ID: examples-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Email simulation > Queue a welcome email
+Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Cookbook example > Queue a welcome email
 
 **Updated: 2026-10-25.**
 
