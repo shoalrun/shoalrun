@@ -39,7 +39,7 @@ export type ArtifactAssemblyInput = {
   themeStyleFile?: string;
   generatedPaletteCss?: string;
   generatedBadgeCss?: string;
-  search: { provider: 'lexical' | 'custom' | 'none'; index: boolean; module?: string };
+  search: { provider: 'lexical' | 'semantic' | 'custom' | 'none'; index: boolean; module?: string };
   synonyms: unknown[];
   config: { site: { title: string; basePath?: unknown; indexing?: boolean }; [key: string]: unknown };
   builtInSearchProvider: string;
@@ -172,7 +172,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     const compact = { schemaVersion: 1, documents: index.documents.map(({ id, demo, url, markdownUrl, title, summary, type, variant, headings, sections, navigationTab }) => ({ id, demo, url, markdownUrl, title, summary, type, variant, headings, ...(navigationTab ? { navigationTab } : {}), ...(sections ? { sections } : {}), ...sizes.get(markdownUrl) })) };
     addMetadataArtifact('/search-index.min.json', JSON.stringify(compact) + '\n');
   }
-  if (search.provider === 'custom' && search.index) addPublicArtifact('/assets/search-lexical.js', await readFile(builtInSearchProvider, 'utf8'));
+  if ((search.provider === 'custom' || search.provider === 'semantic') && search.index) addPublicArtifact('/assets/search-lexical.js', await readFile(builtInSearchProvider, 'utf8'));
   if (search.module) addPublicArtifact('/assets/search-provider.js', await readFile(search.module, 'utf8'));
   if (customReaderModule) addPublicArtifact('/assets/reader-view-custom.js', await readFile(customReaderModule, 'utf8'));
   if (analyticsModule) addPublicArtifact('/assets/analytics-adapter.js', await readFile(analyticsModule, 'utf8'));

@@ -33,4 +33,6 @@ For a new OpenAPI source, read `guide.api-references` and complete its API-sourc
 
 Check the generated HTML, Markdown twins, and `documents.json`. Confirm navigation and API links resolve, and inspect assets inside the components that contain them. Run `shoalrun audit docs.config.yaml` when project checks or API audits are configured; documentation behavior tests can use Doc Detective through `audit.tests` or another external CLI.
 
+For optional semantic search, use `outputs.html.search.provider: semantic` (available since `0.1.0-alpha.16`) with `retrieval.embeddings`; do not generate a custom browser adapter for Shoalrun's own endpoint. Build the site, run `shoalrun index <output> --embed --config docs.config.yaml`, then `shoalrun serve <output> --search --config docs.config.yaml` with the provider key only in the environment. Confirm the endpoint returns `mode: vector`; a visible result or keyword fallback does not prove semantic retrieval. Selecting the browser provider does not provision production hosting, and profiled Vercel chat-function builds remain unsupported.
+
 Report the files created, commands run, and anything still needing an owner decision. Do not deploy, publish a release, or claim factual accuracy from a successful build alone.

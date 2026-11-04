@@ -57,7 +57,7 @@ const generatedWebhookBody = 'This webhook reference is generated from the OpenA
 
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
 const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
-type SearchSetup = { provider: 'lexical' | 'custom' | 'none'; module?: string; index: boolean };
+type SearchSetup = { provider: 'lexical' | 'semantic' | 'custom' | 'none'; module?: string; index: boolean };
 function validateSearch(value: unknown, declaringFile: string): SearchSetup {
   if (value === undefined) return { provider: 'lexical', module: builtInSearchProvider, index: true };
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('outputs.html.search must be a mapping');
@@ -67,6 +67,7 @@ function validateSearch(value: unknown, declaringFile: string): SearchSetup {
   for (const key of Object.keys(config)) if (!allowed.includes(key)) throw new Error(`Unsupported search setting ${key} for ${provider}`);
   if (provider === 'none') return { provider, index: false };
   if (provider === 'lexical') return { provider, module: builtInSearchProvider, index: true };
+  if (provider === 'semantic') return { provider, module: path.resolve(path.dirname(builtInSearchProvider), 'search-semantic.js'), index: true };
   if (provider !== 'custom') throw new Error(`Unknown search provider ${provider}`);
   if (typeof config.module !== 'string' || !/\.m?js$/.test(config.module)) throw new Error('Custom search needs a local .js or .mjs browser module');
   if (config.index !== undefined && typeof config.index !== 'boolean') throw new Error('outputs.html.search.index must be true or false');

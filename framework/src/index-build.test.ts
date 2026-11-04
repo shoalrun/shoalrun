@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import { mkdir, mkdtemp, readFile, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -13,7 +15,7 @@ test('chunks split at h2 and h3 with a heading path, anchors from the search ind
   const markdown = `---\ntitle: Demo\n---\n\n# Demo guide\n\n${filler('Intro.')}\n\n## Install it\n\n${filler('Install text.')}\n\n### Check the version\n\n${filler('Version text.')}\n\n## Configure\n\n${filler('Config text.')}\n`;
   const anchors = [{ id: 'install-it', title: 'Install it' }, { id: 'check-the-version', title: 'Check the version' }, { id: 'configure', title: 'Configure' }];
   const chunks = chunkMarkdown(markdown, document, anchors);
-  assert.deepEqual(chunks.map(chunk => chunk.id), ['guide.demo#intro', 'guide.demo#install-it', 'guide.demo#install-it-check-the-version', 'guide.demo#configure']);
+  assert.deepEqual(chunks.map(chunk => chunk.id), ['production%7Ccurrent%7Cen:guide.demo#intro', 'production%7Ccurrent%7Cen:guide.demo#install-it', 'production%7Ccurrent%7Cen:guide.demo#install-it-check-the-version', 'production%7Ccurrent%7Cen:guide.demo#configure']);
   assert.deepEqual(chunks.map(chunk => chunk.headingPath), [[], ['Install it'], ['Install it', 'Check the version'], ['Configure']]);
   assert.deepEqual(chunks.map(chunk => chunk.url), ['/demo', '/demo#install-it', '/demo#check-the-version', '/demo#configure']);
   assert.ok(chunks.every(chunk => !chunk.text.includes('title: Demo') && chunk.variant === 'production|current|en' && chunk.markdownUrl === '/demo.md'));
@@ -43,7 +45,7 @@ test('long sections split between blocks, and a large table splits between rows 
   assert.ok(chunks.every(chunk => chunk.text.startsWith('| Term | Meaning |\n| --- | --- |')));
   assert.ok(chunks.every(chunk => chunk.text.length <= 600));
   assert.equal(chunks.flatMap(chunk => chunk.text.split('\n').slice(2)).length, 30);
-  assert.deepEqual(chunks.map(chunk => chunk.id), ['guide.demo#terms', 'guide.demo#terms~2', ...chunks.slice(2).map((_, at) => `guide.demo#terms~${at + 3}`)]);
+  assert.deepEqual(chunks.map(chunk => chunk.id), ['production%7Ccurrent%7Cen:guide.demo#terms', 'production%7Ccurrent%7Cen:guide.demo#terms~2', ...chunks.slice(2).map((_, at) => `production%7Ccurrent%7Cen:guide.demo#terms~${at + 3}`)]);
   const paragraphs = Array.from({ length: 6 }, (_, at) => filler(`Paragraph ${at}.`, 300)).join('\n\n');
   assert.ok(chunkMarkdown(`# Demo\n\n## Long\n\n${paragraphs}\n`, document, [], { maxChars: 700 }).length >= 3);
 });
@@ -136,4 +138,40 @@ test('blocks are paragraphs, lists, tables, and whole fences, in order', () => {
   assert.deepEqual(splitBlocks(text), ['First paragraph\ncontinues here.', '- one\n- two', '| A | B |\n| - | - |\n| 1 | 2 |', '```yaml\na: 1\n\nb: 2\n```', '~~~\ntilde fence\n\nwith a gap\n~~~', 'Last one']);
   assert.deepEqual(splitBlocks(''), []);
   assert.deepEqual(splitBlocks('   \n\n  '), []);
+});
+
+test('logical pages retain separate passage identities across releases without changing embedding inputs', () => {
+  const body = '# Demo\n\nConnect to the service.\n';
+  const [current] = chunkMarkdown(body, document);
+  const [old] = chunkMarkdown(body, { ...document, variant: 'production|previous|en', url: '/previous/demo' });
+  assert.equal(current.docId, old.docId);
+  assert.notEqual(current.id, old.id);
+  assert.equal(current.digest, old.digest);
+  assert.equal(embeddingInput(current), embeddingInput(old));
+  assert.equal(old.url, '/previous/demo');
+});
+
+test('index generations track routes, publication membership and reader marks independently of embedding digests', async () => {
+  const body = '# Demo\n\nConnect to the service.\n';
+  const build = async (overrides: object) => (await buildChunkIndex(await site([{ ...entry('/demo.md'), ...overrides }], { 'demo.md': body }))).index;
+  const original = await build({});
+  for (const overrides of [{ url: '/new-demo' }, { readerFilters: { audience: ['staff'] } }, { variant: { channel: 'production', version: 'previous', language: 'en' } }]) {
+    const changed = await build(overrides);
+    assert.notEqual(changed.sourceDigest, original.sourceDigest);
+    assert.equal(changed.chunks[0].digest, original.chunks[0].digest);
+  }
+  assert.equal((await build({})).sourceDigest, original.sourceDigest);
+});
+
+
+test('index CLI reports each retained publication and its generation without embedding requests', async () => {
+  const documents = [entry('/demo.md'), { ...entry('/previous.md'), url: '/previous/demo', variant: { channel: 'production', version: 'previous', language: 'en' } }];
+  const directory = await site(documents, { 'demo.md': '# Demo\n\nUse the new service.\n', 'previous.md': '# Demo\n\nUse the old service.\n' });
+  const report = JSON.parse(execFileSync(process.execPath, [fileURLToPath(new URL('./cli.js', import.meta.url)), 'index', directory], { encoding: 'utf8' }));
+  assert.equal(report.status, 'ok');
+  assert.deepEqual(report.publications, [{ variant: 'production|current|en', passages: 1 }, { variant: 'production|previous|en', passages: 1 }]);
+  const built = JSON.parse(await readFile(report.output, 'utf8'));
+  assert.equal(report.sourceDigest, built.sourceDigest);
+  assert.equal(report.chunks, 2);
+  assert.equal(report.embeddings, undefined);
 });

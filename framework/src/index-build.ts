@@ -141,7 +141,9 @@ export function chunkMarkdown(markdown: string, document: ChunkSource, anchors: 
 }
 
 function makeChunk(document: ChunkSource, headingPath: string[], anchor: string | undefined, text: string, used: Map<string, number>, part = 0): Chunk {
-  const base = `${document.id}#${slug(headingPath.join(' ')) || 'intro'}${part ? `~${part + 1}` : ''}`;
+  // Logical page IDs repeat across releases. Stored passage IDs must not: vector
+  // rows and answer citations are keyed globally within this site's index.
+  const base = `${encodeURIComponent(document.variant)}:${encodeURIComponent(document.id)}#${slug(headingPath.join(' ')) || 'intro'}${part ? `~${part + 1}` : ''}`;
   const seen = used.get(base) ?? 0;
   used.set(base, seen + 1);
   const chunk = { id: seen ? `${base}-${seen + 1}` : base, docId: document.id, title: document.title, type: document.type, variant: document.variant, headingPath, url: anchor ? `${document.url}#${anchor}` : document.url, markdownUrl: document.markdownUrl, text };
@@ -188,8 +190,10 @@ export async function buildChunkIndex(directory: string, options: ChunkOptions =
     const { channel, version, language } = document.variant;
     chunks.push(...chunkMarkdown(markdown, { ...document, variant: `${channel}|${version}|${language}` }, anchors.get(document.url), options));
   }
-  const source = manifest.documents.map(document => `${document.id}:${document.digest}`).sort().join('\n');
-  const index: ChunkIndex = { schemaVersion: 1, sourceDigest: sha(source + (synonyms.length ? `\n${JSON.stringify(synonyms)}` : '')), chunks, ...(synonyms.length ? { synonyms } : {}) };
+  // Generation identity includes publication membership, routes, reader marks,
+  // and prepared search evidence. Embedding digests remain content-only.
+  const source = chunks.map(({ id, variant, digest, url, markdownUrl, readerFilters, search }) => ({ id, variant, digest, url, markdownUrl, readerFilters: Object.fromEntries(Object.entries(readerFilters ?? {}).sort(([a], [b]) => a.localeCompare(b)).map(([facet, values]) => [facet, [...values].sort()])), search })).sort((a, b) => a.id.localeCompare(b.id));
+  const index: ChunkIndex = { schemaVersion: 1, sourceDigest: sha(JSON.stringify({ identityVersion: 2, source, synonyms })), chunks, ...(synonyms.length ? { synonyms } : {}) };
   const output = path.join(await aiDirectory(root), 'chunks.json');
   await writeFile(output, JSON.stringify(index) + '\n');
   return { index, output, documents: manifest.documents.length };

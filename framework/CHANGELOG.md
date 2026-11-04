@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.1.0-alpha.16 — 2026-11-04
+
+- Set `outputs.html.search.provider: semantic` to connect the search box to
+  Shoalrun's semantic endpoint without writing a custom browser module. The
+  included keyword index remains available when the endpoint is absent or
+  unavailable. Configure an embedding provider, build the passage index, and
+  run or deploy the search endpoint; selecting the browser provider alone does
+  not provision a backend.
+
+- Qualify stored passage IDs by publication so repeated page and section IDs
+  across releases cannot alias embedding rows or citation digests. Rebuild
+  passage indexes with `shoalrun index`; when using semantic retrieval, rerun
+  indexing with `--embed` and the same embedding configuration to reuse cached
+  inputs. Regenerate answer cards after rebuilding their cited passage IDs.
+  Ambiguous legacy indexes now fail with rebuild instructions.
+- Include publication membership, routes, reader marks, and prepared search
+  evidence in passage-index generation hashes without changing embedding inputs.
+- Read publication-specific passage counts and `sourceDigest` from the index
+  command's JSON summary to check which retained releases were indexed.
+- Stream hosted search scores into page selection, retaining at most three
+  candidates per page and a result-sized final ranking. Large galleries no
+  longer require an unbounded sorted passage array. Exact identifiers reserve
+  a slot among displayable pages and keep literal table/code landing evidence.
+  File-backed retrieval still scans the selected publication; external vector
+  storage and publication-sharded browser downloads are not included yet.
+
 ## 0.1.0-alpha.15 — 2026-11-03
 
 - Opt into `profiles.requireClassification` to reject unclassified public pages

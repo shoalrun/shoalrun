@@ -102,6 +102,44 @@ for main, developer, and regional sites built from one source directory.
 For deployment-owned SKU selections, direct or grandfathered feature grants, and
 branding supplied outside the shared repository, see [deployment profiles](DEPLOYMENT-PROFILES.md).
 
+## Enable semantic search
+
+The default search runs in the browser with no server or API key. To use
+Shoalrun's semantic endpoint, select the included provider:
+
+```yaml
+outputs:
+  html:
+    search:
+      provider: semantic
+retrieval:
+  embeddings:
+    provider: voyage
+    model: voyage-4-large
+    queryModel: voyage-4-lite
+    dimension: 1024
+```
+
+Set `VOYAGE_API_KEY` in the build and server environment, then run:
+
+```sh
+shoalrun build docs.config.yaml site-dist
+shoalrun index site-dist --embed --config docs.config.yaml
+shoalrun serve site-dist --search --config docs.config.yaml
+```
+
+No custom browser adapter or chat model is needed. The browser sends the selected
+publication and reader view to the same-origin endpoint and uses keyword search
+if it is missing or unavailable. Each semantic query calls the embedding
+provider; keys stay server-side. Reindex changed content and restart the preview
+after rebuilding indexes. Existing matching embedding inputs are reused.
+
+`provider: semantic` configures the browser connection; production hosting still
+needs a search endpoint. The current Vercel integration supplies search through
+its chat-function deployment, which does not yet support deployment profiles.
+A static deployment remains usable through keyword fallback. External search
+services can continue to use `provider: custom`.
+
 ## Export content into an application
 
 Export pages from the same source into a portable directory for an application's

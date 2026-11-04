@@ -73,10 +73,13 @@ export class LexicalIndex {
   }
 
   search(query: string, limit = 8, keep?: Keep): Hit[] {
+    return [...this.scan(query, keep)].sort(compareHits).slice(0, limit);
+  }
+
+  *scan(query: string, keep?: Keep): IterableIterator<Hit> {
     const terms = [...new Set(tokenize(query))];
     const units = queryUnits(query, this.synonyms).filter(unit => unit.alternatives.length);
     const total = this.entries.length;
-    const hits: Hit[] = [];
     for (const entry of this.entries) {
       if (keep && !keep(entry.chunk)) continue;
       let score = 0;
@@ -94,9 +97,8 @@ export class LexicalIndex {
           else if (unit.alternatives.some(term => phraseMatches(fields[at], term))) score += fieldWeight[at] * 0.5;
         }
       }
-      if (score > 0) hits.push({ chunk: entry.chunk, score });
+      if (score > 0) yield { chunk: entry.chunk, score };
     }
-    return hits.sort((left, right) => right.score - left.score || left.chunk.id.localeCompare(right.chunk.id)).slice(0, limit);
   }
 }
 
@@ -115,18 +117,22 @@ export class VectorIndex {
   constructor(private readonly rows: VectorRow[]) {}
 
   search(query: Float32Array, limit = 8, keep?: Keep): Hit[] {
+    return [...this.scan(query, keep)].sort(compareHits).slice(0, limit);
+  }
+
+  *scan(query: Float32Array, keep?: Keep): IterableIterator<Hit> {
     const q = unit(query);
-    const hits: Hit[] = [];
     for (const row of this.rows) {
       if (keep && !keep(row.chunk)) continue;
       if (row.vector.length !== q.length) throw new Error(`Query vector has ${q.length} dimensions but stored vectors have ${row.vector.length}`);
       let score = 0;
       for (let at = 0; at < q.length; at++) score += q[at] * row.vector[at];
-      hits.push({ chunk: row.chunk, score });
+      yield { chunk: row.chunk, score };
     }
-    return hits.sort((left, right) => right.score - left.score || left.chunk.id.localeCompare(right.chunk.id)).slice(0, limit);
   }
 }
+
+export const compareHits = (left: Hit, right: Hit): number => right.score - left.score || left.chunk.id.localeCompare(right.chunk.id);
 
 // Reciprocal rank fusion. Lexical and vector scores are not comparable, so only ranks are combined.
 export function fuse(lists: Hit[][], limit = 8, k = 60): Hit[] {
@@ -151,9 +157,14 @@ export class Retriever {
 
   constructor(index: ChunkIndex, embeddings?: StoredEmbeddings) {
     if (index?.schemaVersion !== 1 || !Array.isArray(index.chunks)) throw new Error('Unsupported or invalid chunks.json');
+    if (new Set(index.chunks.map(chunk => chunk.id)).size !== index.chunks.length) throw new Error('Ambiguous passage IDs in chunks.json; run shoalrun index <site-directory> to rebuild publication-qualified IDs. Existing passage embeddings can be reused.');
     const synonyms = validateSearchSynonyms(index.synonyms);
     const groups = new Map<string, Chunk[]>();
-    for (const chunk of index.chunks) groups.set(chunk.variant, [...(groups.get(chunk.variant) ?? []), chunk]);
+    for (const chunk of index.chunks) {
+      let passages = groups.get(chunk.variant);
+      if (!passages) groups.set(chunk.variant, passages = []);
+      passages.push(chunk);
+    }
     this.counts = { total: index.chunks.length, embedded: 0, stale: 0, ...(embeddings ? { model: embeddings.meta.model, dimension: embeddings.meta.dimension } : {}) };
     const rowOf = new Map((embeddings?.meta.ids ?? []).map((id, row) => [id, row]));
     for (const chunk of index.chunks) this.digests.set(chunk.id, chunk.digest);
@@ -206,6 +217,16 @@ export class Retriever {
 
   lexical(query: string, options: LexicalOptions = {}): Hit[] {
     return (this.byVariant.get(this.variant(options)) as LexicalIndex).search(query, options.limit, keeping(options));
+  }
+
+  // File-backed search still scans its selected publication, but streams scores
+  // into page selection instead of sorting/materializing every passage first.
+  searchPassages(query: string, queryVector: Float32Array | undefined, options: LexicalOptions = {}): Iterable<Hit> {
+    const variant = this.variant(options);
+    if (!queryVector) return this.byVariant.get(variant)!.scan(query, keeping(options));
+    const index = this.vectors.get(variant);
+    if (!index) throw new Error('No current embeddings for this publication; run shoalrun index --embed');
+    return index.scan(queryVector, keeping(options));
   }
 
   vector(queryVector: Float32Array, options: LexicalOptions = {}): Hit[] {

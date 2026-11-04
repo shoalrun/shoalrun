@@ -263,3 +263,27 @@ test('search distinguishes fallback causes without exposing queries or provider 
     assert.equal(body.results[0].url, '/harbor#docking');
   }
 });
+
+test('search streams a large gallery into distinct page results and preserves deep literal landing evidence', async () => {
+  const base = { ...index.chunks[0], readerFilters: undefined };
+  const chunks = [
+    ...Array.from({ length: 5000 }, (_, at) => ({ ...base, id: `gallery-${at}`, docId: 'gallery', title: 'Gallery', url: '/gallery#source', text: '```sh\nrender example\n```' })),
+    ...Array.from({ length: 30 }, (_, at) => ({ ...base, id: `guide-${at}`, docId: `guide-${at}`, title: `Guide ${at}`, url: `/guide-${at}`, text: 'Configure the service for your system.' })),
+    { ...base, id: 'z-key', docId: 'settings', title: 'Settings', url: '/settings#overview', text: 'Set settings.preview when authoring documentation.' },
+    { ...base, id: 'z-table', docId: 'settings', title: 'Settings', url: '/settings#keys', text: '| Key | Meaning |\n| --- | --- |\n| settings.preview | Preview endpoint. |' }
+  ];
+  const scoped = prepared({ ...index, chunks });
+  const stored: StoredEmbeddings = { ...embeddings, meta: { ...embeddings.meta, ids: chunks.map(c => c.id), digests: chunks.map(c => c.digest) }, vectors: chunks.map(() => new Float32Array([1, 0])) };
+  const retriever = new Retriever(scoped, stored);
+  // The handler must not request an unbounded sorted passage array.
+  retriever.vector = () => assert.fail('search must stream page candidates');
+  retriever.lexical = () => assert.fail('search must stream identifier evidence');
+  const handler = createSearchHandler({ retriever, hosts: ['127.0.0.1:8770'], embedQuery: async () => new Float32Array([1, 0]) });
+  const body = await (await handler(request({ query: 'settings.preview', variant: 'production|current|en', limit: 3 }))).json();
+  assert.equal(body.mode, 'vector');
+  assert.equal(body.results.length, 3);
+  assert.equal(new Set(body.results.map((hit: { url: string }) => hit.url)).size, 3);
+  assert.equal(body.results[2].url, '/settings#keys');
+  assert.equal(body.results[2].summary, 'settings.preview — Preview endpoint.');
+  assert.ok(body.results.every((hit: { url: string }) => !hit.url.startsWith('/gallery')));
+});

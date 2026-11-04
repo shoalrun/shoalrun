@@ -1,8 +1,9 @@
 import type { Retriever, ReaderSelection } from './retrieval.js';
+import { compareHits, type Hit } from './retrieval.js';
 import type { ReaderFiltersConfig } from './reader-filters.js';
 import { validateReaderSelection } from './reader-filters.js';
 import { searchSnippetFromParagraphs } from './search-snippet.js';
-import { identifierRescue, searchIdentifiers } from './search-identifier.js';
+import { identifierMatch } from './search-identifier.js';
 import type { DailyBudget, SharedRateLimit } from './budget.js';
 import { createSearchResultSelector } from './search-results.js';
 
@@ -83,17 +84,15 @@ export function createSearchHandler(options: {
         }
       }
       if (!vector && fallbackReason) options.onFallback?.(fallbackReason);
-      // Rank pages after inspecting their passages. A large gallery can otherwise
-      // consume the entire candidate window before page deduplication happens.
-      const retrievalOptions = { ...searchOptions, limit: Number.MAX_SAFE_INTEGER };
-      let hits = vector
-        ? options.retriever.vector(vector, retrievalOptions)
-        : options.retriever.lexical(query.trim(), retrievalOptions);
-      if (vector && (limit as number) >= 3 && searchIdentifiers(query).length) {
-        const lexical = options.retriever.lexical(query.trim(), retrievalOptions);
-        hits = identifierRescue(query.trim(), hits, lexical);
+      let candidate: Hit | undefined;
+      const matchesIdentifier = identifierMatch(query);
+      if (vector && (limit as number) >= 3 && matchesIdentifier) {
+        for (const hit of options.retriever.searchPassages(query.trim(), undefined, searchOptions)) {
+          if (matchesIdentifier(hit) && (!candidate || compareHits(hit, candidate) < 0)) candidate = hit;
+        }
       }
-      const results = selectResults(hits, query.trim(), searchOptions).map(({ chunk, literalSummary }) => ({ url: chunk.url, title: chunk.title, section: chunk.headingPath.at(-1), summary: literalSummary ?? searchSnippetFromParagraphs(chunk.search!.paragraphs, query.trim(), options.pageSummaries?.get(`${chunk.variant}:${chunk.docId}`)) }));
+      const hits = selectResults(options.retriever.searchPassages(query.trim(), vector, searchOptions), query.trim(), searchOptions, candidate);
+      const results = hits.map(({ chunk, literalSummary }) => ({ url: chunk.url, title: chunk.title, section: chunk.headingPath.at(-1), summary: literalSummary ?? searchSnippetFromParagraphs(chunk.search!.paragraphs, query.trim(), options.pageSummaries?.get(`${chunk.variant}:${chunk.docId}`)) }));
       return json(200, { results, mode: vector ? 'vector' : 'lexical', ...(!vector ? { fallbackReason } : {}) });
     } catch { return json(503, { error: 'Semantic search is unavailable.' }); }
   };

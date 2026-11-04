@@ -55,3 +55,10 @@ test('page introductions obey publication and passage reader filters', () => {
   assert.equal(search.pageIntroduction('same', { variant: 'sandbox|current|en' })?.id, 'same#sandbox');
   assert.equal(search.pageIntroduction('missing', { variant: 'production|current|en' }), undefined);
 });
+
+test('ambiguous legacy passage IDs require a rebuild instead of silently aliasing release vectors', () => {
+  assert.throws(() => new Retriever({ schemaVersion: 1, sourceDigest: 'x', chunks: [
+    chunk('same#intro', 'Use the new service.', [], 'production|v2|en'),
+    chunk('same#intro', 'Use the old service.', [], 'production|v1|en')
+  ] }), /Ambiguous passage IDs.*rebuild publication-qualified IDs/);
+});

@@ -1554,6 +1554,12 @@ test('search providers can be replaced by a browser module or turned off', async
   await assert.rejects(readFile(path.join(output, 'search-index.min.json')));
   await build('\nhtml:\n  search: { provider: custom, module: ./search.mjs, index: true }\n');
   assert.ok(JSON.parse(await readFile(path.join(output, 'search-index.json'), 'utf8')).documents.length > 0);
+  ({ built, html } = await build('\nhtml:\n  search: { provider: semantic }\n'));
+  assert.match(html, /class="site-search"/);
+  assert.match(await readFile(path.join(output, 'assets/search-provider.js'), 'utf8'), /__shoalrun\/search/);
+  assert.match(await readFile(path.join(output, 'assets/search-lexical.js'), 'utf8'), /export async function search/);
+  assert.ok(JSON.parse(await readFile(path.join(output, 'search-index.json'), 'utf8')).documents.length > 0);
+  assert.ok(!built.dependencies.includes(providerFile), 'built-in semantic search needs no project adapter');
   ({ html } = await build('\nhtml:\n  search: { provider: none }\n'));
   assert.doesNotMatch(html, /site-search|search\.js|mast-tools/);
   await assert.rejects(readFile(path.join(output, 'search-index.json')));
@@ -1563,6 +1569,7 @@ test('search providers can be replaced by a browser module or turned off', async
     ['\nhtml:\n  search: { provider: algolia }\n', /Unknown search provider algolia/],
     ['\nhtml:\n  search: { provider: custom }\n', /Custom search needs a local \.js or \.mjs browser module/],
     ['\nhtml:\n  search: { provider: lexical, module: ./search.mjs }\n', /Unsupported search setting module for lexical/],
+    ['\nhtml:\n  search: { provider: semantic, module: ./search.mjs }\n', /Unsupported search setting module for semantic/],
     ['\nhtml:\n  search: { provider: custom, module: ./search.mjs, index: yes }\n', /search\.index must be true or false/]
   ] as const) {
     await writeFile(outputsFile, original + extra);

@@ -285,3 +285,28 @@ test('vector files written before spaces existed get one from their provider and
   await writeEmbeddings(directory, { ...meta, provider: 'openai', model: 'text-embedding-3-small' }, [Float32Array.from([1, 0])]);
   assert.equal((await readEmbeddings(directory))?.meta.space, 'text-embedding-3-small');
 });
+
+test('qualified release passage IDs keep vectors and citation digests separate while reusing identical inputs', async () => {
+  const { chunkMarkdown } = await import('./index-build.js');
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-release-embed-'));
+  const doc = { id: 'guide.connect', title: 'Connect', type: 'guide', variant: 'production|v2|en', url: '/v2/connect', markdownUrl: '/v2/connect.md' };
+  const current = chunkMarkdown('# Connect\n\nUse the new service.\n', doc);
+  const previous = chunkMarkdown('# Connect\n\nUse the old service.\n', { ...doc, variant: 'production|v1|en', url: '/v1/connect' });
+  const shared = chunkMarkdown('# Connect\n\nUse the new service.\n', { ...doc, variant: 'sandbox|v2|en', url: '/sandbox/connect' });
+  const chunks = [...current, ...previous, ...shared];
+  const provider = stub();
+  const indexed: ChunkIndex = { schemaVersion: 1, sourceDigest: 'releases', chunks };
+  const result = await embedChunkIndex(directory, indexed, provider, embeddingInput);
+  assert.equal(provider.seen.length, 2, 'identical release inputs share one embedding request');
+  assert.equal(result.passages, 3);
+  const stored = (await readEmbeddings(directory))!;
+  const retriever = new Retriever(indexed, stored);
+  assert.equal(retriever.coverage().embedded, 3);
+  for (const passage of chunks) {
+    assert.equal(retriever.digestOf(passage.id), passage.digest);
+    assert.equal(retriever.vector(stored.vectors[chunks.indexOf(passage)], { variant: passage.variant })[0].chunk.url, passage.url);
+  }
+  const migrated = { ...indexed, chunks: chunks.map((passage, at) => ({ ...passage, id: `old-${at}` })) };
+  const again = await embedChunkIndex(directory, migrated, provider, embeddingInput);
+  assert.equal(again.embedded, 0, 'storage ID changes do not force re-embedding');
+});

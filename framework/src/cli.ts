@@ -189,7 +189,7 @@ try {
         embedQuery = async (query, signal) => (await provider.embed([query], 'query', signal))[0];
       }
       extras = { search: createSearchHandler({ retriever, embedQuery, hosts, readerFilters: validateReaderFilters(settings.readerFilters), pageSummaries }) };
-      banner = `Search is on: ${embeddings ? 'hybrid retrieval' : 'lexical retrieval; run shoalrun index --embed for semantic results'}.\n`;
+      banner = `Search is on: ${embeddings ? 'semantic retrieval' : 'lexical retrieval; run shoalrun index --embed for semantic results'}.\n`;
     }
     if (ask) {
       // The preview spends your API credits on every question, so it answers only on this machine.
@@ -325,7 +325,10 @@ try {
       const provider = createProvider(embeddingProviderConfig(retrieval, { provider: values['--provider'], model: values['--model'], dimension: values['--dimension'] === undefined ? undefined : Number(values['--dimension']), baseUrl: values['--base-url'], keyEnv: values['--key-env'] }));
       embeddings = await embedChunkIndex(subcommand, result.index, provider, embeddingInput);
     }
-    process.stdout.write(JSON.stringify({ status: 'ok', documents: result.documents, chunks: result.index.chunks.length, output: result.output, ...(embeddings ? { embeddings } : {}) }, null, 2) + '\n');
+    const counts = new Map<string, number>();
+    for (const chunk of result.index.chunks) counts.set(chunk.variant, (counts.get(chunk.variant) ?? 0) + 1);
+    const publications = [...counts].sort(([a], [b]) => a.localeCompare(b)).map(([variant, passages]) => ({ variant, passages }));
+    process.stdout.write(JSON.stringify({ status: 'ok', documents: result.documents, chunks: result.index.chunks.length, sourceDigest: result.index.sourceDigest, publications, output: result.output, ...(embeddings ? { embeddings } : {}) }, null, 2) + '\n');
   } else if (command === 'ask') {
     const usage = 'Usage: shoalrun ask <site-directory> "<question>" [--config FILE] [--model MODEL] [--passages N] [--reader-view FACET=CHOICE[,CHOICE]]... [--channel C --version V --language L] [--no-rerank] [--no-direct] [--no-escalate] [--no-cards] [--json]';
     if (!subcommand || subcommand.startsWith('--') || !rest[0] || rest[0].startsWith('--')) throw new Error(usage);

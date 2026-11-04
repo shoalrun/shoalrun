@@ -19,6 +19,8 @@ try {
   const [pack] = JSON.parse(run('npm', ['pack', framework, '--ignore-scripts', '--pack-destination', temporary, '--json'], temporary));
   checkPackageInventory(pack.files.map(file => file.path));
   assert.ok(pack.files.some(file => file.path === 'dist/authoring-project.js'));
+  assert.ok(pack.files.some(file => file.path === 'assets/search-semantic.js'));
+  assert.ok(pack.files.some(file => file.path === 'assets/search-lexical.js'));
   assert.ok(pack.files.some(file => file.path === 'skills/shoalrun-component-author/SKILL.md'));
   assert.ok(pack.files.some(file => file.path === 'examples/components/comparison.mjs'));
   for (const name of ['components.json', 'plugin.mjs', 'browser.jsx', 'package-lock.json', 'LICENSE.react.txt']) assert.ok(pack.files.some(file => file.path === `examples/components/copy-text/${name}`));

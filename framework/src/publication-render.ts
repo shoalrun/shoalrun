@@ -52,7 +52,7 @@ export function renderPublicationPages({ rendered, docs, relationships, knownOpe
   modeToggle: boolean;
   header: HeaderConfig;
   footer?: FooterConfig;
-  search: { provider: 'lexical' | 'custom' | 'none' };
+  search: { provider: 'lexical' | 'semantic' | 'custom' | 'none' };
   readerFilters?: ReaderFiltersConfig;
   variants: Variant[];
   externalDocuments: Map<string, Array<{ label: string; variant: Variant; url: string }>>;
