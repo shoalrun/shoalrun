@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.17 — 2026-11-04
 
 - Package hosted Ask and Search without importing source configuration or its
   component compiler, icon, syntax-highlighting, math-rendering, and esbuild
@@ -13,6 +13,9 @@
   and retain runtime and dependency licenses in function packages.
 - Test isolated function imports and requests, enforce per-runtime file/byte
   budgets, and reject build-only dependencies in hosted runtime packages.
+
+No configuration migration is required. Upgrade the CLI and rebuild the hosted
+bundle to apply the smaller function packages; existing deployments are unchanged.
 
 ## 0.1.0-alpha.16 — 2026-11-04
 
