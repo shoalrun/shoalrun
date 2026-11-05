@@ -1,3 +1,4 @@
+import { samePublication } from './publication-identity.js';
 import { cardIcon, validateCardIcon } from './icons.js';
 import type { Document, Variant } from './content.js';
 import { surfaceText } from './surface-text.js';
@@ -12,7 +13,7 @@ const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 const relationLabels = { prerequisite: 'Read first', 'next-step': 'Next steps', reference: 'Reference while working', advanced: 'Go deeper', 'see-also': 'Related topics', 'not-confused-with': 'Often confused with' };
 const relationTypes = new Set(Object.keys(relationLabels));
 const symmetric = (type: string) => type === 'see-also' || type === 'not-confused-with';
-const sameVariant = (a: Variant, b: Variant) => a.channel === b.channel && a.version === b.version && a.language === b.language;
+const sameVariant = (a: Variant, b: Variant) => samePublication(a, b);
 
 export function validateCardMetadata(value: unknown, file: string): void {
   if (value === undefined) return;

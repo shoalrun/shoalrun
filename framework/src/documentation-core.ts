@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { markdownTokens } from './markdown-size.js';
 import { queryBuiltSite, type SearchOptions } from './search-query.js';
+import { publicationKey, samePublication, type PublicationCoordinate } from './publication-identity.js';
 
 export const bundledDocumentation = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../agent-docs');
 export type DocumentationErrorCode = 'invalid_input' | 'unknown_page' | 'unknown_section' | 'missing_index' | 'internal_error';
@@ -17,7 +18,7 @@ export const documentationTokens = markdownTokens;
 function validate(options: DocumentationOptions) {
   const maxTokens = options.maxTokens ?? 4096;
   if (!Number.isSafeInteger(maxTokens) || maxTokens < 256 || maxTokens > 100_000) throw new DocumentationError('invalid_input', 'maxTokens must be an integer from 256 to 100000');
-  for (const key of ['channel', 'version', 'language'] as const) if (options[key] !== undefined && (typeof options[key] !== 'string' || !options[key]?.trim() || options[key]!.length > 128)) throw new DocumentationError('invalid_input', `${key} must be nonempty text of at most 128 characters`);
+  for (const key of ['product', 'channel', 'version', 'language'] as const) if (options[key] !== undefined && (typeof options[key] !== 'string' || !options[key]?.trim() || options[key]!.length > 128)) throw new DocumentationError('invalid_input', `${key} must be nonempty text of at most 128 characters`);
   return maxTokens;
 }
 
@@ -39,6 +40,36 @@ async function loadJson(directory: string, name: string): Promise<any> {
   catch (error) {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new DocumentationError('missing_index', `Missing ${name}; build the documentation first${name === 'search-index.json' ? ' with search indexing enabled' : ''}.`);
     throw new DocumentationError('internal_error', `Cannot read valid ${name}. Rebuild the documentation.`);
+  }
+}
+
+/** Compact discovery of published coordinates, without returning page inventories. */
+export async function listDocumentationPublications(directory: string, options: DocumentationOptions & { offset?: number; publication?: PublicationCoordinate } = {}) {
+  const maxTokens = validate({ ...options, maxTokens: options.maxTokens ?? 2048 });
+  const limit = options.limit ?? 20;
+  const offset = options.offset ?? 0;
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100 || !Number.isSafeInteger(offset) || offset < 0) throw new DocumentationError('invalid_input', 'limit must be from 1 to 100 and offset must be a nonnegative safe integer');
+  const manifest = await loadJson(directory, 'documents.json');
+  const source = manifest?.publications?.enabled ?? manifest?.documents?.map((doc: any) => doc.variant);
+  const valid = (item: any): item is PublicationCoordinate => item && typeof item === 'object' && !Array.isArray(item) && ['channel', 'version', 'language'].every(key => typeof item[key] === 'string' && item[key].length > 0 && item[key].length <= 128) && (item.product === undefined || typeof item.product === 'string' && item.product.length > 0 && item.product.length <= 128);
+  if (manifest?.schemaVersion !== 1 || !Array.isArray(source) || source.some(item => !valid(item))) throw new DocumentationError('internal_error', 'Invalid publication metadata. Rebuild the documentation.');
+  const coordinates = source.map((item: PublicationCoordinate): PublicationCoordinate => ({ channel: item.channel, version: item.version, language: item.language, ...(item.product === undefined ? {} : { product: item.product }) }));
+  const available: PublicationCoordinate[] = [...new Map<string, PublicationCoordinate>(coordinates.map((item: PublicationCoordinate) => [publicationKey(item), item])).values()]
+    .filter(item => (!options.publication || samePublication(item, options.publication)) && ['product', 'channel', 'version', 'language'].every(key => !options[key as keyof SearchOptions] || item[key as keyof PublicationCoordinate] === options[key as keyof SearchOptions]))
+    .sort((a, b) => publicationKey(a).localeCompare(publicationKey(b)));
+  const total = available.length;
+  let publications = available.slice(offset, offset + limit);
+  while (true) {
+    const products = [...new Set(publications.flatMap(item => item.product === undefined ? [] : [item.product]))].map(id => {
+      const catalog = manifest.publications?.products?.[id];
+      const defaultVersion = typeof catalog?.defaultVersion === 'string' && available.some(item => item.product === id && item.version === catalog.defaultVersion) ? catalog.defaultVersion : undefined;
+      return { id, ...(typeof catalog?.label === 'string' ? { label: catalog.label.slice(0, 160) } : {}), ...(defaultVersion === undefined ? {} : { defaultVersion }) };
+    });
+    const nextOffset = offset + publications.length < total ? offset + publications.length : undefined;
+    const result = budget({ status: 'ok' as const, total, offset, publications, ...(products.length ? { products } : {}), ...(nextOffset === undefined ? {} : { nextOffset }) }, maxTokens, nextOffset !== undefined);
+    if (result.fits) return result.result;
+    if (!publications.length || publications.length === 1) throw new DocumentationError('invalid_input', 'maxTokens is too small for publication metadata. Increase the budget.');
+    publications = publications.slice(0, -1);
   }
 }
 
@@ -66,11 +97,11 @@ export async function searchDocumentation(directory: string, query: string, opti
 async function selectDocument(directory: string, id: string, options: DocumentationOptions) {
   if (typeof id !== 'string' || !id.trim() || id.length > 256) throw new DocumentationError('invalid_input', 'id must be nonempty text of at most 256 characters');
   const manifest = await loadJson(directory, 'documents.json');
-  if (manifest?.schemaVersion !== 1 || !Array.isArray(manifest.documents) || manifest.documents.some((doc: any) => !doc || typeof doc.id !== 'string' || typeof doc.title !== 'string' || typeof doc.url !== 'string' || typeof doc.markdownUrl !== 'string' || !doc.variant || ['channel', 'version', 'language'].some(key => typeof doc.variant[key] !== 'string'))) throw new DocumentationError('internal_error', 'Invalid documents.json. Rebuild the documentation.');
+  if (manifest?.schemaVersion !== 1 || !Array.isArray(manifest.documents) || manifest.documents.some((doc: any) => !doc || typeof doc.id !== 'string' || typeof doc.title !== 'string' || typeof doc.url !== 'string' || typeof doc.markdownUrl !== 'string' || !doc.variant || (doc.variant.product !== undefined && (typeof doc.variant.product !== 'string' || !doc.variant.product)) || ['channel', 'version', 'language'].some(key => typeof doc.variant[key] !== 'string'))) throw new DocumentationError('internal_error', 'Invalid documents.json. Rebuild the documentation.');
   const matching = manifest.documents.filter((doc: any) => doc.id === id);
   if (!matching.length) throw new DocumentationError('unknown_page', `No document with ID ${id}; search the documentation first.`);
-  const selected = matching.filter((doc: any) => ['channel', 'version', 'language'].every(key => !options[key as keyof SearchOptions] || doc.variant[key] === options[key as keyof SearchOptions]));
-  if (selected.length !== 1) throw new DocumentationError('invalid_input', selected.length ? 'Page has multiple publications; select channel, version, and language.' : 'Page does not match the selected publication.');
+  const selected = matching.filter((doc: any) => ['product', 'channel', 'version', 'language'].every(key => !options[key as keyof SearchOptions] || doc.variant[key] === options[key as keyof SearchOptions]));
+  if (selected.length !== 1) throw new DocumentationError('invalid_input', selected.length ? 'Page has multiple publications; select product where applicable, channel, version, and language.' : 'Page does not match the selected publication.');
   return selected[0];
 
 }
@@ -91,7 +122,7 @@ export async function getDocumentationPage(directory: string, id: string, option
   const maxTokens = validate(options);
   const doc = await selectDocument(directory, id, options);
   const content = await readMarkdown(directory, doc.markdownUrl);
-  const metadata = { status: 'ok' as const, id: doc.id as string, title: doc.title as string, url: doc.url as string, markdownUrl: doc.markdownUrl as string, publication: doc.variant as { channel: string; version: string; language: string } };
+  const metadata = { status: 'ok' as const, id: doc.id as string, title: doc.title as string, url: doc.url as string, markdownUrl: doc.markdownUrl as string, publication: doc.variant as { product?: string; channel: string; version: string; language: string } };
   const full = budget({ ...metadata, content }, maxTokens, false);
   if (full.fits) return full.result;
   if (!budget({ ...metadata, content: '' }, maxTokens, true).fits) throw new DocumentationError('invalid_input', 'maxTokens is too small for the page metadata. Increase the budget.');

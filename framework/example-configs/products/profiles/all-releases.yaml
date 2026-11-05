@@ -1,0 +1,9 @@
+schemaVersion: 1
+skus:
+  - { id: business, revision: '2026' }
+site:
+  title: Harbor - All publications
+  header:
+    links:
+      - { label: Payments, href: /payments/v3/start }
+      - { label: Reporting, href: /reporting/v1/start }

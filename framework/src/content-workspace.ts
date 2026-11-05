@@ -1,3 +1,4 @@
+import { documentKey } from './publication-identity.js';
 import { matchesFeatures } from './deployment-profile.js';
 import path from 'node:path';
 import { readFile } from 'node:fs/promises';
@@ -9,7 +10,7 @@ import { validateSnippetConfig, type SnippetDefinition } from './snippets.js';
 import type { ReaderFiltersConfig, ReaderSelection } from './reader-filters.js';
 import type { loadMetadataProvider } from './metadata-provider.js';
 
-const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
+const keyFor = documentKey;
 
 /** Shared source resolution. No website navigation, styles, hosting or provider setup. */
 export async function prepareContentWorkspace({ base, basePath, config, loaded, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions }: {

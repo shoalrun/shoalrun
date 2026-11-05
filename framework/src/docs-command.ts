@@ -14,12 +14,12 @@ export function parseDocsReadOptions(args: string[], mcp = false) {
     seen.add(flag);
     if (flag === '--json' && !mcp) { json = true; continue; }
     const value = args[++i];
-    if (!(mcp ? ['--site'] : ['--site', '--max-tokens', '--limit', '--channel', '--version', '--language']).includes(flag) || !value || value.startsWith('--')) throw new DocumentationError('invalid_input', `Unknown option or missing value for ${flag}`);
+    if (!(mcp ? ['--site'] : ['--site', '--max-tokens', '--limit', '--product', '--channel', '--version', '--language']).includes(flag) || !value || value.startsWith('--')) throw new DocumentationError('invalid_input', `Unknown option or missing value for ${flag}`);
     if (flag === '--site') directory = path.resolve(value);
     else if (flag === '--max-tokens' || flag === '--limit') {
       if (!/^\d+$/.test(value)) throw new DocumentationError('invalid_input', `${flag} must be an integer`);
       options[flag === '--limit' ? 'limit' : 'maxTokens'] = Number(value);
-    } else options[flag.slice(2) as 'channel' | 'version' | 'language'] = value;
+    } else options[flag.slice(2) as 'product' | 'channel' | 'version' | 'language'] = value;
   }
   return { directory, json, options, positional };
 }
@@ -29,7 +29,7 @@ export async function runDocsReadCommand(command: 'search' | 'read' | 'outline' 
   try {
     const parsed = parseDocsReadOptions(args);
     json = json || parsed.json;
-    if (!parsed.positional.length || command !== 'search' && parsed.positional.length !== (command === 'section' ? 2 : 1) || command !== 'search' && parsed.options.limit !== undefined) throw new DocumentationError('invalid_input', `Usage: shoalrun docs ${command} <${command === 'search' ? 'query' : command === 'section' ? 'document-id> <section-id' : 'document-id'}> [--site DIRECTORY] [--json] [--max-tokens N] [--channel C --version V --language L]${command === 'search' ? ' [--limit N]' : ''}`);
+    if (!parsed.positional.length || command !== 'search' && parsed.positional.length !== (command === 'section' ? 2 : 1) || command !== 'search' && parsed.options.limit !== undefined) throw new DocumentationError('invalid_input', `Usage: shoalrun docs ${command} <${command === 'search' ? 'query' : command === 'section' ? 'document-id> <section-id' : 'document-id'}> [--site DIRECTORY] [--json] [--max-tokens N] [--product P --channel C --version V --language L]${command === 'search' ? ' [--limit N]' : ''}`);
     const result = command === 'search'
       ? await searchDocumentation(parsed.directory, parsed.positional.join(' '), parsed.options)
       : command === 'outline' ? await getDocumentationOutline(parsed.directory, parsed.positional[0], parsed.options)

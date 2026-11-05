@@ -126,10 +126,10 @@ export function validateFrontmatter(frontmatter: Frontmatter, config: any, file:
   }
   if (frontmatter.publications !== undefined) {
     const publications = frontmatter.publications;
-    if (!Array.isArray(publications) || !publications.length || publications.some(item => !object(item) || Object.keys(item).some(key => !['channel', 'version'].includes(key)) || typeof item.channel !== 'string' || !item.channel.trim() || typeof item.version !== 'string' || !item.version.trim())) {
+    if (!Array.isArray(publications) || !publications.length || publications.some(item => !object(item) || Object.keys(item).some(key => !['product', 'channel', 'version'].includes(key)) || (item.product !== undefined && (typeof item.product !== 'string' || !item.product.trim())) || typeof item.channel !== 'string' || !item.channel.trim() || typeof item.version !== 'string' || !item.version.trim())) {
       throw new Error(`${file}: publications must list channel and version pairs`);
     }
-    const keys = publications.map(item => `${item.channel}|${item.version}`);
+    const keys = publications.map(item => `${item.product ?? ''}|${item.channel}|${item.version}`);
     if (new Set(keys).size !== keys.length) throw new Error(`${file}: publications has duplicate channel/version pairs`);
   }
   if (frontmatter.description !== undefined && (typeof frontmatter.description !== 'string' || !frontmatter.description.trim())) throw new Error(`${file}: description must be nonempty text`);
@@ -193,10 +193,10 @@ export function frontmatterSchema(config: any): any {
     slug: { type: 'string', description: 'Page URL path before channel, version, and language prefixes.' },
     channel: { type: 'string', description: 'Publication environment, such as sandbox or production; selects an enabled publication and API source.' },
     version: { type: 'string', description: 'API or documentation edition, such as v1; selects an enabled publication and API source.' },
-    publications: { type: 'array', minItems: 1, items: { type: 'object', properties: { channel: { type: 'string' }, version: { type: 'string' } }, required: ['channel', 'version'], additionalProperties: false }, description: 'Publish this one page file in each listed channel/version pair. Use instead of page-level channel and version; language stays the same.' },
+    publications: { type: 'array', minItems: 1, items: { type: 'object', properties: { product: { type: 'string', minLength: 1 }, channel: { type: 'string' }, version: { type: 'string' } }, required: ['channel', 'version'], additionalProperties: false }, description: 'Publish this one page file in each listed product/channel/version coordinate. Use instead of page-level channel and version; language stays the same.' },
     language: { type: 'string', description: 'Content language; uses frontmatter defaults/enforced values, then publications.defaults.language, then en.' },
     locale: { type: 'string', description: 'Formatting conventions used in the content; can inherit a project locale for the page language and can be overridden per page.' },
-    product: { type: 'string', minLength: 1, description: 'Optional product category. Also selects the product reader facet when that facet is configured.' },
+    product: { type: 'string', minLength: 1, description: 'Product publication ID when publications.products is configured; otherwise an optional category and reader facet.' },
     area: { type: 'string', minLength: 1, description: 'Optional area category. Also selects the area reader facet when that facet is configured.' },
     subarea: { type: 'string', minLength: 1, description: 'Optional finer category. Also selects the subarea reader facet when that facet is configured.' },
     operations: { type: 'array', items: { type: 'string' }, description: 'Stable API operation IDs that connect this page to endpoint references and related documents.' },

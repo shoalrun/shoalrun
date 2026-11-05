@@ -13,6 +13,8 @@ Read `shoalrun docs read guide.recipes-overview`, then `guide.recipe-drafts` for
 
 When recipes or ingredients vary by purchased features, read [the customer-edition workflow](../shoalrun-author/references/customer-editions.md). Apply page classification to the final recipe source, use `<ForFeature>` for feature-specific sections, and validate editions that include each changed conditional branch. Do not assume a shared-page build checks an excluded recipe or ingredient branch.
 
+When recipes or ingredients vary by product release, read [the publication workflow](../shoalrun-author/references/publications.md). Preserve product/channel/version/language in scaffolding, API selection, and preview. Explicit publication memberships control reuse; `shared: true` doesn't replicate a recipe into other products. Use an availability label for a newer capability without changing an older recipe's first supported version.
+
 Choose only the layers the task needs:
 
 - **Recipe:** write a complete page with prerequisites, ordered actions, explicit value handoffs, failure guidance, and a final success check. A recipe can be authored directly; ingredients are optional.

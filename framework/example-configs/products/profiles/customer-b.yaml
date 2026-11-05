@@ -1,0 +1,13 @@
+schemaVersion: 1
+skus:
+  - { id: business, revision: '2025' }
+site:
+  title: Harbor - Customer B
+  header:
+    links:
+      - { label: Payments, href: /payments/v2/start }
+      - { label: Reporting, href: /reporting/v1/start }
+publications:
+  enabled:
+    - { product: payments, channel: production, version: v2 }
+    - { product: reporting, channel: production, version: v1 }

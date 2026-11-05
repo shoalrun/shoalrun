@@ -28,6 +28,15 @@ test('OpenAPI stays synchronized and validates real exported content over REST',
   const sampleList = spec.paths['/resources'].get.responses['200'].content['application/json'].examples.illustrative.value;
   validate('ResourceList', sampleList);
   validate('ResourceMetadata', spec.paths['/resources/{key}'].get.responses['200'].content['application/json'].examples.illustrative.value);
+  const productList = structuredClone(sampleList);
+  productList.schemaVersion = 2;
+  productList.publication.product = 'alpha';
+  productList.resources[0].resource.publication.product = 'alpha';
+  validate('ResourceList', productList);
+  validate('ResourceMetadata', { schemaVersion: 2, revision: productList.revision, publication: productList.publication, ...productList.resources[0] });
+  const checkList = ajv.compile({ $ref: '#/$defs/ResourceList', $defs: defs });
+  assert.equal(checkList({ ...productList, schemaVersion: 1 }), false, 'legacy envelopes cannot acquire a product coordinate');
+  assert.equal(checkList({ ...sampleList, schemaVersion: 2 }), false, 'product envelopes require an exact product coordinate');
   assert.equal(sampleList.resources[0].key, contentResourceKey(sampleList.resources[0].resource.ref));
   const { createHash } = await import('node:crypto');
   for (const [format, media] of [['html', 'text/html'], ['markdown', 'text/markdown']]) {

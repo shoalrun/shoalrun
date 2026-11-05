@@ -1,8 +1,9 @@
+import { documentKey, publicationKey, samePublication } from './publication-identity.js';
 import { resolveAuthoredChange, authoredChangeNotice } from './authored-change.js';
 import { resolveSubjectDeprecation, subjectDeprecationNotice } from './subject-deprecation.js';
 import { markdownSections } from './markdown-sections.js';
 import { contentDigest, type Freshness } from './freshness.js';
-import { configField } from './compiler-config.js';
+import { configField, isConfigMapping } from './compiler-config.js';
 import { fictionalDocument, resolveLlmsDiscovery } from './llms-discovery.js';
 import { publicationRelationships, resolveCardTree, type CardUse, validateRelationships } from './cards.js';
 import { resolveCookbookTree, type Cookbooks } from './cookbook-chooser.js';
@@ -15,7 +16,7 @@ import type { CodeHighlighter } from './highlight.js';
 import type { MaterializedPage } from './page-materialization.js';
 import type { ResolvedCompilerConfig, CompilerSiteConfig, CompilerPublicationsConfig } from './compiler-config.js';
 
-const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
+const keyFor = documentKey;
 
 export function renderPublicationPages({ rendered, docs, relationships, knownOperations, cardUses, publishedRelationships, cookbooks, documentRoutes,
   basePath, siteOrigin, colorMode, config, highlighter, editionLabel, customStyleFile, themePreset, palette,
@@ -62,10 +63,13 @@ export function renderPublicationPages({ rendered, docs, relationships, knownOpe
   navigationTagOrder: Map<string, Map<string, string[]>>;
 }) {
   const resolvedNavigation = new Map<string, ReturnType<typeof resolveProjectNavigation>>();
+  const selector = config.site.publicationSelector;
+  if (selector !== undefined && (!isConfigMapping(selector) || Object.keys(selector).some(key => key !== 'showLanguage') || (selector.showLanguage !== undefined && typeof selector.showLanguage !== 'boolean'))) throw new Error('site.publicationSelector must be a mapping with an optional boolean showLanguage');
+  const showLanguage = isConfigMapping(selector) && typeof selector.showLanguage === 'boolean' ? selector.showLanguage : new Set(rendered.map(item => item.doc.variant.language)).size > 1;
   const scopedRelationships = new Map<string, ReturnType<typeof validateRelationships>>();
   const hasHome = rendered.some(page => page.doc.route === basePath || page.doc.route === '/');
   for (const page of rendered) {
-    const navVariant = `${page.doc.variant.channel}|${page.doc.variant.version}|${page.doc.variant.language}`;
+    const navVariant = publicationKey(page.doc.variant);
     let edges = scopedRelationships.get(navVariant);
     if (!edges) {
       const local = new Map([...docs.values()].filter(doc => keyFor(doc.frontmatter.id, doc.variant) === keyFor(doc.frontmatter.id, page.doc.variant)).map(doc => [doc.frontmatter.id, doc]));
@@ -118,21 +122,31 @@ export function renderPublicationPages({ rendered, docs, relationships, knownOpe
         ...(node.children ? { children: node.children.map(parentLinks) } : {}) });
       return renderMarkdown(parentLinks(resolved));
     }, page.doc.frontmatter.standaloneSections);
-    const externalForPage = externalDocuments.get(page.doc.frontmatter.id) ?? [];
+    const externalForPage = (externalDocuments.get(page.doc.frontmatter.id) ?? []).filter(item => item.variant.product === page.doc.variant.product);
     const shownLanguages = new Set([...variants.map(variant => variant.language), ...externalForPage.map(item => item.variant.language)]).size > 1;
     const languageSuffix = (variant: Variant) => shownLanguages ? ` · ${variant.language}` : '';
-    const localAlternates = variants.flatMap(variant => {
+    const localAlternates = variants.filter(variant => variant.product === page.doc.variant.product).flatMap(variant => {
       const alternate = docs.get(keyFor(page.doc.frontmatter.id, variant));
       const label = `${variant.channel} · ${variant.version}${languageSuffix(variant)}`;
       if (alternate) return [{ label, url: alternate.route, current: alternate === page.doc }];
-      const overview = [...docs.values()].filter(doc => doc.variant.channel === variant.channel && doc.variant.version === variant.version && doc.variant.language === variant.language && doc.frontmatter.access?.policy === 'public').sort((a, b) => a.route.length - b.route.length || a.route.localeCompare(b.route))[0];
+      const overview = [...docs.values()].filter(doc => samePublication(doc.variant, variant) && doc.frontmatter.access?.policy === 'public').sort((a, b) => a.route.length - b.route.length || a.route.localeCompare(b.route))[0];
       return overview ? [{ label: `${label} · page unavailable; open overview`, url: overview.route, current: false }] : [];
     });
     const publicationAlternates = [...localAlternates, ...externalSiteLinks, ...externalForPage.map(item => ({
       label: `${item.label}${item.label.toLowerCase() === item.variant.channel.toLowerCase() ? '' : ` · ${item.variant.channel}`} · ${item.variant.version}${languageSuffix(item.variant)}`,
       url: item.url, current: false
     }))];
-    page.html = buildHtmlPage(page.doc, page.htmlTree, page.doc.markdownRoute, config.site.title, navigation, page.pageExamples, page.pageShapes, highlighter, editionLabel(page.doc.variant), !!customStyleFile, { preset: themePreset, palette: palette.name, themeCss: !!themeStyleFile, paletteCss: !!generatedPaletteCss, badgesCss: !!generatedBadgeCss, themeSwitcher: themeSwitcherData, fontsCss: !!generatedFontsCss, preloadFont: fontsPreload, masthead: presetCatalog.find(preset => preset.name === themePreset)?.masthead, share: shareFor(page.doc), favicon: faviconRoute, logo: logoRoute, touchIcon: !faviconRoute.endsWith('.png'), origin: siteOrigin, indexing: config.site.indexing !== false, home: hasHome, mode: colorMode, toggle: modeToggle, header, footer, search: search.provider !== 'none', publicationAlternates, breadcrumbs }, page.pageCurl, page.pageSamples, { ...config, readerFilters });
+    // Derive choices from the selected output, not the catalog: a customer
+    // edition must not advertise products or releases it did not publish.
+    const publicationChoices = config.publications.products ? [...new Map(rendered.map(item => [publicationKey(item.doc.variant), item.doc.variant])).values()]
+      .sort((left, right) => (left.product ?? '').localeCompare(right.product ?? '') || publicationKey(left).localeCompare(publicationKey(right)))
+      .flatMap(variant => {
+        const target = docs.get(keyFor(page.doc.frontmatter.id, variant)) ?? rendered.filter(item => samePublication(item.doc.variant, variant)).map(item => item.doc).sort((left, right) => left.route.length - right.route.length || left.route.localeCompare(right.route))[0];
+        if (!target) return [];
+        const group = variant.product === undefined ? config.site.title : config.publications.products?.[variant.product]?.label ?? variant.product;
+        return [{ group, label: `${group} · ${variant.channel} · ${variant.version}${showLanguage ? ` · ${variant.language}` : ''}`, url: target.route, current: samePublication(page.doc.variant, variant) }];
+      }) : [];
+    page.html = buildHtmlPage(page.doc, page.htmlTree, page.doc.markdownRoute, config.site.title, navigation, page.pageExamples, page.pageShapes, highlighter, editionLabel(page.doc.variant), !!customStyleFile, { preset: themePreset, palette: palette.name, themeCss: !!themeStyleFile, paletteCss: !!generatedPaletteCss, badgesCss: !!generatedBadgeCss, themeSwitcher: themeSwitcherData, fontsCss: !!generatedFontsCss, preloadFont: fontsPreload, masthead: presetCatalog.find(preset => preset.name === themePreset)?.masthead, share: shareFor(page.doc), favicon: faviconRoute, logo: logoRoute, touchIcon: !faviconRoute.endsWith('.png'), origin: siteOrigin, indexing: config.site.indexing !== false, home: hasHome, mode: colorMode, toggle: modeToggle, header, footer, search: search.provider !== 'none', publicationChoices, publicationAlternates, breadcrumbs }, page.pageCurl, page.pageSamples, { ...config, readerFilters });
   }
   return resolvedNavigation;
 }

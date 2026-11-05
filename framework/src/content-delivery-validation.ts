@@ -1,5 +1,6 @@
+import { samePublication } from './publication-identity.js';
 import { ContentDeliveryError, contentRefKey } from './content-delivery-contract.js';
-import type { ContentManifest, ContentRef } from './content-delivery-contract.js';
+import type { ContentManifest, ContentRef, ContentPublication } from './content-delivery-contract.js';
 const object = (value: any): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
 const keys = (value: any, allowed: string[]) => object(value) && Object.keys(value).every(key => allowed.includes(key));
 const nonempty = (value: any): value is string => typeof value === 'string' && value.length > 0 && value.length <= 2048;
@@ -7,8 +8,7 @@ const digestPattern = /^[a-f0-9]{64}$/;
 const pathPattern = /^(?:NOTICES\.txt|(?:content|assets)\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*)$/;
 export const safeContentPath = (value: any): value is string => typeof value === 'string' && pathPattern.test(value) && value.split('/').every(part => part !== '.' && part !== '..');
 const invalid = (message: string): never => { throw new ContentDeliveryError('invalid_manifest', message); };
-export const validContentPublication = (value: any) => object(value) && Object.keys(value).length === 3 && ['channel', 'version', 'language'].every(key => nonempty(value[key]));
-const samePublication = (left: any, right: any) => ['channel', 'version', 'language'].every(key => left[key] === right[key]);
+export const validContentPublication = (value: any): value is ContentPublication => keys(value, ['channel', 'version', 'language', 'product']) && ['channel', 'version', 'language'].every(key => nonempty(value[key])) && (value.product === undefined ? !Object.hasOwn(value, 'product') : nonempty(value.product));
 export function validContentRef(value: any): value is ContentRef {
   if (!object(value)) return false;
   if (value.kind === 'page') return Object.keys(value).length === 2 && nonempty(value.documentId);
@@ -19,9 +19,9 @@ function safeExternal(value: any, image = false): boolean {
   try { const url = new URL(value); return typeof value === 'string' && !url.username && !url.password && (image ? ['http:', 'https:'] : ['http:', 'https:', 'mailto:', 'tel:']).includes(url.protocol); } catch { return false; }
 }
 export function validateContentManifest(value: any, maxResources = 10_000, maxResourceBytes = 8_000_000): asserts value is ContentManifest {
-  if (!keys(value, ['schemaVersion', 'kind', 'digest', 'publicBase', 'publication', 'review', 'resources', 'assets', 'files', 'diagnostics']) || value.schemaVersion !== 1 || value.kind !== 'shoalrun-content-export' || !digestPattern.test(value.digest ?? '')) invalid('Unsupported content manifest.');
+  if (!keys(value, ['schemaVersion', 'kind', 'digest', 'publicBase', 'publication', 'review', 'resources', 'assets', 'files', 'diagnostics']) || ![1, 2].includes(value.schemaVersion) || value.kind !== 'shoalrun-content-export' || !digestPattern.test(value.digest ?? '')) invalid('Unsupported content manifest.');
   if (typeof value.publicBase !== 'string' || !/^\/(?:[A-Za-z0-9_~.-]+\/)*$/.test(value.publicBase) || value.publicBase.split('/').some((part: string) => part === '.' || part === '..')) invalid('Invalid content mount.');
-  if (!validContentPublication(value.publication)) invalid('Invalid publication.');
+  if (!validContentPublication(value.publication) || value.schemaVersion !== (value.publication.product === undefined ? 1 : 2)) invalid('Invalid publication.');
   if (!keys(value.review, ['status', 'apis']) || value.review.status !== 'ok' || !Array.isArray(value.review.apis) || value.review.apis.some((api: any) => !keys(api, ['apiId', 'digest']) || !nonempty(api.apiId) || !digestPattern.test(api.digest ?? ''))) invalid('Content must have approved API review metadata.');
   if (!Array.isArray(value.resources) || !value.resources.length || value.resources.length > maxResources || !Array.isArray(value.files) || !Array.isArray(value.assets) || !Array.isArray(value.diagnostics)) invalid('Invalid manifest inventory.');
   const files = new Map<string, any>();
@@ -36,10 +36,11 @@ export function validateContentManifest(value: any, maxResources = 10_000, maxRe
 
 /** Shared metadata validation; transport supplies its file/asset inventory policy. */
 export function validateContentResources(resources: any[], expectedPublication: unknown, assets: Set<string>, checkRepresentation: (value: any) => boolean, publicBase = '/'): void {
+  if (!validContentPublication(expectedPublication)) invalid('Invalid expected publication.');
   const refs = new Set<string>();
   const links: any[] = [];
   for (const resource of resources) {
-    if (!keys(resource, ['ref', 'publication', 'title', 'summary', 'type', 'canonicalUrl', 'source', 'representations', 'assets', 'externalDependencies']) || !validContentRef(resource.ref) || !validContentPublication(resource.publication) || !samePublication(resource.publication, expectedPublication) || typeof resource.title !== 'string' || typeof resource.summary !== 'string' || typeof resource.type !== 'string') invalid('Invalid resource metadata.');
+    if (!keys(resource, ['ref', 'publication', 'title', 'summary', 'type', 'canonicalUrl', 'source', 'representations', 'assets', 'externalDependencies']) || !validContentRef(resource.ref) || !validContentPublication(resource.publication) || !samePublication(resource.publication, expectedPublication as ContentPublication) || typeof resource.title !== 'string' || typeof resource.summary !== 'string' || typeof resource.type !== 'string') invalid('Invalid resource metadata.');
     const key = contentRefKey(resource.ref); if (refs.has(key)) invalid('Duplicate content reference.'); refs.add(key);
     if (resource.canonicalUrl !== undefined && !safeExternal(resource.canonicalUrl, true)) invalid('Invalid canonical URL.');
     if (resource.source !== undefined && (!object(resource.source) || !Object.keys(resource.source).length || Object.keys(resource.source).some(key => !['documentId', 'snippetId', 'valuesDigest'].includes(key)) || Object.values(resource.source).some(value => !nonempty(value)))) invalid('Invalid resource source.');

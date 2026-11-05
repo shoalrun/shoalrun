@@ -1,0 +1,36 @@
+---
+id: guide.start
+title: Start with Reporting v1
+summary: Reconcile completed payments with a daily reporting period.
+slug: /start
+product: reporting
+version: v1
+shared: true
+---
+Reporting v1 organizes completed transactions by reporting period. Both customer editions use this release, even though they use different Payments versions.
+
+## Prepare a daily report
+
+1. Select a completed reporting period.
+2. Choose the account and settlement currency.
+3. Generate the report and record its period and creation time.
+
+| Field | Check before reconciliation |
+| --- | --- |
+| Reporting period | Covers the day being reconciled. |
+| Currency | Matches the settlement account. |
+| Order reference | Identifies the original order. |
+
+## Compare totals
+
+Compare the report total to the settlement record. Investigate missing orders and currency mismatches before closing the period.
+
+<ForFeature allOf="scheduled-exports">
+
+## Receive reports automatically
+
+Your edition includes scheduled exports. [Configure a recurring delivery](doc:guide.scheduled-exports) after reviewing the account and reporting period.
+
+</ForFeature>
+
+[Use the shared operating checklist](doc:guide.operations).

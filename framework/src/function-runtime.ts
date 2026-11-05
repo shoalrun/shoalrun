@@ -3,7 +3,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 export type FunctionRuntime = {
   schemaVersion: 1;
   settings: Record<string, unknown>;
-  variant?: { channel: string; version: string; language: string };
+  variant?: { product?: string; channel: string; version: string; language: string };
   hosts?: string[];
   callerHeader?: string;
   maxRequestsPerMinute?: number;

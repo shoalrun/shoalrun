@@ -2,6 +2,8 @@
 /* Form fields need a 3:1 boundary (WCAG 1.4.11); this outranks the base navigation filter rule. */
 .side .nav-search input{border-color:var(--color-field-border)}
 .mast-tools{display:flex;align-items:center;gap:.75rem;margin-left:auto;min-width:0}
+.publication-picker{flex:0 1 auto;min-width:0;max-width:min(28rem,100%);min-height:2.5rem;padding:.35rem .7rem;border:1px solid var(--color-field-border);border-radius:var(--radius-small);background:var(--color-field-surface);color:var(--color-ink);font:inherit;font-size:.8rem;font-weight:650;cursor:pointer}
+.publication-picker:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
 .publication-switcher{position:relative;flex:none}
 .publication-switcher summary{display:flex;align-items:center;gap:.45rem;min-height:2.5rem;padding:.35rem .7rem;border:1px solid var(--color-field-border);border-radius:var(--radius-small);background:var(--color-field-surface);color:var(--color-ink);font-size:.8rem;cursor:pointer;list-style:none}
 .publication-switcher summary::-webkit-details-marker{display:none}
@@ -43,6 +45,7 @@
 .mode-toggle .mode-icon-dark,.mode-toggle[aria-pressed=true] .mode-icon-light{display:none}
 .mode-toggle[aria-pressed=true] .mode-icon-dark{display:block}
 @media(max-width:48rem){
+  .publication-picker{max-width:100%;flex:1 1 15rem}
   .mast-tools{position:relative;order:3;width:100%;flex-wrap:wrap;margin-left:0}
   .site-search{position:static;flex:1 1 10rem;min-width:0;width:auto}
   .site-search-results{left:0;right:auto;width:100%}

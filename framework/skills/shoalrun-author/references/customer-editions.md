@@ -64,6 +64,26 @@ directory and must remain inside it. Branding uses bounded existing `site`, `the
 and snippet `variables` settings, not arbitrary config merges. Profiles cannot
 replace content sources, plugins, access policy, or navigation labels.
 
+## Select independent product releases
+
+For `0.1.0-alpha.18` and later, inspect `publications.products` and read
+[publications.md](publications.md) before selecting releases. A deployment can
+select one product's v3 and another product's v1 independently. These are
+publication choices, separate from SKU revisions and feature grants:
+
+```yaml
+# Profile fragment using fictional products declared in the shared catalog
+publications:
+  enabled:
+    - { product: payments, channel: production, version: v3, language: en }
+    - { product: reporting, channel: production, version: v1, language: en }
+```
+
+Use the selected product when reading a repeated page ID or binding an API
+source. Preserve all publication coordinates in validation evidence, links,
+search reads, and content exports. Without a product catalog, retain existing
+productless coordinates rather than adding a product field to every page.
+
 ## Choose page and section requirements
 
 In normal mode, a page with no authored or inherited `requires` is shared after
@@ -94,7 +114,7 @@ Requirements name feature IDs, not SKUs. Use `allOf` when every feature is neede
 and `anyOf` when one suffices; if both clauses appear, both must pass. Lists are
 nonempty. Unmet page requirements omit the whole page.
 
-A shared page may contain product-specific sections:
+A shared page may contain feature-specific sections:
 
 ```mdx
 These setup instructions apply to every customer.
@@ -146,9 +166,19 @@ Use explicit `--file`/`--id` selectors if no baseline exists. Apply the authorin
 skill's applicable project checks, review, preview, and freshness workflow to the
 returned report. Snapshot capture includes the external profile and its declared
 assets; changing them invalidates the evidence. Export still needs its normal
-publication selection when multiple combinations are enabled. `dev` and
-checked-plan authoring do not resolve deployment editions; use build/serve or
-snapshot validation/preview. Preview URLs and artifacts may contain customer data.
+publication selection when multiple combinations are enabled. On `0.1.0-alpha.18`
+or later, preview the selected edition while editing with:
+
+```sh
+shoalrun dev docs.config.yaml edition-dist --profile /run/config/docs-profile.yaml
+```
+
+It watches the chosen profile and declared dependencies, keeps the last good
+output on a failed rebuild, and shows that failure in the preview. Correct the
+input and verify recovery. On older releases use a profiled build followed by
+`serve`. Checked-plan authoring doesn't resolve deployment editions; retain
+snapshot validation/preview for those authoring checks. Preview URLs and
+artifacts may contain customer data.
 
 Check both included and excluded content in HTML, Markdown, search/discovery,
 focused API contracts, and exports. Use synthetic no-grant, relevant single-feature,

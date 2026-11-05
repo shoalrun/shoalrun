@@ -1,3 +1,4 @@
+import { parsePublicationKey } from './publication-identity.js';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { AnswerCache } from './answer-cache.js';
@@ -27,7 +28,7 @@ export function parseReaderView(specs: string[]): ReaderSelection | undefined {
 }
 
 // Either `configFile`, or `settings` (the parsed config, for a host that has no config file, such as a serverless function).
-export type AskSetupInput = { sharedStore?: boolean; siteDirectory: string; configFile?: string; settings?: Record<string, unknown>; model?: string; passages?: number; channel?: string; version?: string; language?: string; noRerank?: boolean; noDirect?: boolean; noEscalate?: boolean; noCards?: boolean; cache?: boolean; direct?: { threshold: number; maxChars?: number }; jevCacheDir?: string; readerView?: ReaderSelection; maxTokens?: number };
+export type AskSetupInput = { sharedStore?: boolean; siteDirectory: string; configFile?: string; settings?: Record<string, unknown>; model?: string; passages?: number; product?: string; channel?: string; version?: string; language?: string; noRerank?: boolean; noDirect?: boolean; noEscalate?: boolean; noCards?: boolean; cache?: boolean; direct?: { threshold: number; maxChars?: number }; jevCacheDir?: string; readerView?: ReaderSelection; maxTokens?: number };
 export type AskSetup = { budget?: DailyBudget; budgetStore?: BudgetStore; chat: ChatProvider; options: Omit<AskOptions, 'question'>; notes: string[]; embedTexts?: (texts: string[]) => Promise<Float32Array[]>; embedding?: { provider: string; model: string; space: string; dimension: number } };
 
 // Everything `shoalrun ask` and the answer eval share: read the project's chat and retrieval settings, load the passages and any
@@ -48,8 +49,12 @@ export async function prepareAskRuntime(input: AskSetupInput & { settings: Recor
   const embeddings = await readEmbeddings(input.siteDirectory);
   const retriever = new Retriever(chunks, embeddings);
   const variants = retriever.variants();
-  const variant = input.channel && input.version && input.language ? `${input.channel}|${input.version}|${input.language}` : variants.length === 1 ? variants[0] : undefined;
-  if (!variant) throw new Error(`The site has several publications (${variants.join(', ')}); pass --channel, --version, and --language`);
+  const matchingVariants = variants.filter(key => {
+    const coordinate = parsePublicationKey(key);
+    return (['product', 'channel', 'version', 'language'] as const).every(field => input[field] === undefined || coordinate[field] === input[field]);
+  });
+  const variant = matchingVariants.length === 1 ? matchingVariants[0] : undefined;
+  if (!variant) throw new Error(`Select one publication from (${matchingVariants.join(', ')}); pass --product where applicable, --channel, --version, and --language`);
   let embedQuery: AskOptions['embedQuery'];
   let embedTexts: AskSetup['embedTexts'];
   let embedding: AskSetup['embedding'];

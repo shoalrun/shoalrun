@@ -1,3 +1,4 @@
+import { documentKey } from './publication-identity.js';
 import type { Document, Frontmatter } from './content-source.js';
 import { link, list, paragraph, root, text } from './semantic-markdown.js';
 
@@ -24,7 +25,7 @@ export function resolveAuthoredChange(doc: Document, docs: Map<string, Document>
   const value = doc.frontmatter.change;
   if (!value) return;
   const target = (id: string, field: string): Target => {
-    const found = docs.get(`${id}|${doc.variant.channel}|${doc.variant.version}|${doc.variant.language}`);
+    const found = docs.get(documentKey(id, doc.variant));
     if (id === doc.frontmatter.id || !found || found.frontmatter.access?.policy !== 'public') throw new Error(`${doc.file}: change.${field} must name another public document in the same publication: ${id}`);
     return { id, title: found.frontmatter.title, url: found.route, markdownUrl: found.markdownRoute };
   };

@@ -14,7 +14,16 @@ const types: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.m
 
 // An optional local question-answering endpoint and its chat panel, for previewing `shoalrun ask` in a browser. `ask` is a
 // Web-standard handler and `widget` is the browser script that talks to it.
-export type SiteExtras = { ask?: (request: Request) => Promise<Response>; search?: (request: Request) => Promise<Response>; widget?: string; publicSettings?: Record<string, unknown>; panel?: Record<string, string> };
+export type PreviewStatus = { profile?: string; profileDigest?: string; buildId?: string; error?: string };
+export type SiteExtras = { ask?: (request: Request) => Promise<Response>; search?: (request: Request) => Promise<Response>; widget?: string; publicSettings?: Record<string, unknown>; panel?: Record<string, string>; preview?: PreviewStatus };
+
+const escapeHtml = (value: string) => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]!));
+const scriptJson = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
+export function previewMarkup(basePath: string, preview?: PreviewStatus): string {
+  const identity = preview?.profile ? `Customer preview: ${preview.profile} (edition ${preview.profileDigest?.slice(0, 12) ?? 'unknown'}, build ${preview.buildId?.slice(0, 12) ?? 'unknown'}).` : '';
+  const failure = preview?.error ? `Build failed: ${preview.error}. Showing the last successful build.` : '';
+  return `${identity ? `<aside id="shoalrun-preview-edition" role="status">${escapeHtml(identity)}</aside>` : ''}${failure ? `<aside id="shoalrun-build-status" role="alert">${escapeHtml(failure)}</aside>` : ''}<script>const updates=new EventSource(${scriptJson(`${basePath}/__shoalrun/reload`)});updates.addEventListener("built",event=>{const update=JSON.parse(event.data);let pathname=location.pathname;try{pathname=decodeURIComponent(pathname)}catch{}const route=pathname.replace(/\\/+$/,"")||"/";if(update.routes&&!update.routes.includes(route)&&update.home){location.assign(update.home)}else{location.reload()}});updates.addEventListener("failed",event=>{let status=document.getElementById("shoalrun-build-status");if(!status){status=document.createElement("aside");status.id="shoalrun-build-status";status.setAttribute("role","alert");document.body.append(status)}status.textContent="Build failed: "+JSON.parse(event.data).message+". Showing the last successful build."})</script>`;
+}
 
 const bridgeLimit = 20_000;
 
@@ -88,6 +97,7 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
       if (liveClients && pathname === `${basePath}/__shoalrun/reload`) {
         response.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' });
         response.write(': connected\n\n');
+        if (extras.preview?.error) response.write(`event: failed\ndata: ${JSON.stringify({ message: extras.preview.error })}\n\n`);
         liveClients.add(response);
         response.on('close', () => liveClients.delete(response));
         return;
@@ -129,7 +139,7 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
       const sendRepresentation = (body: Buffer, resourceHeaders: Record<string, string>) => {
         const match = request.headers['if-none-match'];
         const etag = resourceHeaders.ETag;
-        const notModified = (request.method === 'GET' || request.method === 'HEAD') && etag && match?.split(',').some(value => value.trim() === '*' || value.trim().replace(/^W\//, '') === etag);
+        const notModified = !liveClients && (request.method === 'GET' || request.method === 'HEAD') && etag && match?.split(',').some(value => value.trim() === '*' || value.trim().replace(/^W\//, '') === etag);
         response.writeHead(notModified ? 304 : 200, resourceHeaders);
         response.end(notModified || request.method === 'HEAD' ? undefined : body);
       };
@@ -152,7 +162,7 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
       let body = await readFile(file);
       const documentRoute = pathname === '/' ? '/' : pathname.replace(/\/+$/, '');
       const document = manifest.documents.find(item => item.url === documentRoute);
-      const injected = `${liveClients ? `<script>const updates=new EventSource("${basePath}/__shoalrun/reload");updates.addEventListener("built",()=>location.reload());updates.addEventListener("failed",event=>{let status=document.getElementById("shoalrun-build-status");if(!status){status=document.createElement("aside");status.id="shoalrun-build-status";status.setAttribute("role","alert");document.body.append(status)}status.textContent="Build failed: "+JSON.parse(event.data).message})</script>` : ''}${extras.ask && extras.widget ? `<script src="${basePath}/__shoalrun/ask.js" defer></script>` : ''}`;
+      const injected = `${liveClients ? previewMarkup(basePath, extras.preview) : ''}${extras.ask && extras.widget ? `<script src="${basePath}/__shoalrun/ask.js" defer></script>` : ''}`;
       if (injected && file.endsWith('.html') && request.method !== 'HEAD') body = Buffer.from(body.toString('utf8').replace('</body>', `${injected}</body>`));
       sendRepresentation(body, { ...(headers[pathname] ?? { 'Content-Type': types[path.extname(file)] ?? 'application/octet-stream' }), ...(file.toLowerCase().endsWith('.svg') ? { 'Content-Security-Policy': 'sandbox' } : {}), ...(document ? { Vary: 'Accept', Link: `<${document.markdownUrl}>; rel="alternate"; type="text/markdown"` } : {}) });
     } catch (error) {
@@ -178,7 +188,8 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
       const document = manifest.documents.find(item => item.markdownUrl === pathname || (markdown && item.url === (pathname.replace(/\/+$/, '') || '/')));
       const twin = document && await siteFile(document.url === '/' ? '/index.html' : `${document.url}/index.html`).then(file => stat(file)).then(info => info.isFile()).catch(() => false) ? document.url : undefined;
       response.writeHead(404, { 'Content-Type': markdown ? 'text/markdown; charset=utf-8' : 'text/html; charset=utf-8', Vary: 'Accept', 'X-Robots-Tag': 'noindex', ...(twin ? { Link: `<${twin}>; rel="alternate"; type="text/html"` } : {}) });
-      const body = !markdown && errorHtml ? (twin ? addNotFoundTwin(errorHtml, twin) : errorHtml) : notFoundPage(basePath, home ?? `${basePath}/`, markdown, twin, search);
+      let body = !markdown && errorHtml ? (twin ? addNotFoundTwin(errorHtml, twin) : errorHtml) : notFoundPage(basePath, home ?? `${basePath}/`, markdown, twin, search);
+      if (!markdown && liveClients) body = body.replace('</body>', `${previewMarkup(basePath, extras.preview)}</body>`);
       response.end(request.method === 'HEAD' ? undefined : body);
     }
   });

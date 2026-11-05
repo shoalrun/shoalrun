@@ -1,3 +1,6 @@
+import { samePublication } from './publication-identity.js';
+import { resolvePublication } from './compiler-config.js';
+import type { Variant } from './content.js';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -16,6 +19,7 @@ type IngredientSpec = {
   operation: string;
   requestExample: string;
   workflow?: IngredientWorkflow;
+  publication?: Partial<Variant>;
 };
 
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -23,9 +27,10 @@ const digest = (value: string) => createHash('sha256').update(value).digest('hex
 
 function parseSpec(value: unknown): IngredientSpec {
   const fields = ['schemaVersion', 'id', 'title', 'summary', 'slug', 'operation', 'requestExample'];
-  if (!object(value) || value.schemaVersion !== 1 || Object.keys(value).some(key => ![...fields, 'workflow'].includes(key))) throw new Error('Ingredient spec needs schemaVersion: 1 and only supported fields');
+  if (!object(value) || value.schemaVersion !== 1 || Object.keys(value).some(key => ![...fields, 'workflow', 'publication'].includes(key))) throw new Error('Ingredient spec needs schemaVersion: 1 and only supported fields');
   for (const field of fields.slice(1)) if (typeof value[field] !== 'string' || !value[field].trim()) throw new Error(`Ingredient spec needs ${field}`);
   if (!/^\/[a-z0-9/-]+$/.test(value.slug as string) || (value.slug as string).includes('//') || (value.slug as string).split('/').includes('..')) throw new Error('Ingredient slug must be a lowercase absolute path');
+  if (value.publication !== undefined && (!object(value.publication) || Object.keys(value.publication).some(key => !['product', 'channel', 'version', 'language'].includes(key)) || Object.values(value.publication).some(item => typeof item !== 'string' || !item))) throw new Error('Ingredient publication must declare product/channel/version/language strings');
   const workflow = ingredientWorkflow(value.workflow, 'Ingredient workflow');
   return { ...value, ...(workflow ? { workflow } : {}) } as IngredientSpec;
 }
@@ -48,9 +53,17 @@ export async function renderIngredientDraft(configFile: string, specFile: string
   const matching = Object.entries<any>(config.apis ?? {}).flatMap(([apiId, api]) => (api.operations ?? []).filter((operation: any) => operation.id === spec.operation).map((operation: any) => ({ apiId, api, operation })));
   if (matching.length !== 1) throw new Error(`Ingredient operation ${spec.operation} must name one explicitly configured API operation`);
   const { apiId, api, operation } = matching[0];
-  if (api.source?.kind !== 'file' || typeof api.source.path !== 'string') throw new Error(`Ingredient operation ${spec.operation} needs a local OpenAPI source in the default publication`);
-  const origin = explain(loaded, `apis.${apiId}.source.path`).source.file;
-  const source = path.resolve(path.dirname(origin), api.source.path);
+  const defaults = config.publications?.defaults ?? {};
+  const product = config.publications.products ? spec.publication?.product ?? api.product ?? defaults.product : undefined;
+  const publication = resolvePublication(config.publications, { ...defaults, ...spec.publication, ...(product ? { product, version: spec.publication?.version } : {}) }, defaultLanguage(config));
+  const publicationIndex = api.publications?.findIndex((item: any) => item.product === publication.product && item.channel === publication.channel && item.version === publication.version) ?? -1;
+  const defaultSourcePublication = api.source ? resolvePublication(config.publications, { ...defaults, ...(config.publications.products && api.product ? { product: api.product, version: undefined } : {}) }, defaultLanguage(config)) : undefined;
+  const binding = publicationIndex >= 0 ? api.publications[publicationIndex].source : defaultSourcePublication && publication.product === defaultSourcePublication.product && publication.channel === defaultSourcePublication.channel && publication.version === defaultSourcePublication.version ? api.source : undefined;
+  if (!config.publications.enabled?.some((item: any) => samePublication(resolvePublication(config.publications, item, defaultLanguage(config)), publication))) throw new Error('Ingredient publication is not enabled');
+  if (publicationIndex < 0 && config.publications.products && publication.product !== (api.product ?? defaults.product)) throw new Error('Ingredient needs an OpenAPI source for its selected product');
+  if (binding?.kind !== 'file' || typeof binding.path !== 'string') throw new Error(`Ingredient operation ${spec.operation} needs a local OpenAPI source in the selected publication`);
+  const origin = explain(loaded, publicationIndex >= 0 ? `apis.${apiId}.publications.${publicationIndex}.source.path` : `apis.${apiId}.source.path`).source.file;
+  const source = path.resolve(path.dirname(origin), binding.path);
   const reader = new ApiReader(root);
   const details = await reader.operation(source, operation.sourceOperationId, spec.operation);
   const sourceDigest = digest((await Promise.all([...reader.dependencies].sort().map(async file => `${path.relative(root, file)}\n${await readFile(file, 'utf8')}`))).join('\n'));
@@ -58,12 +71,9 @@ export async function renderIngredientDraft(configFile: string, specFile: string
   const requests = details.examples.filter(example => example.location === 'request' && example.key === spec.requestExample);
   if (requests.length !== 1 || !requests[0].curl) throw new Error(`Request example ${spec.requestExample} needs one inline example with a generated cURL command`);
   const response = details.examples.find(example => example.location === 'response' && /^2\d\d$/.test(example.status ?? '') && example.value !== undefined);
-  const defaults = config.publications?.defaults ?? {};
-  if (!defaults.channel || !defaults.version) throw new Error('Ingredient draft needs a default channel and version');
-  const language = defaults.language ?? defaultLanguage(config);
   const header = {
     id: spec.id, title: spec.title, summary: spec.summary, type: 'ingredient', slug: spec.slug,
-    channel: defaults.channel, version: defaults.version, language,
+    ...publication,
     operations: [spec.operation], access: { policy: 'draft' }, ...(spec.workflow ? { workflow: spec.workflow } : {})
   };
   const reference = operation.reference ? `[${details.method.toUpperCase()} ${details.route}](doc:${operation.reference})` : `\`${details.method.toUpperCase()} ${details.route}\``;

@@ -8,7 +8,7 @@ import puppeteer from 'puppeteer';
 
 test('repeated content mounts scope anchors, ARIA and self links independently and unmount only owned nodes', async t => {
   const framework = process.env.SHOALRUN_TEST_PACKAGE ?? fileURLToPath(new URL('..', import.meta.url));
-  const allowed = new Set(['content-delivery.js','content-delivery-contract.js','content-mount.js','content-delivery-validation.js','content-delivery-transport.js','content-rest-client.js','content-rest-contract.js']);
+  const allowed = new Set(['content-delivery.js','content-delivery-contract.js','content-mount.js','content-delivery-validation.js','content-delivery-transport.js','content-rest-client.js','content-rest-contract.js','publication-identity.js']);
   const server = createServer(async (request,response)=>{
     const pathname=new URL(request.url!,'http://localhost').pathname;
     if(pathname==='/') {response.writeHead(200,{'Content-Type':'text/html'});response.end('<!doctype html><html><body><div id="first"></div><div id="second"></div><script type="module">import {mountContent,openManifestContentSource,openRestContentSource} from "/content-delivery.js";window.mountContent=mountContent;window.openContentSource=openManifestContentSource;window.openRestContentSource=openRestContentSource;</script></body></html>');return;}

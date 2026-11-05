@@ -1,3 +1,6 @@
+import { resolvePublication } from './compiler-config.js';
+import { samePublication } from './publication-identity.js';
+import type { Variant } from './content.js';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -18,6 +21,7 @@ type RecipeSpec = {
   ingredients: string[];
   inputs?: Record<string, string>;
   outcome?: string;
+  publication?: Partial<Variant>;
 };
 
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -30,7 +34,8 @@ function parseYaml(source: string, file: string): unknown {
 }
 
 function parseSpec(value: unknown): RecipeSpec {
-  if (!object(value) || value.schemaVersion !== 1 || Object.keys(value).some(key => !['schemaVersion', 'id', 'title', 'summary', 'slug', 'ingredients', 'inputs', 'outcome'].includes(key))) throw new Error('Recipe spec needs schemaVersion: 1 and only supported fields');
+  if (!object(value) || value.schemaVersion !== 1 || Object.keys(value).some(key => !['schemaVersion', 'id', 'title', 'summary', 'slug', 'ingredients', 'inputs', 'outcome', 'publication'].includes(key))) throw new Error('Recipe spec needs schemaVersion: 1 and only supported fields');
+  if (value.publication !== undefined && (!object(value.publication) || Object.keys(value.publication).some(key => !['product', 'channel', 'version', 'language'].includes(key)) || Object.values(value.publication).some(item => typeof item !== 'string' || !item))) throw new Error('Recipe publication must declare product/channel/version/language strings');
   workflowValues(value.inputs, 'Recipe inputs');
   if (value.outcome !== undefined && (typeof value.outcome !== 'string' || !value.outcome.trim())) throw new Error('Recipe outcome must be nonempty text');
   for (const field of ['id', 'title', 'summary', 'slug']) if (typeof value[field] !== 'string' || !value[field].trim()) throw new Error(`Recipe spec needs ${field}`);
@@ -65,8 +70,8 @@ export async function renderRecipeDraft(configFile: string, specFile: string) {
   const config: any = (await loadConfig(configPath)).value;
   const spec = parseSpec(parseYaml(await readFile(specFile, 'utf8'), specFile));
   const defaults = config.publications?.defaults ?? {};
-  if (!defaults.channel || !defaults.version) throw new Error('Recipe draft needs a default channel and version');
-  const language = defaults.language ?? defaultLanguage(config);
+  const product = spec.publication?.product ?? defaults.product;
+  const publication = resolvePublication(config.publications, { ...defaults, ...spec.publication, ...(product ? { product, version: spec.publication?.version } : {}) }, defaultLanguage(config));
   const seen = new Set<string>();
   const operations = new Set<string>();
   const sources: string[] = [];
@@ -95,7 +100,7 @@ export async function renderRecipeDraft(configFile: string, specFile: string) {
       }
       for (const prerequisite of workflow.prerequisites) prerequisites.add(prerequisite);
     }
-    if (header.channel !== defaults.channel || header.version !== defaults.version || header.language !== language) throw new Error(`Ingredient ${header.id} must match the recipe's default publication`);
+    if (!samePublication({ channel: String(header.channel), version: String(header.version), language: String(header.language), ...(config.publications.products && header.product ? { product: String(header.product) } : {}) }, publication)) throw new Error(`Ingredient ${header.id} must match the recipe's default publication`);
     if (header.operations !== undefined) {
       if (!Array.isArray(header.operations) || header.operations.some(value => typeof value !== 'string')) throw new Error(`Ingredient ${header.id} has invalid operations`);
       for (const operation of header.operations) operations.add(operation as string);
@@ -108,7 +113,7 @@ export async function renderRecipeDraft(configFile: string, specFile: string) {
   }
   const header = {
     id: spec.id, title: spec.title, summary: spec.summary, type: 'recipe', slug: spec.slug,
-    channel: defaults.channel, version: defaults.version, language,
+    ...publication,
     ...(operations.size ? { operations: [...operations] } : {}), access: { policy: 'draft' }
   };
   const sourceDigest = digest([JSON.stringify(spec), ...sources].join('\n'));

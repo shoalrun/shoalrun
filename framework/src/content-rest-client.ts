@@ -1,3 +1,4 @@
+import { samePublication } from './publication-identity.js';
 import { ContentDeliveryError, contentRefKey } from './content-delivery-contract.js';
 import type { ContentSnapshot, ContentPublication, ContentResource, ContentRef, ContentResult, ContentErrorCode } from './content-delivery-contract.js';
 import type { ContentDeliveryLimits } from './content-delivery.js';
@@ -9,7 +10,6 @@ export type RestContentSourceOptions = { baseUrl: string | URL; publication: Con
 const digestPattern = /^[a-f0-9]{64}$/;
 const record = (value: any): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
 const exactKeys = (value: any, keys: string[]) => record(value) && Object.keys(value).length === keys.length && Object.keys(value).every(key => keys.includes(key));
-const samePublication = (left: ContentPublication, right: ContentPublication) => left.channel === right.channel && left.version === right.version && left.language === right.language;
 const invalid = (message: string): never => { throw new ContentDeliveryError('invalid_manifest', message); };
 /** Preloads a REST inventory and pins all subsequent reads to that revision. */
 export async function openRestContentSource(options: RestContentSourceOptions): Promise<ContentSnapshot> {
@@ -30,6 +30,7 @@ export async function openRestContentSource(options: RestContentSourceOptions): 
   const urlFor = (suffix: string, revision?: string) => {
     const url = new URL(baseUrl.href); url.pathname = baseUrl.pathname.replace(/\/$/, '') + '/resources' + suffix;
     for (const key of ['channel', 'version', 'language'] as const) url.searchParams.set(key, publication[key]);
+    if (publication.product !== undefined) url.searchParams.set('product', publication.product);
     if (revision !== undefined) url.searchParams.set('revision', revision);
     return url;
   };
@@ -65,7 +66,7 @@ export async function openRestContentSource(options: RestContentSourceOptions): 
   let envelope: any;
   try { envelope = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(await request(urlFor('', requestedRevision), 'application/json', manifestBytes, openSignal))); }
   catch (error) { if (error instanceof ContentDeliveryError || openSignal.aborted) throw error; return invalid('REST inventory is not valid UTF-8 JSON.'); }
-  if (!exactKeys(envelope, ['schemaVersion', 'revision', 'publication', 'resources']) || envelope.schemaVersion !== 1 || !digestPattern.test(envelope.revision ?? '') || !validContentPublication(envelope.publication) || !samePublication(envelope.publication, publication)) invalid('Invalid REST inventory identity.');
+  if (!exactKeys(envelope, ['schemaVersion', 'revision', 'publication', 'resources']) || envelope.schemaVersion !== (publication.product === undefined ? 1 : 2) || !digestPattern.test(envelope.revision ?? '') || !validContentPublication(envelope.publication) || !samePublication(envelope.publication, publication)) invalid('Invalid REST inventory identity.');
   if (requestedRevision !== undefined && requestedRevision !== envelope.revision) throw new ContentDeliveryError('stale_revision', 'REST inventory differs from the requested revision.');
   if (!Array.isArray(envelope.resources) || envelope.resources.length > maxResources) invalid('Invalid REST resource inventory.');
   const resources: ContentResource[] = [];

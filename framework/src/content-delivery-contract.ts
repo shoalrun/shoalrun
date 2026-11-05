@@ -1,5 +1,5 @@
 /** Browser-safe delivery contracts. These types do not import the compiler. */
-export type ContentPublication = { channel: string; version: string; language: string };
+export type ContentPublication = { channel: string; version: string; language: string; product?: string };
 export type ContentFormat = 'html' | 'markdown';
 export type ContentRef = { kind: 'page'; documentId: string } | { kind: 'section'; documentId: string; sectionId: string } | { kind: 'snippet'; id: string };
 export type ContentFile = { path: string; bytes: number; digest: string };
@@ -14,7 +14,7 @@ export type ContentResource = {
   assets: string[]; externalDependencies: Array<{ url: string; kind: 'image' }>;
 };
 export type ContentManifest = {
-  schemaVersion: 1; kind: 'shoalrun-content-export'; digest: string; publicBase: string;
+  schemaVersion: 1 | 2; kind: 'shoalrun-content-export'; digest: string; publicBase: string;
   publication: ContentPublication; review: { status: 'ok' | 'required'; apis: Array<{ apiId: string; digest: string }> };
   resources: ContentResource[]; assets: ContentAsset[]; files: ContentFile[];
   diagnostics: Array<{ code: string; documentId?: string; message: string }>;

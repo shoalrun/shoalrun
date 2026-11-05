@@ -4,6 +4,23 @@ Detailed CLI and library contracts for project inspection, isolated validation, 
 
 ## Project and reference tools
 
+Available since `0.1.0-alpha.18`. Product-aware publication selection preserves
+the product,
+channel, version, and language when reading a repeated stable page ID. For
+example, `shoalrun docs read guide.start --site site-dist --product payments
+--channel production --version v3 --language en --json` reads one product
+release. MCP clients can call the compact `get_publications` discovery tool
+first and follow its `nextOffset`; hosted endpoints still list only their
+configured publication.
+
+Use `shoalrun scaffold guide -n content/setup.mdx --product payments --version v3`
+to start a page in a selected product release. A product's omitted version uses
+its own configured default rather than another product's release. For customer
+edition review, `shoalrun dev docs.config.yaml site-dist --profile customers/acme.yaml`
+compiles and watches the same profile selection as a customer build. Reader
+views and the HTML publication dropdown do not replace build-time feature
+selection. See the [package README](README.md) for catalogs and preview behavior.
+
 These provider-free commands inspect an existing project without selecting a page:
 
 ```sh

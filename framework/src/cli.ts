@@ -128,15 +128,20 @@ try {
     const args = [subcommand, ...rest].filter((item): item is string => item !== undefined);
     const positional: string[] = [];
     let port = defaultPort();
+    let profile: string | undefined;
     for (let index = 0; index < args.length; index++) {
-      if (args[index] === '--port') {
-        if (!args[index + 1] || args[index + 1].startsWith('--')) throw new Error('Usage: shoalrun dev [config] [output] [--port PORT]');
-        port = Number(args[++index]);
+      if (args[index] === '--port' || args[index] === '--profile') {
+        const option = args[index];
+        if (!args[index + 1] || args[index + 1].startsWith('--')) throw new Error('Usage: shoalrun dev [config] [output] [--port PORT] [--profile FILE]');
+        if (option === '--profile') {
+          if (profile !== undefined) throw new Error('Duplicate dev option --profile');
+          profile = args[++index];
+        } else port = Number(args[++index]);
       } else if (args[index].startsWith('--')) throw new Error(`Unknown dev option ${args[index]}`);
       else positional.push(args[index]);
     }
-    if (positional.length > 2) throw new Error('Usage: shoalrun dev [config] [output] [--port PORT]');
-    await startDev(positional[0] ?? 'docs.config.yaml', positional[1] ?? 'site-dist', '127.0.0.1', port);
+    if (positional.length > 2) throw new Error('Usage: shoalrun dev [config] [output] [--port PORT] [--profile FILE]');
+    await startDev(positional[0] ?? 'docs.config.yaml', positional[1] ?? 'site-dist', '127.0.0.1', port, { profile });
   } else if (command === 'vercel' && subcommand === 'build') {
     // --chat adds the optional answer function: it needs chat and retrieval settings and the embedding key at build time.
     const chat = rest.includes('--chat');
@@ -287,9 +292,9 @@ try {
     const writer = command === 'ingredient' ? writeIngredientDraft : writeRecipeDraft;
     process.stdout.write(JSON.stringify(await writer(flags['--config'] ?? await discoverConfig(process.cwd()), flags['--spec'], flags['--out'], check), null, 2) + '\n');
   } else if (command === 'search') {
-    if (!subcommand || !rest[0] || rest[0].startsWith('--')) throw new Error('Usage: shoalrun search <site-directory> <query> [--channel C] [--version V] [--language L] [--limit N]');
+    if (!subcommand || !rest[0] || rest[0].startsWith('--')) throw new Error('Usage: shoalrun search <site-directory> <query> [--product P] [--channel C] [--version V] [--language L] [--limit N]');
     const options: SearchOptions = {};
-    const names = { '--channel': 'channel', '--version': 'version', '--language': 'language', '--limit': 'limit' } as const;
+    const names = { '--product': 'product', '--channel': 'channel', '--version': 'version', '--language': 'language', '--limit': 'limit' } as const;
     for (let index = 1; index < rest.length; index += 2) {
       const flag = rest[index] as keyof typeof names;
       const value = rest[index + 1];
@@ -330,7 +335,7 @@ try {
     const publications = [...counts].sort(([a], [b]) => a.localeCompare(b)).map(([variant, passages]) => ({ variant, passages }));
     process.stdout.write(JSON.stringify({ status: 'ok', documents: result.documents, chunks: result.index.chunks.length, sourceDigest: result.index.sourceDigest, publications, output: result.output, ...(embeddings ? { embeddings } : {}) }, null, 2) + '\n');
   } else if (command === 'ask') {
-    const usage = 'Usage: shoalrun ask <site-directory> "<question>" [--config FILE] [--model MODEL] [--passages N] [--reader-view FACET=CHOICE[,CHOICE]]... [--channel C --version V --language L] [--no-rerank] [--no-direct] [--no-escalate] [--no-cards] [--json]';
+    const usage = 'Usage: shoalrun ask <site-directory> "<question>" [--config FILE] [--model MODEL] [--passages N] [--reader-view FACET=CHOICE[,CHOICE]]... [--product P] [--channel C --version V --language L] [--no-rerank] [--no-direct] [--no-escalate] [--no-cards] [--json]';
     if (!subcommand || subcommand.startsWith('--') || !rest[0] || rest[0].startsWith('--')) throw new Error(usage);
     const values: Record<string, string> = {};
     const views: string[] = [];
@@ -340,12 +345,12 @@ try {
       if (['--no-rerank', '--no-direct', '--no-escalate', '--no-cards', '--json'].includes(flag)) { switches.add(flag); continue; }
       const value = rest[++index];
       if (flag === '--reader-view' && value && !value.startsWith('--')) { views.push(value); continue; }
-      if (!['--config', '--model', '--passages', '--channel', '--version', '--language'].includes(flag) || !value || value.startsWith('--')) throw new Error(usage);
+      if (!['--config', '--model', '--passages', '--product', '--channel', '--version', '--language'].includes(flag) || !value || value.startsWith('--')) throw new Error(usage);
       if (values[flag] !== undefined) throw new Error(`Duplicate ask option ${flag}`);
       values[flag] = value;
     }
     const configFile = values['--config'] ?? await discoverConfig(process.cwd()).catch(() => { throw new Error('No docs.config.yaml found; pass --config FILE. `ask` reads its chat provider and model from the config'); });
-    const setup = await prepareAsk({ siteDirectory: subcommand, configFile, model: values['--model'], passages: values['--passages'] === undefined ? undefined : Number(values['--passages']), channel: values['--channel'], version: values['--version'], language: values['--language'], noRerank: switches.has('--no-rerank'), noDirect: switches.has('--no-direct'), noEscalate: switches.has('--no-escalate'), noCards: switches.has('--no-cards'), readerView: parseReaderView(views) });
+    const setup = await prepareAsk({ siteDirectory: subcommand, configFile, model: values['--model'], passages: values['--passages'] === undefined ? undefined : Number(values['--passages']), product: values['--product'], channel: values['--channel'], version: values['--version'], language: values['--language'], noRerank: switches.has('--no-rerank'), noDirect: switches.has('--no-direct'), noEscalate: switches.has('--no-escalate'), noCards: switches.has('--no-cards'), readerView: parseReaderView(views) });
     for (const note of setup.notes) process.stderr.write(`${note}\n`);
     const chat = setup.chat;
     const result = await askQuestion({ question: rest[0], ...setup.options });
@@ -404,7 +409,7 @@ try {
       }
     }
   } else if (command === 'answers') {
-    const usage = 'Usage: shoalrun answers <site-directory> --questions FILE [--config FILE] [--model MODEL] [--reader-view FACET=CHOICE[,CHOICE]]...';
+    const usage = 'Usage: shoalrun answers <site-directory> --questions FILE [--config FILE] [--model MODEL] [--product P --channel C --version V --language L] [--reader-view FACET=CHOICE[,CHOICE]]...';
     if (!subcommand || subcommand.startsWith('--')) throw new Error(usage);
     const values: Record<string, string> = {};
     const views: string[] = [];
@@ -412,7 +417,7 @@ try {
       const flag = rest[index];
       const value = rest[++index];
       if (flag === '--reader-view' && value && !value.startsWith('--')) { views.push(value); continue; }
-      if (!['--questions', '--config', '--model'].includes(flag) || !value || value.startsWith('--')) throw new Error(usage);
+      if (!['--questions', '--config', '--model', '--product', '--channel', '--version', '--language'].includes(flag) || !value || value.startsWith('--')) throw new Error(usage);
       if (values[flag] !== undefined) throw new Error(`Duplicate answers option ${flag}`);
       values[flag] = value;
     }
@@ -420,7 +425,7 @@ try {
     const configFile = values['--config'] ?? await discoverConfig(process.cwd()).catch(() => { throw new Error('No docs.config.yaml found; pass --config FILE. `answers` reads its chat provider and model from the config'); });
     const questions = parseCardQuestions(await readFile(values['--questions'], 'utf8'));
     // Cards are polished answers, so they come from the model, not from a direct excerpt, and never from another card.
-    const setup = await prepareAsk({ siteDirectory: subcommand, configFile, model: values['--model'], noCards: true, noDirect: true, readerView: parseReaderView(views) });
+    const setup = await prepareAsk({ siteDirectory: subcommand, configFile, model: values['--model'], product: values['--product'], channel: values['--channel'], version: values['--version'], language: values['--language'], noCards: true, noDirect: true, readerView: parseReaderView(views) });
     for (const note of setup.notes) process.stderr.write(`${note}\n`);
     if (!setup.embedTexts || !setup.embedding) throw new Error('Answer cards need semantic search. Run shoalrun index --embed first');
     const built = await buildCards({ questions, ask: question => askQuestion({ question, ...setup.options }), embed: setup.embedTexts, digestOf: id => setup.options.retriever.digestOf(id), embedding: setup.embedding, variant: setup.options.variant as string, readerSelection: setup.options.readerSelection, progress: message => process.stderr.write(`${message}\n`) });
@@ -459,13 +464,13 @@ try {
       const value = rest[index + 1];
       if ((!flag?.startsWith('--') && flag !== '-n') || !value || value.startsWith('--')) throw new Error(`Scaffold option ${flag ?? ''} needs a value`);
       const name = flag === '-n' ? 'new' : flag.slice(2);
-      if (!['new', 'config', 'id', 'title', 'summary', 'slug', 'channel', 'version', 'language', 'operation'].includes(name)) throw new Error(`Unknown scaffold option ${flag}`);
+      if (!['new', 'config', 'id', 'title', 'summary', 'slug', 'product', 'channel', 'version', 'language', 'operation'].includes(name)) throw new Error(`Unknown scaffold option ${flag}`);
       if (name === 'operation') operations.push(value);
       else if (options[name] !== undefined) throw new Error(`Duplicate scaffold option ${flag}`);
       else options[name] = value;
     }
     if (shortForm && !options.new) throw new Error('Scaffold needs -n or --new with a target file');
-    const overrides = { id: options.id, title: options.title, summary: options.summary, slug: options.slug, channel: options.channel, version: options.version, language: options.language, ...(operations.length ? { operations } : {}) };
+    const overrides = { id: options.id, title: options.title, summary: options.summary, slug: options.slug, product: options.product, channel: options.channel, version: options.version, language: options.language, ...(operations.length ? { operations } : {}) };
     const result = shortForm
       ? await scaffoldFromPath(options.config ?? await discoverConfig(process.cwd()), subcommand, options.new, Object.fromEntries(Object.entries(overrides).filter(([, value]) => value !== undefined)))
       : await scaffold(rest[0], subcommand, rest[1], overrides);
@@ -508,44 +513,53 @@ try {
     process.stdout.write(JSON.stringify(result, null, 2) + '\n');
     if (result.status !== 'ok') process.exitCode = 1;
   } else if (command === 'api' && subcommand === 'select') {
-    if (!rest[0] || !rest[1] || rest[2] !== '--output' || !rest[3] || rest.length !== 4) throw new Error('Usage: shoalrun api select <api-id> <config> --output <selection.yaml>');
-    const result = await selectApiReferences(rest[1], rest[0], rest[3]);
+    const usage = 'Usage: shoalrun api select <api-id> <config> --output FILE [--product P --channel C --version V --language L]';
+    if (!rest[0] || !rest[1]) throw new Error(usage);
+    const flags: Record<string, string> = {};
+    for (let i = 2; i < rest.length; i += 2) {
+      const flag = rest[i]; const value = rest[i + 1];
+      if (!['--output', '--product', '--channel', '--version', '--language'].includes(flag) || !value || value.startsWith('--') || flags[flag]) throw new Error(usage);
+      flags[flag] = value;
+    }
+    if (!flags['--output']) throw new Error(usage);
+    const result = await selectApiReferences(rest[1], rest[0], flags['--output'], { product: flags['--product'], channel: flags['--channel'], version: flags['--version'], language: flags['--language'] });
     process.stdout.write(JSON.stringify({ status: 'ok', ...result }, null, 2) + '\n');
   } else if (command === 'api' && subcommand === 'materialize') {
     const usage = 'Usage: shoalrun api materialize <api-id> <config> (--all | --operation ID | --route "METHOD /path")... [--output content/subdirectory]';
     if (!rest[0] || !rest[1] || rest[0].startsWith('--') || rest[1].startsWith('--')) throw new Error(usage);
-    const options: { all?: boolean; operations: string[]; routes: string[]; output?: string } = { operations: [], routes: [] };
+    const options: { product?: string; channel?: string; version?: string; language?: string; all?: boolean; operations: string[]; routes: string[]; output?: string } = { operations: [], routes: [] };
     for (let index = 2; index < rest.length; index++) {
       const flag = rest[index];
       if (flag === '--all') { if (options.all) throw new Error('Duplicate --all'); options.all = true; continue; }
       const value = rest[++index];
-      if (!['--operation', '--route', '--output'].includes(flag) || !value || value.startsWith('--')) throw new Error(usage);
+      if (!['--operation', '--route', '--output', '--product', '--channel', '--version', '--language'].includes(flag) || !value || value.startsWith('--')) throw new Error(usage);
       if (flag === '--operation') options.operations.push(value);
       else if (flag === '--route') options.routes.push(value);
+      else if (flag !== '--output') { const key = flag.slice(2) as 'product' | 'channel' | 'version' | 'language'; if (options[key]) throw new Error(`Duplicate ${flag}`); options[key] = value; }
       else if (options.output) throw new Error('Duplicate --output');
       else options.output = value;
     }
     const result = await materializeApiPages(rest[1], rest[0], options);
     process.stdout.write(JSON.stringify({ status: 'ok', ...result }, null, 2) + '\n');
   } else if (command === 'operation' && subcommand === 'inspect') {
-    const usage = 'Usage: shoalrun operation inspect <id> [config] [--channel C] [--version V] [--language L]';
+    const usage = 'Usage: shoalrun operation inspect <id> [config] [--product P] [--channel C] [--version V] [--language L]';
     if (!rest[0] || rest[0].startsWith('--')) throw new Error(usage);
     const hasConfig = rest[1] !== undefined && !rest[1].startsWith('--');
-    const filters: Partial<Record<'channel' | 'version' | 'language', string>> = {};
+    const filters: Partial<Record<'product' | 'channel' | 'version' | 'language', string>> = {};
     for (let index = hasConfig ? 2 : 1; index < rest.length; index += 2) {
       const flag = rest[index];
       const value = rest[index + 1];
       const name = flag.slice(2);
-      if (!['--channel', '--version', '--language'].includes(flag)) throw new Error(`Unknown operation inspect option ${flag}`);
+      if (!['--product', '--channel', '--version', '--language'].includes(flag)) throw new Error(`Unknown operation inspect option ${flag}`);
       if (!value || value.startsWith('--')) throw new Error(`Operation inspect option ${flag} needs a value`);
       if (filters[name as keyof typeof filters] !== undefined) throw new Error(`Duplicate operation inspect option ${flag}`);
       filters[name as keyof typeof filters] = value;
     }
     const manifest = await compile(hasConfig ? rest[1] : 'docs.config.yaml');
-    const matches = (manifest.operations[rest[0]] ?? []).filter(item => (!filters.channel || item.channel === filters.channel) && (!filters.version || item.version === filters.version) && (!filters.language || item.language === filters.language));
+    const matches = (manifest.operations[rest[0]] ?? []).filter(item => (!filters.product || item.product === filters.product) && (!filters.channel || item.channel === filters.channel) && (!filters.version || item.version === filters.version) && (!filters.language || item.language === filters.language));
     process.stdout.write(JSON.stringify({ status: matches.length ? 'ok' : 'missing-variant', operationId: rest[0], bindings: matches }, null, 2) + '\n');
   } else {
-    throw new Error('Usage: shoalrun init [directory] [--starter minimal|api-docs|showcase] | build [config] [output] [--source-commit SHA] [--release-label LABEL] | check [config] [--json] | audit [config] | vercel build [config] [output] [--source-commit SHA] [--release-label LABEL] [--chat] | serve <site-directory> [--host HOST] [--port PORT] [--search [--config FILE]] [--ask [--config FILE] [--model MODEL] [--reader-view FACET=CHOICE[,CHOICE]]...] | search <site-directory> <query> [--channel C --version V --language L --limit N] | answers <site-directory> --questions FILE [--config FILE] [--model MODEL] [--reader-view FACET=CHOICE[,CHOICE]]... | chat pause|resume|status --config FILE | ask-log <log-file> [--min-repeats N] [--limit N] [--cards-out FILE] [--json] | ask <site-directory> "<question>" [--config FILE] [--model MODEL] [--passages N] [--reader-view FACET=CHOICE[,CHOICE]]... [--channel C --version V --language L] [--no-rerank] [--no-direct] [--no-escalate] [--no-cards] [--json] | eval prepare <site-directory> --tasks FILE --out REPORT | eval check <site-directory> --tasks FILE --report REPORT | index <site-directory> [--embed [--config FILE] [--provider voyage|openai] [--model MODEL] [--dimension N] [--base-url URL] [--key-env NAME]] | ingredient draft --spec FILE --out FILE [--config FILE] [--check] | recipe draft --spec FILE --out FILE [--config FILE] [--check] | scaffold <template> -n <target> [--config FILE] [--id ID] [--title TITLE] [--summary SUMMARY] [--slug SLUG] [--channel C] [--version V] [--language L] [--operation ID]... | scaffold <template> <config> <target> --id ID --title TITLE --summary SUMMARY --slug SLUG | config validate|resolve|graph <config> | config explain <key> <config> | operation inspect <id> <config> [--channel C --version V --language L] | api audit <openapi-file> | api focused-audit <site-directory> | api review <config-file> --output <local-directory> | api select <api-id> <config> --output <selection.yaml> | api materialize <api-id> <config> (--all | --operation ID | --route "METHOD /path")... [--output content/subdirectory]');
+    throw new Error('Usage: shoalrun init [directory] [--starter minimal|api-docs|showcase] | build [config] [output] [--source-commit SHA] [--release-label LABEL] | check [config] [--json] | audit [config] | vercel build [config] [output] [--source-commit SHA] [--release-label LABEL] [--chat] | serve <site-directory> [--host HOST] [--port PORT] [--search [--config FILE]] [--ask [--config FILE] [--model MODEL] [--reader-view FACET=CHOICE[,CHOICE]]...] | search <site-directory> <query> [--product P] [--channel C --version V --language L --limit N] | answers <site-directory> --questions FILE [--config FILE] [--model MODEL] [--reader-view FACET=CHOICE[,CHOICE]]... | chat pause|resume|status --config FILE | ask-log <log-file> [--min-repeats N] [--limit N] [--cards-out FILE] [--json] | ask <site-directory> "<question>" [--config FILE] [--model MODEL] [--passages N] [--reader-view FACET=CHOICE[,CHOICE]]... [--product P] [--channel C --version V --language L] [--no-rerank] [--no-direct] [--no-escalate] [--no-cards] [--json] | eval prepare <site-directory> --tasks FILE --out REPORT | eval check <site-directory> --tasks FILE --report REPORT | index <site-directory> [--embed [--config FILE] [--provider voyage|openai] [--model MODEL] [--dimension N] [--base-url URL] [--key-env NAME]] | ingredient draft --spec FILE --out FILE [--config FILE] [--check] | recipe draft --spec FILE --out FILE [--config FILE] [--check] | scaffold <template> -n <target> [--config FILE] [--id ID] [--title TITLE] [--summary SUMMARY] [--slug SLUG] [--product P] [--channel C] [--version V] [--language L] [--operation ID]... | scaffold <template> <config> <target> --id ID --title TITLE --summary SUMMARY --slug SLUG | config validate|resolve|graph <config> | config explain <key> <config> | operation inspect <id> <config> [--product P] [--channel C --version V --language L] | api audit <openapi-file> | api focused-audit <site-directory> | api review <config-file> --output <local-directory> | api select <api-id> <config> --output <selection.yaml> | api materialize <api-id> <config> (--all | --operation ID | --route "METHOD /path")... [--output content/subdirectory]');
   }
 } catch (error) {
   process.stderr.write(JSON.stringify({ status: 'error', message: (error as Error).message }) + '\n');

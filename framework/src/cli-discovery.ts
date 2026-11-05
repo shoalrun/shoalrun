@@ -8,6 +8,11 @@ export const docsHelp = `Usage: shoalrun docs <command>
 Read bundled references (no project or provider key required):
   search <query> [--json]
   read <document-id> [--json]
+  outline <document-id> [--json]
+  section <document-id> <section-id> [--json]
+
+Search and reads accept --site DIRECTORY, --max-tokens N, and publication
+selectors --product P --channel C --version V --language L.
 
 Inspect a project:
   project [--config FILE] [--profile FILE] [--section pages|guidance|configuration|navigation|relationships|templates|findings]
@@ -38,17 +43,17 @@ Start and build:
   init [directory] [--starter minimal|api-docs|showcase]
   build [config] [output] [--profile FILE]
   export [config] --out DIRECTORY [--target NAME] [--profile FILE]
-  dev [config] [output] [--port PORT]
+  dev [config] [output] [--profile FILE] [--port PORT]
   serve <site-directory> [--host HOST] [--port PORT]
   check [config] [--json]
   audit [config]
-  scaffold <template> -n <target> [--config FILE]
+  scaffold <template> -n <target> [--config FILE] [--product P]
 
 Agent guidance and offline documentation:
   skills list [--json]
   skills read <name> [--json]
-  docs search <query> [--json]
-  docs read <document-id> [--json]
+  docs search <query> [--site DIRECTORY] [--product P] [--json]
+  docs read <document-id> [--site DIRECTORY] [--product P] [--json]
   docs project [--config FILE] [--profile FILE]
   docs baseline --out FILE [--config FILE] [--profile FILE]
   docs validate (--baseline FILE | --file FILE | --id ID) [--config FILE] [--profile FILE]

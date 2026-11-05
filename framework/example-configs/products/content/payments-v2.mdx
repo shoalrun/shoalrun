@@ -1,0 +1,30 @@
+---
+id: guide.start
+title: Start with Payments v2
+summary: Configure the reference-based payment workflow used by Customer B.
+slug: /start
+product: payments
+version: v2
+shared: true
+---
+Payments v2 uses a merchant reference to track a payment from creation through settlement. This edition follows the v2 workflow while Reporting remains on its own v1 release.
+
+## Create a payment
+
+1. Choose a unique merchant reference for the order.
+2. Submit the amount and currency with that reference.
+3. Save the returned payment identifier before confirming the order.
+
+```json
+{
+  "merchantReference": "order-1042",
+  "amount": 12500,
+  "currency": "USD"
+}
+```
+
+## Confirm settlement
+
+Match the merchant reference on the settlement record to the original order. Retry a failed submission with the same reference so reconciliation can identify it.
+
+[Review the daily operating checklist](doc:guide.operations).

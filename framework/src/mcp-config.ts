@@ -1,6 +1,6 @@
 import { configMappingAt } from './compiler-config.js';
 
-export type McpConfig = { enabled: true; access: 'public'; path: string; publication: { channel: string; version: string; language: string }; allowedHosts: string[]; allowedOrigins: string[]; analytics?: { module: string; clientMetadata?: boolean; intent?: boolean; conversationIds?: boolean; consent?: { header: string; value: string } } };
+export type McpConfig = { enabled: true; access: 'public'; path: string; publication: { product?: string; channel: string; version: string; language: string }; allowedHosts: string[]; allowedOrigins: string[]; analytics?: { module: string; clientMetadata?: boolean; intent?: boolean; conversationIds?: boolean; consent?: { header: string; value: string } } };
 export function resolveMcp(value: unknown): McpConfig | undefined {
   if (value === undefined || value === false) return;
   const config = configMappingAt(value, 'mcp');
@@ -11,7 +11,8 @@ export function resolveMcp(value: unknown): McpConfig | undefined {
   const route = config.path ?? '/mcp';
   if (typeof route !== 'string' || !/^\/[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(route) || route.startsWith('/__shoalrun')) throw new Error('mcp.path must be a non-reserved absolute path without a trailing slash');
   const publication = configMappingAt(config.publication, 'mcp.publication');
-  if (Object.keys(publication).some(key => !['channel', 'version', 'language'].includes(key)) || ['channel', 'version', 'language'].some(key => typeof publication[key] !== 'string' || !/^[a-zA-Z0-9._-]{1,128}$/.test(publication[key] as string))) throw new Error('mcp.publication needs channel, version, and language');
+  if (Object.keys(publication).some(key => !['product', 'channel', 'version', 'language'].includes(key)) || ['channel', 'version', 'language'].some(key => typeof publication[key] !== 'string' || !/^[a-zA-Z0-9._-]{1,128}$/.test(publication[key] as string))) throw new Error('mcp.publication needs channel, version, and language');
+  if (publication.product !== undefined && (typeof publication.product !== 'string' || !/^[a-zA-Z0-9._-]{1,128}$/.test(publication.product))) throw new Error('mcp.publication.product must be a product ID');
   const strings = (key: string) => {
     const values = config[key] ?? [];
     if (!Array.isArray(values) || values.length > 32 || values.some(v => typeof v !== 'string' || !v || v.length > 253)) throw new Error(`mcp.${key} must be an array of explicit hostnames or origins`);

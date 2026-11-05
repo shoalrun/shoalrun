@@ -12,7 +12,7 @@ export type McpAnalyticsEvent = McpClientMetadata & {
   pageId?: string;
   sectionId?: string;
   buildId: string;
-  publication: { channel: string; version: string; language: string };
+  publication: { product?: string; channel: string; version: string; language: string };
 };
 export type McpAnalyticsContext = {
   buildId: string;

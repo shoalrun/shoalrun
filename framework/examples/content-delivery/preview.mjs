@@ -24,7 +24,7 @@ const clientDirectory = path.dirname(clientEntry);
 const clientFiles = new Map([
   ['/shoalrun/content-delivery.js', clientEntry],
   ['/shoalrun/content-delivery-contract.js', path.join(clientDirectory, 'content-delivery-contract.js')],
-  ...['content-mount', 'content-delivery-validation', 'content-delivery-transport', 'content-rest-client', 'content-rest-contract'].map(name => [`/shoalrun/${name}.js`, path.join(clientDirectory, `${name}.js`)]),
+  ...['content-mount', 'content-delivery-validation', 'content-delivery-transport', 'content-rest-client', 'content-rest-contract', 'publication-identity'].map(name => [`/shoalrun/${name}.js`, path.join(clientDirectory, `${name}.js`)]),
 ]);
 const mount = '/help/releases/demo/';
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.md': 'text/markdown; charset=utf-8', '.png': 'image/png' };

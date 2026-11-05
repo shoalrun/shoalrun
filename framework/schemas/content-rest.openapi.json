@@ -3,7 +3,7 @@
   "info": {
     "title": "Shoalrun content REST API",
     "version": "1.0.0",
-    "description": "Read-only delivery of reviewed content snapshots. This is HTTP contract v1, independent of the Shoalrun package version. The reference adapter serves one supplied revision per publication. It retains no revision history. Exported HTML/Markdown bytes are unchanged: host their original static asset and link mount alongside the API."
+    "description": "Read-only delivery of reviewed content snapshots. The endpoints accept legacy productless publication envelopes (schemaVersion 1) and product-scoped envelopes (schemaVersion 2). This is HTTP contract v1, independent of the Shoalrun package version. The reference adapter serves one supplied revision per publication. It retains no revision history. Exported HTML/Markdown bytes are unchanged: host their original static asset and link mount alongside the API."
   },
   "servers": [
     {
@@ -25,6 +25,9 @@
           },
           {
             "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/product"
           },
           {
             "$ref": "#/components/parameters/optionalRevision"
@@ -252,6 +255,9 @@
             "$ref": "#/components/parameters/language"
           },
           {
+            "$ref": "#/components/parameters/product"
+          },
+          {
             "$ref": "#/components/parameters/optionalRevision"
           },
           {
@@ -375,6 +381,9 @@
           },
           {
             "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/product"
           },
           {
             "$ref": "#/components/parameters/revision"
@@ -601,6 +610,9 @@
             "$ref": "#/components/parameters/language"
           },
           {
+            "$ref": "#/components/parameters/product"
+          },
+          {
             "$ref": "#/components/parameters/revision"
           },
           {
@@ -727,6 +739,9 @@
           },
           {
             "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/product"
           },
           {
             "$ref": "#/components/parameters/revision"
@@ -924,6 +939,9 @@
             "$ref": "#/components/parameters/language"
           },
           {
+            "$ref": "#/components/parameters/product"
+          },
+          {
             "$ref": "#/components/parameters/revision"
           },
           {
@@ -1068,6 +1086,10 @@
             "minLength": 1
           },
           "language": {
+            "type": "string",
+            "minLength": 1
+          },
+          "product": {
             "type": "string",
             "minLength": 1
           }
@@ -1458,6 +1480,57 @@
           }
         }
       },
+      "PublicationV1": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "channel",
+          "version",
+          "language"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "language": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "PublicationV2": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "channel",
+          "version",
+          "language",
+          "product"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "language": {
+            "type": "string",
+            "minLength": 1
+          },
+          "product": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
       "ResourceEntry": {
         "type": "object",
         "additionalProperties": false,
@@ -1475,59 +1548,122 @@
         }
       },
       "ResourceList": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "schemaVersion",
-          "revision",
-          "publication",
-          "resources"
-        ],
-        "properties": {
-          "schemaVersion": {
-            "const": 1
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schemaVersion",
+              "revision",
+              "publication",
+              "resources"
+            ],
+            "properties": {
+              "schemaVersion": {
+                "const": 1
+              },
+              "revision": {
+                "$ref": "#/components/schemas/digest"
+              },
+              "publication": {
+                "$ref": "#/components/schemas/PublicationV1"
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceEntry"
+                }
+              }
+            }
           },
-          "revision": {
-            "$ref": "#/components/schemas/digest"
-          },
-          "publication": {
-            "$ref": "#/components/schemas/publication"
-          },
-          "resources": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ResourceEntry"
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schemaVersion",
+              "revision",
+              "publication",
+              "resources"
+            ],
+            "properties": {
+              "schemaVersion": {
+                "const": 2
+              },
+              "revision": {
+                "$ref": "#/components/schemas/digest"
+              },
+              "publication": {
+                "$ref": "#/components/schemas/PublicationV2"
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceEntry"
+                }
+              }
             }
           }
-        }
+        ]
       },
       "ResourceMetadata": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "schemaVersion",
-          "revision",
-          "publication",
-          "key",
-          "resource"
-        ],
-        "properties": {
-          "schemaVersion": {
-            "const": 1
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schemaVersion",
+              "revision",
+              "publication",
+              "key",
+              "resource"
+            ],
+            "properties": {
+              "schemaVersion": {
+                "const": 1
+              },
+              "revision": {
+                "$ref": "#/components/schemas/digest"
+              },
+              "publication": {
+                "$ref": "#/components/schemas/PublicationV1"
+              },
+              "key": {
+                "$ref": "#/components/schemas/ResourceKey"
+              },
+              "resource": {
+                "$ref": "#/components/schemas/ContentResource"
+              }
+            }
           },
-          "revision": {
-            "$ref": "#/components/schemas/digest"
-          },
-          "publication": {
-            "$ref": "#/components/schemas/publication"
-          },
-          "key": {
-            "$ref": "#/components/schemas/ResourceKey"
-          },
-          "resource": {
-            "$ref": "#/components/schemas/ContentResource"
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schemaVersion",
+              "revision",
+              "publication",
+              "key",
+              "resource"
+            ],
+            "properties": {
+              "schemaVersion": {
+                "const": 2
+              },
+              "revision": {
+                "$ref": "#/components/schemas/digest"
+              },
+              "publication": {
+                "$ref": "#/components/schemas/PublicationV2"
+              },
+              "key": {
+                "$ref": "#/components/schemas/ResourceKey"
+              },
+              "resource": {
+                "$ref": "#/components/schemas/ContentResource"
+              }
+            }
           }
-        }
+        ]
       }
     },
     "parameters": {
@@ -1561,6 +1697,17 @@
         "required": true,
         "description": "Exact publication language. No default or fallback.",
         "example": "en",
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "product": {
+        "name": "product",
+        "in": "query",
+        "required": false,
+        "description": "Exact product ID. Required for product-scoped publications; omitted selects only a legacy productless publication. No cross-product fallback.",
         "schema": {
           "type": "string",
           "minLength": 1,

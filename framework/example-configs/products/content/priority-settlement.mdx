@@ -1,0 +1,23 @@
+---
+id: guide.priority-settlement
+title: Submit a priority settlement batch
+summary: Check eligibility and submit a Payments v3 priority batch.
+slug: /priority-settlement
+product: payments
+version: v3
+requires:
+  allOf: [priority-settlement]
+---
+Priority settlement is included in Customer A's feature grants. This entire page is absent from an edition without that grant.
+
+## Prepare the batch
+
+1. Select payments that have completed authorization and meet the settlement rules.
+2. Confirm the settlement account, currency, and batch total.
+3. Assign a unique batch reference and submit the batch once.
+
+## Check the result
+
+Save the batch identifier and compare its accepted count with the submitted count. Investigate rejected entries before retrying them; do not resubmit payments already accepted into the batch.
+
+[Return to Payments v3](doc:guide.start).

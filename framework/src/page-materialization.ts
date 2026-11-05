@@ -1,3 +1,4 @@
+import { documentKey, publicationKey } from './publication-identity.js';
 import type { ComponentRegistry } from './component-plugins.js';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
@@ -12,12 +13,13 @@ import type { SnippetDefinition, SnippetUse } from './snippets.js';
 import type { ReaderFiltersConfig } from './reader-filters.js';
 import type { resolveCalloutTypes } from './callouts.js';
 import type { resolveBadgeVariants } from './badges.js';
+import type { CompilerPublicationsConfig } from './compiler-config.js';
 import { isConfigMapping } from './compiler-config.js';
 
 const generatedReferenceBody = 'This reference is generated from the OpenAPI description. It shows the operation contract; follow any related guides below for task steps and context.\n';
 const generatedWebhookBody = 'This webhook reference is generated from the OpenAPI description. The provider sends this event to the receiver.\n';
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
-const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
+const keyFor = documentKey;
 
 type ApiPlan = Awaited<ReturnType<typeof materializeApiReferences>>;
 type SourceBinding = NonNullable<ReturnType<ApiPlan['sourceForVariant']>>;
@@ -37,7 +39,7 @@ export type MaterializedPage = {
 export async function materializePages({ variables, frontmatterConfig, publications, docs, linkDocuments = docs, apiPlan, sourceForOperation, snippets, calloutTypes, badgeVariants, componentPlugins, readerFilters, base, publicPath, relatedApiTargets, guidesByApi }: {
   variables: Record<string, unknown>;
   frontmatterConfig: unknown;
-  publications: { channels: Record<string, unknown>; versions: Record<string, unknown> };
+  publications: CompilerPublicationsConfig;
   docs: Map<string, Document>;
   linkDocuments?: Map<string, Document>;
   apiPlan: ApiPlan;
@@ -60,7 +62,7 @@ export async function materializePages({ variables, frontmatterConfig, publicati
   const rendered: MaterializedPage[] = [];
   const snippetUses: SnippetUse[] = [];
   const apiEmbedUses: ApiEmbedUse[] = [];
-  const operations: Record<string, Array<{ id: string; type: string; channel: string; version: string; language: string; url: string; markdownUrl: string; focusedContractUrl?: string }>> = {};
+  const operations: Record<string, Array<{ id: string; type: string; product?: string; channel: string; version: string; language: string; url: string; markdownUrl: string; focusedContractUrl?: string }>> = {};
   for (const doc of docs.values()) {
     let pageExamples: NamedExample[] = [];
     let pageShapes: ApiShape[] = [];
@@ -69,7 +71,7 @@ export async function materializePages({ variables, frontmatterConfig, publicati
     const local = new Map<string, Document>();
     for (const other of linkDocuments.values()) if (keyFor(other.frontmatter.id, doc.variant) === keyFor(other.frontmatter.id, other.variant)) local.set(other.frontmatter.id, other);
     const parsed = parse.parse(doc.body);
-    const tree = await resolveApiEmbedTree(transformMdx(parsed, doc, local, snippets, variables, snippetUses, calloutTypes, base, readerFilters, frontmatterConfig, publications, badgeVariants, componentPlugins), api, operationId => sourceForOperation(operationId, doc.variant), apiId => {
+    const tree = await resolveApiEmbedTree(transformMdx(parsed, doc, local, snippets, variables, snippetUses, calloutTypes, base, readerFilters, frontmatterConfig, publications, badgeVariants, componentPlugins, linkDocuments), api, operationId => sourceForOperation(operationId, doc.variant), apiId => {
       if (doc.featureContext?.grants) throw new Error('Standalone API schema embeds require an explicitly scoped source and are not supported in profiled builds; select an operation instead');
       const definition = apiPlan.apiDefinitions[apiId];
       if (!definition) throw new Error(`unknown API ${apiId}`);
@@ -96,7 +98,7 @@ export async function materializePages({ variables, frontmatterConfig, publicati
       const rawLifecycle = mapping ? extensionValue(pathItem?.[generated.method], mapping.from) : undefined;
       const mapped = mapping && (typeof rawLifecycle === 'string' || typeof rawLifecycle === 'number' || typeof rawLifecycle === 'boolean') && Object.hasOwn(mapping.values, String(rawLifecycle)) ? mapping.values[String(rawLifecycle)] : undefined;
       if (mapped && !generated.deprecated && !doc.frontmatter.subjectLifecycle) doc.frontmatter.subjectLifecycle = mapped;
-      const navVariant = `${doc.variant.channel}|${doc.variant.version}|${doc.variant.language}`;
+      const navVariant = publicationKey(doc.variant);
       const entries = navigationEntries.get(navVariant) ?? [];
       entries.push({ id: operationId, apiId: binding.apiId, documentId: doc.frontmatter.id, title: doc.frontmatter.title, tag: generated.tags[0] ?? (generated.webhook ? 'Webhooks' : 'Other'), search: `${generated.webhook ? 'webhook' : generated.method.toUpperCase()} ${generated.route} ${binding.sourceOperationId} ${operationId}` });
       navigationEntries.set(navVariant, entries);
@@ -116,7 +118,7 @@ export async function materializePages({ variables, frontmatterConfig, publicati
       pageCurl = generated.curl;
       pageSamples = generated.samples;
       if (source.focused === true || source.publish === true) {
-        const coordinates = [doc.variant.channel, doc.variant.version, doc.variant.language];
+        const coordinates = [...(doc.variant.product ? [doc.variant.product] : []), doc.variant.channel, doc.variant.version, doc.variant.language];
         if (coordinates.some(value => !/^[A-Za-z0-9._-]+$/.test(value))) throw new Error(`${doc.file}: unsafe publication coordinate for focused contract`);
         const name = operationId.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 70) || 'operation';
         const focusedContent = JSON.stringify(await focusedOpenApi(api, sourceFile, binding.sourceOperationId), null, 2) + '\n';
@@ -133,10 +135,15 @@ export async function materializePages({ variables, frontmatterConfig, publicati
         if (!/^[a-z0-9.-]+$/i.test(id)) throw new Error(`API ID ${id} is unsafe for a public path`);
         const extension = path.extname(sourceFile).toLowerCase();
         if (!['.yaml', '.yml', '.json'].includes(extension)) throw new Error(`Published API source needs YAML or JSON extension: ${sourceFile}`);
-        const sourceUrl = publicPath(`/api/${id}/${doc.variant.channel}/${doc.variant.version}/${path.basename(sourceFile)}`);
+        const sourceUrl = publicPath(`/api/${id}/${doc.variant.product ? `${doc.variant.product}/` : ''}${doc.variant.channel}/${doc.variant.version}/${path.basename(sourceFile)}`);
         const endpoint = (publicationIndex >= 0 ? binding.definition.publications?.[publicationIndex].discovery?.endpoint : undefined) ?? binding.definition.discovery?.endpoint;
-        const recordKey = `${id}|${doc.variant.channel}|${doc.variant.version}`;
-        if (!apiPublications.has(recordKey)) apiPublications.set(recordKey, { apiId: id, variant: doc.variant, sourceFile, endpoint, referenceUrl: doc.route, sourceUrl, mediaType: extension === '.json' ? 'application/json' : 'application/yaml' });
+        // Source contracts are shared across documentation languages. Keep the
+        // legacy productless identity and publish each source URL only once.
+        const recordKey = `${id}|${doc.variant.channel}|${doc.variant.version}${doc.variant.product ? `|${doc.variant.product}` : ''}`;
+        const mediaType = extension === '.json' ? 'application/json' : 'application/yaml';
+        const previous = apiPublications.get(recordKey);
+        if (previous && (previous.sourceFile !== sourceFile || previous.sourceUrl !== sourceUrl || previous.endpoint !== endpoint || previous.mediaType !== mediaType)) throw new Error(`Conflicting published OpenAPI source for ${recordKey}`);
+        if (!previous) apiPublications.set(recordKey, { apiId: id, variant: doc.variant, sourceFile, endpoint, referenceUrl: doc.route, sourceUrl, mediaType });
       }
     }
     for (const operationId of doc.frontmatter.operations ?? []) {

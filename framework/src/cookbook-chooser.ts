@@ -1,3 +1,4 @@
+import { samePublication } from './publication-identity.js';
 import type { Document } from './content.js';
 
 type Option = { id: string; label: string; doc: string; when?: string; needs?: string; outcome?: string };
@@ -35,7 +36,7 @@ export function cookbookChooserComponent(node: any, file: string): any {
 }
 
 export function resolveCookbookTree(tree: any, current: Document, documents: Map<string, Document>, cookbooks: Cookbooks, targets: string[]): any {
-  const sameVariant = (a: Document, b: Document) => a.variant.channel === b.variant.channel && a.variant.version === b.variant.version && a.variant.language === b.variant.language;
+  const sameVariant = (a: Document, b: Document) => samePublication(a.variant, b.variant);
   const walk = (node: any): any => {
     if (node.type !== 'docCookbookChooser') return node.children ? { ...node, children: node.children.map(walk) } : node;
     const cookbook = cookbooks[node.id];

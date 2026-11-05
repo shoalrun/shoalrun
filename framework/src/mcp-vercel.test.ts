@@ -56,7 +56,7 @@ test('Vercel MCP runs from an isolated function with scoped data, routes, and no
   assert.ok(!(await readFile(path.join(loaded.directory, 'documents.json'), 'utf8')).includes('PRIVATE_CONTENT_MARKER'));
   const entry = await import(pathToFileURL(path.join(isolated, 'index.js')).href);
   const client = await connection(t, entry.default);
-  assert.equal((await client.listTools()).tools.length, 4);
+  assert.equal((await client.listTools()).tools.length, 5);
   const search = await client.callTool({ name: 'search_docs', arguments: { query: 'public guide' } });
   assert.equal((search.structuredContent as any).results[0].id, 'intro');
   assert.ok(!(await client.callTool({ name: 'get_page', arguments: { id: 'intro' } })).isError);
@@ -104,7 +104,7 @@ test('MCP analytics is server-only, scoped, flushed, and never records arguments
   const entry = await import(pathToFileURL(path.join(func, 'index.js')).href);
   const client = await connection(t, entry.default);
   const tools = (await client.listTools()).tools;
-  assert.equal(tools.length, 4);
+  assert.equal(tools.length, 5);
   assert.ok(tools.every(tool => !('context' in (tool.inputSchema as any).properties)));
   await client.callTool({ name: 'search_docs', arguments: { query: 'SENSITIVE_QUERY_MARKER' } });
   await client.callTool({ name: 'get_page', arguments: { id: 'intro' } });

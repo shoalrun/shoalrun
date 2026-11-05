@@ -1,0 +1,38 @@
+---
+id: guide.start
+title: Start with Payments v3
+summary: Use an idempotency key and a separate reconciliation reference in Payments v3.
+slug: /start
+product: payments
+version: v3
+shared: true
+---
+Payments v3 separates request retries from business reconciliation. Use an idempotency key for retry safety and an order reference for settlement matching. Reporting can stay on v1 when Payments moves to v3.
+
+## Create a payment
+
+1. Generate an idempotency key for this payment attempt.
+2. Send the order reference separately from the key.
+3. Save the returned payment identifier and status.
+
+```json
+{
+  "idempotencyKey": "payment-attempt-1042",
+  "orderReference": "order-1042",
+  "amount": { "value": 12500, "currency": "USD" }
+}
+```
+
+## Retry a submission
+
+Reuse the idempotency key for the same attempt. A new order needs a new key. Keep the order reference stable when comparing payment and settlement records.
+
+<ForFeature allOf="priority-settlement">
+
+## Settle an eligible payment sooner
+
+Your edition includes priority settlement. [Prepare and submit a priority batch](doc:guide.priority-settlement) after the payment reaches the eligible state.
+
+</ForFeature>
+
+[Review the daily operating checklist](doc:guide.operations).

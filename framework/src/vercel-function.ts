@@ -84,12 +84,12 @@ export async function addAskFunction(input: { configFile: string; staticDirector
   await writeFile(path.join(shoalrun, 'chat.json'), JSON.stringify({ ...(chat.challenge ? { siteKey: chat.challenge.siteKey, ...(chat.challenge.when === 'always' ? { prewarm: true } : {}) } : {}), ...(chat.log ? { notice: chat.log.notice } : {}), ...(chat.panel ? { panel: chat.panel } : {}) }, null, 2) + '\n');
   await addPanelToPages(input.staticDirectory, basePath);
 
-  const publications = (settings.publications as { defaults?: { channel?: string; version?: string; language?: string } } | undefined)?.defaults;
+  const publications = (settings.publications as { defaults?: { product?: string; channel?: string; version?: string; language?: string } } | undefined)?.defaults;
   const origin = (settings.site as { origin?: string } | undefined)?.origin;
   const runtime: FunctionRuntime = {
     schemaVersion: 1,
     settings: { chat: settings.chat, retrieval: settings.retrieval, ...(settings.search ? { search: settings.search } : {}), ...(settings.readerFilters ? { readerFilters: settings.readerFilters } : {}) },
-    ...(publications?.channel && publications.version && publications.language ? { variant: { channel: publications.channel, version: publications.version, language: publications.language } } : {}),
+    ...(publications?.channel && publications.version && publications.language ? { variant: { ...(publications.product ? { product: publications.product } : {}), channel: publications.channel, version: publications.version, language: publications.language } } : {}),
     ...(origin ? { hosts: [new URL(origin).host] } : {})
   };
   await writeFile(path.join(func, 'runtime.json'), JSON.stringify(runtime, null, 2) + '\n');

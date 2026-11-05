@@ -1,0 +1,11 @@
+schemaVersion: 1
+features:
+  priority-settlement:
+    description: Priority settlement instructions for Payments v3.
+  scheduled-exports:
+    description: Scheduled export instructions for Reporting v1.
+skus:
+  business:
+    revisions:
+      '2025': { features: [] }
+      '2026': { features: [priority-settlement, scheduled-exports] }

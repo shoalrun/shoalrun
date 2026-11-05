@@ -1,3 +1,5 @@
+import { documentKey } from './publication-identity.js';
+import type { CompilerPublicationsConfig } from './compiler-config.js';
 import { pruneFeatureTree } from './deployment-profile.js';
 import { lowerComponent, type ComponentRegistry } from './component-plugins.js';
 import { cardComponent } from './cards.js';
@@ -94,7 +96,7 @@ function literalAttributes(attributes: MdxAttribute[]): attributes is Array<MdxA
   return attributes.every(item => item.type === 'mdxJsxAttribute' && typeof item.value === 'string');
 }
 
-export function transformMdx(tree: unknown, current: Document, registry: Map<string, Document>, snippets: Map<string, SnippetDefinition> = new Map(), projectValues: Record<string, unknown> = {}, uses: SnippetUse[] = [], calloutTypes: CalloutTypes = resolveCalloutTypes(undefined, current.file), projectRoot?: string, readerConfig?: ReaderFiltersConfig, frontmatterConfig: unknown = {}, publicationConfig?: { channels: Record<string, unknown>; versions: Record<string, unknown> }, badgeVariants: BadgeVariants = resolveBadgeVariants(undefined, current.file), componentPlugins: ComponentRegistry = new Map()): unknown {
+export function transformMdx(tree: unknown, current: Document, registry: Map<string, Document>, snippets: Map<string, SnippetDefinition> = new Map(), projectValues: Record<string, unknown> = {}, uses: SnippetUse[] = [], calloutTypes: CalloutTypes = resolveCalloutTypes(undefined, current.file), projectRoot?: string, readerConfig?: ReaderFiltersConfig, frontmatterConfig: unknown = {}, publicationConfig?: CompilerPublicationsConfig, badgeVariants: BadgeVariants = resolveBadgeVariants(undefined, current.file), componentPlugins: ComponentRegistry = new Map(), publicationRegistry?: Map<string, Document>): unknown {
   if (!isMdxRoot(tree)) throw new Error(`${current.file}: parsed content must be a root with children`);
   tree = lowerSectionMarkers(pruneFeatureTree(tree, current.featureContext, current.file), current.file);
   snippets = new Map([...snippets].map(([id, definition]) => [id, { ...definition, tree: pruneFeatureTree(definition.tree, current.featureContext, definition.file) }]));
@@ -158,12 +160,16 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
       }
       if (node.name === 'ForPublication') {
         const attributes = node.attributes ?? [];
-        const allowed = ['channel', 'version', 'language'];
+        const allowed = ['product', 'channel', 'version', 'language'];
         if (node.type !== 'mdxJsxFlowElement' || !node.children?.length || !attributes.length || !literalAttributes(attributes) || attributes.some((item) => !allowed.includes(item.name) || !item.value.trim()) || new Set(attributes.map((item) => item.name)).size !== attributes.length) {
           throw new Error(`${sourceFile}: <ForPublication> needs block content and distinct literal channel, version, or language attributes`);
         }
-        for (const item of attributes) if ((item.name === 'channel' || item.name === 'version') && publicationConfig && !Object.hasOwn(publicationConfig[item.name === 'channel' ? 'channels' : 'versions'], item.value)) {
-          throw new Error(`${sourceFile}: <ForPublication> names unknown ${item.name} ${item.value}`);
+        const product = attributes.find(item => item.name === 'product')?.value ?? current.variant.product;
+        for (const item of attributes) {
+          const catalog = item.name === 'product' ? publicationConfig?.products
+            : item.name === 'channel' ? publicationConfig?.channels
+            : item.name === 'version' ? (product ? publicationConfig?.products?.[product]?.versions : publicationConfig?.versions) : undefined;
+          if (publicationConfig && item.name !== 'language' && (!catalog || !Object.hasOwn(catalog, item.value))) throw new Error(`${sourceFile}: <ForPublication> names unknown ${item.name} ${item.value}`);
         }
         if (attributes.some((item) => current.variant[item.name as keyof Variant] !== item.value)) return [];
         return childrenOf(node.children, scope, stack, sourceFile);
@@ -520,8 +526,14 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
         return text(String(scope[name]));
       }
       if (node.name === 'DocLink') {
-        const target = registry.get(attr(node, 'doc'));
-        if (!target) throw new Error(`${sourceFile}: unknown DocLink target`);
+        const attributes = node.attributes ?? [];
+        if (!literalAttributes(attributes) || attributes.some(item => !['doc', 'product', 'channel', 'version', 'language'].includes(item.name)) || new Set(attributes.map(item => item.name)).size !== attributes.length) throw new Error(`${sourceFile}: DocLink needs distinct literal publication attributes`);
+        const id = attr(node, 'doc');
+        const qualified = attributes.some(item => item.name !== 'doc');
+        if (qualified && attributes.some(item => item.name === 'product' && item.value !== current.variant.product) && !attributes.some(item => item.name === 'version')) throw new Error(`${sourceFile}: cross-product DocLink needs an explicit version`);
+        const variant = { ...current.variant, ...Object.fromEntries(attributes.filter(item => item.name !== 'doc').map(item => [item.name, item.value])) };
+        const target = qualified ? publicationRegistry?.get(documentKey(id, variant)) : registry.get(id);
+        if (!target) throw new Error(`${sourceFile}: unknown DocLink target ${id} in selected publication`);
         return link(target.route, (node.children ?? []).map((x) => x.value ?? '').join('') || target.frontmatter.title);
       }
       if (node.name === 'Callout') {

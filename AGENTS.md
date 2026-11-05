@@ -6,6 +6,8 @@ Validate relevant behavior locally before every push. Build once per final input
 
 Both workflows are manual-only. Do not enable automatic triggers, add runner matrices, or dispatch hosted jobs without explicit authorization. Do not commit credentials, private notes/corpora, historical run dumps, dependencies, caches, or generated build output. Inspect staged files and package inventories before sharing. Retain required licenses/notices.
 
+For documentation work in this checkout, use the maintained skills under `framework/skills/` and their linked references; installed global skill copies can be older. `node framework/dist/cli.js skills list` locates the current entries after compilation. The author skill covers independent product publications, customer-profile preview, and availability labels. Check the package version before applying those fields in a consumer project; don't assume an older bundled snapshot or installed skill describes newly implemented behavior.
+
 The docs snapshot in framework/agent-docs is an explicit pinned import. Never fetch arbitrary latest site content during a package build. Run source fixtures locally; site-specific integration tests belong in the docs repository.
 
 Before advising on feature availability, check `framework/package.json`, `framework/CHANGELOG.md`, and the installed package version when working in a consumer project. Unreleased branch changes are not published features. Bundled docs are pinned: inspect `framework/agent-docs/SNAPSHOT.json` and use the current README and source/tests when newer features are absent from that snapshot.

@@ -1,3 +1,4 @@
+import type { PublicationCoordinate } from './publication-identity.js';
 import { markdownTokenEncoding } from './markdown-size.js';
 import { addMcpArtifacts } from './mcp-artifacts.js';
 import { mcpRuntimePath } from './mcp-integrity.js';
@@ -20,6 +21,8 @@ import { outputUrl } from './representation-tree.js';
 import type { ReaderFiltersConfig } from './reader-filters.js';
 import type { DiagramAsset } from './diagrams.js';
 import type { ApiReader } from './api.js';
+
+const publicationLabel = (value: PublicationCoordinate) => [...(value.product === undefined ? [] : [value.product]), value.channel, value.version, value.language].join('/');
 
 export type ArtifactPage = { doc: Document; html: string; markdown: string; htmlTree: unknown; sections?: import('./markdown-sections.js').MarkdownSection[] };
 export type ArtifactAssemblyInput = {
@@ -225,7 +228,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
   const discoveryEntry = ({ doc }: ArtifactPage, includeType = false) => ({ title: `${fictionalDocument(doc, llms) ? 'Fictional example: ' : ''}${doc.frontmatter.title}`, url: doc.markdownRoute, summary: `${includeType ? `${doc.frontmatter.type} — ` : ''}${fictionalDocument(doc, llms) ? 'Demonstration only; not a live API. ' : ''}${doc.frontmatter.summary}` });
   const tabs = manifest.navigationTabs ?? [];
   const tabLinks = tabs.length ? '\n\n## Navigation sections\n\n' + discoveryLinks(tabs.map(tab => ({
-    title: `${tab.label} (${tab.variant.channel}/${tab.variant.version}/${tab.variant.language})`, url: tab.indexUrl,
+    title: `${tab.label} (${publicationLabel(tab.variant)})`, url: tab.indexUrl,
     summary: `Section ID: ${tab.id}. Scoped page index.`
   }))) : '';
   const groups = new Map<string, ArtifactPage[]>();
@@ -262,7 +265,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
   }))])).trimEnd();
   const discovery = [renderMarkdown(root([heading(1, String(config.site.title))])).trimEnd(), '', '> Documentation and API contracts published by this site.', ...(readerFilters ? ['', 'Reader views affect the interactive HTML only. This index lists every published page, and each Markdown page includes all reader-marked sections with readable labels. The document manifest records configured reader facets and each page’s marks.'] : []), ...(llms.fictionalPrefixes.length ? ['', 'Entries labeled Fictional example demonstrate documentation features. Their operations and API contracts do not describe a live service.'] : []), '', '## Discovery', '', discoveryLinks([{ title: 'Compact documentation index', url: publicPath('/llms.min.txt'), summary: 'Start here: full-page Markdown links and author-declared standalone section links with sizes and full-page fallbacks. No tools or JSON processing required.' }, ...(search.index ? [{ title: 'Compact heading index', url: publicPath('/search-index.min.json'), summary: 'Page summaries, headings, and smaller section Markdown URLs with sizes; no article text.' }] : []), { title: 'Resource response headers', url: publicPath('/resource-headers.json'), summary: 'Published hosting metadata: content types and representation Link headers for host adapters.' }, { title: 'Document sync snapshot', url: publicPath('/documents.sync.json'), summary: 'Save and compare compact page signatures between builds; build-info.json identifies the current build.' }, { title: 'Structured document manifest', url: publicPath('/documents.json'), summary: 'Stable page IDs, HTML and Markdown URLs, and content digests.' }, ...(sitemaps.size ? [{ title: 'XML sitemap', url: publicPath('/sitemap.xml'), summary: 'Canonical URLs for indexable pages.' }] : []), ...(search.index ? [{ title: 'Lexical search index', url: publicPath('/search-index.json'), summary: 'Downloadable page titles, summaries, headings, and bounded HTML article text. It is an index file, not a query endpoint.' }] : []), ...(catalog ? [{ title: 'API catalog', url: publicPath('/.well-known/api-catalog'), summary: '' }] : [])]), ...sections, ...(apiSources.some(item => llms.format === 'flat' || !fictionalApis.has(item.apiId)) ? ['', '## API contracts', '', discoveryLinks(apiSources.filter(item => llms.format === 'flat' || !fictionalApis.has(item.apiId)).map(item => ({ title: `${fictionalApis.has(item.apiId) ? 'Fictional example: ' : ''}${item.apiId} ${item.channel} ${item.version} OpenAPI`, url: item.sourceUrl, summary: `Pinned ${item.mediaType} source used for the reference.` })))] : []), ...(llms.format === 'grouped' && optional.length ? ['', '## Optional', '', optionalList] : [])].join('\n') + '\n';
   addPublicArtifact('/llms.txt', discovery + tabLinks + (tabLinks ? '\n' : ''));
-  const publications = [...new Set(rendered.map(page => `${page.doc.variant.channel}/${page.doc.variant.version}/${page.doc.variant.language}`))].sort();
+  const publications = [...new Set(rendered.map(page => `${publicationLabel(page.doc.variant)}`))].sort();
   const pageSizes = new Map(manifest.documents.map(page => [page.markdownUrl, page]));
   const compactSummary = (page: ArtifactPage) => {
     const size = pageSizes.get(page.doc.markdownRoute)!;
@@ -270,7 +273,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
   };
   const compactEntries = [...rendered].sort((a, b) => a.doc.route.localeCompare(b.doc.route)).map(page => {
     const entry = discoveryEntry(page);
-    const publication = `${page.doc.variant.channel}/${page.doc.variant.version}/${page.doc.variant.language}`;
+    const publication = `${publicationLabel(page.doc.variant)}`;
     const approved = (page.sections ?? []).filter(section => section.standalone === true);
     return [paragraph(link(entry.url, `${page.doc.frontmatter.id} · ${entry.title}${publications.length > 1 ? ` (${publication})` : ''}`), text(`: ${compactSummary(page)}`)),
       ...(approved.length ? [list(approved.map(section => [paragraph(
@@ -279,15 +282,17 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
         link(entry.url, 'Full page'), text('.'))]))] : [])];
   });
   const compactList = renderMarkdown(root([list(compactEntries)])).trimEnd();
+  const productGuidance = configField(config.publications, 'products') ? [paragraph(text('Products have independent versions. Discover published product/channel/version/language coordinates with MCP get_publications, or documents.json. Keep the exact publication returned by search when reading pages; cross-product links must name their target explicitly. This edition contains only its selected content.'))] : [];
   const compactIntro = renderMarkdown(root([
     heading(1, String(config.site.title)),
+    ...productGuidance,
     paragraph(text(`Full-page token counts use ${markdownTokenEncoding}. Fetch a matching full Markdown page by default. Use a listed standalone section only for its stated topic; for setup, broader questions, or missing context, follow Full page. Standalone is an author declaration, not proof of completeness.`)),
-    paragraph(text(publications.length === 1 ? `Publication (channel/version/language): ${publications[0]}.` : 'Choose the matching channel/version/language shown on each page; keep that publication when following links.')),
+    paragraph(text(publications.length === 1 ? `Publication (${configField(config.publications, 'products') ? 'product/' : ''}channel/version/language): ${publications[0]}.` : `Choose the matching ${configField(config.publications, 'products') ? 'product/' : ''}channel/version/language shown on each page; keep that publication when following links.`)),
     paragraph(link(publicPath('/llms.txt'), 'Full documentation index'), text('. Full manifests and search indexes are optional. A missing match does not establish that a feature exists or does not exist.')),
   ])).trimEnd();
   const topicEntries: DiscoveryEntry[] = rendered.flatMap(page => {
     const entry = discoveryEntry(page);
-    const publication = `${page.doc.variant.channel}/${page.doc.variant.version}/${page.doc.variant.language}`;
+    const publication = `${publicationLabel(page.doc.variant)}`;
     const area = Array.isArray(page.doc.frontmatter.area) ? page.doc.frontmatter.area[0] : page.doc.frontmatter.area;
     const topic = JSON.stringify([publication, area ?? page.doc.frontmatter.type]);
     const topicLabel = `${(area && manifest.taxonomy?.areas[area]?.label) || area || page.doc.frontmatter.type}${publications.length > 1 ? ` (${publication})` : ''}`;
@@ -311,7 +316,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     const members = manifest.documents.filter(doc => doc.navigationTab?.indexUrl === tab.indexUrl);
     const intro = renderMarkdown(root([
       heading(1, tab.label),
-      paragraph(text(`Full-page token counts use ${markdownTokenEncoding}. Navigation section ID: ${tab.id}. Publication: ${tab.variant.channel}/${tab.variant.version}/${tab.variant.language}.`)),
+      paragraph(text(`Full-page token counts use ${markdownTokenEncoding}. Navigation section ID: ${tab.id}. Publication: ${publicationLabel(tab.variant)}.`)),
       paragraph(link(outputUrl(publicPath('/llms.min.txt'), '/', siteOrigin, 'markdown', documentRoutes, basePath), 'All sections and published pages'), text('. This index covers this section only; shared and unlisted pages remain reachable through the global index. Reader views do not remove pages from this index.')),
     ])).trimEnd();
     const memberUrls = new Set(members.flatMap(doc => [doc.markdownUrl, ...doc.sections.filter(section => section.standalone === true).map(section => section.markdownUrl)]));

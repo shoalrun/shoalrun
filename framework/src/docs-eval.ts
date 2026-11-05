@@ -6,7 +6,7 @@ import { parseYaml } from './yaml-value.js';
 type Criterion = { id: string; description: string };
 export type EvalTask = { id: string; prompt: string; allowedTools: string[]; required: boolean; criteria: Criterion[] };
 export type EvalTasks = { schemaVersion: 1; tasks: EvalTask[] };
-type Publication = { channel: string; version: string; language: string };
+type Publication = { product?: string; channel: string; version: string; language: string };
 type Citation = { id: string; publication: Publication };
 type Judgment = { id: string; status: 'pass' | 'fail'; reason: string };
 type TaskResult = { taskId: string; status: 'pass' | 'fail' | 'skipped'; answer: string; citations: Citation[]; criteria: Judgment[]; notes?: string };
@@ -95,8 +95,8 @@ export function parseEvalReport(value: unknown): EvalReport {
     if (!['pass', 'fail', 'skipped'].includes(result.status) || typeof result.answer !== 'string' || !Array.isArray(result.citations) || !Array.isArray(result.criteria)) throw new Error(`${where} requires status pass/fail/skipped, a text answer, citations, and criteria`);
     const citations = result.citations.map((value: unknown, j: number): Citation => {
       const cite = mapping(value, `${where}.citations[${j}]`, ['id', 'publication']);
-      const publication = mapping(cite.publication, `${where}.citations[${j}].publication`, ['channel', 'version', 'language']);
-      return { id: text(cite.id, `${where}.citations[${j}].id`), publication: { channel: text(publication.channel, 'citation.channel'), version: text(publication.version, 'citation.version'), language: text(publication.language, 'citation.language') } };
+      const publication = mapping(cite.publication, `${where}.citations[${j}].publication`, ['product', 'channel', 'version', 'language']);
+      return { id: text(cite.id, `${where}.citations[${j}].id`), publication: { ...(publication.product === undefined ? {} : { product: text(publication.product, 'citation.product') }), channel: text(publication.channel, 'citation.channel'), version: text(publication.version, 'citation.version'), language: text(publication.language, 'citation.language') } };
     });
     const criteria = unique(result.criteria.map((value: unknown, j: number): Judgment => {
       const judgment = mapping(value, `${where}.criteria[${j}]`, ['id', 'status', 'reason']);

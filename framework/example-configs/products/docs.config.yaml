@@ -1,0 +1,56 @@
+schemaVersion: 1
+
+site:
+  title: Harbor product documentation
+  editionBadge: always
+
+theme:
+  preset: reef
+  palette: harbor
+  mode: system
+
+publications:
+  defaults: { channel: production, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  products:
+    payments:
+      label: Payments
+      pathPrefix: /payments
+      defaultVersion: v3
+      versions:
+        v2: { pathPrefix: /v2 }
+        v3: { pathPrefix: /v3 }
+    reporting:
+      label: Reporting
+      pathPrefix: /reporting
+      defaultVersion: v1
+      versions:
+        v1: { pathPrefix: /v1 }
+  enabled:
+    - { product: payments, channel: production, version: v2 }
+    - { product: payments, channel: production, version: v3 }
+    - { product: reporting, channel: production, version: v1 }
+
+profiles:
+  manifest: ./skus.yaml
+  requireClassification: true
+  pruneNavigation: true
+
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    language: en
+    access: { policy: public }
+
+navigation:
+  - { id: start, doc: guide.start }
+  - { id: operations, doc: guide.operations }
+  - { id: priority-settlement, doc: guide.priority-settlement }
+  - { id: scheduled-exports, doc: guide.scheduled-exports }
+
+outputs:
+  html:
+    highlighting: { provider: none }
+    shareImages: false

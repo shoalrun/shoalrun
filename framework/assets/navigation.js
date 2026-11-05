@@ -1,4 +1,9 @@
 const navigation = document.querySelector('.side');
+for (const select of document.querySelectorAll('[data-publication-switcher]')) {
+  select.addEventListener('change', () => {
+    if (select.value) location.assign(select.value);
+  });
+}
 const tree = navigation?.querySelector('.nav-tree');
 const search = navigation?.querySelector('.nav-search');
 const filter = navigation?.querySelector('#nav-filter');

@@ -1,3 +1,4 @@
+import { validContentPublication } from './content-delivery-validation.js';
 import { contentRefKey, type ContentPublication, type ContentRef } from './content-delivery-contract.js';
 
 export type ContentReference = { publication: ContentPublication; ref: ContentRef };
@@ -9,24 +10,24 @@ export type ContentExportComparison = {
 };
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 const nonempty = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.trim() === value;
-const keyFor = ({ publication, ref }: ContentReference) => JSON.stringify([publication.channel, publication.version, publication.language, contentRefKey(ref)]);
+const keyFor = ({ publication, ref }: ContentReference) => JSON.stringify([publication.channel, publication.version, publication.language, ...(publication.product === undefined ? [] : [publication.product]), contentRefKey(ref)]);
 
 /** Validate the public identity surface, without reading files or executing source. */
 function references(manifest: unknown, label: string, requireReviewed: boolean): Map<string, ContentReference> {
   const fail = (): never => { throw new Error(`${label} must be a content export manifest with valid, unique public resource references`); };
-  if (!object(manifest) || manifest.schemaVersion !== 1 || manifest.kind !== 'shoalrun-content-export' || !Array.isArray(manifest.resources) || !manifest.resources.length) return fail();
+  if (!object(manifest) || manifest.schemaVersion !== 1 && manifest.schemaVersion !== 2 || manifest.kind !== 'shoalrun-content-export' || !Array.isArray(manifest.resources) || !manifest.resources.length) return fail();
   const publication = manifest.publication;
-  if (!object(publication) || Object.keys(publication).length !== 3 || !['channel', 'version', 'language'].every(key => nonempty(publication[key]))) return fail();
+  if (!validContentPublication(publication) || !object(publication) || manifest.schemaVersion !== (publication.product === undefined ? 1 : 2)) return fail();
   if (!object(manifest.review) || !['ok', 'required'].includes(String(manifest.review.status))) return fail();
   if (requireReviewed && manifest.review.status !== 'ok') throw new Error(`${label} must be a reviewed export, not a review candidate`);
   const result = new Map<string, ContentReference>();
   for (const resource of manifest.resources) {
     if (!object(resource) || !object(resource.ref) || !object(resource.publication)) return fail();
-    if (Object.keys(resource.publication).length !== 3 || !['channel', 'version', 'language'].every(key => resource.publication && (resource.publication as Record<string, unknown>)[key] === publication[key])) return fail();
+    if (!validContentPublication(resource.publication) || !['channel', 'version', 'language', 'product'].every(key => resource.publication && (resource.publication as Record<string, unknown>)[key] === publication[key as keyof ContentPublication])) return fail();
     const ref = resource.ref;
     const keys = ref.kind === 'page' ? ['kind', 'documentId'] : ref.kind === 'section' ? ['kind', 'documentId', 'sectionId'] : ref.kind === 'snippet' ? ['kind', 'id'] : [];
     if (!keys.length || Object.keys(ref).length !== keys.length || !keys.every(key => nonempty(ref[key]))) return fail();
-    const entry: ContentReference = { publication: { channel: publication.channel as string, version: publication.version as string, language: publication.language as string }, ref: { ...ref } as ContentRef };
+    const entry: ContentReference = { publication: { channel: publication.channel as string, version: publication.version as string, language: publication.language as string, ...(publication.product !== undefined ? { product: publication.product as string } : {}) }, ref: { ...ref } as ContentRef };
     const key = keyFor(entry);
     if (result.has(key)) return fail();
     result.set(key, entry);

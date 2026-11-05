@@ -1,3 +1,5 @@
+import { resolvePublication, type CompilerPublicationsConfig } from './compiler-config.js';
+import { publicationKey } from './publication-identity.js';
 import { readFile, lstat, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -28,7 +30,7 @@ function profileData(value: unknown) {
 export type FeatureRequirements = { allOf?: string[]; anyOf?: string[] };
 export type FeatureContext = {
   requireClassification?: boolean;
-  classificationPublications?: Array<{ channel: string; version: string; language: string }>;
+  classificationPublications?: Array<{ product?: string; channel: string; version: string; language: string }>;
   features: Set<string>; grants?: Set<string>; digest: string; pruneNavigation: boolean;
   decisions: Array<{ kind: 'page' | 'section'; id: string; included: boolean; requires?: FeatureRequirements }>;
   provenance: Record<string, string[]>;
@@ -89,7 +91,7 @@ export function profileSelection(resolution: ProfileResolution | undefined) {
 }
 
 /** A profile is data, never executable configuration or a directory to discover. */
-export async function resolveDeploymentProfile(settings: unknown, config: Record<string, any>, declaringFile: string, profileFile?: string): Promise<ProfileResolution | undefined> {
+export async function resolveDeploymentProfile(settings: unknown, config: Record<string, any>, declaringFile: string, profileFile?: string, onDependency?: (file: string) => void): Promise<ProfileResolution | undefined> {
   if (settings === undefined) {
     if (profileFile) throw new Error('--profile requires profiles.manifest in the shared configuration');
     return;
@@ -98,6 +100,7 @@ export async function resolveDeploymentProfile(settings: unknown, config: Record
   if (typeof settings.manifest !== 'string' || !settings.manifest.trim()) throw new Error('profiles.manifest must be a local path');
   for (const setting of ['required', 'pruneNavigation', 'requireClassification']) if (settings[setting] !== undefined && typeof settings[setting] !== 'boolean') throw new Error(`profiles.${setting} must be boolean`);
   const manifestFile = path.resolve(path.dirname(declaringFile), settings.manifest);
+  onDependency?.(manifestFile);
   const manifestBytes = await readFile(manifestFile);
   const manifest = parseYaml(manifestBytes.toString('utf8'), manifestFile);
   keys(manifest, ['schemaVersion', 'features', 'skus'], 'SKU manifest');
@@ -122,12 +125,14 @@ export async function resolveDeploymentProfile(settings: unknown, config: Record
   const digest = hash(manifestBytes);
   const context: FeatureContext = { features, digest, pruneNavigation: settings.pruneNavigation ?? false, decisions: [], provenance: Object.create(null) };
   context.requireClassification = settings.requireClassification ?? false;
-  if (context.requireClassification) context.classificationPublications = (config.publications?.enabled ?? []).map((entry: Record<string, any>) => ({ channel: entry.channel, version: entry.version, language: entry.language ?? defaultLanguage(config) }));
+  if (context.requireClassification) context.classificationPublications = (config.publications?.enabled ?? []).map((entry: Record<string, any>) => resolvePublication(config.publications as CompilerPublicationsConfig, entry, defaultLanguage(config)));
   if (!profileFile) {
     if (settings.required !== false) throw new Error('This project requires an explicit --profile FILE');
     return { context, overlay: {}, dependencies: [manifestFile], assetFiles: [], digest };
   }
+  onDependency?.(path.resolve(profileFile));
   const file = await realpath(path.resolve(profileFile));
+  onDependency?.(file);
   const bytes = await readFile(file);
   const profile = parseYaml(bytes.toString('utf8'), file);
   profileData(profile);
@@ -156,7 +161,11 @@ export async function resolveDeploymentProfile(settings: unknown, config: Record
   const overlay: Record<string, unknown> = {};
   const assetFiles: string[] = [];
   if (profile.site !== undefined) {
-    keys(profile.site, ['title', 'origin', 'basePath', 'favicon', 'logo', 'header', 'footer', 'indexing'], 'Profile site');
+    keys(profile.site, ['title', 'origin', 'basePath', 'favicon', 'logo', 'header', 'footer', 'indexing', 'publicationSelector'], 'Profile site');
+    if (profile.site.publicationSelector !== undefined) {
+      keys(profile.site.publicationSelector, ['showLanguage'], 'Profile site.publicationSelector');
+      if (profile.site.publicationSelector.showLanguage !== undefined && typeof profile.site.publicationSelector.showLanguage !== 'boolean') throw new Error('Profile site.publicationSelector.showLanguage must be boolean');
+    }
     if (profile.site.title !== undefined && (typeof profile.site.title !== 'string' || !profile.site.title.trim())) throw new Error('Profile site.title must be nonempty text');
     if (profile.site.indexing !== undefined && typeof profile.site.indexing !== 'boolean') throw new Error('Profile site.indexing must be boolean');
     if (profile.site.basePath !== undefined) normalizeBasePath(profile.site.basePath);
@@ -181,7 +190,24 @@ export async function resolveDeploymentProfile(settings: unknown, config: Record
       if (!target.startsWith(path.dirname(file) + path.sep)) throw new Error('Profile asset must stay within the profile directory');
       // Explicit assets only. Symlinks must not introduce an undeclared capture root.
       let current = target;
-      while (current !== path.dirname(file)) { if ((await lstat(current)).isSymbolicLink()) throw new Error('Profile assets must not use symlinks'); current = path.dirname(current); }
+      const ancestry: string[] = [];
+      while (current !== path.dirname(file)) { ancestry.unshift(current); current = path.dirname(current); }
+      for (const entry of ancestry) {
+        let info;
+        try { info = await lstat(entry); }
+        catch (error) {
+          // Every existing ancestor has passed the containment/symlink check.
+          // Watch only this declared target so creating it can repair a preview.
+          if ((error as NodeJS.ErrnoException).code === 'ENOENT') onDependency?.(target);
+          throw error;
+        }
+        if (info.isSymbolicLink()) throw new Error('Profile assets must not use symlinks');
+        if (entry !== target && !info.isDirectory()) {
+          onDependency?.(target);
+          throw new Error('Profile asset parents must be directories');
+        }
+      }
+      onDependency?.(target);
       if (!(await lstat(target)).isFile()) throw new Error(`Profile ${setting} must be a regular file`);
       assetFiles.push(target);
     }
@@ -206,12 +232,12 @@ export async function resolveDeploymentProfile(settings: unknown, config: Record
     keys(profile.publications, ['enabled'], 'Profile publications');
     const enabled = profile.publications.enabled;
     const language = defaultLanguage(config);
-    const coordinate = (value: Record<string, unknown>) => JSON.stringify([value.channel, value.version, value.language ?? language]);
+    const coordinate = (value: Record<string, unknown>) => publicationKey(resolvePublication(config.publications as CompilerPublicationsConfig, value, language));
     if (!Array.isArray(enabled) || !enabled.length) throw new Error('Profile publications.enabled must be a nonempty subset of shared publications.enabled');
     const selected = new Set<string>();
     for (const variant of enabled) {
-      keys(variant, ['channel', 'version', 'language'], 'Profile publication');
-      if (typeof variant.channel !== 'string' || typeof variant.version !== 'string' || (variant.language !== undefined && typeof variant.language !== 'string') || !config.publications?.enabled?.some((entry: Record<string, unknown>) => coordinate(entry) === coordinate(variant))) throw new Error('Profile publication is not enabled by the shared configuration');
+      keys(variant, ['product', 'channel', 'version', 'language'], 'Profile publication');
+      if (typeof variant.channel !== 'string' || (variant.version !== undefined && typeof variant.version !== 'string') || (variant.product !== undefined && typeof variant.product !== 'string') || (variant.language !== undefined && typeof variant.language !== 'string') || !config.publications?.enabled?.some((entry: Record<string, unknown>) => coordinate(entry) === coordinate(variant))) throw new Error('Profile publication is not enabled by the shared configuration');
       const key = coordinate(variant);
       if (selected.has(key)) throw new Error('Profile publications.enabled must not repeat publication coordinates');
       selected.add(key);

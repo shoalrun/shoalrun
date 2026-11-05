@@ -1,3 +1,4 @@
+import { documentKey, samePublication } from './publication-identity.js';
 import { matchesFeatures, validateFeatureClassification } from './deployment-profile.js';
 import { matchesContentFilter } from './content-filter.js';
 import path from 'node:path';
@@ -12,11 +13,12 @@ import { isConfigMapping, type CompilerPublicationsConfig, type CompilerSiteConf
 
 const generatedReferenceBody = 'This reference is generated from the OpenAPI description. It shows the operation contract; follow any related guides below for task steps and context.\n';
 const generatedWebhookBody = 'This webhook reference is generated from the OpenAPI description. The provider sends this event to the receiver.\n';
-const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
+const keyFor = documentKey;
 
 type ApiDefinition = {
   source?: { kind: string; path: string; [key: string]: unknown };
-  publications?: Array<{ channel: string; version: string; source: { kind: string; path: string; [key: string]: unknown }; discovery?: { endpoint?: string }; [key: string]: unknown }>;
+  product?: string;
+  publications?: Array<{ product?: string; channel: string; version: string; source: { kind: string; path: string; [key: string]: unknown }; discovery?: { endpoint?: string }; [key: string]: unknown }>;
   discovery?: { endpoint?: string };
   operations?: Array<{ id: string; reference: string; sourceOperationId?: string; shared?: unknown; requires?: unknown }>;
   generateReferences?: boolean | { pathPrefix?: string; include?: string[]; exclude?: string[] };
@@ -40,7 +42,7 @@ function validatedApiDefinitions(value: unknown): Record<string, ApiDefinition> 
     const source = raw.source;
     if (source !== undefined && (!isConfigMapping(source) || typeof source.kind !== 'string' || typeof source.path !== 'string')) throw new Error(`apis.${id}.source needs kind and path`);
     const publications = raw.publications;
-    if (publications !== undefined && (!Array.isArray(publications) || publications.some(item => !isConfigMapping(item) || typeof item.channel !== 'string' || typeof item.version !== 'string' || !isConfigMapping(item.source) || typeof item.source.kind !== 'string' || typeof item.source.path !== 'string' || (item.discovery !== undefined && (!isConfigMapping(item.discovery) || (item.discovery.endpoint !== undefined && typeof item.discovery.endpoint !== 'string')))))) throw new Error(`apis.${id}.publications needs entries with channel, version, and a local source`);
+    if (publications !== undefined && (!Array.isArray(publications) || publications.some(item => !isConfigMapping(item) || (item.product !== undefined && typeof item.product !== 'string') || typeof item.channel !== 'string' || typeof item.version !== 'string' || !isConfigMapping(item.source) || typeof item.source.kind !== 'string' || typeof item.source.path !== 'string' || (item.discovery !== undefined && (!isConfigMapping(item.discovery) || (item.discovery.endpoint !== undefined && typeof item.discovery.endpoint !== 'string')))))) throw new Error(`apis.${id}.publications needs entries with channel, version, and a local source`);
     const operations = raw.operations;
     if (operations !== undefined && (!Array.isArray(operations) || operations.some(item => !isConfigMapping(item) || typeof item.id !== 'string' || typeof item.reference !== 'string' || (item.sourceOperationId !== undefined && typeof item.sourceOperationId !== 'string')))) throw new Error(`API ${id} operation needs stable id and reference`);
     const discovery = raw.discovery;
@@ -66,6 +68,15 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
 }) {
   const definitions = validatedApiDefinitions(config.apis);
   for (const [id, definition] of Object.entries(definitions)) {
+    if (config.publications.products && definition.product !== undefined && (typeof definition.product !== 'string' || !config.publications.products || !Object.hasOwn(config.publications.products, definition.product))) throw new Error(`API ${id}: unknown product ${definition.product}`);
+    const seenPublications = new Set<string>();
+    for (const publication of definition.publications ?? []) {
+      const catalog = publication.product === undefined ? config.publications.versions : config.publications.products?.[publication.product]?.versions;
+      if (!catalog || !Object.hasOwn(catalog, publication.version) || !Object.hasOwn(config.publications.channels, publication.channel)) throw new Error(`API ${id}: unknown product publication`);
+      const key = JSON.stringify([publication.product, publication.channel, publication.version]);
+      if (seenPublications.has(key)) throw new Error(`API ${id}: duplicate publication source`);
+      seenPublications.add(key);
+    }
     validateFeatureClassification(definition, loaded.deployment ? { ...loaded.deployment.context, requireClassification: false } : undefined, `API ${id}`);
     for (const operation of definition.operations ?? []) validateFeatureClassification(operation, loaded.deployment ? { ...loaded.deployment.context, requireClassification: false } : undefined, `Operation ${operation.id}`);
     if (loaded.deployment?.context.grants && [definition.source, ...(definition.publications ?? []).map(entry => entry.source)].some(source => source?.publish === true)) throw new Error(`API ${id}: profiled builds cannot publish a full OpenAPI source; use focused contracts (source.publish: false, source.focused: true)`);
@@ -84,9 +95,12 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
   }
   const sourceForVariant = (apiId: string, definition: ApiDefinition, variant: Variant) => {
     const defaults = config.publications.defaults;
-    if (definition.source !== undefined && (!defaults?.channel || !defaults?.version)) throw new Error(`apis.${apiId}.source needs publications.defaults with channel and version to choose its publication`);
-    const isDefault = variant.channel === defaults?.channel && variant.version === defaults?.version;
-    const publicationIndex = definition.publications?.findIndex(item => item.channel === variant.channel && item.version === variant.version) ?? -1;
+    if (definition.source !== undefined && (!defaults?.channel || (!defaults?.version && !((definition.product ?? defaults?.product) && config.publications.products?.[definition.product ?? defaults!.product!]?.defaultVersion)))) throw new Error(`apis.${apiId}.source needs publications.defaults with channel and version to choose its publication`);
+    const product = config.publications.products ? definition.product ?? defaults?.product : undefined;
+    const scopedVersion = product && defaults?.product === product && defaults.version && Object.hasOwn(config.publications.products![product].versions, defaults.version) ? defaults.version : undefined;
+    const defaultVersion = product ? scopedVersion ?? config.publications.products?.[product]?.defaultVersion : defaults?.version;
+    const isDefault = variant.product === product && variant.channel === defaults?.channel && variant.version === defaultVersion;
+    const publicationIndex = definition.publications?.findIndex(item => item.product === variant.product && item.channel === variant.channel && item.version === variant.version) ?? -1;
     const source = publicationIndex >= 0 ? definition.publications?.[publicationIndex].source : (isDefault ? definition.source : undefined);
     if (!source) return undefined;
     if (source.kind !== 'file') throw new Error(`pinned local OpenAPI source required for ${apiId} in ${variant.channel}/${variant.version}`);
@@ -162,7 +176,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
             const classification = requirements !== undefined || shared !== undefined ? { requires: requirements, shared } : definition;
             validateFeatureClassification(classification, loaded.deployment?.context, `${binding.file}: ${sourceOperationId} (generated reference)`);
           }
-          if (!variants.some(item => item.channel === variant.channel && item.version === variant.version && item.language === variant.language)) continue;
+          if (!variants.some(item => item.product === variant.product && item.channel === variant.channel && item.version === variant.version && item.language === variant.language)) continue;
           operationRequirements.set(keyFor(id, variant), requirements);
           const featureSelected = matchesFeatures(requirements, loaded.deployment?.context, `${binding.file}: ${sourceOperationId}`) && matchesFeatures(definition.requires, loaded.deployment?.context, `API ${apiId}`);
           if (!selected || !featureSelected) continue;
@@ -176,7 +190,7 @@ export async function materializeApiReferences({ config, loaded, variants, docs,
           knownDocumentIds.add(reference);
           knownDocumentTypes.set(reference, page.type);
           if (!matchesFeatures(page.requires, loaded.deployment?.context, `${binding.file}: ${reference}`)) continue;
-          if (page.access?.policy !== 'public' || page.channel !== variant.channel || page.version !== variant.version || page.language !== variant.language) continue;
+          if (page.access?.policy !== 'public' || page.channel !== variant.channel || page.version !== variant.version || page.language !== variant.language || (config.publications.products && page.product !== variant.product)) continue;
           const key = keyFor(reference, variant);
           const authored = docs.get(key);
           if (authored) {

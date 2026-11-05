@@ -1,12 +1,13 @@
 import { ContentDeliveryError, contentRefKey } from './content-delivery-contract.js';
 import type { ContentSnapshot, ContentResource, ContentPublication, ContentFormat } from './content-delivery-contract.js';
+import { validContentPublication } from './content-delivery-validation.js';
 import { contentResourceKey } from './content-rest-contract.js';
 
 export type ContentRestHandlerOptions = { sources: readonly ContentSnapshot[]; basePath?: string };
-const publicationKey = (publication: Readonly<ContentPublication>) => JSON.stringify([publication.channel, publication.version, publication.language]);
+const publicationKey = (publication: Readonly<ContentPublication>) => JSON.stringify([publication.channel, publication.version, publication.language, ...(publication.product === undefined ? [] : [publication.product])]);
 const digest = async (bytes: Uint8Array) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes as BufferSource))].map(value => value.toString(16).padStart(2, '0')).join('');
 const encoder = new TextEncoder();
-const validPublication = (value: Readonly<ContentPublication>) => value && Object.keys(value).sort().join(',') === 'channel,language,version' && Object.values(value).every(part => typeof part === 'string' && part.length > 0 && part.length <= 2048);
+const validPublication = validContentPublication;
 const canonical = (value: any): any => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
 const same = (left: unknown, right: unknown) => JSON.stringify(canonical(left)) === JSON.stringify(canonical(right));
 
@@ -35,13 +36,15 @@ export function createContentRestHandler(options: ContentRestHandlerOptions): (r
     if (url.pathname !== prefix && !url.pathname.startsWith(`${prefix}/`)) return error(404, 'not_found', 'Unknown content route.');
     const parts = url.pathname.slice(prefix.length).split('/').slice(1);
     if (parts.length !== 0 && parts.length !== 1 && !(parts.length === 3 && parts[1] === 'representations')) return error(404, 'not_found', 'Unknown content route.');
-    const allowed = new Set(['channel', 'version', 'language', 'revision']);
+    const allowed = new Set(['channel', 'version', 'language', 'product', 'revision']);
     if ([...url.searchParams.keys()].some(key => !allowed.has(key) || url.searchParams.getAll(key).length !== 1)) return error(400, 'invalid_request', 'Unknown or repeated query parameter.');
     const publication = Object.fromEntries(['channel', 'version', 'language'].map(key => [key, url.searchParams.get(key)])) as ContentPublication;
-    if (Object.values(publication).some(value => !value || value.length > 2048)) return error(400, 'invalid_request', 'channel, version, and language are required.');
+    if (url.searchParams.has('product')) publication.product = url.searchParams.get('product')!;
+    if (!validPublication(publication)) return error(400, 'invalid_request', 'channel, version, and language are required.');
     const revision = url.searchParams.get('revision');
     if (revision !== null && !/^[a-f0-9]{64}$/.test(revision) || parts.length > 0 && revision === null) return error(400, 'invalid_request', 'A valid revision is required for resource requests.');
     const selected = publications.get(publicationKey(publication));
+    if (!selected && publication.product === undefined && [...publications.values()].some(item => item.publication.product !== undefined && item.publication.channel === publication.channel && item.publication.version === publication.version && item.publication.language === publication.language)) return error(400, 'invalid_request', 'product is required for product-scoped publications.');
     if (!selected) return error(404, 'not_found', 'Publication not found.');
     if (revision !== null && revision !== selected.revision) return error(409, 'stale_revision', 'The requested revision is not available.');
     const resource = parts.length ? selected.resources.find(item => item.key === parts[0]) : undefined;
@@ -49,8 +52,8 @@ export function createContentRestHandler(options: ContentRestHandlerOptions): (r
     try {
       let body: string;
       let mediaType = 'application/json';
-      if (!parts.length) body = JSON.stringify({ schemaVersion: 1, revision: selected.revision, publication: selected.publication, resources: selected.resources });
-      else if (parts.length === 1) body = JSON.stringify({ schemaVersion: 1, revision: selected.revision, publication: selected.publication, ...resource });
+      if (!parts.length) body = JSON.stringify({ schemaVersion: selected.publication.product === undefined ? 1 : 2, revision: selected.revision, publication: selected.publication, resources: selected.resources });
+      else if (parts.length === 1) body = JSON.stringify({ schemaVersion: selected.publication.product === undefined ? 1 : 2, revision: selected.revision, publication: selected.publication, ...resource });
       else {
         const format = parts[2] as ContentFormat;
         if (!['html', 'markdown'].includes(format) || !resource!.resource.representations[format]) return error(406, 'unsupported_format', 'Representation not available.');

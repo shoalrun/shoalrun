@@ -1,3 +1,4 @@
+import { documentKey } from './publication-identity.js';
 import type { Document } from './content-source.js';
 import { link, paragraph, root, text } from './semantic-markdown.js';
 
@@ -30,7 +31,7 @@ export function resolveSubjectDeprecation(doc: Document, docs: Map<string, Docum
   for (const key of ['replacement', 'migration'] as const) {
     const id = value[key];
     if (!id) continue;
-    const target = docs.get(`${id}|${doc.variant.channel}|${doc.variant.version}|${doc.variant.language}`);
+    const target = docs.get(documentKey(id, doc.variant));
     if (id === doc.frontmatter.id || !target || target.frontmatter.access?.policy !== 'public') throw new Error(`${doc.file}: subjectDeprecation.${key} must name another public document in the same publication: ${id}`);
     result[key] = { id, title: target.frontmatter.title, url: target.route, markdownUrl: target.markdownRoute };
   }

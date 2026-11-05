@@ -49,9 +49,76 @@ were never edited. Retain the manifest revision used for each deployment.
 Feature definitions accept optional `description` and `lifecycle` (`active`,
 `deprecated`, or `retired`). Lifecycle labels do not grant or remove features.
 
+## Select independently versioned products
+
+Available since `0.1.0-alpha.18`.
+
+A product catalog owns its versions rather than sharing one global version list:
+
+```yaml
+publications:
+  defaults: { channel: production, language: en }
+  channels:
+    production: {}
+  products:
+    payments:
+      pathPrefix: /payments
+      defaultVersion: v3
+      versions:
+        v2: { pathPrefix: /v2 }
+        v3: { pathPrefix: /v3 }
+    reporting:
+      pathPrefix: /reporting
+      defaultVersion: v1
+      versions:
+        v1: { pathPrefix: /v1 }
+  enabled:
+    - { product: payments, channel: production, version: v2 }
+    - { product: payments, channel: production, version: v3 }
+    - { product: reporting, channel: production, version: v1 }
+```
+
+A customer's profile narrows those exact coordinates independently:
+
+```yaml
+# Profile fragment
+publications:
+  enabled:
+    - { product: payments, channel: production, version: v3, language: en }
+    - { product: reporting, channel: production, version: v1, language: en }
+```
+
+Another customer can select Payments v2 and Reporting v1. A product release does
+not grant features; SKU revisions and direct grants remain independent. Unknown
+products, unknown product-local versions, and selections outside the shared
+`enabled` list fail. No lookup substitutes another product's matching version.
+
+Pages select `product`, `channel`, and `version`, or explicitly list those
+coordinates in `publications` to reuse a source. Do not combine a membership
+list with page-level product/channel/version. A stable document ID keeps the same
+document type across publications. `shared: true` classifies feature eligibility;
+it does not copy a page into other product releases. `<ForPublication>` also
+accepts `product` for sections.
+
+Routes combine site base path, nondefault language, product prefix, channel
+prefix, version prefix, and slug. For example, `/start` in Payments v3 becomes
+`/payments/v3/start`. An omitted product version resolves its `defaultVersion`,
+unless matching `publications.defaults.product` supplies a valid scoped version.
+An inherited global frontmatter version is not a product default.
+
+Without a product catalog, existing `frontmatter.product` remains metadata and an
+optional reader facet. Declaring `publications.products` opts into publication
+identity: review old product values, declare each product's versions, and update
+page and profile memberships. Root `publications.versions` can remain for
+productless pages. Existing productless identities and routes remain unchanged;
+productless pages are not automatically replicated. Add redirects when product
+prefixes move previously published URLs, then rebuild indexes and exports.
+
 ## Supply one profile per deployment
 
-The deployment can mount or generate this file outside the documentation repo:
+The deployment can mount or generate this file outside the documentation repo.
+This example selects a productless `current` publication. For the product catalog
+above, use its product-qualified publication selection instead:
 
 ```yaml
 schemaVersion: 1
@@ -234,6 +301,27 @@ shared and requirements on the same declaration. General frontmatter defaults
 do not count; classify operations individually when their requirements differ.
 Authored API reference pages follow the ordinary source-page rule.
 
+## Preview the selected edition
+
+Available since `0.1.0-alpha.18`.
+
+```sh
+npx --no-install shoalrun dev docs.config.yaml site-dist \
+  --profile /run/config/docs-profile.yaml --port 8770
+```
+
+The preview uses the same compilation and content pruning as `build --profile`.
+It watches the selected profile, manifest, declared branding assets, and content,
+including declared inputs mounted outside the project. Keep separate outputs and
+ports for concurrent customer previews.
+
+The development banner identifies the selected profile, edition digest, and
+successful build. Invalid initial input prevents startup. A later failed rebuild
+keeps the last successful edition and displays its failure; it never falls back
+to unprofiled output. Saving corrected declared inputs triggers recovery. A
+successful profile change that removes the current page navigates to a published
+landing page. On older releases, use a profiled build followed by `serve`.
+
 ## Validate the deployment edition
 
 Use the same profile when recording a baseline and validating:
@@ -272,14 +360,17 @@ requirements inherited through frontmatter defaults.
 
 Profiled builds reject full OpenAPI source publication, because hiding reference
 pages does not remove operations from that source. Use `source.publish: false`
-and `source.focused: true` for focused operation downloads. Operation embeds
+and `source.focused: true` for focused operation downloads. API source bindings
+include product/channel/version; documentation languages reuse that source.
+Full-source publication outside profiled builds writes one source artifact across
+translations. Source availability never falls back to another product or release. Operation embeds
 respect selection. Standalone `<ApiSchema api="..." schema="..." />` embeds are
 not supported in profiled builds; use an eligible operation embed instead.
 
 Static `vercel build --profile FILE` is supported. Profiled chat-function builds
-are not supported. Other commands without a profile option, including `dev` and
-checked-plan authoring, do not yet resolve deployment editions; use build/serve
-or captured validation/preview.
+are not supported. Checked-plan authoring does not resolve deployment editions;
+use captured validation/preview. Profile-aware development is described in the
+preview workflow above.
 
 Shoalrun does not fetch billing records, infer contract terms, expire grants, or
 authenticate customers. The deployment supplies the declared edition and the

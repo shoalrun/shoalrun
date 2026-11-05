@@ -4,18 +4,18 @@ import { attemptAnalytics, type McpAnalyticsEvent } from './mcp-analytics.js';
 import { McpServer } from '@modelcontextprotocol/server';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import * as z from 'zod/v4';
-import { bundledDocumentation, DocumentationError, documentationFailure, getDocumentationOutline, getDocumentationSection, getDocumentationPage, searchDocumentation } from './documentation-core.js';
+import { bundledDocumentation, DocumentationError, documentationFailure, getDocumentationOutline, getDocumentationSection, getDocumentationPage, listDocumentationPublications, searchDocumentation } from './documentation-core.js';
 
-export function createDocsMcpServer(directory = bundledDocumentation, publication?: { channel: string; version: string; language: string }, analytics?: { clientMetadata?: boolean; buildId: string; capture(event: McpAnalyticsEvent): unknown }, discardAnalyticsArguments = false) {
+export function createDocsMcpServer(directory = bundledDocumentation, publication?: { product?: string; channel: string; version: string; language: string }, analytics?: { clientMetadata?: boolean; buildId: string; capture(event: McpAnalyticsEvent): unknown }, discardAnalyticsArguments = false) {
   const server = new McpServer({ name: 'shoalrun-docs', version: '0.0.0' }, { maxToolInputElements: 1024 });
-  const scope = <T extends { channel?: string; version?: string; language?: string }>(filters: T): T => {
+  const scope = <T extends { product?: string; channel?: string; version?: string; language?: string }>(filters: T): T => {
     if (!publication) return filters;
-    for (const key of ['channel', 'version', 'language'] as const) if (filters[key] !== undefined && filters[key] !== publication[key]) throw new DocumentationError('invalid_input', 'This MCP endpoint serves a different publication');
+    for (const key of ['product', 'channel', 'version', 'language'] as const) if (filters[key] !== undefined && filters[key] !== publication[key]) throw new DocumentationError('invalid_input', 'This MCP endpoint serves a different publication');
     return { ...filters, ...publication };
   };
-  const coordinate = (key: 'channel' | 'version' | 'language') => z.string().optional().describe(publication ? `This endpoint serves ${key}=${publication[key]}; omit this argument or pass that exact value.` : `Select the documentation ${key}.`);
+  const coordinate = (key: 'product' | 'channel' | 'version' | 'language') => z.string().optional().describe(publication ? `This endpoint serves ${key}=${publication[key]}; omit this argument or pass that exact value.` : `Select the documentation ${key}.`);
   const options = {
-    channel: coordinate('channel'), version: coordinate('version'), language: coordinate('language'),
+    product: coordinate('product'), channel: coordinate('channel'), version: coordinate('version'), language: coordinate('language'),
     maxTokens: z.number().int().min(256).max(100_000).default(4096).describe('Maximum serialized result tokens, counted with cl100k_base, including metadata.'),
   };
   // A client may cache the instrumented schema after withdrawing consent.
@@ -52,13 +52,18 @@ export function createDocsMcpServer(directory = bundledDocumentation, publicatio
       if (analytics && publication) await attemptAnalytics(() => analytics.capture({ name: 'mcp_tool_call', ...(analytics.clientMetadata ? mcpClientMetadata(context, server.server.getClientVersion()) : {}), tool, durationMs: Math.max(0, performance.now() - start), isError, ...(errorCode ? { errorCode } : {}), ...(pageId ? { pageId } : {}), ...(sectionId ? { sectionId } : {}), buildId: analytics.buildId, publication: { ...publication } }));
     }
   };
+  server.registerTool('get_publications', {
+    description: 'Discover available product/channel/version/language coordinates before searching. Returns one compact page and concise product defaults; follow nextOffset for more. Products have independent versions. Preserve the selected product and publication coordinates in subsequent search and read calls. This endpoint lists only its published scope.',
+    inputSchema: schema(z.object({ ...options, maxTokens: z.number().int().min(256).max(100_000).default(2048), limit: z.number().int().min(1).max(100).default(20), offset: z.number().int().min(0).default(0) }).strict()),
+    annotations,
+  }, (filters, context) => respond('get_publications', context, () => listDocumentationPublications(directory, { ...scope(filters), ...(publication ? { publication } : {}) })));
   server.registerTool('search_docs', {
-    description: 'Search the documentation by keyword. Partial fallback favors field relevance among results within one meaningful term of the best coverage (at least two matched). Complete lexical matches normally precede partial fallback; stronger near-complete matches can outrank body-only complete matches (matchMode: mixed). Search covers titles, summaries, headings, and bounded article text. For each chosen result, call read.tool with read.arguments exactly. Section recommendations require an author declaration of self-contained content. The result markdownUrl fetches the recommended section or full page; pageMarkdownUrl is always the full-page fallback. Do not guess a section ID or request an outline first.',
+    description: 'Search the documentation by keyword. Use get_publications to discover product/version scope when unknown. Partial fallback favors field relevance among results within one meaningful term of the best coverage (at least two matched). Complete lexical matches normally precede partial fallback; stronger near-complete matches can outrank body-only complete matches (matchMode: mixed). Search covers titles, summaries, headings, and bounded article text. For each chosen result, call read.tool with read.arguments exactly, retaining product and all publication coordinates. Section recommendations require an author declaration of self-contained content. The result markdownUrl fetches the recommended section or full page; pageMarkdownUrl is always the full-page fallback. Do not guess a section ID or request an outline first.',
     inputSchema: schema(z.object({ query: z.string(), limit: z.number().int().min(1).max(100).default(8), ...options }).strict()),
     annotations,
   }, ({ query, ...filters }, context) => respond('search_docs', context, () => searchDocumentation(directory, query, scope(filters))));
   server.registerTool('get_page', {
-    description: 'Read a published Markdown page by the stable document ID returned from search_docs. Includes all reader-marked sections. Check budget.truncated; increase maxTokens if needed.',
+    description: 'Read a published Markdown page by the stable document ID returned from search_docs. Retain its product/channel/version/language coordinates; IDs can repeat across products. Includes all reader-marked sections. Check budget.truncated; increase maxTokens if needed.',
     inputSchema: schema(z.object({ id: z.string(), ...options }).strict()),
     annotations,
   }, ({ id, ...filters }, context) => respond('get_page', context, () => getDocumentationPage(directory, id, scope(filters))));

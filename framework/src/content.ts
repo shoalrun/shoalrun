@@ -1,3 +1,4 @@
+import { publicationKey } from './publication-identity.js';
 import { fictionalDocument, resolveLlmsDiscovery } from './llms-discovery.js';
 import YAML from 'yaml';
 import { nativePublicFields, protectedMetadataRoots, publicFrontmatterPaths } from './frontmatter.js';
@@ -13,7 +14,7 @@ export { renderHtml } from './html-renderer.js';
 export { buildHtmlPage, shareCardText, typeLabel } from './page-renderer.js';
 export type { SiteLink, HeaderConfig, FooterConfig, PageShell } from './page-renderer.js';
 // API separators are visually hidden punctuation; join them to the preceding text so search reads "integer; default: 0".
-const variantKey = (variant: Variant) => `${variant.channel}|${variant.version}|${variant.language}`;
+const variantKey = publicationKey;
 const plainText = (html: string) => html.replace(/<(script|style)[^]*?<\/\1>/g, ' ').replace(/(?:<\/[a-z]+>)?<span class="api-separator">([^<]*)<\/span>/g, '$1').replace(/<[^>]+>/g, ' ')
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 
@@ -55,7 +56,7 @@ export function projectMetadata(doc: Document, config: any): string {
   if (typeof projection !== 'object' || Array.isArray(projection)) throw new Error('Markdown metadata projection must be a mapping');
   const object = (value: unknown): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
   const safePath = (value: string) => /^[A-Za-z_][A-Za-z0-9_-]*(?:\.[A-Za-z_][A-Za-z0-9_-]*)*$/.test(value);
-  const publicationFields = new Set(['channel', 'version', 'language', 'canonicalUrl']);
+  const publicationFields = new Set(['product', 'channel', 'version', 'language', 'canonicalUrl']);
   const approved = publicFrontmatterPaths(config.frontmatter);
   const validateSource = (source: string) => {
     if (!safePath(source)) throw new Error(`Invalid metadata source path ${source}`);

@@ -1,3 +1,5 @@
+import { resolvePublication } from './compiler-config.js';
+import { samePublication } from './publication-identity.js';
 import { mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -6,7 +8,7 @@ import { explainSegments, loadConfig } from './config.js';
 import { defaultLanguage, resolveFrontmatter } from './frontmatter.js';
 import { routeFor } from './content.js';
 
-export type ScaffoldInput = { id: string; title: string; summary: string; slug: string; operations?: string[]; channel?: string; version?: string; language?: string };
+export type ScaffoldInput = { id: string; title: string; summary: string; slug: string; operations?: string[]; product?: string; channel?: string; version?: string; language?: string };
 const object = (value: unknown): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
 async function canonicalPath(value: string): Promise<string> {
   const resolved = path.resolve(value);
@@ -80,12 +82,11 @@ export async function scaffold(configFile: string, templateId: string, targetFil
   const knownOperations = new Set(Object.values<any>(config.apis ?? {}).flatMap(api => (api.operations ?? []).map((item: any) => item.id)));
   for (const operation of input.operations ?? []) if (!knownOperations.has(operation)) throw new Error(`Unknown scaffold operation ${operation}`);
   const defaults = config.publications?.defaults;
-  const applicability = resolveFrontmatter(Object.fromEntries(Object.entries({ channel: input.channel, version: input.version, language: input.language }).filter(([, value]) => value !== undefined)), config.frontmatter);
-  const channel = applicability.channel ?? defaults?.channel;
-  const version = applicability.version ?? defaults?.version;
-  const language = applicability.language ?? defaultLanguage(config);
-  if (!channel || !version || !language) throw new Error('Scaffold needs channel, version, and language');
-  if (!config.publications?.enabled?.some((item: any) => item.channel === channel && item.version === version && (item.language ?? defaultLanguage(config)) === language)) throw new Error(`Scaffold publication ${channel}/${version}/${language} is not enabled`);
+  const applicability = resolveFrontmatter(Object.fromEntries(Object.entries({ product: input.product, channel: input.channel, version: input.version, language: input.language }).filter(([, value]) => value !== undefined)), config.frontmatter);
+  const product = config.publications?.products ? applicability.product ?? defaults?.product : undefined;
+  const publication = resolvePublication(config.publications, { ...applicability, product, ...(product ? { product, version: config.frontmatter?.enforced?.version ?? input.version } : {}), channel: applicability.channel ?? defaults?.channel }, defaultLanguage(config));
+  const { channel, version, language } = publication;
+  if (!config.publications?.enabled?.some((item: any) => samePublication(resolvePublication(config.publications, item, defaultLanguage(config)), publication))) throw new Error(`Scaffold publication ${product ? product + '/' : ''}${channel}/${version}/${language} is not enabled`);
   const root = path.dirname(path.resolve(configFile));
   const contentDir = await canonicalPath(path.resolve(root, config.site?.contentDir ?? 'content'));
   const target = await canonicalPath(targetFile);
@@ -95,13 +96,13 @@ export async function scaffold(configFile: string, templateId: string, targetFil
     ? path.resolve(path.dirname(explainSegments(loaded, ['templates', templateId, 'body']).source.file), template.body)
     : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../templates', template.body);
   const { header, body } = splitTemplate(await readFile(bodyFile, 'utf8'), bodyFile);
-  const frontmatter = { id: input.id, title: input.title, summary: input.summary, type: template.type, slug: input.slug, channel, version, language, ...(input.operations?.length ? { operations: input.operations } : {}), access: { policy: 'draft' } };
-  routeFor(frontmatter, { channel, version, language }, config);
+  const frontmatter = { id: input.id, title: input.title, summary: input.summary, type: template.type, slug: input.slug, ...publication, ...(!config.publications?.products && applicability.product ? { product: applicability.product } : {}), ...(input.operations?.length ? { operations: input.operations } : {}), access: { policy: 'draft' } };
+  routeFor(frontmatter, publication, config);
   const written = header ? fillTemplateHeader(header, frontmatter) : YAML.stringify(frontmatter);
   const content = `---\n${written.replace(/\s*$/, '\n')}---\n\n${body.trimStart().replace(/\s*$/, '\n')}`;
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, content, { flag: 'wx' });
-  return { status: 'ok', template: templateId, id: input.id, file: target, publication: { channel, version, language }, access: 'draft' };
+  return { status: 'ok', template: templateId, id: input.id, file: target, publication, access: 'draft' };
 }
 
 export async function scaffoldFromPath(configFile: string, templateId: string, targetFile: string, overrides: Partial<ScaffoldInput> = {}) {
@@ -113,14 +114,14 @@ export async function scaffoldFromPath(configFile: string, templateId: string, t
   const parts = relative.replace(/\.mdx?$/, '').split(path.sep).map(part => part.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
   if (parts.some(part => !part)) throw new Error('Scaffold target needs a usable filename');
   const title = parts.at(-1)!.split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
-  const selected = resolveFrontmatter(Object.fromEntries(Object.entries({ channel: overrides.channel, version: overrides.version, language: overrides.language }).filter(([, value]) => value !== undefined)), config.frontmatter);
-  const channel = selected.channel ?? config.publications?.defaults?.channel;
-  const version = selected.version ?? config.publications?.defaults?.version;
-  const language = selected.language ?? defaultLanguage(config);
+  const selected = resolveFrontmatter(Object.fromEntries(Object.entries({ product: overrides.product, channel: overrides.channel, version: overrides.version, language: overrides.language }).filter(([, value]) => value !== undefined)), config.frontmatter);
+  const product = config.publications?.products ? selected.product ?? config.publications?.defaults?.product : undefined;
+  const { channel, version, language } = resolvePublication(config.publications, { ...selected, product, ...(product ? { product, version: config.frontmatter?.enforced?.version ?? overrides.version } : {}), channel: selected.channel ?? config.publications?.defaults?.channel }, defaultLanguage(config));
   const prefixGroups = [
     language === defaultLanguage(config) ? '' : language,
+    product ? config.publications.products[product].pathPrefix : '',
     config.publications?.channels?.[channel]?.pathPrefix ?? '',
-    config.publications?.versions?.[version]?.pathPrefix ?? ''
+    (product ? config.publications.products[product].versions : config.publications?.versions)?.[version]?.pathPrefix ?? ''
   ].map(value => value.split('/').filter(Boolean));
   const prefixCandidates: string[][] = [];
   for (let start = 0; start < prefixGroups.length; start++) {

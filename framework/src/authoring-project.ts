@@ -101,7 +101,7 @@ export async function inspectAuthoringProject(configFile: string, options: Proje
           const doc = await readDocument(file, value.frontmatter, undefined, raw);
           const fm = doc.frontmatter;
           pages.push({ id: fm.id, file: relative(file), digest: digest(raw), title: fm.title, summary: fm.summary, type: fm.type, slug: fm.slug,
-            publication: { channel: fm.channel ?? value.publications?.defaults?.channel, version: fm.version ?? value.publications?.defaults?.version, language: fm.language ?? defaultLanguage(value), ...(fm.publications ? { publications: fm.publications } : {}) },
+            publication: { ...(value.publications?.products && fm.product ? { product: fm.product } : {}), channel: fm.channel ?? value.publications?.defaults?.channel, version: value.publications?.products && fm.product && doc.sourceFrontmatter.version === undefined && value.frontmatter?.enforced?.version === undefined ? value.publications.products[fm.product]?.defaultVersion : fm.version ?? value.publications?.defaults?.version, language: fm.language ?? defaultLanguage(value), ...(fm.publications ? { publications: fm.publications } : {}) },
             access: fm.access ?? null, aliases: [] });
           bodies.set(relative(file), doc.body);
           findings.push(...authoringHints(doc.body, relative(file)).map(({ location, ...hint }) => hint));

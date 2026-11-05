@@ -1,9 +1,10 @@
+import { documentKey, samePublication } from './publication-identity.js';
 import { pruneFeatureTree, profileSelection } from './deployment-profile.js';
 import { readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadConfig, explainSegments } from './config.js';
-import { configField, isConfigMapping, requirePublicationsSection, requireSiteSection, resolvedCompilerConfig } from './compiler-config.js';
+import { configField, isConfigMapping, requirePublicationsSection, resolvePublication, requireSiteSection, resolvedCompilerConfig } from './compiler-config.js';
 import { defaultLanguage } from './frontmatter.js';
 import { normalizeBasePath, sitePath } from './site-path.js';
 import { prepareContentWorkspace } from './content-workspace.js';
@@ -38,14 +39,14 @@ export type ContentExportOptions = { profile?: string; target?: string; formats?
 type ExportLink = ContentLink;
 type Representation = { path: string; mediaType: string; bytes: number; digest: string; anchors: Array<{ id: string; exportedId: string; title?: string }>; links: ExportLink[] };
 const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
-const keyFor = (doc: Document) => `${doc.frontmatter.id}|${doc.variant.channel}|${doc.variant.version}|${doc.variant.language}`;
+const keyFor = (doc: Document) => documentKey(doc.frontmatter.id, doc.variant);
 type SelectedResource = { ref: ContentRef; doc: Document; tree: any; meaningTree?: any; title: string; summary: string; type: string; source?: {documentId?: string; snippetId?: string; valuesDigest?: string} };
-const resourceIdentity = (item: SelectedResource) => JSON.stringify([item.ref.kind, item.ref.kind === 'snippet' ? item.ref.id : item.ref.documentId, item.ref.kind === 'section' ? item.ref.sectionId : null, item.doc.variant.channel, item.doc.variant.version, item.doc.variant.language]);
+const resourceIdentity = (item: SelectedResource) => JSON.stringify([item.ref.kind, item.ref.kind === 'snippet' ? item.ref.id : item.ref.documentId, item.ref.kind === 'section' ? item.ref.sectionId : null, item.doc.variant.channel, item.doc.variant.version, item.doc.variant.language, ...(item.doc.variant.product === undefined ? [] : [item.doc.variant.product])]);
 // Pages and their sections share a source; named snippet instances do not.
-const sourceKeyFor = (doc: Document, kind: 'document' | 'snippet' = 'document') => JSON.stringify([kind, doc.frontmatter.id, doc.variant.channel, doc.variant.version, doc.variant.language]);
+const sourceKeyFor = (doc: Document, kind: 'document' | 'snippet' = 'document') => JSON.stringify([kind, doc.frontmatter.id, doc.variant.channel, doc.variant.version, doc.variant.language, ...(doc.variant.product === undefined ? [] : [doc.variant.product])]);
 const selectedSourceKey = (item: SelectedResource) => sourceKeyFor(item.doc, item.ref.kind === 'snippet' ? 'snippet' : 'document');
 const resourceKey = (item: SelectedResource) => `resource-${exportDigest(resourceIdentity(item)).slice(0, 24)}`;
-const sameVariant = (a: Variant, b: Variant) => ['channel', 'version', 'language'].every(key => a[key as keyof Variant] === b[key as keyof Variant]);
+const sameVariant = samePublication;
 const visitTree = (node: any, visit: (node: any) => void) => {
   if (!node || typeof node !== 'object') return;
   if (Array.isArray(node)) { for (const child of node) visitTree(child, visit); return; }
@@ -75,8 +76,8 @@ export async function exportContent(configFile: string, destination: string, opt
   const target = validateExportTarget({ ...raw, ...(options.formats ? { formats: options.formats } : {}), ...(options.documents ? { documents: options.documents } : {}), ...(options.publication ? { publication: options.publication } : {}), ...(options.publicBase ? { publicBase: options.publicBase } : {}) }, config.readerFilters);
   const language = defaultLanguage(config);
   const enabled = config.publications.enabled;
-  if (!Array.isArray(enabled) || !enabled.length || enabled.some(value => !isConfigMapping(value) || typeof value.channel !== 'string' || typeof value.version !== 'string' || value.language !== undefined && typeof value.language !== 'string')) throw new Error('publications.enabled must declare valid publication combinations');
-  const variants = enabled.map(value => ({ channel: value.channel as string, version: value.version as string, language: (value.language as string | undefined) ?? language }));
+  if (!Array.isArray(enabled) || !enabled.length || enabled.some(value => !isConfigMapping(value))) throw new Error('publications.enabled must declare valid publication combinations');
+  const variants = enabled.map(value => resolvePublication(publications, value as Record<string, unknown>, language));
   const unique = [...new Map(variants.map(variant => [JSON.stringify(variant), variant])).values()];
   const publication = target.publication ?? (unique.length === 1 ? unique[0] : undefined);
   if (!publication) throw new Error('Export has multiple enabled publications; select one channel/version/language in the target or command');
@@ -362,7 +363,7 @@ export async function exportContent(configFile: string, destination: string, opt
     notices += `\n${path.basename(file)}:\n${await readFile(resolvedNotice, 'utf8')}\n`;
   }
   artifacts.set('NOTICES.txt', notices);
-  const manifest = { schemaVersion: 1, kind: 'shoalrun-content-export', publicBase: target.publicBase, publication,
+  const manifest = { schemaVersion: publication.product === undefined ? 1 : 2, kind: 'shoalrun-content-export', publicBase: target.publicBase, publication,
     review: { status: unreviewed.length ? 'required' : 'ok', apis: reviews.map(row => ({ apiId: row.apiId, digest: row.digest })) },
     resources: records, assets: [...assets.records.values()].sort((a, b) => compare(a.path, b.path)),
     files: [...artifacts].map(([filename, content]) => ({ path: filename, bytes: Buffer.byteLength(content), digest: exportDigest(content) })).sort((a, b) => compare(a.path, b.path)), diagnostics };

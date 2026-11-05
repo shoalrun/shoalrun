@@ -42,10 +42,13 @@ export interface CompilerSiteConfig extends ConfigMapping {
   contentDir?: string;
 }
 
+export type ProductPublicationConfig = { label?: string; pathPrefix: string; defaultVersion: string; versions: Record<string, { pathPrefix?: string }> };
+
 export interface CompilerPublicationsConfig extends ConfigMapping {
   channels: Record<string, { pathPrefix?: string }>;
   versions: Record<string, { pathPrefix?: string }>;
-  defaults?: { channel?: string; version?: string; language?: string };
+  products?: Record<string, ProductPublicationConfig>;
+  defaults?: { product?: string; channel?: string; version?: string; language?: string };
 }
 
 export function isConfigMapping(value: unknown): value is ConfigMapping {
@@ -106,12 +109,13 @@ export function requireSiteSection(config: ResolvedCompilerConfig): CompilerSite
 
 export function requirePublicationsSection(config: ResolvedCompilerConfig): CompilerPublicationsConfig {
   const publications = config.publications;
-  if (!isConfigMapping(publications) || !isConfigMapping(publications.channels) || !isConfigMapping(publications.versions)) {
+  if (!isConfigMapping(publications) || !isConfigMapping(publications.channels) || (publications.versions !== undefined && !isConfigMapping(publications.versions)) || (publications.versions === undefined && !isConfigMapping(publications.products))) {
     throw new Error('publications needs channels and versions mappings');
   }
   if (publications.defaults !== undefined && !isConfigMapping(publications.defaults)) {
     throw new Error('publications.defaults must be a mapping of channel, version, and language');
   }
+  publications.versions ??= {};
   for (const group of ['channels', 'versions'] as const) {
     for (const [name, value] of Object.entries(publications[group] as ConfigMapping)) {
       if (!isConfigMapping(value) || (value.pathPrefix !== undefined && typeof value.pathPrefix !== 'string')) {
@@ -120,9 +124,40 @@ export function requirePublicationsSection(config: ResolvedCompilerConfig): Comp
     }
   }
   const defaults = publications.defaults;
-  if (isConfigMapping(defaults) && ['channel', 'version', 'language'].some(key => defaults[key] !== undefined && typeof defaults[key] !== 'string')) {
+  if (isConfigMapping(defaults) && ['product', 'channel', 'version', 'language'].some(key => defaults[key] !== undefined && typeof defaults[key] !== 'string')) {
     throw new Error('publications.defaults must be a mapping of channel, version, and language');
   }
 
+  if (publications.products !== undefined) {
+    if (!isConfigMapping(publications.products) || !Object.keys(publications.products).length) throw new Error('publications.products must be a nonempty mapping');
+    const prefixes = new Set<string>();
+    for (const [id, product] of Object.entries(publications.products)) {
+      if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(id) || !isConfigMapping(product) || Object.keys(product).some(key => !['label', 'pathPrefix', 'defaultVersion', 'versions'].includes(key))) throw new Error(`Invalid publication product ${id}`);
+      if (typeof product.pathPrefix !== 'string' || !/^\/[A-Za-z0-9/_-]+$/.test(product.pathPrefix) || product.pathPrefix.endsWith('/') || product.pathPrefix.includes('//') || product.pathPrefix.includes('..')) throw new Error(`Product ${id} needs an absolute nonempty pathPrefix without a trailing slash`);
+      if (prefixes.has(product.pathPrefix.toLowerCase())) throw new Error(`Duplicate product pathPrefix ${product.pathPrefix}`);
+      prefixes.add(product.pathPrefix.toLowerCase());
+      if (product.label !== undefined && (typeof product.label !== 'string' || !product.label.trim())) throw new Error(`Product ${id}.label must be nonempty text`);
+      if (!isConfigMapping(product.versions) || !Object.keys(product.versions).length || typeof product.defaultVersion !== 'string' || !Object.hasOwn(product.versions, product.defaultVersion)) throw new Error(`Product ${id} needs versions and a valid defaultVersion`);
+      const versionPrefixes = new Set<string>();
+      for (const [version, definition] of Object.entries(product.versions)) {
+        if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(version) || !isConfigMapping(definition) || (definition.pathPrefix !== undefined && (typeof definition.pathPrefix !== 'string' || (definition.pathPrefix !== '' && (!/^\/[A-Za-z0-9/_-]+$/.test(definition.pathPrefix) || definition.pathPrefix.includes('//') || definition.pathPrefix.endsWith('/')))))) throw new Error(`Product ${id} has invalid version ${version}`);
+        const prefix = String(definition.pathPrefix ?? '').toLowerCase();
+        if (versionPrefixes.has(prefix)) throw new Error(`Product ${id} has duplicate version pathPrefix ${prefix || '(empty)'}`);
+        versionPrefixes.add(prefix);
+      }
+    }
+  }
   return publications as CompilerPublicationsConfig;
+}
+
+/** Resolve product-local defaults without borrowing another product's catalog. */
+export function resolvePublication(publications: CompilerPublicationsConfig, value: Record<string, unknown>, language = 'en'): { product?: string; channel: string; version: string; language: string } {
+  const product = value.product;
+  if (product !== undefined && (typeof product !== 'string' || !publications.products || !Object.hasOwn(publications.products, product))) throw new Error(`Unknown publication product ${String(product)}`);
+  const catalog = product === undefined ? publications.versions ?? {} : publications.products![product as string].versions;
+  const scopedDefault = product !== undefined && publications.defaults?.product === product && publications.defaults.version && Object.hasOwn(catalog, publications.defaults.version) ? publications.defaults.version : undefined;
+  const version = value.version ?? (product === undefined ? publications.defaults?.version : scopedDefault ?? publications.products![product as string].defaultVersion);
+  const channel = value.channel ?? publications.defaults?.channel;
+  if (typeof channel !== 'string' || !Object.hasOwn(publications.channels, channel) || typeof version !== 'string' || !Object.hasOwn(catalog, version) || (value.language !== undefined && (typeof value.language !== 'string' || !value.language))) throw new Error(`Unknown publication ${product === undefined ? '' : String(product) + '/'}${String(channel)}/${String(version)}`);
+  return { ...(product === undefined ? {} : { product: product as string }), channel, version, language: value.language as string ?? language };
 }

@@ -1,3 +1,4 @@
+import { publicationKey } from './publication-identity.js';
 import { aiDirectory } from './ai-directory.js';
 export { aiDirectory } from './ai-directory.js';
 import { createHash } from 'node:crypto';
@@ -12,7 +13,7 @@ export type ChunkOptions = { maxChars?: number; minChars?: number };
 
 type ChunkSource = Pick<ManifestDocument, 'id' | 'title' | 'type' | 'url' | 'markdownUrl' | 'readerFilters'> & { variant: string };
 
-type ManifestDocument = { id: string; type: string; title: string; url: string; markdownUrl: string; digest: string; readerFilters?: Record<string, string[]>; variant: { channel: string; version: string; language: string } };
+type ManifestDocument = { id: string; type: string; title: string; url: string; markdownUrl: string; digest: string; readerFilters?: Record<string, string[]>; variant: { product?: string; channel: string; version: string; language: string } };
 type Section = { level: number; title: string; path: string[]; blocks: string[] };
 
 const fence = /^\s{0,3}(`{3,}|~{3,})/;
@@ -179,8 +180,7 @@ export async function buildChunkIndex(directory: string, options: ChunkOptions =
     if (file !== root && !file.startsWith(root + path.sep)) throw new Error(`Markdown path for ${document.id} leaves the site directory`);
     if (!inside(await realpath(file))) throw new Error(`Markdown path for ${document.id} leaves the site directory`);
     const markdown = await readFile(file, 'utf8');
-    const { channel, version, language } = document.variant;
-    chunks.push(...chunkMarkdown(markdown, { ...document, variant: `${channel}|${version}|${language}` }, anchors.get(document.url), options));
+    chunks.push(...chunkMarkdown(markdown, { ...document, variant: publicationKey(document.variant) }, anchors.get(document.url), options));
   }
   // Generation identity includes publication membership, routes, reader marks,
   // and prepared search evidence. Embedding digests remain content-only.

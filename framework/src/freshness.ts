@@ -33,7 +33,7 @@ export async function loadFreshness(value: unknown, base: string, today = new Da
   const current: Record<string, RecordEntry> = {};
   return {
     resolve(doc: Document, digest: string, fallback?: string) {
-      const key = JSON.stringify([doc.frontmatter.id, doc.variant.channel, doc.variant.version, doc.variant.language]);
+      const key = JSON.stringify([doc.frontmatter.id, doc.variant.channel, doc.variant.version, doc.variant.language, ...(doc.variant.product === undefined ? [] : [doc.variant.product])]);
       const previous = history.documents[key];
       const updated = previous ? previous.contentDigest === digest ? previous.updated : today : doc.frontmatter.updated ?? fallback ?? today;
       current[key] = { contentDigest: digest, updated };

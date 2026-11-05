@@ -8,10 +8,10 @@ import { normalizeBasePath } from './site-path.js';
 import type { ReaderSelection } from './reader-filters.js';
 import type { StandaloneSectionDeclaration } from './section-identity.js';
 
-export type Variant = { channel: string; version: string; language: string };
+export type Variant = { product?: string; channel: string; version: string; language: string };
 export type Frontmatter = {
   id: string; title: string; type: string; summary: string; description?: string; slug: string; date?: string; updated?: string; verified?: string; releaseVersion?: string;
-  channel?: string; version?: string; publications?: Array<{ channel: string; version: string }>; language?: string; locale?: string; operations?: string[]; relatedApiReferences?: string[];
+  channel?: string; version?: string; publications?: Array<{ product?: string; channel: string; version: string }>; language?: string; locale?: string; operations?: string[]; relatedApiReferences?: string[];
   change?: AuthoredChange; subjectDeprecation?: SubjectDeprecation; product?: string; area?: string | string[]; subarea?: string | string[]; standaloneSections?: StandaloneSectionDeclaration[];
   access?: { policy: string }; audiences?: string[]; readerFilters?: ReaderSelection; seo?: Record<string, unknown>; subjectLifecycle?: 'deprecated' | 'in-development' | 'beta' | 'experimental'; lifecycle?: string; tocDepth?: 0 | 2 | 3 | 4 | 5 | 6; layout?: 'docs' | 'wide' | 'landing' | 'splash'; image?: string;
   showNavigationTabs?: boolean;
@@ -22,7 +22,7 @@ export type Document = { featureContext?: import('./deployment-profile.js').Feat
 export type NavigationNode = { id: string; label: string; route?: string; tab?: boolean; search?: string; subjectLifecycle?: Frontmatter['subjectLifecycle']; method?: string; webhook?: boolean; readerFilters?: ReaderSelection; items?: NavigationNode[] };
 export type PublicationRoutingConfig = {
   site: { basePath?: unknown };
-  publications: { channels: Record<string, { pathPrefix?: string }>; versions: Record<string, { pathPrefix?: string }> };
+  publications: { channels: Record<string, { pathPrefix?: string }>; versions: Record<string, { pathPrefix?: string }>; products?: Record<string, { pathPrefix: string; defaultVersion: string; versions: Record<string, { pathPrefix?: string }> }> };
 };
 export async function readDocument(file: string, frontmatterConfig?: unknown, enrich?: (source: Record<string, unknown>) => Promise<Record<string, unknown>>, sourceText?: string): Promise<{ frontmatter: Frontmatter; sourceFrontmatter: Record<string, unknown>; body: string }> {
   const source = sourceText ?? await readFile(file, 'utf8');
@@ -41,13 +41,15 @@ export async function readDocument(file: string, frontmatterConfig?: unknown, en
 
 export function routeFor(frontmatter: Frontmatter, variant: Variant, config: PublicationRoutingConfig): string {
   const channel = config.publications.channels[variant.channel];
-  const version = config.publications.versions[variant.version];
+  const product = variant.product === undefined ? undefined : config.publications.products?.[variant.product];
+  if (variant.product !== undefined && !product) throw new Error(`Unknown publication product ${variant.product}`);
+  const version = (product?.versions ?? config.publications.versions)[variant.version];
   if (!channel || !version) throw new Error(`Unknown publication ${variant.channel}/${variant.version}`);
   const slug = frontmatter.slug;
   if (!slug.startsWith('/') || slug.includes('..') || /[?#]/.test(slug) || /%2f|%5c/i.test(slug)) throw new Error(`${frontmatter.id}: invalid slug ${slug}`);
   if (/^\/(?:\.well-known|api)(?:\/|$)/i.test(slug)) throw new Error(`${frontmatter.id}: slug uses a reserved discovery path`);
   const languagePrefix = variant.language === defaultLanguage(config) ? '' : `/${variant.language}`;
-  const parts = [normalizeBasePath(config.site.basePath), languagePrefix, channel.pathPrefix ?? '', version.pathPrefix ?? '', slug].filter(Boolean);
+  const parts = [normalizeBasePath(config.site.basePath), languagePrefix, product?.pathPrefix ?? '', channel.pathPrefix ?? '', version.pathPrefix ?? '', slug].filter(Boolean);
   const normalized = '/' + parts.join('/').replace(/\/+/g, '/').replace(/^\//, '').replace(/\/$/, '');
   return normalized === '/' ? '/' : normalized;
 }

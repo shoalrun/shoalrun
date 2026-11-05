@@ -77,7 +77,7 @@ for (const mode of ['legacy', 'auto'] as const) test(`HTTP MCP ${mode} clients d
   const client = new Client({ name: 'shoalrun-http-test', version: '1' }, { versionNegotiation: { mode } });
   t.after(() => client.close());
   await client.connect(new StreamableHTTPClientTransport(url));
-  assert.equal((await client.listTools()).tools.length, 4);
+  assert.equal((await client.listTools()).tools.length, 5);
   const result = await client.callTool({ name: 'search_docs', arguments: { query: 'public guide' } });
   assert.ok(!result.isError, JSON.stringify(result));
   const data = result.structuredContent as any;

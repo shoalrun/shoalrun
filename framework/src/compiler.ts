@@ -1,3 +1,4 @@
+import { documentKey, publicationKey, samePublication } from './publication-identity.js';
 import { validateHeader, validateFooter } from './site-identity.js';
 import { profileSelection } from './deployment-profile.js';
 import { profileNavigation } from './project-navigation.js';
@@ -46,7 +47,7 @@ import { assembleArtifacts } from './artifact-bundle.js';
 import { materializePages } from './page-materialization.js';
 import { renderPublicationPages } from './publication-render.js';
 import { buildPublicationManifest } from './publication-manifest.js';
-import { configField, isConfigMapping, requirePublicationsSection, requireSiteSection, resolvedCompilerConfig, type CompilerSiteConfig, type CompilerPublicationsConfig } from './compiler-config.js';
+import { configField, isConfigMapping, requirePublicationsSection, resolvePublication, requireSiteSection, resolvedCompilerConfig, type CompilerSiteConfig, type CompilerPublicationsConfig } from './compiler-config.js';
 import { validateRetrieval } from './retrieval-config.js';
 import { validateChat } from './chat-config.js';
 import { sitemapFiles } from './sitemap.js';
@@ -56,7 +57,7 @@ const generatedReferenceBody = 'This reference is generated from the OpenAPI des
 const generatedWebhookBody = 'This webhook reference is generated from the OpenAPI description. The provider sends this event to the receiver.\n';
 
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
-const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
+const keyFor = documentKey;
 type SearchSetup = { provider: 'lexical' | 'semantic' | 'custom' | 'none'; module?: string; index: boolean };
 function validateSearch(value: unknown, declaringFile: string): SearchSetup {
   if (value === undefined) return { provider: 'lexical', module: builtInSearchProvider, index: true };
@@ -98,8 +99,8 @@ export async function checkThemeContrast(configFile: string): Promise<{ modes: M
   return { modes, palette: palette.name };
 }
 
-export async function compile(configFile: string, destination?: string, provenance: BuildProvenance = {}, options: { apiReview?: 'report'; sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; profile?: string } = {}) {
-  const loaded = await loadConfig(configFile, { profile: options.profile });
+export async function compile(configFile: string, destination?: string, provenance: BuildProvenance = {}, options: { apiReview?: 'report'; sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; profile?: string; onDependency?: (file: string) => void } = {}) {
+  const loaded = await loadConfig(configFile, { profile: options.profile, onDependency: options.onDependency });
   const componentPlugins = await loadComponentPlugins(loaded);
   const provenanceRecord = buildInfo(loaded.digest, provenance);
   const resolvedConfig = resolvedCompilerConfig(loaded.value);
@@ -193,9 +194,10 @@ export async function compile(configFile: string, destination?: string, provenan
   const enabledVariants = config.publications.enabled ?? [];
   if (!Array.isArray(enabledVariants)) throw new Error('publications.enabled must declare at least one variant');
   const variants: Variant[] = enabledVariants.map((variant: unknown) => {
-    if (!isConfigMapping(variant) || typeof variant.channel !== 'string' || typeof variant.version !== 'string' || (variant.language !== undefined && typeof variant.language !== 'string')) throw new Error('publications.enabled needs channel, version, and optional language');
-    return { ...variant, channel: variant.channel, version: variant.version, language: variant.language ?? language } as Variant;
+    if (!isConfigMapping(variant)) throw new Error('publications.enabled needs publication coordinates');
+    return resolvePublication(config.publications, variant, language);
   });
+  if (new Set(variants.map(publicationKey)).size !== variants.length) throw new Error('publications.enabled has duplicate publication coordinates');
   if (!variants.length) throw new Error('publications.enabled must declare at least one variant');
   const externalSites = config.publications.externalSites ?? [];
   if (!Array.isArray(externalSites)) throw new Error('publications.externalSites must be a list');
@@ -229,7 +231,7 @@ export async function compile(configFile: string, destination?: string, provenan
       const document = isConfigMapping(rawDocument) ? rawDocument : {};
       const rawVariant = document.variant;
       const route = document.url;
-      if (typeof document.id !== 'string' || !document.id || !isConfigMapping(rawVariant) || ['channel', 'version', 'language'].some(field => typeof rawVariant[field] !== 'string' || !rawVariant[field]) || typeof route !== 'string' || !route.startsWith('/') || route.startsWith('//') || route.includes('..') || /[?#\\]|%2f|%5c/i.test(route)) {
+      if (typeof document.id !== 'string' || !document.id || !isConfigMapping(rawVariant) || (rawVariant.product !== undefined && (typeof rawVariant.product !== 'string' || !rawVariant.product)) || ['channel', 'version', 'language'].some(field => typeof rawVariant[field] !== 'string' || !rawVariant[field]) || typeof route !== 'string' || !route.startsWith('/') || route.startsWith('//') || route.includes('..') || /[?#\\]|%2f|%5c/i.test(route)) {
         throw new Error(`${setting}.manifest has an invalid document identity, publication, or URL`);
       }
       const variant = rawVariant as Variant;
@@ -246,8 +248,8 @@ export async function compile(configFile: string, destination?: string, provenan
   const editionBadge = config.site.editionBadge ?? 'auto';
   if (editionBadge !== 'auto' && editionBadge !== 'always' && editionBadge !== 'never') throw new Error('site.editionBadge must be auto, always, or never');
   const varying = (field: keyof Variant) => new Set(variants.map(variant => variant[field])).size > 1;
-  const editionLabel = (variant: Variant) => editionBadge === 'never' ? '' : (['channel', 'version', 'language'] as const)
-    .filter(field => editionBadge === 'always' || varying(field)).map(field => variant[field]).join(' · ');
+  const editionLabel = (variant: Variant) => editionBadge === 'never' ? '' : (['product', 'channel', 'version', 'language'] as const)
+    .filter(field => variant[field] !== undefined && (editionBadge === 'always' || varying(field))).map(field => variant[field]).join(' · ');
   const { docs, knownDocumentIds, knownDocumentTypes, routeOwners, contentDir, snippets, apiPlan, api,
     sourceForVariant, knownOperations, relatedApiTargets, guidesByApi, sourceForOperation } = await prepareContentWorkspace({
       base, basePath, config, loaded, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies,
@@ -339,7 +341,7 @@ export async function compile(configFile: string, destination?: string, provenan
   ] : [];
   for (const [operationId, bindings] of Object.entries(operations)) {
     for (const variant of variants) {
-      const inVariant = bindings.filter(b => b.channel === variant.channel && b.version === variant.version && b.language === variant.language);
+      const inVariant = bindings.filter(b => samePublication(b, variant));
       if (inVariant.filter(b => b.type === 'api-reference').length > 1) throw new Error(`Multiple canonical references for ${operationId}`);
     }
   }
@@ -356,14 +358,14 @@ export async function compile(configFile: string, destination?: string, provenan
     if (rule.from.toLowerCase() === '/robots.txt' || /^\/sitemap(?:-\d+)?\.xml$/i.test(rule.from)) throw new Error(`Redirect shadows search discovery: ${rule.from}`);
     const to = rule.to;
     if (!isConfigMapping(to) || typeof to.doc !== 'string' || !to.doc || typeof to.channel !== 'string' || !to.channel || typeof to.version !== 'string' || !to.version || typeof to.language !== 'string' || !to.language) throw new Error(`Redirect ${rule.from} needs an explicit target variant`);
-    const target = docs.get(keyFor(to.doc, { channel: to.channel, version: to.version, language: to.language }));
+    const target = docs.get(keyFor(to.doc, { channel: to.channel, version: to.version, language: to.language, ...(to.product === undefined ? {} : { product: String(to.product) }) }));
     if (!target) throw new Error(`Redirect ${rule.from} targets missing document variant`);
     const status = rule.status ?? 308;
     if (typeof status !== 'number' || ![301, 302, 303, 307, 308].includes(status)) throw new Error(`Redirect ${rule.from} status must be 301, 302, 303, 307, or 308`);
     // The old page's Markdown twin moves too, so its .md URL redirects to the target's twin.
     redirects.push({ from: sourceRoute, to: target.route, markdownFrom: markdownRoute(sourceRoute.replace(/(.)\/+$/, '$1'), basePath), markdownTo: target.markdownRoute, status });
   }
-  const apiSources = [...apiPublications.values()].map(({ apiId, variant, endpoint, referenceUrl, sourceUrl, mediaType }) => ({ apiId, channel: variant.channel, version: variant.version, endpoint: endpoint ?? null, referenceUrl, sourceUrl, mediaType }));
+  const apiSources = [...apiPublications.values()].map(({ apiId, variant, endpoint, referenceUrl, sourceUrl, mediaType }) => ({ apiId, ...(variant.product === undefined ? {} : { product: variant.product }), channel: variant.channel, version: variant.version, endpoint: endpoint ?? null, referenceUrl, sourceUrl, mediaType }));
   let catalog: { linkset: Array<Record<string, unknown>> } | null = null;
   const discoverable = apiSources.filter(item => item.endpoint);
   if (discoverable.length) {
@@ -379,6 +381,7 @@ export async function compile(configFile: string, destination?: string, provenan
   const manifestDependencies = [...new Set([...loaded.dependencies, ...componentPlugins.dependencies, ...externalManifestFiles, ...api.dependencies, ...(metadataProvider ? [metadataProvider.module] : []), ...metadataDependencies, ...(highlighter.dependency ? [highlighter.dependency] : []), ...styleFiles, ...(themeStyleFile ? [themeStyleFile] : []), ...palette.files, ...(search.module ? [search.module] : []), ...previewFiles, ...(customStyleFile ? [customStyleFile] : []), ...(customReaderModule ? [customReaderModule] : []), ...(analyticsModule ? [analyticsModule] : []), ...(mcpAnalyticsModule ? [mcpAnalyticsModule] : []), ...(shareImages.template ? [shareImages.template] : []), ...shareImages.fonts, ...(faviconFile ? [faviconFile] : []), ...heroImages.values(), ...walkthroughSources, ...fontFiles, ...fonts.faces.map(face => face.file), ...scriptFiles, iconLicenseFile, ...[...snippets.values()].map(s => s.file), ...[...docs.values()].map(d => d.file)])].sort();
   const llmsDiscovery = resolveLlmsDiscovery(configField(config.outputs, 'llms'));
   const { manifest, headers, sitemaps } = buildPublicationManifest({
+    configPublications: config.publications,
     fictionalDocuments: new Set(rendered.filter(({ doc }) => fictionalDocument(doc, llmsDiscovery)).map(({ doc }) => doc)),
     configDigest: loaded.digest, synonyms, basePath, publicPath, readerFilters, taxonomy: resolveTaxonomy(configField(config.frontmatter, 'taxonomy')), dependencies: manifestDependencies,
     rendered, resolvedNavigation, cardUses, snippetUses, apiEmbedUses, focusedContracts, operations,

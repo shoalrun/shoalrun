@@ -1,3 +1,4 @@
+import { documentKey } from './publication-identity.js';
 import { validateAuthoringGuidance } from './authoring-guidance.js';
 import { createHash, randomUUID } from 'node:crypto';
 import { chmod, cp, link, lstat, mkdir, mkdtemp, readFile, readdir, realpath, rename, rm, writeFile } from 'node:fs/promises';
@@ -298,7 +299,7 @@ export async function docsApply(planFile: string, configFile: string, checkOnly:
       for (const id of candidateIds) if (!rendered.documents.some(doc => doc.id === id)) throw new Error(`Candidate excluded from rendering: ${id}`);
     }
 
-    const key = (doc: (typeof result.documents)[number]) => `${doc.id}|${doc.variant.channel}|${doc.variant.version}|${doc.variant.language}`;
+    const key = (doc: (typeof result.documents)[number]) => documentKey(doc.id, doc.variant);
     const oldDocs = new Map(before?.documents.map(doc => [key(doc), doc]) ?? []);
     const newDocs = new Map(result.documents.map(doc => [key(doc), doc]));
     const affected = [...new Set([...oldDocs.keys(), ...newDocs.keys()])].filter(id => {

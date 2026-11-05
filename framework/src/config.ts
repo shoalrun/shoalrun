@@ -55,13 +55,14 @@ function merge(base: Tree | undefined, overlay: Tree): Tree {
   return { value: overlay.value, source: { file: overlay.source.file, history: [base.source.file, ...base.source.history] } };
 }
 
-export async function loadConfig(file: string, options: { profile?: string } = {}) {
+export async function loadConfig(file: string, options: { profile?: string; onDependency?: (file: string) => void } = {}) {
   const dependencies = new Set<string>();
   const root = path.resolve(file);
   async function read(current: string, stack: string[], rootFile = false): Promise<Tree> {
     current = path.resolve(current);
     if (stack.includes(current)) throw new ConfigError(`Configuration cycle: ${[...stack, current].join(' -> ')}`);
     dependencies.add(current);
+    options.onDependency?.(current);
     const raw = await readFile(current, 'utf8');
     let parsed: any;
     try { parsed = parseYaml(raw, current); }
@@ -102,7 +103,7 @@ export async function loadConfig(file: string, options: { profile?: string } = {
   const raw = value as Record<string, any>;
   const profileSettings = treeObject(tree.value) ? tree.value.profiles : undefined;
   const manifestNode = profileSettings && treeObject(profileSettings.value) ? profileSettings.value.manifest : undefined;
-  const deployment = await resolveDeploymentProfile(raw.profiles, raw, manifestNode?.source.file ?? root, options.profile);
+  const deployment = await resolveDeploymentProfile(raw.profiles, raw, manifestNode?.source.file ?? root, options.profile, options.onDependency);
   if (deployment) {
     for (const file of deployment.dependencies) dependencies.add(file);
     const node = (value: unknown): Tree => ({ source: { file: deployment.file ?? root, history: [] }, value: Array.isArray(value) ? value.map(node) : object(value) ? Object.fromEntries(Object.entries(value).map(([key, child]) => [key, node(child)])) : value });

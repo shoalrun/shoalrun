@@ -8,7 +8,7 @@ export function canonicalJson(value: unknown): string {
 }
 export type SyncDocument = {
   id: string;
-  variant: { channel: string; version: string; language: string };
+  variant: { product?: string; channel: string; version: string; language: string };
   url: string;
   markdownUrl: string;
   digest: string;
@@ -16,7 +16,7 @@ export type SyncDocument = {
   recordDigest: string;
 };
 export type DocumentSnapshot = { schemaVersion: 1; buildId: string; metadataDigest: string; documents: SyncDocument[] };
-const key = (doc: SyncDocument) => JSON.stringify([doc.id, doc.variant.channel, doc.variant.version, doc.variant.language]);
+const key = (doc: SyncDocument) => JSON.stringify([doc.id, doc.variant.channel, doc.variant.version, doc.variant.language, ...(doc.variant.product === undefined ? [] : [doc.variant.product])]);
 
 export function documentSnapshot(manifest: { documents: unknown; [key: string]: unknown }, buildId: string): DocumentSnapshot {
   const { documents, dependencies, buildId: _buildId, ...metadata } = manifest;
@@ -45,7 +45,7 @@ export function parseDocumentSnapshot(value: unknown): DocumentSnapshot {
   const seen = new Set<string>();
   for (const doc of value.documents) {
     const variant = object(doc) && object(doc.variant) ? doc.variant : {};
-    if (!object(doc) || typeof doc.id !== 'string' || !doc.id.trim() || !object(doc.variant) || ['channel', 'version', 'language'].some(field => typeof variant[field] !== 'string' || !(variant[field] as string).trim()) || !route(doc.url) || !route(doc.markdownUrl) || !(doc.markdownUrl as string).endsWith('.md') || !hex(doc.digest) || !hex(doc.contentDigest) || !hex(doc.recordDigest)) throw new Error('Invalid document sync record');
+    if (!object(doc) || typeof doc.id !== 'string' || !doc.id.trim() || !object(doc.variant) || (variant.product !== undefined && (typeof variant.product !== 'string' || !variant.product.trim())) || ['channel', 'version', 'language'].some(field => typeof variant[field] !== 'string' || !(variant[field] as string).trim()) || !route(doc.url) || !route(doc.markdownUrl) || !(doc.markdownUrl as string).endsWith('.md') || !hex(doc.digest) || !hex(doc.contentDigest) || !hex(doc.recordDigest)) throw new Error('Invalid document sync record');
     const identity = key(doc as SyncDocument);
     if (seen.has(identity)) throw new Error('Duplicate document sync identity');
     seen.add(identity);

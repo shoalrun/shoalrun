@@ -1,10 +1,11 @@
+import { publicationKey } from './publication-identity.js';
 import { createHash } from 'node:crypto';
 import type { Document, NavigationNode, Variant } from './content-source.js';
 import { markdownRoute } from './content-source.js';
 
 export type OperationNavEntry = { id: string; apiId: string; documentId: string; title: string; tag: string; search: string };
 type NavSpec = { id: string; label?: string; tab?: boolean; landing?: string; doc?: string; operation?: string; generated?: 'tags' | 'remaining'; api?: string; tag?: string; search?: string; items?: NavSpec[] };
-const variantKey = (variant: Variant) => `${variant.channel}|${variant.version}|${variant.language}`;
+const variantKey = publicationKey;
 const docKey = (id: string, variant: Variant) => `${id}|${variantKey(variant)}`;
 const tagId = (placeholder: string, tag: string) => `${placeholder}-tag-${createHash('sha256').update(tag).digest('hex').slice(0, 8)}`;
 

@@ -1,0 +1,50 @@
+---
+id: guide.operations
+title: Daily operating checklist
+summary: A shared source page published explicitly into each supported product release.
+slug: /operations
+shared: true
+publications:
+  - { product: payments, channel: production, version: v2 }
+  - { product: payments, channel: production, version: v3 }
+  - { product: reporting, channel: production, version: v1 }
+---
+Run this checklist before closing a reporting period. The same source page serves Payments v2, Payments v3, and Reporting v1; each publication keeps its own links and navigation.
+
+## Before you start
+
+- Confirm the product and release shown in the page header.
+- Check the account and currency used for the day's activity.
+- Keep a list of orders that still need investigation.
+
+## Close the day
+
+1. Review completed payments and unsettled orders.
+2. Compare the settlement total with the matching reporting period.
+3. Record any unresolved discrepancy and assign an owner.
+
+<ForPublication product="payments" version="v2">
+
+### Payments v2 check
+
+Match settlement records using the merchant reference. This instruction belongs only to the Payments v2 publication.
+
+</ForPublication>
+
+<ForPublication product="payments" version="v3">
+
+### Payments v3 check
+
+Match settlement records using the order reference. Use the idempotency key only when investigating retries.
+
+</ForPublication>
+
+<ForFeature allOf="scheduled-exports">
+
+## Check automatic deliveries
+
+Confirm the latest scheduled export arrived and covers the expected period. This section is compiled into Customer A's edition.
+
+</ForFeature>
+
+[Return to this product's getting-started guide](doc:guide.start).

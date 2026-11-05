@@ -147,7 +147,7 @@ test('public content entrypoint bundles for a browser without compiler or Node d
   const result=await build({stdin:{contents:'import {openManifestContentSource,openRestContentSource,mountContent} from "@shoalrun/cli/content"; globalThis.help={openManifestContentSource,openRestContentSource,mountContent};',resolveDir:framework},platform:'browser',format:'esm',bundle:true,write:false,metafile:true});
   const inputs=Object.keys(result.metafile!.inputs).filter(name=>name!=='<stdin>');
   assert.ok(inputs.some(name=>name.endsWith('/content-delivery.js')));
-  assert.ok(inputs.every(name=>/content-(?:delivery(?:-contract|-validation|-transport)?|rest-client|rest-contract|mount)\.js$/.test(name)),inputs.join('\n'));
+  assert.ok(inputs.every(name=>/(?:content-(?:delivery(?:-contract|-validation|-transport)?|rest-client|rest-contract|mount)|publication-identity)\.js$/.test(name)),inputs.join('\n'));
   assert.ok(result.outputFiles[0].text.includes('openManifestContentSource'));
   const pkg=JSON.parse(await readFile(path.join(framework,'package.json'),'utf8')); assert.equal(pkg.exports['./content'],'./dist/content-delivery.js');
 });

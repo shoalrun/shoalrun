@@ -38,6 +38,62 @@ npx --no-install shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 
 
 Stop the existing preview with Ctrl-C before starting the development server on the same port. Choose **Explore the starter**, the first item in the left navigation, to find component examples, diagrams, reader views, themes, and generated API references. The service and API hosts are fictional; replace them before sending requests. Choose `--starter minimal` for a smaller starting point or `--starter api-docs` for a focused OpenAPI example. All three starters build without provider credentials.
 
+## Independently versioned products
+
+Projects can give each product its own version catalog and default version. Product publications carry a product, channel, version, and language; routes, document links, navigation, search, and content exports retain that scope. Existing projects without product catalogs keep their publication identities and routes.
+
+Available since `0.1.0-alpha.18`.
+
+The header publication dropdown groups the published releases by product. It hides language labels when the edition has one language; set `site.publicationSelector.showLanguage: true` or `false` to override that display without changing publication identity.
+
+```yaml
+publications:
+  defaults: { channel: production, language: en }
+  channels:
+    production: {}
+  products:
+    payments:
+      label: Payments
+      pathPrefix: /payments
+      defaultVersion: v3
+      versions:
+        v3: { pathPrefix: /v3 }
+        v2: { pathPrefix: /v2 }
+    reporting:
+      label: Reporting
+      pathPrefix: /reporting
+      defaultVersion: v1
+      versions:
+        v1: { pathPrefix: /v1 }
+  enabled:
+    - { product: payments, channel: production, version: v3 }
+    - { product: payments, channel: production, version: v2 }
+    - { product: reporting, channel: production, version: v1 }
+```
+
+Declare a page's product and version in its frontmatter; omitting its version selects that product's `defaultVersion`. To reuse a source across product releases, list explicit product/channel/version entries in `publications` instead of setting those fields at page level. A page with slug `/setup` in the Payments v3 publication above is published at `/payments/v3/setup`. Product selection does not grant feature access: page-level `requires` and section-level `<ForFeature>` still select content from the customer's feature grants.
+
+An existing customer profile can narrow the shared enabled publications independently for each product:
+
+```yaml
+schemaVersion: 1
+features: [] # Or declare SKU revisions and additional feature grants.
+publications:
+  enabled:
+    - { product: payments, channel: production, version: v3 }
+    - { product: reporting, channel: production, version: v1 }
+```
+
+The shared configuration must declare `profiles.manifest`, which defines the known features and SKU revisions. Each selected publication must be enabled by that configuration. Preview the customer edition directly:
+
+```sh
+npx --no-install shoalrun dev docs.config.yaml site-dist --profile customers/acme.yaml --port 8770
+```
+
+The development server compiles the selected edition and watches its profile, SKU manifest, and declared assets, including files outside the project. Editing the profile rebuilds the edition and removes output that is no longer selected. The preview identifies the last successful edition. If a rebuild fails, it keeps that output and displays the failure on existing and newly opened pages. Reader views remain browsing controls; customer profile selection applies during compilation to HTML, Markdown, navigation, and indexes.
+
+Agents can discover product scopes through MCP `get_publications` before searching. It returns a short, paginated list (20 publications and a 2,048-token budget by default), with only the relevant product labels and defaults. Search results supply scoped read arguments; catalogs are stored once in `documents.json`, rather than repeated in every page. Product-aware content exports use schema version 2; legacy exports remain version 1.
+
 ## Work with an agent
 
 Shoalrun works with your existing coding agent. Its packaged skills explain how to set up a site, edit pages, and develop components:

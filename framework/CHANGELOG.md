@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased
+
+- Add product publication catalogs with independent versions and default
+  versions. Product-aware publications preserve their identity through routes,
+  links, navigation, APIs, search, and content exports. Existing productless
+  publication identities and routes remain compatible.
+- Select product releases independently in customer deployment profiles,
+  alongside existing SKU revisions and feature grants. Continue to apply
+  `requires` and `<ForFeature>` during compilation across emitted content.
+- Accept `dev --profile FILE` to build, serve, and watch a customer edition in
+  one command. Watch external profile inputs, replace output after successful
+  rebuilds, and disclose failed rebuilds while serving the last successful
+  edition. Reload removed pages at the new edition's landing page.
+
+- Add bounded, paginated MCP `get_publications` discovery and retain product
+  coordinates in search read arguments. Emit v2 product content contracts while
+  preserving legacy v1 exports.
+
 ## 0.1.0-alpha.17 — 2026-11-04
 
 - Package hosted Ask and Search without importing source configuration or its

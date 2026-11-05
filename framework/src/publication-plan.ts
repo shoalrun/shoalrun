@@ -1,3 +1,4 @@
+import { documentKey, samePublication } from './publication-identity.js';
 import { hasScaffoldPlaceholders } from './scaffold-placeholders.js';
 import { validateFeatureClassification, matchesFeatures, type FeatureContext } from './deployment-profile.js';
 import { matchesContentFilter } from './content-filter.js';
@@ -8,7 +9,7 @@ import type { PublicationRoutingConfig } from './content-source.js';
 import { applyFormattingLocale, validateFrontmatter } from './frontmatter.js';
 import { mergeProvidedMetadata, type MetadataProvider } from './metadata-provider.js';
 import { pageReaderFilters, type ReaderSelection, type ReaderFiltersConfig } from './reader-filters.js';
-import { configField, type CompilerSiteConfig, type CompilerPublicationsConfig } from './compiler-config.js';
+import { resolvePublication, configField, type CompilerSiteConfig, type CompilerPublicationsConfig } from './compiler-config.js';
 
 export type AuthoredPublicationConfig = PublicationRoutingConfig & { site: CompilerSiteConfig; publications: CompilerPublicationsConfig; frontmatter?: unknown };
 
@@ -21,7 +22,7 @@ export type AuthoredPublicationPlan = {
   routeOwners: Map<string, string>;
 };
 
-const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
+const keyFor = documentKey;
 
 async function files(dir: string): Promise<string[]> {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -67,23 +68,32 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
       return merged.page;
     } : undefined, sourceOverrides?.get(file));
     frontmatter.language ??= language;
+    // A product's release default never comes from the legacy global version.
+    if (config.publications.products && frontmatter.product && !frontmatter.publications) {
+      if (!Object.hasOwn(config.publications.products, frontmatter.product)) throw new Error(`${file}: unknown publication product ${frontmatter.product}`);
+      const enforcedVersion = configField(configField(config.frontmatter, 'enforced'), 'version');
+      if (sourceFrontmatter.version === undefined && enforcedVersion === undefined) frontmatter.version = resolvePublication(config.publications, { ...frontmatter, version: undefined }, language).version;
+      resolvePublication(config.publications, frontmatter, language);
+    }
     applyFormattingLocale(frontmatter, config.frontmatter, sourceFrontmatter);
     validateFrontmatter(frontmatter, config.frontmatter, file, sourceFrontmatter);
     const pagePublications = frontmatter.publications;
     if (pagePublications) {
-      if (sourceFrontmatter.channel !== undefined || sourceFrontmatter.version !== undefined) throw new Error(`${file}: use publications instead of page-level channel or version`);
+      if (sourceFrontmatter.channel !== undefined || sourceFrontmatter.version !== undefined || (config.publications.products && sourceFrontmatter.product !== undefined)) throw new Error(`${file}: use publications instead of page-level channel or version`);
       for (const publication of pagePublications) {
-        if (!config.publications.channels[publication.channel] || !config.publications.versions[publication.version]) throw new Error(`${file}: unknown publication ${publication.channel}/${publication.version}`);
+        resolvePublication(config.publications, publication, language);
         const enforced = configField(config.frontmatter, 'enforced');
-        if (configField(enforced, 'channel') && configField(enforced, 'channel') !== publication.channel || configField(enforced, 'version') && configField(enforced, 'version') !== publication.version) throw new Error(`${file}: publications conflicts with enforced channel or version`);
+        if (configField(enforced, 'channel') && configField(enforced, 'channel') !== publication.channel || configField(enforced, 'version') && configField(enforced, 'version') !== publication.version || config.publications.products && configField(enforced, 'product') && configField(enforced, 'product') !== publication.product) throw new Error(`${file}: publications conflicts with enforced channel or version`);
       }
     }
     knownDocumentIds.add(frontmatter.id);
+    const previousType = knownDocumentTypes.get(frontmatter.id);
+    if (previousType !== undefined && previousType !== frontmatter.type) throw new Error(`${file}: stable document ID ${frontmatter.id} has inconsistent types across publications (${previousType} and ${frontmatter.type})`);
     knownDocumentTypes.set(frontmatter.id, frontmatter.type);
     if (frontmatter.type === 'api-reference') for (const operation of frontmatter.operations ?? []) authoredOperationIds.add(operation);
     const classificationVariants = featureContext?.classificationPublications ?? variants;
     const classificationEligible = frontmatter.access?.policy === 'public' && classificationVariants.some(variant =>
-      (pagePublications ? pagePublications.some(item => item.channel === variant.channel && item.version === variant.version) : frontmatter.channel === variant.channel && frontmatter.version === variant.version) && frontmatter.language === variant.language);
+      (pagePublications ? pagePublications.some(item => samePublication({ ...item, language: frontmatter.language! }, variant)) : samePublication({ channel: frontmatter.channel!, version: frontmatter.version!, language: frontmatter.language!, ...(config.publications.products && frontmatter.product ? { product: frontmatter.product } : {}) }, variant)) && frontmatter.language === variant.language);
     if (classificationEligible) validateFeatureClassification(sourceFrontmatter, featureContext, `${file}: ${frontmatter.id}`);
     const included = matchesFeatures(frontmatter.requires, featureContext, `${file}: ${frontmatter.id}`);
     const decision = featureContext?.decisions.at(-1);
@@ -94,10 +104,10 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
     if (hasScaffoldPlaceholders(body) || /\[\[TODO:[\s\S]*?\]\]/.test(JSON.stringify(frontmatter)) || frontmatter.summary?.startsWith('Draft guide for ')) throw new Error(`${file}: unresolved scaffold placeholders cannot be published`);
     let selectedPublication = false;
     for (const variant of variants) {
-      if (pagePublications ? !pagePublications.some(item => item.channel === variant.channel && item.version === variant.version) : (frontmatter.channel && frontmatter.channel !== variant.channel || frontmatter.version && frontmatter.version !== variant.version)) continue;
+      if (pagePublications ? !pagePublications.some(item => samePublication({ ...item, language: frontmatter.language! }, variant)) : (frontmatter.channel && frontmatter.channel !== variant.channel || frontmatter.version && frontmatter.version !== variant.version || (config.publications.products && frontmatter.product !== variant.product))) continue;
       if (frontmatter.language && frontmatter.language !== variant.language) continue;
       if (!pagePublications && (!frontmatter.channel || !frontmatter.version || !frontmatter.language)) throw new Error(`${file}: resolved frontmatter needs publication channel and version`);
-      const publishedFrontmatter = pagePublications ? { ...frontmatter, channel: variant.channel, version: variant.version } : frontmatter;
+      const publishedFrontmatter = pagePublications ? { ...frontmatter, channel: variant.channel, version: variant.version, ...(variant.product ? { product: variant.product } : {}) } : frontmatter;
       const key = keyFor(frontmatter.id, variant);
       if (docs.has(key)) throw new Error(`Duplicate document identity ${key}`);
       const route = routeFor(publishedFrontmatter, variant, config);

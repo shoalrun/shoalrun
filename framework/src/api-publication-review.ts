@@ -1,3 +1,4 @@
+import { documentKey, publicationKey } from './publication-identity.js';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -6,7 +7,7 @@ import type { prepareContentWorkspace } from './content-workspace.js';
 import type { materializePages } from './page-materialization.js';
 import type { Variant } from './content.js';
 const digest = (value: string) => createHash('sha256').update(value).digest('hex');
-const keyFor = (id: string, variant: Variant) => `${id}|${variant.channel}|${variant.version}|${variant.language}`;
+const keyFor = documentKey;
 export async function reviewApiPublication(configFile: string, apiPlan: Awaited<ReturnType<typeof prepareContentWorkspace>>['apiPlan'], rendered: Awaited<ReturnType<typeof materializePages>>['rendered'], apiEmbedUses: Awaited<ReturnType<typeof materializePages>>['apiEmbedUses'], focusedContracts: Awaited<ReturnType<typeof materializePages>>['focusedContracts'], apiSources: Array<{ apiId: string; sourceUrl: string }>, sourceForOperation: Awaited<ReturnType<typeof prepareContentWorkspace>>['sourceForOperation'], mode?: 'report') {
   const { api, knownOperations, sourceForVariant } = apiPlan;
   // Pin the source bytes and the API selections exposed by public pages. Authored
@@ -21,7 +22,7 @@ export async function reviewApiPublication(configFile: string, apiPlan: Awaited<
     if (!pages.length) continue;
     const bindings = new Map<string, ReturnType<typeof sourceForVariant>>();
     for (const { doc } of pages) {
-      const key = `${doc.variant.channel}|${doc.variant.version}`;
+      const key = doc.variant.product ? publicationKey(doc.variant) : `${doc.variant.channel}|${doc.variant.version}`;
       if (!bindings.has(key)) bindings.set(key, sourceForVariant(apiId, definition, doc.variant));
     }
     const inputs: Array<{ source: string; files: Array<{ path: string; digest: string }> }> = [];
@@ -36,7 +37,7 @@ export async function reviewApiPublication(configFile: string, apiPlan: Awaited<
     const reviewedPages = pages.map(({ doc }) => ({ id: doc.frontmatter.id, url: doc.route, markdownUrl: doc.markdownRoute }));
     const references = pages.filter(({ doc }) => doc.frontmatter.type === 'api-reference').flatMap(({ doc }) =>
       (doc.frontmatter.operations ?? []).filter(id => knownOperations.get(id)?.apiId === apiId).map(id => ({
-        channel: doc.variant.channel, version: doc.variant.version, language: doc.variant.language,
+        ...(doc.variant.product ? { product: doc.variant.product } : {}), channel: doc.variant.channel, version: doc.variant.version, language: doc.variant.language,
         operation: sourceForOperation(id, doc.variant).sourceOperationId
       }))
     ).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));

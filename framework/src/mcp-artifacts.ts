@@ -1,3 +1,4 @@
+import { publicationKey, samePublication } from './publication-identity.js';
 import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -11,8 +12,8 @@ export async function addMcpArtifacts(artifacts: Map<string, string | Buffer>, c
   const mcp = resolveMcp(config.mcp);
   if (!mcp) return;
   const endpoint = `${manifest.basePath}${mcp.path}`;
-  const variant = ['channel', 'version', 'language'].map(key => mcp.publication[key as keyof typeof mcp.publication]).join('|');
-  const selected = rendered.filter(page => ['channel', 'version', 'language'].every(key => page.doc.variant[key as keyof typeof page.doc.variant] === mcp.publication[key as keyof typeof mcp.publication]));
+  const variant = publicationKey(mcp.publication);
+  const selected = rendered.filter(page => samePublication(page.doc.variant, mcp.publication));
   if (!selected.length || selected.some(page => page.doc.frontmatter.access?.policy !== 'public')) throw new Error('mcp.publication must select nonempty, normally published public documentation');
   for (const artifact of artifacts.keys()) {
     const route = artifact.toLowerCase();
@@ -22,7 +23,7 @@ export async function addMcpArtifacts(artifacts: Map<string, string | Buffer>, c
     })) throw new Error(`MCP output route collision: ${artifact}`);
   }
   if (manifest.redirects.some((r: any) => r.from === endpoint || r.markdownFrom === endpoint)) throw new Error('MCP endpoint conflicts with a redirect');
-  const docs = manifest.documents.filter((doc: any) => ['channel', 'version', 'language'].every(key => doc.variant[key] === mcp.publication[key as keyof typeof mcp.publication]));
+  const docs = manifest.documents.filter((doc: any) => samePublication(doc.variant, mcp.publication));
   const inventory: Record<string, string> = {};
   const put = (file: string, value: string | Buffer) => {
     artifacts.set(`${mcpDataPath}/${file}`, value);
@@ -35,7 +36,15 @@ export async function addMcpArtifacts(artifacts: Map<string, string | Buffer>, c
     return { ...doc, markdownBytes: record.markdownBytes, markdownTokens: record.markdownTokens, markdownTokenEncoding: record.markdownTokenEncoding, sections: record.sections };
   }) };
   if (search.documents.some(doc => doc.variant !== variant)) throw new Error('MCP search publication mismatch');
-  put('documents.json', JSON.stringify({ schemaVersion: 1, documents: docs }));
+  const catalog = mcp.publication.product === undefined ? undefined : manifest.publications?.products?.[mcp.publication.product];
+  const scopedProducts = catalog && mcp.publication.product ? { [mcp.publication.product]: {
+    ...(typeof catalog.label === 'string' ? { label: catalog.label } : {}),
+    ...(catalog.defaultVersion === mcp.publication.version ? { defaultVersion: catalog.defaultVersion } : {}),
+    versions: [mcp.publication.version],
+  } } : undefined;
+  put('documents.json', JSON.stringify({ schemaVersion: 1, documents: docs,
+    ...(manifest.publications ? { publications: { enabled: [{ ...mcp.publication }], ...(scopedProducts ? { products: scopedProducts } : {}) } } : {}),
+  }));
   put('search-index.json', JSON.stringify(search));
   for (const doc of docs) for (const resource of [doc, ...doc.sections]) {
     const content = artifacts.get(resource.markdownUrl);

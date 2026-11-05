@@ -1,3 +1,4 @@
+import { parsePublicationKey } from './publication-identity.js';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { phraseMatches, queryUnits, validateSearchSynonyms, type QueryUnit } from './search-synonyms.js';
@@ -5,7 +6,7 @@ import { phraseMatches, queryUnits, validateSearchSynonyms, type QueryUnit } fro
 type SearchSection = { standalone?: boolean; id: string; title: string; markdownUrl: string; markdownBytes: number; markdownTokens: number };
 type SearchDocument = { id: string; url: string; markdownUrl: string; title: string; summary: string; type: string; variant: string; headings: Array<{ id: string; title: string }>; text: string; markdownBytes?: number; markdownTokens?: number; markdownTokenEncoding?: string; sections?: SearchSection[] };
 type SearchIndex = { schemaVersion: number; documents: SearchDocument[]; synonyms?: string[][] };
-export type SearchOptions = { channel?: string; version?: string; language?: string; limit?: number };
+export type SearchOptions = { product?: string; channel?: string; version?: string; language?: string; limit?: number };
 
 const fallbackStopWords = new Set('a an the i me my we our you your how do does can could would should will is are was were be to of in on for with please what where when why which some any each several'.split(' '));
 
@@ -31,16 +32,16 @@ export async function queryBuiltSite(directory: string, query: string, options: 
   if (index?.schemaVersion !== 1 || !Array.isArray(index.documents) || index.documents.some(doc => !doc || typeof doc.id !== 'string' || typeof doc.url !== 'string' || typeof doc.markdownUrl !== 'string' || typeof doc.title !== 'string' || typeof doc.summary !== 'string' || typeof doc.type !== 'string' || typeof doc.variant !== 'string' || typeof doc.text !== 'string' || !Array.isArray(doc.headings) || doc.headings.some(heading => !heading || typeof heading.id !== 'string' || typeof heading.title !== 'string'))) throw new Error('Unsupported or invalid search-index.json');
   const synonyms = validateSearchSynonyms(index.synonyms);
   const matching = index.documents.filter(doc => {
-    const [channel, version, language] = doc.variant.split('|');
-    return (!options.channel || channel === options.channel) && (!options.version || version === options.version) && (!options.language || language === options.language);
+    const { product, channel, version, language } = parsePublicationKey(doc.variant);
+    return (!options.product || product === options.product) && (!options.channel || channel === options.channel) && (!options.version || version === options.version) && (!options.language || language === options.language);
   });
   const variants = [...new Set(matching.map(doc => doc.variant))].sort();
   if (!variants.length) throw new Error('No search documents match the selected publication');
-  if (variants.length > 1) throw new Error(`Search matches multiple publications (${variants.join(', ')}); pass --channel, --version, and --language`);
+  if (variants.length > 1) throw new Error(`Search matches multiple publications (${variants.join(', ')}); pass --product where applicable, --channel, --version, and --language`);
   const terms = queryUnits(query, synonyms);
   if (!terms.length) {
-    const [channel, version, language] = variants[0].split('|');
-    return { status: 'ok', query: query.trim(), publication: { channel, version, language }, total: 0, results: [] };
+    const publication = parsePublicationKey(variants[0]);
+    return { status: 'ok', query: query.trim(), publication, total: 0, results: [] };
   }
   const match = (value: string, unit: QueryUnit) => phraseMatches(value, unit.term) || unit.alternatives.some(term => phraseMatches(value, term));
   // Page titles are short subject labels, often singular. Accept a plain final
@@ -76,10 +77,10 @@ export async function queryBuiltSite(directory: string, query: string, options: 
     const selected = candidates.length === 1 && candidates[0].standalone === true ? candidates[0] : undefined;
     // A complete multiword section-title match outranks incidental page-title words.
     if (meaningful.length >= 2 && candidates.some(candidate => meaningful.every(term => match(candidate.title.toLocaleLowerCase(), term)))) score += 20;
-    const [channel, version, language] = doc.variant.split('|');
+    const { product, channel, version, language } = parsePublicationKey(doc.variant);
     const tokens = selected?.markdownTokens ?? doc.markdownTokens;
     const read = { tool: selected ? 'get_section' : 'get_page', arguments: {
-      id: doc.id, ...(selected ? { section: selected.id } : {}), channel, version, language,
+      id: doc.id, ...(selected ? { section: selected.id } : {}), ...(product === undefined ? {} : { product }), channel, version, language,
       ...(tokens !== undefined ? { maxTokens: Math.min(100_000, Math.max(4096, tokens * 2 + 1024)) } : {}),
     } };
     return [{ score, contentScore, prominentMatches, matched: matched.length, partialMatched: matched.filter(term => !fallbackStopWords.has(term.term)).length, id: doc.id, type: doc.type, title: doc.title, summary: doc.summary, url: section ? `${doc.url}#${section.id}` : doc.url, markdownUrl: selected?.markdownUrl ?? doc.markdownUrl, pageMarkdownUrl: doc.markdownUrl, read, ...(tokens !== undefined ? { markdownTokens: tokens, markdownBytes: selected?.markdownBytes ?? doc.markdownBytes, markdownTokenEncoding: doc.markdownTokenEncoding } : {}), ...(selected || section ? { section: selected?.title ?? section?.title } : {}), snippet: excerpt(doc.text, terms.flatMap(unit => [unit.term, ...unit.alternatives])) }];
@@ -110,6 +111,6 @@ export async function queryBuiltSite(directory: string, query: string, options: 
     }
     return (complete.length ? b.matched - a.matched : b.partialMatched - a.partialMatched) || b.score - a.score || a.title.localeCompare(b.title) || a.id.localeCompare(b.id);
   });
-  const [channel, version, language] = variants[0].split('|');
-  return { status: 'ok', query: query.trim(), publication: { channel, version, language }, total: ranked.length, matchMode: stronger.length ? 'mixed' : complete.length ? 'all' : 'partial', results: ranked.slice(0, limit).map(({ matched, partialMatched, contentScore, prominentMatches, ...result }) => result) };
+  const publication = parsePublicationKey(variants[0]);
+  return { status: 'ok', query: query.trim(), publication, total: ranked.length, matchMode: stronger.length ? 'mixed' : complete.length ? 'all' : 'partial', results: ranked.slice(0, limit).map(({ matched, partialMatched, contentScore, prominentMatches, ...result }) => result) };
 }

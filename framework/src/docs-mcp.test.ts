@@ -17,7 +17,7 @@ for (const mode of ['legacy', 'auto'] as const) test(`MCP stdio ${mode} clients 
   t.after(() => client.close());
   await client.connect(transport);
   const tools = await client.listTools();
-  assert.deepEqual(tools.tools.map(tool => tool.name).sort(), ['get_outline', 'get_page', 'get_section', 'search_docs']);
+  assert.deepEqual(tools.tools.map(tool => tool.name).sort(), ['get_outline', 'get_page', 'get_publications', 'get_section', 'search_docs']);
   assert.ok(tools.tools.every(tool => tool.annotations?.readOnlyHint));
   const search = await client.callTool({ name: 'search_docs', arguments: { query: 'Organize site navigation', maxTokens: 512 } });
   assert.ok(!search.isError);

@@ -61,7 +61,8 @@ export function validateExportTarget(value: unknown, readerFilters?: unknown): E
   };
   let publication: Variant | undefined;
   if (value.publication !== undefined) {
-    if (!isConfigMapping(value.publication) || Object.keys(value.publication).some(key => !['channel', 'version', 'language'].includes(key)) || ['channel', 'version', 'language'].some(key => typeof value.publication === 'object' && (typeof (value.publication as Record<string, unknown>)[key] !== 'string' || !(value.publication as Record<string, string>)[key].trim()))) throw new Error('Export publication needs channel, version, and language');
+    if (!isConfigMapping(value.publication) || Object.keys(value.publication).some(key => !['channel', 'version', 'language', 'product'].includes(key)) || ['channel', 'version', 'language'].some(key => typeof value.publication === 'object' && (typeof (value.publication as Record<string, unknown>)[key] !== 'string' || !(value.publication as Record<string, string>)[key].trim()))) throw new Error('Export publication needs channel, version, and language');
+    if (value.publication.product !== undefined && !nonempty(value.publication.product)) throw new Error('Export publication product must be nonempty text');
     publication = value.publication as Variant;
   }
   if (value.apiReview !== undefined && (!isConfigMapping(value.apiReview) || Object.values(value.apiReview).some(digest => typeof digest !== 'string' || !/^[a-f0-9]{64}$/.test(digest)))) throw new Error('Export apiReview must map API IDs to lowercase SHA-256 digests');

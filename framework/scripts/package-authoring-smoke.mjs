@@ -122,6 +122,50 @@ console.log(JSON.stringify({ pages: project.entries.length, schemaVersion: proje
   assert.equal(deliverySection.ref.sectionId, 'refunds');
   assert.match(await readFile(path.join(deliveryOutput, deliverySection.representations.markdown.path), 'utf8'), /refund/i);
   console.log('Installed content delivery page, section and snippet export: passed.');
+  const productsExample = path.join(consumer, 'products-example');
+  await cp(path.join(installed, 'example-configs/products'), productsExample, { recursive: true });
+  const productsConfig = path.join(productsExample, 'docs.config.yaml');
+  // A single-page export needs an eligible canonical destination for links to
+  // the other published pages. Configure that host only in the isolated copy.
+  await writeFile(productsConfig, (await readFile(productsConfig, 'utf8')).replace('site:\n', 'site:\n  origin: https://docs.example.test\n'));
+  for (const [customer, paymentsVersion, count] of [['a', 'v3', 6], ['b', 'v2', 4]]) {
+    const profile = path.join(productsExample, 'profiles', `customer-${customer}.yaml`);
+    const output = path.join(consumer, `products-${customer}`);
+    const built = JSON.parse(runCli(['build', productsConfig, output, '--profile', profile], consumer));
+    assert.equal(built.documents, count);
+    const productManifest = JSON.parse(await readFile(path.join(output, 'documents.json'), 'utf8'));
+    assert.equal(productManifest.documents.length, count);
+    assert.deepEqual([...new Set(productManifest.documents.map(doc => `${doc.variant.product}/${doc.variant.version}`))].sort(), [`payments/${paymentsVersion}`, 'reporting/v1']);
+    const grants = productManifest.documents.filter(doc => ['guide.priority-settlement', 'guide.scheduled-exports'].includes(doc.id));
+    assert.equal(grants.length, customer === 'a' ? 2 : 0);
+    if (customer === 'b') for (const excluded of ['payments/v3/priority-settlement.md', 'reporting/v1/scheduled-exports.md']) await assert.rejects(readFile(path.join(output, excluded)), { code: 'ENOENT' });
+    assert.throws(() => runCli(['docs', 'read', 'guide.start', '--site', output, '--json'], consumer), 'repeated stable IDs require an unambiguous publication');
+    for (const [product, version] of [['payments', paymentsVersion], ['reporting', 'v1']]) {
+      const selection = ['--product', product, '--channel', 'production', '--version', version, '--language', 'en'];
+      const publication = { product, channel: 'production', version, language: 'en' };
+      const search = JSON.parse(runCli(['search', output, 'Start', ...selection], consumer));
+      assert.deepEqual(search.publication, publication);
+      assert.ok(search.results.some(result => result.id === 'guide.start'));
+      assert.ok(search.results.every(result => result.url.startsWith(`/${product}/${version}/`)));
+      const page = JSON.parse(runCli(['docs', 'read', 'guide.start', '--site', output, '--json', ...selection], consumer));
+      assert.deepEqual(page.publication, publication);
+      assert.equal(page.title, `Start with ${product === 'payments' ? 'Payments' : 'Reporting'} ${version}`);
+      if (customer === 'b') assert.doesNotMatch(page.content, /Receive reports automatically|Settle an eligible payment sooner/);
+    }
+    if (customer === 'a') {
+      const bundle = path.join(consumer, 'product-content-export');
+      runCli(['export', productsConfig, '--profile', profile, '--document', 'guide.start', '--product', 'payments', '--channel', 'production', '--version', 'v3', '--language', 'en', '--public-base', '/help/', '--out', bundle], consumer);
+      const exportedProduct = JSON.parse(await readFile(path.join(bundle, 'manifest.json'), 'utf8'));
+      assert.equal(exportedProduct.schemaVersion, 2);
+      assert.deepEqual(exportedProduct.publication, { product: 'payments', channel: 'production', version: 'v3', language: 'en' });
+      assert.equal(exportedProduct.resources.length, 1);
+      const resource = exportedProduct.resources[0];
+      assert.deepEqual(resource.ref, { kind: 'page', documentId: 'guide.start' });
+      assert.deepEqual(resource.publication, exportedProduct.publication);
+      assert.match(await readFile(path.join(bundle, resource.representations.markdown.path), 'utf8'), /idempotencyKey/);
+    }
+  }
+  console.log('Installed product/customer profiles, scoped search/reads, feature pruning and v2 content export: passed.');
   if (args.includes('--browser')) {
     const browserEnv = { ...env, SHOALRUN_TEST_PACKAGE: installed };
     if (process.env.PUPPETEER_EXECUTABLE_PATH) browserEnv.PUPPETEER_EXECUTABLE_PATH = process.env.PUPPETEER_EXECUTABLE_PATH;
