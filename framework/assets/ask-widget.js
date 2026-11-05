@@ -114,14 +114,28 @@
       if (current?.item && (indent > current.indent || code && current.item.textContent.replace(/\[\d+\]/g, '').trim().endsWith(':'))) current.item.append(node);
       else { lists.length = 0; parent.append(node); }
     };
-    for (const part of text.split(/((?:^[ \t]*)?```[\s\S]*?```)/m)) {
-      if (!part.trim()) continue;
-      if (part.trimStart().startsWith('```')) {
-        const indent = indentOf(part);
-        let code = part.replace(/^[ \t]*```[^\n]*\n?/, '').replace(/\n?[ \t]*```$/, '');
-        if (indent) code = code.replace(new RegExp('^ {0,' + indent + '}', 'gm'), '');
+    // A shorter fence inside an example is literal code, not its closing fence.
+    const parts = [];
+    const openings = /^([ \t]*)(`{3,}|~{3,})[^\n]*\n/gm;
+    let cursor = 0, opening;
+    while ((opening = openings.exec(text))) {
+      const closing = new RegExp('^[ \\t]*' + opening[2][0] + '{' + opening[2].length + ',}[ \\t]*\\r?$', 'gm');
+      closing.lastIndex = openings.lastIndex;
+      const end = closing.exec(text);
+      parts.push({ text: text.slice(cursor, opening.index) });
+      parts.push({ code: text.slice(openings.lastIndex, end ? end.index : text.length).replace(/\r?\n$/, ''), indent: indentOf(opening[1]) });
+      cursor = end ? closing.lastIndex : text.length;
+      openings.lastIndex = cursor;
+    }
+    parts.push({ text: text.slice(cursor) });
+    for (const blockPart of parts) {
+      if (blockPart.code !== undefined) {
+        const { indent } = blockPart;
+        const code = indent ? blockPart.code.replace(new RegExp('^ {0,' + indent + '}', 'gm'), '') : blockPart.code;
         appendBlock(el('pre', {}, el('code', { text: code })), indent, true); continue;
       }
+      const part = blockPart.text;
+      if (!part.trim()) continue;
       for (const block of part.split(/\n{2,}/)) {
         const heading = /^(#{1,6})\s+(.+)$/.exec(block.trim());
         if (heading && !block.trim().includes('\n')) { const node = el(`h${Math.max(2, heading[1].length)}`); inline(node, heading[2], sources); appendBlock(node, indentOf(block)); continue; }
