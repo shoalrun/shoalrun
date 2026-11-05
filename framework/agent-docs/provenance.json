@@ -5,12 +5,12 @@
     "configDigest": "094587e5a7827dd66a59699ef24af45c5f12a1067d1d95fa29eff50d432c2383",
     "buildId": "41390a172a8dbd578761e016a1c5890718f0b06c37f90b40769f585f75fd71ec"
   },
-  "packageIntegrity": "sha512-sTElYym68H5TLlx7j6L4REA42odJTbN07+K81N38ONUrFOrbjteASV61mLf4aXEIUEDmRf3WIktg4UpxA48ZhQ==",
+  "packageIntegrity": "sha512-91enZzr2NCzCFo8OXfEZWjI7SQD+FVlFtEwRD30UKaMD3OBjgVY0wBgZyvVULXMUoZkdbyOj/OpdfDw/Tkk1ww==",
   "compilerPackage": {
     "kind": "reviewed-local-artifact",
     "name": "@shoalrun/cli",
     "version": "0.1.0-alpha.18",
-    "integrity": "sha512-sTElYym68H5TLlx7j6L4REA42odJTbN07+K81N38ONUrFOrbjteASV61mLf4aXEIUEDmRf3WIktg4UpxA48ZhQ=="
+    "integrity": "sha512-91enZzr2NCzCFo8OXfEZWjI7SQD+FVlFtEwRD30UKaMD3OBjgVY0wBgZyvVULXMUoZkdbyOj/OpdfDw/Tkk1ww=="
   },
   "manifestDigest": "b0996def2c34eaafbb41b5ab5b3ca0e78a370a620ffb4b8bfe53bc6248300d05"
 }
