@@ -27,6 +27,13 @@ export function sourceFingerprint(root) {
   return hash.digest('hex');
 }
 const checkpoint = docs => ({ framework: sourceFingerprint(repo), frameworkHead: git(repo, 'rev-parse', 'HEAD'), docs: sourceFingerprint(docs), docsHead: git(docs, 'rev-parse', 'HEAD') });
+export const releaseFrameworkFile = file => file === 'README.md' || /^framework\/(?:package(?:-lock)?\.json|README\.md|CHANGELOG\.md)$/.test(file) || file.startsWith('framework/agent-docs/');
+export function auditReleaseDependencies(frameworkDirectory, docsDirectory, run) {
+  for (const [name, directory] of [['Framework', frameworkDirectory], ['Documentation', docsDirectory]]) {
+    run(`${name} full dependency advisory check`, 'npm', ['audit', '--json'], directory);
+    run(`${name} production dependency advisory check`, 'npm', ['audit', '--omit=dev', '--json'], directory);
+  }
+}
 export function recordSuccessfulCheck(stateFile, name, evidence) {
   const state = json(stateFile);
   if (!['source-checks', 'clean-install', 'site-checks'].includes(name)) throw new Error('Unknown verification phase');
@@ -182,7 +189,7 @@ export async function release(argv = process.argv.slice(2)) {
     });
     return run('Framework regression and skill checks', 'npm', ['run', 'test:compiled']);
   });
-  const frameworkCommit = await step('framework-source', () => commit(repo, `Release ${version}`, file => /^framework\/(?:package(?:-lock)?\.json|README\.md|CHANGELOG\.md|agent-docs\/)/.test(file)));
+  const frameworkCommit = await step('framework-source', () => commit(repo, `Release ${version}`, releaseFrameworkFile));
   const archive = await step('final-package', () => pack('final'));
   verifyArchive(archive.file, archive);
   await step('compiler-equivalence', () => {
@@ -211,8 +218,7 @@ export async function release(argv = process.argv.slice(2)) {
       const response = await fetch('https://registry.npmjs.org/@shoalrun%2fcli', { signal: AbortSignal.timeout(15000) });
       if (!response.ok) throw new Error('Registry unavailable');
     } catch { throw new Error('This environment cannot reach the registry/providers. Run the same release command in a normal terminal; local preparation is saved.'); }
-    run('Full dependency advisory check', 'npm', ['audit', '--json'], path.join(repo, 'framework'));
-    run('Production dependency advisory check', 'npm', ['audit', '--omit=dev', '--json'], path.join(repo, 'framework'));
+    auditReleaseDependencies(path.join(repo, 'framework'), docs, run);
     return run('Build full production documentation', 'npm', ['run', 'docs:build-all'], docs);
   });
   await step('site-checks', () => {

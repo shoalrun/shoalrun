@@ -2,35 +2,62 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createAskHandler } from './ask-handler.js';
 import type { AskResult } from './ask.js';
-import { createSession, turnstileVerifier, turnstileVerifyUrl } from './turnstile.js';
+import { createSession, turnstilePreviewVerifier, turnstileVerifier, turnstileVerifyUrl } from './turnstile.js';
 
 const respond = (body: unknown, status = 200) => async (url: string, init: RequestInit) => { calls.push({ url, body: String(init.body) }); return Response.json(body, { status }); };
 const calls: Array<{ url: string; body: string }> = [];
 
 test('a token is verified with the secret and the caller address, and only success passes', async () => {
   calls.length = 0;
-  const verify = turnstileVerifier({ secret: 'the-secret', fetch: respond({ success: true }) as unknown as typeof fetch });
+  const verify = turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: 'the-secret', fetch: respond({ success: true, hostname: 'docs.example.com' }) as unknown as typeof fetch });
   assert.equal(await verify({ token: 'tok', ip: '203.0.113.9' }), true);
   assert.equal(calls[0].url, turnstileVerifyUrl);
   const form = new URLSearchParams(calls[0].body);
   assert.deepEqual([form.get('secret'), form.get('response'), form.get('remoteip')], ['the-secret', 'tok', '203.0.113.9']);
-  assert.equal(await turnstileVerifier({ secret: 's', fetch: respond({ success: false, 'error-codes': ['timeout-or-duplicate'] }) as unknown as typeof fetch })({ token: 't' }), false);
-  assert.equal(await turnstileVerifier({ secret: 's', fetch: respond({ success: 'true' }) as unknown as typeof fetch })({ token: 't' }), false, 'only the boolean true passes');
+  assert.equal(await turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: 's', fetch: respond({ success: false, 'error-codes': ['timeout-or-duplicate'] }) as unknown as typeof fetch })({ token: 't' }), false);
+  assert.equal(await turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: 's', fetch: respond({ success: 'true' }) as unknown as typeof fetch })({ token: 't' }), false, 'only the boolean true passes');
 });
 
 test('a missing, oversized, or unverifiable token is refused, and an outage refuses too', async () => {
   calls.length = 0;
-  const ok = turnstileVerifier({ secret: 's', fetch: respond({ success: true }) as unknown as typeof fetch });
+  const ok = turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: 's', fetch: respond({ success: true, hostname: 'docs.example.com' }) as unknown as typeof fetch });
   assert.equal(await ok({}), false);
   assert.equal(await ok({ token: '' }), false);
   assert.equal(await ok({ token: 'x'.repeat(3000) }), false);
   assert.equal(calls.length, 0, 'Cloudflare is not asked about a token that cannot be real');
-  assert.equal(await turnstileVerifier({ secret: 's', fetch: respond({}, 500) as unknown as typeof fetch })({ token: 't' }), false);
-  assert.equal(await turnstileVerifier({ secret: 's', fetch: (async () => { throw new Error('offline'); }) as unknown as typeof fetch })({ token: 't' }), false);
-  assert.equal(await turnstileVerifier({ secret: 's', fetch: (async () => new Response('not json')) as unknown as typeof fetch })({ token: 't' }), false);
-  assert.throws(() => turnstileVerifier({ secret: '' }), /needs a secret key/);
+  assert.equal(await turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: 's', fetch: respond({}, 500) as unknown as typeof fetch })({ token: 't' }), false);
+  assert.equal(await turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: 's', fetch: (async () => { throw new Error('offline'); }) as unknown as typeof fetch })({ token: 't' }), false);
+  assert.equal(await turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: 's', fetch: (async () => new Response('not json')) as unknown as typeof fetch })({ token: 't' }), false);
+  assert.throws(() => turnstileVerifier({ allowedHostnames: ['docs.example.com'], secret: '' }), /needs a secret key/);
   const form = new URLSearchParams(calls[calls.length - 1]?.body ?? '');
   assert.equal(form.get('remoteip'), null);
+});
+
+test('successful verification requires an exact configured hostname and the configured action', async () => {
+  const check = (body: unknown, action: string | undefined = 'docs_chat') => turnstileVerifier({ secret: 's', allowedHostnames: ['docs.example.com', 'preview.example.com'], action, fetch: respond(body) as unknown as typeof fetch })({ token: 't' });
+  assert.equal(await check({ success: true, hostname: 'docs.example.com', action: 'docs_chat' }), true);
+  assert.equal(await check({ success: true, hostname: 'preview.example.com', action: 'docs_chat' }), true);
+  assert.equal(await check({ success: true, hostname: 'DOCS.EXAMPLE.COM', action: 'docs_chat' }), true);
+  for (const hostname of [undefined, null, '', 'other.example.com', 'docs.example.com.attacker.example', 'https://docs.example.com', 'docs.example.com:443', '*.example.com', 12]) {
+    assert.equal(await check({ success: true, hostname, action: 'docs_chat' }), false, `reject hostname ${hostname}`);
+  }
+  for (const action of [undefined, '', 'other_action', true]) assert.equal(await check({ success: true, hostname: 'docs.example.com', action }), false);
+  const noAction = turnstileVerifier({ secret: 's', allowedHostnames: ['docs.example.com'], fetch: respond({ success: true, hostname: 'docs.example.com' }) as unknown as typeof fetch });
+  assert.equal(await noAction({ token: 't' }), true, 'an action is checked only when explicitly configured');
+  for (const names of [[], ['*'], ['https://docs.example.com'], ['docs.example.com:443']]) assert.throws(() => turnstileVerifier({ secret: 's', allowedHostnames: names }), /hostnames/i);
+});
+
+test('loopback preview accepts only the published dummy token and testing-key response', async () => {
+  const check = (body: unknown, token = 'XXXX.DUMMY.TOKEN.XXXX') => turnstilePreviewVerifier({ fetch: respond(body) as unknown as typeof fetch })({ token });
+  const actualDummyResponse = { success: true, hostname: 'example.com', metadata: { result_with_testing_key: true } };
+  assert.equal(await check(actualDummyResponse), true, 'the actual dummy response has no action and uses example.com');
+  const form = new URLSearchParams(calls.at(-1)!.body);
+  assert.equal(form.get('secret'), '1x0000000000000000000000000000000AA');
+  assert.equal(await check(actualDummyResponse, 'real-token'), false);
+  assert.equal(await check({ ...actualDummyResponse, hostname: 'production.example.com' }), false);
+  assert.equal(await check({ success: true, metadata: { result_with_testing_key: true } }), false);
+  assert.equal(await check({ success: true, hostname: 'example.com' }), false);
+  assert.equal(await check({ ...actualDummyResponse, success: false }), false);
 });
 
 test('the handler refuses a request that fails the challenge before anything is answered or counted', async () => {
@@ -89,6 +116,17 @@ test('a session pass is signed, expires, is tied to the caller, and cannot be fo
   time += 2_000;
   assert.equal(session.valid(cookie, '203.0.113.9'), false, 'the pass expires');
   assert.throws(() => createSession({ secret: '' }), /needs a secret/);
+});
+
+test('session passes cannot cross a challenge policy boundary or reuse an unbound legacy pass', () => {
+  const make = (context?: string) => createSession({ secret: 'same-widget-secret', context });
+  const policy = JSON.stringify({ version: 1, hostnames: ['docs.example.com'], action: 'docs_chat' });
+  const session = make(policy);
+  const cookie = session.header('caller', true).split(';')[0];
+  assert.equal(make(policy).valid(cookie, 'caller'), true);
+  assert.equal(make(JSON.stringify({ version: 1, hostnames: ['other.example.com'], action: 'docs_chat' })).valid(cookie, 'caller'), false);
+  assert.equal(make(JSON.stringify({ version: 1, hostnames: ['docs.example.com'], action: 'different_action' })).valid(cookie, 'caller'), false);
+  assert.equal(session.valid(make().header('caller', true).split(';')[0], 'caller'), false, 'old secret-only passes must be challenged again');
 });
 
 test('the handler gives a pass after a passed check and lets follow-ups through with it, and refuses a wrong or expired one', async () => {

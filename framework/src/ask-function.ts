@@ -15,6 +15,7 @@ import { createSession, turnstileVerifier, type Session } from './turnstile.js';
 import { envRedis } from './budget-store.js';
 import { pausedKey } from './chat-pause.js';
 import { deleteKvLogRecord, kvLogSink } from './ask-log-kv.js';
+import { turnstileHostnames } from './turnstile-policy.js';
 
 // The answer function for a hosted site. The build writes a directory holding `runtime.json` (the chat and retrieval settings, with no
 // keys) and `site/ai` (the passages and vectors), and this module turns that directory into a Web `Request` to `Response` function. Keys come
@@ -38,7 +39,9 @@ export async function createAskFunction(directory: string, env: NodeJS.ProcessEn
   if (chat.challenge) {
     const secret = env[chat.challenge.secretEnv];
     if (secret) {
-      session = createSession({ secret }); const verify = turnstileVerifier({ secret, ...(send ? { fetch: send } : {}) }); challenge = ({ token, ip }) => verify({ token, ip }); }
+      const allowedHostnames = turnstileHostnames(chat.challenge.hostnames ?? hosts.map(host => new URL(`https://${host}`).hostname), 'Turnstile allowedHostnames');
+      const context = JSON.stringify({ version: 1, hostnames: [...allowedHostnames].sort(), action: chat.challenge.action ?? null });
+      session = createSession({ secret, context }); const verify = turnstileVerifier({ secret, allowedHostnames, ...(chat.challenge.action ? { action: chat.challenge.action } : {}), ...(send ? { fetch: send } : {}) }); challenge = ({ token, ip }) => verify({ token, ip }); }
     else { console.error(`Set ${chat.challenge.secretEnv} to check visitors with Turnstile; every request is refused until then`); challenge = async () => false; }
   } else console.error('chat.challenge is not set, so nothing stops a script from asking questions until the daily caps are spent');
 

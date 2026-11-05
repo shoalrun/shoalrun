@@ -99,6 +99,9 @@ test('chat.challenge names the check, checks nobody until it is needed by defaul
   bad({ ...challenge, when: 'sometimes' }, /when must be adaptive or always/);
   bad({ ...challenge, busyShare: 0 }, /busyShare must be a number above 0/);
   bad({ ...challenge, freeQuestions: -1 }, /freeQuestions must be an integer/);
+  assert.deepEqual(validateChat({ ...base, challenge: { ...challenge, hostnames: ['DOCS.EXAMPLE.COM', 'preview.example.com', 'docs.example.com'], action: 'docs_chat' } })?.challenge, { ...challenge, hostnames: ['docs.example.com', 'preview.example.com'], action: 'docs_chat', when: 'adaptive', freeQuestions: 3, busyShare: 0.5 });
+  for (const hostnames of [[], '*', ['*.example.com'], ['https://docs.example.com'], ['docs.example.com:443'], ['docs.example.com/path'], ['']]) bad({ ...challenge, hostnames }, /hostnames must/);
+  for (const action of ['', 'two words', 'a'.repeat(33), true]) bad({ ...challenge, action }, /action must contain/);
 });
 
 test('chat config rejects bad shapes and never holds a key', () => {

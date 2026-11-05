@@ -40,7 +40,7 @@ import { buildChunkIndex, embeddingInput } from './index-build.js';
 import { createProvider, embedChunkIndex, readEmbeddings } from './embeddings.js';
 import { embeddingProviderConfig, queryProviderConfig, validateRetrieval } from './retrieval-config.js';
 import { defaultLogNotice, validateChat } from './chat-config.js';
-import { createSession, turnstileVerifier } from './turnstile.js';
+import { createSession, turnstilePreviewVerifier } from './turnstile.js';
 import { adaptiveChallenge } from './budget.js';
 import { validateReaderFilters } from './reader-filters.js';
 import { askQuestion } from './ask.js';
@@ -214,7 +214,7 @@ try {
       if (publicPreview) {
         chatConfigForPreview = chatConfig;
         publicSettings = { siteKey: '1x00000000000000000000AA', ...(chatConfig?.challenge?.when === 'always' ? { prewarm: true } : {}), notice: chatConfig?.log?.notice ?? defaultLogNotice, ...(chatConfig?.panel ? { panel: chatConfig.panel } : {}) };
-        const verify = turnstileVerifier({ secret: '1x0000000000000000000000000000000AA' });
+        const verify = turnstilePreviewVerifier();
         challenge = ({ token, ip }) => verify({ token, ip });
       }
       const handler = createAskHandler({ hosts, exposeErrors: true, ...(publicPreview ? { response: 'public' as const, challenge, session: createSession({ secret: '1x0000000000000000000000000000000AA' }), ...(chatConfigForPreview?.challenge?.when === 'always' || !setup.budget ? {} : { challengeNeeded: adaptiveChallenge(setup.budget, { freeQuestions: chatConfigForPreview?.challenge?.freeQuestions, busyShare: chatConfigForPreview?.challenge?.busyShare }) }) } : {}), ...(log ? { record: event => log.write(event) } : {}), ...(setup.budget ? { budget: setup.budget } : {}), answer: (question, history, context) => askQuestion({ question, history, ...setup.options, modelAllowed: context.modelAllowed, signal: context.signal, ...(publicPreview ? { requireCitations: true } : {}) }) });

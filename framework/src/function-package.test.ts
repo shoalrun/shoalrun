@@ -55,6 +55,10 @@ function fakeServices() {
   const calls = { embeddings: 0, chat: 0 };
   const send = async (url: string | URL | Request, options?: RequestInit): Promise<Response> => {
     const address = String(url);
+    if (address === 'https://challenges.cloudflare.com/turnstile/v0/siteverify') {
+      const token = new URLSearchParams(String(options?.body)).get('response');
+      return Response.json({ success: true, hostname: token === 'wrong-host' ? 'other.example.com' : token === 'preview-host' ? 'preview.example.com' : 'docs.example.com', action: token === 'wrong-action' ? 'other_action' : 'docs_chat' });
+    }
     const body = JSON.parse(String(options?.body ?? 'null'));
     if (address === 'http://127.0.0.1:8779/v1/embeddings') {
       calls.embeddings++;
@@ -91,13 +95,14 @@ chat:
   model: test-chat
   baseUrl: http://127.0.0.1:8779/v1
   keyEnv: PACK_TEST_CHAT
+  challenge: { provider: turnstile, siteKey: 0x4AAAAAAFEqp0VO0aJ5DcUi, secretEnv: PACK_TEST_TURNSTILE, when: always, hostnames: [docs.example.com], action: docs_chat }
   budget: { perCaller: 2, perDay: 100, store: { provider: upstash, urlEnv: PACK_TEST_KV_URL, tokenEnv: PACK_TEST_KV_TOKEN } }
 retrieval:
   embeddings: { provider: openai, model: test-embed, dimension: 2, baseUrl: http://127.0.0.1:8779/v1, keyEnv: PACK_TEST_EMBED }
 search:
   limits: { perCallerPerDay: 1, perDay: 100, perCallerPerMinute: 20 }
 `);
-  const values = { PACK_TEST_CHAT: 'fake', PACK_TEST_EMBED: 'fake', PACK_TEST_KV_URL: 'http://127.0.0.1:8779/kv', PACK_TEST_KV_TOKEN: 'fake' };
+  const values = { PACK_TEST_CHAT: 'fake', PACK_TEST_EMBED: 'fake', PACK_TEST_KV_URL: 'http://127.0.0.1:8779/kv', PACK_TEST_KV_TOKEN: 'fake', PACK_TEST_TURNSTILE: 'fake-secret' };
   const before = Object.fromEntries(Object.keys(values).map(key => [key, process.env[key]]));
   Object.assign(process.env, values);
   t.after(() => { for (const [key, value] of Object.entries(before)) if (value === undefined) delete process.env[key]; else process.env[key] = value; });
@@ -108,6 +113,7 @@ search:
   await buildVercel(config, output, {}, { chat: true });
   const search = path.join(output, 'functions/__shoalrun/search.func');
   const ask = path.join(output, 'functions/__shoalrun/ask.func');
+  assert.equal(JSON.parse(await readFile(path.join(output, 'static/__shoalrun/chat.json'), 'utf8')).action, 'docs_chat', 'the widget receives the same expected action as the verifier');
   const runtime = JSON.parse(await readFile(path.join(search, 'runtime.json'), 'utf8'));
   assert.equal(runtime.settings.chat, undefined);
   assert.ok(!JSON.stringify(runtime).includes('PACK_TEST_CHAT'), 'Search must not carry chat-provider configuration');
@@ -119,6 +125,7 @@ import {readFile,writeFile} from 'node:fs/promises';
 import {Readable} from 'node:stream';
 const services = (${fakeServices.toString()})(); globalThis.fetch = services.send;
 const {createAskFunction} = await import(${JSON.stringify(pathToFileURL(path.join(ask, 'lib/ask-function.js')).href)});
+const {createSession} = await import(${JSON.stringify(pathToFileURL(path.join(ask, 'lib/turnstile.js')).href)});
 const {createHostedSearchFunction} = await import(${JSON.stringify(pathToFileURL(path.join(search, 'lib/search-function.js')).href)});
 const ask = await createAskFunction(${JSON.stringify(ask)});
 const search = await createHostedSearchFunction(${JSON.stringify(search)});
@@ -130,13 +137,28 @@ await writeFile(runtimeFile,JSON.stringify({...original,searchStore:undefined,se
 const legacySearch=await createHostedSearchFunction(${JSON.stringify(search)});
 assert.equal((await legacySearch(new Request('https://docs.example.com/__shoalrun/search'))).status,405);
 await writeFile(runtimeFile,JSON.stringify(original));
-const request = (endpoint, body, origin = 'https://docs.example.com') => new Request('https://docs.example.com/__shoalrun/' + endpoint, {method:'POST',headers:{host:'docs.example.com',origin,'content-type':'application/json'},body:JSON.stringify(body)});
+const request = (endpoint, body, origin = 'https://docs.example.com', cookie) => new Request('https://docs.example.com/__shoalrun/' + endpoint, {method:'POST',headers:{host:'docs.example.com',origin,'content-type':'application/json',...(cookie?{cookie}:{})},body:JSON.stringify(body)});
 const query = {query:'handbook',variant:'production|current|en'};
 assert.equal((await (await search(request('search',query))).json()).mode,'vector');
 assert.equal((await (await search(request('search',query))).json()).fallbackReason,'budget-denied');
 assert.equal((await search(request('search',query,'https://other.example'))).status,403);
-const response = await ask(request('ask',{question:'Where is the handbook?'}));
+for(const turnstileToken of [undefined,'wrong-host','wrong-action']) assert.equal((await ask(request('ask',{question:'Where is the handbook?',turnstileToken}))).status,403);
+assert.equal(services.calls.chat,0,'missing or mismatched challenge binding never reaches the model');
+const response = await ask(request('ask',{question:'Where is the handbook?',turnstileToken:'human'}));
 assert.equal(response.status,200); assert.equal(services.calls.chat,1); assert.equal(services.calls.embeddings,2);
+for(const context of [undefined,JSON.stringify({version:1,hostnames:['other.example.com'],action:'docs_chat'}),JSON.stringify({version:1,hostnames:['docs.example.com'],action:'different_action'})]){
+ const cookie=createSession({secret:'fake-secret',context}).header('unknown',true).split(';')[0];
+ assert.equal((await ask(request('ask',{question:'Where is the handbook?'},undefined,cookie))).status,403,'legacy and different-policy cookies do not bypass challenge binding');
+}
+assert.equal((await ask(request('ask',{question:'Where is the handbook?'},undefined,response.headers.get('set-cookie').split(';')[0]))).status,200,'a pass for this exact policy still covers follow-ups');
+const askRuntimeFile=${JSON.stringify(path.join(ask, 'runtime.json'))};
+const askRuntime=JSON.parse(await readFile(askRuntimeFile,'utf8'));
+const envWithPreview={...process.env,VERCEL_URL:'preview.example.com'};
+const previewRequest=()=>new Request('https://preview.example.com/__shoalrun/ask',{method:'POST',headers:{host:'preview.example.com',origin:'https://preview.example.com','content-type':'application/json'},body:JSON.stringify({question:'Where is the handbook?',turnstileToken:'preview-host'})});
+assert.equal((await (await createAskFunction(${JSON.stringify(ask)},envWithPreview))(previewRequest())).status,403,'explicit challenge hostnames can exclude an otherwise allowed deployment host');
+delete askRuntime.settings.chat.challenge.hostnames;
+await writeFile(askRuntimeFile,JSON.stringify(askRuntime));
+assert.equal((await (await createAskFunction(${JSON.stringify(ask)},envWithPreview))(previewRequest())).status,200,'default challenge binding derives exact trusted production and preview hostnames');
 for(const [directory,endpoint] of [[${JSON.stringify(ask)},'ask'],[${JSON.stringify(search)},'search']]){
  const handler=(await import(new URL('index.js','file://'+directory+'/'))).default;
  const request=Readable.from([]);request.method='GET';request.url='/__shoalrun/'+endpoint;request.headers={host:'docs.example.com'};

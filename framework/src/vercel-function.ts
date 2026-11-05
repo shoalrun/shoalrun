@@ -81,7 +81,7 @@ export async function addAskFunction(input: { configFile: string; staticDirector
   await mkdir(shoalrun, { recursive: true });
   const assets = path.join(input.distDirectory ?? path.dirname(fileURLToPath(import.meta.url)), '..', 'assets');
   await cp(path.join(assets, 'ask-widget.js'), path.join(shoalrun, 'ask.js'));
-  await writeFile(path.join(shoalrun, 'chat.json'), JSON.stringify({ ...(chat.challenge ? { siteKey: chat.challenge.siteKey, ...(chat.challenge.when === 'always' ? { prewarm: true } : {}) } : {}), ...(chat.log ? { notice: chat.log.notice } : {}), ...(chat.panel ? { panel: chat.panel } : {}) }, null, 2) + '\n');
+  await writeFile(path.join(shoalrun, 'chat.json'), JSON.stringify({ ...(chat.challenge ? { siteKey: chat.challenge.siteKey, ...(chat.challenge.action ? { action: chat.challenge.action } : {}), ...(chat.challenge.when === 'always' ? { prewarm: true } : {}) } : {}), ...(chat.log ? { notice: chat.log.notice } : {}), ...(chat.panel ? { panel: chat.panel } : {}) }, null, 2) + '\n');
   await addPanelToPages(input.staticDirectory, basePath);
 
   const publications = (settings.publications as { defaults?: { product?: string; channel?: string; version?: string; language?: string } } | undefined)?.defaults;

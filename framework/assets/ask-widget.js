@@ -252,7 +252,7 @@
   });
   const checkVisitor = async () => {
     const turnstile = await loadTurnstile();
-    if (widget === undefined) widget = turnstile.render(challengeBox, { sitekey: hosted.siteKey, appearance: 'interaction-only', execution: 'execute', callback: token => waiter?.resolve(token), 'error-callback': () => waiter?.reject(new Error('The check did not pass.')) });
+    if (widget === undefined) widget = turnstile.render(challengeBox, { sitekey: hosted.siteKey, ...(hosted.action ? { action: hosted.action } : {}), appearance: 'interaction-only', execution: 'execute', callback: token => waiter?.resolve(token), 'error-callback': () => waiter?.reject(new Error('The check did not pass.')) });
     else turnstile.reset(widget);
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => reject(new Error('The check timed out.')), 30000);

@@ -5,10 +5,31 @@ import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { approvalId, requireApproval, publishOnce, deployOnce, verifyArchive, digest, releaseTag, withCompilerLock } from './release-state.mjs';
-import { sourceFingerprint } from './release.mjs';
+import { sourceFingerprint, auditReleaseDependencies, releaseFrameworkFile } from './release.mjs';
 import { execFileSync } from 'node:child_process';
 
 const expected = { version: '0.1.0-alpha.18', integrity: 'sha512-reviewed' };
+test('release commits include versioned root installation instructions but reject unrelated source', () => {
+  for (const file of ['README.md', 'framework/README.md', 'framework/CHANGELOG.md', 'framework/package.json', 'framework/package-lock.json', 'framework/agent-docs/SNAPSHOT.json']) assert.equal(releaseFrameworkFile(file), true, file);
+  for (const file of ['framework/src/cli.ts', 'framework/README.md.backup', 'notes.md', 'package.json']) assert.equal(releaseFrameworkFile(file), false, file);
+});
+test('release dependency audits include docs development tools and stop on an advisory', () => {
+  const calls = [];
+  const audit = (label, command, args, directory) => {
+    calls.push({ command, args, directory });
+    if (directory === '/docs' && !args.includes('--omit=dev')) throw new Error('Docs development dependency advisory');
+  };
+  assert.throws(() => auditReleaseDependencies('/framework', '/docs', audit), /Docs development dependency advisory/);
+  assert.deepEqual(calls, [
+    { command: 'npm', args: ['audit', '--json'], directory: '/framework' },
+    { command: 'npm', args: ['audit', '--omit=dev', '--json'], directory: '/framework' },
+    { command: 'npm', args: ['audit', '--json'], directory: '/docs' },
+  ]);
+  const successful = [];
+  auditReleaseDependencies('/framework', '/docs', (...args) => successful.push(args));
+  assert.equal(successful.length, 4);
+  assert.deepEqual(successful.at(-1).slice(1), ['npm', ['audit', '--omit=dev', '--json'], '/docs']);
+});
 test('local compiler installation uses the committed dependency graph and restores source after failure', t => {
   const root = mkdtempSync(path.join(os.tmpdir(), 'release-lock-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));

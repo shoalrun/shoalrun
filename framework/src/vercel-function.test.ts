@@ -303,7 +303,7 @@ test('with when: always the function checks every visitor with Turnstile, and re
       assert.deepEqual(JSON.parse(await readFile(path.join(output, 'static', '__shoalrun', 'chat.json'), 'utf8')), { siteKey: '1x00000000000000000000AA', prewarm: true, panel: { placeholder: 'Ask about Example' } });
       const func = path.join(output, 'functions', '__shoalrun', 'ask.func');
       const verified: string[] = [];
-      const cloudflare = (async (_url: string, init: RequestInit) => { const token = new URLSearchParams(String(init.body)).get('response') ?? ''; verified.push(token); return Response.json({ success: token === 'human' }); }) as unknown as typeof fetch;
+      const cloudflare = (async (_url: string, init: RequestInit) => { const token = new URLSearchParams(String(init.body)).get('response') ?? ''; verified.push(token); return Response.json({ success: token === 'human', hostname: 'docs.example.com' }); }) as unknown as typeof fetch;
       const post = (fn: (request: Request) => Promise<Response>, body: object, cookie?: string) => fn(new Request('https://docs.example.com/__shoalrun/ask', { method: 'POST', headers: { host: 'docs.example.com', 'content-type': 'application/json', 'x-vercel-forwarded-for': '198.51.100.4', ...(cookie ? { cookie } : {}) }, body: JSON.stringify(body) }));
       await withEnv({ FAKE_TURNSTILE_SECRET: 'turnstile-secret' }, async () => {
         const fn = await createAskFunction(func, process.env, cloudflare);
@@ -410,7 +410,7 @@ test('by default nobody is checked until they have used their free questions, th
       assert.equal((await buildVercel(config, output, {}, { chat: true })).chat?.added, true);
       assert.deepEqual(JSON.parse(await readFile(path.join(output, 'static', '__shoalrun', 'chat.json'), 'utf8')), { siteKey: '1x00000000000000000000AA' }, 'no prewarm in adaptive mode');
       const verified: string[] = [];
-      const cloudflare = (async (_url: string, init: RequestInit) => { const token = new URLSearchParams(String(init.body)).get('response') ?? ''; verified.push(token); return Response.json({ success: token === 'human' }); }) as unknown as typeof fetch;
+      const cloudflare = (async (_url: string, init: RequestInit) => { const token = new URLSearchParams(String(init.body)).get('response') ?? ''; verified.push(token); return Response.json({ success: token === 'human', hostname: 'docs.example.com' }); }) as unknown as typeof fetch;
       const fn = await createAskFunction(path.join(output, 'functions', '__shoalrun', 'ask.func'), process.env, cloudflare);
       const post = (body: object, cookie?: string) => fn(new Request('https://docs.example.com/__shoalrun/ask', { method: 'POST', headers: { host: 'docs.example.com', 'content-type': 'application/json', 'x-vercel-forwarded-for': '198.51.100.4', ...(cookie ? { cookie } : {}) }, body: JSON.stringify(body) }));
       assert.equal((await post({ question: 'where does the handbook start' })).status, 200, 'the first question needs no check');

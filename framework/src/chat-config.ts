@@ -1,5 +1,6 @@
 import { reservedBodyFields, type ChatProviderConfig } from './chat.js';
 import { validateReaderSelection, type ReaderFiltersConfig, type ReaderSelection } from './reader-filters.js';
+import { turnstileHostnames } from './turnstile-policy.js';
 
 // `chat` in docs.config.yaml chooses the service that writes answers for `shoalrun ask` and, later, the chat endpoint. Like
 // `retrieval`, it names no default, and it never holds a key: `keyEnv` names the environment variable that does.
@@ -17,7 +18,7 @@ export type ChatCards = { threshold: number; confirm: number };
 // instances share. The config names the environment variables that hold the address and token, and never the values.
 export type ChatBudgetStore = { provider: 'upstash'; urlEnv: string; tokenEnv: string };
 // The check that stops scripts. The site key is public and goes to the browser; the secret is named by `secretEnv` and never written in config.
-export type ChatChallenge = { provider: 'turnstile'; siteKey: string; secretEnv: string; when: 'adaptive' | 'always'; freeQuestions: number; busyShare: number };
+export type ChatChallenge = { provider: 'turnstile'; siteKey: string; secretEnv: string; hostnames?: string[]; action?: string; when: 'adaptive' | 'always'; freeQuestions: number; busyShare: number };
 // Recording questions on a hosted site. It uses the budget's store. Text is redacted before it is written, and the notice is shown to readers.
 export type ChatLog = { retentionDays: number; maxPerDay: number; answers: boolean; notice: string };
 // The words on the chat panel that a site may change. Each is optional; the panel has its own text for any that are left out.
@@ -229,8 +230,8 @@ export function validateChat(value: unknown, readerFilters?: ReaderFiltersConfig
     const challenge = value.challenge;
     if (!mapping(challenge)) throw new Error('chat.challenge must be a mapping with provider, siteKey, and secretEnv');
     for (const key of Object.keys(challenge)) {
-      if (['provider', 'siteKey', 'secretEnv', 'when', 'freeQuestions', 'busyShare'].includes(key)) continue;
-      throw new Error(/key|secret|token|password/i.test(key) ? `chat.challenge.${key} is not a setting. The config never holds a secret; name the environment variable that does with secretEnv` : `chat.challenge has an unknown setting ${key}; it accepts provider, siteKey, secretEnv, when, freeQuestions, and busyShare`);
+      if (['provider', 'siteKey', 'secretEnv', 'hostnames', 'action', 'when', 'freeQuestions', 'busyShare'].includes(key)) continue;
+      throw new Error(/key|secret|token|password/i.test(key) ? `chat.challenge.${key} is not a setting. The config never holds a secret; name the environment variable that does with secretEnv` : `chat.challenge has an unknown setting ${key}; it accepts provider, siteKey, secretEnv, hostnames, action, when, freeQuestions, and busyShare`);
     }
     if (challenge.provider !== 'turnstile') throw new Error('chat.challenge.provider must be turnstile');
     const siteKey = typeof challenge.siteKey === 'string' ? challenge.siteKey.trim() : '';
@@ -240,6 +241,11 @@ export function validateChat(value: unknown, readerFilters?: ReaderFiltersConfig
     if (challenge.when !== undefined && challenge.when !== 'adaptive' && challenge.when !== 'always') throw new Error('chat.challenge.when must be adaptive or always');
     if (challenge.busyShare !== undefined && (typeof challenge.busyShare !== 'number' || !(challenge.busyShare > 0 && challenge.busyShare <= 1))) throw new Error('chat.challenge.busyShare must be a number above 0 and at most 1');
     result.challenge = { provider: 'turnstile', siteKey, secretEnv, when: challenge.when ?? 'adaptive', freeQuestions: challenge.freeQuestions === undefined ? 3 : integer(challenge.freeQuestions, 'chat.challenge.freeQuestions', 0, 1000), busyShare: challenge.busyShare ?? 0.5 };
+    if (challenge.hostnames !== undefined) result.challenge.hostnames = turnstileHostnames(challenge.hostnames, 'chat.challenge.hostnames');
+    if (challenge.action !== undefined) {
+      if (typeof challenge.action !== 'string' || !/^[A-Za-z0-9_-]{1,32}$/.test(challenge.action)) throw new Error('chat.challenge.action must contain 1 to 32 letters, numbers, underscores, or hyphens');
+      result.challenge.action = challenge.action;
+    }
   }
   if (value.budget !== undefined) {
     if (!mapping(value.budget)) throw new Error('chat.budget must be a mapping with perCaller and perDay');
