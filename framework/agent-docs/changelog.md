@@ -22,6 +22,14 @@ Updates to Shoalrun and its documentation. Each entry identifies the affected ve
 
 ## Latest changes
 
+- 2026-11-05
+
+  Version 0.1.0-alpha.19
+
+  [Branding guidance and safer hosted chat](https://www.shoalrun.com/changelog/branding-security.md)
+
+  Match your documentation to your brand with an agent skill, and bind hosted-chat visitor checks to the intended site.
+
 - 2026-11-04
 
   Version 0.1.0-alpha.17

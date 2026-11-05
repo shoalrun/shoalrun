@@ -116,6 +116,22 @@ chat:
 
 The site key is public and goes in the config. The secret goes in the environment variable. A check that fails, times out, or has no secret refuses the request, so an outage can't let scripts through. Without `chat.challenge`, the function logs a warning, because only the daily caps then stand in the way of a script.
 
+The function also checks the hostname returned by Cloudflare. By default, it accepts the trusted site and deployment hostnames described above, without their ports. Set `hostnames` to an explicit list to narrow that check. Names are exact: don't include a scheme, path, port, or wildcard. Keep the widget's allowed domains in Cloudflare consistent with the addresses you intend to use.
+
+Use `action` when the widget needs to identify this operation. The browser sends it when requesting a token, and the server requires the same value in Cloudflare's verification response:
+
+```yaml title="docs.config.yaml"
+chat:
+  challenge:
+    provider: turnstile
+    siteKey: 0x4AAAAAAAexample
+    secretEnv: TURNSTILE_SECRET_KEY
+    hostnames: [docs.example.com]
+    action: documentation_chat
+```
+
+A missing or mismatched hostname, or a missing or mismatched configured action, refuses the request before answering. Adding a hostname here doesn't authorize incoming requests from that host; the function's host checks still apply.
+
 The default `adaptive` mode requests a challenge when usage crosses a threshold:
 
 - A caller is asked once they have used `freeQuestions` model answers in a day. The default is 3.
@@ -124,15 +140,17 @@ The default `adaptive` mode requests a challenge when usage crosses a threshold:
 
 When challenged, the panel runs the check and resends the question. It shows `Checking that you are a person…` while waiting.
 
-A successful check creates a signed, browser-script-inaccessible cookie tied to the caller’s address. The signing key is derived from the Turnstile secret. The pass lasts 15 minutes, so follow-up questions need no new challenge during that time.
+A successful check creates a signed, browser-script-inaccessible cookie tied to the caller’s address and the hostname/action policy. The signing key is derived from the Turnstile secret and that policy. Changing the policy invalidates existing passes. The pass lasts 15 minutes, so follow-up questions need no new challenge during that time.
 
 | Setting         | What it does                                                                                                                                                            |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hostnames`     | Exact hostnames accepted from token verification. Defaults to the trusted runtime hostnames; an explicit list must be nonempty.                                         |
+| `action`        | Optional operation name sent by the widget and checked by the server. Use 1–32 letters, digits, underscores, or hyphens.                                                |
 | `when`          | `adaptive` (the default) asks only when needed. `always` checks every conversation. It runs in the background when the panel opens, so the first question doesn't wait. |
 | `freeQuestions` | Model answers a caller gets before being asked. The default is 3.                                                                                                       |
 | `busyShare`     | The share of the daily budget at which everyone is asked. A number above 0 and at most 1. The default is 0.5.                                                           |
 
-Cloudflare publishes test keys for development. They work on any address and accept only their own test token, so a test site key needs the matching test secret. Use them for preview deployments, so you never have to register preview addresses.
+Cloudflare publishes test keys for development. A test site key needs the matching test secret. Test responses use synthetic hostname metadata and don't prove a production domain or action. `serve --ask --public-preview` configures its local test expectations for you. For hosted previews with real verification, register the preview hostname in the widget and include it among the function's trusted hosts. Keep test keys and test grants out of production.
 
 ### Record questions
 

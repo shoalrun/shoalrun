@@ -36,7 +36,7 @@ Install an exact version of the alpha and initialize the minimal starter:
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.18
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.19
 npx --no-install shoalrun init .
 ```
 

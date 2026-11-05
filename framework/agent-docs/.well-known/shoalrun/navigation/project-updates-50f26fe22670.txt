@@ -24,13 +24,15 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Smaller hosted search and Ask functions](https://www.shoalrun.com/changelog/2026-11-04-runtime-packaging.md) — ID: change.2026-11-04-runtime-packaging. changelog-entry; 647 tokens. Rebuild hosted docs with alpha.17 to reduce deployment files while keeping semantic search and Ask available.
 
+- [Branding guidance and safer hosted chat](https://www.shoalrun.com/changelog/branding-security.md) — ID: change.branding-security. changelog-entry; 936 tokens. Match your documentation to your brand with an agent skill, and bind hosted-chat visitor checks to the intended site.
+
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 554 tokens. Snapshot previews with coverage and freshness reports.
 
 - [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 468 tokens. Reviewed agent drafts, search improvements, and answer context.
 
 - [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 384 tokens. Project discovery and captured working-tree validation.
 
-- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1337 tokens. Compiler, CLI, and reader changes.
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1407 tokens. Compiler, CLI, and reader changes.
 
 - [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1147 tokens. MCP hosting, analytics, and shared component content.
 

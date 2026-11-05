@@ -22,7 +22,7 @@ Reader filters help visitors browse content. Customer-edition selection happens 
 Use Node.js 22.12 or newer. In your documentation project:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.18
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.19
 npx --no-install shoalrun init my-docs --starter showcase
 npx --no-install shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
 ```

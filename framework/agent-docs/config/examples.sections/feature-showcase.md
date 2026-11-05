@@ -29,7 +29,7 @@ Install Node.js 22.12 or newer and npm before running these commands.
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.18
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.19
 npx --no-install shoalrun init . --starter minimal
 npx --no-install shoalrun build docs.config.yaml site-dist
 npx --no-install shoalrun serve site-dist
@@ -54,7 +54,7 @@ The `showcase` starter provides 18 connected pages. Its component examples cover
 mkdir my-handbook
 cd my-handbook
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.18
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.19
 npx --no-install shoalrun init . --starter showcase
 npx --no-install shoalrun build docs.config.yaml site-dist
 npx --no-install shoalrun serve site-dist

@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "siteBuild": {
     "schemaVersion": 1,
-    "configDigest": "094587e5a7827dd66a59699ef24af45c5f12a1067d1d95fa29eff50d432c2383",
-    "buildId": "41390a172a8dbd578761e016a1c5890718f0b06c37f90b40769f585f75fd71ec"
+    "configDigest": "2a4f31a26f253a82d999fa1ed1d2a1220053ba53bea00435844ec76815e67bfa",
+    "buildId": "3ca70f64a4b3562b2c51fd6a4a6beceb3578705d2fc545b7788589aebd0e6ff5"
   },
-  "packageIntegrity": "sha512-91enZzr2NCzCFo8OXfEZWjI7SQD+FVlFtEwRD30UKaMD3OBjgVY0wBgZyvVULXMUoZkdbyOj/OpdfDw/Tkk1ww==",
+  "packageIntegrity": "sha512-UMknmhUPoDv6tSOUlIjfeEuOHANy/+pEouq8wGEXlAxN9uRaVqcO/bSRcXQkLZvWLIolLcqkFDRjAUzVNimFDA==",
   "compilerPackage": {
     "kind": "reviewed-local-artifact",
     "name": "@shoalrun/cli",
-    "version": "0.1.0-alpha.18",
-    "integrity": "sha512-91enZzr2NCzCFo8OXfEZWjI7SQD+FVlFtEwRD30UKaMD3OBjgVY0wBgZyvVULXMUoZkdbyOj/OpdfDw/Tkk1ww=="
+    "version": "0.1.0-alpha.19",
+    "integrity": "sha512-UMknmhUPoDv6tSOUlIjfeEuOHANy/+pEouq8wGEXlAxN9uRaVqcO/bSRcXQkLZvWLIolLcqkFDRjAUzVNimFDA=="
   },
-  "manifestDigest": "b0996def2c34eaafbb41b5ab5b3ca0e78a370a620ffb4b8bfe53bc6248300d05"
+  "manifestDigest": "2fb2a205cf322384919c7546e0626c42de82c34cfcdc2f5e244c92968993fd03"
 }
