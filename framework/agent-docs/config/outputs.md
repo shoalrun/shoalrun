@@ -17,13 +17,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Output and export
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Configure metadata providers, application exports, Markdown headers, and discovery indexes. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
 
 ## `metadata`
 
-`metadata.provider.module` names an optional local module that exports `provideMetadata(context)`. The module can supply owned page fields to the build. The framework does not run an external vocabulary validator or publish supplied fields automatically. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md) for the return shape and ownership rule.
+`metadata.provider.module` names an optional local module that exports `provideMetadata(context)`. The module can supply owned page fields to the build. The framework doesn't run an external vocabulary validator or publish supplied fields automatically. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md) for the return shape and ownership rule.
 
 ```yaml title="docs.config.yaml"
 metadata:
@@ -37,21 +37,21 @@ The path is relative to the config file that declares it. `provider` accepts onl
 
 Use [resource selectors](https://www.shoalrun.com/content-delivery/select.md) to select pages, approved sections, and named snippet instances.
 
-Optional named targets for `shoalrun export`. They select portable application content independently of website navigation and `site.contentFilter`. The normal website build does not emit export bundles automatically. See [export content into an application](https://www.shoalrun.com/publish/content-export.md).
+Optional named targets for `shoalrun export`. They select portable application content independently of website navigation and `site.contentFilter`. The normal website build doesn't emit export bundles automatically. See [export content into an application](https://www.shoalrun.com/publish/content-export.md).
 
 Each target accepts these fields:
 
-| Field           | Default                                         | Meaning                                                                                                                  |
-| --------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `formats`       | `[markdown, html]`                              | A nonempty unique list of `markdown` and/or `html`.                                                                      |
-| `documents`     | All eligible pages when neither selector is set | Explicit document IDs. Missing, inaccessible, or export-filtered IDs fail. Mutually exclusive with `resources`.          |
-| `resources`     | None                                            | Typed page, section, or snippet selectors. Mutually exclusive with `documents`.                                          |
-| `publication`   | The only enabled publication                    | One complete `{ channel, version, language }` combination. Required when selection is ambiguous.                         |
-| `contentFilter` | None                                            | Optional configured reader facets; every facet must match any listed choice. Unmarked pages do not match.                |
-| `publicBase`    | `/`                                             | Root-relative mount with a trailing slash, such as `/help/`. It locates bundle content and assets in the app.            |
-| `assetRoots`    | Content directory only                          | Extra local asset directories, relative to the declaring config file. Only referenced supported files are copied.        |
-| `notices`       | Renderer notices only                           | Local text or Markdown license/notice files to retain in `NOTICES.txt`. Paths are relative to the declaring config file. |
-| `apiReview`     | Matching API-level approval, if any             | API IDs mapped to reviewed SHA-256 digests for this export selection.                                                    |
+| Field           | Default                                         | Meaning                                                                                                                                            |
+| --------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `formats`       | `[markdown, html]`                              | A nonempty unique list of `markdown` and/or `html`.                                                                                                |
+| `documents`     | All eligible pages when neither selector is set | Explicit document IDs. Missing, inaccessible, or export-filtered IDs fail. Mutually exclusive with `resources`.                                    |
+| `resources`     | None                                            | Typed page, section, or snippet selectors. Mutually exclusive with `documents`.                                                                    |
+| `publication`   | The only enabled publication                    | One complete `{ channel, version, language }` combination. Product-scoped selection also requires `product`. Required when selection is ambiguous. |
+| `contentFilter` | None                                            | Optional configured reader facets; every facet must match any listed choice. Unmarked pages don't match.                                           |
+| `publicBase`    | `/`                                             | Root-relative mount with a trailing slash, such as `/help/`. It locates bundle content and assets in the app.                                      |
+| `assetRoots`    | Content directory only                          | Extra local asset directories, relative to the declaring config file. Only referenced supported files are copied.                                  |
+| `notices`       | Renderer notices only                           | Local text or Markdown license/notice files to retain in `NOTICES.txt`. Paths are relative to the declaring config file.                           |
+| `apiReview`     | Matching API-level approval, if any             | API IDs mapped to reviewed SHA-256 digests for this export selection.                                                                              |
 
 ```yaml
 exports:
@@ -63,6 +63,12 @@ exports:
 
 The export preserves whole-page content, including all reader sections. It flattens interactive components into readable static content and omits website/browser runtimes. Unsupported output, escaping assets, and unavailable document fallbacks fail. `exports` and its target fields are validated for unknown keys.
 
+Since 0.1.0-alpha.18
+
+Upgrade the exporter and content client together to use product-scoped bundles.
+
+For a product release, set `publication: { product: payments, channel: production, version: v3, language: en }`. The complete publication must be enabled by the configuration and any selected customer profile. Each target exports one publication; use separate targets or runs for independent product releases. Product bundles emit v2 manifests; productless bundles keep v1. See the [manifest reference](https://www.shoalrun.com/content-delivery/manifest.md) for the contract.
+
 ## `outputs`
 
 Use `outputs` to configure the HTML, Markdown, discovery, and text artifacts produced by a build.
@@ -72,7 +78,7 @@ Use `outputs` to configure the HTML, Markdown, discovery, and text artifacts pro
 | `markdown.metadata`          | The Markdown twin's YAML header: `format`, `fields`, `addFields`, `removeFields`, `omitNull`, `byType`, and `profiles`. `format` defaults to `none`. See [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md). |
 | `html.shareImages`           | `true`: a generated 1200×630 link-preview image per page. `false` turns them off; a mapping with `template` and `fonts` replaces the design. See [share images and favicon](https://www.shoalrun.com/styling/share-images.md).      |
 | `html.highlighting`          | Code highlighting `provider`, `theme`, and `module`. Defaults to Shiki with the `site` theme, which takes code colors from the palette. See [code blocks](https://www.shoalrun.com/author/components/code-blocks.md).               |
-| `html.navigation.heading`    | Heading above the sidebar filter. Defaults to `Explore`; use nonempty text to replace it or `false` to hide it. Available since `0.1.0-alpha.13`.                                                                                   |
+| `html.navigation.heading`    | Heading above the sidebar filter. Defaults to `Explore`; use nonempty text to replace it or `false` to hide it. Since 0.1.0-alpha.13                                                                                                |
 | `html.navigation.showCounts` | Show page counts beside navigation groups. Defaults to `true`; set `false` to omit them. See [navigation](https://www.shoalrun.com/author/navigation.md).                                                                           |
 | `html.search`                | Search `provider`, `module`, and `index`. See [search](https://www.shoalrun.com/author/search.md).                                                                                                                                  |
 | `text`                       | Ordered frontmatter field paths for `card`, `pageHeader`, `search`, `htmlDescription`, and `socialCard`. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md).                                                 |
@@ -130,7 +136,7 @@ outputs:
 
 ### Agent discovery index
 
-Every published page is included automatically, using its title and frontmatter summary. You do not need to list page IDs. Omit `outputs.llms` for automatic grouping, or choose a bare alphabetical list of links and summaries:
+Every published page is included automatically, using its title and frontmatter summary. You don't need to list page IDs. Omit `outputs.llms` for automatic grouping, or choose a bare alphabetical list of links and summaries:
 
 ```yaml title="docs.config.yaml"
 outputs:

@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Starters and discovery > Example projects
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/config/examples.md)
 
@@ -29,7 +29,7 @@ Install Node.js 22.12 or newer and npm before running these commands.
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.11
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.18
 npx --no-install shoalrun init . --starter minimal
 npx --no-install shoalrun build docs.config.yaml site-dist
 npx --no-install shoalrun serve site-dist

@@ -17,9 +17,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
-This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
+This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun doesn't automatically apply these rules to other projects.
 
 ## Adapt this example
 
@@ -50,11 +50,13 @@ Component references use **Syntax**, **Attributes**, and **HTML, Markdown, and a
 
 Use **Next steps** to continue a task and **Related reading** for supporting reference or explanation. Describe why to follow each link. Keep demo headings separate from the page's instructional outline where possible.
 
-Run customer commands from a project with the pinned npm package installed, using `npx --no-install shoalrun`. Label contributor-only paths and repository scripts explicitly. Do not assume the quickstart compiled a framework checkout. Recipes maintained through composition must declare every required artifact, including a current build before an export.
+Run customer commands from a project with the pinned npm package installed, using `npx --no-install shoalrun`. Label contributor-only paths and repository scripts explicitly. Don't assume the quickstart compiled a framework checkout. Recipes maintained through composition must declare every required artifact, including a current build before an export.
 
-These are editorial shapes, not a reason to add empty boilerplate. Follow the [template rules](https://www.shoalrun.com/author/templates.md) and adapt the outline to the reader's need. Headings in a page body start at level two because the renderer supplies the title. Do not add step numbers to authored headings. For a procedure with titled steps, use the [Steps component](https://www.shoalrun.com/author/components/steps.md); it supplies the numbering in HTML and Markdown.
+These are editorial shapes, not a reason to add empty boilerplate. Follow the [template rules](https://www.shoalrun.com/author/templates.md) and adapt the outline to the reader's need. Headings in a page body start at level two because the renderer supplies the title. Don't add step numbers to authored headings. For a procedure with titled steps, use the [Steps component](https://www.shoalrun.com/author/components/steps.md); it supplies the numbering in HTML and Markdown.
 
 ## Voice and explanations
+
+Use natural contractions such as “don't,” “can't,” “it's,” and “you're.” Keep expanded forms when emphasis or clarity needs them. Preserve exact commands, configuration values, API fields, error messages, and quotations. Vale's `Shoalrun.Contractions` rule flags common expanded forms for review; contractions themselves are accepted.
 
 Address the reader as “you.” Use active voice and concrete verbs. Start a paragraph with its main point, then supply the reason or example needed to understand it. Keep sentences short enough to follow without breaking every thought into a separate paragraph.
 
@@ -71,21 +73,21 @@ Define an unfamiliar term at its first useful appearance, even when the glossary
 
 ## Procedures and examples
 
-Show the starting directory, required inputs, and expected result when a command depends on them. Say which values readers must replace. Keep commands supported by source or verified behavior; do not invent flags to make an example look complete.
+Show the starting directory, required inputs, and expected result when a command depends on them. Say which values readers must replace. Keep commands supported by source or verified behavior; don't invent flags to make an example look complete.
 
 Give each procedure step one purpose. Put the explanation beside the action it supports. Include a check that readers can perform and describe what success looks like. Troubleshooting should identify a symptom, likely cause, and concrete next action.
 
-Examples demonstrate the feature under discussion. Use the smallest example that still shows the important behavior. Preserve required fields, defaults, constraints, and meaningful errors during a rewrite. An example copied from a different page is not evidence that it applies to this task.
+Examples demonstrate the feature under discussion. Use the smallest example that still shows the important behavior. Preserve required fields, defaults, constraints, and meaningful errors during a rewrite. An example copied from a different page isn't evidence that it applies to this task.
 
 ## Ingredients, recipes, and cookbooks
 
 Use a recipe for a task that should participate in the recipe and cookbook features. A recipe can be authored directly; ingredients and a composition spec are optional. Use ingredients when multiple recipes share instructions you want to maintain once. Use a cookbook when readers need help choosing a complete path. See [how these page types fit together](https://www.shoalrun.com/author/recipes.md).
 
-For an ingredient, name what must already be available and what success makes available to the next step. When using `workflow` metadata, keep `inputs` and `outputs` consistent across the recipe and include the required `check`. State a check the reader can perform, such as “the build reports success and both output files exist,” rather than “make sure it works.” Metadata declares handoffs; it does not run commands or verify their results. Keep essential instructions in the body.
+For an ingredient, name what must already be available and what success makes available to the next step. When using `workflow` metadata, keep `inputs` and `outputs` consistent across the recipe and include the required `check`. State a check the reader can perform, such as “the build reports success and both output files exist,” rather than “make sure it works.” Metadata declares handoffs; it doesn't run commands or verify their results. Keep essential instructions in the body.
 
-For a recipe, choose the order deliberately and explain how to recover from a failed step. The published recipe must contain the complete instructions; readers should not need to assemble ingredients themselves. Review assembled drafts before publication. Do not describe passing assembly checks as proof that the procedure succeeds. [Compose and maintain recipes](https://www.shoalrun.com/author/recipe-drafts.md) explains the authoring workflow.
+For a recipe, choose the order deliberately and explain how to recover from a failed step. The published recipe must contain the complete instructions; readers shouldn't need to assemble ingredients themselves. Review assembled drafts before publication. Don't describe passing assembly checks as proof that the procedure succeeds. [Compose and maintain recipes](https://www.shoalrun.com/author/recipe-drafts.md) explains the authoring workflow.
 
-For a cookbook, describe each choice's starting state and outcome. Use single selection for alternative or overlapping paths, such as build versus build-and-audit. Offer multiple selection only when the recipes make sense together. A chooser displays published recipes; it does not deduplicate their steps, connect dependencies, or execute them. If a combined task needs shared setup and explicit handoffs, write one complete recipe for it. [Configure a cookbook](https://www.shoalrun.com/author/cookbooks.md) explains the options.
+For a cookbook, describe each choice's starting state and outcome. Use single selection for alternative or overlapping paths, such as build versus build-and-audit. Offer multiple selection only when the recipes make sense together. A chooser displays published recipes; it doesn't deduplicate their steps, connect dependencies, or execute them. If a combined task needs shared setup and explicit handoffs, write one complete recipe for it. [Configure a cookbook](https://www.shoalrun.com/author/cookbooks.md) explains the options.
 
 Check each ingredient's instructions and each recipe's full outcome. Inspect the cookbook's HTML choices and Markdown recipe links. Keep prerequisites, failure guidance, and success checks readable in both formats.
 
@@ -105,27 +107,40 @@ Choose the structure that helps readers use the information or complete the task
 
 Introduce every table with a sentence explaining what readers should use it for. Never place a table directly after a heading. The formatting check enforces this rule with `DocShape.TableIntroduction`.
 
-Do not hide an essential instruction inside decoration. Every page documenting a component or presentation feature needs an **HTML, Markdown, and agents** section, or an existing clearly named equivalent. Explain what HTML shows or lets readers do, what Markdown retains or omits, and how an agent gets the information needed for the task. Include limitations and keyboard or JavaScript behavior when relevant. Check both rendered outputs.
+Don't hide an essential instruction inside decoration. Every page documenting a component or presentation feature needs an **HTML, Markdown, and agents** section, or an existing clearly named equivalent. Explain what HTML shows or lets readers do, what Markdown retains or omits, and how an agent gets the information needed for the task. Include limitations and keyboard or JavaScript behavior when relevant. Check both rendered outputs.
 
 A page that merely uses a callout, link, or Steps component needs the section only when that use changes access to information. Avoid generic claims that both formats are identical: explain the actual representation. Cookbook pages must distinguish their recipe links from the complete instructions in the linked recipes or a downloaded selection.
 
 ## Feature availability
 
-Use the sentence “Available since `VERSION`.” to record the first package release that supports a feature. Replace `VERSION` with the exact assigned release number, including any prerelease suffix. This is ordinary prose, preserved in HTML and Markdown.
+Use page frontmatter `availability` for a feature's overall version support. HTML uses the same quiet text style as changelog release versions, beside the page dates. Markdown keeps readable availability labels, and `documents.json` retains the authored metadata.
 
-Put the note immediately after the introduction on the feature's main guide and reference page. If only an option or behavior is newer, put its note beside that option or behavior. Add a prerequisite to a how-to only when readers need that version to complete the task.
+```yaml title="Page frontmatter"
+availability:
+  since: 0.1.0-alpha.18
+```
 
-Use the release record or approved release plan as evidence. Never infer the next release number, use `latest`, or publish a placeholder. For coordinated package and documentation releases, add the assigned version before publication. Leave the note out while the release number is undecided; track that work in release preparation.
+Use `through` for the last supported version, or combine `since` and `through` for a range. Both boundaries are inclusive. These are authored version labels: they don't hide a page, select a publication, or compare versions automatically. Omit a boundary when it's unknown.
 
-Keep the original availability version when editing the page. Do not change it to the current release. Link to release notes when readers need migration details, and name the package if the page covers more than one product.
+If only an option or behavior is newer, put a badge beside that option or behavior:
 
-This note describes feature availability. Frontmatter `version` selects a documentation edition, `releaseVersion` identifies a changelog release, and `subjectLifecycle` describes feature status. Do not repurpose those fields or add a badge solely for availability.
+```mdx
+<Badge variant="neutral">Since 0.1.0-alpha.18</Badge>
+```
+
+Keep the availability of the whole feature separate from newer additions. Don't assign the newest option's version to an older guide. Add a prerequisite to a how-to when readers need that version to complete the task.
+
+Use the release record or approved release plan as evidence. Never infer the next release number, use `latest`, or publish a placeholder. For coordinated package and documentation releases, add the assigned version before publication. Leave it out while the release number is undecided; track that work in release preparation.
+
+Keep the original availability version when editing the page. Don't change it to the current release. Link to release notes when readers need migration details, and name the package if the page covers more than one product.
+
+Frontmatter `availability` describes feature support. The `version` field selects a documentation edition, `releaseVersion` identifies a changelog release, and `subjectLifecycle` describes feature status.
 
 ## Evidence and uncertainty
 
-Distinguish implemented behavior, measured observations, and planned work. State a benchmark's inputs and scoring rule before drawing conclusions. A result from one task or model does not establish general reliability.
+Distinguish implemented behavior, measured observations, and planned work. State a benchmark's inputs and scoring rule before drawing conclusions. A result from one task or model doesn't establish general reliability.
 
-When evidence does not specify a fact, say what is missing. An undocumented policy is not proof that no policy exists. Keep a visible TODO in an unpublished draft and record the missing fact for review. Do not remove uncertainty just to clear a style check. Resolve it with evidence before publication.
+When evidence doesn't specify a fact, say what is missing. An undocumented policy isn't proof that no policy exists. Keep a visible TODO in an unpublished draft and record the missing fact for review. Don't remove uncertainty just to clear a style check. Resolve it with evidence before publication.
 
 Preserve stable IDs, routes, publication metadata, and access policy during a prose edit. Use stable document links. Set the edit date without changing an entry's original change date. Report changes to identity, scope, or technical claims explicitly for review.
 
@@ -146,7 +161,7 @@ These pages illustrate specific editorial choices. Copy their approach, then ver
 
 ## Review a draft
 
-Check purpose, organization, definitions, factual support, examples, and the success check. Compare technical details with the original source. Run the compiler and Vale, then inspect HTML and Markdown. This site's Vale configuration enables Voices, Direct, and Shoalrun; those rules catch detectable wording and structure problems. Passing them does not establish factual accuracy or usefulness.
+Check purpose, organization, definitions, factual support, examples, and the success check. Compare technical details with the original source. Run the compiler and Vale, then inspect HTML and Markdown. This site's Vale configuration enables Voices, Direct, and Shoalrun; those rules catch detectable wording and structure problems. Passing them doesn't establish factual accuracy or usefulness.
 
 Give your agent this guide and an example appropriate to the page's purpose. Examples guide structure and tone; verify technical claims against the relevant sources.
 

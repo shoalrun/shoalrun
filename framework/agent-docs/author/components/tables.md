@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Tables
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Ordinary Markdown tables work without a component. For a long table, wrap one table in `<Table>` to add a filter box, sticky column headings, or both in HTML:
 
@@ -65,4 +65,4 @@ Filter this table by a name, environment, or status. Several words must all occu
 
 The filter needs JavaScript. Without it, the filter field stays hidden and all rows remain visible. Sticky headings use CSS and still work without JavaScript. On narrow screens the table scrolls horizontally. Keyboard users can focus the scrollable table region.
 
-The Markdown twin contains all 16 rows as a regular table. Agents and text-only readers do not need the filter to find a row. Use an ordinary Markdown table when these HTML controls are unnecessary.
+The Markdown twin contains all 16 rows as a regular table. Agents and text-only readers don't need the filter to find a row. Use an ordinary Markdown table when these HTML controls are unnecessary.

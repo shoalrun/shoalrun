@@ -15,11 +15,11 @@ date: 2026-10-19
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Experimental visual navigation and taxonomy enforcement
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-19: Visual navigation
 
 **Published: 2026-10-19.**
 
-These October 19 changes cover the documentation site's experimental explorer and taxonomy enforcement in CLI `0.1.0-alpha.3`. This entry does not announce a package release or a verified deployment.
+These October 19 changes cover the documentation site's experimental explorer and taxonomy enforcement in CLI `0.1.0-alpha.3`. This entry doesn't announce a package release or a verified deployment.
 
 ## Explore documentation visually
 
@@ -27,7 +27,7 @@ The site's [experimental explorer](https://www.shoalrun.com/explore.md) provides
 
 Views support zoom and pan, with native browser fullscreen where supported. Fullscreen keeps layout controls visible and makes filters and the relationship key available in expandable panels. The matrix distinguishes source rows from destination columns and offers readable sizing alongside the full overview.
 
-Relationship arrows show direction. Related topics and comparisons apply in both directions. Line patterns, matrix symbols, labels, and a monochrome option supplement color. The sidebar identifies incoming, outgoing, and two-way relationships, their page endpoints, and why they are connected.
+Relationship arrows show direction. Related topics and comparisons apply in both directions. Line patterns, matrix symbols, labels, and a monochrome option supplement color. The sidebar identifies incoming, outgoing, and two-way relationships, their page endpoints, and why they're connected.
 
 Those explanations come from authored `reason` fields in the relationship configuration. The build publishes them in `documents.json`; the explorer makes no model calls and infers no new connections. [Related reading](https://www.shoalrun.com/author/related-reading.md) documents the authoring and validation rules.
 

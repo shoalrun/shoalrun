@@ -17,11 +17,11 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Examples > Cedar Parcel API · styling lab > API reference styling lab
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 > Fictional API example. This page demonstrates documentation features; its operations do not describe a live service.
 
-The Cedar Parcel API is fictional. Its `.example` hosts do not accept requests, and its OpenAPI examples have not been executed. We keep it in the Shoalrun docs to check API reference layouts alongside other pages. It uses the same navigation, search, themes, and Markdown output.
+The Cedar Parcel API is fictional. Its `.example` hosts don't accept requests, and its OpenAPI examples haven't been executed. We keep it in the Shoalrun docs to check API reference layouts alongside other pages. It uses the same navigation, search, themes, and Markdown output.
 
 Use these pages to inspect the hardest layouts:
 
@@ -32,8 +32,8 @@ Use these pages to inspect the hardest layouts:
 - [Get a parcel through the old route](https://www.shoalrun.com/example-api/cedar/get-legacy-parcel-6758d051.md) shows OpenAPI deprecation overriding an extension value.
 - [Parcel delivered event](https://www.shoalrun.com/example-api/cedar/parcel-delivered-7d1ba6db.md) shows an inbound OpenAPI 3.1 webhook with a nested `oneOf` proof.
 
-The source and standalone test project live at `framework/example-configs/reference-stress/` in the repository. The source is not copied into the built site; each operation publishes only its focused contract.
+The source and standalone test project live at `framework/example-configs/reference-stress/` in the repository. The source isn't copied into the built site; each operation publishes only its focused contract.
 
 ## How it works for agents
 
-Every operation has a complete `.md` page and a focused OpenAPI contract. Schema fields remain in Markdown even when their HTML disclosure is closed. The site manifest and search index include these pages, and the reader's theme choice does not change what an agent can read.
+Every operation has a complete `.md` page and a focused OpenAPI contract. Schema fields remain in Markdown even when their HTML disclosure is closed. The site manifest and search index include these pages, and the reader's theme choice doesn't change what an agent can read.

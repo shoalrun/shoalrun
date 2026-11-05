@@ -17,15 +17,15 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Measure MCP tool usage
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
-Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP does not enable tracking, and the browser analytics setting does not count tool calls.
+Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP doesn't enable tracking, and the browser analytics setting doesn't count tool calls.
 
-Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting does not instrument stdio, direct Markdown requests, or browser page views.
+Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting doesn't instrument stdio, direct Markdown requests, or browser page views.
 
 ## Enable analytics
 
-Add your server adapter to the MCP configuration. Readers do not need to change their client settings:
+Add your server adapter to the MCP configuration. Readers don't need to change their client settings:
 
 ```yaml title="docs.config.yaml"
 mcp:
@@ -50,7 +50,7 @@ export async function flush() {
 }
 ```
 
-`capture` runs after each tool call, including failures. `flush` sends queued events before the response completes. Both can be asynchronous. Each has a one-second wait limit; analytics failures leave tool results unchanged. Set network timeouts in your adapter because Shoalrun cannot cancel a timed-out operation.
+`capture` runs after each tool call, including failures. `flush` sends queued events before the response completes. Both can be asynchronous. Each has a one-second wait limit; analytics failures leave tool results unchanged. Set network timeouts in your adapter because Shoalrun can't cancel a timed-out operation.
 
 Module paths resolve relative to the config file. Use static imports and install SDK dependencies in your project. Keep credentials in the server environment, since adapter files are copied into the build.
 
@@ -73,7 +73,7 @@ Every event has the following fields. Arguments, search text, returned content, 
 
 Map these fields to your service’s event and property names. A service with native MCP analytics may require its SDK or reserved event names. A general event service can receive `mcp_tool_call` with these properties. The PostHog example below uses its native MCP SDK.
 
-Tool counts show usage, not comprehension. This adapter supplies no user or conversation identifier, so do not treat calls as unique people or agent sessions. Basic event capture leaves tool definitions and results unchanged. The optional SDK features below add analytics arguments and conversation handles.
+Tool counts show usage, not comprehension. This adapter supplies no user or conversation identifier, so don't treat calls as unique people or agent sessions. Basic event capture leaves tool definitions and results unchanged. The optional SDK features below add analytics arguments and conversation handles.
 
 ## Optionally identify the client and model
 
@@ -91,11 +91,11 @@ mcp:
 
 This option defaults to `false`. Shoalrun recognizes a fixed set of client names from MCP identity metadata or product tokens in selected headers. It discards raw headers and unrelated metadata. Client versions must match a bounded numeric version format.
 
-Model capture currently recognizes `model` in Codex’s `x-codex-turn-metadata`. It accepts labels from a fixed model-name registry, normalizes supported provider prefixes, and drops other values. A recognized family prefix alone does not qualify; custom deployment names and unknown models are omitted. Other clients may supply no supported model field; missing labels remain absent. The harness name does not establish which model it uses.
+Model capture currently recognizes `model` in Codex’s `x-codex-turn-metadata`. It accepts labels from a fixed model-name registry, normalizes supported provider prefixes, and drops other values. A recognized family prefix alone doesn't qualify; custom deployment names and unknown models are omitted. Other clients may supply no supported model field; missing labels remain absent. The harness name doesn't establish which model it uses.
 
 Both labels are unverified client claims. Use them for usage reports, never authentication, access control, or billing. No user fingerprint or cross-request identity cache is added.
 
-OpenCode can also be recognized by the presence of its documented session metadata marker. Shoalrun discards that identifier; it records only the client label. Client-specific markers do not establish the model.
+OpenCode can also be recognized by the presence of its documented session metadata marker. Shoalrun discards that identifier; it records only the client label. Client-specific markers don't establish the model.
 
 ## Optionally collect intent and group calls
 
@@ -115,7 +115,7 @@ mcp:
 
 With intent enabled, the SDK adds a `context` argument asking for exactly one category: `discovery`, `setup`, `troubleshooting`, `configuration`, `reference_lookup`, `comparison`, `migration`, or `other`. Only these values can reach analytics. The adapter trims whitespace and normalizes case; it never stores an explanation or extracts a category from arbitrary text.
 
-An empty, invalid, or free-text value falls back to `discovery` for `search_docs` or `reference_lookup` for reading tools. PostHog marks the fallback as `inferred`. It describes the tool action, not a verified user goal, and does not invoke a model. Accepted client categories are also unverified claims.
+An empty, invalid, or free-text value falls back to `discovery` for `search_docs` or `reference_lookup` for reading tools. PostHog marks the fallback as `inferred`. It describes the tool action, not a verified user goal, and doesn't invoke a model. Accepted client categories are also unverified claims.
 
 The SDK still accepts a string argument, so an agent might send private text despite the instruction. The outbound allowlist replaces that text before delivery. Raw queries, complete arguments, and returned documentation remain excluded.
 
@@ -135,11 +135,11 @@ The PostHog example builds each outbound event from allowed fields. It includes 
 
 The adapter drops raw arguments, search text, responses, headers, IP properties, error messages, and arbitrary event fields. It disables exception autocapture, requests no person profiles, and disables GeoIP enrichment. These controls apply to analytics delivery, not the documentation response or infrastructure access logs.
 
-Conversation and session IDs support grouping when enabled. They are pseudonymous identifiers, not proof that data is anonymous or that a particular person made the call. Leave grouping off when aggregate tool counts are enough. Never use client labels or intent categories for authentication or billing.
+Conversation and session IDs support grouping when enabled. They're pseudonymous identifiers, not proof that data is anonymous or that a particular person made the call. Leave grouping off when aggregate tool counts are enough. Never use client labels or intent categories for authentication or billing.
 
 Check PostHog’s **Settings → Project → IP data capture configuration → Discard client IP data** setting as an additional storage control. A network service still receives the source IP of its connection; this server adapter must not forward the caller’s IP. Hosting logs and other services need their own review. See [PostHog storage controls](https://posthog.com/docs/privacy/data-storage).
 
-Test the final delivered payload with a local receiver before changing the adapter or upgrading its SDK. Include names, emails, credentials, URLs, and private text in test arguments and metadata; verify they are absent from captured events. Public page IDs remain useful for usage analysis without recording the agent’s search or explanation. These safeguards do not establish a legal basis for collection or guarantee that all infrastructure stores no personal data.
+Test the final delivered payload with a local receiver before changing the adapter or upgrading its SDK. Include names, emails, credentials, URLs, and private text in test arguments and metadata; verify they're absent from captured events. Public page IDs remain useful for usage analysis without recording the agent’s search or explanation. These safeguards don't establish a legal basis for collection or guarantee that all infrastructure stores no personal data.
 
 ## Example: PostHog MCP analytics
 
@@ -341,7 +341,7 @@ This example sends native `$mcp_tool_call` events through [PostHog’s MCP analy
 
    Rebuild and serve the site, or generate its Vercel output as described in the [MCP guide](https://www.shoalrun.com/publish/mcp.md). Connect a client and call `get_page` for a known ID. In PostHog’s activity feed, filter for `$mcp_tool_call`; inspect the tool name, duration, outcome, and `page_id`.
 
-   You can test on localhost with a development project or a local ingestion receiver. Without identity or conversation tracking, this example does not correlate requests into agent sessions. With basic capture, no prompts or tools are added. When client metadata is available, inspect `$mcp_client_name` and `$mcp_llm_model`; their source and verification properties identify them as claims.
+   You can test on localhost with a development project or a local ingestion receiver. Without identity or conversation tracking, this example doesn't correlate requests into agent sessions. With basic capture, no prompts or tools are added. When client metadata is available, inspect `$mcp_client_name` and `$mcp_llm_model`; their source and verification properties identify them as claims.
 
    To stop collection, remove `mcp.analytics` or set it to `false`, rebuild, and restart the serving process or redeploy.
 

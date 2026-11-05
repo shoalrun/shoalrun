@@ -16,11 +16,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Timelines
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<Timeline>` to show progress through an ordered set of milestones. Set `current` to the `id` of the milestone in progress. Earlier milestones become complete; later milestones become upcoming.
 
-This is a **read-only progress display**. Readers can see the current stage, but they cannot mark milestones complete or move the bar. Update `current` in the source and rebuild the site when the shared process advances. Links inside milestone content work normally.
+This is a **read-only progress display**. Readers can see the current stage, but they can't mark milestones complete or move the bar. Update `current` in the source and rebuild the site when the shared process advances. Links inside milestone content work normally.
 
 ## When to use it
 

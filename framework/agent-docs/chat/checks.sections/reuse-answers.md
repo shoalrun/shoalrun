@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -37,12 +37,12 @@ Citations and code are checked by default. Coverage gating, claim verification, 
 
 People ask the same questions. With `chat.cache`, `serve --ask` keeps recent answers in memory and returns a stored one when the same question comes back, with no model call. The question is compared after ignoring case, extra spaces, and closing punctuation, and separately for each publication and reader view.
 
-Only an answer that passed every check is stored. A hedged answer, a declined one, and one with a flagged sentence, flagged code, or an invented citation are not. A follow-up is never stored and never served from the cache, because its meaning depends on the conversation.
+Only an answer that passed every check is stored. A hedged answer, a declined one, and one with a flagged sentence, flagged code, or an invented citation aren't. A follow-up is never stored and never served from the cache, because its meaning depends on the conversation.
 
 A cache entry is removed when:
 
-- It is older than `ttlMinutes`.
-- The cache is full and it is the least recently used entry.
+- It's older than `ttlMinutes`.
+- The cache is full and it's the least recently used entry.
 - A source passage shown to the model has changed.
 
 The local panel labels reused answers with "from the answer cache".

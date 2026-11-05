@@ -17,11 +17,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content client API
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.13.**
 
 Import the browser-safe delivery API from `@shoalrun/cli/content`. It reads exports and mounts trusted HTML without loading the compiler. Browser use requires HTTPS or localhost for Web Crypto.
-
-Available since `0.1.0-alpha.13`.
 
 ## Open a source
 
@@ -50,19 +50,32 @@ openRestContentSource(options): Promise<ContentSnapshot>
 
 `RestContentSourceOptions` accepts `baseUrl`, a required `{ channel, version, language }` publication, and an optional `revision`. It also accepts the same `fetch`, `signal`, and `limits` options as the manifest source. `limits.manifestBytes` bounds the JSON inventory response. Opening fetches that inventory and pins subsequent reads to its revision.
 
-Browser URLs must share the application's origin. Outside a browser, provide an absolute HTTP(S) URL. The base URL must omit credentials, query strings, and fragments. `contentResourceKey(ref)` returns a REST resource key; it is distinct from the local comparison key returned by `contentRefKey(ref)`. See the [HTTP reference](https://www.shoalrun.com/content-delivery/http-api.md) for routes and response types.
+Since 0.1.0-alpha.18
+
+Upgrade the exporter and content client together to use product-scoped bundles.
+
+For a product-scoped source, pass `{ product, channel, version, language }` as `publication`. The client sends `product` on inventory and resource requests and rejects responses for a different product. Productless responses use envelope `schemaVersion: 1`; product responses use `schemaVersion: 2`. Both use the `/content/v1` protocol path.
+
+```ts
+const snapshot = await openRestContentSource({
+  baseUrl: '/content/v1',
+  publication: { product: 'payments', channel: 'production', version: 'v3', language: 'en' },
+});
+```
+
+Browser URLs must share the application's origin. Outside a browser, provide an absolute HTTP(S) URL. The base URL must omit credentials, query strings, and fragments. `contentResourceKey(ref)` returns a REST resource key; it's distinct from the local comparison key returned by `contentRefKey(ref)`. See the [HTTP reference](https://www.shoalrun.com/content-delivery/http-api.md) for routes and response types.
 
 ## Read a snapshot
 
 A snapshot exposes the following members for one opened revision.
 
-| Member                          | Contract                                            |
-| ------------------------------- | --------------------------------------------------- |
-| `revision`                      | Opened manifest digest                              |
-| `publication`                   | Channel, version, and language                      |
-| `list()`                        | Read-only resource metadata for this revision       |
-| `get(ref, { format, signal? })` | Promise for a checked HTML or Markdown result       |
-| `dispose()`                     | Cancel the snapshot lifetime and refuse later reads |
+| Member                          | Contract                                                                        |
+| ------------------------------- | ------------------------------------------------------------------------------- |
+| `revision`                      | Opened manifest digest                                                          |
+| `publication`                   | Channel, version, and language; product-scoped snapshots also include `product` |
+| `list()`                        | Read-only resource metadata for this revision                                   |
+| `get(ref, { format, signal? })` | Promise for a checked HTML or Markdown result                                   |
+| `dispose()`                     | Cancel the snapshot lifetime and refuse later reads                             |
 
 ```ts
 type ContentRef =
@@ -71,9 +84,9 @@ type ContentRef =
   | { kind: 'snippet'; id: string };
 ```
 
-`list()` is synchronous because opening a source loads and freezes its metadata. Each `get()` fetches and checks UTF-8, media type, byte count, and SHA-256 against that revision; the client does not cache response bodies. `dispose()` is idempotent, aborts active reads, and makes later `list()` and `get()` calls fail. The opening signal affects only opening; use the per-read signal or `dispose()` for subsequent reads.
+`list()` is synchronous because opening a source loads and freezes its metadata. Each `get()` fetches and checks UTF-8, media type, byte count, and SHA-256 against that revision; the client doesn't cache response bodies. `dispose()` is idempotent, aborts active reads, and makes later `list()` and `get()` calls fail. The opening signal affects only opening; use the per-read signal or `dispose()` for subsequent reads.
 
-A `ContentResult` contains `resource`, `representation`, `format`, `content`, and `revision`. `contentRefKey(ref)` returns a key for comparing typed references. It is not a URL or authorization decision.
+A `ContentResult` contains `resource`, `representation`, `format`, `content`, and `revision`. `contentRefKey(ref)` returns a key for comparing typed references. It isn't a URL or authorization decision.
 
 ## Validate a manifest
 
@@ -81,7 +94,7 @@ A `ContentResult` contains `resource`, `representation`, `format`, `content`, an
 validateContentManifest(value, maxResources = 10_000, maxResourceBytes = 8_000_000): asserts value is ContentManifest
 ```
 
-This exported helper checks structure, inventory limits, and approved review metadata. It does not fetch files or verify the manifest digest. Use `openManifestContentSource` for the complete loading and integrity checks. See the [manifest reference](https://www.shoalrun.com/content-delivery/manifest.md) for `ContentResource`, `ContentRepresentation`, `ContentAnchor`, and `ContentLink` fields.
+This exported helper checks structure, inventory limits, and approved review metadata. It doesn't fetch files or verify the manifest digest. Use `openManifestContentSource` for the complete loading and integrity checks. See the [manifest reference](https://www.shoalrun.com/content-delivery/manifest.md) for `ContentResource`, `ContentRepresentation`, `ContentAnchor`, and `ContentLink` fields.
 
 ## Mount HTML
 
@@ -91,7 +104,7 @@ mountContent(container, result, { instanceId?, signal? })
 
 The result must be HTML from a trusted export. Mounting replaces the container's children, assigns instance-specific DOM IDs, and rewrites local ID references. The returned `ContentMount` contains `anchors`, `links`, and `unmount()`. See [render content](https://www.shoalrun.com/content-delivery/render.md) for ownership and routing.
 
-`instanceId` is optional; the default uses a random UUID. A supplied ID must start with an ASCII letter and contain at most 128 letters, numbers, underscores, or hyphens. Use a different ID for each simultaneous mount. `anchors` maps original anchor IDs to mounted DOM IDs, while `links` carries routing metadata. `signal` cancels before insertion; aborting it after mounting does not remove content. Call `unmount()` to remove only nodes still owned by that mount.
+`instanceId` is optional; the default uses a random UUID. A supplied ID must start with an ASCII letter and contain at most 128 letters, numbers, underscores, or hyphens. Use a different ID for each simultaneous mount. `anchors` maps original anchor IDs to mounted DOM IDs, while `links` carries routing metadata. `signal` cancels before insertion; aborting it after mounting doesn't remove content. Call `unmount()` to remove only nodes still owned by that mount.
 
 ## Errors
 
@@ -115,7 +128,7 @@ Cancellation can propagate the signal's abort reason instead of a `ContentDelive
 
 ## HTML, Markdown, and agents
 
-The same typed reference selects either available representation. HTML mounting is optional and separate from retrieval. Agents can read Markdown and metadata through the client without a DOM. Digests detect mismatched bytes; they do not establish that an unknown publisher's content is trustworthy.
+The same typed reference selects either available representation. HTML mounting is optional and separate from retrieval. Agents can read Markdown and metadata through the client without a DOM. Digests detect mismatched bytes; they don't establish that an unknown publisher's content is trustworthy.
 
 ## Related reading
 

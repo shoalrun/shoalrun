@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Related reading
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/related-reading.md)
 
@@ -27,7 +27,7 @@ A relationship is an authored connection between two pages, with a reason to fol
 
 The **Why they’re connected** text in this site's [documentation explorer](https://www.shoalrun.com/explore.md) comes directly from the relationship's authored `reason` field. Authors maintain that text in `docs/config/relationships.yaml`. The build validates each relationship and publishes its reason in the `relationships` array in `documents.json`. The explorer reads that manifest and displays the explanation.
 
-Opening the graph, selecting a page, or inspecting a matrix cell makes no model calls. The explorer does not infer connections or generate explanations from page content. Relationship types, direction, and reasons come from the declared configuration; page titles and summaries come from document metadata.
+Opening the graph, selecting a page, or inspecting a matrix cell makes no model calls. The explorer doesn't infer connections or generate explanations from page content. Relationship types, direction, and reasons come from the declared configuration; page titles and summaries come from document metadata.
 
 Write a reason that tells readers what the connected page helps them do or understand. Prefer a concrete explanation such as “Inspect the HTML, Markdown, and manifests produced by the build” over “These pages are related.” For two-way relationships, write text that works from either page. The `reason` field is required by relationship validation.
 

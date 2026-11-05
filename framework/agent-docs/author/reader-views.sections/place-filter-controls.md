@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/reader-views.md)
 
@@ -40,4 +40,4 @@ Authors can place the same controls inside a page:
 
 `select` allows one choice per facet and includes **All**. `checks` allows multiple choices and includes **Show all** and **Copy view link**. `<ReaderFilter />` controls every facet. The component is interactive in HTML and omitted from the Markdown twin; marked content and `ReaderChoice` links remain in Markdown.
 
-Set `scope="page"` on an in-page `ReaderChoice` or `ReaderFilter` to control only marked sections and cards on the current page. The site-wide choice still controls navigation and search. Page-only choices use the `pageView` URL parameter for sharing; they do not enter local storage. With no page-only choice, the page follows the site view. A page-scoped multi-select includes **Follow site view** to return to that state. The default scope is `site`.
+Set `scope="page"` on an in-page `ReaderChoice` or `ReaderFilter` to control only marked sections and cards on the current page. The site-wide choice still controls navigation and search. Page-only choices use the `pageView` URL parameter for sharing; they don't enter local storage. With no page-only choice, the page follows the site view. A page-scoped multi-select includes **Follow site view** to return to that state. The default scope is `site`.

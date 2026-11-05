@@ -16,9 +16,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Fields
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-Use `<Fields>` and `<Field>` to describe fields that are not selected from an OpenAPI schema, or to explain a small task-specific subset in your own words. The list uses the same field styling as generated schemas. If the exact contract already exists in OpenAPI, [ApiSchema](https://www.shoalrun.com/author/components/api-embeds.md) can include the source schema or one of its fields.
+Use `<Fields>` and `<Field>` to describe fields that aren't selected from an OpenAPI schema, or to explain a small task-specific subset in your own words. The list uses the same field styling as generated schemas. If the exact contract already exists in OpenAPI, [ApiSchema](https://www.shoalrun.com/author/components/api-embeds.md) can include the source schema or one of its fields.
 
 ## Syntax
 
@@ -73,22 +73,22 @@ Use a shorter layout.
 
 ### Attribute reference
 
-All values are literal MDX attributes. Text and numbers use quoted strings; flags are bare attributes. These declarations describe fields in the published page. They do not validate user input at runtime.
+All values are literal MDX attributes. Text and numbers use quoted strings; flags are bare attributes. These declarations describe fields in the published page. They don't validate user input at runtime.
 
-| `Field` attribute        | Required | Meaning                                                                             |
-| ------------------------ | -------- | ----------------------------------------------------------------------------------- |
-| `name`                   | Yes      | Nonempty field name.                                                                |
-| `type`                   | Yes      | Nonempty type label, such as `string`, `integer`, or `array of objects`.            |
-| `required`, `optional`   | No       | Bare presence flags. Omission means optional; the two flags cannot appear together. |
-| `nullable`               | No       | Bare flag allowing a `null` value. It does not change whether the field is present. |
-| `min`, `max`             | No       | Finite numeric value bounds; `minimum` and `maximum` are equivalent spellings.      |
-| `minLength`, `maxLength` | No       | Nonnegative integer string-length bounds.                                           |
-| `minItems`, `maxItems`   | No       | Nonnegative integer array-size bounds.                                              |
-| `format`, `pattern`      | No       | Nonempty text for a format name or pattern.                                         |
-| `example`, `default`     | No       | Literal text shown as an example or default value.                                  |
-| `deprecated`             | No       | Bare flag marking the field as deprecated.                                          |
+| `Field` attribute        | Required | Meaning                                                                            |
+| ------------------------ | -------- | ---------------------------------------------------------------------------------- |
+| `name`                   | Yes      | Nonempty field name.                                                               |
+| `type`                   | Yes      | Nonempty type label, such as `string`, `integer`, or `array of objects`.           |
+| `required`, `optional`   | No       | Bare presence flags. Omission means optional; the two flags can't appear together. |
+| `nullable`               | No       | Bare flag allowing a `null` value. It doesn't change whether the field is present. |
+| `min`, `max`             | No       | Finite numeric value bounds; `minimum` and `maximum` are equivalent spellings.     |
+| `minLength`, `maxLength` | No       | Nonnegative integer string-length bounds.                                          |
+| `minItems`, `maxItems`   | No       | Nonnegative integer array-size bounds.                                             |
+| `format`, `pattern`      | No       | Nonempty text for a format name or pattern.                                        |
+| `example`, `default`     | No       | Literal text shown as an example or default value.                                 |
+| `deprecated`             | No       | Bare flag marking the field as deprecated.                                         |
 
-Bounds must be numeric, and each minimum must be no greater than its maximum. `min` cannot be combined with `minimum`, nor `max` with `maximum`. Keep the declared type, constraints, and examples consistent with the actual contract.
+Bounds must be numeric, and each minimum must be no greater than its maximum. `min` can't be combined with `minimum`, nor `max` with `maximum`. Keep the declared type, constraints, and examples consistent with the actual contract.
 
 ```mdx
 <Fields>

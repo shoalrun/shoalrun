@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -39,7 +39,7 @@ Configuration takes effect in three stages:
 2. **Resolve pages.** Apply configured frontmatter defaults, the page's own metadata, and enforced metadata. Validate the resulting page fields.
 3. **Build publications.** Select public pages for enabled channel/version/language combinations, resolve links and APIs, then produce HTML, Markdown, and discovery files.
 
-A preset changes configuration. A page default changes metadata. An enabled publication selects an edition to build. These mechanisms have separate rules; changing one does not automatically create pages or translations.
+A preset changes configuration. A page default changes metadata. An enabled publication selects an edition to build. These mechanisms have separate rules; changing one doesn't automatically create pages or translations.
 
 ### Find the section you need
 
@@ -56,4 +56,4 @@ Start with the configuration sections that control the behavior you want to chan
 | Style the site and configure rendering         | `theme`, `outputs`                                  |
 | Configure reader views and project checks      | `readerFilters`, `audit`                            |
 
-Every entry config resolves to a YAML mapping with `schemaVersion: 1`. Duplicate YAML keys and unknown top-level settings fail. Nested settings are not all checked for unknown keys, so verify spelling against the reference.
+Every entry config resolves to a YAML mapping with `schemaVersion: 1`. Duplicate YAML keys and unknown top-level settings fail. Nested settings aren't all checked for unknown keys, so verify spelling against the reference.

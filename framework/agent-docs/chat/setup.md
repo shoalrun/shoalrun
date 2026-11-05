@@ -18,13 +18,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Set up locally
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
 Set up a local chat panel, then check that its answers cite the right documentation. Start in the root of a Shoalrun project that already builds, with the CLI available in your terminal.
 
-You need a chat-service account and its API key. Meaning-based retrieval also needs an embedding provider and key. These commands make provider requests; they do not deploy your site.
+You need a chat-service account and its API key. Meaning-based retrieval also needs an embedding provider and key. These commands make provider requests; they don't deploy your site.
 
 For keyword-only retrieval, omit `retrieval` from the example below and omit `--embed` from the indexing command. You still need the passage index and a chat service.
 

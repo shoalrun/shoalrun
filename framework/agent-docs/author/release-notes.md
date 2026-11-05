@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write release notes
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Release notes and changelog entries serve different reading needs. A **release note** summarizes a named release, quarter, or other period. A **changelog entry** records a change identified by date, release version, or both. Both are ordinary Markdown or MDX pages with HTML and Markdown outputs and stable IDs.
 
@@ -76,7 +76,7 @@ frontmatter:
 | `date`    | A date. A release version is optional.       |
 | `version` | A release version. A date is optional.       |
 
-This rule does not apply to release notes. It also does not change the documentation publication's `version` axis.
+This rule doesn't apply to release notes. It also doesn't change the documentation publication's `version` axis.
 
 ## Describe what changed
 
@@ -89,7 +89,7 @@ change:
   migration: guide.migrate-payments
 ```
 
-Replace these IDs with public pages in the entry's channel, version, and language. Use stable IDs without the `doc:` prefix. Targets resolve to their current titles and URLs. Missing, draft, self, and other-publication targets fail the build; external URLs and references to removed pages are not supported in this increment.
+Replace these IDs with public pages in the entry's channel, version, and language. Use stable IDs without the `doc:` prefix. Targets resolve to their current titles and URLs. Missing, draft, self, and other-publication targets fail the build; external URLs and references to removed pages aren't supported in this increment.
 
 | Field       | Required | Meaning                                                                                                       |
 | ----------- | -------- | ------------------------------------------------------------------------------------------------------------- |
@@ -101,16 +101,16 @@ Replace these IDs with public pages in the entry's channel, version, and languag
 | ----------- | -------------------------------------------------------------------------------------------- |
 | `editorial` | Correcting wording or presentation without changing the documented instructions or behavior. |
 | `procedure` | Changing instructions, setup steps, or a recommended workflow.                               |
-| `behavior`  | Describing a feature or behavior change that the author has not classified as breaking.      |
+| `behavior`  | Describing a feature or behavior change that the author hasn't classified as breaking.       |
 | `breaking`  | Existing clients or workflows need adaptation because of the change.                         |
 
-Choose the kind deliberately and explain scope and limitations in the entry body. `behavior` is not a compiler guarantee of compatibility. A missing migration link does not mean migration is unnecessary. When one release contains several distinct changes, agree on the grouping before drafting: one combined entry with clearly scoped sections, or separate entries collected in a release note. Use one `change` classification only when it accurately describes the combined entry; otherwise leave the entry unclassified and explain each change in its body.
+Choose the kind deliberately and explain scope and limitations in the entry body. `behavior` isn't a compiler guarantee of compatibility. A missing migration link doesn't mean migration is unnecessary. When one release contains several distinct changes, agree on the grouping before drafting: one combined entry with clearly scoped sections, or separate entries collected in a release note. Use one `change` classification only when it accurately describes the combined entry; otherwise leave the entry unclassified and explain each change in its body.
 
-`change` is page-specific: global defaults and enforced metadata cannot set it. It is accepted only on `changelog-entry` pages, not release summaries or ordinary guides. Unknown keys fail. Use the entry's existing `date` and `releaseVersion` fields for its date and release label; this block does not add an effective-date schedule or prove deployment.
+`change` is page-specific: global defaults and enforced metadata can't set it. It's accepted only on `changelog-entry` pages, not release summaries or ordinary guides. Unknown keys fail. Use the entry's existing `date` and `releaseVersion` fields for its date and release label; this block doesn't add an effective-date schedule or prove deployment.
 
 HTML, full Markdown, and every published section of the entry show an **Authored change** notice with the kind, affected pages, and migration link when supplied. HTML links open pages; Markdown links open their twins. The corresponding `documents.json` record includes `change.kind`, resolved `change.affects` targets, and optional `change.migration`. Each target has `id`, `title`, `url`, and `markdownUrl`; URLs include the publication and base path. The entry's manifest variant supplies its publication scope.
 
-Entries without `change` remain published and discoverable. Treat them as unclassified, not nonbreaking. The build checks metadata and references; it does not verify the classification or infer a breaking change from a changed digest. There is no separate semantic feed or automatic annotation of affected pages in this increment. Fetch an entry's Markdown to read its explanation.
+Entries without `change` remain published and discoverable. Treat them as unclassified, not nonbreaking. The build checks metadata and references; it doesn't verify the classification or infer a breaking change from a changed digest. There is no separate semantic feed or automatic annotation of affected pages in this increment. Fetch an entry's Markdown to read its explanation.
 
 ## Collect updates
 
@@ -134,7 +134,7 @@ Release notes can link to entries, include a filtered collection, or stand alone
 
 ## Check the published entries
 
-Build the site and open the note or changelog page in HTML and Markdown. Confirm its release scope, date or version, and collection links match the change you are documenting. If the page is missing, check its public access and enabled publication. Keep existing IDs and routes when revising an entry, and set `updated` to the edit date.
+Build the site and open the note or changelog page in HTML and Markdown. Confirm its release scope, date or version, and collection links match the change you're documenting. If the page is missing, check its public access and enabled publication. Keep existing IDs and routes when revising an entry, and set `updated` to the edit date.
 
 ## Related reading
 

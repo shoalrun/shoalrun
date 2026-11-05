@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Use this site's MCP
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Connect an MCP client to Shoalrun's live documentation at **`https://www.shoalrun.com/mcp`**. You need an agent application that supports remote HTTP MCP servers. No Shoalrun account, API key, custom header, or local installation is required.
 
@@ -39,9 +39,9 @@ The setting names vary by client. Use its remote MCP server connection settings:
 
 2. ### Connect and discover the tools
 
-   Save the connection and enable it. Restart or reconnect the client if it does not refresh its tools automatically.
+   Save the connection and enable it. Restart or reconnect the client if it doesn't refresh its tools automatically.
 
-   Look for `search_docs`, `get_page`, `get_outline`, and `get_section` under the connection. Your client may prefix their names with `shoalrun-docs`.
+   Look for `get_publications`, `search_docs`, `get_page`, `get_outline`, and `get_section` under the connection. Your client may prefix their names with `shoalrun-docs`.
 
 3. ### Ask the agent to use the documentation
 
@@ -49,30 +49,39 @@ The setting names vary by client. Use its remote MCP server connection settings:
 
    > Use the Shoalrun docs MCP to find how to configure analytics. Read the relevant documentation and give me the answer with source links.
 
-   Inspect the agent's tool activity. It should call `search_docs` and follow a returned read instruction. Answers and links alone do not prove that it used MCP.
+   Inspect the agent's tool activity. It should call `search_docs` and follow a returned read instruction. Answers and links alone don't prove that it used MCP.
 
 ## What the tools do
 
-These tools only read published documentation. They cannot edit your files, change a project, or deploy a site.
+These tools only read published documentation. They can't edit your files, change a project, or deploy a site.
 
-| Tool          | Use                                                  |
-| ------------- | ---------------------------------------------------- |
-| `search_docs` | Find relevant pages and suggested read instructions. |
-| `get_page`    | Read a Markdown page by its stable document ID.      |
-| `get_outline` | List a page's sections and their exact IDs.          |
-| `get_section` | Read one section by page ID and section ID.          |
+| Tool               | Use                                                                                                                         |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `get_publications` | Discover the endpoint’s published product/channel/version/language scope, with `nextOffset` when another page is available. |
+| `search_docs`      | Find relevant pages and suggested read instructions.                                                                        |
+| `get_page`         | Read a Markdown page by its stable document ID.                                                                             |
+| `get_outline`      | List a page's sections and their exact IDs.                                                                                 |
+| `get_section`      | Read one section by page ID and section ID.                                                                                 |
 
-Use IDs returned by the tools rather than guessing them from a page title or URL. When a tool says the result does not fit its token budget, retry with the recommended `maxTokens` value. Do not treat an incomplete response as the complete documentation.
+Use IDs returned by the tools rather than guessing them from a page title or URL. When a tool says the result doesn't fit its token budget, retry with the recommended `maxTokens` value. Don't treat an incomplete response as the complete documentation.
+
+## Discover available publications
+
+Since 0.1.0-alpha.18
+
+Call `get_publications` before searching when the product release is unknown. Follow `nextOffset` for additional compact pages, then retain the returned product, channel, version, and language in search and read calls. This site’s hosted endpoint remains limited to its configured publication. To browse several products in a local built site, use a stdio server as described in [MCP hosting](https://www.shoalrun.com/publish/mcp.md).
+
+The HTML publication dropdown is a reader convenience. Agents use the discovery tool and generated Markdown for the same published product release. Hiding a language label in HTML doesn't remove it from tool arguments.
 
 ## If the connection fails
 
-Check that your client supports remote HTTP MCP and that the URL ends in `/mcp`. A client that only launches local stdio commands cannot connect directly to this URL.
+Check that your client supports remote HTTP MCP and that the URL ends in `/mcp`. A client that only launches local stdio commands can't connect directly to this URL.
 
-If tools are missing after saving, reconnect the server or restart the client. If the client insists on an API key or OAuth login, check that you selected an unauthenticated remote connection. This endpoint does not provide an OAuth login.
+If tools are missing after saving, reconnect the server or restart the client. If the client insists on an API key or OAuth login, check that you selected an unauthenticated remote connection. This endpoint doesn't provide an OAuth login.
 
 This site's MCP analytics measures tool usage, available harness/model labels, and fixed intent categories. It excludes raw queries, free-text intent, returned content, and request headers. Session grouping uses pseudonymous IDs. Hosting access logs are separate; see the [analytics safeguards](https://www.shoalrun.com/publish/mcp-analytics.md).
 
-No private test settings are needed to use the tools or supply supported metadata. Missing or unrecognized labels remain absent; the server does not guess them.
+No private test settings are needed to use the tools or supply supported metadata. Missing or unrecognized labels remain absent; the server doesn't guess them.
 
 ## Related reading
 

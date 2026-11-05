@@ -16,11 +16,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content REST API > Other > Read HTML or Markdown
 
-**Updated: 2026-09-27.**
+**Updated: 2026-11-05.**
 
 This reference is generated from the OpenAPI description. It shows the operation contract; follow any related guides below for task steps and context.
 
-OpenAPI for this operation: [Download JSON](https://www.shoalrun.com/api/operations/production/current/en/content-rest-getcontentrepresentation-63a66b7a4eae1e1befb0ade4fd57d8346e3a5548cb933c1718acc72a9ab3ceed.json).
+OpenAPI for this operation: [Download JSON](https://www.shoalrun.com/api/operations/production/current/en/content-rest-getcontentrepresentation-5f3ded6e0382f20faab3224a94d604d8a7d0f129f9faad445649d00ec643752c.json).
 
 ## GET /resources/{key}/representations/{format}
 
@@ -63,6 +63,14 @@ Exact publication language. No default or fallback.
 string; minLength: 1; maxLength: 2048
 
 **Default example**: `"en"`
+
+#### product (query)
+
+Optional
+
+Exact product ID. Required for product-scoped publications; omitted selects only a legacy productless publication. No cross-product fallback.
+
+string; minLength: 1; maxLength: 2048
 
 #### revision (query)
 

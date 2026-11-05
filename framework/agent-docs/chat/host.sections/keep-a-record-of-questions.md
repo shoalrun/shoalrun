@@ -18,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Host on Vercel
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -32,7 +32,7 @@ Before building the hosted function, have these ready:
 - A shared store that speaks the Upstash REST API.
 - A Vercel project and the public address in `site.origin`.
 
-The normal site build does not add this function. Hosted provider requests can incur costs.
+The normal site build doesn't add this function. Hosted provider requests can incur costs.
 
 ## Keep a record of questions
 
@@ -53,7 +53,7 @@ It also counts how questions were answered and how many called the model. It cou
 
 ### Local log privacy
 
-Questions can contain personal details. These controls reduce exposure but do not guarantee that sensitive text is removed:
+Questions can contain personal details. These controls reduce exposure but don't guarantee that sensitive text is removed:
 
 - Emails, phone and card-length numbers, keys, and the query part of a web address are replaced before the line is written. That's best effort and no guarantee.
 - The file is created with owner-only permissions and rotates at 5 MB, keeping one older file.

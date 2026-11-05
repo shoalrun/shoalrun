@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Related reading
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/related-reading.md)
 
@@ -25,7 +25,7 @@ A relationship is an authored connection between two pages, with a reason to fol
 
 ## Declare relationships
 
-A **relationship** is an explicit connection between two pages, with a reason to follow the link. For example, a guide can point to the task readers should do next, a prerequisite they should read first, or a useful reference. These connections express your intended reading path; sidebar position and shared operation IDs do not establish that order.
+A **relationship** is an explicit connection between two pages, with a reason to follow the link. For example, a guide can point to the task readers should do next, a prerequisite they should read first, or a useful reference. These connections express your intended reading path; sidebar position and shared operation IDs don't establish that order.
 
 Keep the connections in a central config fragment so pages can display them without repeating the target IDs and reasons in their content:
 
@@ -65,4 +65,4 @@ Declare symmetric pairs only once and write a reason that makes sense from eithe
 
 Unknown document IDs, self-links, duplicate IDs, duplicate edges of the same type, and prerequisite cycles within a public publication fail. Different relationship types can connect the same pair. Next-step cycles are allowed for workflows with a return step; provide meaningful reasons.
 
-A relationship is published only where both documents have public variants in the same channel, version, and language. Edges to drafts or unavailable variants are omitted from related reading and the public manifest. A relationship does not publish its target or create a cross-version link.
+A relationship is published only where both documents have public variants in the same channel, version, and language. Edges to drafts or unavailable variants are omitted from related reading and the public manifest. A relationship doesn't publish its target or create a cross-version link.

@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -69,7 +69,7 @@ Publication fields identify the channel, version, language, and access policy fo
 | `version`       | string                         | API or documentation version.                                                                                       |
 | `publications`  | list of `{ channel, version }` | Publish one source page in several channel/version combinations. Use instead of page-level `channel` and `version`. |
 | `language`      | string                         | Optional content language; resolved from globals, publication defaults, then `en`.                                  |
-| `locale`        | string                         | Optional conventions used for dates, numbers, and currency in the content; does not select a publication.           |
+| `locale`        | string                         | Optional conventions used for dates, numbers, and currency in the content; doesn't select a publication.            |
 | `access.policy` | string                         | Set to `public` for a public page.                                                                                  |
 
 Channel identifies an environment such as sandbox or production; version identifies an API or documentation edition; language identifies the content language. The resolved combination must be enabled in project config. `channel`, `version`, and `access` can come from global frontmatter. A language on the page overrides the default unless the project enforces one.

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
@@ -69,14 +69,14 @@ The `module` path resolves from the config file that declares it. The module is 
 
 The search box passes a context object to both functions.
 
-| Field             | Value                                                                                                                                                     |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`         | The page's channel, version, and language, joined by `\|`, such as `production\|current\|en`.                                                             |
-| `language`        | The page's `lang` value.                                                                                                                                  |
-| `indexUrl`        | The base-path-prefixed `/search-index.json` URL. The file exists only when the build writes an index.                                                     |
-| `limit`           | The maximum number of results the box shows.                                                                                                              |
-| `signal`          | An `AbortSignal`, passed to `search` only. It aborts when the reader types again.                                                                         |
-| `readerSelection` | The active reader view as facet IDs mapped to arrays of choice IDs. An empty object means show all. Custom providers must use it to filter their results. |
+| Field             | Value                                                                                                                                                                                                                                                       |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`         | The page’s publication key. Productless keys stay `channel\|version\|language`, such as `production\|current\|en`. Product publication keys append the product, such as `production\|v3\|en\|payments`. Forward this key unchanged; don't drop its product. |
+| `language`        | The page's `lang` value.                                                                                                                                                                                                                                    |
+| `indexUrl`        | The base-path-prefixed `/search-index.json` URL. The file exists only when the build writes an index.                                                                                                                                                       |
+| `limit`           | The maximum number of results the box shows.                                                                                                                                                                                                                |
+| `signal`          | An `AbortSignal`, passed to `search` only. It aborts when the reader types again.                                                                                                                                                                           |
+| `readerSelection` | The active reader view as facet IDs mapped to arrays of choice IDs. An empty object means show all. Custom providers must use it to filter their results.                                                                                                   |
 
 Pass `signal` to `fetch` so stale requests stop. The box ignores results from an aborted search.
 
@@ -95,4 +95,4 @@ The box drops results without a valid `url` and `title`, and it keeps the first 
 
 ### Module limits
 
-The build copies one file. It does not copy files that the module imports with relative paths. Bundle the provider into one file, or import dependencies from absolute URLs.
+The build copies one file. It doesn't copy files that the module imports with relative paths. Bundle the provider into one file, or import dependencies from absolute URLs.

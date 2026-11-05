@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > CLI reference
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/cli.md)
 
@@ -24,12 +24,16 @@ The public `@shoalrun/cli` package supplies the `shoalrun` command. It needs Nod
 
 Commands that return data print JSON to standard output. On an error, the CLI prints `{"status":"error","message":"..."}` to standard error and exits with code 1. A config argument defaults to `docs.config.yaml` in the current directory unless noted.
 
-[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render without a browser: Pele handles Mermaid syntax, and D2 handles D2 source. Development installs include Puppeteer for browser UI tests; production package installs do not need it.
+[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render without a browser: Pele handles Mermaid syntax, and D2 handles D2 source. Development installs include Puppeteer for browser UI tests; production package installs don't need it.
+
+Since 0.1.0-alpha.18
+
+Product selectors, `dev --profile`, and `get_publications` discovery add product-aware workflows. Existing productless commands keep their publication scope.
 
 ## Working-tree authoring tools
 
 `docs project` discovers pages, guidance, configuration, navigation, relationships, templates, and findings without selecting a page. `docs source FILE` reads bounded project-relative source passages. Both return JSON and accept `--config FILE`.
 
-`docs baseline --out FILE` records the current working tree. `docs validate` checks a separate capture using a baseline or explicit file/page selectors. `docs validation-status REPORT` checks whether a retained result still applies. `docs review REPORT` presents that snapshot as JSON or Markdown. `docs preview REPORT` serves its exact build locally and returns a browser review URL plus affected HTML/Markdown URLs. These tools make no authoring provider calls and do not apply or publish edits.
+`docs baseline --out FILE` records the current working tree. `docs validate` checks a separate capture using a baseline or explicit file/page selectors. `docs validation-status REPORT` checks whether a retained result still applies. `docs review REPORT` presents that snapshot as JSON or Markdown. `docs preview REPORT` serves its exact build locally and returns a browser review URL plus affected HTML/Markdown URLs. These tools make no authoring provider calls and don't apply or publish edits.
 
 See [Authoring tools commands](https://www.shoalrun.com/author/workspace/commands.md) for selectors, budgets, artifact paths, statuses, and check execution limits. Follow [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md) for a complete procedure. Existing context/plan/apply commands remain supported.

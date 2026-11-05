@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Steps
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<Steps>` when each part of a procedure needs a title and supporting content. For a simple sequence with no step titles, an ordinary Markdown numbered list is enough. For code that changes between steps, use a [Walkthrough](https://www.shoalrun.com/author/components/walkthroughs.md).
 
@@ -97,7 +97,7 @@ The same `<Step>` tag is also used in [Walkthrough](https://www.shoalrun.com/aut
 | `<Steps>`       | `title`, optional `icon`                                  | Numbered procedure with configurable heading level and TOC behavior. |
 | `<Walkthrough>` | `title`, optional code source and highlighting attributes | Code walkthrough with synchronized explanations.                     |
 
-Use the attributes documented for the parent you are writing. The two forms do not share rendering or settings.
+Use the attributes documented for the parent you're writing. The two forms don't share rendering or settings.
 
 ## Step headings and the page outline
 

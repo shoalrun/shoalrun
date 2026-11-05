@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Authoring and content
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/config/content.md)
 
@@ -31,7 +31,7 @@ Configure authoring guidance, page defaults, reusable content, reading paths, an
 
 ## `authoring`
 
-Optional project guidance and read-only source locations. These settings do not choose a model or read external files during a site build.
+Optional project guidance and read-only source locations. These settings don't choose a model or read external files during a site build.
 
 | Key             | Meaning                                                                                                                         |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -41,7 +41,7 @@ Optional project guidance and read-only source locations. These settings do not 
 | `sourceRoots`   | Named local folders for source search. Each entry has `path`, optional `name`, and optional `include` and `exclude` glob lists. |
 | `pageSources`   | Stable page IDs mapped to source file paths or globs. These seed evidence selection for known features.                         |
 
-Source paths resolve from the root configuration directory. Source folders and page-source files may be outside the docs project; guide and exemplar paths remain inside it. URLs are not source folders. Git is not required. Your coding agent selects the evidence scope under its own permissions.
+Source paths resolve from the root configuration directory. Source folders and page-source files may be outside the docs project; guide and exemplar paths remain inside it. URLs aren't source folders. Git isn't required. Your coding agent selects the evidence scope under its own permissions.
 
 ```yaml title="docs.config.yaml"
 authoring:

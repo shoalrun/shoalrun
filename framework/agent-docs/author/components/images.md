@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Images
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<Image>` to show an image with optional sizing, a caption, or click-to-expand viewing. Plain Markdown image syntax also works when you only need an image and alt text.
 
@@ -39,7 +39,7 @@ Images fit the content column and shrink on narrow screens. They keep their aspe
 
 ## Set a width
 
-`width` sets a maximum in pixels. It does not force an image to overflow a smaller screen. Leave it out to use the available content width.
+`width` sets a maximum in pixels. It doesn't force an image to overflow a smaller screen. Leave it out to use the available content width.
 
 ```mdx
 <Image src="./assets/image-example.svg" alt="A documentation page layout" width="480" />
@@ -75,7 +75,7 @@ A documentation page has three reading areas.
 
 [View original image](https://www.shoalrun.com/assets/pages/author/components/images/image-example.svg)
 
-The expanded view supports Escape to close and returns focus to the image link. Without JavaScript or modal-dialog support, the link opens the original asset. A larger view cannot add detail that is missing from a low-resolution source.
+The expanded view supports Escape to close and returns focus to the image link. Without JavaScript or modal-dialog support, the link opens the original asset. A larger view can't add detail that's missing from a low-resolution source.
 
 ## Attributes
 
@@ -90,13 +90,13 @@ All attributes use literal values. `expand` is a bare boolean attribute.
 | `caption` | No       | Plain text shown below the image and retained in Markdown.                          |
 | `expand`  | No       | Opens a modal image viewer when supported, with an original-image link as fallback. |
 
-`<Image>` is an empty block component. It does not accept children, HTML strings, or dynamic expressions. Keep essential explanations in nearby prose and meaningful alt text. For generated diagrams, use [Diagram](https://www.shoalrun.com/author/components/diagrams.md).
+`<Image>` is an empty block component. It doesn't accept children, HTML strings, or dynamic expressions. Keep essential explanations in nearby prose and meaningful alt text. For generated diagrams, use [Diagram](https://www.shoalrun.com/author/components/diagrams.md).
 
 ## HTML, Markdown, and agents
 
 HTML contains a normal image with alt text. Captions use `figure` and `figcaption`. Expandable images use a link enhanced by a modal viewer; the image remains usable without scripts. Modified clicks still open the link normally.
 
-Markdown includes the image and alt text, followed by its caption when present. Expandable images also include a link to the original asset. Width, alignment, and modal state do not hide content from agents.
+Markdown includes the image and alt text, followed by its caption when present. Expandable images also include a link to the original asset. Width, alignment, and modal state don't hide content from agents.
 
 ## Related reading
 

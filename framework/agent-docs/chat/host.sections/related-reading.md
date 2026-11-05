@@ -18,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Host on Vercel
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -32,7 +32,7 @@ Before building the hosted function, have these ready:
 - A shared store that speaks the Upstash REST API.
 - A Vercel project and the public address in `site.origin`.
 
-The normal site build does not add this function. Hosted provider requests can incur costs.
+The normal site build doesn't add this function. Hosted provider requests can incur costs.
 
 ## Related reading
 

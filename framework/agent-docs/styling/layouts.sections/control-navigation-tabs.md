@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Page layouts, landing pages, and splash pages
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/styling/layouts.md)
 
@@ -51,4 +51,4 @@ showNavigationTabs: false
 
 Set `showNavigationTabs: true` to include the tab bar on a landing or splash page. Set it to `false` to suppress it on a docs or wide page. The value must be a boolean and can also come from frontmatter defaults or enforced values. With no configured tabs, neither value creates a bar.
 
-This setting affects the HTML section bar only. It does not change the page's sidebar, tab membership, breadcrumbs, Markdown, search records, or agent indexes. An agent can still discover and read every published section without visiting the homepage.
+This setting affects the HTML section bar only. It doesn't change the page's sidebar, tab membership, breadcrumbs, Markdown, search records, or agent indexes. An agent can still discover and read every published section without visiting the homepage.

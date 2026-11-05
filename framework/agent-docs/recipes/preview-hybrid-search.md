@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Preview semantic search in this checkout
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Build the Shoalrun docs, index passages, and verify vector retrieval and lexical fallback locally.
 
@@ -53,9 +53,9 @@ Save `indexedSite`: The successful site build and current passage index under do
 npm run docs:search-preview
 ```
 
-Open `http://127.0.0.1:8770/`. This command occupies the terminal. Restart it after rebuilding the passage index, because the local endpoint reads its files at startup. Vector results include only passages with current embeddings. Reindex after editing pages so semantic results include the changed passages. A literal configuration key or command flag can also recover one word-matching explanation, but this is not a substitute for refreshing vectors.
+Open `http://127.0.0.1:8770/`. This command occupies the terminal. Restart it after rebuilding the passage index, because the local endpoint reads its files at startup. Vector results include only passages with current embeddings. Reindex after editing pages so semantic results include the changed passages. A literal configuration key or command flag can also recover one word-matching explanation, but this isn't a substitute for refreshing vectors.
 
-The browser search provider first asks `/__shoalrun/search`. That endpoint ranks passages by embedding similarity and returns page or section links. Successful semantic queries keep their first two pages ranked by meaning. A question containing dotted configuration keys or command flags can include one exact-identifier prose explanation as the third result. Filenames and requests for fewer than three results keep semantic ranking. It does not call the chat model. If the endpoint has no current vectors, it returns lexical passage results. If the endpoint is missing, slow, or fails, the browser uses `search-index.json` for lexical page search.
+The browser search provider first asks `/__shoalrun/search`. That endpoint ranks passages by embedding similarity and returns page or section links. Successful semantic queries keep their first two pages ranked by meaning. A question containing dotted configuration keys or command flags can include one exact-identifier prose explanation as the third result. Filenames and requests for fewer than three results keep semantic ranking. It doesn't call the chat model. If the endpoint has no current vectors, it returns lexical passage results. If the endpoint is missing, slow, or fails, the browser uses `search-index.json` for lexical page search.
 
 Save `runningPreview`: The local site and search endpoint while the server is running.
 
@@ -65,9 +65,9 @@ Save `runningPreview`: The local site and search endpoint while the server is ru
 
 - Use `runningPreview` from **Start the semantic endpoint**.
 
-Search for `navigation`, then describe a task in your own words without copying a page title or sentence. For example, ask about reusing warnings across documentation. Lexical search can now return partial matches for the sentence; returning a result alone does not prove semantic retrieval worked.
+Search for `navigation`, then describe a task in your own words without copying a page title or sentence. For example, ask about reusing warnings across documentation. Lexical search can now return partial matches for the sentence; returning a result alone doesn't prove semantic retrieval worked.
 
-In the browser Network inspector, inspect `/__shoalrun/search`. A successful response with `"mode": "vector"` confirms the endpoint used embeddings. `"mode": "lexical"` means the endpoint returned word-matching results. It can do this when current document vectors are missing, the embedding budget is exhausted, the provider fails, or the three-second deadline expires. The response mode alone does not tell you whether document vectors exist. A failed request followed by results demonstrates the browser provider's lexical fallback. For a preview without the endpoint, stop this server and run `npm run docs:preview`.
+In the browser Network inspector, inspect `/__shoalrun/search`. A successful response with `"mode": "vector"` confirms the endpoint used embeddings. `"mode": "lexical"` means the endpoint returned word-matching results. It can do this when current document vectors are missing, the embedding budget is exhausted, the provider fails, or the three-second deadline expires. The response mode alone doesn't tell you whether document vectors exist. A failed request followed by results demonstrates the browser provider's lexical fallback. For a preview without the endpoint, stop this server and run `npm run docs:preview`.
 
 Save `modeEvidence`: The response mode and relevant page or section links for the queries.
 

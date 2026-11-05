@@ -17,13 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Create a page
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Create a page from a template with `scaffold`. Templates prompt you for the page's frontmatter, an introduction, the main content, and related pages before you publish. This is the recommended authoring workflow for new pages.
 
 ## Before you begin
 
-Complete [getting started](https://www.shoalrun.com/start.md), then run the commands from `my-docs/`, where `@shoalrun/cli` is installed. You will create a page at `/track-parcel` and verify both published formats.
+Complete [getting started](https://www.shoalrun.com/start.md), then run the commands from `my-docs/`, where `@shoalrun/cli` is installed. You'll create a page at `/track-parcel` and verify both published formats.
 
 ## Choose a template
 
@@ -69,7 +69,7 @@ Open `content/track-parcel.mdx` and work through its prompts:
 4. Keep the **HTML, Markdown, and agents** section when the page uses a component or behavior that changes either output or what an agent reads. Otherwise delete it.
 5. Add relationships for the page, or delete Related reading. Verify technical claims before you publish.
 
-Replace every TODO prompt enclosed in double square brackets. Adapt the sections to the task rather than leaving irrelevant prompts behind. Templates provide a starting structure; editing a template later does not rewrite this page. The [quickstart](https://www.shoalrun.com/start.md) shows a completed example.
+Replace every TODO prompt enclosed in double square brackets. Adapt the sections to the task rather than leaving irrelevant prompts behind. Templates provide a starting structure; editing a template later doesn't rewrite this page. The [quickstart](https://www.shoalrun.com/start.md) shows a completed example.
 
 Keep the generated `access.policy: draft` while writing. Drafts are validated but omitted from the published site, even if the starter defaults to public access. Headings in the body begin at level 2 because Shoalrun renders the page title separately.
 

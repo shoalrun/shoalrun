@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Add a page to this documentation site
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Create a guide, add navigation, build and audit it, then refresh its agent documentation.
 
@@ -76,7 +76,7 @@ Set a suitable `card.icon`, such as `file-text`, to meet this site's page-card a
 - { id: my-new-guide, doc: guide.my-new-guide }
 ```
 
-For useful next steps, add edges to `docs/config/relationships.yaml` and put `<RelatedReading />` at the end of the page. Preserve the page ID if you later change its title or slug. Setting public access includes the page in the local build; it does not deploy the site.
+For useful next steps, add edges to `docs/config/relationships.yaml` and put `<RelatedReading />` at the end of the page. Preserve the page ID if you later change its title or slug. Setting public access includes the page in the local build; it doesn't deploy the site.
 
 Save `authoredPage`: The completed public page and its navigation entry, ready for a local build.
 
@@ -94,7 +94,7 @@ npx --no-install shoalrun build docs/docs.config.yaml docs/dist
 
 The source configuration is `docs/docs.config.yaml`; output goes to `docs/dist`. The root shortcut is `npm run docs:build`; it uses the installed package.
 
-If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone is not evidence of a successful new build.
+If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone isn't evidence of a successful new build.
 
 Save `builtSite`: The successful site build at docs/dist, including documents.json and each published page.
 
@@ -140,7 +140,7 @@ Run Shoalrun's configured checks. This repository's formatting check requires [V
 npx --no-install shoalrun audit docs/docs.config.yaml
 ```
 
-The audit checks configured project commands, API representations, and focused contracts. Read any reported finding and fix its source before continuing. This command does not run the complete framework test suite or replace a browser review. Framework source changes and tests belong in the framework repository.
+The audit checks configured project commands, API representations, and focused contracts. Read any reported finding and fix its source before continuing. This command doesn't run the complete framework test suite or replace a browser review. Framework source changes and tests belong in the framework repository.
 
 Save `auditPassed`: A successful audit report with no failed configured checks.
 
@@ -157,7 +157,7 @@ Export the already built site for the framework’s next documentation snapshot:
 npm run agent-docs:build
 ```
 
-Build the site first. The export copies that output without rebuilding and records the site build identity and pinned package integrity in `agent-docs/provenance.json`. It does not modify the installed package.
+Build the site first. The export copies that output without rebuilding and records the site build identity and pinned package integrity in `agent-docs/provenance.json`. It doesn't modify the installed package.
 
 Review and transfer the export as a versioned artifact to the framework repository. Framework releases consume an explicitly selected snapshot; they must not fetch the latest site during a package build.
 

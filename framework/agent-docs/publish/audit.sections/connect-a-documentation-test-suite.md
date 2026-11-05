@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Audit a docs project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/audit.md)
 
@@ -51,4 +51,4 @@ audit:
 
 The `--exit-on-fail` flag matters: Doc Detective's standalone CLI otherwise [can exit successfully when a test fails](https://docs.doc-detective.com/docs/ci/reporters-and-artifacts). `npx --no-install` uses the locally installed package without downloading one during the audit. Configure tests and report artifacts with Doc Detective. Shoalrun's audit report only records the command's success or failure and the end of its output on failure. To use another suite, replace the `run` list with its command and failure-exit option.
 
-Configured test commands run before Shoalrun's temporary site build. If a tool needs a built or deployed site, run it as a separate step after building or deploying. Shoalrun does not define a competing documentation assertion format or CLI, HTTP, or browser test engine.
+Configured test commands run before Shoalrun's temporary site build. If a tool needs a built or deployed site, run it as a separate step after building or deploying. Shoalrun doesn't define a competing documentation assertion format or CLI, HTTP, or browser test engine.

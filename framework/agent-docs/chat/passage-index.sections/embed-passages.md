@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Passage index
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -26,7 +26,7 @@ Parent page: [Full Markdown page](/chat/passage-index.md)
 
 A passage index splits built Markdown pages into smaller pieces for retrieval. Each passage keeps its page title, heading path, and source link. [Chat](https://www.shoalrun.com/chat.md) and the optional semantic search endpoint use it to find relevant parts of a page.
 
-The default keyword [search box](https://www.shoalrun.com/author/search.md) uses the separate page-level `search-index.json`. The included `semantic` provider connects that box to the passage-search endpoint. You do not need a passage index for normal static-site keyword search.
+The default keyword [search box](https://www.shoalrun.com/author/search.md) uses the separate page-level `search-index.json`. The included `semantic` provider connects that box to the passage-search endpoint. You don't need a passage index for normal static-site keyword search.
 
 Create the files after building the site:
 
@@ -70,7 +70,7 @@ The summary gains an `embeddings` object:
 }
 ```
 
-The command sends each passage's [embedding input](https://www.shoalrun.com/chat/passage-index.md#embedding-input) to the configured provider. The key is not written to the output.
+The command sends each passage's [embedding input](https://www.shoalrun.com/chat/passage-index.md#embedding-input) to the configured provider. The key isn't written to the output.
 
 It writes two files next to `chunks.json`:
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Audit a docs project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/audit.md)
 
@@ -52,6 +52,6 @@ audit:
   links: true
 ```
 
-Each test has a unique lowercase `id` (letters, digits, and hyphens) and a nonempty `run` list of strings. Shoalrun starts the executable in the first item and passes the rest as arguments. It does not invoke a shell, so shell operators, pipes, and redirection do not work in `run`. Tests run in list order from the directory containing the config file. They run before API audits and the build. A failing test does not stop the other tests or audits.
+Each test has a unique lowercase `id` (letters, digits, and hyphens) and a nonempty `run` list of strings. Shoalrun starts the executable in the first item and passes the rest as arguments. It doesn't invoke a shell, so shell operators, pipes, and redirection don't work in `run`. Tests run in list order from the directory containing the config file. They run before API audits and the build. A failing test doesn't stop the other tests or audits.
 
 Each test has a two minute timeout. Shoalrun captures its output and includes the last 16,000 characters in a failure finding. Successful test output is omitted from the report. Because the commands are executable code, review test entries before running an unfamiliar project. Set `audit.api: false` to skip local OpenAPI source audits, or `audit.focusedContracts: false` to skip focused-contract checks. Set `audit.links: false` to skip local link checks. All three default to `true`; the build always runs.

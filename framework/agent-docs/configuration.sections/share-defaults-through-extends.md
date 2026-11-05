@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -109,7 +109,7 @@ When a config extends another file, the overlay value determines how each inheri
 | Overlay value            | Result                                                                     |
 | ------------------------ | -------------------------------------------------------------------------- |
 | Mapping over a mapping   | Merge recursively by key. Unchanged keys survive.                          |
-| List                     | Replace the entire inherited list. Items do not merge by ID.               |
+| List                     | Replace the entire inherited list. Items don't merge by ID.                |
 | Scalar, including `null` | Replace the inherited value. The receiving setting must accept that value. |
 | `$concat`                | Append to an inherited list, or create a list if none exists.              |
 | `$remove`                | Remove inherited mapping keys or list entries by `id`.                     |
@@ -118,4 +118,4 @@ This also applies after resolving an include. An included mapping can merge with
 
 To layer a second preset, use `extends: [../shared/base.yaml, ../shared/brand.yaml]`. Only settings in `brand.yaml` override the base; the project's local settings still win.
 
-`extends` is recognized at the top level of each loaded YAML file, including files loaded through `$include`. Avoid using a top-level `extends` key as unrelated data in a fragment. An `extends` nested inside an ordinary mapping is not an inheritance instruction.
+`extends` is recognized at the top level of each loaded YAML file, including files loaded through `$include`. Avoid using a top-level `extends` key as unrelated data in a fragment. An `extends` nested inside an ordinary mapping isn't an inheritance instruction.

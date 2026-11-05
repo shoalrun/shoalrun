@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Design and enforce a page taxonomy
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Use `area` and `subarea` to describe a page's subject independently of its place in navigation. The same subject can appear in guides, reference pages, recipes, and change notes.
 
@@ -55,7 +55,7 @@ frontmatter:
 
 `required` makes the selected fields mandatory after defaults and enforced values are resolved. `requireExplicit` also requires those fields in authored source, including drafts. Generated API reference pages can inherit their categories from global frontmatter defaults.
 
-Each subarea belongs to its declared parent area. IDs do not need to share a prefix. A subarea ID must be unique across the taxonomy.
+Each subarea belongs to its declared parent area. IDs don't need to share a prefix. A subarea ID must be unique across the taxonomy.
 
 ## Classify pages by subject
 
@@ -66,7 +66,7 @@ area: components
 subarea: api-embeds
 ```
 
-The build rejects unknown categories, missing required tags, and subareas that do not belong to the selected area. It applies the checks to authored pages and resolved generated references. The generated frontmatter schema exposes the same vocabulary and pair constraints for editors.
+The build rejects unknown categories, missing required tags, and subareas that don't belong to the selected area. It applies the checks to authored pages and resolved generated references. The generated frontmatter schema exposes the same vocabulary and pair constraints for editors.
 
 Shoalrun publishes the definitions in `documents.json` under `taxonomy`. Individual page records and search indexes carry their resolved categories. To expose category IDs in Markdown frontmatter, add `area: frontmatter.area` and `subarea: frontmatter.subarea` to `outputs.markdown.metadata.fields`.
 

@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Content negotiation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 
@@ -42,6 +42,6 @@ Shoalrun builds two versions of every published page from one authored source. T
 
 ## What if the host cannot negotiate?
 
-GitHub Pages can publish Shoalrun's HTML, `.md` files, and `/llms.txt`. It serves static files and has no request handler for choosing a file from `Accept` or setting the page response headers described above. Agents can still read the `.md` URLs, but a request to the HTML URL cannot negotiate there. A programmable proxy or CDN can add that behavior. You can also publish the same built files on a host with request rules. Bare GitHub Pages cannot pass AFDocs' content-negotiation check.
+GitHub Pages can publish Shoalrun's HTML, `.md` files, and `/llms.txt`. It serves static files and has no request handler for choosing a file from `Accept` or setting the page response headers described above. Agents can still read the `.md` URLs, but a request to the HTML URL can't negotiate there. A programmable proxy or CDN can add that behavior. You can also publish the same built files on a host with request rules. Bare GitHub Pages can't pass AFDocs' content-negotiation check.
 
-`site.basePath` also prefixes assets, API contracts, `/llms.txt`, and discovery files. For a GitHub Pages project site at `/<repository>/`, set `site.basePath: /<repository>` and publish the matching subtree from the build output as the project site's root. GitHub Pages still cannot provide Markdown content negotiation at an HTML URL.
+`site.basePath` also prefixes assets, API contracts, `/llms.txt`, and discovery files. For a GitHub Pages project site at `/<repository>/`, set `site.basePath: /<repository>` and publish the matching subtree from the build output as the project site's root. GitHub Pages still can't provide Markdown content negotiation at an HTML URL.

@@ -15,11 +15,11 @@ date: 2026-10-16
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Navigation, page layouts, and browser analytics
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-16: Navigation and analytics
 
 **Published: 2026-10-16.**
 
-This entry groups the October 16 changes to Shoalrun's private prototype and documentation. It does not announce a package release or a verified deployment.
+This entry groups the October 16 changes to Shoalrun's private prototype and documentation. It doesn't announce a package release or a verified deployment.
 
 ## Navigate between sections
 
@@ -49,11 +49,11 @@ Pages led by a Hero omit the page-level Markdown action row. Markdown twins and 
 
 Projects can now connect browser analytics through the top-level `analytics.module` setting. Shoalrun supplies versioned events for navigation, content tabs, disclosures, clipboard successes, search outcomes, and reader selections. Events include stable page IDs and publication context. Site scripts can emit additional events through the same hook.
 
-The browser adapter owns service initialization, consent, and delivery. Analytics is off by default, and disabled builds omit its runtime and adapter. SDK failures do not interrupt the site. Browser instrumentation leaves Markdown and agent discovery unchanged; agent request measurements belong at the host or server. See [bring your own analytics](https://www.shoalrun.com/author/analytics.md).
+The browser adapter owns service initialization, consent, and delivery. Analytics is off by default, and disabled builds omit its runtime and adapter. SDK failures don't interrupt the site. Browser instrumentation leaves Markdown and agent discovery unchanged; agent request measurements belong at the host or server. See [bring your own analytics](https://www.shoalrun.com/author/analytics.md).
 
 ## Add contributor documentation
 
-Repository contributors now have a separate maintainer guide covering architecture, development, validation, hosting, and release work. It is separate from the public documentation and packaged agent bundle.
+Repository contributors now have a separate maintainer guide covering architecture, development, validation, hosting, and release work. It's separate from the public documentation and packaged agent bundle.
 
 ## Related reading
 

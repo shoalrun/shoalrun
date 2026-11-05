@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/recipe-drafts.md)
 
@@ -47,4 +47,4 @@ npx --no-install shoalrun ingredient draft \
 
 Its YAML spec supplies `schemaVersion: 1`, the page's `id`, `title`, `summary`, and `slug`, plus `operation` and `requestExample`. An optional `workflow` mapping is copied into frontmatter. The command copies the generated cURL request and first inline 2xx response example, links the configured reference, and records a source digest. It supports the default publication and outgoing requests with generated cURL. Webhook receiver flows need authored instructions.
 
-The generated file still needs setup, failure guidance, and a verified success check. An example response is not evidence that a live request worked. The [worked cookbook example](https://www.shoalrun.com/cookbooks/welcome-email.md) shows how complete recipes reuse a step and offer different outcomes against the local simulator.
+The generated file still needs setup, failure guidance, and a verified success check. An example response isn't evidence that a live request worked. The [worked cookbook example](https://www.shoalrun.com/cookbooks/welcome-email.md) shows how complete recipes reuse a step and offer different outcomes against the local simulator.

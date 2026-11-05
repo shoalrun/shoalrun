@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
@@ -36,7 +36,7 @@ Shoalrun supplies the search box and keyboard controls. A **search provider** su
 
 The optional search endpoint uses vector similarity when current query and passage embeddings are available. It falls back to keyword passage search if vectors are unavailable, the provider fails, the budget is exhausted, or the deadline expires.
 
-For dotted configuration keys or command flags, the endpoint can add an exact-identifier explanation as the third result. It must contain every requested identifier in prose; tables, code listings, and identifier prefixes do not qualify. The first two semantic results stay in place. File-name queries and requests for fewer than three results keep semantic ranking.
+For dotted configuration keys or command flags, the endpoint can add an exact-identifier explanation as the third result. It must contain every requested identifier in prose; tables, code listings, and identifier prefixes don't qualify. The first two semantic results stay in place. File-name queries and requests for fewer than three results keep semantic ranking.
 
 Result snippets prefer prose matching the substantive words in your question, omit generated discovery text, and keep a matching term visible in a long paragraph. Code-only and table-only passages use the page summary.
 

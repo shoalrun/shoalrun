@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Retrieval and chat settings
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -39,4 +39,4 @@ chat:
 
 The fields can add to a request but can't replace what Shoalrun sets, which is `model`, `messages`, `max_tokens`, `temperature`, and `stream`. Use `chat.model`, `chat.maxTokens`, and `chat.temperature` for those. A field whose name looks like a secret, such as a key, token, or password, fails validation, because the config never holds a key. Each fallback and escalation model inherits `body` and can replace it with its own. An empty `body: {}` clears it. Another service may reject a field it doesn't know, so check what yours accepts.
 
-Service-specific fields can affect latency, cost, and quality. Test them with your own questions and model; support and effects vary by service. Shoalrun does not interpret those extra fields.
+Service-specific fields can affect latency, cost, and quality. Test them with your own questions and model; support and effects vary by service. Shoalrun doesn't interpret those extra fields.

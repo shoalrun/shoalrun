@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Glossary
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 This page defines the terms used across Shoalrun's documentation. Look a term up when a guide uses a word you don't know. Terms are sorted A to Z, and each definition links to the full guide. Filter the list by a term or a word in its definition, for example `publication` or `agent`. In the Markdown version, use your reader's Find command. To see how the main terms fit together, read [How Shoalrun works](https://www.shoalrun.com/concepts.md).
 
@@ -34,7 +34,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Access policy**
 
-  The `access.policy` field. `public` puts a page in the build. Any other value, such as `draft`, keeps it out. It does not control who can read a published page. See [Page metadata](https://www.shoalrun.com/author/frontmatter.md).
+  The `access.policy` field. `public` puts a page in the build. Any other value, such as `draft`, keeps it out. It doesn't control who can read a published page. See [Page metadata](https://www.shoalrun.com/author/frontmatter.md).
 
 - **AFDocs**
 
@@ -42,7 +42,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Agent intent**
 
-  A self-reported category describing why an agent called an MCP tool. Optional analytics can record allowed categories; it does not reveal private model reasoning. See [MCP analytics](https://www.shoalrun.com/publish/mcp-analytics.md).
+  A self-reported category describing why an agent called an MCP tool. Optional analytics can record allowed categories; it doesn't reveal private model reasoning. See [MCP analytics](https://www.shoalrun.com/publish/mcp-analytics.md).
 
 - **Agent skill**
 
@@ -50,7 +50,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Alt text**
 
-  Text describing an image for readers who cannot see it. `<Image>` requires `alt`; `alt=""` marks a decorative image for screen readers to skip. See [Images](https://www.shoalrun.com/author/components/images.md).
+  Text describing an image for readers who can't see it. `<Image>` requires `alt`; `alt=""` marks a decorative image for screen readers to skip. See [Images](https://www.shoalrun.com/author/components/images.md).
 
 - **Analytics adapter**
 
@@ -58,11 +58,11 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Answer cache**
 
-  Temporary storage for checked answers in a running chat server. Matching repeated questions can reuse them while their source passages remain current. It is separate from prepared answer cards. See [Answer checks and reuse](https://www.shoalrun.com/chat/checks.md).
+  Temporary storage for checked answers in a running chat server. Matching repeated questions can reuse them while their source passages remain current. It's separate from prepared answer cards. See [Answer checks and reuse](https://www.shoalrun.com/chat/checks.md).
 
 - **Answer card**
 
-  A reviewed answer to a common question, generated ahead of time with `shoalrun answers` using a chat model. A confirmed match serves it without a new chat-model answer, though matching uses an embedding provider and scorer. It is not a page-preview card. See [Prepared answers](https://www.shoalrun.com/chat/prepared-answers.md).
+  A reviewed answer to a common question, generated ahead of time with `shoalrun answers` using a chat model. A confirmed match serves it without a new chat-model answer, though matching uses an embedding provider and scorer. It isn't a page-preview card. See [Prepared answers](https://www.shoalrun.com/chat/prepared-answers.md).
 
 - **API catalog**
 
@@ -126,7 +126,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Card**
 
-  A linked preview of another page. It shows the target's title and summary and follows the target's current URL. It is not an [answer card](https://www.shoalrun.com/chat/prepared-answers.md). See [Cards and collections](https://www.shoalrun.com/author/components/cards.md).
+  A linked preview of another page. It shows the target's title and summary and follows the target's current URL. It isn't an [answer card](https://www.shoalrun.com/chat/prepared-answers.md). See [Cards and collections](https://www.shoalrun.com/author/components/cards.md).
 
 - **Changelog identifier**
 
@@ -134,7 +134,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Channel**
 
-  An audience or environment, such as `production` or `sandbox`. It is one third of a publication. See [How Shoalrun works](https://www.shoalrun.com/concepts.md).
+  An audience or environment, such as `production` or `sandbox`. It's one third of a publication. See [How Shoalrun works](https://www.shoalrun.com/concepts.md).
 
 - **Chat answer**
 
@@ -198,7 +198,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Cookbook**
 
-  A page that helps readers choose among complete published recipe pages. Its introduction is authored separately; an optional chooser loads selected recipe instructions in the browser. It does not assemble ingredients or execute tasks. See [How recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md).
+  A page that helps readers choose among complete published recipe pages. Its introduction is authored separately; an optional chooser loads selected recipe instructions in the browser. It doesn't assemble ingredients or execute tasks. See [How recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md).
 
 - **Curated list**
 
@@ -302,7 +302,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Example project**
 
-  The `framework/example/` project used as a test fixture. It is not a deployed API. See [Example configs](https://www.shoalrun.com/config/examples.md).
+  The `framework/example/` project used as a test fixture. It isn't a deployed API. See [Example configs](https://www.shoalrun.com/config/examples.md).
 
 - **`extends`**
 
@@ -382,7 +382,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Harness**
 
-  The application running an agent and its tools, such as a coding-agent client. Its reported name does not establish which model it uses. See [MCP client metadata](https://www.shoalrun.com/publish/mcp-analytics.md).
+  The application running an agent and its tools, such as a coding-agent client. Its reported name doesn't establish which model it uses. See [MCP client metadata](https://www.shoalrun.com/publish/mcp-analytics.md).
 
 - **Header link**
 
@@ -418,11 +418,11 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Ingredient**
 
-  A reusable source document containing instructions for one action or check. Authors can copy it into several recipe drafts with the recipe assembler. Optional workflow metadata declares inputs, outputs, prerequisites, and a success check; it does not execute the action. See [How recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md).
+  A reusable source document containing instructions for one action or check. Authors can copy it into several recipe drafts with the recipe assembler. Optional workflow metadata declares inputs, outputs, prerequisites, and a success check; it doesn't execute the action. See [How recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md).
 
 - **Jev**
 
-  The supported relevance-scoring protocol used by `chat.rerank`. A compatible service rates passage relevance and support for claims; it does not write the answer. See [Scorer settings](https://www.shoalrun.com/chat/settings.md).
+  The supported relevance-scoring protocol used by `chat.rerank`. A compatible service rates passage relevance and support for claims; it doesn't write the answer. See [Scorer settings](https://www.shoalrun.com/chat/settings.md).
 
 - **JSON shape**
 
@@ -430,7 +430,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Language**
 
-  The content language of a publication, such as `en`. The default language has no route prefix. Shoalrun does not translate text. See [Share pages across versions](https://www.shoalrun.com/publish/publications.md).
+  The content language of a publication, such as `en`. The default language has no route prefix. Shoalrun doesn't translate text. See [Share pages across versions](https://www.shoalrun.com/publish/publications.md).
 
 - **Layout**
 
@@ -446,7 +446,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Locale**
 
-  An optional `locale` field for date, number, and currency conventions. It does not choose a publication. Use `language` for that. See [Page metadata](https://www.shoalrun.com/author/frontmatter.md).
+  An optional `locale` field for date, number, and currency conventions. It doesn't choose a publication. Use `language` for that. See [Page metadata](https://www.shoalrun.com/author/frontmatter.md).
 
 - **Local MCP**
 
@@ -474,7 +474,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **MCP endpoint**
 
-  The HTTP address of a hosted documentation MCP server, such as this site’s `/mcp` endpoint. It requires a running server or host function; static files alone cannot serve it. See [Host an MCP endpoint](https://www.shoalrun.com/publish/mcp.md).
+  The HTTP address of a hosted documentation MCP server, such as this site’s `/mcp` endpoint. It requires a running server or host function; static files alone can't serve it. See [Host an MCP endpoint](https://www.shoalrun.com/publish/mcp.md).
 
 - **MDX**
 
@@ -502,7 +502,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Navigation tab**
 
-  A top-level site section, such as Docs or Changelog, with its own navigation scope. It is separate from the in-page `Tabs` component. See [Navigation](https://www.shoalrun.com/author/navigation.md).
+  A top-level site section, such as Docs or Changelog, with its own navigation scope. It's separate from the in-page `Tabs` component. See [Navigation](https://www.shoalrun.com/author/navigation.md).
 
 - **`Only`**
 
@@ -586,7 +586,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Reader view**
 
-  A reader's saved choice of audience, product, or another facet. It narrows navigation, search, cards, and marked sections. It is not access control. See [Reader views](https://www.shoalrun.com/author/reader-views.md).
+  A reader's saved choice of audience, product, or another facet. It narrows navigation, search, cards, and marked sections. It isn't access control. See [Reader views](https://www.shoalrun.com/author/reader-views.md).
 
 - **Recipe**
 
@@ -686,7 +686,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Sidebar filter**
 
-  The menu filter that matches navigation labels and optional node-level `search` words. It does not change site search. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).
+  The menu filter that matches navigation labels and optional node-level `search` words. It doesn't change site search. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).
 
 - **Site search**
 
@@ -774,11 +774,11 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Title**
 
-  The required `title` field. It is the page heading and the default browser title. See [Page metadata](https://www.shoalrun.com/author/frontmatter.md).
+  The required `title` field. It's the page heading and the default browser title. See [Page metadata](https://www.shoalrun.com/author/frontmatter.md).
 
 - **Token**
 
-  A unit of text counted by a model or tokenizer. Token budgets limit how much text a tool or model processes; a token is not necessarily a word. For styling values, see Design token. See [CLI token limits](https://www.shoalrun.com/cli.md).
+  A unit of text counted by a model or tokenizer. Token budgets limit how much text a tool or model processes; a token isn't necessarily a word. For styling values, see Design token. See [CLI token limits](https://www.shoalrun.com/cli.md).
 
 - **`Tooltip`**
 
@@ -806,7 +806,7 @@ This page defines the terms used across Shoalrun's documentation. Look a term up
 
 - **Version**
 
-  An API or documentation edition, such as `v1` or `current`. It is one third of a publication. See [How Shoalrun works](https://www.shoalrun.com/concepts.md).
+  An API or documentation edition, such as `v1` or `current`. It's one third of a publication. See [How Shoalrun works](https://www.shoalrun.com/concepts.md).
 
 - **`Walkthrough`, `Step`**
 

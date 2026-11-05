@@ -16,11 +16,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content REST API > Other > Read resource metadata headers
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 This reference is generated from the OpenAPI description. It shows the operation contract; follow any related guides below for task steps and context.
 
-OpenAPI for this operation: [Download JSON](https://www.shoalrun.com/api/operations/production/current/en/content-rest-getcontentresourcehead-49278b5d587407017389307aa792900c49ecece639e9d4cd3aefd8c1b1245254.json).
+OpenAPI for this operation: [Download JSON](https://www.shoalrun.com/api/operations/production/current/en/content-rest-getcontentresourcehead-2bbdd35b7b5c9fc69bdbca76d615f9db3210df6a0040b49074f2055aef5e0ac8.json).
 
 ## HEAD /resources/{key}
 
@@ -63,6 +63,14 @@ Exact publication language. No default or fallback.
 string; minLength: 1; maxLength: 2048
 
 **Default example**: `"en"`
+
+#### product (query)
+
+Optional
+
+Exact product ID. Required for product-scoped publications; omitted selects only a legacy productless publication. No cross-product fallback.
+
+string; minLength: 1; maxLength: 2048
 
 #### revision (query)
 

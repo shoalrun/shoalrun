@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Use Manni with Shoalrun
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/manni.md)
 
@@ -33,13 +33,13 @@ Shoalrun builds and delivers your docs. Here, we use Manni to add checks before 
 
 This guide shows how to run Manni in a Shoalrun project and add a check to `shoalrun audit`. That command runs the checks you configure and reports whether they passed. Start with one useful rule, then add more when you need them. For a working example, see [how we use Manni on this site](https://www.shoalrun.com/publish/manni.md#how-this-site-uses-manni).
 
-Manni's [documentation site](https://hawkeyexl.github.io/manni/) describes its available tools and rules. Your choices go in `manni.config.yaml`; you do not need a separate Shoalrun setting for each Manni feature.
+Manni's [documentation site](https://hawkeyexl.github.io/manni/) describes its available tools and rules. Your choices go in `manni.config.yaml`; you don't need a separate Shoalrun setting for each Manni feature.
 
 ## How this site uses Manni
 
-Here are some ways we use Manni to check the docs you are reading. You can adopt the examples that suit your project.
+Here are some ways we use Manni to check the docs you're reading. You can adopt the examples that suit your project.
 
-**Catch broken glossary references.** Some pages list the glossary terms they discuss, such as “facet” or “reader view.” If an author types “reader veiw” in that list, the check fails because no such term exists. We check those lists against the [glossary](https://www.shoalrun.com/glossary.md), using its existing definitions. This does not check every word in the prose.
+**Catch broken glossary references.** Some pages list the glossary terms they discuss, such as “facet” or “reader view.” If an author types “reader veiw” in that list, the check fails because no such term exists. We check those lists against the [glossary](https://www.shoalrun.com/glossary.md), using its existing definitions. This doesn't check every word in the prose.
 
 **Keep instructions complete.** On this page and the [content export guide](https://www.shoalrun.com/publish/content-export.md), we require prerequisites, named steps with instructions, and a final result check. The [getting-started tutorial](https://www.shoalrun.com/start.md) must cover setup, creating a page, navigation, and checking both outputs. Two common problems in [troubleshooting](https://www.shoalrun.com/publish/troubleshooting.md) must explain their cause and what to do. Removing one of those required sections makes the check fail.
 
@@ -72,7 +72,7 @@ npm run docs:build
 npm run docs:a11y
 ```
 
-The scan starts a temporary local server and checks every HTML page named in `documents.json`, including pages without navigation links. It fails on detected violations, skipped pages, or incomplete coverage. It reuses the built files and does not run another build. You can select another built directory with `SHOALRUN_BUILT_SITE`.
+The scan starts a temporary local server and checks every HTML page named in `documents.json`, including pages without navigation links. It fails on detected violations, skipped pages, or incomplete coverage. It reuses the built files and doesn't run another build. You can select another built directory with `SHOALRUN_BUILT_SITE`.
 
 To check the connection between our metadata guide and its implementation, provide a framework source checkout. Replace `/path/to/shoalrun` with its location:
 
@@ -80,4 +80,4 @@ To check the connection between our metadata guide and its implementation, provi
 npm run docs:citations -- --repo framework=/path/to/shoalrun
 ```
 
-The citation record is kept outside the published page. Review changes to the explanation and code before updating that record. It identifies the source version reviewed; it does not replace testing the installed Shoalrun package.
+The citation record is kept outside the published page. Review changes to the explanation and code before updating that record. It identifies the source version reviewed; it doesn't replace testing the installed Shoalrun package.

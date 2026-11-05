@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Use ingredients when several recipes share instructions you want to maintain in one place. This guide follows Shoalrun's **Build and audit this documentation site** recipe from its source files to its published page.
 
@@ -75,7 +75,7 @@ The `workflow` fields describe the step:
 | `prerequisites` | Setup instructions. The assembler includes identical strings once across the recipe.                                                               |
 | `check`         | An observable condition for the reader to evaluate before continuing. Required whenever `workflow` is present.                                     |
 
-These declarations do not run the command or create variables. The body tells the reader or agent what to do. The check tells them what result to inspect. The assembler checks names and order, so a typo such as `builtDocs` where the next step expects `builtSite` fails during assembly.
+These declarations don't run the command or create variables. The body tells the reader or agent what to do. The check tells them what result to inspect. The assembler checks names and order, so a typo such as `builtDocs` where the next step expects `builtSite` fails during assembly.
 
 An ingredient can be private draft source for a recipe, or a published page readers can inspect. It must have a literal YAML header and match the recipe's default channel, version, and language. Without `workflow`, the assembler copies its body without checking handoffs.
 
@@ -102,7 +102,7 @@ outcome: The build succeeds, both page formats exist, and configured audits pass
 
 Paths are relative to this spec file. The initial `inputs` are available before the first ingredient. The installation ingredient produces `frameworkCli`; the build ingredient requires it and produces `builtSite`; the artifact-check ingredient requires that build and `DOC_ID`.
 
-The assembler rejects a missing input, repeated output name, repeated ingredient ID, or publication mismatch. It does not choose an order for you or verify that an output has the described value. The `outcome` is the final check for the complete recipe; omitting it leaves a prompt for the author to complete.
+The assembler rejects a missing input, repeated output name, repeated ingredient ID, or publication mismatch. It doesn't choose an order for you or verify that an output has the described value. The `outcome` is the final check for the complete recipe; omitting it leaves a prompt for the author to complete.
 
 ## 3. Generate a draft and review it
 
@@ -153,7 +153,7 @@ To check freshness without changing files:
 node scripts/build-shoalrun-recipes.mjs --check
 ```
 
-The test suite runs that check too. General `recipe draft` output has no automatic synchronization: it is an editable snapshot. The maintenance script above is this repository's explicit workflow for keeping its published recipes in sync.
+The test suite runs that check too. General `recipe draft` output has no automatic synchronization: it's an editable snapshot. The maintenance script above is this repository's explicit workflow for keeping its published recipes in sync.
 
 ## Start an ingredient from an API example
 
@@ -168,7 +168,7 @@ npx --no-install shoalrun ingredient draft \
 
 Its YAML spec supplies `schemaVersion: 1`, the page's `id`, `title`, `summary`, and `slug`, plus `operation` and `requestExample`. An optional `workflow` mapping is copied into frontmatter. The command copies the generated cURL request and first inline 2xx response example, links the configured reference, and records a source digest. It supports the default publication and outgoing requests with generated cURL. Webhook receiver flows need authored instructions.
 
-The generated file still needs setup, failure guidance, and a verified success check. An example response is not evidence that a live request worked. The [worked cookbook example](https://www.shoalrun.com/cookbooks/welcome-email.md) shows how complete recipes reuse a step and offer different outcomes against the local simulator.
+The generated file still needs setup, failure guidance, and a verified success check. An example response isn't evidence that a live request worked. The [worked cookbook example](https://www.shoalrun.com/cookbooks/welcome-email.md) shows how complete recipes reuse a step and offer different outcomes against the local simulator.
 
 ## Related reading
 

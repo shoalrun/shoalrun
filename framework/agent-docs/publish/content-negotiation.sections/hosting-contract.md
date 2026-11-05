@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Content negotiation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 
@@ -48,7 +48,7 @@ For each published page, use the two URLs in `documents.json`. Configure the hos
 2. Keep the URL in the browser unchanged when serving the twin. Use an internal rewrite or server response, not a redirect to `.md`.
 3. On the Markdown response, set `Content-Type: text/markdown; charset=utf-8`, `Vary: Accept`, and `Content-Location` to the `.md` URL.
 4. On both page responses, set `Link: <PAGE.md>; rel="alternate"; type="text/markdown"`. Keep the HTML document's existing alternate link as well.
-5. Serve direct `.md` URLs as `text/markdown`. Apply the content types in [`/resource-headers.json`](https://www.shoalrun.com/resource-headers.json) to discovery files, especially `/.well-known/api-catalog` when it is published.
+5. Serve direct `.md` URLs as `text/markdown`. Apply the content types in [`/resource-headers.json`](https://www.shoalrun.com/resource-headers.json) to discovery files, especially `/.well-known/api-catalog` when it's published.
 6. Limit the negotiation rule to published documentation pages. Leave assets, API contracts, and `/llms.txt` alone. Missing routes use the error responses described below.
 
 The Vercel rule matches the Node server except when `text/markdown` and the HTML or wildcard entry it competes with both have fractional weights. The [Vercel guide](https://www.shoalrun.com/publish/vercel.md) gives the details. The Node server compares the requested HTML and Markdown weights. When the weights tie, Markdown wins. A wildcard such as `text/*` or `*/*` alone never selects Markdown; the request must name `text/markdown`.

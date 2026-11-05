@@ -17,7 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Customer editions
 
-**Updated: 2026-11-03.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.15.**
 
 Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
@@ -31,14 +33,12 @@ Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
 - [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md) — Review the selected edition using captured HTML and Markdown. (Status: experimental.)
 
-Build a documentation edition for each customer from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles do not need to share a repository.
+Build a documentation edition for individual customers from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles don't need to share a repository with the content.
 
-By default, you do not need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
-
-Available since `0.1.0-alpha.15`.
+By default, you don't need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
 
 ## HTML, Markdown, and agents
 
-HTML displays the selected documentation with the deployment's title, logo, favicon, theme, and configured links. The masthead keeps the title as its accessible label. Markdown retains the selected instructions and links, without the site's branding controls. Feature selection happens during compilation and does not need browser JavaScript.
+HTML displays the selected documentation with the deployment's title, logo, favicon, theme, and configured links. The masthead keeps the title as its accessible label. Markdown retains the selected instructions and links, without the site's branding controls. Feature selection happens during compilation and doesn't need browser JavaScript.
 
-Agents reading search, discovery, or exported content receive the selected edition. They cannot retrieve excluded instructions from that edition's Markdown twin. Existing browser reader views still affect visibility only; use feature requirements for build-time omission.
+Agents reading search, discovery, or exported content receive the selected edition. They can't retrieve excluded instructions from that edition's Markdown twin. Existing browser reader views still affect visibility only; use feature requirements for build-time omission.

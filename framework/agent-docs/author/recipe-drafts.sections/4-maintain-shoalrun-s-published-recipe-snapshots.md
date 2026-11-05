@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Compose and maintain recipes
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/recipe-drafts.md)
 
@@ -63,4 +63,4 @@ To check freshness without changing files:
 node scripts/build-shoalrun-recipes.mjs --check
 ```
 
-The test suite runs that check too. General `recipe draft` output has no automatic synchronization: it is an editable snapshot. The maintenance script above is this repository's explicit workflow for keeping its published recipes in sync.
+The test suite runs that check too. General `recipe draft` output has no automatic synchronization: it's an editable snapshot. The maintenance script above is this repository's explicit workflow for keeping its published recipes in sync.

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Deploy your documentation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 After the [quickstart](https://www.shoalrun.com/start.md), your documentation project has `@shoalrun/cli` installed. Run the commands below from that project directory, `my-docs/`.
 
@@ -60,7 +60,7 @@ For a local check, use `http://localhost:8080/install/` and `http://localhost:80
 
 ### Other hosts
 
-A static upload alone does not establish Markdown content negotiation. Configure the host to serve the resources and page variants described in [content negotiation](https://www.shoalrun.com/publish/content-negotiation.md), including `Vary: Accept`, content types, Markdown alternate links, redirects, and 404 responses. Use [generated outputs](https://www.shoalrun.com/publish/output.md) to identify the files to deploy.
+A static upload alone doesn't establish Markdown content negotiation. Configure the host to serve the resources and page variants described in [content negotiation](https://www.shoalrun.com/publish/content-negotiation.md), including `Vary: Accept`, content types, Markdown alternate links, redirects, and 404 responses. Use [generated outputs](https://www.shoalrun.com/publish/output.md) to identify the files to deploy.
 
 ## Verify the public site
 

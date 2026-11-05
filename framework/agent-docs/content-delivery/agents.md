@@ -17,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Content delivery and agents
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.13.**
 
 Content delivery and documentation discovery serve different reading tasks. Delivery gives an application a reviewed collection of resources. Discovery helps an agent find and read documentation across a published site or installed snapshot.
-
-Available since `0.1.0-alpha.13`.
 
 ## Choose the reading contract
 
@@ -34,7 +34,7 @@ Match the interface to the task and the context it must retain.
 | Find documentation by a question or topic     | Existing documentation search and discovery indexes |
 | Read a page or contextual section through MCP | Existing documentation MCP tools                    |
 
-An export does not automatically create a search service or MCP server. The content client lists and reads resources; it does not rank them or generate answers. For an HTTP integration, use the [REST resource routes](https://www.shoalrun.com/content-delivery/http-api.md) or `openRestContentSource` with the same snapshot reading methods.
+An export doesn't automatically create a search service or MCP server. The content client lists and reads resources; it doesn't rank them or generate answers. For an HTTP integration, use the [REST resource routes](https://www.shoalrun.com/content-delivery/http-api.md) or `openRestContentSource` with the same snapshot reading methods.
 
 ## Read Markdown for an agent
 
@@ -61,7 +61,7 @@ In Node.js, use an absolute URL. Browser integrations must serve the export from
 
 ## Keep context explicit
 
-Application section fragments use `{ id, context: section }` approval and explicit export selection. They contain the section slice plus required notices and referenced definitions. They can exist on short pages where no heuristic discovery section is generated. An application fragment is not a replacement for the MCP section's context contract.
+Application section fragments use `{ id, context: section }` approval and explicit export selection. They contain the section slice plus required notices and referenced definitions. They can exist on short pages where no heuristic discovery section is generated. An application fragment isn't a replacement for the MCP section's context contract.
 
 Discovery sections can include the page introduction, nested subsections, and reading-path context. Their generation also depends on page and section size. Existing title-string approvals retain that behavior; see [compatibility guidance](https://www.shoalrun.com/content-delivery/sections.md) before changing them.
 
@@ -69,7 +69,7 @@ Discovery sections can include the page introduction, nested subsections, and re
 
 Use the resource's typed reference and publication. Section IDs can be derived from headings or fixed by an explicit marker. A marker stays out of Markdown prose; metadata carries the identity. Follow the returned representation URL or use `snapshot.get` rather than constructing a Markdown anchor from the ID.
 
-A full-page fallback can help when a fragment does not answer the question. It must refer to an eligible published destination or an exported page; it is not permission to read drafts or private source files.
+A full-page fallback can help when a fragment doesn't answer the question. It must refer to an eligible published destination or an exported page; it isn't permission to read drafts or private source files.
 
 ## HTML, Markdown, and agents
 

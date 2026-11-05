@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 `docs.config.yaml` connects your content, presentation, and publication settings. Start with one file, then extract sections or share defaults when several projects need them. This guide explains how those choices interact and how to inspect the result.
 
@@ -31,7 +31,7 @@ Configuration takes effect in three stages:
 2. **Resolve pages.** Apply configured frontmatter defaults, the page's own metadata, and enforced metadata. Validate the resulting page fields.
 3. **Build publications.** Select public pages for enabled channel/version/language combinations, resolve links and APIs, then produce HTML, Markdown, and discovery files.
 
-A preset changes configuration. A page default changes metadata. An enabled publication selects an edition to build. These mechanisms have separate rules; changing one does not automatically create pages or translations.
+A preset changes configuration. A page default changes metadata. An enabled publication selects an edition to build. These mechanisms have separate rules; changing one doesn't automatically create pages or translations.
 
 ### Find the section you need
 
@@ -48,7 +48,7 @@ Start with the configuration sections that control the behavior you want to chan
 | Style the site and configure rendering         | `theme`, `outputs`                                  |
 | Configure reader views and project checks      | `readerFilters`, `audit`                            |
 
-Every entry config resolves to a YAML mapping with `schemaVersion: 1`. Duplicate YAML keys and unknown top-level settings fail. Nested settings are not all checked for unknown keys, so verify spelling against the reference.
+Every entry config resolves to a YAML mapping with `schemaVersion: 1`. Duplicate YAML keys and unknown top-level settings fail. Nested settings aren't all checked for unknown keys, so verify spelling against the reference.
 
 ## Start with one working file
 
@@ -59,7 +59,7 @@ CONFIG_DEMO="$(mktemp -d)"
 mkdir "$CONFIG_DEMO/site"
 cd "$CONFIG_DEMO/site"
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.11
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.18
 npx --no-install shoalrun init . --starter minimal
 ```
 
@@ -222,7 +222,7 @@ When a config extends another file, the overlay value determines how each inheri
 | Overlay value            | Result                                                                     |
 | ------------------------ | -------------------------------------------------------------------------- |
 | Mapping over a mapping   | Merge recursively by key. Unchanged keys survive.                          |
-| List                     | Replace the entire inherited list. Items do not merge by ID.               |
+| List                     | Replace the entire inherited list. Items don't merge by ID.                |
 | Scalar, including `null` | Replace the inherited value. The receiving setting must accept that value. |
 | `$concat`                | Append to an inherited list, or create a list if none exists.              |
 | `$remove`                | Remove inherited mapping keys or list entries by `id`.                     |
@@ -231,7 +231,7 @@ This also applies after resolving an include. An included mapping can merge with
 
 To layer a second preset, use `extends: [../shared/base.yaml, ../shared/brand.yaml]`. Only settings in `brand.yaml` override the base; the project's local settings still win.
 
-`extends` is recognized at the top level of each loaded YAML file, including files loaded through `$include`. Avoid using a top-level `extends` key as unrelated data in a fragment. An `extends` nested inside an ordinary mapping is not an inheritance instruction.
+`extends` is recognized at the top level of each loaded YAML file, including files loaded through `$include`. Avoid using a top-level `extends` key as unrelated data in a fragment. An `extends` nested inside an ordinary mapping isn't an inheritance instruction.
 
 ## Change inherited lists deliberately
 
@@ -262,7 +262,7 @@ npx --no-install shoalrun build docs.config.yaml dist
 
 ### Know the directive limits
 
-`$concat` expects a list base when an inherited value exists. It does not append to a mapping. Included lists within `$concat` are flattened one level, so several team navigation fragments can become one list:
+`$concat` expects a list base when an inherited value exists. It doesn't append to a mapping. Included lists within `$concat` are flattened one level, so several team navigation fragments can become one list:
 
 ```yaml
 navigation:
@@ -271,11 +271,11 @@ navigation:
     - { $include: ./config/nav-api.yaml }
 ```
 
-That fragment requires both named files. Each should contain a navigation list. Concatenation preserves order and does not remove duplicates; duplicate navigation IDs still fail during a build.
+That fragment requires both named files. Each should contain a navigation list. Concatenation preserves order and doesn't remove duplicates; duplicate navigation IDs still fail during a build.
 
-`$remove` requires an inherited value. For mappings, its strings name keys. For lists, they match each item's `id`; it does not remove scalar strings or match another field such as `label`. Removing a missing name has no effect. Removing an item does not automatically repair links or other settings that referred to it.
+`$remove` requires an inherited value. For mappings, its strings name keys. For lists, they match each item's `id`; it doesn't remove scalar strings or match another field such as `label`. Removing a missing name has no effect. Removing an item doesn't automatically repair links or other settings that referred to it.
 
-Each directive mapping must contain exactly one directive and no other keys. You cannot combine `$remove` and `$concat` at the same location in one overlay. Use separate preset layers when you need both operations.
+Each directive mapping must contain exactly one directive and no other keys. You can't combine `$remove` and `$concat` at the same location in one overlay. Use separate preset layers when you need both operations.
 
 ## Understand where paths point
 
@@ -292,7 +292,7 @@ Resolution records a source file for every configuration value. Relative paths o
 
 In the running example, `site.customCss: ./brand.css` still finds `shared/brand.css` after the project overrides `site.title`. The two keys keep separate origins.
 
-Moving a path into `config/api.yaml` may require changing `./apis/service.yaml` to `../apis/service.yaml`. Inspect the exact path key with `config explain` after moving it. `config resolve` retains relative strings; it does not rewrite every file path into an absolute path.
+Moving a path into `config/api.yaml` may require changing `./apis/service.yaml` to `../apis/service.yaml`. Inspect the exact path key with `config explain` after moving it. `config resolve` retains relative strings; it doesn't rewrite every file path into an absolute path.
 
 Some grouped settings use the origin of their containing block: custom search uses `outputs.html.search`, fonts use `theme.fonts`, and share images use `outputs.html.shareImages`. Overriding part of such a block can change its path base. Keep a block's relative paths and related overrides together, and inspect that block's source when debugging.
 
@@ -306,19 +306,19 @@ The loader first combines all configured `frontmatter` sections using the config
 frontmatter.defaults → page frontmatter → frontmatter.enforced
 ```
 
-Mappings merge recursively and lists replace at this stage too. Config directives such as `$include`, `$concat`, and `$remove` are not page-frontmatter inheritance instructions.
+Mappings merge recursively and lists replace at this stage too. Config directives such as `$include`, `$concat`, and `$remove` aren't page-frontmatter inheritance instructions.
 
 For example, `frontmatter.defaults.access.policy: public` lets a page set itself to `draft`. Setting `frontmatter.enforced.access.policy: public` overrides that draft choice. Use defaults when authors should control publication access.
 
-`frontmatter.fields` declares field types and requirements; it does not fill in missing values. A metadata provider is an additional advanced input to page resolution. See [page metadata](https://www.shoalrun.com/author/frontmatter.md) and the [configuration reference](https://www.shoalrun.com/config.md) before adding one.
+`frontmatter.fields` declares field types and requirements; it doesn't fill in missing values. A metadata provider is an additional advanced input to page resolution. See [page metadata](https://www.shoalrun.com/author/frontmatter.md) and the [configuration reference](https://www.shoalrun.com/config.md) before adding one.
 
 ### Publication defaults serve a different purpose
 
 `publications.defaults` identifies default publication choices, including which channel and version receive an API's top-level source. It also supplies defaults for scaffolding and API selection. The default language supplies a page language when one is missing.
 
-Existing authored pages still need resolved channel and version fields. The starter provides these through `frontmatter.defaults`. Do not assume that changing `publications.defaults.version` also changes every page's metadata.
+Existing authored pages still need resolved channel and version fields. The starter provides these through `frontmatter.defaults`. Don't assume that changing `publications.defaults.version` also changes every page's metadata.
 
-`publications.enabled` selects combinations to build; it does not clone pages into those combinations. Navigation and `doc:` links resolve against the selected publication. See [versions and languages](https://www.shoalrun.com/publish/publications.md) for complete variant and route examples.
+`publications.enabled` selects combinations to build; it doesn't clone pages into those combinations. Navigation and `doc:` links resolve against the selected publication. See [versions and languages](https://www.shoalrun.com/publish/publications.md) for complete variant and route examples.
 
 ## Inspect and validate changes
 
@@ -334,11 +334,11 @@ Use these commands while reorganizing configuration:
 | `config validate docs.config.yaml`           | Successful configuration loading and theme contrast checks                 |
 | `build docs.config.yaml dist`                | Whether content, navigation, APIs, routes, and output can compile together |
 
-Prefix each command with `npx --no-install shoalrun`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot cannot be addressed unambiguously through this CLI syntax.
+Prefix each command with `npx --no-install shoalrun`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot can't be addressed unambiguously through this CLI syntax.
 
-`graph` reports dependencies, not an edge-by-edge visual graph. Its list covers loaded configuration files, not every content or API input. The resolved digest hashes effective values; it is not a digest of all referenced file contents.
+`graph` reports dependencies, not an edge-by-edge visual graph. Its list covers loaded configuration files, not every content or API input. The resolved digest hashes effective values; it isn't a digest of all referenced file contents.
 
-A successful `config validate` does not establish that document links resolve or that an API review digest is current. Run a full build after structural changes. If a setting looks correct but behaves unexpectedly, inspect its exact key and source before editing another layer.
+A successful `config validate` doesn't establish that document links resolve or that an API review digest is current. Run a full build after structural changes. If a setting looks correct but behaves unexpectedly, inspect its exact key and source before editing another layer.
 
 ### Recover common configuration failures
 
@@ -353,7 +353,7 @@ Match the build message or symptom to the corresponding correction.
 | `$remove has no inherited value`    | Add an actual inherited value or remove the unnecessary directive.               |
 | `Unknown config path`               | Inspect `resolve`, then correct the dotted key or list index.                    |
 | A list unexpectedly lost entries    | Replace a normal overlay list with `$concat` when appending was intended.        |
-| A local file cannot be found        | Inspect the path's source file and the relevant path-base rule.                  |
+| A local file can't be found         | Inspect the path's source file and the relevant path-base rule.                  |
 
 Finish the running example with:
 

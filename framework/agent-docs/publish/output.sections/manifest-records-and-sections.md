@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -41,6 +41,6 @@ Every document record includes identity, publication, title, summary, page type,
 
 Each record has a `sections` array, possibly empty. Each section has `id`, `title`, `depth: 2`, `markdownUrl`, `parentMarkdownUrl`, `parentDigest`, `digest`, and the three size/token fields. `standalone` is present as `true` only for an explicit author declaration. Its absence means no such declaration, not that a section has been proved incomplete.
 
-Section files preserve the parent preamble, nested reader content, and applicable page reading paths. Generation requires a parent of at least 2,000 tokens and a section no larger than half the parent in both tokens and bytes. An empty array does not imply a page has no headings. Heading-derived IDs can change after renaming, insertion, or reordering; there are no permanent section IDs or automatic section redirects. See [section retrieval and citations](https://www.shoalrun.com/author/markdown-metadata.md) for the exact policy and full-page fallback.
+Section files preserve the parent preamble, nested reader content, and applicable page reading paths. Generation requires a parent of at least 2,000 tokens and a section no larger than half the parent in both tokens and bytes. An empty array doesn't imply a page has no headings. Heading-derived IDs can change after renaming, insertion, or reordering; there are no permanent section IDs or automatic section redirects. See [section retrieval and citations](https://www.shoalrun.com/author/markdown-metadata.md) for the exact policy and full-page fallback.
 
-Optional `subjectDeprecation` requires a deprecated subject and contains supplied dates or resolved replacement/migration targets. It does not require every deprecated subject to have dates or a replacement. Optional `change` requires a changelog entry, one of `editorial`, `procedure`, `behavior`, or `breaking`, a nonempty unique affected-ID list, and an optional migration target. Published targets include `id`, `title`, `url`, and `markdownUrl`, resolved to other public documents in the same publication. The build checks references and dates; it does not verify authored classification or retirement. See [page metadata](https://www.shoalrun.com/author/frontmatter.md) and [release notes](https://www.shoalrun.com/author/release-notes.md).
+Optional `subjectDeprecation` requires a deprecated subject and contains supplied dates or resolved replacement/migration targets. It doesn't require every deprecated subject to have dates or a replacement. Optional `change` requires a changelog entry, one of `editorial`, `procedure`, `behavior`, or `breaking`, a nonempty unique affected-ID list, and an optional migration target. Published targets include `id`, `title`, `url`, and `markdownUrl`, resolved to other public documents in the same publication. The build checks references and dates; it doesn't verify authored classification or retirement. See [page metadata](https://www.shoalrun.com/author/frontmatter.md) and [release notes](https://www.shoalrun.com/author/release-notes.md).

@@ -16,9 +16,11 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Project > Project status
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Shoalrun is an alpha for publishing documentation for people and agents from the same source. This site is built with it. Install the public `@shoalrun/cli` npm package through [Getting started](https://www.shoalrun.com/start.md). No account or package token is needed.
+
+The [features overview](https://www.shoalrun.com/features.md) summarizes the platform on one page. The capabilities below include `0.1.0-alpha.18`.
 
 ## What works today
 
@@ -40,6 +42,14 @@ Shoalrun is an alpha for publishing documentation for people and agents from the
 
 - **Experimental visual navigation.** [Explore the docs](https://www.shoalrun.com/explore.md) offers circles, expandable branches, arcs, a relationship matrix, and a force layout. The views use declared page categories and reading relationships, including authored explanations. Agents can read the same metadata and relationships through the document manifest without running the visualization.
 
+## Product publications and customer previews
+
+Since 0.1.0-alpha.18
+
+Product publications add independent versions, defaults, and exact product-release selection in customer profiles. They also add a grouped publication dropdown, optional language labels, and `dev --profile` edition previews. Search and content identity retain product scope; MCP adds compact publication discovery, and product-aware delivery uses version 2 contracts. Existing productless identities and version 1 delivery contracts remain supported.
+
+Follow [publications](https://www.shoalrun.com/publish/publications.md) and [customer editions](https://www.shoalrun.com/publish/deployment-profiles.md) for the release-specific configuration. The [features overview](https://www.shoalrun.com/features.md) shows how these capabilities fit together.
+
 ## What I want to add next
 
 - **Optional vector-store connections.** Add adapters for customers’ own vector stores for semantic search. Keep file-based indexes as the default, and preserve document identity, publication filtering, updates, and deletions across storage options. Content exports should remain usable without a vector store.
@@ -52,9 +62,9 @@ These are intended additions, without a promised release date.
 
 - **Alpha stability.** Configuration, extension points, and output formats can still change. There is no stable release or compatibility promise yet.
 - **Component extensibility.** [Trusted custom components](https://www.shoalrun.com/author/components/custom.md) lower into shared content, with a portable authoring skill. Arbitrary executable MDX remains unsupported. Project CSS, browser modules, and configured build extensions are trusted project code.
-- **API coverage.** OpenAPI and JSON Schema support is partial; check the [support reference](https://www.shoalrun.com/api-docs/support.md) against your source. Request examples are copyable, but Shoalrun does not provide a live API explorer that sends requests.
-- **Private content.** Reader views do not restrict access to published files. Shoalrun has no built-in reader authentication, and its HTTP MCP endpoint currently serves one selected public publication. Host-level authorization is a separate responsibility.
-- **Managed services.** Shoalrun does not provide managed hosting, translation, or chat. Versions and translations need explicit authored variants. Optional model and analytics services need your own configuration and accounts.
+- **API coverage.** OpenAPI and JSON Schema support is partial; check the [support reference](https://www.shoalrun.com/api-docs/support.md) against your source. Request examples are copyable, but Shoalrun doesn't provide a live API explorer that sends requests.
+- **Private content.** Reader views don't restrict access to published files. Shoalrun has no built-in reader authentication, and its HTTP MCP endpoint currently serves one selected public publication. Host-level authorization is a separate responsibility.
+- **Managed services.** Shoalrun doesn't provide managed hosting, translation, or chat. Versions and translations need explicit authored variants. Optional model and analytics services need your own configuration and accounts.
 
 Automatic skill generation and general agent orchestration are [deliberate non-goals](https://www.shoalrun.com/non-goals.md). Authors remain responsible for the accuracy and usefulness of their documentation.
 

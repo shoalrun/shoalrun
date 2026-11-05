@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > API and audit
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Configure OpenAPI sources, generated references, focused contracts, and local validation. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
 
@@ -119,7 +119,7 @@ audit:
       inputs: [../format.ini, ../styles]
 ```
 
-The snapshot copies declared files and directories within the project parent. It rejects missing inputs, symlinks, credentials, dependency folders, and paths outside that boundary. Directory declarations also track added and deleted files for freshness. Declare the configuration's supporting files too; Shoalrun does not infer dependencies from command arguments. Ordinary `check` and `audit` commands still run in the original project.
+The snapshot copies declared files and directories within the project parent. It rejects missing inputs, symlinks, credentials, dependency folders, and paths outside that boundary. Directory declarations also track added and deleted files for freshness. Declare the configuration's supporting files too; Shoalrun doesn't infer dependencies from command arguments. Ordinary `check` and `audit` commands still run in the original project.
 
 ### Agent evaluation reports
 

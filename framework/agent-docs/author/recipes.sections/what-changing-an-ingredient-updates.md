@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/recipes.md)
 
@@ -37,7 +37,7 @@ Readers can open a recipe directly. Ingredients help authors maintain instructio
 
 ## What changing an ingredient updates
 
-A generated recipe is a snapshot of its ingredients. Editing an ingredient does not immediately change a published recipe. Regenerate the affected recipe, review the changes, and rebuild the site.
+A generated recipe is a snapshot of its ingredients. Editing an ingredient doesn't immediately change a published recipe. Regenerate the affected recipe, review the changes, and rebuild the site.
 
 Shoalrun's five repository recipes have a maintenance script that updates their snapshots together and a test that detects stale snapshots. The [composition guide](https://www.shoalrun.com/author/recipe-drafts.md) shows that workflow. Other projects can keep generated recipes as drafts and edit them independently.
 

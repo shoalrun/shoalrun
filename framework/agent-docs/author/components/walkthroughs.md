@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Walkthroughs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<Walkthrough>` to explain code step by step. Each step pairs an explanation with code built up across steps or read from a project file.
 
@@ -303,7 +303,7 @@ navigation:
 
 ### Step 1: Name the site
 
-`site.title` appears in the header and in every page title. It is the only required site setting.
+`site.title` appears in the header and in every page title. It's the only required site setting.
 
 Lines 4–5:
 

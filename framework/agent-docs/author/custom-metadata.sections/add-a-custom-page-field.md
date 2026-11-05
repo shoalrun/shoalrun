@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Metadata customization
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/custom-metadata.md)
 
@@ -30,7 +30,7 @@ Use this guide when your project needs shared metadata rules or fields beyond th
 
 ## Add a custom page field
 
-The [page metadata guide](https://www.shoalrun.com/author/frontmatter.md) uses the optional, project-defined `agent.intent` field to record the task it helps a reader complete. Shoalrun does not require or interpret that field. A custom field has two parts: a **declaration** in project config and a **value** in a page header. The declaration appears in the [published field reference](https://www.shoalrun.com/author/frontmatter-reference.md) and the local generated reference; the value belongs to that page.
+The [page metadata guide](https://www.shoalrun.com/author/frontmatter.md) uses the optional, project-defined `agent.intent` field to record the task it helps a reader complete. Shoalrun doesn't require or interpret that field. A custom field has two parts: a **declaration** in project config and a **value** in a page header. The declaration appears in the [published field reference](https://www.shoalrun.com/author/frontmatter-reference.md) and the local generated reference; the value belongs to that page.
 
 1. `docs/docs.config.yaml` loads the field declarations from a separate file:
 
@@ -61,8 +61,8 @@ The [page metadata guide](https://www.shoalrun.com/author/frontmatter.md) uses t
      reviewNote: Check the frontmatter examples before release.
    ```
 
-The config key `agent.intent` is a path. On the page, write it as an `agent` object with an `intent` value. The declaration checks that the value is a string and adds its description to the generated reference. `public: true` makes it eligible for the Markdown preamble; it does not export the value by itself.
+The config key `agent.intent` is a path. On the page, write it as an `agent` object with an `intent` value. The declaration checks that the value is a string and adds its description to the generated reference. `public: true` makes it eligible for the Markdown preamble; it doesn't export the value by itself.
 
-Undeclared fields are allowed in source pages, but they have no project type check or export approval. Declarations cannot redefine built-in fields, `slug`, `channel`, `version`, or the [protected metadata roots](https://www.shoalrun.com/author/markdown-metadata.md). A dotted declaration such as `agent.intent` needs any declared parent, such as `agent`, to have type `object`. Declarations support `string`, `number`, `integer`, `boolean`, `object`, and `array`. They can also set `required`, `items` for arrays, or `enum` for scalar values.
+Undeclared fields are allowed in source pages, but they have no project type check or export approval. Declarations can't redefine built-in fields, `slug`, `channel`, `version`, or the [protected metadata roots](https://www.shoalrun.com/author/markdown-metadata.md). A dotted declaration such as `agent.intent` needs any declared parent, such as `agent`, to have type `object`. Declarations support `string`, `number`, `integer`, `boolean`, `object`, and `array`. They can also set `required`, `items` for arrays, or `enum` for scalar values.
 
 For conditional source rules, such as requiring a verification date and evidence note together, see [check editorial policies with Manni](https://www.shoalrun.com/publish/manni.md). This optional check complements the field declarations above.

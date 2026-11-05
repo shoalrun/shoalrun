@@ -15,11 +15,11 @@ date: 2026-10-14
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Agent discovery, verified Markdown, and incremental sync
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-14: Agent discovery
 
 **Published: 2026-10-14.**
 
-Agents can now find pages through smaller indexes, check which build they are reading, and compare saved page inventories before fetching updates.
+Agents can now find pages through smaller indexes, check which build they're reading, and compare saved page inventories before fetching updates.
 
 - **Smaller discovery files.** `llms.min.txt` lists page IDs, titles, summaries, and Markdown links. `search-index.min.json` adds headings without article text. Markdown 404 responses point to these compact files.
 - **Incremental sync.** Clients can check `build-info.json` for a new build, then compare `documents.sync.json` with their saved snapshot to find added, changed, and removed pages. They can fetch only the pages that need updating instead of downloading the full manifest and every page again. `shoalrun docs changes CURRENT-SNAPSHOT --since PREVIOUS-SNAPSHOT` performs the comparison locally.

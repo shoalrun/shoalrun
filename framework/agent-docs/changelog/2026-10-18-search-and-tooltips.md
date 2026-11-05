@@ -15,11 +15,11 @@ date: 2026-10-18
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Search results and tooltips
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-18: Search and tooltips
 
 **Published: 2026-10-18.**
 
-These October 18 changes improve search and supporting explanations in Shoalrun’s private prototype. This entry does not announce a package release.
+These October 18 changes improve search and supporting explanations in Shoalrun’s private prototype. This entry doesn't announce a package release.
 
 ## Find useful search results
 
@@ -29,7 +29,7 @@ Explicit identifiers and commands remain searchable in code and tables. Matching
 
 The [passage index](https://www.shoalrun.com/chat/passage-index.md) prepares result paragraphs, code lines, and table rows during indexing. Search requests no longer parse the Markdown passages to prepare these results.
 
-Preparing this data does not change the embedding input, so unchanged passages reuse their existing vectors.
+Preparing this data doesn't change the embedding input, so unchanged passages reuse their existing vectors.
 
 Queries such as “charts” and “graphs” lead to chart and diagram examples with readable descriptions. Searching “diagrams” opens the [Diagrams guide](https://www.shoalrun.com/author/components/diagrams.md). Semantic search retains its keyword fallback when embeddings are unavailable; Ask passage retrieval is unchanged.
 

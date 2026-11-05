@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Custom components > Data-driven React components
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/components/custom/react.md)
 
@@ -85,4 +85,4 @@ function retryDelayBounds(retry, policy) {
 
 [Read the Retry-After HTTP specification](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after)
 
-`title` is an optional nonempty literal string, defaulting to `Retry budget`. The component accepts no children and imports its local `policy.json` file. The policy fields and control limits appear in the fixture above. The browser controls let readers explore alternatives; they do not change the documented policy or its Markdown.
+`title` is an optional nonempty literal string, defaulting to `Retry budget`. The component accepts no children and imports its local `policy.json` file. The policy fields and control limits appear in the fixture above. The browser controls let readers explore alternatives; they don't change the documented policy or its Markdown.

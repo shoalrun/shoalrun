@@ -16,7 +16,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Reusable Shoalrun steps > Build the Shoalrun docs site
 
-**Updated: 2026-10-19.**
+**Updated: 2026-11-05.**
 
 Use the installed CLI to build Shoalrun's documentation:
 
@@ -26,4 +26,4 @@ npx --no-install shoalrun build docs/docs.config.yaml docs/dist
 
 The source configuration is `docs/docs.config.yaml`; output goes to `docs/dist`. The root shortcut is `npm run docs:build`; it uses the installed package.
 
-If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone is not evidence of a successful new build.
+If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone isn't evidence of a successful new build.

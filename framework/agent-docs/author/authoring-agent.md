@@ -19,7 +19,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Advanced workflows > Checked edit plans
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -71,13 +71,13 @@ Use this optional workflow when your agent needs a digest-checked replacement pl
    shoalrun audit docs.config.yaml
    ```
 
-   Applying repeats freshness and build checks before writing. Inspect the resulting HTML and Markdown. The plan does not run configured audit tests, commit changes, or deploy; those are separate steps.
+   Applying repeats freshness and build checks before writing. Inspect the resulting HTML and Markdown. The plan doesn't run configured audit tests, commit changes, or deploy; those are separate steps.
 
 ## What checks establish
 
 Compiler checks catch problems such as broken document links and invalid components. Vale checks the rules your team configures. Neither establishes factual accuracy or whether a procedure works. Ask your agent to explain what it verified and what still needs review.
 
-Ordinary public builds exclude draft pages. Use the separate working-tree `docs validate` interface to render affected drafts in isolation without changing their authored access policy. This does not change the checked plan/apply contract described above.
+Ordinary public builds exclude draft pages. Use the separate working-tree `docs validate` interface to render affected drafts in isolation without changing their authored access policy. This doesn't change the checked plan/apply contract described above.
 
 ## Related reading
 

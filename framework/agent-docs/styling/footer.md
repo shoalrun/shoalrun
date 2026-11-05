@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Site footer
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 The footer sits below every page, after the navigation and article. Configure it under `site.footer`. Without that setting, the site has no footer.
 
@@ -62,7 +62,7 @@ The footer uses the page's theme tokens, so each [theme preset](https://www.shoa
 
 ## HTML, Markdown, and agents
 
-The footer appears in HTML with ordinary links that work without JavaScript. Markdown twins, search results, and `/llms.txt` omit it. An agent reading those files cannot discover a destination from the footer alone. Include links needed to complete a task in the article or its reading relationships.
+The footer appears in HTML with ordinary links that work without JavaScript. Markdown twins, search results, and `/llms.txt` omit it. An agent reading those files can't discover a destination from the footer alone. Include links needed to complete a task in the article or its reading relationships.
 
 ## Related reading
 

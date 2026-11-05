@@ -20,7 +20,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > ApiExample and ApiSchema
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/components/api-embeds.md)
 
@@ -54,7 +54,7 @@ Use these attributes to configure the component.
 | `example`   | Yes           | Key in that media type's OpenAPI `examples` map. |
 | `status`    | For responses | Response status, such as `201`.                  |
 
-The element is standalone and empty, with literal string attributes. It resolves in the page's publication. HTML and Markdown show the example title, original key, context, description when present, provenance, and value. A missing selector fails the build. API includes cannot be nested inside snippets. See [API references](https://www.shoalrun.com/publish/api-references.md) for source configuration and [example presentation](https://www.shoalrun.com/api-docs/generate.md) in reference pages.
+The element is standalone and empty, with literal string attributes. It resolves in the page's publication. HTML and Markdown show the example title, original key, context, description when present, provenance, and value. A missing selector fails the build. API includes can't be nested inside snippets. See [API references](https://www.shoalrun.com/publish/api-references.md) for source configuration and [example presentation](https://www.shoalrun.com/api-docs/generate.md) in reference pages.
 
 The fictional Notes API returns a saved note with its author, labels, and display metadata. The response includes a required but nullable `archivedAt` field: `null` means the note is active.
 
@@ -87,7 +87,7 @@ An active note with a nested author, two labels, and optional display metadata.
 
 ### Markdown twin
 
-During the build, Shoalrun selects the named example from the OpenAPI source for this page's publication and replaces `<ApiExample>` with ordinary content. An agent reading the generated `.md` page does not need to resolve the component or fetch the OpenAPI file. The example above renders as:
+During the build, Shoalrun selects the named example from the OpenAPI source for this page's publication and replaces `<ApiExample>` with ordinary content. An agent reading the generated `.md` page doesn't need to resolve the component or fetch the OpenAPI file. The example above renders as:
 
 ````md
 ### Created release note

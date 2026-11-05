@@ -1,0 +1,49 @@
+---
+id: guide.publications
+title: Share pages across products and documentation versions
+summary: Configure independent product versioning and reuse pages across
+  releases, channels, and languages.
+type: how-to
+area: publishing
+subarea: publishing-versions
+canonical: /publish/publications
+---
+
+# Share pages across products and documentation versions
+
+> Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
+
+Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigation/docs-50f26fe22670.txt) (ID: docs). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+
+Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Products, versions, and languages
+
+**Updated: 2026-11-05.**
+
+Parent page: [Full Markdown page](/publish/publications.md)
+
+Publish documentation for different releases, channels, and languages from one content source. Keep common instructions in one file and select the content that changes between publications. If you document multiple products, each can have its own versions and defaults.
+
+A **publication** identifies a product, channel, version, and language. For a site without product catalogs, it identifies just channel, version, and language. These coordinates determine which page variant readers and agents receive, including its route, links, and search scope.
+
+This guide uses two fictional products, Payments and Reporting, to show independent releases. They're example names you replace with your own product IDs and labels.
+
+A Git branch or tag chooses *which revision of the repository to build*; it doesn't automatically create a documentation version. See [publish separate docs sites from Git](https://www.shoalrun.com/publish/revisions.md) for that workflow. For audience or region selection using facets, see [build sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md).
+
+## Publish versions without a product catalog
+
+If your site doesn't need independent products, use a root version catalog. This config publishes two versions at `/v1` and `/v2`:
+
+```yaml title="docs.config.yaml (fragment)"
+publications:
+  defaults: { channel: production, version: v1, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    v1: { pathPrefix: /v1 }
+    v2: { pathPrefix: /v2 }
+  enabled:
+    - { channel: production, version: v1, language: en }
+    - { channel: production, version: v2, language: en }
+```
+
+`enabled` sets the combinations the build may publish. It doesn't create pages or fill gaps in them. The paths come from the prefixes above plus each page's `slug`.

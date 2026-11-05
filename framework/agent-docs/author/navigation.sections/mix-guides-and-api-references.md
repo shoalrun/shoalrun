@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Navigation > Overview
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/navigation.md)
 
@@ -29,7 +29,7 @@ Each node has a stable `id` for the menu entry. It needs exactly one of these ta
 - `operation` places an API reference by stable operation ID.
 - `generated` fills in API references from the registered OpenAPI source.
 
-The menu follows document IDs rather than file paths or slugs. Moving a source file or changing a page URL does not require a navigation edit. A `doc` node uses the page title by default; set `label` when the menu needs a shorter name. Pages omitted from navigation can still be built and linked from other pages.
+The menu follows document IDs rather than file paths or slugs. Moving a source file or changing a page URL doesn't require a navigation edit. A `doc` node uses the page title by default; set `label` when the menu needs a shorter name. Pages omitted from navigation can still be built and linked from other pages.
 
 ## Mix guides and API references
 
@@ -48,7 +48,7 @@ An API reference is a document too, so `doc: reference.create-payment` works bes
       generated: tags
 ```
 
-`generated: tags` groups the remaining endpoints by their first OpenAPI tag. Declared tag order and source operation order are retained **only for those remaining endpoints**. To override the position of a generated reference, add its stable operation ID as an explicit `operation:` entry at the desired point in this YAML list. You do not need to create an MDX page. An explicit `doc` or `operation` placement wins regardless of where the generator appears, so the same endpoint appears once. Leave out the generator when you want to choose every menu entry yourself. Navigation resolves separately for each channel, version, and language.
+`generated: tags` groups the remaining endpoints by their first OpenAPI tag. Declared tag order and source operation order are retained **only for those remaining endpoints**. To override the position of a generated reference, add its stable operation ID as an explicit `operation:` entry at the desired point in this YAML list. You don't need to create an MDX page. An explicit `doc` or `operation` placement wins regardless of where the generator appears, so the same endpoint appears once. Leave out the generator when you want to choose every menu entry yourself. Navigation resolves separately for each channel, version, and language.
 
 An API might tag every `/Query/` route as `Query`, while readers look for `GET /Query/widgets` under **Widgets**. Place its stable operation ID among the widget operations:
 

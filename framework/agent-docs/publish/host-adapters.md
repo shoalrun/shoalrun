@@ -16,9 +16,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Add Shoalrun to another build or host
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
-Shoalrun builds a complete static site without a host framework. To include its pages in another build system, run Shoalrun's CLI as a build step. Then copy the generated files into the host's output. The host does not need to parse Shoalrun's MDX or OpenAPI sources.
+Shoalrun builds a complete static site without a host framework. To include its pages in another build system, run Shoalrun's CLI as a build step. Then copy the generated files into the host's output. The host doesn't need to parse Shoalrun's MDX or OpenAPI sources.
 
 ```sh
 shoalrun build docs.config.yaml ./shoalrun-dist
@@ -35,17 +35,17 @@ With the command above, the public subtree for `/docs` is `shoalrun-dist/docs/`.
 An adapter for Astro, another site builder, or a deployment platform can follow these steps:
 
 1. Run `shoalrun build <config> <temporary-output>` after the host has generated its own files.
-2. Enumerate both output trees and fail if a Shoalrun file would replace a host file. Also fail if a file occupies a directory the other tree needs. Compare paths without regard to case so a build that works on one filesystem does not overwrite files on another.
-3. Copy the Shoalrun files into the host output, keeping their paths. Do not modify the generated HTML or Markdown: both came from the same content build.
+2. Enumerate both output trees and fail if a Shoalrun file would replace a host file. Also fail if a file occupies a directory the other tree needs. Compare paths without regard to case so a build that works on one filesystem doesn't overwrite files on another.
+3. Copy the Shoalrun files into the host output, keeping their paths. Don't modify the generated HTML or Markdown: both came from the same content build.
 4. Configure the host's routing and response headers as described below. Run the [post-deploy checker](https://www.shoalrun.com/publish/deployment-check.md) against the published URL.
 
 The generated `documents.json` lists every page's HTML and Markdown URLs. `redirects.json` records redirects, and `resource-headers.json` records content types for Markdown and discovery resources. It also records `Content-Security-Policy: sandbox` and `X-Content-Type-Options: nosniff` for generated and local SVG files. Apply those headers when hosting SVGs; the Node server and Vercel adapter do this automatically. `/llms.txt`, `search-index.json`, API contracts, images, styles, and scripts are ordinary output files. The [output guide](https://www.shoalrun.com/publish/output.md) lists their paths.
 
 ## Supply HTTP behavior
 
-Copying files does not make a static host negotiate Markdown at an HTML URL or apply redirects and special content types. Use the [content negotiation contract](https://www.shoalrun.com/publish/content-negotiation.md) to configure those rules. A host that cannot inspect request headers can still serve the direct `.md` URLs, but cannot provide the negotiated response. Shoalrun's [Node server](https://www.shoalrun.com/cli.md) handles these rules; the [Vercel build](https://www.shoalrun.com/publish/vercel.md) generates a deployable configuration for that host.
+Copying files doesn't make a static host negotiate Markdown at an HTML URL or apply redirects and special content types. Use the [content negotiation contract](https://www.shoalrun.com/publish/content-negotiation.md) to configure those rules. A host that can't inspect request headers can still serve the direct `.md` URLs, but can't provide the negotiated response. Shoalrun's [Node server](https://www.shoalrun.com/cli.md) handles these rules; the [Vercel build](https://www.shoalrun.com/publish/vercel.md) generates a deployable configuration for that host.
 
-Keep the adapter small: Shoalrun owns content compilation and the generated files, while the host owns request handling. A JavaScript plugin API is not required to call the CLI or publish its output.
+Keep the adapter small: Shoalrun owns content compilation and the generated files, while the host owns request handling. A JavaScript plugin API isn't required to call the CLI or publish its output.
 
 ## Related reading
 

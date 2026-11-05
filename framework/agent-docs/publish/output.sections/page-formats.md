@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -35,7 +35,7 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 ## Page formats
 
-Both formats come from the same parsed content. Supported components preserve their documented shared content in Markdown: tab choices, disclosure bodies, reader-marked branches, table rows, resolved snippets, and API examples retain readable content and relevant labels. Unknown components and unsupported dynamic MDX fail compilation. Explicit format-specific branches follow author selection; authors must review equivalent task guidance and completeness. Rendering checks do not prove semantic equivalence or that a reader has every prerequisite. [Tabs](https://www.shoalrun.com/author/components/tabs.md) become labeled sections in Markdown. [OpenAPI examples and schemas](https://www.shoalrun.com/author/components/api-embeds.md) are expanded during the build, so their values and field details appear as readable text in the twin. A [filtered or sticky table](https://www.shoalrun.com/author/components/tables.md) keeps every row as a plain table in Markdown.
+Both formats come from the same parsed content. Supported components preserve their documented shared content in Markdown: tab choices, disclosure bodies, reader-marked branches, table rows, resolved snippets, and API examples retain readable content and relevant labels. Unknown components and unsupported dynamic MDX fail compilation. Explicit format-specific branches follow author selection; authors must review equivalent task guidance and completeness. Rendering checks don't prove semantic equivalence or that a reader has every prerequisite. [Tabs](https://www.shoalrun.com/author/components/tabs.md) become labeled sections in Markdown. [OpenAPI examples and schemas](https://www.shoalrun.com/author/components/api-embeds.md) are expanded during the build, so their values and field details appear as readable text in the twin. A [filtered or sticky table](https://www.shoalrun.com/author/components/tables.md) keeps every row as a plain table in Markdown.
 
 Write links in page content as `doc:` IDs, site paths, or relative paths such as `[Next](./next)` and `[Overview](../overview)`. Shoalrun resolves relative paths against the current page's published route. For a page at `/guides/setup`, `./next` resolves to `/guides/next`. HTML links use site paths, so local previews stay local; links to known pages in Markdown twins point to their `.md` routes. Set `site.origin` to publish full HTTPS links in Markdown twins and `/llms.txt`, so a fetched Markdown page keeps working outside the site's browser context. Fragment-only links such as `#options` stay local to the page. Explicit external URLs keep their original host.
 

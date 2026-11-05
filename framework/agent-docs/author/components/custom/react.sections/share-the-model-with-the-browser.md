@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Custom components > Data-driven React components
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/components/custom/react.md)
 
@@ -42,6 +42,6 @@ export function enhance({ root, controls, content, data: policy }) {
 }
 ```
 
-The browser imports the same `retrySchedule` function as the build module. It does not parse table rows, depend on English labels, or maintain a separate calculation implementation. Renaming a documented label does not change the calculator's model.
+The browser imports the same `retrySchedule` function as the build module. It doesn't parse table rows, depend on English labels, or maintain a separate calculation implementation. Renaming a documented label doesn't change the calculator's model.
 
-React and React DOM are dependencies of this component package. Shoalrun compiles its JSX and imports when building the site; component consumers do not run a separate bundler. The interface still enhances shared documentation and does not render arbitrary MDX imports.
+React and React DOM are dependencies of this component package. Shoalrun compiles its JSX and imports when building the site; component consumers don't run a separate bundler. The interface still enhances shared documentation and doesn't render arbitrary MDX imports.

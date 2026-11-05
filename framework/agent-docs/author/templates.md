@@ -18,11 +18,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 
-Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they do not enforce a permanent page structure.
+Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they don't enforce a permanent page structure.
 
 ## Built-in templates
 
@@ -60,7 +60,7 @@ A recipe can be written directly; ingredients and composition specs are optional
 
 ## Project-added templates
 
-Project templates are named entries under `templates` in config. They are available only in projects that register them; installing the CLI does not provide these names. Use a custom name to add an outline, or a built-in name to override its starting content.
+Project templates are named entries under `templates` in config. They're available only in projects that register them; installing the CLI doesn't provide these names. Use a custom name to add an outline, or a built-in name to override its starting content.
 
 A project template with the same name as a built-in takes precedence. For example, registering `how-to` replaces its starting outline in that project. Use a distinct name to add a choice instead. Neither registration nor overriding rewrites existing pages.
 
@@ -82,7 +82,7 @@ These boundaries are based on Diátaxis's guidance for [tutorials](https://diata
 The primary Diátaxis templates use these authoring conventions; workflow templates keep the sections useful to their role:
 
 - **Commented frontmatter.** Comments explain fields and give examples where useful. Fields you must fill in hold a placeholder. Optional fields are commented out, each with the case where it applies.
-- **A short introduction.** One paragraph of 150 words or fewer sits under the title with no heading. It says what the page is for and who it is for.
+- **A short introduction.** One paragraph of 150 words or fewer sits under the title with no heading. It says what the page is for and who it's for.
 - **Optional sections.** Sections such as Prerequisites and Considerations are marked optional. Keep the ones that apply and delete the rest, heading and text.
 - **Structure for the reader need.** Tutorials guide an exercise, how-tos put actions and verification first, references organize facts for lookup, and explanations develop context and reasoning.
 - **HTML, Markdown, and agents.** Keep this section when the page uses a component or describes behavior that differs between HTML and Markdown or affects what an agent reads. State what HTML shows, what the Markdown twin contains, and what an agent receives. Delete it otherwise.
@@ -137,15 +137,17 @@ Three rules keep the output valid:
 
 - Quote placeholder values in the frontmatter. An unquoted value that starts with two square brackets is read as a YAML list.
 - Use only placeholder values that pass validation in every project. Comment out fields such as `audiences`, `readerFilters`, and `subjectLifecycle`, because a wrong value fails the draft build.
-- Keep nested fields in flow style, such as `card: { icon: book-open }`. A comment block after a nested block mapping is indented with it and cannot be uncommented in place.
+- Keep nested fields in flow style, such as `card: { icon: book-open }`. A comment block after a nested block mapping is indented with it and can't be uncommented in place.
 
-Frontmatter comments do not reach the published page, so they never appear in the Markdown twin.
+Frontmatter comments don't reach the published page, so they never appear in the Markdown twin.
 
 ### Write the body
 
-Write each prompt for the facts and checks an author must supply as a placeholder: `[[TODO:`, the prompt text, then two closing square brackets. Do not use braces, angle brackets, or two closing square brackets inside a placeholder, because the MDX parser and the placeholder check read them. A public page fails the build while a complete placeholder remains in its prose or frontmatter, or while its summary still starts with `Draft guide for `. Ordinary Markdown and the supported [components](https://www.shoalrun.com/author/components.md) can appear in the body.
+Write each prompt for the facts and checks an author must supply as a placeholder: `[[TODO:`, the prompt text, then two closing square brackets. Don't use braces, angle brackets, or two closing square brackets inside a placeholder, because the MDX parser and the placeholder check read them. A public page fails the build while a complete placeholder remains in its prose or frontmatter, or while its summary still starts with `Draft guide for `. Ordinary Markdown and the supported [components](https://www.shoalrun.com/author/components.md) can appear in the body.
 
-Fenced code blocks can teach the placeholder syntax without blocking publication. Available since `0.1.0-alpha.13`. For example, this code is preserved literally in HTML and Markdown:
+Since 0.1.0-alpha.13
+
+Fenced code blocks can teach the placeholder syntax without blocking publication. For example, this code is preserved literally in HTML and Markdown:
 
 ```md
 [[TODO: Explain the task and how to check the result.]]
@@ -161,13 +163,13 @@ Set the page's frontmatter `updated` to the current date in `YYYY-MM-DD` format 
 
 ## Choose formatting enforcement for your project
 
-A template supplies a starting outline. It does not impose that outline on completed pages. Project overrides replace the scaffold; they do not silently change your lint policy.
+A template supplies a starting outline. It doesn't impose that outline on completed pages. Project overrides replace the scaffold; they don't silently change your lint policy.
 
-This repository checks authored page formatting with `npm run docs:format`. Its `.vale-format.ini` enables project-owned `DocShape` rules. Errors cover title and summary lengths, body headings, introductions, and `updated` dates. Type-boundary warnings flag possible digressions for editorial review. A passing check does not prove a page serves its reader's need.
+This repository checks authored page formatting with `npm run docs:format`. Its `.vale-format.ini` enables project-owned `DocShape` rules. Errors cover title and summary lengths, body headings, introductions, and `updated` dates. Type-boundary warnings flag possible digressions for editorial review. A passing check doesn't prove a page serves its reader's need.
 
-The structural rules use [Vale's embedded Tengo scripting language](https://docs.vale.sh/checks/script) to read source frontmatter and headings. Tengo runs inside Vale during linting; it needs no separate installation and is not part of the published site. The scripts live under `.vale/styles/config/scripts/` in this repository.
+The structural rules use [Vale's embedded Tengo scripting language](https://docs.vale.sh/checks/script) to read source frontmatter and headings. Tengo runs inside Vale during linting; it needs no separate installation and isn't part of the published site. The scripts live under `.vale/styles/config/scripts/` in this repository.
 
-`DocShape.RecipeShape` requires nonempty setup, action, and final success-check sections. It accepts directly authored recipes without an Ingredients list and assembled recipes with task-specific action headings. `DocShape.IngredientShape` accepts either Inputs, Action, Output, and Check it worked sections or a compact body with `workflow` handoff metadata and a declared `check`. These are this repository's conventions. `recipe draft` validates YAML values and handoff order; Vale checks structure and does not run the instructions or prove the stated outcome.
+`DocShape.RecipeShape` requires nonempty setup, action, and final success-check sections. It accepts directly authored recipes without an Ingredients list and assembled recipes with task-specific action headings. `DocShape.IngredientShape` accepts either Inputs, Action, Output, and Check it worked sections or a compact body with `workflow` handoff metadata and a declared `check`. These are this repository's conventions. `recipe draft` validates YAML values and handoff order; Vale checks structure and doesn't run the instructions or prove the stated outcome.
 
 Both scripts ignore headings inside fenced code examples. Setup headings can be Before you start, Before you begin, Prerequisites, or What you need. Success headings can be Check it worked, Check the outcome, Check the result, Verify the outcome, or Verify the result. Alternate outlines and YAML forms may need a project-adapted script. Keep compact workflow declarations as ordinary block or flow mappings for this policy.
 
@@ -193,7 +195,7 @@ audit:
       run: [vale, --config=../.vale-format.ini, content]
 ```
 
-Vale must be installed when you configure that command. The CLI does not require Vale for other projects or derive rules from template text. Compiler checks for valid source, links, and unresolved public draft prompts still apply independently. See [audit settings](https://www.shoalrun.com/publish/audit.md) and [writing guides](https://www.shoalrun.com/author/design-writing-guides.md).
+Vale must be installed when you configure that command. The CLI doesn't require Vale for other projects or derive rules from template text. Compiler checks for valid source, links, and unresolved public draft prompts still apply independently. See [audit settings](https://www.shoalrun.com/publish/audit.md) and [writing guides](https://www.shoalrun.com/author/design-writing-guides.md).
 
 ## Short CLI and derived values
 
@@ -212,7 +214,7 @@ The CLI discovers `docs.config.yaml` in the current directory or a parent. It de
 | `summary` | `Draft guide for retry payments. Replace this summary before publication.` |
 | `slug`    | `/guides/retry-payments`                                                   |
 
-The derived summary counts as a placeholder, so the page cannot be published until you replace it. Override any value with `--id`, `--title`, `--summary`, or `--slug`. Other options are `--config FILE`, `--channel`, `--version`, and `--language` (defaults come from `publications.defaults`), and `--operation ID`, which can repeat. `--new` is the long form of `-n`. The [CLI reference](https://www.shoalrun.com/cli.md) lists every rule.
+The derived summary counts as a placeholder, so the page can't be published until you replace it. Override any value with `--id`, `--title`, `--summary`, or `--slug`. Other options are `--config FILE`, `--channel`, `--version`, and `--language` (defaults come from `publications.defaults`), and `--operation ID`, which can repeat. `--new` is the long form of `-n`. The [CLI reference](https://www.shoalrun.com/cli.md) lists every rule.
 
 If the target path begins with the selected publication's route prefix, the short form omits that prefix from the derived slug. For example, with version `v2` configured at `/v2`, `content/v2/check-payment.mdx` gets slug `/check-payment` and route `/v2/check-payment`. The stable ID still derives from the complete content path; use `--id` if several versions represent the same document.
 

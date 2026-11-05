@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Metadata customization
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/custom-metadata.md)
 
@@ -42,7 +42,7 @@ outputs:
     socialCard: [summary]
 ```
 
-`socialCard` writes an Open Graph description tag when it finds text; it does not generate a card image. Without a `socialCard` rule or page override, Shoalrun writes no Open Graph description. The other surfaces default to `summary` if no rule is set. The search choice becomes the summary in `search-index.json`. A card's existing `card.description` and an HTML page's existing `seo.description` take precedence over these rules.
+`socialCard` writes an Open Graph description tag when it finds text; it doesn't generate a card image. Without a `socialCard` rule or page override, Shoalrun writes no Open Graph description. The other surfaces default to `summary` if no rule is set. The search choice becomes the summary in `search-index.json`. A card's existing `card.description` and an HTML page's existing `seo.description` take precedence over these rules.
 
 Override one surface on a page with literal text:
 
@@ -51,4 +51,4 @@ displayText:
   socialCard: A short introduction for link previews.
 ```
 
-`displayText` is presentation control; it is not exported as Markdown metadata. A configured text rule can also select a custom or provider-supplied string field by path. Selecting it for public HTML or the search index is an explicit publication decision.
+`displayText` is presentation control; it isn't exported as Markdown metadata. A configured text rule can also select a custom or provider-supplied string field by path. Selecting it for public HTML or the search index is an explicit publication decision.

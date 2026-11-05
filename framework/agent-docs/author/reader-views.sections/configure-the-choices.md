@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/reader-views.md)
 
@@ -29,7 +29,7 @@ To build separate sites from the same source using these facets, use [build-time
 
 ## Configure the choices
 
-Define the available reader choices once in `readerFilters.facets` in `docs.config.yaml`. The facet names and choices are yours; Shoalrun has no fixed list of reader types. Each facet and choice has a stable lowercase ID and a label for readers. Pages and sections refer to these IDs, and unknown IDs fail the build. `typeDefaults` is optional; it is useful when generated API references should start in the Developer view without marking every operation separately.
+Define the available reader choices once in `readerFilters.facets` in `docs.config.yaml`. The facet names and choices are yours; Shoalrun has no fixed list of reader types. Each facet and choice has a stable lowercase ID and a label for readers. Pages and sections refer to these IDs, and unknown IDs fail the build. `typeDefaults` is optional; it's useful when generated API references should start in the Developer view without marking every operation separately.
 
 ```yaml title="docs.config.yaml"
 readerFilters:

@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -65,7 +65,7 @@ These fields categorize pages, add connections, or change presentation. `product
 
 | Field                  | Type                               | Purpose                                                                                                                                                                                      |
 | ---------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `showNavigationTabs`   | boolean                            | Override the HTML navigation tab bar. Defaults to visible for docs and wide layouts, hidden for landing and splash. Does not affect agent discovery.                                         |
+| `showNavigationTabs`   | boolean                            | Override the HTML navigation tab bar. Defaults to visible for docs and wide layouts, hidden for landing and splash. Doesn't affect agent discovery.                                          |
 | `product`              | nonempty string                    | Product category; selects the `product` reader facet if configured.                                                                                                                          |
 | `area`                 | nonempty string or configured list | Area category; selects the `area` reader facet if configured.                                                                                                                                |
 | `subarea`              | nonempty string or configured list | Finer category; selects the `subarea` reader facet if configured.                                                                                                                            |
@@ -86,8 +86,8 @@ These fields categorize pages, add connections, or change presentation. `product
 | `displayText`          | object                             | Page-specific text for cards, the page header, search, HTML description, or social description.                                                                                              |
 | `variables`            | object                             | Page-level public values for registered snippets.                                                                                                                                            |
 
-For example, a page can use `product: payments`, `area: reporting`, and `subarea: settlements`. Those resolved values appear in `documents.json` and `search-index.json`. If the site config defines reader facets with those names, each value must be a configured choice ID and becomes that page's reader filter. Do not also set `readerFilters.product`, `.area`, or `.subarea` for the same field. Without a matching facet, the category is metadata only. A site's Markdown metadata projection can also select `frontmatter.product`, `frontmatter.area`, and `frontmatter.subarea`.
+For example, a page can use `product: payments`, `area: reporting`, and `subarea: settlements`. Those resolved values appear in `documents.json` and `search-index.json`. If the site config defines reader facets with those names, each value must be a configured choice ID and becomes that page's reader filter. Don't also set `readerFilters.product`, `.area`, or `.subarea` for the same field. Without a matching facet, the category is metadata only. A site's Markdown metadata projection can also select `frontmatter.product`, `frontmatter.area`, and `frontmatter.subarea`.
 
 Choose the [page layout](https://www.shoalrun.com/styling/layouts.md) before adjusting the outline. Use `layout: wide` to remove “On this page” and give interactive content more space while keeping navigation. Use `tocDepth: 0` when you only need to hide the outline within the current layout.
 
-The default ToC includes headings through level 3. This page sets `tocDepth: 2`, so its ToC lists only the main sections. Use `tocDepth: 0` to suppress the ToC, or choose a depth from 2 through 6. Headings still appear in the page and Markdown twin when they are left out of the ToC.
+The default ToC includes headings through level 3. This page sets `tocDepth: 2`, so its ToC lists only the main sections. Use `tocDepth: 0` to suppress the ToC, or choose a depth from 2 through 6. Headings still appear in the page and Markdown twin when they're left out of the ToC.

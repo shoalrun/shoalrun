@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Metadata customization
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/custom-metadata.md)
 
@@ -30,4 +30,4 @@ Use this guide when your project needs shared metadata rules or fields beyond th
 
 ## Preview changes to metadata providers
 
-Restart local preview after editing a custom metadata provider module configured with `metadata.provider`. Node loads the module once, so a watched rebuild does not reload its implementation. Stop `shoalrun dev` and start it again to see changes to the provider code. Changes to ordinary documentation pages still trigger automatic rebuilds. See the [CLI reference](https://www.shoalrun.com/cli.md) for other changes that require a restart.
+Restart local preview after editing a custom metadata provider module configured with `metadata.provider`. Node loads the module once, so a watched rebuild doesn't reload its implementation. Stop `shoalrun dev` and start it again to see changes to the provider code. Changes to ordinary documentation pages still trigger automatic rebuilds. See the [CLI reference](https://www.shoalrun.com/cli.md) for other changes that require a restart.

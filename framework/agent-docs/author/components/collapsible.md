@@ -17,9 +17,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Collapsibles
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-`<Collapsible>` keeps supporting detail near the main instructions. Use it for material readers may need, but do not need to see before taking the next step. Its body is present in the initial HTML even when closed, and fully expanded in the Markdown twin.
+`<Collapsible>` keeps supporting detail near the main instructions. Use it for material readers may need, but don't need to see before taking the next step. Its body is present in the initial HTML even when closed, and fully expanded in the Markdown twin.
 
 ## Syntax
 
@@ -86,7 +86,7 @@ The build includes public pages in the selected publication.
 
 Yes. Build locally and review the HTML and Markdown before deployment.
 
-Put rich content inside each child. Other direct children fail the build. Groups do not enforce a single open item.
+Put rich content inside each child. Other direct children fail the build. Groups don't enforce a single open item.
 
 ## HTML, Markdown, and agents
 

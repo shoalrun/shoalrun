@@ -16,13 +16,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
 Parent page: [Full Markdown page](/author/search.md)
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 

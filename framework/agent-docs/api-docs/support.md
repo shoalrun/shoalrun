@@ -17,9 +17,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > API support > OpenAPI support and limits
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
-Shoalrun renders a defined subset of OpenAPI into HTML, Markdown, and focused contracts. Check these limits before importing a large specification. A supported OpenAPI version does not mean every feature in that version can be rendered.
+Shoalrun renders a defined subset of OpenAPI into HTML, Markdown, and focused contracts. Check these limits before importing a large specification. A supported OpenAPI version doesn't mean every feature in that version can be rendered.
 
 ## Compatibility
 
@@ -30,13 +30,13 @@ The supported behavior varies by OpenAPI feature and source structure.
 | Source formats     | OpenAPI 3.0.x and 3.1.x in YAML or JSON. `kind: file` builds from local files; `api import` can create a pinned local snapshot from a public HTTPS URL.                                                                                                                                                                              |
 | Operations         | Method and path, server alternatives, CommonMark descriptions, security alternatives and credential details, path and operation parameter overrides, request body media types, responses, and named examples.                                                                                                                        |
 | Webhooks           | Top-level OpenAPI 3.1 `webhooks`, including a document without `paths`; authored and generated references describe the inbound request and acknowledgement, with no outbound cURL command. Focused contracts retain the `webhooks` location.                                                                                         |
-| Authentication     | API keys in headers, query strings, or cookies; HTTP schemes; OAuth2 flow names and scopes; OpenID Connect discovery; mutual TLS. These describe authentication; the site does not authenticate or execute requests.                                                                                                                 |
+| Authentication     | API keys in headers, query strings, or cookies; HTTP schemes; OAuth2 flow names and scopes; OpenID Connect discovery; mutual TLS. These describe authentication; the site doesn't authenticate or execute requests.                                                                                                                  |
 | References         | Local `$ref` within the project or configured OpenAPI source directory, including multiple files. `api import` downloads same-origin relative references and rewrites them to local snapshot paths. Recursive schemas end with a named reference marker. Absolute file paths and references escaping those directories are rejected. |
 | Schemas            | Objects, arrays, titled variants, discriminators, enums, constants, required fields, defaults, examples, nullable values, supported constraints, additional properties, and read/write/deprecated labels. OpenAPI 3.1 boolean schemas are supported. The exact keyword list is below.                                                |
 | Named examples     | Parameter, request, and response `examples` maps; reusable `components.examples` references; names, summaries, descriptions, values, provenance, HTML selection and deep links. All examples appear in Markdown. HTTPS `externalValue` is an external link, not a fetched payload.                                                   |
 | Focused contracts  | One-operation JSON with transitive local components, named examples, security schemes, and internal recursive references. Enabled by `source.focused: true` or `source.publish: true`.                                                                                                                                               |
 | Reader layout      | Three columns at wide widths and a stacked order on narrow screens. JSON schemas supply type shapes even without named examples; shapes and named examples are distinct views.                                                                                                                                                       |
-| Extension metadata | Explicit mappings from operation-level `x-*` values to `subjectLifecycle`; OpenAPI `deprecated: true` takes precedence. Other extensions do not automatically become page metadata.                                                                                                                                                  |
+| Extension metadata | Explicit mappings from operation-level `x-*` values to `subjectLifecycle`; OpenAPI `deprecated: true` takes precedence. Other extensions don't automatically become page metadata.                                                                                                                                                   |
 
 ## Supported schema keywords
 
@@ -52,7 +52,7 @@ allOf, oneOf, anyOf, items, properties, required, additionalProperties,
 title, discriminator
 ```
 
-Other schema keywords fail when encountered by the renderer. This includes valid OpenAPI or JSON Schema keywords outside this list. The compiler presents supported constraints; it is not a general validator for payloads or the entire OpenAPI specification.
+Other schema keywords fail when encountered by the renderer. This includes valid OpenAPI or JSON Schema keywords outside this list. The compiler presents supported constraints; it isn't a general validator for payloads or the entire OpenAPI specification.
 
 Exclusive bounds follow the entry document's version even when a schema lives in another local file. In OpenAPI 3.0, `exclusiveMinimum` and `exclusiveMaximum` are booleans that modify a numeric `minimum` or `maximum`. In OpenAPI 3.1, each exclusive bound is a number. The build rejects a value in the wrong form. OpenAPI 3.1 also accepts `true` and `false` as entire schemas, displayed as allowing any value or no value, and an `examples` array on a schema. OpenAPI 3.0 rejects boolean schemas and schema-level `examples`.
 
@@ -68,7 +68,7 @@ These features have limits that may require adapting the source or authored docu
 | Response headers                | Schema-based headers and local references render descriptions, required/deprecated status, constraints, examples, and simple serialization. Content-style headers remain unsupported. `Content-Type` header definitions are ignored as OpenAPI requires. |
 | Response links                  | Require an adapter; prepare a supported documentation source while retaining the original contract separately.                                                                                                                                           |
 | Parameter `content`             | Requires an adapter; use supported parameter schemas in the documentation source.                                                                                                                                                                        |
-| Request media `encoding`        | Fails with `Request encoding needs an adapter`. Multipart binary fields have limited generated upload commands, but media encoding settings are not rendered.                                                                                            |
+| Request media `encoding`        | Fails with `Request encoding needs an adapter`. Multipart binary fields have limited generated upload commands, but media encoding settings aren't rendered.                                                                                             |
 | Other schema keywords           | Fail with `Unsupported schema keyword`. Adapt the documentation source without claiming omitted constraints are represented.                                                                                                                             |
 
 Avoid removing source semantics silently. If your API needs an unsupported feature, describe that limitation in the authored page and keep the authoritative contract available to readers where appropriate.
@@ -81,7 +81,7 @@ With the CLI built as in the [quickstart](https://www.shoalrun.com/start.md), ru
 npx --no-install shoalrun api audit apis/notes/openapi.yaml
 ```
 
-The audit renders every operation in the supplied source and checks field anchors and named examples across HTML and Markdown. It reports every unsupported schema keyword it finds for each operation, with the source file and schema location, before the strict renderer runs. It can reveal unsupported features beyond the operations you initially plan to publish. It does not call a live API or establish complete semantic fidelity.
+The audit renders every operation in the supplied source and checks field anchors and named examples across HTML and Markdown. It reports every unsupported schema keyword it finds for each operation, with the source file and schema location, before the strict renderer runs. It can reveal unsupported features beyond the operations you initially plan to publish. It doesn't call a live API or establish complete semantic fidelity.
 
 After registering an API and authoring or selecting its pages, run `api review` and pin the reviewed digest before a normal public build. The [API tutorial](https://www.shoalrun.com/publish/api-references.md) gives the full sequence. `source.publish: true` publishes the entire source, even when only a subset has reference pages; use focused contracts when a full-source download is unnecessary.
 

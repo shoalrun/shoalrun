@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Measure MCP tool usage
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
@@ -27,9 +27,9 @@ Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
 - [Connect an MCP client](https://www.shoalrun.com/publish/mcp.md) — Enable and verify the HTTP endpoint before adding analytics.
 
-Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP does not enable tracking, and the browser analytics setting does not count tool calls.
+Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP doesn't enable tracking, and the browser analytics setting doesn't count tool calls.
 
-Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting does not instrument stdio, direct Markdown requests, or browser page views.
+Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting doesn't instrument stdio, direct Markdown requests, or browser page views.
 
 ## Event fields and service mappings
 
@@ -50,4 +50,4 @@ Every event has the following fields. Arguments, search text, returned content, 
 
 Map these fields to your service’s event and property names. A service with native MCP analytics may require its SDK or reserved event names. A general event service can receive `mcp_tool_call` with these properties. The PostHog example below uses its native MCP SDK.
 
-Tool counts show usage, not comprehension. This adapter supplies no user or conversation identifier, so do not treat calls as unique people or agent sessions. Basic event capture leaves tool definitions and results unchanged. The optional SDK features below add analytics arguments and conversation handles.
+Tool counts show usage, not comprehension. This adapter supplies no user or conversation identifier, so don't treat calls as unique people or agent sessions. Basic event capture leaves tool definitions and results unchanged. The optional SDK features below add analytics arguments and conversation handles.

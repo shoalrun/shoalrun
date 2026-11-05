@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,13 +28,13 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
 ## Enable included semantic search
 
-Available since `0.1.0-alpha.16`.
+Since 0.1.0-alpha.16
 
 Choose the included semantic provider to connect the search box to Shoalrun's endpoint without writing a browser adapter:
 
@@ -59,8 +59,8 @@ npx --no-install shoalrun index site-dist --embed --config docs.config.yaml
 npx --no-install shoalrun serve site-dist --search --config docs.config.yaml
 ```
 
-Keys remain server-side. Each semantic query calls the embedding provider; no chat model is required. The browser sends the selected publication and reader view with each request. A missing or unavailable endpoint uses the included browser keyword index. Requests cancelled by further typing do not start fallback searches.
+Keys remain server-side. Each semantic query calls the embedding provider; no chat model is required. The browser sends the selected publication and reader view with each request. A missing or unavailable endpoint uses the included browser keyword index. Requests cancelled by further typing don't start fallback searches.
 
 Confirm `mode: vector` in the endpoint response to verify semantic retrieval. Rebuild and reindex edited content, then restart the local server. The [passage index](https://www.shoalrun.com/chat/passage-index.md) explains input reuse and release-specific passage identities.
 
-This setting selects the browser connection; it does not provision production hosting. The current [Vercel integration](https://www.shoalrun.com/publish/vercel.md) supplies search through its chat-function deployment. Profiled Vercel chat-function builds remain unsupported. Static deployments retain keyword search when no endpoint is present. Custom search services can continue to use `provider: custom`.
+This setting selects the browser connection; it doesn't provision production hosting. The current [Vercel integration](https://www.shoalrun.com/publish/vercel.md) supplies search through its chat-function deployment. Profiled Vercel chat-function builds remain unsupported. Static deployments retain keyword search when no endpoint is present. Custom search services can continue to use `provider: custom`.

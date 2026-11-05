@@ -15,7 +15,7 @@ date: 2026-10-03
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Agent authoring, search, and documentation answers
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-03: Agent authoring
 
 **Published: 2026-10-03.**
 

@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Frontmatter is the YAML header between the first two `---` lines of a `.md` or `.mdx` page. It gives a page its identity, URL, and publication settings. Start with this complete header, then write the page body below it:
 
@@ -79,7 +79,7 @@ Publication fields identify the channel, version, language, and access policy fo
 | `version`       | string                         | API or documentation version.                                                                                       |
 | `publications`  | list of `{ channel, version }` | Publish one source page in several channel/version combinations. Use instead of page-level `channel` and `version`. |
 | `language`      | string                         | Optional content language; resolved from globals, publication defaults, then `en`.                                  |
-| `locale`        | string                         | Optional conventions used for dates, numbers, and currency in the content; does not select a publication.           |
+| `locale`        | string                         | Optional conventions used for dates, numbers, and currency in the content; doesn't select a publication.            |
 | `access.policy` | string                         | Set to `public` for a public page.                                                                                  |
 
 Channel identifies an environment such as sandbox or production; version identifies an API or documentation edition; language identifies the content language. The resolved combination must be enabled in project config. `channel`, `version`, and `access` can come from global frontmatter. A language on the page overrides the default unless the project enforces one.
@@ -125,10 +125,10 @@ An explicit page policy of `public` publishes a finished page with these default
 The build reads every `.md` and `.mdx` file in the content directory, including drafts, and checks each header:
 
 - The header must start on the first line of the file, and a key may appear only once.
-- `slug` must start with `/` and cannot contain `..`, `?`, `#`, `%2f`, or `%5c`. Slugs under `/api` and `/.well-known` are reserved for published contracts and discovery files. Routes are compared without regard to case, so `/Guide` and `/guide` collide.
+- `slug` must start with `/` and can't contain `..`, `?`, `#`, `%2f`, or `%5c`. Slugs under `/api` and `/.well-known` are reserved for published contracts and discovery files. Routes are compared without regard to case, so `/Guide` and `/guide` collide.
 - Only `access.policy: public` publishes a page. Any other value, such as `draft`, keeps it out of every publication.
 - A public page whose channel, version, and language match no enabled publication is skipped without a warning. If a page is missing from the output, check its publication fields first.
-- A page with `publications` cannot also set page-level `channel` or `version`; a project-wide enforced channel or version must agree with every entry.
+- A page with `publications` can't also set page-level `channel` or `version`; a project-wide enforced channel or version must agree with every entry.
 - A public page fails while it still contains a scaffold placeholder or a scaffolded summary. See [templates](https://www.shoalrun.com/author/templates.md) for the exact patterns.
 
 `type` is free text, but some values change behavior. An `api-reference` page must list exactly one operation. `guide` and `how-to` pages can use `relatedApiReferences`. Any type can get its own Markdown metadata through [`byType` in Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md). The HTML page header shows the type as words: `api-reference` appears as "API reference".
@@ -141,7 +141,7 @@ These fields categorize pages, add connections, or change presentation. `product
 
 | Field                  | Type                               | Purpose                                                                                                                                                                                      |
 | ---------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `showNavigationTabs`   | boolean                            | Override the HTML navigation tab bar. Defaults to visible for docs and wide layouts, hidden for landing and splash. Does not affect agent discovery.                                         |
+| `showNavigationTabs`   | boolean                            | Override the HTML navigation tab bar. Defaults to visible for docs and wide layouts, hidden for landing and splash. Doesn't affect agent discovery.                                          |
 | `product`              | nonempty string                    | Product category; selects the `product` reader facet if configured.                                                                                                                          |
 | `area`                 | nonempty string or configured list | Area category; selects the `area` reader facet if configured.                                                                                                                                |
 | `subarea`              | nonempty string or configured list | Finer category; selects the `subarea` reader facet if configured.                                                                                                                            |
@@ -162,11 +162,11 @@ These fields categorize pages, add connections, or change presentation. `product
 | `displayText`          | object                             | Page-specific text for cards, the page header, search, HTML description, or social description.                                                                                              |
 | `variables`            | object                             | Page-level public values for registered snippets.                                                                                                                                            |
 
-For example, a page can use `product: payments`, `area: reporting`, and `subarea: settlements`. Those resolved values appear in `documents.json` and `search-index.json`. If the site config defines reader facets with those names, each value must be a configured choice ID and becomes that page's reader filter. Do not also set `readerFilters.product`, `.area`, or `.subarea` for the same field. Without a matching facet, the category is metadata only. A site's Markdown metadata projection can also select `frontmatter.product`, `frontmatter.area`, and `frontmatter.subarea`.
+For example, a page can use `product: payments`, `area: reporting`, and `subarea: settlements`. Those resolved values appear in `documents.json` and `search-index.json`. If the site config defines reader facets with those names, each value must be a configured choice ID and becomes that page's reader filter. Don't also set `readerFilters.product`, `.area`, or `.subarea` for the same field. Without a matching facet, the category is metadata only. A site's Markdown metadata projection can also select `frontmatter.product`, `frontmatter.area`, and `frontmatter.subarea`.
 
 Choose the [page layout](https://www.shoalrun.com/styling/layouts.md) before adjusting the outline. Use `layout: wide` to remove “On this page” and give interactive content more space while keeping navigation. Use `tocDepth: 0` when you only need to hide the outline within the current layout.
 
-The default ToC includes headings through level 3. This page sets `tocDepth: 2`, so its ToC lists only the main sections. Use `tocDepth: 0` to suppress the ToC, or choose a depth from 2 through 6. Headings still appear in the page and Markdown twin when they are left out of the ToC.
+The default ToC includes headings through level 3. This page sets `tocDepth: 2`, so its ToC lists only the main sections. Use `tocDepth: 0` to suppress the ToC, or choose a depth from 2 through 6. Headings still appear in the page and Markdown twin when they're left out of the ToC.
 
 ## Give deprecation guidance
 
@@ -181,7 +181,7 @@ subjectDeprecation:
   migration: guide.migrate-endpoint
 ```
 
-Replace the example IDs with public documents in the same channel, version, and language. Use stable IDs without the `doc:` prefix. Each target must be a different document; external URLs, missing targets, draft targets, and automatic fallback to another publication are not supported.
+Replace the example IDs with public documents in the same channel, version, and language. Use stable IDs without the `doc:` prefix. Each target must be a different document; external URLs, missing targets, draft targets, and automatic fallback to another publication aren't supported.
 
 | Field          | Meaning                                                                   |
 | -------------- | ------------------------------------------------------------------------- |
@@ -190,17 +190,17 @@ Replace the example IDs with public documents in the same channel, version, and 
 | `replacement`  | Stable ID of the page documenting the replacement.                        |
 | `migration`    | Stable ID of the page explaining how to migrate.                          |
 
-All four fields are optional, but the object must contain at least one. Unknown fields fail. Dates must be real `YYYY-MM-DD` calendar dates; when both are present, sunset cannot precede deprecation. The object stays page-specific and cannot appear in global defaults or enforced metadata. The resolved `subjectLifecycle` must be `deprecated`, whether authored or inferred from OpenAPI. A date does not change the status automatically or verify that a service has retired.
+All four fields are optional, but the object must contain at least one. Unknown fields fail. Dates must be real `YYYY-MM-DD` calendar dates; when both are present, sunset can't precede deprecation. The object stays page-specific and can't appear in global defaults or enforced metadata. The resolved `subjectLifecycle` must be `deprecated`, whether authored or inferred from OpenAPI. A date doesn't change the status automatically or verify that a service has retired.
 
 HTML, the full Markdown twin, and every published section resource show a subject deprecation notice with the supplied dates and links. HTML links open pages; Markdown links open their Markdown twins. `documents.json` carries the dates and resolved targets as `{ id, title, url, markdownUrl }` under `subjectDeprecation`. The manifest URLs are site paths, including any base path and publication prefix. Fetch-only readers can use the notice without parsing JSON or running JavaScript.
 
-These fields describe the documented subject. They do not retire the documentation resource, emit HTTP `Deprecation` or `Sunset` headers, change access, or establish verification. Fictional-example flags, editorial `lifecycle`, and `verified` remain independent. Omitting lifecycle information does not imply stability or verification.
+These fields describe the documented subject. They don't retire the documentation resource, emit HTTP `Deprecation` or `Sunset` headers, change access, or establish verification. Fictional-example flags, editorial `lifecycle`, and `verified` remain independent. Omitting lifecycle information doesn't imply stability or verification.
 
 ## Audience badges
 
-This page sets `audiences: [authors, maintainers]`, so its HTML header shows an **Intended audience** row with those two badges. Without [reader views](https://www.shoalrun.com/author/reader-views.md), write the labels as you want them displayed; they do not filter content. With an `audience` facet configured, use its choice IDs and Shoalrun displays the configured labels. A page without `audiences` has no audience row. Neither field restricts access; `access.policy` controls whether the page enters the public build.
+This page sets `audiences: [authors, maintainers]`, so its HTML header shows an **Intended audience** row with those two badges. Without [reader views](https://www.shoalrun.com/author/reader-views.md), write the labels as you want them displayed; they don't filter content. With an `audience` facet configured, use its choice IDs and Shoalrun displays the configured labels. A page without `audiences` has no audience row. Neither field restricts access; `access.policy` controls whether the page enters the public build.
 
-The site's Markdown metadata projection also selects `frontmatter.audiences`, so [this page's Markdown twin](https://www.shoalrun.com/author/frontmatter.md) lists the same values in its YAML header. A site can omit that projection field if its Markdown readers do not need audience labels.
+The site's Markdown metadata projection also selects `frontmatter.audiences`, so [this page's Markdown twin](https://www.shoalrun.com/author/frontmatter.md) lists the same values in its YAML header. A site can omit that projection field if its Markdown readers don't need audience labels.
 
 ## SEO fields
 
@@ -219,7 +219,7 @@ seo:
   description: Inspect the payment request and response.
 ```
 
-There are no other supported `seo.*` fields yet. Configure social images separately in [share images](https://www.shoalrun.com/styling/share-images.md). Use global frontmatter for site-wide SEO defaults or enforced values. The compiler now rejects unsupported page-level SEO keys so they cannot silently have no effect.
+There are no other supported `seo.*` fields yet. Configure social images separately in [share images](https://www.shoalrun.com/styling/share-images.md). Use global frontmatter for site-wide SEO defaults or enforced values. The compiler now rejects unsupported page-level SEO keys so they can't silently have no effect.
 
 ## Related metadata tasks
 

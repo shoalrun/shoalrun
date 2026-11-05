@@ -18,11 +18,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > How answers work
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
-Documentation chat reads a site you have already built. It is optional: a normal `shoalrun build` does not call the retrieval or chat providers.
+Documentation chat reads a site you have already built. It's optional: a normal `shoalrun build` doesn't call the retrieval or chat providers.
 
 Chat first finds relevant passages, then uses them to produce a cited answer. A passage is a short part of a built Markdown page with a link back to its source. Some configurations can return an existing answer or an excerpt instead of generating new text.
 
@@ -34,7 +34,7 @@ Each layer adds a retrieval or answer capability and has its own prerequisites.
 
 | Layer            | What it adds                                                                                                                                                               | It needs                                       |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| Keyword matching | Finds the most relevant passages by their words. It is what the chat uses when there are no vectors, or the embedding service is unavailable.                              | The passage index. No key.                     |
+| Keyword matching | Finds the most relevant passages by their words. It's what the chat uses when there are no vectors, or the embedding service is unavailable.                               | The passage index. No key.                     |
 | Semantic search  | Finds passages by meaning, so a question matches even when it shares no words with the page.                                                                               | An embedding service and key.                  |
 | Relevance scorer | Reorders the results and declines a question the docs don't cover. It checks each sentence of an answer, and shows a passage word for word when one is clearly the answer. | A scorer service that speaks the Jev protocol. |
 | Chat model       | Writes a cited answer from the best passages.                                                                                                                              | A chat service and key.                        |

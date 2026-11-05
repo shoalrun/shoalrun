@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
@@ -69,12 +69,12 @@ The generated index contains one record for each published page:
 The index fields have these limits:
 
 - `headings` covers levels 2 through 4, including headings later in the article.
-- `text` holds the first 5,000 characters of the HTML article as plain text. Body words beyond that limit are not searchable through this field.
+- `text` holds the first 5,000 characters of the HTML article as plain text. Body words beyond that limit aren't searchable through this field.
 - Titles and the selected summary are indexed separately from body text.
-- A section result links to a heading; it does not mean the section's full body was indexed.
+- A section result links to a heading; it doesn't mean the section's full body was indexed.
 - `id` and `markdownUrl` let local tools cite the matching page.
 
-When reader views are enabled, `readerFilters` holds page marks and `readerSegments` holds shared and marked text. A custom provider must apply those marks to respect the selected view. The full text remains in the index; reader views do not restrict access to published files.
+When reader views are enabled, `readerFilters` holds page marks and `readerSegments` holds shared and marked text. A custom provider must apply those marks to respect the selected view. The full text remains in the index; reader views don't restrict access to published files.
 
 The browser index comes from the HTML article, including HTML-only blocks and excluding Markdown-only blocks written with [Only](https://www.shoalrun.com/author/components/only.md). It excludes the surrounding header, navigation, and search UI. Marked sections stay in the stored index; the built-in browser provider filters their text when a view is active. Each `readerSegments` text value is capped at 5,000 characters.
 

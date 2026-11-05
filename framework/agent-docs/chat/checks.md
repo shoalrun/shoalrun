@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -52,11 +52,11 @@ Jev reads each sentence that carries a citation, together with the passage it ci
 
 Fenced code, lead-ins that end in a colon, and statements that the docs lack something are skipped, because no passage can support an absence. That covers phrasings such as "the docs don't specifically describe", "no other information is given", and "it only shows".
 
-A sentence below `verify.threshold` is flagged in the notes, or removed when `onUnsupported` is `remove`. If removal leaves no supported sentence, the answer becomes "The documentation does not cover that." The check costs one more Jev call for each answer.
+A sentence below `verify.threshold` is flagged in the notes, or removed when `onUnsupported` is `remove`. If removal leaves no supported sentence, the answer becomes `The documentation does not cover that.` The check costs one more Jev call for each answer.
 
 Start with flagging while you review the results. Choose a threshold using questions and source passages from your own project; scores and useful thresholds vary by scorer. Removing sentences can leave an answer incomplete.
 
-The claims check can't catch a wrong sentence that a passage loosely supports, or a passage that is itself wrong. It reads only the passage a sentence cites.
+The claims check can't catch a wrong sentence that a passage loosely supports, or a passage that's itself wrong. It reads only the passage a sentence cites.
 
 ## Answer without a model
 
@@ -72,7 +72,7 @@ A passage is shown only when all of these are true:
 
 - Jev scores the best passage at `threshold` or higher.
 - At most `others` other passages score within `margin` of the best. A broad question has many strong passages and needs a model to combine them.
-- It is a question that stands on its own. A follow-up, which needs the conversation to make sense, always goes to the model.
+- It's a question that stands on its own. A follow-up, which needs the conversation to make sense, always goes to the model.
 
 Every other question goes to the model as usual. A passage longer than `maxChars` (default 1,200) is cut to the block that answers the question. The cut keeps the sentence that introduces a code example, or the example that a sentence introduces. If trimming fails, the whole passage is shown. The answer begins with **From the docs** and the page and section, and the result's decision is `excerpt`. `--no-direct` on `ask` turns the mode off for one run.
 
@@ -86,12 +86,12 @@ Some questions are asked so often that they deserve a reviewed answer. An answer
 
 People ask the same questions. With `chat.cache`, `serve --ask` keeps recent answers in memory and returns a stored one when the same question comes back, with no model call. The question is compared after ignoring case, extra spaces, and closing punctuation, and separately for each publication and reader view.
 
-Only an answer that passed every check is stored. A hedged answer, a declined one, and one with a flagged sentence, flagged code, or an invented citation are not. A follow-up is never stored and never served from the cache, because its meaning depends on the conversation.
+Only an answer that passed every check is stored. A hedged answer, a declined one, and one with a flagged sentence, flagged code, or an invented citation aren't. A follow-up is never stored and never served from the cache, because its meaning depends on the conversation.
 
 A cache entry is removed when:
 
-- It is older than `ttlMinutes`.
-- The cache is full and it is the least recently used entry.
+- It's older than `ttlMinutes`.
+- The cache is full and it's the least recently used entry.
 - A source passage shown to the model has changed.
 
 The local panel labels reused answers with "from the answer cache".
@@ -114,7 +114,7 @@ A rewrite is accepted only when it meets these constraints:
 - No web address or proposed instruction such as “Set the draft property to false.”
 - Technical names in backticks, dotted identifiers, and command flags already occur in the conversation.
 
-If the rewrite or service fails, retrieval combines the previous and current questions. The rejected rewrite is not displayed; a note records the fallback. These checks do not prove that an accepted rewrite preserves the reader's intent.
+If the rewrite or service fails, retrieval combines the previous and current questions. The rejected rewrite isn't displayed; a note records the fallback. These checks don't prove that an accepted rewrite preserves the reader's intent.
 
 Rewriting makes a model call and is skipped when the model budget is spent.
 
@@ -124,13 +124,13 @@ An explicit request such as “Compare templates and snippets, then explain navi
 
 For each part, Ask also considers introductions from up to three matching pages. An introduction can explain a prerequisite or automatic build behavior that a matching subsection omits. Related-reading lists are excluded from this evidence selection. With Jev, up to 36 topic/passage pairs are scored in at most two additional batches. Semantic retrieval can make one additional query-embedding request per part.
 
-Evidence selection reserves a passage for each part before adding a second round, up to `chat.passages`. The model is asked to address every part and state when evidence is missing. A part with no passage above the relevance threshold makes the answer partial; when none qualify, Ask declines. Multi-part requests do not use the direct-excerpt or answer-card shortcuts.
+Evidence selection reserves a passage for each part before adding a second round, up to `chat.passages`. The model is asked to address every part and state when evidence is missing. A part with no passage above the relevance threshold makes the answer partial; when none qualify, Ask declines. Multi-part requests don't use the direct-excerpt or answer-card shortcuts.
 
-The result's optional `coverage` field records the topic and whether selected evidence passed the relevance threshold. Without a scorer, that value is `null`. A positive relevance score means a passage may help; it does not prove the answer is complete or correct. Citation and claim checks still run on the generated answer. Questions whose meaning depends on several sources remain experimental.
+The result's optional `coverage` field records the topic and whether selected evidence passed the relevance threshold. Without a scorer, that value is `null`. A positive relevance score means a passage may help; it doesn't prove the answer is complete or correct. Citation and claim checks still run on the generated answer. Questions whose meaning depends on several sources remain experimental.
 
 ## Answer for one audience
 
-`chat.readerView` limits retrieval to the configured audience, such as customers or staff. It filters whole pages using their reader marks. It does not make published files private; use host-level access controls for confidential content.
+`chat.readerView` limits retrieval to the configured audience, such as customers or staff. It filters whole pages using their reader marks. It doesn't make published files private; use host-level access controls for confidential content.
 
 It uses the same reader filters as the search box. Define the audiences once under `readerFilters.facets`, name one in the chat, and tag pages with `audiences`:
 

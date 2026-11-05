@@ -17,13 +17,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > API support > Focused OpenAPI contracts
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 A **focused contract** is a generated OpenAPI JSON file for one operation. It contains that operation's path and method, parameters, request and response definitions, named examples, and the schemas and security schemes those definitions use. The build resolves local references so the file stands on its own. Each API reference page links to its focused contract.
 
 ## Why use one
 
-An API reference page is made for reading. A focused contract gives an agent, test tool, or client generator the exact machine-readable shape of the operation. A large OpenAPI source can contain many unrelated operations and schemas; the focused file keeps the context to what this operation needs. It is also useful when the full source should stay internal but a selected operation can be published.
+An API reference page is made for reading. A focused contract gives an agent, test tool, or client generator the exact machine-readable shape of the operation. A large OpenAPI source can contain many unrelated operations and schemas; the focused file keeps the context to what this operation needs. It's also useful when the full source should stay internal but a selected operation can be published.
 
 ## Generate and inspect it
 
@@ -53,9 +53,9 @@ The focused contract describes the selected operation, not the entire API. Use t
 - It drops every `x-*` extension key, so vendor extensions and internal notes stored there stay out of the public file.
 - It supports local OpenAPI 3.0.x and 3.1.x files with internal and multi-file references. Referenced files must stay inside the main OpenAPI file's directory, including after resolving symlinks. Absolute local paths are rejected. A Path Item `$ref`, or a JSON Schema `$id`, `$anchor`, `$dynamicRef`, or `$dynamicAnchor`, stops the build.
 
-The URL pattern is `/api/operations/<channel>/<version>/<language>/<name>-<sha256>.json`. The suffix is the full SHA-256 of the generated JSON bytes. Changing the contract changes its URL; an unchanged contract keeps the same URL. Earlier prototype filenames hashed the operation ID, which did not provide this property.
+The URL pattern is `/api/operations/<channel>/<version>/<language>/<name>-<sha256>.json`. The suffix is the full SHA-256 of the generated JSON bytes. Changing the contract changes its URL; an unchanged contract keeps the same URL. Earlier prototype filenames hashed the operation ID, which didn't provide this property.
 
-The generated hosting metadata gives these URLs `Cache-Control: public, max-age=31536000, immutable` and a strong ETag containing the same digest. The Node server applies these headers, and the Vercel adapter includes them in its routing configuration. A CDN can replace the ETag with its own validator. Use the returned ETag for conditional requests and the manifest's `focusedContractDigest` to verify downloaded bytes. Mutable Markdown and JSON indexes require revalidation. Other hosts must apply the generated cache policy. Old builds are not archived automatically, so the URL identity does not guarantee permanent availability. To check every contract in a built site, run `shoalrun api focused-audit <site-directory>`. The [CLI reference](https://www.shoalrun.com/cli.md) lists what it checks.
+The generated hosting metadata gives these URLs `Cache-Control: public, max-age=31536000, immutable` and a strong ETag containing the same digest. The Node server applies these headers, and the Vercel adapter includes them in its routing configuration. A CDN can replace the ETag with its own validator. Use the returned ETag for conditional requests and the manifest's `focusedContractDigest` to verify downloaded bytes. Mutable Markdown and JSON indexes require revalidation. Other hosts must apply the generated cache policy. Old builds aren't archived automatically, so the URL identity doesn't guarantee permanent availability. To check every contract in a built site, run `shoalrun api focused-audit <site-directory>`. The [CLI reference](https://www.shoalrun.com/cli.md) lists what it checks.
 
 ## Related reading
 

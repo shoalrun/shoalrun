@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -60,7 +60,7 @@ npx --no-install shoalrun build docs.config.yaml dist
 
 ### Know the directive limits
 
-`$concat` expects a list base when an inherited value exists. It does not append to a mapping. Included lists within `$concat` are flattened one level, so several team navigation fragments can become one list:
+`$concat` expects a list base when an inherited value exists. It doesn't append to a mapping. Included lists within `$concat` are flattened one level, so several team navigation fragments can become one list:
 
 ```yaml
 navigation:
@@ -69,8 +69,8 @@ navigation:
     - { $include: ./config/nav-api.yaml }
 ```
 
-That fragment requires both named files. Each should contain a navigation list. Concatenation preserves order and does not remove duplicates; duplicate navigation IDs still fail during a build.
+That fragment requires both named files. Each should contain a navigation list. Concatenation preserves order and doesn't remove duplicates; duplicate navigation IDs still fail during a build.
 
-`$remove` requires an inherited value. For mappings, its strings name keys. For lists, they match each item's `id`; it does not remove scalar strings or match another field such as `label`. Removing a missing name has no effect. Removing an item does not automatically repair links or other settings that referred to it.
+`$remove` requires an inherited value. For mappings, its strings name keys. For lists, they match each item's `id`; it doesn't remove scalar strings or match another field such as `label`. Removing a missing name has no effect. Removing an item doesn't automatically repair links or other settings that referred to it.
 
-Each directive mapping must contain exactly one directive and no other keys. You cannot combine `$remove` and `$concat` at the same location in one overlay. Use separate preset layers when you need both operations.
+Each directive mapping must contain exactly one directive and no other keys. You can't combine `$remove` and `$concat` at the same location in one overlay. Use separate preset layers when you need both operations.

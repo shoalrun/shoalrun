@@ -17,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Publish and update content
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.13.**
 
 Publish a complete export as one revision. The manifest and representation files must agree; replacing only the manifest or only an article can leave a running application with mismatched content.
-
-Available since `0.1.0-alpha.13`.
 
 ## Build a revision
 
@@ -47,7 +47,7 @@ npx --no-install shoalrun export docs.config.yaml \
 
 The comparison reports added and removed typed references within their publication. A title or body edit changes content without changing an explicit identity. A renamed derived section ID can remove a reference. Strict removal checking fails before replacing the previous output; without a baseline, removal checking is reported as unavailable.
 
-Review intentional removals with the applications that consume them. Keep old revisions available while deployed applications still need them. Comparison does not create redirects or aliases.
+Review intentional removals with the applications that consume them. Keep old revisions available while deployed applications still need them. Comparison doesn't create redirects or aliases.
 
 ## Serve and switch
 
@@ -57,7 +57,7 @@ The application chooses which manifest URL to open. An already-open snapshot sta
 
 ## HTML, Markdown, and agents
 
-Publish both representations together when both are selected. Agents and applications can record the manifest revision with a resource reference to explain which content they read. A digest verifies that bytes match the declared revision; it is not a signature or proof of factual accuracy. Remote images remain external dependencies and need separate availability planning.
+Publish both representations together when both are selected. Agents and applications can record the manifest revision with a resource reference to explain which content they read. A digest verifies that bytes match the declared revision; it isn't a signature or proof of factual accuracy. Remote images remain external dependencies and need separate availability planning.
 
 ## Related reading
 

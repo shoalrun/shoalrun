@@ -17,11 +17,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 
-This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
+This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun doesn't automatically apply these rules to other projects.
 
 ## Page purpose and structure
 
@@ -44,6 +44,6 @@ Component references use **Syntax**, **Attributes**, and **HTML, Markdown, and a
 
 Use **Next steps** to continue a task and **Related reading** for supporting reference or explanation. Describe why to follow each link. Keep demo headings separate from the page's instructional outline where possible.
 
-Run customer commands from a project with the pinned npm package installed, using `npx --no-install shoalrun`. Label contributor-only paths and repository scripts explicitly. Do not assume the quickstart compiled a framework checkout. Recipes maintained through composition must declare every required artifact, including a current build before an export.
+Run customer commands from a project with the pinned npm package installed, using `npx --no-install shoalrun`. Label contributor-only paths and repository scripts explicitly. Don't assume the quickstart compiled a framework checkout. Recipes maintained through composition must declare every required artifact, including a current build before an export.
 
-These are editorial shapes, not a reason to add empty boilerplate. Follow the [template rules](https://www.shoalrun.com/author/templates.md) and adapt the outline to the reader's need. Headings in a page body start at level two because the renderer supplies the title. Do not add step numbers to authored headings. For a procedure with titled steps, use the [Steps component](https://www.shoalrun.com/author/components/steps.md); it supplies the numbering in HTML and Markdown.
+These are editorial shapes, not a reason to add empty boilerplate. Follow the [template rules](https://www.shoalrun.com/author/templates.md) and adapt the outline to the reader's need. Headings in a page body start at level two because the renderer supplies the title. Don't add step numbers to authored headings. For a procedure with titled steps, use the [Steps component](https://www.shoalrun.com/author/components/steps.md); it supplies the numbering in HTML and Markdown.

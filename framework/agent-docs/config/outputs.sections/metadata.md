@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Output and export
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/config/outputs.md)
 
@@ -31,7 +31,7 @@ Configure metadata providers, application exports, Markdown headers, and discove
 
 ## `metadata`
 
-`metadata.provider.module` names an optional local module that exports `provideMetadata(context)`. The module can supply owned page fields to the build. The framework does not run an external vocabulary validator or publish supplied fields automatically. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md) for the return shape and ownership rule.
+`metadata.provider.module` names an optional local module that exports `provideMetadata(context)`. The module can supply owned page fields to the build. The framework doesn't run an external vocabulary validator or publish supplied fields automatically. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md) for the return shape and ownership rule.
 
 ```yaml title="docs.config.yaml"
 metadata:

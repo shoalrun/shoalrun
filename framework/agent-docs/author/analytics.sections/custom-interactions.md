@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Analytics
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/analytics.md)
 
@@ -43,7 +43,7 @@ globalThis.shoalrunAnalytics?.track(
 
 The arguments are the event name, properties, and optional element for component context. Page properties are added automatically. The optional chain skips the call when analytics is unconfigured.
 
-This hook does not register MDX components: unknown components fail the build. Use the [supported components](https://www.shoalrun.com/author/components.md) or register a [trusted component plugin](https://www.shoalrun.com/author/components/custom.md) with shared HTML and Markdown content.
+This hook doesn't register MDX components: unknown components fail the build. Use the [supported components](https://www.shoalrun.com/author/components.md) or register a [trusted component plugin](https://www.shoalrun.com/author/components/custom.md) with shared HTML and Markdown content.
 
 Event names start with a lowercase letter and contain at most 64 lowercase letters, digits, or underscores.
 

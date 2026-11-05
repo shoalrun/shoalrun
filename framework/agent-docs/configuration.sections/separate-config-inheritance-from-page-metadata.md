@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -39,16 +39,16 @@ The loader first combines all configured `frontmatter` sections using the config
 frontmatter.defaults → page frontmatter → frontmatter.enforced
 ```
 
-Mappings merge recursively and lists replace at this stage too. Config directives such as `$include`, `$concat`, and `$remove` are not page-frontmatter inheritance instructions.
+Mappings merge recursively and lists replace at this stage too. Config directives such as `$include`, `$concat`, and `$remove` aren't page-frontmatter inheritance instructions.
 
 For example, `frontmatter.defaults.access.policy: public` lets a page set itself to `draft`. Setting `frontmatter.enforced.access.policy: public` overrides that draft choice. Use defaults when authors should control publication access.
 
-`frontmatter.fields` declares field types and requirements; it does not fill in missing values. A metadata provider is an additional advanced input to page resolution. See [page metadata](https://www.shoalrun.com/author/frontmatter.md) and the [configuration reference](https://www.shoalrun.com/config.md) before adding one.
+`frontmatter.fields` declares field types and requirements; it doesn't fill in missing values. A metadata provider is an additional advanced input to page resolution. See [page metadata](https://www.shoalrun.com/author/frontmatter.md) and the [configuration reference](https://www.shoalrun.com/config.md) before adding one.
 
 ### Publication defaults serve a different purpose
 
 `publications.defaults` identifies default publication choices, including which channel and version receive an API's top-level source. It also supplies defaults for scaffolding and API selection. The default language supplies a page language when one is missing.
 
-Existing authored pages still need resolved channel and version fields. The starter provides these through `frontmatter.defaults`. Do not assume that changing `publications.defaults.version` also changes every page's metadata.
+Existing authored pages still need resolved channel and version fields. The starter provides these through `frontmatter.defaults`. Don't assume that changing `publications.defaults.version` also changes every page's metadata.
 
-`publications.enabled` selects combinations to build; it does not clone pages into those combinations. Navigation and `doc:` links resolve against the selected publication. See [versions and languages](https://www.shoalrun.com/publish/publications.md) for complete variant and route examples.
+`publications.enabled` selects combinations to build; it doesn't clone pages into those combinations. Navigation and `doc:` links resolve against the selected publication. See [versions and languages](https://www.shoalrun.com/publish/publications.md) for complete variant and route examples.

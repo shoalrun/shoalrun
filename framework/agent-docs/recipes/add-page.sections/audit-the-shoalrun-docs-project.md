@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Add a page to this documentation site
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/recipes/add-page.md)
 
@@ -33,7 +33,7 @@ Run Shoalrun's configured checks. This repository's formatting check requires [V
 npx --no-install shoalrun audit docs/docs.config.yaml
 ```
 
-The audit checks configured project commands, API representations, and focused contracts. Read any reported finding and fix its source before continuing. This command does not run the complete framework test suite or replace a browser review. Framework source changes and tests belong in the framework repository.
+The audit checks configured project commands, API representations, and focused contracts. Read any reported finding and fix its source before continuing. This command doesn't run the complete framework test suite or replace a browser review. Framework source changes and tests belong in the framework repository.
 
 Save `auditPassed`: A successful audit report with no failed configured checks.
 

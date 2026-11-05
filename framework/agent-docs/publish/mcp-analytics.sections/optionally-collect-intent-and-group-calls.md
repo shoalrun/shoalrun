@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Measure MCP tool usage
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
@@ -27,9 +27,9 @@ Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
 - [Connect an MCP client](https://www.shoalrun.com/publish/mcp.md) — Enable and verify the HTTP endpoint before adding analytics.
 
-Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP does not enable tracking, and the browser analytics setting does not count tool calls.
+Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP doesn't enable tracking, and the browser analytics setting doesn't count tool calls.
 
-Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting does not instrument stdio, direct Markdown requests, or browser page views.
+Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting doesn't instrument stdio, direct Markdown requests, or browser page views.
 
 ## Optionally collect intent and group calls
 
@@ -49,7 +49,7 @@ mcp:
 
 With intent enabled, the SDK adds a `context` argument asking for exactly one category: `discovery`, `setup`, `troubleshooting`, `configuration`, `reference_lookup`, `comparison`, `migration`, or `other`. Only these values can reach analytics. The adapter trims whitespace and normalizes case; it never stores an explanation or extracts a category from arbitrary text.
 
-An empty, invalid, or free-text value falls back to `discovery` for `search_docs` or `reference_lookup` for reading tools. PostHog marks the fallback as `inferred`. It describes the tool action, not a verified user goal, and does not invoke a model. Accepted client categories are also unverified claims.
+An empty, invalid, or free-text value falls back to `discovery` for `search_docs` or `reference_lookup` for reading tools. PostHog marks the fallback as `inferred`. It describes the tool action, not a verified user goal, and doesn't invoke a model. Accepted client categories are also unverified claims.
 
 The SDK still accepts a string argument, so an agent might send private text despite the instruction. The outbound allowlist replaces that text before delivery. Raw queries, complete arguments, and returned documentation remain excluded.
 

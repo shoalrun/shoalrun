@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Page layouts, landing pages, and splash pages
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/styling/layouts.md)
 
@@ -40,4 +40,4 @@ An unknown value fails the build. Each preset styles all four layouts, and proje
 
 ## HTML, Markdown, and agents
 
-Layouts control HTML sidebars, outlines, column widths, and full-width bands. They do not create separate content for agents. In Markdown, a `Hero` retains its tagline, action links, and supported image or code content; `Section` retains its body in source order without the visual wrapper. Agents can follow the links and read the content without interpreting the layout or running browser scripts. Keep essential meaning in the authored text rather than background styling or motion.
+Layouts control HTML sidebars, outlines, column widths, and full-width bands. They don't create separate content for agents. In Markdown, a `Hero` retains its tagline, action links, and supported image or code content; `Section` retains its body in source order without the visual wrapper. Agents can follow the links and read the content without interpreting the layout or running browser scripts. Keep essential meaning in the authored text rather than background styling or motion.

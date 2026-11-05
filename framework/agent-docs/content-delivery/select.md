@@ -17,13 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Select content resources
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.13.**
 
 Use an export target to choose exactly which content an application receives. Work from a Shoalrun project with public pages in an enabled publication. Whole pages need no section declaration. To export just one section, first read it without the rest of its page. Check that it includes the context needed to understand or follow it. Record that review in the source page's `standaloneSections` frontmatter; [declare a section ready for separate use](https://www.shoalrun.com/content-delivery/sections.md) explains why and shows the syntax.
 
 The declaration says the section can be used on its own. The export target below says which content to include in this bundle. Both are required for a section export.
-
-Available since `0.1.0-alpha.13`.
 
 ## Define the target
 
@@ -48,7 +48,7 @@ exports:
 
 `resources` and the older `documents` selection are mutually exclusive. A page selector includes the complete page. A section selector includes its approved H2 and nested subsections, ending at the next H2 or H1. The export retains applicable notices and referenced definitions without copying ordinary page introduction text.
 
-A requested page must be public and available in the chosen publication. An export `contentFilter` can narrow eligible pages; it is independent of website navigation and `site.contentFilter`. Reader filters select content, not access permissions.
+A requested page must be public and available in the chosen publication. An export `contentFilter` can narrow eligible pages; it's independent of website navigation and `site.contentFilter`. Reader filters select content, not access permissions.
 
 ## Name snippet instances
 
@@ -68,7 +68,7 @@ The snippet file contains:
 Request a refund within <Var name="days" /> days.
 ```
 
-`snippetId` chooses that source; `id` names the exported instance. Multiple instances can use different literal values. The application reads `refund.standard`, not a runtime template. Instances have no containing page or page variables. Page-dependent components and headings are not supported in standalone snippets.
+`snippetId` chooses that source; `id` names the exported instance. Multiple instances can use different literal values. The application reads `refund.standard`, not a runtime template. Instances have no containing page or page variables. Page-dependent components and headings aren't supported in standalone snippets.
 
 ## Export and inspect
 
@@ -79,7 +79,7 @@ npx --no-install shoalrun export docs.config.yaml \
 
 Inspect `manifest.json`, each selected representation, and its referenced assets. Unknown references, missing approval, and unsupported content fail before replacing an existing export. Imported API material still follows the existing source-review gate.
 
-Links to fragments in unselected pages fail export because their anchors cannot be verified. Select the target page or section explicitly. Missing or ambiguous fragments also fail. A sliced section keeps its full-source heading identity. Links to sibling content can use a canonical page URL only when the source HTML anchor is verified.
+Links to fragments in unselected pages fail export because their anchors can't be verified. Select the target page or section explicitly. Missing or ambiguous fragments also fail. A sliced section keeps its full-source heading identity. Links to sibling content can use a canonical page URL only when the source HTML anchor is verified.
 
 ## HTML, Markdown, and agents
 

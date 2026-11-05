@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Definition lists
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<DefinitionList>` for a compact glossary or configuration reference. Put alternating `<Term>` and `<Definition>` children inside it. Add `filter` when readers need to search a long list by term or definition text.
 
@@ -47,7 +47,7 @@ Use `<DefinitionList>` for a compact glossary or configuration reference. Put al
 
 HTML uses `<dl>`, `<dt>`, and `<dd>`, with aligned columns on wide screens and stacked pairs on narrow screens. With `filter`, JavaScript adds a labeled search input and a live count above the list. It searches both terms and definitions, hides or shows each pair together, and Escape clears the query. Without JavaScript, every pair remains visible and the filter control stays hidden.
 
-Markdown keeps each term immediately before its full definition in a list, so an agent can read every pair in order. The interactive filter does not appear in Markdown.
+Markdown keeps each term immediately before its full definition in a list, so an agent can read every pair in order. The interactive filter doesn't appear in Markdown.
 
 ## Related reading
 

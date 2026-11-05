@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Math
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<Math>` with a literal LaTeX expression. It supports the KaTeX math subset and reports invalid expressions during the build.
 
@@ -36,7 +36,7 @@ c^2=a^2+b^2
 
 ## Attributes
 
-`expression` is required and nonempty. Add the bare `display` attribute on a block element for centered display math. The component does not parse dollar delimiters in ordinary prose or code fences. Escape quotes in MDX attributes as needed.
+`expression` is required and nonempty. Add the bare `display` attribute on a block element for centered display math. The component doesn't parse dollar delimiters in ordinary prose or code fences. Escape quotes in MDX attributes as needed.
 
 ## HTML, Markdown, and agents
 

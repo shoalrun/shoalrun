@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -35,7 +35,7 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 ## Validate an existing build locally
 
-This checker belongs to Shoalrun’s documentation repository; it is not an installed CLI command. From that repository with its dependencies installed, run:
+This checker belongs to Shoalrun’s documentation repository; it isn't an installed CLI command. From that repository with its dependencies installed, run:
 
 ```sh
 node scripts/check-output-contract.mjs docs/dist
@@ -45,4 +45,4 @@ Replace `docs/dist` with an already-built site's directory. The checker loads bo
 
 The report has `status`, `findings`, and document/section counts. A failure exits nonzero. The command never rebuilds, writes output, evaluates model tasks, or checks live hosting. The existing repository built-site check includes this check, so run either path rather than duplicating it for unchanged output. Use the [deployment checker](https://www.shoalrun.com/publish/deployment-check.md) separately for HTTP behavior.
 
-Passing checks establish the specified structure and consistency, not authored truth, semantic completeness, or a fresh evaluation grade. The build identity is compared across files, not recomputed from final stamped artifacts. This contract does not add `llms-full.txt`, a public evaluation report, signatures, or an offline release archive.
+Passing checks establish the specified structure and consistency, not authored truth, semantic completeness, or a fresh evaluation grade. The build identity is compared across files, not recomputed from final stamped artifacts. This contract doesn't add `llms-full.txt`, a public evaluation report, signatures, or an offline release archive.

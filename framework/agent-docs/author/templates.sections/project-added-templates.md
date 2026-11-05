@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/templates.md)
 
@@ -30,10 +30,10 @@ Parent page: [Full Markdown page](/author/templates.md)
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 
-Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they do not enforce a permanent page structure.
+Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they don't enforce a permanent page structure.
 
 ## Project-added templates
 
-Project templates are named entries under `templates` in config. They are available only in projects that register them; installing the CLI does not provide these names. Use a custom name to add an outline, or a built-in name to override its starting content.
+Project templates are named entries under `templates` in config. They're available only in projects that register them; installing the CLI doesn't provide these names. Use a custom name to add an outline, or a built-in name to override its starting content.
 
 A project template with the same name as a built-in takes precedence. For example, registering `how-to` replaces its starting outline in that project. Use a distinct name to add a choice instead. Neither registration nor overriding rewrites existing pages.

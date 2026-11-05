@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/api-docs/generate.md)
 
@@ -35,9 +35,9 @@ Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun
 
 ## Choose generated references or MDX
 
-Use build-time generated references when the OpenAPI contract already gives readers the method, path, parameters, schemas, and examples they need. The pages update whenever the reviewed source changes, and there are no MDX files to maintain. Use an authored MDX reference when an endpoint needs a reviewed introduction, prerequisites, limitations, or task-specific context that the contract cannot express. The compiler still appends the contract details from OpenAPI, so do not copy field tables and example payloads into MDX. Use a guide for a task spanning several endpoints; link its reference pages with `relatedApiReferences`.
+Use build-time generated references when the OpenAPI contract already gives readers the method, path, parameters, schemas, and examples they need. The pages update whenever the reviewed source changes, and there are no MDX files to maintain. Use an authored MDX reference when an endpoint needs a reviewed introduction, prerequisites, limitations, or task-specific context that the contract can't express. The compiler still appends the contract details from OpenAPI, so don't copy field tables and example payloads into MDX. Use a guide for a task spanning several endpoints; link its reference pages with `relatedApiReferences`.
 
-The one-time `api materialize` command creates draft MDX references for every endpoint or selected source operation IDs or method/path routes. It does not change config or navigation and never rewrites an existing page. For example:
+The one-time `api materialize` command creates draft MDX references for every endpoint or selected source operation IDs or method/path routes. It doesn't change config or navigation and never rewrites an existing page. For example:
 
 ```sh
 npx --no-install shoalrun api materialize notes docs.config.yaml --all
@@ -47,4 +47,4 @@ npx --no-install shoalrun api materialize notes docs.config.yaml --route 'GET /n
 
 The default destination is `content/api/<api-id>/`; use `--output` for another directory inside the configured content tree. Selectors use the OpenAPI `operationId` or exact uppercase method and path. Repeating a command reports the existing matching page as skipped. A file with a conflicting identity stops the job before it writes anything. Existing authored references also count as skipped.
 
-Each new page has a stable document ID, slug, operation binding, and `access.policy: draft`. The draft contains an editorial prompt. While it remains a draft, any already selected build-time reference continues to publish. Review the text, replace the prompt, then set access to `public`; that MDX page takes the generated page's place for its publication. This also works when `generateReferences` is off: the authored page binds to the registered API's local OpenAPI source. The command never enables build-time generation, changes the public review digest, or chooses navigation order for you. Run `api review` before publishing changed API content, and place the reference with `operation:` or `doc:` in navigation if it is not already covered by a generator.
+Each new page has a stable document ID, slug, operation binding, and `access.policy: draft`. The draft contains an editorial prompt. While it remains a draft, any already selected build-time reference continues to publish. Review the text, replace the prompt, then set access to `public`; that MDX page takes the generated page's place for its publication. This also works when `generateReferences` is off: the authored page binds to the registered API's local OpenAPI source. The command never enables build-time generation, changes the public review digest, or chooses navigation order for you. Run `api review` before publishing changed API content, and place the reference with `operation:` or `doc:` in navigation if it isn't already covered by a generator.

@@ -1,7 +1,7 @@
 ---
 id: reference.config-publishing
 title: Publications and routing settings
-summary: Configure versions, languages, navigation, and redirects.
+summary: Configure product releases, versions, languages, navigation, and redirects.
 type: reference
 area: publishing
 subarea: publishing-configuration
@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Publications and routing
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/config/publishing.md)
 
@@ -35,7 +35,7 @@ A list of old URLs to send to a current page. Shoalrun's own docs use redirects 
 Add a redirect when a URL that readers, bookmarks, or other sites already use would stop working:
 
 - You change a page's `slug`. The slug sets the URL, so the old path no longer has a page.
-- You change `site.basePath`, a channel or version `pathPrefix`, or a language prefix. Every route under it moves.
+- You change `site.basePath`, a product, channel, or version `pathPrefix`, or a language prefix. Every route under it moves.
 - You delete a page, merge two pages, or replace a page with one in another version.
 
 You don't need a redirect when a page keeps its `slug`. Moving or renaming the source file doesn't change a URL, and neither does changing navigation. The URL comes from the slug, not the file.
@@ -70,10 +70,10 @@ Send an old URL to a page in another publication, such as a retired v1 page to i
 
 Because the target is a page ID, the redirect follows the page when its slug changes. Nothing else needs updating.
 
-| Key      | Meaning                                                                                                                   |
-| -------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `from`   | Old path, starting with `/`. Compared without regard to case; a duplicate or a path that belongs to a current page fails. |
-| `to`     | Target page ID and its full publication: `doc`, `channel`, `version`, and `language` are all required.                    |
-| `status` | HTTP status: `301`, `302`, `303`, `307`, or `308`. Defaults to `308`.                                                     |
+| Key      | Meaning                                                                                                                                                |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `from`   | Old path, starting with `/`. Compared without regard to case; a duplicate or a path that belongs to a current page fails.                              |
+| `to`     | Target page ID and its full publication: `doc`, `channel`, `version`, and `language` are all required. Add `product` for a product publication target. |
+| `status` | HTTP status: `301`, `302`, `303`, `307`, or `308`. Defaults to `308`.                                                                                  |
 
 The build resolves each target to its current route and writes `redirects.json`. `shoalrun serve` and the Vercel build apply the redirects, with or without a trailing slash. The old page's `.md` URL redirects to the target's Markdown twin with the same status.

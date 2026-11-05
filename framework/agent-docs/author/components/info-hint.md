@@ -16,9 +16,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Short definitions
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-Use `<InfoHint>` for a short definition that readers can open when they need it. It is a click-to-expand disclosure. Use a [tooltip](https://www.shoalrun.com/author/components/tooltips.md) for brief text that appears on hover or keyboard focus. Put longer explanations in a [callout](https://www.shoalrun.com/author/components/callout.md) or a linked page.
+Use `<InfoHint>` for a short definition that readers can open when they need it. It's a click-to-expand disclosure. Use a [tooltip](https://www.shoalrun.com/author/components/tooltips.md) for brief text that appears on hover or keyboard focus. Put longer explanations in a [callout](https://www.shoalrun.com/author/components/callout.md) or a linked page.
 
 ## Syntax
 
@@ -40,7 +40,7 @@ Use these attributes to configure the component.
 | --------- | -------- | ---------------------------------------------- |
 | `label`   | Yes      | Nonempty text shown on the disclosure control. |
 
-`<InfoHint>` must be a block element with one plain-text definition. It does not accept links, multiple paragraphs, or other components inside the definition.
+`<InfoHint>` must be a block element with one plain-text definition. It doesn't accept links, multiple paragraphs, or other components inside the definition.
 
 `<Tooltip>` previously named this same disclosure. Use `<InfoHint>` to keep click-to-expand behavior; `<Tooltip>` now provides hover and focus behavior.
 

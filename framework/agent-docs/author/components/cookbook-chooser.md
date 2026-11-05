@@ -16,9 +16,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > CookbookChooser
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-Use `<CookbookChooser>` to help a reader choose a complete recipe or combine compatible recipes. The author reviews each recipe and sets its place in the choice list. The browser loads the selected published recipe pages and displays their instructions. The component does not read ingredient files, generate a recipe, or execute commands. Start with [how recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md), then [configure a cookbook](https://www.shoalrun.com/author/cookbooks.md); this page lists the component's exact syntax.
+Use `<CookbookChooser>` to help a reader choose a complete recipe or combine compatible recipes. The author reviews each recipe and sets its place in the choice list. The browser loads the selected published recipe pages and displays their instructions. The component doesn't read ingredient files, generate a recipe, or execute commands. Start with [how recipes and cookbooks work](https://www.shoalrun.com/author/recipes.md), then [configure a cookbook](https://www.shoalrun.com/author/cookbooks.md); this page lists the component's exact syntax.
 
 ## Syntax
 
@@ -77,11 +77,11 @@ The build rejects duplicate IDs, labels, or recipe targets, plus missing, draft,
 
 ## HTML, Markdown, and agents
 
-HTML displays checkboxes, or radio buttons for `mode: single`, after the page script starts. Selecting options loads the published recipe pages and assembles their instructions in configured order under **Your path**. Each section links to its source recipe. If a page cannot load, the source link remains available. The recipe list below the controls works without JavaScript.
+HTML displays checkboxes, or radio buttons for `mode: single`, after the page script starts. Selecting options loads the published recipe pages and assembles their instructions in configured order under **Your path**. Each section links to its source recipe. If a page can't load, the source link remains available. The recipe list below the controls works without JavaScript.
 
-The cookbook page and choice list are compiled at build time. Recipe content is fetched when a reader selects it in the browser. The selected option IDs are stored in the page URL. **Link to this path** preserves that selection; **Download Markdown** saves all selected recipe instructions, and **Print this path** prints the loaded path. Downloads fail as a whole if a recipe cannot be fetched. Printing is disabled while any selected recipe failed to load.
+The cookbook page and choice list are compiled at build time. Recipe content is fetched when a reader selects it in the browser. The selected option IDs are stored in the page URL. **Link to this path** preserves that selection; **Download Markdown** saves all selected recipe instructions, and **Print this path** prints the loaded path. Downloads fail as a whole if a recipe can't be fetched. Printing is disabled while any selected recipe failed to load.
 
-Markdown lists every recipe with its choice descriptions and a link to its `.md` page in the same order. An agent can choose a recipe from those descriptions and read its complete Markdown. The cookbook Markdown does not contain the browser-selected recipe bodies. Give an agent the recipe Markdown or downloaded selection to follow a task. A selection URL does not create a published Markdown endpoint.
+Markdown lists every recipe with its choice descriptions and a link to its `.md` page in the same order. An agent can choose a recipe from those descriptions and read its complete Markdown. The cookbook Markdown doesn't contain the browser-selected recipe bodies. Give an agent the recipe Markdown or downloaded selection to follow a task. A selection URL doesn't create a published Markdown endpoint.
 
 ## Related reading
 

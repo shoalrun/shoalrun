@@ -17,13 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Evaluate agent tasks against your docs
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/evals.md)
 
-Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun does not launch agents, choose a model, or grade prose.
+Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun doesn't launch agents, choose a model, or grade prose.
 
-You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build does not execute evaluations or call a model. Evaluations are opt-in audit checks.
+You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build doesn't execute evaluations or call a model. Evaluations are opt-in audit checks.
 
 ## Prepare a report for the built site
 
@@ -34,6 +34,6 @@ shoalrun eval prepare site-dist --tasks evals/tasks.yaml --out evals/results.jso
 
 Create the `evals` directory first. Preparation refuses to overwrite an existing report; use a new output filename for another run.
 
-The template contains a task-file digest, a documentation-build digest, a per-file `buildFiles` inventory, a timestamp, empty runner details, and each task marked `skipped`. It records no passing results and does not run the tasks. A template with skipped required tasks fails the check until you complete the run and review.
+The template contains a task-file digest, a documentation-build digest, a per-file `buildFiles` inventory, a timestamp, empty runner details, and each task marked `skipped`. It records no passing results and doesn't run the tasks. A template with skipped required tasks fails the check until you complete the run and review.
 
-The task digest uses normalized definitions, so whitespace-only changes do not invalidate a run. Prompt, criteria, tools, or required-status changes do. The build digest covers published output files, including HTML, Markdown, indexes, discovery, and assets. It excludes `build-info.json`, private `ai/` artifacts, and `.shoalrun/` state. File touches do not invalidate otherwise identical output; changed published bytes do. Other published metadata, including build IDs embedded in manifests, remains covered even when it reflects deployment provenance.
+The task digest uses normalized definitions, so whitespace-only changes don't invalidate a run. Prompt, criteria, tools, or required-status changes do. The build digest covers published output files, including HTML, Markdown, indexes, discovery, and assets. It excludes `build-info.json`, private `ai/` artifacts, and `.shoalrun/` state. File touches don't invalidate otherwise identical output; changed published bytes do. Other published metadata, including build IDs embedded in manifests, remains covered even when it reflects deployment provenance.

@@ -16,7 +16,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Cookbook example > Queue a welcome email
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Use this path to check request acceptance. For delivery status and failure handling, follow [the complete delivery recipe](https://www.shoalrun.com/recipes/send-welcome-email.md).
 
@@ -46,4 +46,4 @@ printf '\nMessage ID: %s\n' "$MESSAGE_ID"
 
 ## Check the outcome
 
-The HTTP status is 202, the response says `status: queued`, and the returned `id` is nonempty. Keep that ID if you will check delivery later. A failed POST needs its own diagnostic; do not reuse an ID from an earlier attempt. Acceptance leaves delivery unknown.
+The HTTP status is 202, the response says `status: queued`, and the returned `id` is nonempty. Keep that ID if you'll check delivery later. A failed POST needs its own diagnostic; don't reuse an ID from an earlier attempt. Acceptance leaves delivery unknown.

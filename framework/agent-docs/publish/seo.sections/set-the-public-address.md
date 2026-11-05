@@ -17,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > SEO and social previews
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/seo.md)
 
-When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you do not need to hand-write Open Graph or Twitter tags.
+When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you don't need to hand-write Open Graph or Twitter tags.
 
 ## Set the public address
 
@@ -33,4 +33,4 @@ site:
   origin: https://docs.acme.com
 ```
 
-Check the domain in the built `og:image` URL. A page may display in a browser while its social preview cannot load an image from that domain. Preview deployments behind sign-in cannot be unfurled by a public crawler. [Publish on Vercel](https://www.shoalrun.com/publish/vercel.md) explains the production and preview origins for this site's build.
+Check the domain in the built `og:image` URL. A page may display in a browser while its social preview can't load an image from that domain. Preview deployments behind sign-in can't be unfurled by a public crawler. [Publish on Vercel](https://www.shoalrun.com/publish/vercel.md) explains the production and preview origins for this site's build.

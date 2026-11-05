@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -47,7 +47,7 @@ A passage is shown only when all of these are true:
 
 - Jev scores the best passage at `threshold` or higher.
 - At most `others` other passages score within `margin` of the best. A broad question has many strong passages and needs a model to combine them.
-- It is a question that stands on its own. A follow-up, which needs the conversation to make sense, always goes to the model.
+- It's a question that stands on its own. A follow-up, which needs the conversation to make sense, always goes to the model.
 
 Every other question goes to the model as usual. A passage longer than `maxChars` (default 1,200) is cut to the block that answers the question. The cut keeps the sentence that introduces a code example, or the example that a sentence introduces. If trimming fails, the whole passage is shown. The answer begins with **From the docs** and the page and section, and the result's decision is `excerpt`. `--no-direct` on `ask` turns the mode off for one run.
 

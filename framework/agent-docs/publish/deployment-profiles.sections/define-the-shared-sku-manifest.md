@@ -17,7 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Customer editions
 
-**Updated: 2026-11-03.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.15.**
 
 Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
@@ -31,11 +33,9 @@ Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
 - [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md) — Review the selected edition using captured HTML and Markdown. (Status: experimental.)
 
-Build a documentation edition for each customer from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles do not need to share a repository.
+Build a documentation edition for individual customers from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles don't need to share a repository with the content.
 
-By default, you do not need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
-
-Available since `0.1.0-alpha.15`.
+By default, you don't need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
 
 ## Define the shared SKU manifest
 
@@ -56,7 +56,7 @@ skus:
         features: [analytics, connectors]
 ```
 
-Retain historical revisions unchanged when packaging changes. An existing customer can continue using the original revision, or receive an explicit feature grant. Marking a feature `deprecated` or `retired` does not remove its documentation grant.
+Retain historical revisions unchanged when packaging changes. An existing customer can continue using the original revision, or receive an explicit feature grant. Marking a feature `deprecated` or `retired` doesn't remove its documentation grant.
 
 Enable profile selection in the shared configuration:
 

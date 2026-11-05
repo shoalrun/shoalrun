@@ -18,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Host on Vercel
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -30,7 +30,7 @@ Before building the hosted function, have these ready:
 - A shared store that speaks the Upstash REST API.
 - A Vercel project and the public address in `site.origin`.
 
-The normal site build does not add this function. Hosted provider requests can incur costs.
+The normal site build doesn't add this function. Hosted provider requests can incur costs.
 
 ## Cap the daily spend
 
@@ -77,13 +77,13 @@ Because a slot is taken before the answer and not counted after, questions that 
 
 ## Host the chat on Vercel
 
-The chat can run as a Vercel function on the same deployment as the site. It is optional, and a build never adds it unless you ask. Add `--chat` to the Vercel build:
+The chat can run as a Vercel function on the same deployment as the site. It's optional, and a build never adds it unless you ask. Add `--chat` to the Vercel build:
 
 ```sh
 shoalrun vercel build docs.config.yaml .vercel/output --chat
 ```
 
-The build indexes the site and puts the index inside the function's own directory, never in the public static files. It writes the chat settings, without any key, and copies the code the function needs. The function answers at `/__shoalrun/ask`. If the function cannot be added, the build fails with a reason. Check for:
+The build indexes the site and puts the index inside the function's own directory, never in the public static files. It writes the chat settings, without any key, and copies the code the function needs. The function answers at `/__shoalrun/ask`. If the function can't be added, the build fails with a reason. Check for:
 
 - A missing `chat` or `retrieval.embeddings` section.
 - A missing `chat.budget.store`.
@@ -107,7 +107,7 @@ The hosted chat shows only answers that cite the docs. When the model's answer c
 
 ### Check visitors with Turnstile
 
-`chat.challenge` turns on a Cloudflare Turnstile check. The browser gets a one-time token, and the function asks Cloudflare whether it is real. A failed check is refused before any model is called.
+`chat.challenge` turns on a Cloudflare Turnstile check. The browser gets a one-time token, and the function asks Cloudflare whether it's real. A failed check is refused before any model is called.
 
 ```yaml title="docs.config.yaml"
 chat:
@@ -122,7 +122,7 @@ The default `adaptive` mode requests a challenge when usage crosses a threshold:
 - Everyone is asked once the site has used `busyShare` of its daily budget. The default is 0.5.
 - A budget store that can't be read means "ask", so an outage never removes the check.
 
-When challenged, the panel runs the check and resends the question. It shows "Checking that you are a person…" while waiting.
+When challenged, the panel runs the check and resends the question. It shows `Checking that you are a person…` while waiting.
 
 A successful check creates a signed, browser-script-inaccessible cookie tied to the caller’s address. The signing key is derived from the Turnstile secret. The pass lasts 15 minutes, so follow-up questions need no new challenge during that time.
 
@@ -153,7 +153,7 @@ shoalrun ask-log --kv --config docs.config.yaml --days 30
 
 The command reads the store's address and token from the environment variables the config names. Recording a question never delays or changes the answer, and a failed write is logged and dropped.
 
-Each recorded hosted answer has a **Delete logged question** button. The reader can remove that one record even while chat is paused. Its unguessable deletion code also appears under the answer so the reader can save it for a later request. Deleting a record does not delete the docs answer from the conversation. Earlier records made before deletion codes were added expire under the retention rule.
+Each recorded hosted answer has a **Delete logged question** button. The reader can remove that one record even while chat is paused. Its unguessable deletion code also appears under the answer so the reader can save it for a later request. Deleting a record doesn't delete the docs answer from the conversation. Earlier records made before deletion codes were added expire under the retention rule.
 
 For a later request, send the saved code to the same site's answer endpoint:
 
@@ -203,7 +203,7 @@ It also counts how questions were answered and how many called the model. It cou
 
 ### Local log privacy
 
-Questions can contain personal details. These controls reduce exposure but do not guarantee that sensitive text is removed:
+Questions can contain personal details. These controls reduce exposure but don't guarantee that sensitive text is removed:
 
 - Emails, phone and card-length numbers, keys, and the query part of a web address are replaced before the line is written. That's best effort and no guarantee.
 - The file is created with owner-only permissions and rotates at 5 MB, keeping one older file.

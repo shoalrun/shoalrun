@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Retrieval and chat settings
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -123,7 +123,7 @@ chat:
 
 The fields can add to a request but can't replace what Shoalrun sets, which is `model`, `messages`, `max_tokens`, `temperature`, and `stream`. Use `chat.model`, `chat.maxTokens`, and `chat.temperature` for those. A field whose name looks like a secret, such as a key, token, or password, fails validation, because the config never holds a key. Each fallback and escalation model inherits `body` and can replace it with its own. An empty `body: {}` clears it. Another service may reject a field it doesn't know, so check what yours accepts.
 
-Service-specific fields can affect latency, cost, and quality. Test them with your own questions and model; support and effects vary by service. Shoalrun does not interpret those extra fields.
+Service-specific fields can affect latency, cost, and quality. Test them with your own questions and model; support and effects vary by service. Shoalrun doesn't interpret those extra fields.
 
 ## Choose the scorer
 
@@ -206,7 +206,7 @@ The main model answers first, and the checks run. If one of the `when` reasons a
 
 Without `when`, the reasons are `unsupported-code` and `uncited`, plus `unsupported-claim` when `verify` is set. The code check is a heuristic that can misjudge a valid example. A second answer from a thinking model adds seconds. So many sites limit `when` to `unsupported-claim` and `uncited`. A declined answer or a direct excerpt is never escalated. If the escalation model fails, the first answer is shown with a note. `--no-escalate` on `ask` turns it off for one run.
 
-Choose an escalation model using reviewed questions that your primary model handles poorly. A larger model is not automatically a better fit.
+Choose an escalation model using reviewed questions that your primary model handles poorly. A larger model isn't automatically a better fit.
 
 ## Related reading
 

@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/templates.md)
 
@@ -30,7 +30,7 @@ Parent page: [Full Markdown page](/author/templates.md)
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 
-Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they do not enforce a permanent page structure.
+Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they don't enforce a permanent page structure.
 
 ## Short CLI and derived values
 
@@ -49,7 +49,7 @@ The CLI discovers `docs.config.yaml` in the current directory or a parent. It de
 | `summary` | `Draft guide for retry payments. Replace this summary before publication.` |
 | `slug`    | `/guides/retry-payments`                                                   |
 
-The derived summary counts as a placeholder, so the page cannot be published until you replace it. Override any value with `--id`, `--title`, `--summary`, or `--slug`. Other options are `--config FILE`, `--channel`, `--version`, and `--language` (defaults come from `publications.defaults`), and `--operation ID`, which can repeat. `--new` is the long form of `-n`. The [CLI reference](https://www.shoalrun.com/cli.md) lists every rule.
+The derived summary counts as a placeholder, so the page can't be published until you replace it. Override any value with `--id`, `--title`, `--summary`, or `--slug`. Other options are `--config FILE`, `--channel`, `--version`, and `--language` (defaults come from `publications.defaults`), and `--operation ID`, which can repeat. `--new` is the long form of `-n`. The [CLI reference](https://www.shoalrun.com/cli.md) lists every rule.
 
 If the target path begins with the selected publication's route prefix, the short form omits that prefix from the derived slug. For example, with version `v2` configured at `/v2`, `content/v2/check-payment.mdx` gets slug `/check-payment` and route `/v2/check-payment`. The stable ID still derives from the complete content path; use `--id` if several versions represent the same document.
 

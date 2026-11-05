@@ -16,11 +16,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
-Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It does not need a Shoalrun browser runtime.
+Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It doesn't need a Shoalrun browser runtime.
 
 ## Review exported API material
 
@@ -41,4 +41,4 @@ exports:
       catalog: "REPLACE_WITH_THE_REVIEWED_SHA256_DIGEST"
 ```
 
-Run the normal export command again. Changed source bytes or exposed API selections invalidate approval. An existing `apis.<id>.publicReview.digest` also applies when it exactly matches the export's review fingerprint. Do not distribute candidates with review still required.
+Run the normal export command again. Changed source bytes or exposed API selections invalidate approval. An existing `apis.<id>.publicReview.digest` also applies when it exactly matches the export's review fingerprint. Don't distribute candidates with review still required.

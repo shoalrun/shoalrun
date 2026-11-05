@@ -18,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Advanced workflows > Design templates
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 A template defines the starting structure of a page. Use it for information that belongs in most pages of a particular kind. A writing guide explains how to write that information.
 
@@ -32,11 +32,11 @@ For an ingredient, define one reusable action, its inputs, and its success check
 
 A useful placeholder asks for specific missing information: prerequisites, a tested command, expected output, or a recovery action. Avoid vague prompts such as “add useful details.” Tell the agent to flag missing evidence instead of filling gaps with plausible facts.
 
-Keep required sections small. Make optional sections clearly optional, and provide a reviewed example outside the template. A copied example's technical details are not evidence for a different feature.
+Keep required sections small. Make optional sections clearly optional, and provide a reviewed example outside the template. A copied example's technical details aren't evidence for a different feature.
 
 ## Keep structure and checks separate
 
-Shoalrun's [template overrides](https://www.shoalrun.com/author/templates.md) control scaffold text. They do not automatically change configured lint rules. Match the template to your page-type conventions and configure checks explicitly.
+Shoalrun's [template overrides](https://www.shoalrun.com/author/templates.md) control scaffold text. They don't automatically change configured lint rules. Match the template to your page-type conventions and configure checks explicitly.
 
 Review a template by drafting several real pages with it. Remove sections authors repeatedly leave empty, and add prompts where readers repeatedly lack information. Check both HTML and Markdown so essential instructions survive every representation.
 

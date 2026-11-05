@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Callouts
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 `<Callout>` highlights a short message in the reading flow. Use a type that matches the message's purpose. The type sets the HTML color and decorative icon, while a visible label carries the meaning in both HTML and Markdown.
 
@@ -114,7 +114,7 @@ Use the registered name in MDX:
 
 Each custom tone needs `line` (left rule), `background`, and `text` (label and icon), all as hex colors. Multiple types can share a tone.
 
-A tone's `dark` block sets the same three colors for [dark mode](https://www.shoalrun.com/styling/color-modes.md). It is optional on a light-only site. When `theme.mode` is `dark` or `system`, every tone in use needs `dark`, or the build fails. The build checks each tone against the site's [palette](https://www.shoalrun.com/styling/palettes.md) in every mode the site shows. Body text, links, and the label need 4.5:1 against the tone's background.
+A tone's `dark` block sets the same three colors for [dark mode](https://www.shoalrun.com/styling/color-modes.md). It's optional on a light-only site. When `theme.mode` is `dark` or `system`, every tone in use needs `dark`, or the build fails. The build checks each tone against the site's [palette](https://www.shoalrun.com/styling/palettes.md) in every mode the site shows. Body text, links, and the label need 4.5:1 against the tone's background.
 
 You can also use `callouts.tones` to replace a built-in tone's colors. The five built-in types have default labels and Lucide icons; you can override their `label`, `tone`, or `icon` in `callouts.types`. A registered type without an icon displays its label without an icon. Icons are decorative and hidden from assistive technology; the label stays in HTML and Markdown. Invalid names, colors, icons, and definitions fail the build.
 

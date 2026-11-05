@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -76,4 +76,4 @@ seo:
   description: Inspect the payment request and response.
 ```
 
-There are no other supported `seo.*` fields yet. Configure social images separately in [share images](https://www.shoalrun.com/styling/share-images.md). Use global frontmatter for site-wide SEO defaults or enforced values. The compiler now rejects unsupported page-level SEO keys so they cannot silently have no effect.
+There are no other supported `seo.*` fields yet. Configure social images separately in [share images](https://www.shoalrun.com/styling/share-images.md). Use global frontmatter for site-wide SEO defaults or enforced values. The compiler now rejects unsupported page-level SEO keys so they can't silently have no effect.

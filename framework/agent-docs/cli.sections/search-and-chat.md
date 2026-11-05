@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > CLI reference
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/cli.md)
 
@@ -24,7 +24,11 @@ The public `@shoalrun/cli` package supplies the `shoalrun` command. It needs Nod
 
 Commands that return data print JSON to standard output. On an error, the CLI prints `{"status":"error","message":"..."}` to standard error and exits with code 1. A config argument defaults to `docs.config.yaml` in the current directory unless noted.
 
-[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render without a browser: Pele handles Mermaid syntax, and D2 handles D2 source. Development installs include Puppeteer for browser UI tests; production package installs do not need it.
+[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render without a browser: Pele handles Mermaid syntax, and D2 handles D2 source. Development installs include Puppeteer for browser UI tests; production package installs don't need it.
+
+Since 0.1.0-alpha.18
+
+Product selectors, `dev --profile`, and `get_publications` discovery add product-aware workflows. Existing productless commands keep their publication scope.
 
 ## Search and chat
 
@@ -58,14 +62,14 @@ See [Passage index](https://www.shoalrun.com/chat/passage-index.md) for the chun
 shoalrun serve <site-directory> --search --config docs.config.yaml [--port PORT]
 ```
 
-Optional local preview for a custom browser search provider. Run `shoalrun build` and `shoalrun index` first. The server adds `/__shoalrun/search`, which returns page and section links from lexical passage retrieval or combines it with semantic retrieval when current vectors exist. It reads query embedding settings from `retrieval.embeddings` and the key from the environment. It runs only on a loopback address and accepts same-origin JSON requests. It does not add the chat panel or call a chat model. A site needs a [custom provider](https://www.shoalrun.com/author/search.md) to call the endpoint; the built-in search provider continues to use `/search-index.json`.
+Optional local preview for the included semantic browser search provider or a custom provider. Run `shoalrun build` and `shoalrun index` first. The server adds `/__shoalrun/search`, which returns page and section links from vector retrieval when current embeddings are available, with lexical fallback otherwise. It reads query embedding settings from `retrieval.embeddings` and the key from the environment. It runs only on a loopback address and accepts same-origin JSON requests. It doesn't add the chat panel or call a chat model. Set `outputs.html.search.provider: semantic` to use the included endpoint integration. The lexical browser provider continues to use `/search-index.json`; a [custom provider](https://www.shoalrun.com/author/search.md) can also call the endpoint.
 
 The local `serve --search` command is a preview server. The optional Vercel `--chat` build packages the same search handler as `/__shoalrun/search`, alongside `/__shoalrun/ask`, with shared rate and embedding budgets.
 
 ### `ask`
 
 ```sh
-shoalrun ask <site-directory> "<question>" [--config FILE] [--model MODEL] [--passages N] [--reader-view FACET=CHOICE[,CHOICE]]... [--channel C --version V --language L] [--no-rerank] [--no-direct] [--no-escalate] [--no-cards] [--json]
+shoalrun ask <site-directory> "<question>" [--config FILE] [--model MODEL] [--passages N] [--reader-view FACET=CHOICE[,CHOICE]]... [--product P --channel C --version V --language L] [--no-rerank] [--no-direct] [--no-escalate] [--no-cards] [--json]
 ```
 
 Optional. It answers one question from your built docs, with citations. It needs a site that you have run [`shoalrun index`](https://www.shoalrun.com/cli.md#index) on, and a [`chat`](https://www.shoalrun.com/chat/settings.md) section in your config. The build doesn't need any of this, and skipping it changes nothing about your site. Quote the question.
@@ -74,26 +78,28 @@ The command searches the passages, using vector search too when the site has vec
 
 Standard error also shows how the answer was made: the search mode, the decision, the Jev score, the model, the tokens, and the time. Any layer that failed, such as Jev or the query embedding, is listed as a note, and the answer falls back to plain search. `--json` prints the full result as JSON instead, including every passage the model saw and the support score of every checked sentence.
 
-| Option                                 | Value                                                                                        |
-| -------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `--config`                             | The config to read. The default is `docs.config.yaml` in the current directory or a parent.  |
-| `--model`                              | Overrides `chat.model`.                                                                      |
-| `--passages`                           | Overrides `chat.passages`.                                                                   |
-| `--reader-view`                        | Overrides `chat.readerView`, as `facet=choice[,choice]`. Repeat it for more than one filter. |
-| `--channel`, `--version`, `--language` | The publication to search. Needed only when the site has more than one.                      |
-| `--no-rerank`                          | Skips Jev even when `chat.rerank` is set.                                                    |
-| `--no-direct`                          | Always uses the model, even when `chat.direct` would show an excerpt.                        |
-| `--no-escalate`                        | Skips the escalation model even when `chat.escalate` is set.                                 |
-| `--no-cards`                           | Skips answer cards even when `chat.cards` is set.                                            |
-| `--json`                               | Prints the result as JSON.                                                                   |
+| Option                                              | Value                                                                                                                                  |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--config`                                          | The config to read. The default is `docs.config.yaml` in the current directory or a parent.                                            |
+| `--model`                                           | Overrides `chat.model`.                                                                                                                |
+| `--passages`                                        | Overrides `chat.passages`.                                                                                                             |
+| `--reader-view`                                     | Overrides `chat.readerView`, as `facet=choice[,choice]`. Repeat it for more than one filter.                                           |
+| `--product`, `--channel`, `--version`, `--language` | The publication to search. Needed when the built index doesn't identify one matching publication. Product versions remain independent. |
+| `--no-rerank`                                       | Skips Jev even when `chat.rerank` is set.                                                                                              |
+| `--no-direct`                                       | Always uses the model, even when `chat.direct` would show an excerpt.                                                                  |
+| `--no-escalate`                                     | Skips the escalation model even when `chat.escalate` is set.                                                                           |
+| `--no-cards`                                        | Skips answer cards even when `chat.cards` is set.                                                                                      |
+| `--json`                                            | Prints the result as JSON.                                                                                                             |
 
 The command answers one question at a time. It reads `OPENAI_API_KEY`, or the variable that `chat.keyEnv` names, and `JEV_API_KEY`, or the variable that `chat.rerank.keyEnv` names, when you use a scorer. It fails with a clear message when the chat section, the chat key, or `ai/chunks.json` is missing. Without the scorer's key, the scorer counts as down, as [chat settings](https://www.shoalrun.com/chat/settings.md) explain.
 
 ### `answers`
 
 ```sh
-shoalrun answers <site-directory> --questions FILE [--config FILE] [--model MODEL] [--reader-view FACET=CHOICE[,CHOICE]]...
+shoalrun answers <site-directory> --questions FILE [--config FILE] [--model MODEL] [--product P --channel C --version V --language L] [--reader-view FACET=CHOICE[,CHOICE]]...
 ```
+
+Use the publication selectors to build cards for one product release. The command rejects ambiguous multi-product indexes; it doesn't combine products or infer a customer edition from a reader view.
 
 Optional. It builds [answer cards](https://www.shoalrun.com/chat/prepared-answers.md) from a list of questions and writes `ai/answers.json`. The list is YAML or JSON: plain strings, or mappings with `question` and `aliases`. It needs a site that you have indexed with `--embed`, and the same `chat` config as `ask`. This build step uses embeddings and the configured scorer. It calls the chat model for questions that pass the coverage gate. It never reuses a direct excerpt or another card. It embeds kept questions and aliases, then keeps only answers that passed every check. It prints JSON with the number of cards, the questions it skipped and why, and the output path. It replaces any earlier file, so keep the question list in your repository and rerun it after the docs change.
 
@@ -126,7 +132,7 @@ Optional. It serves a built and indexed site with a local chat panel, so you can
 This is a local preview and nothing more:
 
 - It runs only on a loopback address (`127.0.0.1`, `localhost`, or `::1`), because every question spends your API credits. It refuses `--host 0.0.0.0` and any other address.
-- `serve --ask` adds the panel and the `/__shoalrun/ask` endpoint for local preview. `shoalrun vercel build --chat` adds the hosted panel and function. Ordinary `build` and `dev` do not add chat.
+- `serve --ask` adds the panel and the `/__shoalrun/ask` endpoint for local preview. `shoalrun vercel build --chat` adds the hosted panel and function. Ordinary `build` and `dev` don't add chat.
 - The endpoint refuses requests from other web sites and from unknown host names, requires JSON, caps the request size, and allows 20 questions a minute.
 
 It reads the same `chat` and `retrieval` config as `ask`, and the keys from the environment. Stop it with the usual interrupt.

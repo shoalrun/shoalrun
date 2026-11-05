@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/templates.md)
 
@@ -30,17 +30,17 @@ Parent page: [Full Markdown page](/author/templates.md)
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 
-Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they do not enforce a permanent page structure.
+Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they don't enforce a permanent page structure.
 
 ## Choose formatting enforcement for your project
 
-A template supplies a starting outline. It does not impose that outline on completed pages. Project overrides replace the scaffold; they do not silently change your lint policy.
+A template supplies a starting outline. It doesn't impose that outline on completed pages. Project overrides replace the scaffold; they don't silently change your lint policy.
 
-This repository checks authored page formatting with `npm run docs:format`. Its `.vale-format.ini` enables project-owned `DocShape` rules. Errors cover title and summary lengths, body headings, introductions, and `updated` dates. Type-boundary warnings flag possible digressions for editorial review. A passing check does not prove a page serves its reader's need.
+This repository checks authored page formatting with `npm run docs:format`. Its `.vale-format.ini` enables project-owned `DocShape` rules. Errors cover title and summary lengths, body headings, introductions, and `updated` dates. Type-boundary warnings flag possible digressions for editorial review. A passing check doesn't prove a page serves its reader's need.
 
-The structural rules use [Vale's embedded Tengo scripting language](https://docs.vale.sh/checks/script) to read source frontmatter and headings. Tengo runs inside Vale during linting; it needs no separate installation and is not part of the published site. The scripts live under `.vale/styles/config/scripts/` in this repository.
+The structural rules use [Vale's embedded Tengo scripting language](https://docs.vale.sh/checks/script) to read source frontmatter and headings. Tengo runs inside Vale during linting; it needs no separate installation and isn't part of the published site. The scripts live under `.vale/styles/config/scripts/` in this repository.
 
-`DocShape.RecipeShape` requires nonempty setup, action, and final success-check sections. It accepts directly authored recipes without an Ingredients list and assembled recipes with task-specific action headings. `DocShape.IngredientShape` accepts either Inputs, Action, Output, and Check it worked sections or a compact body with `workflow` handoff metadata and a declared `check`. These are this repository's conventions. `recipe draft` validates YAML values and handoff order; Vale checks structure and does not run the instructions or prove the stated outcome.
+`DocShape.RecipeShape` requires nonempty setup, action, and final success-check sections. It accepts directly authored recipes without an Ingredients list and assembled recipes with task-specific action headings. `DocShape.IngredientShape` accepts either Inputs, Action, Output, and Check it worked sections or a compact body with `workflow` handoff metadata and a declared `check`. These are this repository's conventions. `recipe draft` validates YAML values and handoff order; Vale checks structure and doesn't run the instructions or prove the stated outcome.
 
 Both scripts ignore headings inside fenced code examples. Setup headings can be Before you start, Before you begin, Prerequisites, or What you need. Success headings can be Check it worked, Check the outcome, Check the result, Verify the outcome, or Verify the result. Alternate outlines and YAML forms may need a project-adapted script. Keep compact workflow declarations as ordinary block or flow mappings for this policy.
 
@@ -66,4 +66,4 @@ audit:
       run: [vale, --config=../.vale-format.ini, content]
 ```
 
-Vale must be installed when you configure that command. The CLI does not require Vale for other projects or derive rules from template text. Compiler checks for valid source, links, and unresolved public draft prompts still apply independently. See [audit settings](https://www.shoalrun.com/publish/audit.md) and [writing guides](https://www.shoalrun.com/author/design-writing-guides.md).
+Vale must be installed when you configure that command. The CLI doesn't require Vale for other projects or derive rules from template text. Compiler checks for valid source, links, and unresolved public draft prompts still apply independently. See [audit settings](https://www.shoalrun.com/publish/audit.md) and [writing guides](https://www.shoalrun.com/author/design-writing-guides.md).

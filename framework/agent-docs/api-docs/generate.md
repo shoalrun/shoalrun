@@ -17,15 +17,15 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun.com/publish/api-references.md). Use generation when you want references for many operations without writing an MDX page for each one. The commands below run in your documentation project with `@shoalrun/cli` installed as in the [quickstart](https://www.shoalrun.com/start.md).
 
 ## Choose generated references or MDX
 
-Use build-time generated references when the OpenAPI contract already gives readers the method, path, parameters, schemas, and examples they need. The pages update whenever the reviewed source changes, and there are no MDX files to maintain. Use an authored MDX reference when an endpoint needs a reviewed introduction, prerequisites, limitations, or task-specific context that the contract cannot express. The compiler still appends the contract details from OpenAPI, so do not copy field tables and example payloads into MDX. Use a guide for a task spanning several endpoints; link its reference pages with `relatedApiReferences`.
+Use build-time generated references when the OpenAPI contract already gives readers the method, path, parameters, schemas, and examples they need. The pages update whenever the reviewed source changes, and there are no MDX files to maintain. Use an authored MDX reference when an endpoint needs a reviewed introduction, prerequisites, limitations, or task-specific context that the contract can't express. The compiler still appends the contract details from OpenAPI, so don't copy field tables and example payloads into MDX. Use a guide for a task spanning several endpoints; link its reference pages with `relatedApiReferences`.
 
-The one-time `api materialize` command creates draft MDX references for every endpoint or selected source operation IDs or method/path routes. It does not change config or navigation and never rewrites an existing page. For example:
+The one-time `api materialize` command creates draft MDX references for every endpoint or selected source operation IDs or method/path routes. It doesn't change config or navigation and never rewrites an existing page. For example:
 
 ```sh
 npx --no-install shoalrun api materialize notes docs.config.yaml --all
@@ -35,7 +35,7 @@ npx --no-install shoalrun api materialize notes docs.config.yaml --route 'GET /n
 
 The default destination is `content/api/<api-id>/`; use `--output` for another directory inside the configured content tree. Selectors use the OpenAPI `operationId` or exact uppercase method and path. Repeating a command reports the existing matching page as skipped. A file with a conflicting identity stops the job before it writes anything. Existing authored references also count as skipped.
 
-Each new page has a stable document ID, slug, operation binding, and `access.policy: draft`. The draft contains an editorial prompt. While it remains a draft, any already selected build-time reference continues to publish. Review the text, replace the prompt, then set access to `public`; that MDX page takes the generated page's place for its publication. This also works when `generateReferences` is off: the authored page binds to the registered API's local OpenAPI source. The command never enables build-time generation, changes the public review digest, or chooses navigation order for you. Run `api review` before publishing changed API content, and place the reference with `operation:` or `doc:` in navigation if it is not already covered by a generator.
+Each new page has a stable document ID, slug, operation binding, and `access.policy: draft`. The draft contains an editorial prompt. While it remains a draft, any already selected build-time reference continues to publish. Review the text, replace the prompt, then set access to `public`; that MDX page takes the generated page's place for its publication. This also works when `generateReferences` is off: the authored page binds to the registered API's local OpenAPI source. The command never enables build-time generation, changes the public review digest, or chooses navigation order for you. Run `api review` before publishing changed API content, and place the reference with `operation:` or `doc:` in navigation if it isn't already covered by a generator.
 
 ## Generate many pages selectively
 
@@ -58,7 +58,7 @@ pathPrefix: /example-api/generated
 include: [getNote]
 ```
 
-`include` lists source `operationId` values to generate; an empty list generates none. You can use `exclude` instead to generate all but named operations, or set `generateReferences: true` to generate every operation without an authored binding. The build rejects unknown selection IDs. Generated IDs and URLs derive from the API ID and source `operationId`, not the operation summary, so editing a title does not move the page. If an `operationId` changes, add an authored binding when the old public identity must remain stable.
+`include` lists source `operationId` values to generate; an empty list generates none. You can use `exclude` instead to generate all but named operations, or set `generateReferences: true` to generate every operation without an authored binding. The build rejects unknown selection IDs. Generated IDs and URLs derive from the API ID and source `operationId`, not the operation summary, so editing a title doesn't move the page. If an `operationId` changes, add an authored binding when the old public identity must remain stable.
 
 For an API `notes` and `operationId: getNote`, the generator creates:
 
@@ -76,7 +76,7 @@ You can place an MDX guide among operation links in `navigation` by adding a `do
 
 ## Override generated reference order in navigation
 
-`generateReferences` chooses which reference pages exist. The `navigation` list chooses where they appear. **You can put a generated reference's stable operation ID in an `operation:` entry to override its OpenAPI tag group and source order. No MDX page is needed.** Write those entries in the exact order readers should see them, then use `generated: tags` to place only the operations you did not list.
+`generateReferences` chooses which reference pages exist. The `navigation` list chooses where they appear. **You can put a generated reference's stable operation ID in an `operation:` entry to override its OpenAPI tag group and source order. No MDX page is needed.** Write those entries in the exact order readers should see them, then use `generated: tags` to place only the operations you didn't list.
 
 ```yaml title="config/nav.yaml"
 - id: widgets
@@ -88,7 +88,7 @@ You can place an MDX guide among operation links in `navigation` by adding a `do
     - { id: other-widgets, api: widgets, generated: tags }
 ```
 
-Here `GET /Query/widgets` may have the OpenAPI tag `Query`, but its generated reference appears second under **Widgets**. The listed operations appear in this YAML order, regardless of their path, tag, or position in the OpenAPI file. They are removed from the `generated: tags` remainder, so each appears once. The `id` fields such as `query-widgets-nav` identify menu entries; `operation` values are the stable IDs that select the reference pages. An authored MDX reference uses the same navigation rule. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md) for the full layout.
+Here `GET /Query/widgets` may have the OpenAPI tag `Query`, but its generated reference appears second under **Widgets**. The listed operations appear in this YAML order, regardless of their path, tag, or position in the OpenAPI file. They're removed from the `generated: tags` remainder, so each appears once. The `id` fields such as `query-widgets-nav` identify menu entries; `operation` values are the stable IDs that select the reference pages. An authored MDX reference uses the same navigation rule. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md) for the full layout.
 
 To review the default publication's spec operation by operation, run:
 
@@ -96,13 +96,13 @@ To review the default publication's spec operation by operation, run:
 npx --no-install shoalrun api select notes docs.config.yaml --output config/notes-pages.yaml
 ```
 
-The command shows the method, path, ID, and summary for each operation and asks **yes** or **no**. It shows operations with authored pages but does not replace them. After the choices are complete, it writes the `pathPrefix` and `include` list to the selection file; `q` cancels without writing. Run `api review` again, inspect the candidate, and update `publicReview.digest` before rebuilding to apply the choices. Add `{ id: notes-generated, api: notes, generated: tags }` under a navigation group to display the generated pages by their first OpenAPI tag, or place selected operations explicitly in navigation. This site's [Example Notes API subnav](https://www.shoalrun.com/author/navigation.md) uses the tag generator.
+The command shows the method, path, ID, and summary for each operation and asks **yes** or **no**. It shows operations with authored pages but doesn't replace them. After the choices are complete, it writes the `pathPrefix` and `include` list to the selection file; `q` cancels without writing. Run `api review` again, inspect the candidate, and update `publicReview.digest` before rebuilding to apply the choices. Add `{ id: notes-generated, api: notes, generated: tags }` under a navigation group to display the generated pages by their first OpenAPI tag, or place selected operations explicitly in navigation. This site's [Example Notes API subnav](https://www.shoalrun.com/author/navigation.md) uses the tag generator.
 
 The digest shown above is a placeholder. Keep your existing review digest while editing. After reviewing the new selection, replace it with the reported value. Selection limits generated pages; `source.publish: true` still publishes the full source, including operations without pages. Use `focused: true` and omit `publish` when you only need individual operation contracts.
 
 ## Use a template for editorial context
 
-Use the built-in `api-reference` template for details OpenAPI cannot supply, such as operational context, task links, prerequisites, and limitations. Keep method, path, field lists, and example values in the spec so generated references have one source for those facts.
+Use the built-in `api-reference` template for details OpenAPI can't supply, such as operational context, task links, prerequisites, and limitations. Keep method, path, field lists, and example values in the spec so generated references have one source for those facts.
 
 ```sh
 shoalrun scaffold api-reference -n content/create-enrollment.mdx \
@@ -113,11 +113,11 @@ No template registration is needed. The scaffold requires exactly one known stab
 
 ## Add useful examples
 
-API reference pages display the examples defined in the OpenAPI file; the build does not invent them. Give each example a clear name and include the fields a reader needs to use it. In this site's Notes spec, [Create a note](https://www.shoalrun.com/example-api/create-note.md) has request and response examples. [Get a note](https://www.shoalrun.com/example-api/generated/get-note-cbedb319.md) has a note ID and a response example.
+API reference pages display the examples defined in the OpenAPI file; the build doesn't invent them. Give each example a clear name and include the fields a reader needs to use it. In this site's Notes spec, [Create a note](https://www.shoalrun.com/example-api/create-note.md) has request and response examples. [Get a note](https://www.shoalrun.com/example-api/generated/get-note-cbedb319.md) has a note ID and a response example.
 
 The right panel offers **Examples** first when the spec provides them, plus a **JSON shape** view built from each JSON request or response schema. Shape values are type placeholders, not a runnable payload. Request and response examples stay in separate groups, with response status and media type in each heading. Groups of three or fewer use native disclosures. Larger groups use a compact selector with one visible preview when JavaScript is available; without JavaScript, every disclosure remains usable. The Create a note request has ten named examples so you can inspect this layout. Direct links still open the selected example.
 
-Local named request examples for ordinary, non-multipart operations also have copyable request samples. In HTML, each sample has a language selector. It offers cURL, JavaScript, Node.js, Python, Go, Java, PHP, Ruby, and C#. Webhooks have no generated request samples. A sample uses the first declared server and security option, required parameters, the example body, and its media type. Replace `YOUR_` credential and parameter placeholders before using it. Ordinary operations without a request body show a general request sample. An operation with a request body but no local named request examples usually shows no sample. A multipart body whose required fields are all binary strings can produce a file-upload sample in cURL only. An `externalValue` example has no example-specific sample. These samples are generated from the OpenAPI source and have not been executed. **The Markdown twin and agent bundle keep only the cURL sample.** Agents can translate cURL; one canonical sample keeps the `.md` output small.
+Local named request examples for ordinary, non-multipart operations also have copyable request samples. In HTML, each sample has a language selector. It offers cURL, JavaScript, Node.js, Python, Go, Java, PHP, Ruby, and C#. Webhooks have no generated request samples. A sample uses the first declared server and security option, required parameters, the example body, and its media type. Replace `YOUR_` credential and parameter placeholders before using it. Ordinary operations without a request body show a general request sample. An operation with a request body but no local named request examples usually shows no sample. A multipart body whose required fields are all binary strings can produce a file-upload sample in cURL only. An `externalValue` example has no example-specific sample. These samples are generated from the OpenAPI source and haven't been executed. **The Markdown twin and agent bundle keep only the cURL sample.** Agents can translate cURL; one canonical sample keeps the `.md` output small.
 
 An OpenAPI `summary` names an example, and `description` adds context. Without a summary, the reader turns its source key into a readable title and still shows the original key. A response without an example still has a shape: Get a note's `404` response shows `code` and `message` as strings. The full field descriptions and presence rules remain in the main reference and its Markdown twin.
 

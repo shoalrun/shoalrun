@@ -17,7 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Customer editions
 
-**Updated: 2026-11-03.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.15.**
 
 Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
@@ -31,25 +33,23 @@ Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
 - [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md) — Review the selected edition using captured HTML and Markdown. (Status: experimental.)
 
-Build a documentation edition for each customer from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles do not need to share a repository.
+Build a documentation edition for individual customers from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles don't need to share a repository with the content.
 
-By default, you do not need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
-
-Available since `0.1.0-alpha.15`.
+By default, you don't need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
 
 ## Build and inspect the edition
 
 From the shared documentation project directory, build into a deployment-specific output:
 
 ```sh
-shoalrun build docs.config.yaml dist/customer \
+npx --no-install shoalrun build docs.config.yaml dist/customer \
   --profile /run/config/docs-profile.yaml
 ```
 
 To export application content, pass the same profile to `shoalrun export`:
 
 ```sh
-shoalrun export docs.config.yaml --out dist/customer-content \
+npx --no-install shoalrun export docs.config.yaml --out dist/customer-content \
   --profile /run/config/docs-profile.yaml
 ```
 
@@ -58,11 +58,11 @@ If several publications are enabled, an export still needs its normal explicit p
 Use the profile when [validating documentation edits](https://www.shoalrun.com/author/workspace.md):
 
 ```sh
-shoalrun docs baseline --config docs.config.yaml \
+npx --no-install shoalrun docs baseline --config docs.config.yaml \
   --out .shoalrun/baseline.json --profile /run/config/docs-profile.yaml
 
 # Edit your documentation, then validate the same edition.
-shoalrun docs validate --config docs.config.yaml \
+npx --no-install shoalrun docs validate --config docs.config.yaml \
   --baseline .shoalrun/baseline.json --profile /run/config/docs-profile.yaml
 ```
 

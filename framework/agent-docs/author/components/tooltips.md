@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Tooltips
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<Tooltip>` for brief supporting text beside a term. The text appears when readers hover over or focus the label. Use [Short definitions](https://www.shoalrun.com/author/components/info-hint.md) for click-to-expand explanations, or a [callout](https://www.shoalrun.com/author/components/callout.md) for warnings and instructions that belong in the reading path.
 
@@ -47,7 +47,7 @@ With JavaScript, the label becomes a button linked to its explanation through `a
 
 The popup contains no focusable controls. Use an ordinary link or disclosure when readers need to interact with the explanation. Keep tooltips supplementary; essential warnings, choices, and instructions belong in visible page content.
 
-Without JavaScript, the label and explanation remain visible together in the page. Markdown includes the label and full explanation as ordinary text, so agents do not need hover, focus, or browser scripts. For the inline example above, the Markdown twin reads:
+Without JavaScript, the label and explanation remain visible together in the page. Markdown includes the label and full explanation as ordinary text, so agents don't need hover, focus, or browser scripts. For the inline example above, the Markdown twin reads:
 
 ```md
 Compare the build digest (A fingerprint of the published build's content.) before refreshing your cache.

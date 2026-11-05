@@ -20,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Snapshot validation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -34,23 +34,23 @@ The capture excludes generated output, dependencies, repository metadata, creden
 
 ## Checks and artifacts
 
-The compiler renders affected drafts in the captured project while preserving their publication access metadata. It checks metadata, identities, routes, components, navigation, relationships, and document links. Local HTML and Markdown links and configured API contracts are checked in the captured output. External URLs are not requested.
+The compiler renders affected drafts in the captured project while preserving their publication access metadata. It checks metadata, identities, routes, components, navigation, relationships, and document links. Local HTML and Markdown links and configured API contracts are checked in the captured output. External URLs aren't requested.
 
-Configured shell checks are skipped by default. With `--run-checks`, trusted project commands run inside the capture under the harness's permissions. This is not an operating-system sandbox; scripts can still access absolute paths or services. Model evaluators are skipped. Executable metadata and highlighting extensions are currently unavailable to snapshot validation.
+Configured shell checks are skipped by default. With `--run-checks`, trusted project commands run inside the capture under the harness's permissions. This isn't an operating-system sandbox; scripts can still access absolute paths or services. Model evaluators are skipped. Executable metadata and highlighting extensions are currently unavailable to snapshot validation.
 
-The result retains the captured project, built site, and JSON report. Remove the reported artifact directory when finished. Compiler success does not replace factual and editorial review.
+The result retains the captured project, built site, and JSON report. Remove the reported artifact directory when finished. Compiler success doesn't replace factual and editorial review.
 
 ## Freshness and scope
 
 The report identifies the snapshot and source digests. `docs validation-status` compares current inputs with the report and returns stale when they differ. A report only applies to its recorded coverage and checks. Review skipped and unavailable checks before accepting a result.
 
-Snapshot validation does not apply edits, start a preview server, commit, or publish. Existing checked plan/apply clients retain their own review and freshness protections.
+Snapshot validation doesn't apply edits, start a preview server, commit, or publish. Existing checked plan/apply clients retain their own review and freshness protections.
 
 ## Matching previews and review reports
 
-`docs review` reads a retained validation report as JSON or Markdown. It associates changed-file operations and digests with the declared baseline and exposes findings, check status, affected routes, dependencies, and artifacts. Baselines retain digests rather than earlier contents, so your harness must retain the task diff. Evidence, semantic review, and author decisions are not inferred by these tools.
+`docs review` reads a retained validation report as JSON or Markdown. It associates changed-file operations and digests with the declared baseline and exposes findings, check status, affected routes, dependencies, and artifacts. Baselines retain digests rather than earlier contents, so your harness must retain the task diff. Evidence, semantic review, and author decisions aren't inferred by these tools.
 
-`docs preview` makes a separate private copy of the validated site and starts a foreground loopback server. Every affected rendered page has HTML and Markdown URLs. HTML pages link to a browser review and display freshness; the original Markdown output remains unchanged. Replacing source files does not replace the preview's content. Replacing the report makes its pinned preview stale. Artifact changes prevent startup or stop page serving.
+`docs preview` makes a separate private copy of the validated site and starts a foreground loopback server. Every affected rendered page has HTML and Markdown URLs. HTML pages link to a browser review and display freshness; the original Markdown output remains unchanged. Replacing source files doesn't replace the preview's content. Replacing the report makes its pinned preview stale. Artifact changes prevent startup or stop page serving.
 
 After editing, validate again and restart from the new report. Ctrl-C or SIGTERM closes the server and removes only its serving copy. Retained validation artifacts have a separate lifecycle. The preview starts no source watcher or provider requests.
 

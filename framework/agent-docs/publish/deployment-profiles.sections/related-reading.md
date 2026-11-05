@@ -17,15 +17,15 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Customer editions
 
-**Updated: 2026-11-03.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.15.**
 
 Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
-Build a documentation edition for each customer from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles do not need to share a repository.
+Build a documentation edition for individual customers from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles don't need to share a repository with the content.
 
-By default, you do not need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
-
-Available since `0.1.0-alpha.15`.
+By default, you don't need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
 
 ## Related reading
 
@@ -39,4 +39,4 @@ Available since `0.1.0-alpha.15`.
 
 ### Reference while working
 
-- [Share pages across documentation versions](https://www.shoalrun.com/publish/publications.md) — Select older product instructions independently of feature grants.
+- [Share pages across products and documentation versions](https://www.shoalrun.com/publish/publications.md) — Select older product instructions independently of feature grants.

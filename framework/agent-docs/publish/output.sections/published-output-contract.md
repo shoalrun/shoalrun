@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -35,11 +35,11 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 ## Published-output contract
 
-This page is the consumer reference for Shoalrun's current published output. It describes the existing producer, not a general format that other generators must implement. The manifest and sync snapshot use `schemaVersion: 1`. Editorial revisions to this reference do not change that wire version.
+This page is the consumer reference for Shoalrun's current published output. It describes the existing producer, not a general format that other generators must implement. The manifest and sync snapshot use `schemaVersion: 1`. Editorial revisions to this reference don't change that wire version.
 
-The repository maintains JSON Schema 2020-12 definitions at `framework/schemas/manifest.schema.json` and `framework/schemas/sync.schema.json`. They specify required fields and known value shapes; this reference explains their meaning. Schema identifiers are stable names for local resolution, not a promise that a site hosts the schema files. Register both schemas together when validating a sync snapshot. They remain repository validation resources and are not added to site output.
+The repository maintains JSON Schema 2020-12 definitions at `framework/schemas/manifest.schema.json` and `framework/schemas/sync.schema.json`. They specify required fields and known value shapes; this reference explains their meaning. Schema identifiers are stable names for local resolution, not a promise that a site hosts the schema files. Register both schemas together when validating a sync snapshot. They remain repository validation resources and aren't added to site output.
 
-Consumers must tolerate unknown properties. Optional fields may be absent; absence is not evidence of a negative claim. Removing a required field, changing a field's meaning, or making existing valid output incompatible requires a new wire version. Adding optional fields can retain version 1. Changes to a constrained value set also need compatibility review; accepting unknown properties does not mean a consumer accepts unknown enum values.
+Consumers must tolerate unknown properties. Optional fields may be absent; absence isn't evidence of a negative claim. Removing a required field, changing a field's meaning, or making existing valid output incompatible requires a new wire version. Adding optional fields can retain version 1. Changes to a constrained value set also need compatibility review; accepting unknown properties doesn't mean a consumer accepts unknown enum values.
 
 | Capability                                                                                                        | Availability                                                                                        |
 | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -55,4 +55,4 @@ Routes include the configured base path and publication prefixes. Start at `llms
 
 A document's identity is `(id, channel, version, language)`, not its title, URL, or array position. The same ID in two publications identifies two records. That tuple must be unique in both the manifest and sync snapshot. Cite it with the resource URL; for sections, also retain section identity and parent/section digests. A manifest array pointer is a link into that snapshot, not a permanent document identifier.
 
-`indexable` describes indexing, not access. `demo: false` means unmarked, not a verified service. Missing or null `subjectLifecycle` does not mean stable. `verified` is an author's review date, not compiler or independent verification. `updated` records content freshness and can be a calendar date or a timestamp with a timezone. Reader filters control presentation, not authorization.
+`indexable` describes indexing, not access. `demo: false` means unmarked, not a verified service. Missing or null `subjectLifecycle` doesn't mean stable. `verified` is an author's review date, not compiler or independent verification. `updated` records content freshness and can be a calendar date or a timestamp with a timezone. Reader filters control presentation, not authorization.

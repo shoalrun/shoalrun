@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Content negotiation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 
@@ -46,4 +46,4 @@ A Markdown response includes its canonical HTML link and a `rel="describedby"` l
 
 Generated hosting metadata specifies a strong `ETag` equal to the quoted SHA-256 Markdown digest and `Cache-Control: public, max-age=0, must-revalidate`. The Node server handles matching `If-None-Match` requests with `304` and no body, including Markdown negotiated at an HTML URL. Negotiated responses retain `Vary: Accept`. Vercel receives the generated headers but can replace the ETag with its own validator, including a weak validator for compressed responses. Send the ETag returned by the host in `If-None-Match`; treat its value as opaque. To verify downloaded Markdown bytes, compare their SHA-256 with `digest` in the document manifest, independently of the HTTP validator.
 
-Focused contracts have content-addressed URLs and a one-year immutable cache policy. Mutable JSON manifests and indexes require revalidation. See [focused contracts](https://www.shoalrun.com/api-docs/focused-contracts.md) for URL identity and retention limits. `resource-headers.json` describes selected hosting headers, including Markdown, JSON metadata, and contracts; it is not an exhaustive inventory of every static asset.
+Focused contracts have content-addressed URLs and a one-year immutable cache policy. Mutable JSON manifests and indexes require revalidation. See [focused contracts](https://www.shoalrun.com/api-docs/focused-contracts.md) for URL identity and retention limits. `resource-headers.json` describes selected hosting headers, including Markdown, JSON metadata, and contracts; it isn't an exhaustive inventory of every static asset.

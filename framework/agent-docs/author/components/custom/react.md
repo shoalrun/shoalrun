@@ -17,13 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Custom components > Data-driven React components
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Use a declared data file when a component needs to generate tables, calculations, or other structured documentation. This advanced example adds data and generated explanations to the [small CopyText example](https://www.shoalrun.com/author/components/custom.md). A data file is optional; ordinary component text can stay in MDX.
 
 ## Where the content lives
 
-A custom component is a small program that writes part of a documentation page. Its build function produces shared content, which Shoalrun renders as HTML and Markdown. An optional React interface adds browser controls afterward. Shoalrun does not convert React into Markdown.
+A custom component is a small program that writes part of a documentation page. Its build function produces shared content, which Shoalrun renders as HTML and Markdown. An optional React interface adds browser controls afterward. Shoalrun doesn't convert React into Markdown.
 
 The retry example splits its work across these files:
 
@@ -89,7 +89,7 @@ With the example policy, the generated Markdown includes this worked schedule:
 | 4 | 2000 ms | 3500 ms |
 ```
 
-HTML displays the same documented schedule. React receives the same validated policy directly and adds the calculator shown below. Changing a browser control changes that reader's calculation; it does not edit `policy.json`, the documented schedule, or Markdown. To change the documented policy, edit the data file and rebuild.
+HTML displays the same documented schedule. React receives the same validated policy directly and adds the calculator shown below. Changing a browser control changes that reader's calculation; it doesn't edit `policy.json`, the documented schedule, or Markdown. To change the documented policy, edit the data file and rebuild.
 
 ## Registration
 
@@ -158,7 +158,7 @@ function retryDelayBounds(retry, policy) {
 
 [Read the Retry-After HTTP specification](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after)
 
-`title` is an optional nonempty literal string, defaulting to `Retry budget`. The component accepts no children and imports its local `policy.json` file. The policy fields and control limits appear in the fixture above. The browser controls let readers explore alternatives; they do not change the documented policy or its Markdown.
+`title` is an optional nonempty literal string, defaulting to `Retry budget`. The component accepts no children and imports its local `policy.json` file. The policy fields and control limits appear in the fixture above. The browser controls let readers explore alternatives; they don't change the documented policy or its Markdown.
 
 ## Share the model with the browser
 
@@ -173,15 +173,15 @@ export function enhance({ root, controls, content, data: policy }) {
 }
 ```
 
-The browser imports the same `retrySchedule` function as the build module. It does not parse table rows, depend on English labels, or maintain a separate calculation implementation. Renaming a documented label does not change the calculator's model.
+The browser imports the same `retrySchedule` function as the build module. It doesn't parse table rows, depend on English labels, or maintain a separate calculation implementation. Renaming a documented label doesn't change the calculator's model.
 
-React and React DOM are dependencies of this component package. Shoalrun compiles its JSX and imports when building the site; component consumers do not run a separate bundler. The interface still enhances shared documentation and does not render arbitrary MDX imports.
+React and React DOM are dependencies of this component package. Shoalrun compiles its JSX and imports when building the site; component consumers don't run a separate bundler. The interface still enhances shared documentation and doesn't render arbitrary MDX imports.
 
 ## HTML, Markdown, and agents
 
-The calculator uses labeled native form controls, keyboard input, and an announced result. Without JavaScript, the configured settings, supported alternatives, formulas, worked schedule, safety warning, code, and specification link remain visible. Markdown contains that same explanation. Changing browser controls does not change the documented policy.
+The calculator uses labeled native form controls, keyboard input, and an announced result. Without JavaScript, the configured settings, supported alternatives, formulas, worked schedule, safety warning, code, and specification link remain visible. Markdown contains that same explanation. Changing browser controls doesn't change the documented policy.
 
-The author and agent must write the shared explanation deliberately. Shoalrun does not infer it from React. Review the essential content in both outputs, including every meaningful choice and warning. The [component-authoring skill](https://www.shoalrun.com/author/components/custom.md) guides that work.
+The author and agent must write the shared explanation deliberately. Shoalrun doesn't infer it from React. Review the essential content in both outputs, including every meaningful choice and warning. The [component-authoring skill](https://www.shoalrun.com/author/components/custom.md) guides that work.
 
 ## Related reading
 

@@ -16,9 +16,9 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Visual examples > Pele gallery
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
-Browse examples of Pele's 33 built-in diagram families, including its version display, and 48 flowchart shapes. Every example uses Shoalrun's [Diagram component](https://www.shoalrun.com/author/components/diagrams.md) with Mermaid syntax. These illustrate notation; they do not describe live services or measured product results.
+Browse examples of Pele's 33 built-in diagram families, including its version display, and 48 flowchart shapes. Every example uses Shoalrun's [Diagram component](https://www.shoalrun.com/author/components/diagrams.md) with Mermaid syntax. These illustrate notation; they don't describe live services or measured product results.
 
 Open **Source** beneath a diagram to copy its syntax. See [Pele's examples](https://pele.run/examples) for more variations and [compatibility notes](https://pele.run/compatibility) for differences from Mermaid.
 
@@ -1304,7 +1304,7 @@ flowchart TB
 
 The diagrams are generated during the build and work without JavaScript. Theme changes update their CSS colors. Markdown retains every title, summary, SVG link, and original source, including examples inside closed disclosures.
 
-This gallery checks one example per diagram family and the listed flowchart shapes. It does not establish support for every syntax variation or external Mermaid plugin. Shoalrun disables diagram links, external images, and JavaScript callbacks. See [styling and compatibility](https://www.shoalrun.com/author/components/diagrams.md) before migrating existing diagrams.
+This gallery checks one example per diagram family and the listed flowchart shapes. It doesn't establish support for every syntax variation or external Mermaid plugin. Shoalrun disables diagram links, external images, and JavaScript callbacks. See [styling and compatibility](https://www.shoalrun.com/author/components/diagrams.md) before migrating existing diagrams.
 
 ## Related reading
 

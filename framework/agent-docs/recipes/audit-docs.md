@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Build and audit this documentation site
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Build current documentation, check its artifacts, and run the configured audits.
 
@@ -58,7 +58,7 @@ npx --no-install shoalrun build docs/docs.config.yaml docs/dist
 
 The source configuration is `docs/docs.config.yaml`; output goes to `docs/dist`. The root shortcut is `npm run docs:build`; it uses the installed package.
 
-If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone is not evidence of a successful new build.
+If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone isn't evidence of a successful new build.
 
 Save `builtSite`: The successful site build at docs/dist, including documents.json and each published page.
 
@@ -104,7 +104,7 @@ Run Shoalrun's configured checks. This repository's formatting check requires [V
 npx --no-install shoalrun audit docs/docs.config.yaml
 ```
 
-The audit checks configured project commands, API representations, and focused contracts. Read any reported finding and fix its source before continuing. This command does not run the complete framework test suite or replace a browser review. Framework source changes and tests belong in the framework repository.
+The audit checks configured project commands, API representations, and focused contracts. Read any reported finding and fix its source before continuing. This command doesn't run the complete framework test suite or replace a browser review. Framework source changes and tests belong in the framework repository.
 
 Save `auditPassed`: A successful audit report with no failed configured checks.
 
@@ -112,7 +112,7 @@ Save `auditPassed`: A successful audit report with no failed configured checks.
 
 ## Check the outcome
 
-The current source builds, the selected page has both output formats, and all configured audits pass. Review the rendered change before publishing; this recipe does not deploy or run the full framework test suite.
+The current source builds, the selected page has both output formats, and all configured audits pass. Review the rendered change before publishing; this recipe doesn't deploy or run the full framework test suite.
 
 ## Related reading
 

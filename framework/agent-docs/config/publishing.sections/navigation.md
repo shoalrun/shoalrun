@@ -1,7 +1,7 @@
 ---
 id: reference.config-publishing
 title: Publications and routing settings
-summary: Configure versions, languages, navigation, and redirects.
+summary: Configure product releases, versions, languages, navigation, and redirects.
 type: reference
 area: publishing
 subarea: publishing-configuration
@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Publications and routing
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/config/publishing.md)
 

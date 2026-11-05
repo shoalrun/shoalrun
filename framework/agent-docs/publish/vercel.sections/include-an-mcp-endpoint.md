@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Publish on Vercel
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/vercel.md)
 
@@ -35,4 +35,4 @@ The [content negotiation guide](https://www.shoalrun.com/publish/content-negotia
 
 Enable `mcp` in your project config before running `shoalrun vercel build`. The output includes a separate Node function for the selected public publication, without requiring Ask or embeddings. See [connect an MCP client](https://www.shoalrun.com/publish/mcp.md) for configuration, host trust, limits, and the current verification status.
 
-MCP analytics remains off unless you also configure its [server adapter](https://www.shoalrun.com/publish/mcp-analytics.md). If enabled, set its credentials on the function’s runtime environment. Browser analytics settings do not collect MCP traffic.
+MCP analytics remains off unless you also configure its [server adapter](https://www.shoalrun.com/publish/mcp-analytics.md). If enabled, set its credentials on the function’s runtime environment. Browser analytics settings don't collect MCP traffic.

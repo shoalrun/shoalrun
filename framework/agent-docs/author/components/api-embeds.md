@@ -20,7 +20,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > ApiExample and ApiSchema
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 `ApiExample` and `ApiSchema` reuse OpenAPI content in authored pages. Examples stay synchronized with named payloads; schemas expose selected field definitions in HTML and Markdown.
 
@@ -46,7 +46,7 @@ Use these attributes to configure the component.
 | `example`   | Yes           | Key in that media type's OpenAPI `examples` map. |
 | `status`    | For responses | Response status, such as `201`.                  |
 
-The element is standalone and empty, with literal string attributes. It resolves in the page's publication. HTML and Markdown show the example title, original key, context, description when present, provenance, and value. A missing selector fails the build. API includes cannot be nested inside snippets. See [API references](https://www.shoalrun.com/publish/api-references.md) for source configuration and [example presentation](https://www.shoalrun.com/api-docs/generate.md) in reference pages.
+The element is standalone and empty, with literal string attributes. It resolves in the page's publication. HTML and Markdown show the example title, original key, context, description when present, provenance, and value. A missing selector fails the build. API includes can't be nested inside snippets. See [API references](https://www.shoalrun.com/publish/api-references.md) for source configuration and [example presentation](https://www.shoalrun.com/api-docs/generate.md) in reference pages.
 
 The fictional Notes API returns a saved note with its author, labels, and display metadata. The response includes a required but nullable `archivedAt` field: `null` means the note is active.
 
@@ -79,7 +79,7 @@ An active note with a nested author, two labels, and optional display metadata.
 
 ### Markdown twin
 
-During the build, Shoalrun selects the named example from the OpenAPI source for this page's publication and replaces `<ApiExample>` with ordinary content. An agent reading the generated `.md` page does not need to resolve the component or fetch the OpenAPI file. The example above renders as:
+During the build, Shoalrun selects the named example from the OpenAPI source for this page's publication and replaces `<ApiExample>` with ordinary content. An agent reading the generated `.md` page doesn't need to resolve the component or fetch the OpenAPI file. The example above renders as:
 
 ````md
 ### Created release note
@@ -135,7 +135,7 @@ These attributes select the source schema.
 | `status`    | For response bodies     | Response status, such as `201`.                                                                 |
 | `schema`    | With `api`              | Local OpenAPI `$ref` selector. With `operation`, omitted uses the selected media type's schema. |
 
-Use `operation`, `kind`, `mediaType`, and `status` for a body schema. To select an object that is not a body, use `api` and `schema` without the operation attributes. A pointer ending in `/properties/<name>` selects a single field. Both forms use the API source for the page's publication.
+Use `operation`, `kind`, `mediaType`, and `status` for a body schema. To select an object that isn't a body, use `api` and `schema` without the operation attributes. A pointer ending in `/properties/<name>` selects a single field. Both forms use the API source for the page's publication.
 
 ```mdx
 <ApiSchema api="notes" schema="#/components/schemas/NoteMetadata" />
@@ -164,7 +164,7 @@ string
 
 Where the note came from.
 
-The element is standalone and empty, with literal string attributes. A missing or invalid selector fails the build. API includes cannot be nested inside snippets. See [API references](https://www.shoalrun.com/publish/api-references.md) for source setup and focused contracts.
+The element is standalone and empty, with literal string attributes. A missing or invalid selector fails the build. API includes can't be nested inside snippets. See [API references](https://www.shoalrun.com/publish/api-references.md) for source setup and focused contracts.
 
 ### Response 201 schema · application/json
 
@@ -254,7 +254,7 @@ string
 Where the note came from.
 ```
 
-`<ApiSchema>` includes the full selected schema, including nested objects. It does not shorten or collapse large schemas in either output. For a large object, include it in a guide only when readers need the whole field tree there. Otherwise, select a relevant field, use authored [Fields](https://www.shoalrun.com/author/components/fields.md) for a short explanation, or link to the API reference. A field pointer selects its definition; it does not infer whether that field is required by its parent. Recursive references stop with a visible recursive-reference note rather than repeating forever.
+`<ApiSchema>` includes the full selected schema, including nested objects. It doesn't shorten or collapse large schemas in either output. For a large object, include it in a guide only when readers need the whole field tree there. Otherwise, select a relevant field, use authored [Fields](https://www.shoalrun.com/author/components/fields.md) for a short explanation, or link to the API reference. A field pointer selects its definition; it doesn't infer whether that field is required by its parent. Recursive references stop with a visible recursive-reference note rather than repeating forever.
 
 ## HTML, Markdown, and agents
 

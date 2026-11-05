@@ -16,13 +16,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Cards and collections
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 A card is a linked preview of another documentation page: it shows a title and short preview so readers can decide where to go next. Cards use the target page's title, the project's configured `outputs.text.card` field, and its current URL. The target is the page the reader will open when they select the card.
 
-Authors maintain those details in the target page's frontmatter, the YAML metadata at the top of the file. A card references the page's stable `id`, so renaming its file or changing its URL does not break the card. HTML displays a card layout; Markdown displays the same links, descriptions, subject lifecycle status, and relationship reasons as a readable list.
+Authors maintain those details in the target page's frontmatter, the YAML metadata at the top of the file. A card references the page's stable `id`, so renaming its file or changing its URL doesn't break the card. HTML displays a card layout; Markdown displays the same links, descriptions, subject lifecycle status, and relationship reasons as a readable list.
 
-Use these components as standalone, empty blocks in `.md` or `.mdx` pages or registered snippets. Literal attributes are accepted; arbitrary JavaScript expressions are not evaluated.
+Use these components as standalone, empty blocks in `.md` or `.mdx` pages or registered snippets. Literal attributes are accepted; arbitrary JavaScript expressions aren't evaluated.
 
 ## Link to one document
 
@@ -60,12 +60,12 @@ The array controls the order. Duplicate IDs fail validation. An empty array rend
 <DocCards relation="next-step" relatedTo="guide.cards" />
 ```
 
-| Attribute   | Required               | Meaning                                                         |
-| ----------- | ---------------------- | --------------------------------------------------------------- |
-| `docs`      | For a curated list     | Literal array of unique document IDs in display order.          |
-| `relation`  | For relationship cards | One declared relationship type; cannot be combined with `docs`. |
-| `relatedTo` | No                     | Source document for `relation`; defaults to this page.          |
-| `empty`     | No                     | Message for no results; default is “No matching documents.”     |
+| Attribute   | Required               | Meaning                                                        |
+| ----------- | ---------------------- | -------------------------------------------------------------- |
+| `docs`      | For a curated list     | Literal array of unique document IDs in display order.         |
+| `relation`  | For relationship cards | One declared relationship type; can't be combined with `docs`. |
+| `relatedTo` | No                     | Source document for `relation`; defaults to this page.         |
+| `empty`     | No                     | Message for no results; default is “No matching documents.”    |
 
 Use [RelatedReading](https://www.shoalrun.com/author/components/related-reading.md) when a plain link list grouped by purpose fits better than cards.
 
@@ -73,7 +73,7 @@ Use [RelatedReading](https://www.shoalrun.com/author/components/related-reading.
 
 By default, a card shows the target page's `title` and `summary`. These are the resolved values after global defaults, page frontmatter, and enforced values have been applied. Add an optional `card` object to the target page's frontmatter when its card needs different wording.
 
-An **eyebrow** is a short label above the card title, such as “Integration guide” or “Tutorial.” It helps readers recognize the kind of content before reading the title. It is optional display text; it does not set the document's type, add a tag, or affect collection filters. In this example, “Integration guide” appears above “Send your first payment”:
+An **eyebrow** is a short label above the card title, such as “Integration guide” or “Tutorial.” It helps readers recognize the kind of content before reading the title. It's optional display text; it doesn't set the document's type, add a tag, or affect collection filters. In this example, “Integration guide” appears above “Send your first payment”:
 
 ```yaml
 title: Create a payment
@@ -92,7 +92,7 @@ card:
 | `card.eyebrow`     | A small label above the title.                    | No label.                                                           |
 | `card.icon`        | A decorative Lucide symbol above the text.        | No icon, unless inherited from global frontmatter.                  |
 
-These overrides affect cards only. The page heading, SEO, and navigation keep their existing values. A card's destination always comes from the stable ID; `href` overrides are not supported. Values must be nonempty strings. Images, arbitrary badges, and other card fields are not implemented and fail with a diagnostic. Subject lifecycle status comes from the target document, including authoritative OpenAPI deprecation.
+These overrides affect cards only. The page heading, SEO, and navigation keep their existing values. A card's destination always comes from the stable ID; `href` overrides aren't supported. Values must be nonempty strings. Images, arbitrary badges, and other card fields aren't implemented and fail with a diagnostic. Subject lifecycle status comes from the target document, including authoritative OpenAPI deprecation.
 
 ## Add a Lucide icon
 
@@ -105,7 +105,7 @@ card:
 
 Names use hyphens, such as `book-open`, `credit-card`, `terminal`, or `sliders-horizontal`. The pinned Lucide package supplies the icons at build time. An unknown name or URL fails with a file-specific diagnostic, so typos never silently produce an empty icon. New icons from a later Lucide release need a dependency update first.
 
-The icon appears in every card for that page, including curated lists, collections, and relationship views. It does not change the page heading or sidebar. Omit `card.icon` for a text-only card. Global `frontmatter.defaults.card.icon` and `frontmatter.enforced.card.icon` use the same precedence rules as other card metadata; a page can override a default with another icon name.
+The icon appears in every card for that page, including curated lists, collections, and relationship views. It doesn't change the page heading or sidebar. Omit `card.icon` for a text-only card. Global `frontmatter.defaults.card.icon` and `frontmatter.enforced.card.icon` use the same precedence rules as other card metadata; a page can override a default with another icon name.
 
 Icons are inline SVGs with `aria-hidden="true"` and `focusable="false"`. The visible card title remains the link's accessible name. Icons are decorative, omitted from Markdown, and require no browser JavaScript, font download, or CDN. Only the selected SVG shapes appear in each page. Adjust their color and size with `.doc-card-icon` in `styles/site.css`.
 
@@ -113,9 +113,9 @@ Lucide is open source under the [ISC license](https://lucide.dev/license), with 
 
 ## Build a collection
 
-A **collection** automatically finds pages that match your filters and displays them as cards. Use it when the list should follow the site's content, such as all authoring guides or pages associated with a payment operation. Unlike a curated list, you do not have to maintain an array of every matching page ID.
+A **collection** automatically finds pages that match your filters and displays them as cards. Use it when the list should follow the site's content, such as all authoring guides or pages associated with a payment operation. Unlike a curated list, you don't have to maintain an array of every matching page ID.
 
-`DocCollection` re-runs its filters during each build. Adding a matching page adds its card on the next build; removing the tag or making that page a draft removes it. A collection does not create pages, change their metadata, or add them to sidebar navigation.
+`DocCollection` re-runs its filters during each build. Adding a matching page adds its card on the next build; removing the tag or making that page a draft removes it. A collection doesn't create pages, change their metadata, or add them to sidebar navigation.
 
 This example displays up to six other guides tagged `authoring`, sorted by title:
 
@@ -130,7 +130,7 @@ No matching documents.
 | `type`      | Matches the document kind in frontmatter, such as `guide` or `api-reference`.                                                                                                   |
 | `tag`       | Matches a topic label in the target's `tags` array, such as `authoring`.                                                                                                        |
 | `operation` | Membership in its stable `operations` IDs; unknown operation IDs fail.                                                                                                          |
-| `audience`  | Membership in its `audiences` array; this filters metadata and does not grant access.                                                                                           |
+| `audience`  | Membership in its `audiences` array; this filters metadata and doesn't grant access.                                                                                            |
 | `orderBy`   | `title` by default, `id`, `date`, or `releaseVersion`. Date sorts newest first; version uses numeric label ordering. Every match needs the chosen field. Stable IDs break ties. |
 | `pin`       | Promotes selected matching pages to the front of the collection, in the given order. Supply a literal array of document IDs.                                                    |
 | `exclude`   | A literal array of IDs to remove. IDs absent from this publication are ignored.                                                                                                 |
@@ -145,7 +145,7 @@ For example, in the API fixture:
 <DocCollection operation="payments.create" pin={["reference.create-payment"]} />
 ```
 
-Pinned documents must be visible and satisfy all filters, including exclusions. Invalid pins stop the build. The `pin` and `exclude` arrays require unique document IDs. Collection ordering is deterministic and does not depend on filenames.
+Pinned documents must be visible and satisfy all filters, including exclusions. Invalid pins stop the build. The `pin` and `exclude` arrays require unique document IDs. Collection ordering is deterministic and doesn't depend on filenames.
 
 ## HTML, Markdown, and agents
 

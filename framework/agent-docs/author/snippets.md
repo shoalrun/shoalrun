@@ -16,9 +16,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reusable snippets
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-A snippet is a shared Markdown or MDX fragment that the build expands into each page that includes it. Use one when the wording must stay in sync across pages. A [template](https://www.shoalrun.com/author/templates.md) creates a draft once; editing a template does not change existing pages.
+A snippet is a shared Markdown or MDX fragment that the build expands into each page that includes it. Use one when the wording must stay in sync across pages. A [template](https://www.shoalrun.com/author/templates.md) creates a draft once; editing a template doesn't change existing pages.
 
 ## Register a snippet
 
@@ -101,7 +101,7 @@ For this slice, snippets use inline `<Var />` in prose. Code blocks are never ch
 | `<Snippet>` | `values`  | No       | Literal mapping of invocation values. |
 | `<Var>`     | `name`    | Yes      | Variable declared for that snippet.   |
 
-The included Markdown and supported MDX components render in both HTML and Markdown. Nested snippets work, but recursive includes fail. API embeds need page-level headings and cannot be placed inside snippets. Keep headings in the page, and use absolute or `doc:` links in snippets.
+The included Markdown and supported MDX components render in both HTML and Markdown. Nested snippets work, but recursive includes fail. API embeds need page-level headings and can't be placed inside snippets. Keep headings in the page, and use absolute or `doc:` links in snippets.
 
 ## Check the shared text
 

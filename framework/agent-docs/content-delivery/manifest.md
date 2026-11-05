@@ -17,11 +17,33 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content manifest
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
-`manifest.json` is the entry point for a content export. The resource-aware implementation uses `kind: shoalrun-content-export`, `schemaVersion: 1`, and a `resources` array. Earlier whole-page exports use a `documents` array; rebuild those exports before opening them with the resource client.
+**Available since: 0.1.0-alpha.13.**
 
-Available since `0.1.0-alpha.13`.
+`manifest.json` is the entry point for a content export. Resource exports use `kind: shoalrun-content-export` and a `resources` array. Productless exports use `schemaVersion: 1`. Earlier whole-page exports use a `documents` array; rebuild those exports before opening them with the resource client.
+
+## Product-scoped manifests
+
+Since 0.1.0-alpha.18
+
+Upgrade the exporter and content client together to use product-scoped bundles.
+
+Shoalrun preserves v1 for publications without products and emits `schemaVersion: 2` for product-scoped publications. A v2 manifest requires `product` alongside `channel`, `version`, and `language`. Its resources must have that same complete publication; a resource from another product is invalid.
+
+```json
+{
+  "schemaVersion": 2,
+  "publication": {
+    "product": "payments",
+    "channel": "production",
+    "version": "v3",
+    "language": "en"
+  }
+}
+```
+
+This excerpt shows the version and publication fields, not a complete manifest. A legacy v1 client rejects v2, so update custom validators and use the new client before distributing product bundles.
 
 ## Bundle fields
 
@@ -31,14 +53,14 @@ These fields describe the complete export and its publication.
 | ------------- | -------------------------------------------------------------------- |
 | `digest`      | Revision digest for the bundle manifest                              |
 | `publicBase`  | Root-relative serving mount with a trailing slash                    |
-| `publication` | One channel, version, and language                                   |
+| `publication` | One channel, version, and language; v2 also requires a product       |
 | `review`      | API source-review status and digests                                 |
 | `resources`   | Selected pages, sections, and snippet instances                      |
 | `assets`      | Local asset records                                                  |
 | `files`       | Exported file paths, sizes, and digests                              |
 | `diagnostics` | Export findings such as external images or static interaction output |
 
-A review status of `required` identifies a review candidate. Do not serve it as an approved content release.
+A review status of `required` identifies a review candidate. Don't serve it as an approved content release.
 
 ## Resource fields
 
@@ -52,17 +74,17 @@ Each resource has `ref`, `publication`, `title`, `summary`, `type`, `representat
 }
 ```
 
-This is a section's `ref`, not a complete manifest. Page references use `kind` and `documentId`; snippet-instance references use `kind` and `id`. Identity is scoped to the publication. A title or generated filename is not a resource reference.
+This is a section's `ref`, not a complete manifest. Page references use `kind` and `documentId`; snippet-instance references use `kind` and `id`. Identity is scoped to the complete publication, including the product in v2. The same page or section ID in another product is a different resource. A title or generated filename isn't a resource reference.
 
 ## Representations and links
 
 Each available `html` or `markdown` representation declares `path`, `mediaType`, `bytes`, `digest`, `anchors`, and `links`. Paths point to files under the export mount. Anchors map source IDs to exported DOM IDs. Link records distinguish `resource`, `canonical`, `external`, and `asset` targets; resource links include a typed reference.
 
-A resource's asset list names local dependencies. `externalDependencies` identifies remote images that were not copied. Distribute `NOTICES.txt` and any required attribution with the content.
+A resource's asset list names local dependencies. `externalDependencies` identifies remote images that weren't copied. Distribute `NOTICES.txt` and any required attribution with the content.
 
 ## Validate a consumer
 
-Use the content client or validate the manifest before fetching its declared paths. Unknown references and unavailable formats are errors. Check representation bytes and digest against the opened revision. Do not assume that a valid digest makes an untrusted host or its HTML safe.
+Use the content client or validate the manifest before fetching its declared paths. Unknown references and unavailable formats are errors. Check representation bytes and digest against the opened revision. Don't assume that a valid digest makes an untrusted host or its HTML safe.
 
 ## HTML, Markdown, and agents
 

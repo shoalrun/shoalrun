@@ -18,7 +18,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer cards
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -26,7 +26,7 @@ An answer card stores a reviewed answer to a recurring question. Generate cards 
 
 A confirmed card avoids generating a new answer. Matching still calls the embedding provider and relevance scorer.
 
-> **Note:** An answer card is not a page card. Page cards preview another page; see [Cards and collections](https://www.shoalrun.com/author/components/cards.md). Answer cards are stored answers.
+> **Note:** An answer card isn't a page card. Page cards preview another page; see [Cards and collections](https://www.shoalrun.com/author/components/cards.md). Answer cards are stored answers.
 
 ## What you need
 
@@ -61,7 +61,7 @@ shoalrun index site-dist --embed
 shoalrun answers site-dist --questions config/answers.yaml
 ```
 
-Each question goes through the normal retrieval and answer checks. The command turns off card reuse and direct excerpts while generating cards, so an accepted card contains a freshly written answer. It also embeds each kept question and its aliases for later similarity matching. A question the docs do not cover may be declined before a chat-model call. The command writes `ai/answers.json` and reports kept and skipped questions. It skips a question when:
+Each question goes through the normal retrieval and answer checks. The command turns off card reuse and direct excerpts while generating cards, so an accepted card contains a freshly written answer. It also embeds each kept question and its aliases for later similarity matching. A question the docs don't cover may be declined before a chat-model call. The command writes `ai/answers.json` and reports kept and skipped questions. It skips a question when:
 
 - The docs don't cover it.
 - The answer was hedged.
@@ -103,7 +103,7 @@ shoalrun ask-log ask.jsonl --cards-out candidates.yaml
 
 Cards work in the terminal, the local panel, and the Vercel chat function.
 
-For Vercel, build with `--chat`, then run `shoalrun answers` against the function's private `site` directory before deployment. The function reads `site/ai/answers.json` from that directory. A plain `shoalrun vercel build --chat` embeds passages but does not generate cards.
+For Vercel, build with `--chat`, then run `shoalrun answers` against the function's private `site` directory before deployment. The function reads `site/ai/answers.json` from that directory. A plain `shoalrun vercel build --chat` embeds passages but doesn't generate cards.
 
 This repository's `npm run docs:build-all` performs both steps. See [Publish on Vercel](https://www.shoalrun.com/publish/vercel.md) for the deployment workflow.
 

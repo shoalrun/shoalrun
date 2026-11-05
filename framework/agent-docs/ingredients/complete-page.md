@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Reusable Shoalrun steps > Complete the guide and add navigation
 
-**Updated: 2026-10-19.**
+**Updated: 2026-11-05.**
 
 Open the scaffolded file and write the actual task, prerequisites, steps, and an observable success check. Set `updated` to today's date, replace the draft summary, and resolve every generated TODO prompt. Check every technical claim against the implementation or a tested workflow.
 
@@ -27,4 +27,4 @@ Set a suitable `card.icon`, such as `file-text`, to meet this site's page-card a
 - { id: my-new-guide, doc: guide.my-new-guide }
 ```
 
-For useful next steps, add edges to `docs/config/relationships.yaml` and put `<RelatedReading />` at the end of the page. Preserve the page ID if you later change its title or slug. Setting public access includes the page in the local build; it does not deploy the site.
+For useful next steps, add edges to `docs/config/relationships.yaml` and put `<RelatedReading />` at the end of the page. Preserve the page ID if you later change its title or slug. Setting public access includes the page in the local build; it doesn't deploy the site.

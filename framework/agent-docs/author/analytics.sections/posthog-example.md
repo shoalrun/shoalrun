@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Analytics
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/analytics.md)
 
@@ -86,7 +86,7 @@ This example sends native page views and page leaves to PostHog, with custom eve
 
    The adapter maps `page_view` to `$pageview` and keeps other Shoalrun event names. Automatic page views are off to avoid duplicates. PostHog supplies `$pageleave` with scroll depth and duration. Generic click capture, replay, and person profiles are disabled.
 
-   Use custom names in Product Analytics insights and funnels. Do not map them to `$autocapture`, which requires SDK-generated element metadata. PostHog adds properties and manages browser storage; review its [SDK configuration](https://posthog.com/docs/libraries/js/config) for consent and content security policy requirements.
+   Use custom names in Product Analytics insights and funnels. Don't map them to `$autocapture`, which requires SDK-generated element metadata. PostHog adds properties and manages browser storage; review its [SDK configuration](https://posthog.com/docs/libraries/js/config) for consent and content security policy requirements.
 
 3. ### Bundle and configure the module
 
@@ -121,6 +121,6 @@ This example sends native page views and page leaves to PostHog, with custom eve
    | `$prev_pageview_max_content_percentage` | Fraction of document height reached by the viewport, from `0` to `1`. |
    | `$prev_pageview_duration`               | Seconds the page was open.                                            |
 
-   These measure the document, excluding scrolling within code panes. Time open does not prove active reading, and page-leave delivery is best effort. For visual scrollmaps, configure [PostHog heatmaps](https://posthog.com/docs/toolbar/heatmaps) separately; some engagement metrics require generic autocapture.
+   These measure the document, excluding scrolling within code panes. Time open doesn't prove active reading, and page-leave delivery is best effort. For visual scrollmaps, configure [PostHog heatmaps](https://posthog.com/docs/toolbar/heatmaps) separately; some engagement metrics require generic autocapture.
 
    If events are missing, check consent, browser blockers, and network requests. Exclude development traffic from production reports or use a separate development project.

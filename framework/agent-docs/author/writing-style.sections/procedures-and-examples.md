@@ -17,16 +17,16 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 
-This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
+This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun doesn't automatically apply these rules to other projects.
 
 ## Procedures and examples
 
-Show the starting directory, required inputs, and expected result when a command depends on them. Say which values readers must replace. Keep commands supported by source or verified behavior; do not invent flags to make an example look complete.
+Show the starting directory, required inputs, and expected result when a command depends on them. Say which values readers must replace. Keep commands supported by source or verified behavior; don't invent flags to make an example look complete.
 
 Give each procedure step one purpose. Put the explanation beside the action it supports. Include a check that readers can perform and describe what success looks like. Troubleshooting should identify a symptom, likely cause, and concrete next action.
 
-Examples demonstrate the feature under discussion. Use the smallest example that still shows the important behavior. Preserve required fields, defaults, constraints, and meaningful errors during a rewrite. An example copied from a different page is not evidence that it applies to this task.
+Examples demonstrate the feature under discussion. Use the smallest example that still shows the important behavior. Preserve required fields, defaults, constraints, and meaningful errors during a rewrite. An example copied from a different page isn't evidence that it applies to this task.

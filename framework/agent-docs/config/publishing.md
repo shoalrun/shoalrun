@@ -1,7 +1,7 @@
 ---
 id: reference.config-publishing
 title: Publications and routing settings
-summary: Configure versions, languages, navigation, and redirects.
+summary: Configure product releases, versions, languages, navigation, and redirects.
 type: reference
 area: publishing
 subarea: publishing-configuration
@@ -16,26 +16,36 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Publications and routing
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Configure versions, languages, navigation, and redirects. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
 
 ## `publications`
 
-Required. Declares which channel, version, and language combinations to build. See [how Shoalrun works](https://www.shoalrun.com/concepts.md) for the concepts.
+Required. Declares which channel, version, and language combinations to build. Product publications also include a product ID. See [how Shoalrun works](https://www.shoalrun.com/concepts.md) for the concepts.
+
+Since 0.1.0-alpha.18
+
+The product settings below extend publication configuration. Existing productless publications retain their current routes and identities.
 
 These settings select page variants within a build. For separate branches and domains, see [use Git branches for separate docs sites](https://www.shoalrun.com/publish/revisions.md).
 
-| Key                                    | Meaning                                                                                                                                                                                                                                               |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `enabled`                              | At least one `{ channel, version, language }` entry. `language` is optional and defaults to the default language.                                                                                                                                     |
-| `channels.<name>.pathPrefix`           | Route prefix for a channel. Every channel used in `enabled` must be declared, even with `pathPrefix: ""`.                                                                                                                                             |
-| `versions.<name>.pathPrefix`           | Route prefix for a version. Same rule as channels.                                                                                                                                                                                                    |
-| `defaults.channel`, `defaults.version` | The publication that uses each API's top-level `source`, and the defaults for `scaffold` and `api select`. Required when the project has `apis`.                                                                                                      |
-| `defaults.language`                    | The default language, which gets no route prefix. Global frontmatter can override it. Falls back to `en`.                                                                                                                                             |
-| `externalSites`                        | Optional links in the Version menu. Each entry needs a `label` and HTTP(S) `baseUrl`, which links to that site's root. Add a local `manifest` file containing its built `documents.json` to link only matching document IDs at their published paths. |
+| Key                                                        | Meaning                                                                                                                                                                                                                                                                                                                     |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `enabled`                                                  | At least one publication coordinate. Product publications add `product` to `{ channel, version, language }`. `language` defaults to the default language; a product version can default from its catalog. Unknown coordinates and duplicates fail.                                                                          |
+| `channels.<name>.pathPrefix`                               | Route prefix for a channel. Every channel used in `enabled` must be declared, even with `pathPrefix: ""`.                                                                                                                                                                                                                   |
+| `versions.<name>.pathPrefix`                               | Version prefix for productless publications. May coexist with product catalogs; omit `versions` when every enabled publication has a product.                                                                                                                                                                               |
+| `products.<id>`                                            | Product catalog with required `pathPrefix`, `defaultVersion`, and nonempty `versions`; optional `label`. Product IDs use letters, digits, dots, underscores, and hyphens.                                                                                                                                                   |
+| `products.<id>.pathPrefix`                                 | Required nonempty absolute product prefix, such as `/payments`. Must be unique without regard to case; no trailing slash, repeated slash, or traversal.                                                                                                                                                                     |
+| `products.<id>.defaultVersion`                             | A declared version in this product catalog. Used when a product coordinate omits `version`.                                                                                                                                                                                                                                 |
+| `products.<id>.versions.<version>.pathPrefix`              | Version prefix within the product. Prefixes must be distinct within a product, including the empty prefix.                                                                                                                                                                                                                  |
+| `defaults.product`, `defaults.channel`, `defaults.version` | Scope the default API `source` and authoring commands. A product uses its own `defaultVersion` unless `defaults.product` matches it and `defaults.version` is valid in that catalog. Product source bindings can also declare an API-level `product`. Explicit API publication bindings don't need a global default source. |
+| `defaults.language`                                        | The default language, which gets no route prefix. Global frontmatter can override it. Falls back to `en`.                                                                                                                                                                                                                   |
+| `externalSites`                                            | Optional links in the Version menu. Each entry needs a `label` and HTTP(S) `baseUrl`, which links to that site's root. Add a local `manifest` file containing its built `documents.json` to link only matching document IDs at their published paths.                                                                       |
 
-For a page in several enabled combinations, set its frontmatter `publications` to a list of `{ channel, version }` pairs. This is separate from `apis.<name>.publications`, which binds API source files. A page without a list uses its resolved single channel and version. A list may include a declared but disabled combination; that copy is omitted from the build. See [share pages across documentation versions](https://www.shoalrun.com/publish/publications.md) for an example with version-specific sections.
+For a page in several enabled combinations, set its frontmatter `publications` to a list of `{ channel, version }` pairs, adding `product` for product publications. This is separate from `apis.<name>.publications`, which binds API source files. A page without a list uses its resolved single channel and version. A list may include a declared but disabled combination; that copy is omitted from the build. See [share pages across documentation versions](https://www.shoalrun.com/publish/publications.md) for an example with version-specific sections.
+
+For independent product catalogs and migration from product metadata, see [share pages across products and versions](https://www.shoalrun.com/publish/publications.md). Product routes combine base path, nondefault language, product prefix, channel prefix, version prefix, and page slug. An undeclared product version fails instead of using a root version with the same name.
 
 A single publication with no prefixes. Pages set `channel: production` and `version: current`:
 
@@ -65,7 +75,7 @@ publications:
     - { channel: production, version: v2 }
 ```
 
-A sandbox channel, with a version that is declared but not yet built. Leave a combination out of `enabled` to stop publishing it without deleting its pages:
+A sandbox channel, with a version that's declared but not yet built. Leave a combination out of `enabled` to stop publishing it without deleting its pages:
 
 ```yaml title="docs.config.yaml"
 publications:
@@ -165,7 +175,7 @@ A list of old URLs to send to a current page. Shoalrun's own docs use redirects 
 Add a redirect when a URL that readers, bookmarks, or other sites already use would stop working:
 
 - You change a page's `slug`. The slug sets the URL, so the old path no longer has a page.
-- You change `site.basePath`, a channel or version `pathPrefix`, or a language prefix. Every route under it moves.
+- You change `site.basePath`, a product, channel, or version `pathPrefix`, or a language prefix. Every route under it moves.
 - You delete a page, merge two pages, or replace a page with one in another version.
 
 You don't need a redirect when a page keeps its `slug`. Moving or renaming the source file doesn't change a URL, and neither does changing navigation. The URL comes from the slug, not the file.
@@ -200,11 +210,11 @@ Send an old URL to a page in another publication, such as a retired v1 page to i
 
 Because the target is a page ID, the redirect follows the page when its slug changes. Nothing else needs updating.
 
-| Key      | Meaning                                                                                                                   |
-| -------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `from`   | Old path, starting with `/`. Compared without regard to case; a duplicate or a path that belongs to a current page fails. |
-| `to`     | Target page ID and its full publication: `doc`, `channel`, `version`, and `language` are all required.                    |
-| `status` | HTTP status: `301`, `302`, `303`, `307`, or `308`. Defaults to `308`.                                                     |
+| Key      | Meaning                                                                                                                                                |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `from`   | Old path, starting with `/`. Compared without regard to case; a duplicate or a path that belongs to a current page fails.                              |
+| `to`     | Target page ID and its full publication: `doc`, `channel`, `version`, and `language` are all required. Add `product` for a product publication target. |
+| `status` | HTTP status: `301`, `302`, `303`, `307`, or `308`. Defaults to `308`.                                                                                  |
 
 The build resolves each target to its current route and writes `redirects.json`. `shoalrun serve` and the Vercel build apply the redirects, with or without a trailing slash. The old page's `.md` URL redirects to the target's Markdown twin with the same status.
 

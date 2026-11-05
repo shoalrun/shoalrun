@@ -17,12 +17,12 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > SEO and social previews
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/seo.md)
 
-When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you do not need to hand-write Open Graph or Twitter tags.
+When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you don't need to hand-write Open Graph or Twitter tags.
 
 ## What agents receive
 
-The social tags are in HTML, and each generated share card is a public PNG. Agents reading Markdown get the authored title, body, and fields published by your [Markdown metadata settings](https://www.shoalrun.com/author/markdown-metadata.md). The Markdown body does not contain HTML meta tags. `documents.json` and `search-index.json` list the published page and its routes. Changing `seo.title` or the share image does not replace a clear page title or summary for agents that use the Markdown and search index. The [agent-friendly documentation guide](https://www.shoalrun.com/publish/agent-friendliness.md) explains how these public files differ from the documentation bundle shipped inside Shoalrun's CLI.
+The social tags are in HTML, and each generated share card is a public PNG. Agents reading Markdown get the authored title, body, and fields published by your [Markdown metadata settings](https://www.shoalrun.com/author/markdown-metadata.md). The Markdown body doesn't contain HTML meta tags. `documents.json` and `search-index.json` list the published page and its routes. Changing `seo.title` or the share image doesn't replace a clear page title or summary for agents that use the Markdown and search index. The [agent-friendly documentation guide](https://www.shoalrun.com/publish/agent-friendliness.md) explains how these public files differ from the documentation bundle shipped inside Shoalrun's CLI.

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Navigation > Overview
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/navigation.md)
 
@@ -29,7 +29,7 @@ Each node has a stable `id` for the menu entry. It needs exactly one of these ta
 - `operation` places an API reference by stable operation ID.
 - `generated` fills in API references from the registered OpenAPI source.
 
-The menu follows document IDs rather than file paths or slugs. Moving a source file or changing a page URL does not require a navigation edit. A `doc` node uses the page title by default; set `label` when the menu needs a shorter name. Pages omitted from navigation can still be built and linked from other pages.
+The menu follows document IDs rather than file paths or slugs. Moving a source file or changing a page URL doesn't require a navigation edit. A `doc` node uses the page title by default; set `label` when the menu needs a shorter name. Pages omitted from navigation can still be built and linked from other pages.
 
 ## Arrange authored pages
 
@@ -53,6 +53,6 @@ The menu follows document IDs rather than file paths or slugs. Moving a source f
       doc: guide.handle-errors
 ```
 
-Each `doc` value must match a page's frontmatter ID. Groups can contain other groups, so a larger site can place task guides under a product area. Use a structure that matches the reader's tasks; the source directory layout does not control the menu. The build rejects missing document IDs and malformed groups. For a publication where a page has no matching channel, version, or language, its menu entry is omitted. An empty group is omitted too.
+Each `doc` value must match a page's frontmatter ID. Groups can contain other groups, so a larger site can place task guides under a product area. Use a structure that matches the reader's tasks; the source directory layout doesn't control the menu. The build rejects missing document IDs and malformed groups. For a publication where a page has no matching channel, version, or language, its menu entry is omitted. An empty group is omitted too.
 
-Use `search` on an individual page or operation node to add terms to the reader's **sidebar menu filter**. The filter also matches the page label and its group labels. For example, `search: refunds returns` helps readers find a page whose title uses different words. This setting does not add terms to the site-wide search index; [site search](https://www.shoalrun.com/author/search.md) uses page content and search metadata. Groups and generators cannot have `search`.
+Use `search` on an individual page or operation node to add terms to the reader's **sidebar menu filter**. The filter also matches the page label and its group labels. For example, `search: refunds returns` helps readers find a page whose title uses different words. This setting doesn't add terms to the site-wide search index; [site search](https://www.shoalrun.com/author/search.md) uses page content and search metadata. Groups and generators can't have `search`.

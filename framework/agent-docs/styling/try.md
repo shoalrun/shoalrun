@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Visual examples > Try a theme
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Pick a shape, a palette, and a mode. This page restyles itself as you choose. Scroll down to see how each option styles the sample content, then copy the config into `docs.config.yaml`.
 
@@ -46,7 +46,7 @@ theme:
   mode: system
 ```
 
-The preview lasts until you leave the page or press **Reset**. It does not change the site for other readers. Your site's [project CSS](https://www.shoalrun.com/author/css.md) still applies on top of the preview.
+The preview lasts until you leave the page or press **Reset**. It doesn't change the site for other readers. Your site's [project CSS](https://www.shoalrun.com/author/css.md) still applies on top of the preview.
 
 ## Sample content
 

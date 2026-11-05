@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Retrieval and chat settings
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -59,4 +59,4 @@ The main model answers first, and the checks run. If one of the `when` reasons a
 
 Without `when`, the reasons are `unsupported-code` and `uncited`, plus `unsupported-claim` when `verify` is set. The code check is a heuristic that can misjudge a valid example. A second answer from a thinking model adds seconds. So many sites limit `when` to `unsupported-claim` and `uncited`. A declined answer or a direct excerpt is never escalated. If the escalation model fails, the first answer is shown with a note. `--no-escalate` on `ask` turns it off for one run.
 
-Choose an escalation model using reviewed questions that your primary model handles poorly. A larger model is not automatically a better fit.
+Choose an escalation model using reviewed questions that your primary model handles poorly. A larger model isn't automatically a better fit.

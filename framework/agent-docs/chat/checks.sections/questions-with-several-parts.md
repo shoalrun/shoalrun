@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -39,6 +39,6 @@ An explicit request such as “Compare templates and snippets, then explain navi
 
 For each part, Ask also considers introductions from up to three matching pages. An introduction can explain a prerequisite or automatic build behavior that a matching subsection omits. Related-reading lists are excluded from this evidence selection. With Jev, up to 36 topic/passage pairs are scored in at most two additional batches. Semantic retrieval can make one additional query-embedding request per part.
 
-Evidence selection reserves a passage for each part before adding a second round, up to `chat.passages`. The model is asked to address every part and state when evidence is missing. A part with no passage above the relevance threshold makes the answer partial; when none qualify, Ask declines. Multi-part requests do not use the direct-excerpt or answer-card shortcuts.
+Evidence selection reserves a passage for each part before adding a second round, up to `chat.passages`. The model is asked to address every part and state when evidence is missing. A part with no passage above the relevance threshold makes the answer partial; when none qualify, Ask declines. Multi-part requests don't use the direct-excerpt or answer-card shortcuts.
 
-The result's optional `coverage` field records the topic and whether selected evidence passed the relevance threshold. Without a scorer, that value is `null`. A positive relevance score means a passage may help; it does not prove the answer is complete or correct. Citation and claim checks still run on the generated answer. Questions whose meaning depends on several sources remain experimental.
+The result's optional `coverage` field records the topic and whether selected evidence passed the relevance threshold. Without a scorer, that value is `null`. A positive relevance score means a passage may help; it doesn't prove the answer is complete or correct. Citation and claim checks still run on the generated answer. Questions whose meaning depends on several sources remain experimental.

@@ -15,11 +15,11 @@ date: 2026-10-17
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > MCP hosting, analytics, and component improvements
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-17: MCP hosting
 
 **Published: 2026-10-17.**
 
-This entry groups the October 17 changes to Shoalrun’s private prototype. It does not announce a package release.
+This entry groups the October 17 changes to Shoalrun’s private prototype. It doesn't announce a package release.
 
 ## Serve documentation tools over HTTP
 

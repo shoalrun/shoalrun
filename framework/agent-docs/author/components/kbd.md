@@ -16,9 +16,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Keyboard shortcuts
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-Use `<Kbd>` to name a key or shortcut in a sentence. Include the action in the sentence; key styling alone does not explain what the shortcut does.
+Use `<Kbd>` to name a key or shortcut in a sentence. Include the action in the sentence; key styling alone doesn't explain what the shortcut does.
 
 ## Syntax
 

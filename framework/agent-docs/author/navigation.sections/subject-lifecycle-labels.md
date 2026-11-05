@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Navigation > Overview
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/navigation.md)
 
@@ -29,13 +29,13 @@ Each node has a stable `id` for the menu entry. It needs exactly one of these ta
 - `operation` places an API reference by stable operation ID.
 - `generated` fills in API references from the registered OpenAPI source.
 
-The menu follows document IDs rather than file paths or slugs. Moving a source file or changing a page URL does not require a navigation edit. A `doc` node uses the page title by default; set `label` when the menu needs a shorter name. Pages omitted from navigation can still be built and linked from other pages.
+The menu follows document IDs rather than file paths or slugs. Moving a source file or changing a page URL doesn't require a navigation edit. A `doc` node uses the page title by default; set `label` when the menu needs a shorter name. Pages omitted from navigation can still be built and linked from other pages.
 
 ## Subject lifecycle labels
 
 Set `subjectLifecycle` to `beta`, `in-development`, `experimental`, or `deprecated` in page frontmatter. Navigation and page headers show a text badge. Markdown and the document manifest carry the same status.
 
-OpenAPI `deprecated: true` marks an endpoint as deprecated and cannot be overridden by an editorial label. The preview layout can also assign a label by source operation ID. Labels communicate maturity; they do not control access.
+OpenAPI `deprecated: true` marks an endpoint as deprecated and can't be overridden by an editorial label. The preview layout can also assign a label by source operation ID. Labels communicate maturity; they don't control access.
 
 For a deprecated subject, add [deprecation guidance](https://www.shoalrun.com/author/frontmatter.md) with optional dates, replacement, and migration references. These details appear in the article and Markdown resources; navigation keeps its concise status badge.
 

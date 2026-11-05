@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/reader-views.md)
 
@@ -61,4 +61,4 @@ In a dashboard guide, show the menu names and screen actions a reader needs. Thi
 
 In an API guide, show the request, required fields, and expected response. This section appears when **Developer** is selected.
 
-**Show all** in the multi-select keeps both sections visible on this page. **Follow site view** removes the page-only choice and returns to the site's current reader view. The page-only choice is shareable with **Copy view link** and is not saved across visits.
+**Show all** in the multi-select keeps both sections visible on this page. **Follow site view** removes the page-only choice and returns to the site's current reader view. The page-only choice is shareable with **Copy view link** and isn't saved across visits.

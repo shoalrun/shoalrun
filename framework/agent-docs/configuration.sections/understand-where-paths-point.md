@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -46,7 +46,7 @@ Resolution records a source file for every configuration value. Relative paths o
 
 In the running example, `site.customCss: ./brand.css` still finds `shared/brand.css` after the project overrides `site.title`. The two keys keep separate origins.
 
-Moving a path into `config/api.yaml` may require changing `./apis/service.yaml` to `../apis/service.yaml`. Inspect the exact path key with `config explain` after moving it. `config resolve` retains relative strings; it does not rewrite every file path into an absolute path.
+Moving a path into `config/api.yaml` may require changing `./apis/service.yaml` to `../apis/service.yaml`. Inspect the exact path key with `config explain` after moving it. `config resolve` retains relative strings; it doesn't rewrite every file path into an absolute path.
 
 Some grouped settings use the origin of their containing block: custom search uses `outputs.html.search`, fonts use `theme.fonts`, and share images use `outputs.html.shareImages`. Overriding part of such a block can change its path base. Keep a block's relative paths and related overrides together, and inspect that block's source when debugging.
 

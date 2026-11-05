@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/reader-views.md)
 
@@ -29,7 +29,7 @@ To build separate sites from the same source using these facets, use [build-time
 
 ## Mark sections and add an entry choice
 
-Use `ReaderSection` for content that belongs to a narrower view within an otherwise shared page. Content outside these blocks stays visible to everyone. Sections can contain Markdown and supported MDX components, but reader sections cannot be nested.
+Use `ReaderSection` for content that belongs to a narrower view within an otherwise shared page. Content outside these blocks stays visible to everyone. Sections can contain Markdown and supported MDX components, but reader sections can't be nested.
 
 ```mdx title="content/get-started.mdx"
 <ReaderChoice audience="ui" label="Use the dashboard" />

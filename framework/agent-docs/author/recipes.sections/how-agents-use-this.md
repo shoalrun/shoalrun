@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/recipes.md)
 
@@ -45,6 +45,6 @@ Give an agent the source material that matches its task and the outcome you want
 | Complete a task                 | The finished recipe's Markdown.                                 | Follow the commands, pass values between steps, and evaluate the stated success checks. |
 | Choose a task                   | The cookbook's Markdown.                                        | Read each option's purpose and follow the appropriate recipe link.                      |
 
-The recipe assembler does not call a model. It does not execute commands, validate data types, or prove that a task succeeded. A declared output such as `builtSite` is a name and description; it does not create a directory or a shell variable. The recipe's commands produce the actual result.
+The recipe assembler doesn't call a model. It doesn't execute commands, validate data types, or prove that a task succeeded. A declared output such as `builtSite` is a name and description; it doesn't create a directory or a shell variable. The recipe's commands produce the actual result.
 
 A recipe's **Read as Markdown** link contains its complete published instructions. A cookbook's Markdown lists the choices and recipe links. The browser selection has no separate published Markdown endpoint. **Download Markdown** saves the selected recipes' instructions in a file you can give to an agent.

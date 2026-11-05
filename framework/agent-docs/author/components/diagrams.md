@@ -17,13 +17,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Overview
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-Use `<Diagram>` for flowcharts, sequence diagrams, charts, and other graphs written as text. D2 is the default engine, with TALA as its default layout. Set `engine="mermaid"` for Mermaid syntax, rendered by [Pele](https://pele.run). Diagrams render to SVG during the build, so readers do not need a diagram script in their browser. Set a literal pixel `width`, such as `width="440"`, to cap the diagram's displayed width while allowing it to shrink on narrow screens.
+Use `<Diagram>` for flowcharts, sequence diagrams, charts, and other graphs written as text. D2 is the default engine, with TALA as its default layout. Set `engine="mermaid"` for Mermaid syntax, rendered by [Pele](https://pele.run). Diagrams render to SVG during the build, so readers don't need a diagram script in their browser. Set a literal pixel `width`, such as `width="440"`, to cap the diagram's displayed width while allowing it to shrink on narrow screens.
 
 For the diagram languages themselves, use the official [D2 tour](https://d2lang.com/tour/intro/) and [Mermaid syntax reference](https://mermaid.js.org/intro/syntax-reference.html). Shoalrun's component controls how their source is published; those references cover each language's shapes, connections, and diagram types.
 
-Every diagram needs a short `title` and `summary`. The summary states the point of the diagram; it does not need to repeat every connection. For a complex diagram, add a fuller explanation in nearby prose so readers can understand its meaning without the graphic.
+Every diagram needs a short `title` and `summary`. The summary states the point of the diagram; it doesn't need to repeat every connection. For a complex diagram, add a fuller explanation in nearby prose so readers can understand its meaning without the graphic.
 
 ## Syntax
 
@@ -113,7 +113,7 @@ Use these attributes to configure the component.
 
 Keep the source in one fenced code block inside the component. When quoting a complete example in Markdown, use four backticks around the outer `mdx` block so its inner three-backtick fence stays intact.
 
-See the [diagram gallery](https://www.shoalrun.com/author/components/diagrams/pele-gallery.md) for examples of every built-in Pele diagram family and 48 flowchart shapes. Use [Mermaid’s syntax reference](https://mermaid.js.org/intro/syntax-reference.html) to write the source and [Pele’s compatibility guide](https://pele.run/compatibility) to check rendering differences. External Mermaid plugins are not supported.
+See the [diagram gallery](https://www.shoalrun.com/author/components/diagrams/pele-gallery.md) for examples of every built-in Pele diagram family and 48 flowchart shapes. Use [Mermaid’s syntax reference](https://mermaid.js.org/intro/syntax-reference.html) to write the source and [Pele’s compatibility guide](https://pele.run/compatibility) to check rendering differences. External Mermaid plugins aren't supported.
 
 ## Styling and readability
 
@@ -130,19 +130,19 @@ Override Pele’s variables in [project CSS](https://www.shoalrun.com/author/css
 }
 ```
 
-See [Pele’s styling guide](https://pele.run/theming) for all variables, series colors, and element classes. Its [examples](https://pele.run/examples) show more diagram variations. Fixed source-level colors do not follow the palette; check their contrast in both modes. Custom fonts can change label widths, so inspect long labels after overriding fonts.
+See [Pele’s styling guide](https://pele.run/theming) for all variables, series colors, and element classes. Its [examples](https://pele.run/examples) show more diagram variations. Fixed source-level colors don't follow the palette; check their contrast in both modes. Custom fonts can change label widths, so inspect long labels after overriding fonts.
 
 Without `width`, a diagram fills the available content width. Set `width="520"` to cap one diagram at 520 pixels; it still shrinks on narrower screens. Use `.doc-diagram` and `.doc-diagram figcaption` to style the frame and caption.
 
-D2 still renders separate light and dark SVG images using themes 0 and 200. Project CSS can style their frames and dimensions, but cannot reach individual nodes inside those image files.
+D2 still renders separate light and dark SVG images using themes 0 and 200. Project CSS can style their frames and dimensions, but can't reach individual nodes inside those image files.
 
 ## HTML, Markdown, and agents
 
 Pele generates inline SVG during the build. It needs no browser or client-side renderer, and the diagram works without JavaScript. Each SVG has an accessible name from `title` and a visible caption with the `summary`. Published light/dark SVG files remain available for direct links and Markdown readers.
 
-The `.md` page retains the title, summary, SVG link, and original fenced D2 or Mermaid source. Readers and agents can inspect the structure without running a diagram library. Changing the renderer does not remove the source or explanation.
+The `.md` page retains the title, summary, SVG link, and original fenced D2 or Mermaid source. Readers and agents can inspect the structure without running a diagram library. Changing the renderer doesn't remove the source or explanation.
 
-Shoalrun disables diagram links, external images, and JavaScript callbacks. It rejects active SVG content before publication. Arbitrary HTML labels and Mermaid’s named themes are not supported by this renderer. Keep essential instructions in the summary or surrounding text.
+Shoalrun disables diagram links, external images, and JavaScript callbacks. It rejects active SVG content before publication. Arbitrary HTML labels and Mermaid’s named themes aren't supported by this renderer. Keep essential instructions in the summary or surrounding text.
 
 Keep a diagram in one fenced code block inside `<Diagram>`. The fence language must match the engine: `d2` or `mermaid`. Unknown engines, invalid layouts, missing titles or summaries, and render failures stop the build with the source file and diagram title.
 

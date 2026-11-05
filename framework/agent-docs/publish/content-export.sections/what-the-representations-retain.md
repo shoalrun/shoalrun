@@ -16,11 +16,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
-Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It does not need a Shoalrun browser runtime.
+Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It doesn't need a Shoalrun browser runtime.
 
 ## What the representations retain
 
@@ -38,6 +38,6 @@ Exports resolve snippets, supported components, and API material before renderin
 
 HTML contains no site navigation, theme, required scripts, or app-wide stylesheet. It remains readable without CSS; your app styles its content container. HTML and Markdown are rendered independently from the same resolved source, so [representation-specific blocks](https://www.shoalrun.com/author/components/only.md) retain their intended differences.
 
-HTML heading, footnote, and other IDs are namespaced per resource. Directly inserting the same HTML more than once can duplicate IDs. Use [mountContent](https://www.shoalrun.com/content-delivery/render.md) for simultaneous instances; it rewrites IDs and their fragment and ARIA references for each mount. Markdown heading anchors depend on the customer's renderer; the export does not promise identical anchor generation across Markdown libraries.
+HTML heading, footnote, and other IDs are namespaced per resource. Directly inserting the same HTML more than once can duplicate IDs. Use [mountContent](https://www.shoalrun.com/content-delivery/render.md) for simultaneous instances; it rewrites IDs and their fragment and ARIA references for each mount. Markdown heading anchors depend on the customer's renderer; the export doesn't promise identical anchor generation across Markdown libraries.
 
-Exports support pages, explicitly approved sections, and named snippet instances. Application section fragments use `{ id, context: section }` approval; they are separate from the website's size-based contextual agent sections. See [select content resources](https://www.shoalrun.com/content-delivery/select.md) for configuration and approval examples.
+Exports support pages, explicitly approved sections, and named snippet instances. Application section fragments use `{ id, context: section }` approval; they're separate from the website's size-based contextual agent sections. See [select content resources](https://www.shoalrun.com/content-delivery/select.md) for configuration and approval examples.

@@ -17,13 +17,13 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Evaluate agent tasks against your docs
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/evals.md)
 
-Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun does not launch agents, choose a model, or grade prose.
+Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun doesn't launch agents, choose a model, or grade prose.
 
-You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build does not execute evaluations or call a model. Evaluations are opt-in audit checks.
+You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build doesn't execute evaluations or call a model. Evaluations are opt-in audit checks.
 
 ## Add the audit hook
 
@@ -36,7 +36,7 @@ audit:
     report: ./evals/results.json
 ```
 
-Paths resolve beside the config file declaring each value, including included config files. The audit builds a temporary site, then checks the report against that output. Changes to published output or task definitions require a new evaluation. Reports remain project files; Shoalrun does not publish them into the site automatically.
+Paths resolve beside the config file declaring each value, including included config files. The audit builds a temporary site, then checks the report against that output. Changes to published output or task definitions require a new evaluation. Reports remain project files; Shoalrun doesn't publish them into the site automatically.
 
 If your team already has an evaluator command, configure it as an optional `run` list:
 
@@ -58,6 +58,6 @@ That script belongs to your project. It runs after a successful build, from the 
 | `SHOALRUN_EVAL_BUILD_DIGEST` | Digest of the built documentation.  |
 | `SHOALRUN_EVAL_TASKS_DIGEST` | Digest of the normalized tasks.     |
 
-The script must run and assess tasks, write a report, and exit nonzero on execution failure. A successful exit does not bypass report checks. A nonzero exit fails the audit even if an older report still validates. Hook execution and report validation appear separately as `eval-run` and `evals` in the audit results. A failed build prevents the eval hook from running.
+The script must run and assess tasks, write a report, and exit nonzero on execution failure. A successful exit doesn't bypass report checks. A nonzero exit fails the audit even if an older report still validates. Hook execution and report validation appear separately as `eval-run` and `evals` in the audit results. A failed build prevents the eval hook from running.
 
 Configured commands can use your provider keys, make network requests, and write files. Shoalrun supplies the interface; your team owns the execution, costs, review, and credentials. The temporary build is removed after the audit. For longer runs, execute your evaluator separately and import the resulting report.

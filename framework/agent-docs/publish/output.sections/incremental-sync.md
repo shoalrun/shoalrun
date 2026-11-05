@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -35,7 +35,7 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 ## Incremental sync
 
-`buildId` is a SHA-256 fingerprint of the assembled publication: HTML, Markdown, contracts, assets, and metadata. The compiler hashes route names and bytes in sorted route order before adding the build ID stamps and derived sync snapshot. Identical assembled output produces the same ID. A page edit changes it even when `configDigest` stays the same. Changing an asset or supplied release label also changes it. This identity does not promise byte-identical rendering across platforms.
+`buildId` is a SHA-256 fingerprint of the assembled publication: HTML, Markdown, contracts, assets, and metadata. The compiler hashes route names and bytes in sorted route order before adding the build ID stamps and derived sync snapshot. Identical assembled output produces the same ID. A page edit changes it even when `configDigest` stays the same. Changing an asset or supplied release label also changes it. This identity doesn't promise byte-identical rendering across platforms.
 
 `documents.json`, `build-info.json`, and `documents.sync.json` carry the same build ID. The sync snapshot contains one record per stable ID and publication variant:
 
@@ -47,7 +47,7 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 | `contentDigest`      | Resolved content fingerprint used for freshness.                       |
 | `recordDigest`       | SHA-256 of the canonical JSON manifest record, including its metadata. |
 
-`contentDigest` is an opaque resolved-content change token, not a Markdown byte hash or a semantic-change classification. `recordDigest` hashes the full manifest record, not the smaller sync record. Do not reconstruct it from the sync fields alone. `buildId` is also opaque to consumers: hashing the final output directory does not reproduce the pre-stamp build calculation.
+`contentDigest` is an opaque resolved-content change token, not a Markdown byte hash or a semantic-change classification. `recordDigest` hashes the full manifest record, not the smaller sync record. Don't reconstruct it from the sync fields alone. `buildId` is also opaque to consumers: hashing the final output directory doesn't reproduce the pre-stamp build calculation.
 
 The snapshot's top-level `metadataDigest` covers manifest fields outside the document records, excluding build ID and dependency paths. A changed value tells a client to refresh the full manifest if it needs relationships, operations, redirects, or other global metadata. Canonical JSON sorts object keys and preserves array order.
 
@@ -66,4 +66,4 @@ shoalrun docs changes current-sync.json --since previous-sync.json
 
 It returns `fromBuildId`, `buildId`, `buildChanged`, `metadataChanged`, and `added`, `changed`, and `removed` record arrays. A route move is a change; a removed publication variant is a removal. Metadata-only page changes also appear in `changed`, even if the Markdown digest is unchanged. Asset-only changes can change the build ID with empty page arrays.
 
-These are static files. The host retains no snapshot history and does not interpret `documents.json?since=...`. Clients retain their own baseline. Without one, use the current snapshot as a full initial inventory. A build ID identifies output; it does not archive earlier page bytes or record a build timestamp.
+These are static files. The host retains no snapshot history and doesn't interpret `documents.json?since=...`. Clients retain their own baseline. Without one, use the current snapshot as a full initial inventory. A build ID identifies output; it doesn't archive earlier page bytes or record a build timestamp.

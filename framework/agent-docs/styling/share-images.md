@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Share images and favicon
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 When someone pastes a page link into Slack, LinkedIn, or X, the preview shows an image. Shoalrun draws one for every page at build time and adds the tags those apps read. It also generates a favicon. Both follow the site's preset and palette, so they need no setup.
 
@@ -29,7 +29,7 @@ For the author workflow around page titles, summaries, public URLs, and social m
 - `og:title`, `og:description`, and `og:image` tags, plus explicit `twitter:title`, `twitter:description`, `twitter:image`, and `twitter:card` tags. The description uses the same page text as the image.
 - `/favicon.svg`, drawn from the preset's brand mark in the accent color, and a 180×180 `/apple-touch-icon.png`.
 
-Set `site.origin` to the public site address so image and page URLs in the tags are absolute and publicly reachable. A browser can load a page even when a link-preview crawler cannot fetch an image hosted at a different or private address. Run the [deployment checker](https://www.shoalrun.com/publish/deployment-check.md) against the public origin to catch a mismatched `og:image` or a missing image.
+Set `site.origin` to the public site address so image and page URLs in the tags are absolute and publicly reachable. A browser can load a page even when a link-preview crawler can't fetch an image hosted at a different or private address. Run the [deployment checker](https://www.shoalrun.com/publish/deployment-check.md) against the public origin to catch a mismatched `og:image` or a missing image.
 
 ```yaml title="docs.config.yaml"
 site:
@@ -100,7 +100,7 @@ A missing file or another format fails the build.
 
 ## HTML, Markdown, and agents
 
-Share images are generated image files referenced by the HTML page's social metadata. The image is not a substitute for the page's authored title, summary, or instructions. Agents reading Markdown receive the text and any metadata selected for that format, without needing to interpret a social preview image. Keep information needed for a task in the page body.
+Share images are generated image files referenced by the HTML page's social metadata. The image isn't a substitute for the page's authored title, summary, or instructions. Agents reading Markdown receive the text and any metadata selected for that format, without needing to interpret a social preview image. Keep information needed for a task in the page body.
 
 ## Related reading
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Audit a docs project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/audit.md)
 
@@ -51,7 +51,7 @@ The first command discovers `docs.config.yaml` in the current directory or a par
 
 Checks include configured test commands, local OpenAPI sources, a complete temporary build, focused contracts, and local links. The build validates config, frontmatter, and supported MDX. YAML duplicate keys, excessive alias expansion, and cyclic aliases fail with a source-file diagnostic. OpenAPI inputs must declare a supported 3.0 or 3.1 version, an info title and version, and mapping-shaped paths.
 
-Link checks inspect generated HTML and Markdown. They verify local destinations and HTML fragments, including same-origin absolute links. Markdown fragments are not checked because heading rules vary between readers. Links in code samples are ignored. Built-in checks need no browser or running server and do not fetch external URLs. Existing site output is preserved; normal generated metadata can still be written under `.shoalrun/`.
+Link checks inspect generated HTML and Markdown. They verify local destinations and HTML fragments, including same-origin absolute links. Markdown fragments aren't checked because heading rules vary between readers. Links in code samples are ignored. Built-in checks need no browser or running server and don't fetch external URLs. Existing site output is preserved; normal generated metadata can still be written under `.shoalrun/`.
 
 Add a package script to make the check easy to run:
 
@@ -66,7 +66,7 @@ An optional Git pre-push hook can run that script. Put these lines in `.git/hook
 exec npm run docs:check
 ```
 
-The CLI does not install hooks. Configured test commands can perform their own network requests or writes.
+The CLI doesn't install hooks. Configured test commands can perform their own network requests or writes.
 
 To include a dependency check for a project with a package lock, configure:
 

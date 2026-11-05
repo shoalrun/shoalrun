@@ -17,9 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Add an OpenAPI API
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). This walkthrough uses a fictional Notes API as its example. You will register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
+Add one authored API reference to the project created in the [quickstart](https://www.shoalrun.com/start.md). This walkthrough uses a fictional Notes API as its example. You'll register an operation, write its introduction, add it to navigation, review the imported content, and verify its published files.
 
 Run commands from the documentation project directory created in the quickstart, where `@shoalrun/cli` is installed. The commands use that local package. Check [OpenAPI support and limits](https://www.shoalrun.com/api-docs/support.md) before importing a larger specification.
 
@@ -138,7 +138,7 @@ notes:
   # Keep source and operations here.
 ```
 
-Replace the angle-bracket placeholder with the actual digest. Keep the candidate local and remove it after review. The digest records what you reviewed; it does not determine whether content is safe. Changing source bytes, selected operations or embeds, focused contracts, or full-source publication requires another review. Changing only authored page copy does not.
+Replace the angle-bracket placeholder with the actual digest. Keep the candidate local and remove it after review. The digest records what you reviewed; it doesn't determine whether content is safe. Changing source bytes, selected operations or embeds, focused contracts, or full-source publication requires another review. Changing only authored page copy doesn't.
 
 ## Build and verify the output
 
@@ -150,7 +150,7 @@ npx --no-install shoalrun serve site-dist --port 8765
 
 Open `http://127.0.0.1:8765/example-api/create-note/` and choose **Create a note** in the sidebar. Confirm the introduction, `POST /notes`, the `201` response with its required `id` field, and the named example. Open `http://127.0.0.1:8765/example-api/create-note.md` to check the same details as Markdown. Follow the focused contract link and check that it contains only this operation and its required contract data.
 
-The HTML uses a reference column and an API data panel at wide widths; on narrow screens the panel follows the article. The Markdown twin contains every property, variant, enum choice, and named example in reading order. JSON shapes use type placeholders; they are not runnable payloads. Generated request commands have not been executed.
+The HTML uses a reference column and an API data panel at wide widths; on narrow screens the panel follows the article. The Markdown twin contains every property, variant, enum choice, and named example in reading order. JSON shapes use type placeholders; they aren't runnable payloads. Generated request commands haven't been executed.
 
 For a larger live example of the documentation layout, see the [fictional Create a note reference](https://www.shoalrun.com/example-api/create-note.md). Its `archivedAt` response field is both **always present** and **nullable**: presence and nullability describe different things. A field marked **may be absent** can be omitted entirely.
 
@@ -158,7 +158,7 @@ Next, [generate and select more API pages](https://www.shoalrun.com/api-docs/gen
 
 ## What readers get
 
-An authored reference adds editorial context to the operation contract. A [generated reference](https://www.shoalrun.com/example-api/generated/get-note-cbedb319.md) includes the same contract details without an MDX introduction. For tasks spanning several operations, write a linked guide such as [Write a note](https://www.shoalrun.com/example-api/write-note.md). These fictional examples do not imply a live API or tested requests.
+An authored reference adds editorial context to the operation contract. A [generated reference](https://www.shoalrun.com/example-api/generated/get-note-cbedb319.md) includes the same contract details without an MDX introduction. For tasks spanning several operations, write a linked guide such as [Write a note](https://www.shoalrun.com/example-api/write-note.md). These fictional examples don't imply a live API or tested requests.
 
 Response status and media type share a heading row. Descriptions remain visible above property disclosures; enum choices appear below field descriptions. Markdown includes all of this without interactive controls. OpenAPI `deprecated: true` sets the page's status to deprecated; conflicting authored status values fail the build.
 

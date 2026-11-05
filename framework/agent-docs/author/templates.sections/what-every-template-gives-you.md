@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/templates.md)
 
@@ -30,14 +30,14 @@ Parent page: [Full Markdown page](/author/templates.md)
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 
-Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they do not enforce a permanent page structure.
+Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they don't enforce a permanent page structure.
 
 ## What every template gives you
 
 The primary Diátaxis templates use these authoring conventions; workflow templates keep the sections useful to their role:
 
 - **Commented frontmatter.** Comments explain fields and give examples where useful. Fields you must fill in hold a placeholder. Optional fields are commented out, each with the case where it applies.
-- **A short introduction.** One paragraph of 150 words or fewer sits under the title with no heading. It says what the page is for and who it is for.
+- **A short introduction.** One paragraph of 150 words or fewer sits under the title with no heading. It says what the page is for and who it's for.
 - **Optional sections.** Sections such as Prerequisites and Considerations are marked optional. Keep the ones that apply and delete the rest, heading and text.
 - **Structure for the reader need.** Tutorials guide an exercise, how-tos put actions and verification first, references organize facts for lookup, and explanations develop context and reasoning.
 - **HTML, Markdown, and agents.** Keep this section when the page uses a component or describes behavior that differs between HTML and Markdown or affects what an agent reads. State what HTML shows, what the Markdown twin contains, and what an agent receives. Delete it otherwise.

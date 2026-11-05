@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 A reader view changes which pages appear in navigation and search. It also controls document cards and marked sections within pages. The site still publishes one URL for each page. A first-time visitor sees all content; a choice is saved in the browser and added to the URL so it can be shared.
 
@@ -59,11 +59,11 @@ In a dashboard guide, show the menu names and screen actions a reader needs. Thi
 
 In an API guide, show the request, required fields, and expected response. This section appears when **Developer** is selected.
 
-**Show all** in the multi-select keeps both sections visible on this page. **Follow site view** removes the page-only choice and returns to the site's current reader view. The page-only choice is shareable with **Copy view link** and is not saved across visits.
+**Show all** in the multi-select keeps both sections visible on this page. **Follow site view** removes the page-only choice and returns to the site's current reader view. The page-only choice is shareable with **Copy view link** and isn't saved across visits.
 
 ## Configure the choices
 
-Define the available reader choices once in `readerFilters.facets` in `docs.config.yaml`. The facet names and choices are yours; Shoalrun has no fixed list of reader types. Each facet and choice has a stable lowercase ID and a label for readers. Pages and sections refer to these IDs, and unknown IDs fail the build. `typeDefaults` is optional; it is useful when generated API references should start in the Developer view without marking every operation separately.
+Define the available reader choices once in `readerFilters.facets` in `docs.config.yaml`. The facet names and choices are yours; Shoalrun has no fixed list of reader types. Each facet and choice has a stable lowercase ID and a label for readers. Pages and sections refer to these IDs, and unknown IDs fail the build. `typeDefaults` is optional; it's useful when generated API references should start in the Developer view without marking every operation separately.
 
 ```yaml title="docs.config.yaml"
 readerFilters:
@@ -115,13 +115,13 @@ subarea: settlements
 ---
 ```
 
-When a facet is configured, `audiences` and same-named category values must use its choice IDs. You can instead use `readerFilters.audience` or `readerFilters.product`, but do not put both forms for the same facet on one page. An explicit page value overrides a `typeDefaults` value for that facet. Categories without matching configured facets remain taxonomy metadata only. Pages with no marks remain visible in every view.
+When a facet is configured, `audiences` and same-named category values must use its choice IDs. You can instead use `readerFilters.audience` or `readerFilters.product`, but don't put both forms for the same facet on one page. An explicit page value overrides a `typeDefaults` value for that facet. Categories without matching configured facets remain taxonomy metadata only. Pages with no marks remain visible in every view.
 
-The page marks control navigation, search, and cards that point to the page. They do not change its URL. A direct link to a page outside the current view opens the page in full. A notice offers actions to switch view or show all content.
+The page marks control navigation, search, and cards that point to the page. They don't change its URL. A direct link to a page outside the current view opens the page in full. A notice offers actions to switch view or show all content.
 
 ## Mark sections and add an entry choice
 
-Use `ReaderSection` for content that belongs to a narrower view within an otherwise shared page. Content outside these blocks stays visible to everyone. Sections can contain Markdown and supported MDX components, but reader sections cannot be nested.
+Use `ReaderSection` for content that belongs to a narrower view within an otherwise shared page. Content outside these blocks stays visible to everyone. Sections can contain Markdown and supported MDX components, but reader sections can't be nested.
 
 ```mdx title="content/get-started.mdx"
 <ReaderChoice audience="ui" label="Use the dashboard" />
@@ -153,16 +153,16 @@ Authors can place the same controls inside a page:
 
 `select` allows one choice per facet and includes **All**. `checks` allows multiple choices and includes **Show all** and **Copy view link**. `<ReaderFilter />` controls every facet. The component is interactive in HTML and omitted from the Markdown twin; marked content and `ReaderChoice` links remain in Markdown.
 
-Set `scope="page"` on an in-page `ReaderChoice` or `ReaderFilter` to control only marked sections and cards on the current page. The site-wide choice still controls navigation and search. Page-only choices use the `pageView` URL parameter for sharing; they do not enter local storage. With no page-only choice, the page follows the site view. A page-scoped multi-select includes **Follow site view** to return to that state. The default scope is `site`.
+Set `scope="page"` on an in-page `ReaderChoice` or `ReaderFilter` to control only marked sections and cards on the current page. The site-wide choice still controls navigation and search. Page-only choices use the `pageView` URL parameter for sharing; they don't enter local storage. With no page-only choice, the page follows the site view. A page-scoped multi-select includes **Follow site view** to return to that state. The default scope is `site`.
 
 ## How it works for agents
 
-Reader views change the interactive HTML. They do not create separate agent publications or a personalized agent navigation tree. An agent can discover and read every **published** page regardless of a browser reader's saved choice or a shared `view` or `pageView` URL parameter. Draft and access-controlled source pages still follow the normal publication rules.
+Reader views change the interactive HTML. They don't create separate agent publications or a personalized agent navigation tree. An agent can discover and read every **published** page regardless of a browser reader's saved choice or a shared `view` or `pageView` URL parameter. Draft and access-controlled source pages still follow the normal publication rules.
 
 | Agent-facing output   | Reader-view behavior                                                                                                                                                                                                                                                                                                         |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Markdown twin (`.md`) | Includes shared content and every `ReaderSection`, even sections hidden in HTML. Each marked section starts with a readable label such as `**For Reader: UI reader.**`. `<ReaderFilter />` controls are omitted. `ReaderChoice` becomes a link to the interactive HTML page with its `view` or `pageView` choice in the URL. |
-| `/llms.txt`           | Lists every published Markdown page. A selected browser view does not remove entries.                                                                                                                                                                                                                                        |
+| `/llms.txt`           | Lists every published Markdown page. A selected browser view doesn't remove entries.                                                                                                                                                                                                                                         |
 | `/documents.json`     | Lists every published page. `readerFacets` defines the configured choices; each document's `readerFilters` contains its resolved page marks. An empty map means the page is shared. Optional `product`, `area`, and `subarea` categories also appear when set.                                                               |
 | `/search-index.json`  | Retains a search record for every published page, with page marks in `readerFilters` and indexed section text in `readerSegments`. The built-in **browser** search applies the site-wide choice when displaying results.                                                                                                     |
 

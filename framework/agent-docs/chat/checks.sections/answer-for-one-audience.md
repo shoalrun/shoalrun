@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -35,7 +35,7 @@ Citations and code are checked by default. Coverage gating, claim verification, 
 
 ## Answer for one audience
 
-`chat.readerView` limits retrieval to the configured audience, such as customers or staff. It filters whole pages using their reader marks. It does not make published files private; use host-level access controls for confidential content.
+`chat.readerView` limits retrieval to the configured audience, such as customers or staff. It filters whole pages using their reader marks. It doesn't make published files private; use host-level access controls for confidential content.
 
 It uses the same reader filters as the search box. Define the audiences once under `readerFilters.facets`, name one in the chat, and tag pages with `audiences`:
 

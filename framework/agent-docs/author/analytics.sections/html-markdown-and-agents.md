@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Analytics
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/analytics.md)
 
@@ -31,12 +31,12 @@ Shoalrun sends documentation interactions to an analytics service through an **a
 
 ## HTML, Markdown, and agents
 
-Instrumentation runs only in the browser and leaves Markdown and discovery artifacts unchanged. Agents that fetch Markdown or call tools without running page JavaScript are not counted.
+Instrumentation runs only in the browser and leaves Markdown and discovery artifacts unchanged. Agents that fetch Markdown or call tools without running page JavaScript aren't counted.
 
-To measure those requests, collect CDN or hosting logs, add a server request hook, or enable the separate [MCP analytics adapter](https://www.shoalrun.com/publish/mcp-analytics.md). Include cache hits: origin logs alone miss responses served by a CDN. Shoalrun does not install a request collector.
+To measure those requests, collect CDN or hosting logs, add a server request hook, or enable the separate [MCP analytics adapter](https://www.shoalrun.com/publish/mcp-analytics.md). Include cache hits: origin logs alone miss responses served by a CDN. Shoalrun doesn't install a request collector.
 
 Measure discovery indexes, Markdown pages and sections, negotiated responses, and tool calls. Record the actual response representation because HTML and Markdown can share a URL. Keep health checks, `HEAD`, failures, and cache revalidation separate from successful body responses.
 
 Send a separate server event such as `documentation_request` with path, representation, status, cache status, page ID when known, and a request ID for deduplication. Keep these counts separate from browser page views. Avoid raw headers, IP addresses, query strings, and page bodies by default.
 
-A user agent is a claimed identity, not a verified one. People can fetch Markdown, and agents can use ordinary browsers; classify representation and claimed client separately. Requests do not prove reading, comprehension, or citation. Correlating them into sessions requires an explicit client or integration identifier; timing and IP address are unreliable.
+A user agent is a claimed identity, not a verified one. People can fetch Markdown, and agents can use ordinary browsers; classify representation and claimed client separately. Requests don't prove reading, comprehension, or citation. Correlating them into sessions requires an explicit client or integration identifier; timing and IP address are unreliable.

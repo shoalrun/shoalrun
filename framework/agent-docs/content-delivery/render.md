@@ -17,11 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Render content in an application
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.13.**
 
 Your application can display a resource in a panel, onboarding surface, article view, or help drawer. Fetch the resource through a [content snapshot](https://www.shoalrun.com/content-delivery/client.md), then mount its HTML in a container you own.
-
-Available since `0.1.0-alpha.13`.
 
 ## Mount the result
 
@@ -44,17 +44,17 @@ Mounting assigns a unique prefix to IDs and rewrites local fragments, footnote r
 
 ## Own the interface
 
-Apply your application's CSS to passive elements. The mount helper does not install the documentation theme or recreate interactive components. Preserve headings, link labels, image alternatives, and other semantic content when styling.
+Apply your application's CSS to passive elements. The mount helper doesn't install the documentation theme or recreate interactive components. Preserve headings, link labels, image alternatives, and other semantic content when styling.
 
 Your app owns loading and failure states, navigation history, focus management, close controls, keyboard behavior, and announcements when content changes. Preserve heading levels from the content; arrange the surrounding page so those levels make sense.
 
-The helper inserts trusted compiler output. It is not a sanitizer for arbitrary HTML from users or unknown publishers.
+The helper inserts trusted compiler output. It isn't a sanitizer for arbitrary HTML from users or unknown publishers.
 
 ## Route links and clean up
 
 `mounted.links` records each exported link's kind and target. Resource links include a typed `ref`; canonical and external links have ordinary URLs. Intercept a resource link only when the app can open that target and preserve its fragment or query. Other links should retain their normal destination.
 
-Use the returned `mounted.anchors` for instance-specific fragment targets. Do not guess DOM IDs from headings. When the view closes, call `mounted.unmount()` and dispose the snapshot when it is no longer shared by another view.
+Use the returned `mounted.anchors` for instance-specific fragment targets. Don't guess DOM IDs from headings. When the view closes, call `mounted.unmount()` and dispose the snapshot when it's no longer shared by another view.
 
 ## HTML, Markdown, and agents
 

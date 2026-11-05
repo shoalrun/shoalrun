@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Cards and collections
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/components/cards.md)
 
@@ -28,15 +28,15 @@ Parent page: [Full Markdown page](/author/components/cards.md)
 
 A card is a linked preview of another documentation page: it shows a title and short preview so readers can decide where to go next. Cards use the target page's title, the project's configured `outputs.text.card` field, and its current URL. The target is the page the reader will open when they select the card.
 
-Authors maintain those details in the target page's frontmatter, the YAML metadata at the top of the file. A card references the page's stable `id`, so renaming its file or changing its URL does not break the card. HTML displays a card layout; Markdown displays the same links, descriptions, subject lifecycle status, and relationship reasons as a readable list.
+Authors maintain those details in the target page's frontmatter, the YAML metadata at the top of the file. A card references the page's stable `id`, so renaming its file or changing its URL doesn't break the card. HTML displays a card layout; Markdown displays the same links, descriptions, subject lifecycle status, and relationship reasons as a readable list.
 
-Use these components as standalone, empty blocks in `.md` or `.mdx` pages or registered snippets. Literal attributes are accepted; arbitrary JavaScript expressions are not evaluated.
+Use these components as standalone, empty blocks in `.md` or `.mdx` pages or registered snippets. Literal attributes are accepted; arbitrary JavaScript expressions aren't evaluated.
 
 ## Build a collection
 
-A **collection** automatically finds pages that match your filters and displays them as cards. Use it when the list should follow the site's content, such as all authoring guides or pages associated with a payment operation. Unlike a curated list, you do not have to maintain an array of every matching page ID.
+A **collection** automatically finds pages that match your filters and displays them as cards. Use it when the list should follow the site's content, such as all authoring guides or pages associated with a payment operation. Unlike a curated list, you don't have to maintain an array of every matching page ID.
 
-`DocCollection` re-runs its filters during each build. Adding a matching page adds its card on the next build; removing the tag or making that page a draft removes it. A collection does not create pages, change their metadata, or add them to sidebar navigation.
+`DocCollection` re-runs its filters during each build. Adding a matching page adds its card on the next build; removing the tag or making that page a draft removes it. A collection doesn't create pages, change their metadata, or add them to sidebar navigation.
 
 This example displays up to six other guides tagged `authoring`, sorted by title:
 
@@ -51,7 +51,7 @@ No matching documents.
 | `type`      | Matches the document kind in frontmatter, such as `guide` or `api-reference`.                                                                                                   |
 | `tag`       | Matches a topic label in the target's `tags` array, such as `authoring`.                                                                                                        |
 | `operation` | Membership in its stable `operations` IDs; unknown operation IDs fail.                                                                                                          |
-| `audience`  | Membership in its `audiences` array; this filters metadata and does not grant access.                                                                                           |
+| `audience`  | Membership in its `audiences` array; this filters metadata and doesn't grant access.                                                                                            |
 | `orderBy`   | `title` by default, `id`, `date`, or `releaseVersion`. Date sorts newest first; version uses numeric label ordering. Every match needs the chosen field. Stable IDs break ties. |
 | `pin`       | Promotes selected matching pages to the front of the collection, in the given order. Supply a literal array of document IDs.                                                    |
 | `exclude`   | A literal array of IDs to remove. IDs absent from this publication are ignored.                                                                                                 |
@@ -66,4 +66,4 @@ For example, in the API fixture:
 <DocCollection operation="payments.create" pin={["reference.create-payment"]} />
 ```
 
-Pinned documents must be visible and satisfy all filters, including exclusions. Invalid pins stop the build. The `pin` and `exclude` arrays require unique document IDs. Collection ordering is deterministic and does not depend on filenames.
+Pinned documents must be visible and satisfy all filters, including exclusions. Invalid pins stop the build. The `pin` and `exclude` arrays require unique document IDs. Collection ordering is deterministic and doesn't depend on filenames.

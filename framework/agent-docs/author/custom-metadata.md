@@ -16,13 +16,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Metadata customization
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Use this guide when your project needs shared metadata rules or fields beyond the [native page metadata](https://www.shoalrun.com/author/frontmatter.md). To choose which values appear in published Markdown, see [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md).
 
 ## Global defaults and enforced values
 
-The project config is the root `docs.config.yaml` plus any imported fragments. Its `frontmatter` block supplies shared page values; this block does not appear inside an individual page's header. Configure it in the root file or an imported fragment:
+The project config is the root `docs.config.yaml` plus any imported fragments. Its `frontmatter` block supplies shared page values; this block doesn't appear inside an individual page's header. Configure it in the root file or an imported fragment:
 
 ```yaml
 frontmatter:
@@ -48,9 +48,9 @@ frontmatter:
       description: Team responsible for the documentation.
 ```
 
-`defaults` fills in values that a page may replace. `enforced` sets values the page cannot replace. Precedence is **defaults → page frontmatter → enforced values**. Objects merge recursively, and arrays replace rather than concatenate. In this example, every page's effective audience is `partners`, even if its source lists another audience. A page can override the default SEO description, but cannot override the enforced editorial owner.
+`defaults` fills in values that a page may replace. `enforced` sets values the page can't replace. Precedence is **defaults → page frontmatter → enforced values**. Objects merge recursively, and arrays replace rather than concatenate. In this example, every page's effective audience is `partners`, even if its source lists another audience. A page can override the default SEO description, but can't override the enforced editorial owner.
 
-The `id` and `slug` fields must stay on each page; they cannot be global defaults or enforced values. Other native and custom metadata can be inherited. Required fields and declared types are checked after merging, so an inherited `type`, `summary`, or required custom field satisfies validation. The generated JSON Schema omits inherited fields from its source-level required lists. Global values do not bypass public metadata projection rules.
+The `id` and `slug` fields must stay on each page; they can't be global defaults or enforced values. Other native and custom metadata can be inherited. Required fields and declared types are checked after merging, so an inherited `type`, `summary`, or required custom field satisfies validation. The generated JSON Schema omits inherited fields from its source-level required lists. Global values don't bypass public metadata projection rules.
 
 `access` follows the same precedence. A default public policy allows a page to remain an explicit draft. An enforced public policy replaces even an explicit draft policy, so use defaults if authors need to keep individual pages unpublished. Scaffolded files are still initially written with draft access.
 
@@ -72,11 +72,11 @@ When updating an earlier prototype project, rename these settings:
 
 Review page `locale` values individually, because that name now means formatting conventions.
 
-Set nested global values with YAML mappings, as shown above. Dotted names such as `editorial.owner` belong in `fields` declarations and metadata projections. Global settings are applied in memory during the build; source pages are not rewritten. There are no directory-specific or document-type global policies yet.
+Set nested global values with YAML mappings, as shown above. Dotted names such as `editorial.owner` belong in `fields` declarations and metadata projections. Global settings are applied in memory during the build; source pages aren't rewritten. There are no directory-specific or document-type global policies yet.
 
 ## Add a custom page field
 
-The [page metadata guide](https://www.shoalrun.com/author/frontmatter.md) uses the optional, project-defined `agent.intent` field to record the task it helps a reader complete. Shoalrun does not require or interpret that field. A custom field has two parts: a **declaration** in project config and a **value** in a page header. The declaration appears in the [published field reference](https://www.shoalrun.com/author/frontmatter-reference.md) and the local generated reference; the value belongs to that page.
+The [page metadata guide](https://www.shoalrun.com/author/frontmatter.md) uses the optional, project-defined `agent.intent` field to record the task it helps a reader complete. Shoalrun doesn't require or interpret that field. A custom field has two parts: a **declaration** in project config and a **value** in a page header. The declaration appears in the [published field reference](https://www.shoalrun.com/author/frontmatter-reference.md) and the local generated reference; the value belongs to that page.
 
 1. `docs/docs.config.yaml` loads the field declarations from a separate file:
 
@@ -107,9 +107,9 @@ The [page metadata guide](https://www.shoalrun.com/author/frontmatter.md) uses t
      reviewNote: Check the frontmatter examples before release.
    ```
 
-The config key `agent.intent` is a path. On the page, write it as an `agent` object with an `intent` value. The declaration checks that the value is a string and adds its description to the generated reference. `public: true` makes it eligible for the Markdown preamble; it does not export the value by itself.
+The config key `agent.intent` is a path. On the page, write it as an `agent` object with an `intent` value. The declaration checks that the value is a string and adds its description to the generated reference. `public: true` makes it eligible for the Markdown preamble; it doesn't export the value by itself.
 
-Undeclared fields are allowed in source pages, but they have no project type check or export approval. Declarations cannot redefine built-in fields, `slug`, `channel`, `version`, or the [protected metadata roots](https://www.shoalrun.com/author/markdown-metadata.md). A dotted declaration such as `agent.intent` needs any declared parent, such as `agent`, to have type `object`. Declarations support `string`, `number`, `integer`, `boolean`, `object`, and `array`. They can also set `required`, `items` for arrays, or `enum` for scalar values.
+Undeclared fields are allowed in source pages, but they have no project type check or export approval. Declarations can't redefine built-in fields, `slug`, `channel`, `version`, or the [protected metadata roots](https://www.shoalrun.com/author/markdown-metadata.md). A dotted declaration such as `agent.intent` needs any declared parent, such as `agent`, to have type `object`. Declarations support `string`, `number`, `integer`, `boolean`, `object`, and `array`. They can also set `required`, `items` for arrays, or `enum` for scalar values.
 
 For conditional source rules, such as requiring a verification date and evidence note together, see [check editorial policies with Manni](https://www.shoalrun.com/publish/manni.md). This optional check complements the field declarations above.
 
@@ -127,7 +127,7 @@ outputs:
     socialCard: [summary]
 ```
 
-`socialCard` writes an Open Graph description tag when it finds text; it does not generate a card image. Without a `socialCard` rule or page override, Shoalrun writes no Open Graph description. The other surfaces default to `summary` if no rule is set. The search choice becomes the summary in `search-index.json`. A card's existing `card.description` and an HTML page's existing `seo.description` take precedence over these rules.
+`socialCard` writes an Open Graph description tag when it finds text; it doesn't generate a card image. Without a `socialCard` rule or page override, Shoalrun writes no Open Graph description. The other surfaces default to `summary` if no rule is set. The search choice becomes the summary in `search-index.json`. A card's existing `card.description` and an HTML page's existing `seo.description` take precedence over these rules.
 
 Override one surface on a page with literal text:
 
@@ -136,11 +136,11 @@ displayText:
   socialCard: A short introduction for link previews.
 ```
 
-`displayText` is presentation control; it is not exported as Markdown metadata. A configured text rule can also select a custom or provider-supplied string field by path. Selecting it for public HTML or the search index is an explicit publication decision.
+`displayText` is presentation control; it isn't exported as Markdown metadata. A configured text rule can also select a custom or provider-supplied string field by path. Selecting it for public HTML or the search index is an explicit publication decision.
 
 ## Read metadata from a project module
 
-A project can opt into a local build-time provider module. Shoalrun does not validate external vocabularies; projects run their own validation separately. A provider can adapt an external metadata manifest to Shoalrun's page model:
+A project can opt into a local build-time provider module. Shoalrun doesn't validate external vocabularies; projects run their own validation separately. A provider can adapt an external metadata manifest to Shoalrun's page model:
 
 ```yaml title="docs.config.yaml"
 metadata:
@@ -160,7 +160,7 @@ export async function provideMetadata({ file, source, projectRoot }) {
 }
 ```
 
-`lookupById` is project code in this example. The provider runs for each authored page before project defaults and normal frontmatter checks. Returned values can be used by Shoalrun's build features. Return nothing to leave a page unchanged. `ownedKeys` names top-level fields the provider owns, including fields with no value on a given page. Every key in `values` must be owned. If `ownedKeys` is omitted, the provider owns exactly the keys in `values`. If an owned field also appears in page frontmatter, the build fails. Providers cannot replace `id`, `slug`, publication selectors, or `access`. `dependencies` lists absolute paths of files the provider read so the build record includes them.
+`lookupById` is project code in this example. The provider runs for each authored page before project defaults and normal frontmatter checks. Returned values can be used by Shoalrun's build features. Return nothing to leave a page unchanged. `ownedKeys` names top-level fields the provider owns, including fields with no value on a given page. Every key in `values` must be owned. If `ownedKeys` is omitted, the provider owns exactly the keys in `values`. If an owned field also appears in page frontmatter, the build fails. Providers can't replace `id`, `slug`, publication selectors, or `access`. `dependencies` lists absolute paths of files the provider read so the build record includes them.
 
 Provider fields stay out of public metadata unless the project selects them. To put a custom provider field in the Markdown header, declare it under `frontmatter.fields` with `public: true`, then select it in `outputs.markdown.metadata.fields`. The project's explicit selection determines what is published.
 
@@ -168,7 +168,7 @@ Next, [choose metadata for published Markdown](https://www.shoalrun.com/author/m
 
 ## Preview changes to metadata providers
 
-Restart local preview after editing a custom metadata provider module configured with `metadata.provider`. Node loads the module once, so a watched rebuild does not reload its implementation. Stop `shoalrun dev` and start it again to see changes to the provider code. Changes to ordinary documentation pages still trigger automatic rebuilds. See the [CLI reference](https://www.shoalrun.com/cli.md) for other changes that require a restart.
+Restart local preview after editing a custom metadata provider module configured with `metadata.provider`. Node loads the module once, so a watched rebuild doesn't reload its implementation. Stop `shoalrun dev` and start it again to see changes to the provider code. Changes to ordinary documentation pages still trigger automatic rebuilds. See the [CLI reference](https://www.shoalrun.com/cli.md) for other changes that require a restart.
 
 ## Related reading
 

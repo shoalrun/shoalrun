@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/recipes.md)
 
@@ -61,4 +61,4 @@ flowchart TD
  audit -->|"added to draft"| audit_recipe
 ```
 
-The [Site workflows cookbook](https://www.shoalrun.com/cookbooks/site-workflows.md) offers these two finished recipes. Choosing the audit path displays all four steps. The reader does not have to find or assemble the ingredients.
+The [Site workflows cookbook](https://www.shoalrun.com/cookbooks/site-workflows.md) offers these two finished recipes. Choosing the audit path displays all four steps. The reader doesn't have to find or assemble the ingredients.

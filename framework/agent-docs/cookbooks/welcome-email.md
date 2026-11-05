@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Cookbook example > Cookbook example
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 This worked example shows how a cookbook presents complete recipes and reuses instructions across them. Choose a short acceptance check or a longer delivery workflow; the delivery recipe includes the same queue step.
 
@@ -45,11 +45,11 @@ What do you need to confirm?. Choose one recipe.
 
   You will have: A delivery status tied to the message you queued, with a failure check.
 
-The delivery path includes the queue step, so choose one path. Use **Link to this path** to share your selection, **Download Markdown** to keep the instructions, or **Print this path** for a paper copy. Shared links contain your recipe choice only; they do not contain a message ID.
+The delivery path includes the queue step, so choose one path. Use **Link to this path** to share your selection, **Download Markdown** to keep the instructions, or **Print this path** for a paper copy. Shared links contain your recipe choice only; they don't contain a message ID.
 
 ## HTML, Markdown, and agents
 
-The HTML chooser loads the selected email recipes, while ordinary recipe links remain available without JavaScript. Markdown lists the choices and links rather than the browser-selected recipe bodies. An agent must follow those links or read the chooser's **Download Markdown** file for the complete simulator instructions. Selecting a recipe does not send an email or execute its commands.
+The HTML chooser loads the selected email recipes, while ordinary recipe links remain available without JavaScript. Markdown lists the choices and links rather than the browser-selected recipe bodies. An agent must follow those links or read the chooser's **Download Markdown** file for the complete simulator instructions. Selecting a recipe doesn't send an email or execute its commands.
 
 ## Related reading
 

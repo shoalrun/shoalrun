@@ -16,9 +16,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
-This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
+This quickstart takes you from installing Shoalrun to your own working documentation site. You'll scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
 > **Alpha:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between alpha releases.
 
@@ -36,7 +36,7 @@ Install an exact version of the alpha and initialize the minimal starter:
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.16
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.18
 npx --no-install shoalrun init .
 ```
 
@@ -141,7 +141,7 @@ navigation:
         doc: guide.first-page
 ```
 
-Creating a page does not add it to navigation automatically. This entry puts **Your first page** under **Setup**, using its frontmatter title as the label.
+Creating a page doesn't add it to navigation automatically. This entry puts **Your first page** under **Setup**, using its frontmatter title as the label.
 
 ## Build and check both outputs
 
@@ -160,7 +160,7 @@ Check these URLs in your browser:
 
 The installation link should take you to `/install` in HTML and `/install.md` in the Markdown output. Commands print JSON and return a nonzero exit code on failure. If a page is missing, check its publication fields and navigation entry.
 
-Press **Ctrl+C** to stop the server. For ongoing writing, run the `dev` command again; it rebuilds and refreshes the browser when you save edits. Builds replace the whole output directory, so keep `site-dist/` separate from your source files. Add `site-dist/` and `.shoalrun/` to your project's `.gitignore` if you do not want to track generated files.
+Press **Ctrl+C** to stop the server. For ongoing writing, run the `dev` command again; it rebuilds and refreshes the browser when you save edits. Builds replace the whole output directory, so keep `site-dist/` separate from your source files. Add `site-dist/` and `.shoalrun/` to your project's `.gitignore` if you don't want to track generated files.
 
 ## Make it yours
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Page layouts, landing pages, and splash pages
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Use `layout: wide` to hide “On this page” and give interactive content more space while keeping navigation. Use `tocDepth: 0` when you only want to hide the table of contents within the current layout.
 
@@ -64,7 +64,7 @@ showNavigationTabs: false
 
 Set `showNavigationTabs: true` to include the tab bar on a landing or splash page. Set it to `false` to suppress it on a docs or wide page. The value must be a boolean and can also come from frontmatter defaults or enforced values. With no configured tabs, neither value creates a bar.
 
-This setting affects the HTML section bar only. It does not change the page's sidebar, tab membership, breadcrumbs, Markdown, search records, or agent indexes. An agent can still discover and read every published section without visiting the homepage.
+This setting affects the HTML section bar only. It doesn't change the page's sidebar, tab membership, breadcrumbs, Markdown, search records, or agent indexes. An agent can still discover and read every published section without visiting the homepage.
 
 ## Build a landing page
 
@@ -206,7 +206,7 @@ Keep text readable against any background you choose. The build checks palette c
 
 ## HTML, Markdown, and agents
 
-Layouts control HTML sidebars, outlines, column widths, and full-width bands. They do not create separate content for agents. In Markdown, a `Hero` retains its tagline, action links, and supported image or code content; `Section` retains its body in source order without the visual wrapper. Agents can follow the links and read the content without interpreting the layout or running browser scripts. Keep essential meaning in the authored text rather than background styling or motion.
+Layouts control HTML sidebars, outlines, column widths, and full-width bands. They don't create separate content for agents. In Markdown, a `Hero` retains its tagline, action links, and supported image or code content; `Section` retains its body in source order without the visual wrapper. Agents can follow the links and read the content without interpreting the layout or running browser scripts. Keep essential meaning in the authored text rather than background styling or motion.
 
 ## Related reading
 

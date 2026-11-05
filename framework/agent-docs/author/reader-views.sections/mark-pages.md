@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Reader views
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/reader-views.md)
 
@@ -44,6 +44,6 @@ subarea: settlements
 ---
 ```
 
-When a facet is configured, `audiences` and same-named category values must use its choice IDs. You can instead use `readerFilters.audience` or `readerFilters.product`, but do not put both forms for the same facet on one page. An explicit page value overrides a `typeDefaults` value for that facet. Categories without matching configured facets remain taxonomy metadata only. Pages with no marks remain visible in every view.
+When a facet is configured, `audiences` and same-named category values must use its choice IDs. You can instead use `readerFilters.audience` or `readerFilters.product`, but don't put both forms for the same facet on one page. An explicit page value overrides a `typeDefaults` value for that facet. Categories without matching configured facets remain taxonomy metadata only. Pages with no marks remain visible in every view.
 
-The page marks control navigation, search, and cards that point to the page. They do not change its URL. A direct link to a page outside the current view opens the page in full. A notice offers actions to switch view or show all content.
+The page marks control navigation, search, and cards that point to the page. They don't change its URL. A direct link to a page outside the current view opens the page in full. A notice offers actions to switch view or show all content.

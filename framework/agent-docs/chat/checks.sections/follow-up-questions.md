@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -49,6 +49,6 @@ A rewrite is accepted only when it meets these constraints:
 - No web address or proposed instruction such as “Set the draft property to false.”
 - Technical names in backticks, dotted identifiers, and command flags already occur in the conversation.
 
-If the rewrite or service fails, retrieval combines the previous and current questions. The rejected rewrite is not displayed; a note records the fallback. These checks do not prove that an accepted rewrite preserves the reader's intent.
+If the rewrite or service fails, retrieval combines the previous and current questions. The rejected rewrite isn't displayed; a note records the fallback. These checks don't prove that an accepted rewrite preserves the reader's intent.
 
 Rewriting makes a model call and is skipped when the model budget is spent.

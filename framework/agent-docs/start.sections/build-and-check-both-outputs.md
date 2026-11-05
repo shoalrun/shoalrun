@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/start.md)
 
@@ -26,7 +26,7 @@ Parent page: [Full Markdown page](/start.md)
 
 - [Create a page](https://www.shoalrun.com/author/add-page.md) — Create another page and add it to navigation.
 
-This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
+This quickstart takes you from installing Shoalrun to your own working documentation site. You'll scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
 > **Alpha:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between alpha releases.
 
@@ -47,4 +47,4 @@ Check these URLs in your browser:
 
 The installation link should take you to `/install` in HTML and `/install.md` in the Markdown output. Commands print JSON and return a nonzero exit code on failure. If a page is missing, check its publication fields and navigation entry.
 
-Press **Ctrl+C** to stop the server. For ongoing writing, run the `dev` command again; it rebuilds and refreshes the browser when you save edits. Builds replace the whole output directory, so keep `site-dist/` separate from your source files. Add `site-dist/` and `.shoalrun/` to your project's `.gitignore` if you do not want to track generated files.
+Press **Ctrl+C** to stop the server. For ongoing writing, run the `dev` command again; it rebuilds and refreshes the browser when you save edits. Builds replace the whole output directory, so keep `site-dist/` separate from your source files. Add `site-dist/` and `.shoalrun/` to your project's `.gitignore` if you don't want to track generated files.

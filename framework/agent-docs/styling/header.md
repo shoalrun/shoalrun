@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Header links
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 The masthead shows the site title, the publication label, the [search box](https://www.shoalrun.com/author/search.md), the [dark mode toggle](https://www.shoalrun.com/styling/color-modes.md) when it's on, and any links you configure. Add links under `site.header.links`:
 
@@ -52,7 +52,7 @@ On narrow screens, the search box and links wrap onto their own row below the si
 
 ## HTML, Markdown, and agents
 
-Header links appear in HTML as ordinary links, including links styled as buttons. They remain usable without JavaScript. Markdown twins and `/llms.txt` omit the masthead, so agents reading those files do not receive its links. Put a task's essential next step in the article or its reading relationships as well as the header.
+Header links appear in HTML as ordinary links, including links styled as buttons. They remain usable without JavaScript. Markdown twins and `/llms.txt` omit the masthead, so agents reading those files don't receive its links. Put a task's essential next step in the article or its reading relationships as well as the header.
 
 ## Related reading
 

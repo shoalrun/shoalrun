@@ -16,11 +16,11 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Generated frontmatter reference
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 This is the field inventory for this documentation site. The tables below are built from Shoalrun's native field definitions and this site's `frontmatter.fields` declarations on each build. They describe source page headers, not the shorter YAML header selected for a published Markdown page.
 
-`agent.intent` in the project-defined table is an optional string. This site's authors use it to describe the task a page helps an agent complete. It is **not** a required Shoalrun field or an instruction to an agent. `editorial.reviewNote` is another site-specific field for internal review notes. A different project can declare different fields.
+`agent.intent` in the project-defined table is an optional string. This site's authors use it to describe the task a page helps an agent complete. It **isn't** a required Shoalrun field or an instruction to an agent. `editorial.reviewNote` is another site-specific field for internal review notes. A different project can declare different fields.
 
 To publish an equivalent inventory on your site, place `<FrontmatterReference />` on a page. It takes no attributes or child content and renders the current project's native and declared fields in HTML and Markdown.
 
@@ -64,7 +64,8 @@ By default, `product`, `area`, and `subarea` are optional, nonempty string categ
 
 | Field                  | Type            | Needed       | What it changes                                                                                                                                                                                                                                                             |
 | ---------------------- | --------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `product`              | string          | Optional     | Optional product category. Also selects the product reader facet when that facet is configured.                                                                                                                                                                             |
+| `availability`         | object          | Optional     | Inclusive feature availability labels shown beside page dates and retained in Markdown and the document manifest. Does not select or hide publications; labels are not compared or inferred.                                                                                |
+| `product`              | string          | Optional     | Product publication ID when publications.products is configured; otherwise an optional category and reader facet.                                                                                                                                                           |
 | `area`                 | string or array | On each page | Optional area category. Also selects the area reader facet when that facet is configured.                                                                                                                                                                                   |
 | `subarea`              | string or array | On each page | Optional finer category. Also selects the subarea reader facet when that facet is configured.                                                                                                                                                                               |
 | `operations`           | array           | Optional     | Stable API operation IDs that connect this page to endpoint references and related documents.                                                                                                                                                                               |
@@ -124,11 +125,49 @@ A project can add page fields by declaring them in `frontmatter.fields`. The dec
 
 These are project config settings, not keys in a page header. `frontmatter.defaults` supplies values when a page omits them; `frontmatter.enforced` replaces page values. Resolution follows defaults → page → enforced. Objects merge recursively and arrays replace. IDs and slugs remain page-specific. Required fields and declared types are checked after resolution. Use an access default if authors need to keep individual pages as drafts.
 
+## Feature availability
+
+Since 0.1.0-alpha.18
+
+Set `availability` on a page to show version support beside its dates. This example uses fictional release labels; replace them with your feature's actual supported versions:
+
+```yaml title="Page frontmatter"
+availability:
+  since: v1
+  through: v2
+```
+
+Use either boundary alone or both together. `since` is the first supported version, and `through` is the last supported version; both are inclusive. Omit an unknown boundary. The values are labels and aren't compared automatically. This metadata doesn't select a publication, hide content, or mark a feature as deprecated.
+
+HTML displays “Since v1” and “Through v2” in the same text style as changelog release versions, beside “Updated” when that date is present. Markdown includes readable availability labels even when its configured metadata projection omits the field. The document manifest retains the `availability` object. There is no JavaScript interaction. For a newer option within an older guide, use a [Badge](https://www.shoalrun.com/author/components/badge.md) beside the option instead of changing the page's availability.
+
+### Mark a newer section
+
+Keep the page's original availability when only one section covers a newer capability. Put its label directly below the section heading:
+
+```mdx
+## Product publications
+
+<Badge variant="neutral">Since 0.1.0-alpha.18</Badge>
+
+Give each product its own versions and default release.
+```
+
+This renders the section label as Since 0.1.0-alpha.18. The [publications guide](https://www.shoalrun.com/publish/publications.md) uses this pattern for independent product versions. Markdown retains the label as readable text beside that section's content.
+
+## Product publication fields
+
+Since 0.1.0-alpha.18
+
+The generated inventory above follows the package installed by this site. In alpha.18, configuring `publications.products` makes a page's `product` part of its publication identity. Its `version` is resolved within that product's catalog. Without a product catalog, `product` keeps its existing metadata meaning.
+
+A page's `publications` list can include `product` alongside `channel` and `version` to reuse one source in explicit product releases. Don't combine that list with page-level product, channel, or version fields. `shared: true` classifies content for feature grants; it doesn't copy the page to other product publications. See [independent product publications](https://www.shoalrun.com/publish/publications.md) for the catalog, routes, and examples.
+
 ## Use the local files while authoring
 
-Every project also gets `.shoalrun/frontmatter-reference.md` and `.shoalrun/frontmatter.schema.json` beside `docs.config.yaml`. They contain that project's inventory for authors, editors, and agents working in its repository. For this site, the paths are `docs/.shoalrun/frontmatter-reference.md` and `docs/.shoalrun/frontmatter.schema.json`. These internal files are not published site routes.
+Every project also gets `.shoalrun/frontmatter-reference.md` and `.shoalrun/frontmatter.schema.json` beside `docs.config.yaml`. They contain that project's inventory for authors, editors, and agents working in its repository. For this site, the paths are `docs/.shoalrun/frontmatter-reference.md` and `docs/.shoalrun/frontmatter.schema.json`. These internal files aren't published site routes.
 
-Changing a declaration and rebuilding updates the published table and both local files. Undeclared fields may still appear in source pages, but they have no project type check and do not appear in the field inventory.
+Changing a declaration and rebuilding updates the published table and both local files. Undeclared fields may still appear in source pages, but they have no project type check and don't appear in the field inventory.
 
 ## When the files update
 
@@ -146,7 +185,7 @@ The reference describes source fields. To choose which of them appear in each pa
 
 ## HTML, Markdown, and agents
 
-`FrontmatterReference` writes the project's field definitions into both the HTML page and its Markdown twin. An agent can read those tables without running JavaScript or opening the local schema file. The tables describe accepted source fields; they do not expose each page's private metadata values. The separate `.shoalrun` files are local authoring resources, not public routes.
+`FrontmatterReference` writes the project's field definitions into both the HTML page and its Markdown twin. An agent can read those tables without running JavaScript or opening the local schema file. The tables describe accepted source fields; they don't expose each page's private metadata values. The separate `.shoalrun` files are local authoring resources, not public routes.
 
 ## Related reading
 

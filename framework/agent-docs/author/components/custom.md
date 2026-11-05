@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Custom components > Overview
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 A component package adds a custom component, such as `<CopyText>`, that authors can use in their pages. Its `content()` function produces the content shown in both HTML and Markdown. An optional browser module adds interactive behavior.
 
@@ -49,7 +49,7 @@ Contact <support@example.com> for help.
 
 ## Develop a component
 
-The package's manifest declares its names and implementation files. Consumers register this manifest once; they do not configure its internal browser files:
+The package's manifest declares its names and implementation files. Consumers register this manifest once; they don't configure its internal browser files:
 
 ```json
 {
@@ -63,7 +63,7 @@ The package's manifest declares its names and implementation files. Consumers re
 }
 ```
 
-Each component needs `module`. `browser` and a `styles` list are optional. These paths are relative to the manifest. Names start with an uppercase letter, contain only letters and digits, and must be unique across registrations. They cannot replace built-ins.
+Each component needs `module`. `browser` and a `styles` list are optional. These paths are relative to the manifest. Names start with an uppercase letter, contain only letters and digits, and must be unique across registrations. They can't replace built-ins.
 
 The complete build module for the small example passes the page's children through unchanged:
 
@@ -123,7 +123,7 @@ content({ attributes }) {
 }
 ```
 
-`makePolicy` and `describePolicy` represent your component's model and content functions. `data` must contain only JSON values. Shoalrun snapshots it per invocation and gives that same data to the browser. Do not recover data by parsing tables or matching display labels. Import shared validation and calculation functions into both implementations when they need the same behavior.
+`makePolicy` and `describePolicy` represent your component's model and content functions. `data` must contain only JSON values. Shoalrun snapshots it per invocation and gives that same data to the browser. Don't recover data by parsing tables or matching display labels. Import shared validation and calculation functions into both implementations when they need the same behavior.
 
 The browser module exports an enhancement function:
 
@@ -136,7 +136,7 @@ export async function enhance({ root, controls, content, data }) {
 }
 ```
 
-`root` contains this component instance; `content` contains its rendered documentation. React can mount into `controls`. Browser behavior enhances the shared documentation; this is not an arbitrary React renderer or an MDX import mechanism. If enhancement fails or JavaScript is disabled, shared content remains readable.
+`root` contains this component instance; `content` contains its rendered documentation. React can mount into `controls`. Browser behavior enhances the shared documentation; this isn't an arbitrary React renderer or an MDX import mechanism. If enhancement fails or JavaScript is disabled, shared content remains readable.
 
 The [data-driven React fixture](https://www.shoalrun.com/author/components/custom/react.md) exercises the explicit model handoff and shared calculation module.
 
@@ -152,7 +152,7 @@ Configured modules execute trusted code with build-process permissions. Browser 
 
 ## HTML, Markdown, and agents
 
-Shoalrun renders the same shared documentation into both formats. Authors remain responsible for whether it adequately explains the component. A calculator typically needs its inputs, formula, limits, a default worked example, and qualifications; it does not need every possible numeric state enumerated.
+Shoalrun renders the same shared documentation into both formats. Authors remain responsible for whether it adequately explains the component. A calculator typically needs its inputs, formula, limits, a default worked example, and qualifications; it doesn't need every possible numeric state enumerated.
 
 Page content, links, warnings, and code must remain available without browser interaction. Shared content participates in normal search, links, section extraction, digests, and artifact generation. Check the component's own behavior and meaning in both outputs, including keyboard use and no-JavaScript fallback.
 
@@ -168,7 +168,7 @@ shoalrun docs review <report> --format markdown
 shoalrun docs preview <report> --port 0
 ```
 
-The skill does not publish the result or infer a static explanation from arbitrary React. See [Use the bundled agent skills](https://www.shoalrun.com/contribute/agent-skills.md) for installation and invocation.
+The skill doesn't publish the result or infer a static explanation from arbitrary React. See [Use the bundled agent skills](https://www.shoalrun.com/contribute/agent-skills.md) for installation and invocation.
 
 ## Related reading
 

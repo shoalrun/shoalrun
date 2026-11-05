@@ -17,17 +17,17 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Project > Non-goals
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Shoalrun's scope includes publishing documentation that people and agents can discover and read. This page records capabilities we deliberately exclude and the reasoning behind those decisions.
 
 ## Shipping a skill builder with the tool
 
-Shoalrun does not ship a non-interactive skill builder or automatically generate a reader-side skill for each site it builds.
+Shoalrun doesn't ship a non-interactive skill builder or automatically generate a reader-side skill for each site it builds.
 
 Skills need a human expert to guide their creation and maintenance. That expert brings knowledge of the domain, decides which workflows are appropriate, tests the instructions against real tasks, and keeps them accurate as the product changes.
 
-A non-interactive builder could produce something that looks complete and give users false confidence that they have “automatic agent skills.” Generating instructions alone does not establish that those instructions are useful, reliable, or kept current. We are not yet comfortable shipping a feature that implies that confidence.
+A non-interactive builder could produce something that looks complete and give users false confidence that they have “automatic agent skills.” Generating instructions alone doesn't establish that those instructions are useful, reliable, or kept current. We aren't yet comfortable shipping a feature that implies that confidence.
 
 Shoalrun's bundled authoring skills are maintained instructions for working with Shoalrun. Published sites receive Markdown pages and discovery files during the build. Teams that create their own skills remain responsible for expert guidance, review, evaluation, and maintenance.
 
@@ -39,7 +39,7 @@ The [evaluation task format and audit hook](https://www.shoalrun.com/publish/eva
 
 ## Using reader views for authorization
 
-[Reader views](https://www.shoalrun.com/author/reader-views.md) shape navigation and visible sections. They do not protect content: published files and Markdown twins remain available. Using a reader's selected view as an authorization boundary is outside their purpose. Exclude nonpublic pages from a public build and use host-level authorization when private content must be protected.
+[Reader views](https://www.shoalrun.com/author/reader-views.md) shape navigation and visible sections. They don't protect content: published files and Markdown twins remain available. Using a reader's selected view as an authorization boundary is outside their purpose. Exclude nonpublic pages from a public build and use host-level authorization when private content must be protected.
 
 ## Related reading
 

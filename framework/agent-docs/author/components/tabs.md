@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Tabs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 `<Tabs>` presents alternate views, such as two output formats. Use it only when the choices are truly alternatives; a normal heading sequence is easier to read when readers need every section.
 
@@ -57,7 +57,7 @@ Use these attributes to configure the component.
 | `Tab`   | `value`       | Optional matching key; defaults to the tab label. Values must be unique within a group.                                     |
 | `Tab`   | `label`       | Required nonempty literal name for its control and Markdown heading.                                                        |
 
-Use at least two nonempty, direct `Tab` children. A `Tab` cannot stand alone. Other direct children and attributes fail the build.
+Use at least two nonempty, direct `Tab` children. A `Tab` can't stand alone. Other direct children and attributes fail the build.
 
 ## Keep the height steady
 
@@ -102,13 +102,13 @@ Import the JavaScript client in your application.
 
 Import the Python client in your application.
 
-`sync` names use up to 64 letters, numbers, dashes, or underscores, starting with a letter or number. Synchronization follows reader choices within this page; it does not store a cross-page preference or move focus to another group. Markdown still includes every tab.
+`sync` names use up to 64 letters, numbers, dashes, or underscores, starting with a letter or number. Synchronization follows reader choices within this page; it doesn't store a cross-page preference or move focus to another group. Markdown still includes every tab.
 
 ## HTML, Markdown, and agents
 
 HTML contains every panel before scripts run. Without JavaScript, all panels remain visible. With JavaScript, Left and Right arrows switch tabs, while Home and End choose the first and last.
 
-The build replaces the tab controls with ordinary Markdown sections. Each `Tab` label becomes a level-three heading, followed by that tab's complete body, in source order. The outer `Tabs` label is for the HTML control and does not appear in Markdown. The first example on this page renders like this in the Markdown twin:
+The build replaces the tab controls with ordinary Markdown sections. Each `Tab` label becomes a level-three heading, followed by that tab's complete body, in source order. The outer `Tabs` label is for the HTML control and doesn't appear in Markdown. The first example on this page renders like this in the Markdown twin:
 
 ```md
 ### HTML
@@ -122,7 +122,7 @@ The page keeps the content as text.
 
 An agent reading the `.md` page gets every alternative without choosing a tab. Markdown inside each body stays Markdown; supported MDX components expand to their own Markdown forms during the build.
 
-Each `Tab` body accepts ordinary Markdown, including lists, links, and fenced code, plus supported MDX components such as `Callout`, `DocLink`, and `Collapsible`. Put other content inside a `Tab` body. Dynamic MDX expressions and unknown components are not supported.
+Each `Tab` body accepts ordinary Markdown, including lists, links, and fenced code, plus supported MDX components such as `Callout`, `DocLink`, and `Collapsible`. Put other content inside a `Tab` body. Dynamic MDX expressions and unknown components aren't supported.
 
 ## Related reading
 

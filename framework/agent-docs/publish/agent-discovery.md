@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Configure the agent discovery block
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Configure the early HTML guidance so readers and agents can find the article, Markdown twin, and documentation index. Work in an existing Shoalrun project with a working local build.
 
@@ -25,7 +25,7 @@ Configure the early HTML guidance so readers and agents can find the article, Ma
 
 Set `site.agentDiscovery` to change the early HTML instruction. The default `mode: focus` hides it visually until keyboard focus enters its links. Choose `visible` for an always-shown banner, or `disclosure` for a compact **For agents** toggle in the header that starts closed. All three modes include the guidance links in the HTML source. Choose `off` to omit the block from HTML entirely.
 
-The mode controls visual presentation and whether the block is included. Screen readers and agents parsing raw HTML can encounter the guidance in both `focus` and `visible` modes. The disclosure uses native HTML `details` and `summary`, so it works without JavaScript. Agents using screenshots see the same visual presentation as humans and need to open the disclosure to see its links. Some HTML extraction tools discard visually hidden elements; the document head also provides discovery links. This setting does not control access to documentation or make the guidance private.
+The mode controls visual presentation and whether the block is included. Screen readers and agents parsing raw HTML can encounter the guidance in both `focus` and `visible` modes. The disclosure uses native HTML `details` and `summary`, so it works without JavaScript. Agents using screenshots see the same visual presentation as humans and need to open the disclosure to see its links. Some HTML extraction tools discard visually hidden elements; the document head also provides discovery links. This setting doesn't control access to documentation or make the guidance private.
 
 ## Set the message and link labels
 
@@ -67,6 +67,12 @@ View the HTML source to confirm that all three enabled modes include the links. 
 Use **Copy as Markdown** beside **Read as Markdown** to copy the current page's published Markdown twin. The button fetches the full file, including metadata and all reader-labeled sections, regardless of the selected HTML reader view. It uses the page's publication and base path.
 
 Activate the button with Enter, Space, or a tap. A visible status announces success or failure to screen readers. If fetching or clipboard access fails, use **Read as Markdown** to open and copy the file manually. The plain link also works without JavaScript; the copy button appears when its script loads. Browser clipboard access requires a secure context and permission.
+
+## HTML, Markdown, and agents
+
+The agent discovery block links to the current page’s published Markdown and the site’s compact documentation index. The Markdown link retains the current product release. Product-aware discovery Since 0.1.0-alpha.18 preserves these coordinates. The header’s publication dropdown is a separate HTML navigation control. It doesn't become an interactive Markdown element or change which files a customer edition publishes.
+
+An MCP agent can discover product releases with the `get_publications` tool. Follow its `nextOffset`, then retain the chosen product/channel/version/language in later reads. A hosted endpoint exposes only its configured publication. A local server can select among publications in its built site. See [connect an MCP client](https://www.shoalrun.com/publish/mcp.md) for exact inputs and scope. A reader view or a hidden language label doesn't replace explicit publication selection.
 
 ## Related reading
 

@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Search and integration
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Configure search synonyms, the read-only MCP endpoint, and browser analytics. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
 
@@ -36,7 +36,7 @@ mcp:
   publication: { channel: production, version: current, language: en }
 ```
 
-`path` defaults to `/mcp` and is mounted beneath `site.basePath`. The build rejects conflicting output routes. `enabled` must be a boolean, and enabled configurations require `access: public` and all three publication coordinates.
+`path` defaults to `/mcp` and is mounted beneath `site.basePath`. The build rejects conflicting output routes. `enabled` must be a boolean, and enabled configurations require `access: public`, channel, version, and language. The `mcp.publication.product` option Since 0.1.0-alpha.18 selects a product release. It accepts a product ID, for example `{ product: payments, channel: production, version: v3, language: en }`. The endpoint still serves one configured publication; its discovery response can't reveal other products or customer editions.
 
 Optional `allowedHosts` lists exact hostnames without ports or wildcards. Optional `allowedOrigins` lists exact HTTP(S) browser origins. `site.origin` contributes its hostname and origin automatically; the local Node server also permits loopback requests. Unknown settings fail validation.
 
@@ -46,13 +46,13 @@ Optional `mcp.analytics.module` names a local `.js` or `.mjs` server adapter exp
 
 Optional `mcp.analytics.consent` contains `header` and `value`. When configured, only requests with that exact header value can load or call the analytics adapter. Other requests can use the documentation tools without tracking. The header must be a lowercase custom `x-` name; forwarded, Vercel, and MCP protocol headers are reserved. The value is a case-sensitive policy identifier of up to 64 letters, digits, dots, underscores, or hyphens.
 
-The header gate is off when omitted or set to `false`; readers then need no special client configuration for analytics. Use the gate only when your deployment requires explicit caller opt-in. In that mode, removing the header stops collection on future requests. This feature does not determine your privacy obligations. See [analytics safeguards](https://www.shoalrun.com/publish/mcp-analytics.md).
+The header gate is off when omitted or set to `false`; readers then need no special client configuration for analytics. Use the gate only when your deployment requires explicit caller opt-in. In that mode, removing the header stops collection on future requests. This feature doesn't determine your privacy obligations. See [analytics safeguards](https://www.shoalrun.com/publish/mcp-analytics.md).
 
 Optional `mcp.analytics.clientMetadata: true` adds normalized client labels and model labels from a fixed registry when supported request metadata is present. It defaults to `false`. Labels are unverified; raw headers, unrelated metadata, queries, and intent are excluded.
 
 Optional `mcp.analytics.intent` and `mcp.analytics.conversationIds` are booleans that default to `false`. An adapter’s optional `instrument(server, options)` hook implements them. The PostHog example can add context/model arguments and conversation handles while excluding raw queries and results. Its context argument requests a fixed intent category. Free-text or invalid values are replaced with a per-tool category before analytics delivery; raw intent is never stored by that example. Other adapters must implement their own safeguards.
 
-Omit `mcp.analytics` or set it to `false` to disable collection. It is independent of browser analytics and does not instrument stdio. See [measure MCP tool usage](https://www.shoalrun.com/publish/mcp-analytics.md) for fields, service mappings, and a PostHog example.
+Omit `mcp.analytics` or set it to `false` to disable collection. It's independent of browser analytics and doesn't instrument stdio. See [measure MCP tool usage](https://www.shoalrun.com/publish/mcp-analytics.md) for fields, service mappings, and a PostHog example.
 
 ## `analytics`
 

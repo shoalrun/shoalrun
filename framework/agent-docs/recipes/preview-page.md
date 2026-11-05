@@ -16,7 +16,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Preview a documentation change locally
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Build current documentation and inspect its HTML and Markdown over local HTTP.
 
@@ -56,7 +56,7 @@ npx --no-install shoalrun build docs/docs.config.yaml docs/dist
 
 The source configuration is `docs/docs.config.yaml`; output goes to `docs/dist`. The root shortcut is `npm run docs:build`; it uses the installed package.
 
-If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone is not evidence of a successful new build.
+If the build fails, fix the named source or configuration issue and rerun it. A previous successful output can remain on disk after a failure, so file existence alone isn't evidence of a successful new build.
 
 Save `builtSite`: The successful site build at docs/dist, including documents.json and each published page.
 

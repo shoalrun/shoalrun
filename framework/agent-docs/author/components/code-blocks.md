@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Code blocks
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Fenced code is ordinary Markdown rather than an MDX component. It belongs in the component reference because authors use it beside components to show commands, configuration, and payloads.
 
@@ -100,7 +100,7 @@ export function highlight(code, language) {
 }
 ```
 
-The adapter may import an installed library and initialize it with top-level await. Its `highlight` function must be synchronous. Tokens must reproduce the source code exactly, including whitespace, and colors must use `#rgb`, `#rgba`, `#rrggbb`, or `#rrggbbaa`. The framework validates tokens and escapes HTML; the adapter does not return raw HTML. Invalid tokens or changed text fail the build. The same adapter handles authored fences and API example panels. The entry module appears in the dependency manifest, while its own imports are not tracked individually.
+The adapter may import an installed library and initialize it with top-level await. Its `highlight` function must be synchronous. Tokens must reproduce the source code exactly, including whitespace, and colors must use `#rgb`, `#rgba`, `#rrggbb`, or `#rrggbbaa`. The framework validates tokens and escapes HTML; the adapter doesn't return raw HTML. Invalid tokens or changed text fail the build. The same adapter handles authored fences and API example panels. The entry module appears in the dependency manifest, while its own imports aren't tracked individually.
 
 ## HTML, Markdown, and agents
 

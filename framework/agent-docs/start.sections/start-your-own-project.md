@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/start.md)
 
@@ -26,7 +26,7 @@ Parent page: [Full Markdown page](/start.md)
 
 - [Create a page](https://www.shoalrun.com/author/add-page.md) — Create another page and add it to navigation.
 
-This quickstart takes you from installing Shoalrun to your own working documentation site. You will scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
+This quickstart takes you from installing Shoalrun to your own working documentation site. You'll scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
 > **Alpha:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between alpha releases.
 
@@ -38,7 +38,7 @@ Install an exact version of the alpha and initialize the minimal starter:
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-alpha.16
+npm install --save-exact @shoalrun/cli@0.1.0-alpha.18
 npx --no-install shoalrun init .
 ```
 

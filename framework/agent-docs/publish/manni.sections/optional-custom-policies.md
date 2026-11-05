@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Use Manni with Shoalrun
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/manni.md)
 
@@ -33,10 +33,10 @@ Shoalrun builds and delivers your docs. Here, we use Manni to add checks before 
 
 This guide shows how to run Manni in a Shoalrun project and add a check to `shoalrun audit`. That command runs the checks you configure and reports whether they passed. Start with one useful rule, then add more when you need them. For a working example, see [how we use Manni on this site](https://www.shoalrun.com/publish/manni.md#how-this-site-uses-manni).
 
-Manni's [documentation site](https://hawkeyexl.github.io/manni/) describes its available tools and rules. Your choices go in `manni.config.yaml`; you do not need a separate Shoalrun setting for each Manni feature.
+Manni's [documentation site](https://hawkeyexl.github.io/manni/) describes its available tools and rules. Your choices go in `manni.config.yaml`; you don't need a separate Shoalrun setting for each Manni feature.
 
 ## Optional custom policies
 
-You can add your own rules as a local JSON Schema in `meta.schemas`. For example, if a page records a review date, you might require a note explaining what was reviewed. Those fields and rules belong to your project; Manni does not require them.
+You can add your own rules as a local JSON Schema in `meta.schemas`. For example, if a page records a review date, you might require a note explaining what was reviewed. Those fields and rules belong to your project; Manni doesn't require them.
 
-Keep simple required-field, type, and enum rules in [Shoalrun's field declarations](https://www.shoalrun.com/author/custom-metadata.md). Add a custom Manni schema when you need conditional rules, and include that schema in the audit's captured inputs. A recorded verification date and note establish a metadata contract; they do not prove accuracy or freshness.
+Keep simple required-field, type, and enum rules in [Shoalrun's field declarations](https://www.shoalrun.com/author/custom-metadata.md). Add a custom Manni schema when you need conditional rules, and include that schema in the audit's captured inputs. A recorded verification date and note establish a metadata contract; they don't prove accuracy or freshness.

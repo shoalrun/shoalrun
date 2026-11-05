@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Passage index
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -26,7 +26,7 @@ Parent page: [Full Markdown page](/chat/passage-index.md)
 
 A passage index splits built Markdown pages into smaller pieces for retrieval. Each passage keeps its page title, heading path, and source link. [Chat](https://www.shoalrun.com/chat.md) and the optional semantic search endpoint use it to find relevant parts of a page.
 
-The default keyword [search box](https://www.shoalrun.com/author/search.md) uses the separate page-level `search-index.json`. The included `semantic` provider connects that box to the passage-search endpoint. You do not need a passage index for normal static-site keyword search.
+The default keyword [search box](https://www.shoalrun.com/author/search.md) uses the separate page-level `search-index.json`. The included `semantic` provider connects that box to the passage-search endpoint. You don't need a passage index for normal static-site keyword search.
 
 Create the files after building the site:
 
@@ -61,18 +61,18 @@ Each entry in `chunks` describes one passage:
 }
 ```
 
-| Field                    | Value                                                                                                                                                                   |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                     | The passage ID. See [Passage IDs](https://www.shoalrun.com/chat/passage-index.md#passage-ids-and-links).                                                                |
-| `docId`, `title`, `type` | The page's ID, title, and type.                                                                                                                                         |
-| `variant`                | The page's channel, version, and language, joined by `\|`. Passages from different publications never mix.                                                              |
-| `headingPath`            | The `##` and `###` headings above the passage, outermost first. Empty for an intro passage.                                                                             |
-| `url`                    | The page URL, plus `#` and the section's heading ID when one exists.                                                                                                    |
-| `markdownUrl`            | The page's Markdown twin.                                                                                                                                               |
-| `readerFilters`          | Optional. The page's reader marks, such as `{ "audience": ["maintainers"] }`. It is present only when the page has marks. Retrieval uses it to answer for one audience. |
-| `text`                   | The passage's Markdown, without its own heading.                                                                                                                        |
-| `digest`                 | A SHA-256 hash of the passage's embedding input.                                                                                                                        |
-| `search`                 | Prepared result content: `schemaVersion: 1`, explanatory `paragraphs`, and code/table `literalLines`. Generated navigation lists are excluded from the paragraphs.      |
+| Field                    | Value                                                                                                                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                     | The passage ID. See [Passage IDs](https://www.shoalrun.com/chat/passage-index.md#passage-ids-and-links).                                                               |
+| `docId`, `title`, `type` | The page's ID, title, and type.                                                                                                                                        |
+| `variant`                | The page's channel, version, and language, joined by `\|`. Passages from different publications never mix.                                                             |
+| `headingPath`            | The `##` and `###` headings above the passage, outermost first. Empty for an intro passage.                                                                            |
+| `url`                    | The page URL, plus `#` and the section's heading ID when one exists.                                                                                                   |
+| `markdownUrl`            | The page's Markdown twin.                                                                                                                                              |
+| `readerFilters`          | Optional. The page's reader marks, such as `{ "audience": ["maintainers"] }`. It's present only when the page has marks. Retrieval uses it to answer for one audience. |
+| `text`                   | The passage's Markdown, without its own heading.                                                                                                                       |
+| `digest`                 | A SHA-256 hash of the passage's embedding input.                                                                                                                       |
+| `search`                 | Prepared result content: `schemaVersion: 1`, explanatory `paragraphs`, and code/table `literalLines`. Generated navigation lists are excluded from the paragraphs.     |
 
 The file also records `schemaVersion` and a `sourceDigest`. Since `0.1.0-alpha.16`, this digest identifies passage content, publication membership, routes, reader marks, and prepared search evidence. Metadata changes can change this digest without requiring new embeddings.
 
@@ -88,4 +88,4 @@ Configuration takes effect in three stages: …
 
 `digest` hashes that string, so it changes when the title, the heading path, or the text changes. A stored vector or score that no longer matches a passage's digest is stale.
 
-The derived `search` data is not part of the embedding input or its digest. Preparing it does not require new embeddings for unchanged passages.
+The derived `search` data isn't part of the embedding input or its digest. Preparing it doesn't require new embeddings for unchanged passages.

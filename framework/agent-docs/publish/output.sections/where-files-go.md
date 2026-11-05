@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -35,7 +35,7 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 ## Where files go
 
-`shoalrun build <config> <output>` writes the site to the output directory. It builds in a temporary directory, then **deletes the output directory and replaces it**, so point it at a directory that holds only build output. To protect other folders, it replaces a directory only when it is new, empty, or an earlier build. Otherwise the build stops before deleting anything.
+`shoalrun build <config> <output>` writes the site to the output directory. It builds in a temporary directory, then **deletes the output directory and replaces it**, so point it at a directory that holds only build output. To protect other folders, it replaces a directory only when it's new, empty, or an earlier build. Otherwise the build stops before deleting anything.
 
 | Output                     | Path                                                                                                                                  |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -46,4 +46,4 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 | Published OpenAPI source   | `/api/<apiId>/<channel>/<version>/<file>`, plus the local files it references                                                         |
 | Focused contracts          | `/api/operations/<channel>/<version>/<language>/<name>-<hash>.json`                                                                   |
 
-The `/api` and `/.well-known` paths are reserved for these files, so page slugs cannot use them. A [diagram](https://www.shoalrun.com/author/components/diagrams.md) in the Markdown twin keeps its title, summary, a link to the light SVG, and its fenced source.
+The `/api` and `/.well-known` paths are reserved for these files, so page slugs can't use them. A [diagram](https://www.shoalrun.com/author/components/diagrams.md) in the Markdown twin keeps its title, summary, a link to the light SVG, and its fenced source.

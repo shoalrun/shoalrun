@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Audit a docs project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/audit.md)
 
@@ -60,8 +60,8 @@ The default example produces this shape (counts and source paths depend on the p
 
 Configured tests have IDs such as `test:project-tests`. Additional API publications use IDs such as `api:payments:publication-0`. A failing result has `status: "error"` and one or more `findings`, each with a `target` and `message`. The top-level status becomes `error`, and the process exits with code `1`. Config or command-line errors occur before a report can be produced; the CLI writes `{"status":"error","message":"..."}` to standard error instead.
 
-Shoalrun audits each configured local OpenAPI source, including sources that are not published. It checks operation IDs, unique HTML field anchors, and named examples in both representations. The build checks project content and writes a temporary site. If the build succeeds, the focused-contract audit checks each generated contract and its Markdown link. If the build fails, the report keeps test and API results and adds a `build` finding; it cannot run the focused-contract audit.
+Shoalrun audits each configured local OpenAPI source, including sources that aren't published. It checks operation IDs, unique HTML field anchors, and named examples in both representations. The build checks project content and writes a temporary site. If the build succeeds, the focused-contract audit checks each generated contract and its Markdown link. If the build fails, the report keeps test and API results and adds a `build` finding; it can't run the focused-contract audit.
 
 The temporary site is removed after the audit. Like a normal build, this command also writes the generated frontmatter reference and schema to `.shoalrun/` beside the config. Add `.shoalrun/` to your project's `.gitignore`.
 
-These checks cover the rules Shoalrun implements and any tests you supply. A passing audit does not establish the factual accuracy of prose, full OpenAPI semantic fidelity, accessibility conformance, or live deployment behavior. Use the [post-deploy checker](https://www.shoalrun.com/publish/deployment-check.md) for HTTP behavior on a hosted site.
+These checks cover the rules Shoalrun implements and any tests you supply. A passing audit doesn't establish the factual accuracy of prose, full OpenAPI semantic fidelity, accessibility conformance, or live deployment behavior. Use the [post-deploy checker](https://www.shoalrun.com/publish/deployment-check.md) for HTTP behavior on a hosted site.

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Related reading
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/related-reading.md)
 
@@ -30,6 +30,6 @@ Some links appear without a relationship. The build adds these lists at the end 
 - **Related documentation** links pages that share an operation ID in `operations`.
 - **Related API references** and **Related guides** link a guide or how-to page with the API references named in its `relatedApiReferences`. See [link guides to API references](https://www.shoalrun.com/api-docs/generate.md).
 
-These automatic lists are separate from authored relationships and can appear alongside related reading. They do not establish workflow order.
+These automatic lists are separate from authored relationships and can appear alongside related reading. They don't establish workflow order.
 
-The current mapping uses explicit document-ID pairs. DITA table imports, external targets, and topic-group shorthand are not supported yet.
+The current mapping uses explicit document-ID pairs. DITA table imports, external targets, and topic-group shorthand aren't supported yet.

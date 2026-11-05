@@ -12,7 +12,7 @@ canonical: /
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-10-30.**
+**Updated: 2026-11-05.**
 
 **Docs for people. Context for agents.**
 
@@ -85,7 +85,7 @@ FAIL build
 Checks failed. Fix the findings above and rerun shoalrun check.
 ```
 
-This output is illustrative, not a failure on the current site. The check catches unsupported representations; it does not establish that every sentence is correct.
+This output is illustrative, not a failure on the current site. The check catches unsupported representations; it doesn't establish that every sentence is correct.
 
 [Eval reports](https://www.shoalrun.com/publish/evals.md) add reviewed agent-task results to the gate. You supply the agent run and the review. Shoalrun's five example tasks are a self-reviewed demonstration, not an independent measure of agent accuracy.
 
@@ -103,7 +103,7 @@ This output is illustrative, not a failure on the current site. The check catche
 
 ## Let agents read your docs, and help write them
 
-Agents search and read built docs through the CLI or a read-only MCP server with four tools: `search_docs`, `get_page`, `get_outline`, and `get_section`. MCP cannot edit files or deploy. Writing and checking use your agent's own file tools, CLI commands such as `docs validate` and `audit`, and five bundled skills.
+Agents search and read built docs through the CLI or a read-only MCP server with four tools: `search_docs`, `get_page`, `get_outline`, and `get_section`. MCP can't edit files or deploy. Writing and checking use your agent's own file tools, CLI commands such as `docs validate` and `audit`, and five bundled skills.
 
 ```sh
 shoalrun docs mcp --site docs/dist
@@ -147,9 +147,9 @@ Keep one content directory and give each site its own config, origin, theme, and
 
   Publish separate sites from shared content using optional facet selection.
 
-- [Share pages across documentation versions](https://www.shoalrun.com/publish/publications.md)
+- [Share pages across products and documentation versions](https://www.shoalrun.com/publish/publications.md)
 
-  Versioning one docs site without copying every page: share unchanged pages, vary sections, and publish changed pages separately.
+  Configure independent product versioning and reuse pages across releases, channels, and languages.
 
 ## Make it look like yours
 

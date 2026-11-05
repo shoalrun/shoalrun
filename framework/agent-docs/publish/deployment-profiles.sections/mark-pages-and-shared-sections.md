@@ -17,7 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Customer editions
 
-**Updated: 2026-11-03.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.15.**
 
 Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
@@ -31,15 +33,13 @@ Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
 - [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md) — Review the selected edition using captured HTML and Markdown. (Status: experimental.)
 
-Build a documentation edition for each customer from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles do not need to share a repository.
+Build a documentation edition for individual customers from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles don't need to share a repository with the content.
 
-By default, you do not need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
-
-Available since `0.1.0-alpha.15`.
+By default, you don't need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
 
 ## Mark pages and shared sections
 
-Pages declare feature requirements with `requires`. They do not name SKU IDs. The profile's SKU mappings and direct grants determine which features are available.
+Pages declare feature requirements with `requires`. They don't name SKU IDs. The profile's SKU mappings and direct grants determine which features are available.
 
 ### Unmarked pages are shared by default
 
@@ -56,7 +56,7 @@ The following table shows feature selection after those other rules pass. Grants
 | `allOf: [analytics, connectors]`      | Omitted             | Omitted        | Included                 |
 | `anyOf: [analytics, connectors]`      | Omitted             | Included       | Included                 |
 
-**Forgetting a requirement makes a feature-specific page shared.** Shoalrun does not infer requirements from its folder, title, product metadata, or navigation label. Enable explicit classification to catch missing page declarations, and review feature-specific content before distributing an edition.
+**Forgetting a requirement makes a feature-specific page shared.** Shoalrun doesn't infer requirements from its folder, title, product metadata, or navigation label. Enable explicit classification to catch missing page declarations, and review feature-specific content before distributing an edition.
 
 ### Require a deliberate page classification
 
@@ -70,7 +70,7 @@ profiles:
   requireClassification: true
 ```
 
-Every public page in the shared project's enabled publications must now explicitly declare `shared: true` or `requires` in its own source frontmatter. An unclassified page fails the build with its source filename; it does not silently disappear. The check runs before customer feature and publication selection, so a later purchase or publication change cannot expose a previously unchecked page. Drafts and pages outside the shared project's enabled publications do not need classification for that build.
+Every public page in the shared project's enabled publications must now explicitly declare `shared: true` or `requires` in its own source frontmatter. An unclassified page fails the build with its source filename; it doesn't silently disappear. The check runs before customer feature and publication selection, so a later purchase or publication change can't expose a previously unchecked page. Drafts and pages outside the shared project's enabled publications don't need classification for that build.
 
 For common instructions, add this page-level declaration:
 
@@ -78,11 +78,11 @@ For common instructions, add this page-level declaration:
 shared: true
 ```
 
-For a product-specific page, use `requires` as shown below. Do not combine `shared: true` and `requires` on the same page. `shared: false` is invalid. `shared` must stay page-specific and cannot appear in frontmatter defaults or enforced settings. Inherited feature requirements still restrict content, but do not satisfy strict classification: each page needs its own declaration.
+For a product-specific page, use `requires` as shown below. Don't combine `shared: true` and `requires` on the same page. `shared: false` is invalid. `shared` must stay page-specific and can't appear in frontmatter defaults or enforced settings. Inherited feature requirements still restrict content, but don't satisfy strict classification: each page needs its own declaration.
 
 To migrate, enable the policy locally and classify the pages named in build errors after reviewing their content. Put the declaration in page templates to make the choice part of creating a page; avoid marking an entire collection shared without reviewing it.
 
-This policy catches missing declarations. It cannot tell whether a declaration is correct or detect an ungated product-specific paragraph inside a shared page. It does not authenticate readers; the deployment still controls access to the resulting edition.
+This policy catches missing declarations. It can't tell whether a declaration is correct or detect an ungated product-specific paragraph inside a shared page. It doesn't authenticate readers; the deployment still controls access to the resulting edition.
 
 ### Restrict a feature-specific page
 
@@ -93,7 +93,7 @@ requires:
   allOf: [analytics, connectors]
 ```
 
-Use `anyOf` when either feature is sufficient. If a requirement contains both clauses, both must pass. When the resolved requirements do not match the profile's grants, the whole page is omitted.
+Use `anyOf` when either feature is sufficient. If a requirement contains both clauses, both must pass. When the resolved requirements don't match the profile's grants, the whole page is omitted.
 
 ### Restrict part of a shared page
 
@@ -113,7 +113,7 @@ Import a dataset through a connector, then select it in your analytics report.
 These troubleshooting tips apply to every customer.
 ```
 
-The page's content outside `<ForFeature>` stays shared. A block appears only when its requirements match; excluding a block does not exclude the rest of the page. If a page-level requirement excludes the whole page, a matching block inside it cannot restore that page.
+The page's content outside `<ForFeature>` stays shared. A block appears only when its requirements match; excluding a block doesn't exclude the rest of the page. If a page-level requirement excludes the whole page, a matching block inside it can't restore that page.
 
 Excluded blocks contribute no text, links, snippet expansions, API embeds, or images to the edition. Put links to optional pages inside matching conditions. A link remaining in selected prose must point to a selected destination.
 
@@ -132,4 +132,4 @@ apis:
     generateReferences: true
 ```
 
-For a feature-specific API, use `requires` instead of `shared`. An individual OpenAPI operation can declare `x-shoalrun-shared: true` or `x-shoalrun-requires: { allOf: [analytics] }`. Its declaration satisfies classification for that generated page; API-level feature requirements still apply. Operations with differing requirements need their own declarations. General frontmatter defaults do not satisfy generated-page classification. Authored API reference pages follow the ordinary page rule.
+For a feature-specific API, use `requires` instead of `shared`. An individual OpenAPI operation can declare `x-shoalrun-shared: true` or `x-shoalrun-requires: { allOf: [analytics] }`. Its declaration satisfies classification for that generated page; API-level feature requirements still apply. Operations with differing requirements need their own declarations. General frontmatter defaults don't satisfy generated-page classification. Authored API reference pages follow the ordinary page rule.

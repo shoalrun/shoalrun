@@ -17,13 +17,15 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 
-This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
+This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun doesn't automatically apply these rules to other projects.
 
 ## Voice and explanations
+
+Use natural contractions such as “don't,” “can't,” “it's,” and “you're.” Keep expanded forms when emphasis or clarity needs them. Preserve exact commands, configuration values, API fields, error messages, and quotations. Vale's `Shoalrun.Contractions` rule flags common expanded forms for review; contractions themselves are accepted.
 
 Address the reader as “you.” Use active voice and concrete verbs. Start a paragraph with its main point, then supply the reason or example needed to understand it. Keep sentences short enough to follow without breaking every thought into a separate paragraph.
 

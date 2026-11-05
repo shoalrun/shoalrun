@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Custom components > Data-driven React components
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/components/custom/react.md)
 
@@ -31,7 +31,7 @@ Use a declared data file when a component needs to generate tables, calculations
 
 ## Where the content lives
 
-A custom component is a small program that writes part of a documentation page. Its build function produces shared content, which Shoalrun renders as HTML and Markdown. An optional React interface adds browser controls afterward. Shoalrun does not convert React into Markdown.
+A custom component is a small program that writes part of a documentation page. Its build function produces shared content, which Shoalrun renders as HTML and Markdown. An optional React interface adds browser controls afterward. Shoalrun doesn't convert React into Markdown.
 
 The retry example splits its work across these files:
 
@@ -97,4 +97,4 @@ With the example policy, the generated Markdown includes this worked schedule:
 | 4 | 2000 ms | 3500 ms |
 ```
 
-HTML displays the same documented schedule. React receives the same validated policy directly and adds the calculator shown below. Changing a browser control changes that reader's calculation; it does not edit `policy.json`, the documented schedule, or Markdown. To change the documented policy, edit the data file and rebuild.
+HTML displays the same documented schedule. React receives the same validated policy directly and adds the calculator shown below. Changing a browser control changes that reader's calculation; it doesn't edit `policy.json`, the documented schedule, or Markdown. To change the documented policy, edit the data file and rebuild.

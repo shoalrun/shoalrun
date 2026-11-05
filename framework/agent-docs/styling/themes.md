@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Themes
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 The `theme` setting controls how the HTML site looks. It has five keys, and each has a default:
 
@@ -109,7 +109,7 @@ When a site uses a non-default preset, palette, or mode, the `html` element carr
 
 ## HTML, Markdown, and agents
 
-Presets and fonts style the HTML page through generated stylesheets. They do not change its Markdown text or add font and layout instructions to the Markdown twin. An agent reading Markdown receives the authored content without needing the theme assets. Keep labels, hierarchy, and instructions meaningful without relying on typography or position alone.
+Presets and fonts style the HTML page through generated stylesheets. They don't change its Markdown text or add font and layout instructions to the Markdown twin. An agent reading Markdown receives the authored content without needing the theme assets. Keep labels, hierarchy, and instructions meaningful without relying on typography or position alone.
 
 ## Related reading
 

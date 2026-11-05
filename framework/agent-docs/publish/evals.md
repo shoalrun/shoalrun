@@ -17,15 +17,15 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Evaluate agent tasks against your docs
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
-Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun does not launch agents, choose a model, or grade prose.
+Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun doesn't launch agents, choose a model, or grade prose.
 
-You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build does not execute evaluations or call a model. Evaluations are opt-in audit checks.
+You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build doesn't execute evaluations or call a model. Evaluations are opt-in audit checks.
 
 ## Define a task file
 
-Save YAML or JSON with `schemaVersion: 1` and a nonempty `tasks` list. Each task needs a unique lowercase ID, a prompt, an `allowedTools` list, and criteria with unique IDs and descriptions. Tasks are required by default; set `required: false` for an exploratory task that should not block an audit.
+Save YAML or JSON with `schemaVersion: 1` and a nonempty `tasks` list. Each task needs a unique lowercase ID, a prompt, an `allowedTools` list, and criteria with unique IDs and descriptions. Tasks are required by default; set `required: false` for an exploratory task that shouldn't block an audit.
 
 ```yaml title="evals/tasks.yaml"
 schemaVersion: 1
@@ -40,7 +40,7 @@ tasks:
         description: Explain that published Markdown retains reader-marked content.
 ```
 
-Use the same tool names in your task file and runner report, such as `search`, `fetch`, `docs.search`, or `mcp.get_page`. Shoalrun validates the recorded runner tools against each executed task's allowed list. It cannot observe or enforce what tools an external agent actually used. Use a shared allowed tool set within a report; prepare separate suites for runs with different tool permissions.
+Use the same tool names in your task file and runner report, such as `search`, `fetch`, `docs.search`, or `mcp.get_page`. Shoalrun validates the recorded runner tools against each executed task's allowed list. It can't observe or enforce what tools an external agent actually used. Use a shared allowed tool set within a report; prepare separate suites for runs with different tool permissions.
 
 Write criteria that an expert can assess. Valid citations and complete report fields are mechanical checks. Whether the answer correctly explains your product remains a review judgment.
 
@@ -53,9 +53,9 @@ shoalrun eval prepare site-dist --tasks evals/tasks.yaml --out evals/results.jso
 
 Create the `evals` directory first. Preparation refuses to overwrite an existing report; use a new output filename for another run.
 
-The template contains a task-file digest, a documentation-build digest, a per-file `buildFiles` inventory, a timestamp, empty runner details, and each task marked `skipped`. It records no passing results and does not run the tasks. A template with skipped required tasks fails the check until you complete the run and review.
+The template contains a task-file digest, a documentation-build digest, a per-file `buildFiles` inventory, a timestamp, empty runner details, and each task marked `skipped`. It records no passing results and doesn't run the tasks. A template with skipped required tasks fails the check until you complete the run and review.
 
-The task digest uses normalized definitions, so whitespace-only changes do not invalidate a run. Prompt, criteria, tools, or required-status changes do. The build digest covers published output files, including HTML, Markdown, indexes, discovery, and assets. It excludes `build-info.json`, private `ai/` artifacts, and `.shoalrun/` state. File touches do not invalidate otherwise identical output; changed published bytes do. Other published metadata, including build IDs embedded in manifests, remains covered even when it reflects deployment provenance.
+The task digest uses normalized definitions, so whitespace-only changes don't invalidate a run. Prompt, criteria, tools, or required-status changes do. The build digest covers published output files, including HTML, Markdown, indexes, discovery, and assets. It excludes `build-info.json`, private `ai/` artifacts, and `.shoalrun/` state. File touches don't invalidate otherwise identical output; changed published bytes do. Other published metadata, including build IDs embedded in manifests, remains covered even when it reflects deployment provenance.
 
 ## Diagnose a different build
 
@@ -69,15 +69,15 @@ shoalrun eval compare current-build.json --since evaluated-build.json
 
 The comparison lists added, changed, and removed file paths. It exits 0 for identical snapshots and 1 for differences or invalid input. Each inventory binds relative file paths and SHA-256 byte digests to the same build digest used by evaluation reports. It contains no answers or grades.
 
-New report templates include this inventory in `buildFiles`. When a report is stale, `eval check` includes the file comparison in `details.buildChanges`. Older reports still receive the exact-build check, but cannot identify which earlier files differ. Editing the stored digest or deleting changed files is not a new evaluation.
+New report templates include this inventory in `buildFiles`. When a report is stale, `eval check` includes the file comparison in `details.buildChanges`. Older reports still receive the exact-build check, but can't identify which earlier files differ. Editing the stored digest or deleting changed files isn't a new evaluation.
 
-For local review of a hosted build, download and retain that exact output, task file, and report template. Run the tasks against the downloaded site and check the completed report against it. Rebuilding the source on another operating system can change rendered assets; a report about the downloaded build does not automatically cover that rebuild. Archive the source revision and build inventory with the run. A successful build capture records no evaluation pass.
+For local review of a hosted build, download and retain that exact output, task file, and report template. Run the tasks against the downloaded site and check the completed report against it. Rebuilding the source on another operating system can change rendered assets; a report about the downloaded build doesn't automatically cover that rebuild. Archive the source revision and build inventory with the run. A successful build capture records no evaluation pass.
 
 ## Run and review the tasks
 
 Use your own agent with the declared tool access. Record the actual runner name, optional model, available tools, and any limitations in `runner`. Replace `recordedAt` with the run's UTC ISO timestamp.
 
-For each task, record its status (`pass`, `fail`, or `skipped`), answer, citations, and criterion judgments. A passing result needs a nonempty answer, at least one citation, and a passing judgment with a reason for every defined criterion. Identify citations by stable page ID and publication, so editions and languages cannot be confused:
+For each task, record its status (`pass`, `fail`, or `skipped`), answer, citations, and criterion judgments. A passing result needs a nonempty answer, at least one citation, and a passing judgment with a reason for every defined criterion. Identify citations by stable page ID and publication, so editions and languages can't be confused:
 
 ```json
 {
@@ -109,7 +109,7 @@ shoalrun eval check site-dist --tasks evals/tasks.yaml --report evals/results.js
 
 The command prints JSON and exits 1 on failure. It checks schema versions and fields, unique task and criterion IDs, the two digests, timestamps, runner and review details, declared tool access, criterion coverage, and whether each citation identifies a published page in the selected publication. Required tasks must pass. Missing or failed optional tasks appear in the outcomes without blocking, but malformed results, bad citations, or unsupported passing claims still fail validation.
 
-Shoalrun verifies that cited pages exist; it does not verify that their text supports an answer. Reported tool use and grades are assertions supplied by the runner and reviewer. A passing report does not establish broad agent reliability or factual correctness.
+Shoalrun verifies that cited pages exist; it doesn't verify that their text supports an answer. Reported tool use and grades are assertions supplied by the runner and reviewer. A passing report doesn't establish broad agent reliability or factual correctness.
 
 ## Add the audit hook
 
@@ -122,7 +122,7 @@ audit:
     report: ./evals/results.json
 ```
 
-Paths resolve beside the config file declaring each value, including included config files. The audit builds a temporary site, then checks the report against that output. Changes to published output or task definitions require a new evaluation. Reports remain project files; Shoalrun does not publish them into the site automatically.
+Paths resolve beside the config file declaring each value, including included config files. The audit builds a temporary site, then checks the report against that output. Changes to published output or task definitions require a new evaluation. Reports remain project files; Shoalrun doesn't publish them into the site automatically.
 
 If your team already has an evaluator command, configure it as an optional `run` list:
 
@@ -144,17 +144,17 @@ That script belongs to your project. It runs after a successful build, from the 
 | `SHOALRUN_EVAL_BUILD_DIGEST` | Digest of the built documentation.  |
 | `SHOALRUN_EVAL_TASKS_DIGEST` | Digest of the normalized tasks.     |
 
-The script must run and assess tasks, write a report, and exit nonzero on execution failure. A successful exit does not bypass report checks. A nonzero exit fails the audit even if an older report still validates. Hook execution and report validation appear separately as `eval-run` and `evals` in the audit results. A failed build prevents the eval hook from running.
+The script must run and assess tasks, write a report, and exit nonzero on execution failure. A successful exit doesn't bypass report checks. A nonzero exit fails the audit even if an older report still validates. Hook execution and report validation appear separately as `eval-run` and `evals` in the audit results. A failed build prevents the eval hook from running.
 
 Configured commands can use your provider keys, make network requests, and write files. Shoalrun supplies the interface; your team owns the execution, costs, review, and credentials. The temporary build is removed after the audit. For longer runs, execute your evaluator separately and import the resulting report.
 
 ## Shoalrun's own example
 
-This repository retains `docs/evals/tasks.yaml` and `docs/evals/results.json` as an example of a small agent self-assessment. Its five questions cover custom search providers, search off, bounded lexical coverage, reader choices, and freshness. This narrow, familiar task set is not a general quality gate. The site's routine audit does not import the report, and ordinary documentation changes do not require rerunning it.
+This repository retains `docs/evals/tasks.yaml` and `docs/evals/results.json` as an example of a small agent self-assessment. Its five questions cover custom search providers, search off, bounded lexical coverage, reader choices, and freshness. This narrow, familiar task set isn't a general quality gate. The site's routine audit doesn't import the report, and ordinary documentation changes don't require rerunning it.
 
 The original October 1 report is preserved unchanged in `docs/evals/history/results-2026-10-01.json`. The October 15 local run retains its actual tool responses, new answers, self-review judgments, and exact-build inventory under `docs/evals/runs/2026-10-15-local/`. The evaluator knew the project and had seen the earlier report; tasks shared retrieved pages. These are historical observations, not blind or independent evidence of general agent reliability. Earlier exploratory results remain in `plans/documentation/agent-docs-eval.json`.
 
-Run a new evaluation when it answers a concrete product question, with relevant tasks and a clearly described runner and reviewer. Preserve older reports rather than changing their dates, digests, or grades. An exact-build report can legitimately fail freshness against a later build; that does not make its original evidence invalid or require routine refreshes.
+Run a new evaluation when it answers a concrete product question, with relevant tasks and a clearly described runner and reviewer. Preserve older reports rather than changing their dates, digests, or grades. An exact-build report can legitimately fail freshness against a later build; that doesn't make its original evidence invalid or require routine refreshes.
 
 Shoalrun's evaluation commands and optional audit hook remain available for projects that choose them. This site's normal validation still covers the build, links, schemas, output consistency, relevant behavior tests, and browser checks. To inspect the archived October 15 evidence without requiring the current site to match its old build, run from the repository root after compiling the framework:
 
@@ -162,7 +162,7 @@ Shoalrun's evaluation commands and optional audit hook remain available for proj
 node docs/evals/runs/2026-10-15-local/verify.mjs
 ```
 
-That command checks the recorded responses and report provenance; it does not rerun tasks, grade answers, or certify the current site.
+That command checks the recorded responses and report provenance; it doesn't rerun tasks, grade answers, or certify the current site.
 
 ## Related reading
 

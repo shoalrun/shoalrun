@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
@@ -42,8 +42,8 @@ When CLI/MCP search has no complete matches, it first finds the highest meaningf
 
 ### Title plurals
 
-CLI and MCP page-title matching also accepts a simple final-`s` query plural against a singular title. It leaves short words and endings `-ss`, `-us`, and `-is` intact. This title-only rule does not add general stemming to body or heading searches.
+CLI and MCP page-title matching also accepts a simple final-`s` query plural against a singular title. It leaves short words and endings `-ss`, `-us`, and `-is` intact. This title-only rule doesn't add general stemming to body or heading searches.
 
 ### Mixed matches
 
-CLI and MCP search can also return a stronger partial match when every complete match gets all meaningful query terms from body text alone. The partial match must contain all but one meaningful term, match at least two, and score higher through title, summary, or heading matches. Common question words cannot earn this preference. A complete match with any meaningful title, summary, or heading match keeps the original preference. Results report `matchMode: mixed` when the exception applies, retain the complete matches, and rank by non-filler field score. This bounded lexical rule does not infer intent or guarantee an answer. The browser search box keeps its complete-match-first behavior.
+CLI and MCP search can also return a stronger partial match when every complete match gets all meaningful query terms from body text alone. The partial match must contain all but one meaningful term, match at least two, and score higher through title, summary, or heading matches. Common question words can't earn this preference. A complete match with any meaningful title, summary, or heading match keeps the original preference. Results report `matchMode: mixed` when the exception applies, retain the complete matches, and rank by non-filler field score. This bounded lexical rule doesn't infer intent or guarantee an answer. The browser search box keeps its complete-match-first behavior.

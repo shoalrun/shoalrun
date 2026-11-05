@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Measure MCP tool usage
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
@@ -27,9 +27,9 @@ Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
 - [Connect an MCP client](https://www.shoalrun.com/publish/mcp.md) — Enable and verify the HTTP endpoint before adding analytics.
 
-Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP does not enable tracking, and the browser analytics setting does not count tool calls.
+Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP doesn't enable tracking, and the browser analytics setting doesn't count tool calls.
 
-Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting does not instrument stdio, direct Markdown requests, or browser page views.
+Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting doesn't instrument stdio, direct Markdown requests, or browser page views.
 
 ## Adapter exports
 
@@ -45,6 +45,6 @@ export async function flush() {
 }
 ```
 
-`capture` runs after each tool call, including failures. `flush` sends queued events before the response completes. Both can be asynchronous. Each has a one-second wait limit; analytics failures leave tool results unchanged. Set network timeouts in your adapter because Shoalrun cannot cancel a timed-out operation.
+`capture` runs after each tool call, including failures. `flush` sends queued events before the response completes. Both can be asynchronous. Each has a one-second wait limit; analytics failures leave tool results unchanged. Set network timeouts in your adapter because Shoalrun can't cancel a timed-out operation.
 
 Module paths resolve relative to the config file. Use static imports and install SDK dependencies in your project. Keep credentials in the server environment, since adapter files are copied into the build.

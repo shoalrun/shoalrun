@@ -17,20 +17,33 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 
-This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
+This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun doesn't automatically apply these rules to other projects.
 
 ## Feature availability
 
-Use the sentence “Available since `VERSION`.” to record the first package release that supports a feature. Replace `VERSION` with the exact assigned release number, including any prerelease suffix. This is ordinary prose, preserved in HTML and Markdown.
+Use page frontmatter `availability` for a feature's overall version support. HTML uses the same quiet text style as changelog release versions, beside the page dates. Markdown keeps readable availability labels, and `documents.json` retains the authored metadata.
 
-Put the note immediately after the introduction on the feature's main guide and reference page. If only an option or behavior is newer, put its note beside that option or behavior. Add a prerequisite to a how-to only when readers need that version to complete the task.
+```yaml title="Page frontmatter"
+availability:
+  since: 0.1.0-alpha.18
+```
 
-Use the release record or approved release plan as evidence. Never infer the next release number, use `latest`, or publish a placeholder. For coordinated package and documentation releases, add the assigned version before publication. Leave the note out while the release number is undecided; track that work in release preparation.
+Use `through` for the last supported version, or combine `since` and `through` for a range. Both boundaries are inclusive. These are authored version labels: they don't hide a page, select a publication, or compare versions automatically. Omit a boundary when it's unknown.
 
-Keep the original availability version when editing the page. Do not change it to the current release. Link to release notes when readers need migration details, and name the package if the page covers more than one product.
+If only an option or behavior is newer, put a badge beside that option or behavior:
 
-This note describes feature availability. Frontmatter `version` selects a documentation edition, `releaseVersion` identifies a changelog release, and `subjectLifecycle` describes feature status. Do not repurpose those fields or add a badge solely for availability.
+```mdx
+<Badge variant="neutral">Since 0.1.0-alpha.18</Badge>
+```
+
+Keep the availability of the whole feature separate from newer additions. Don't assign the newest option's version to an older guide. Add a prerequisite to a how-to when readers need that version to complete the task.
+
+Use the release record or approved release plan as evidence. Never infer the next release number, use `latest`, or publish a placeholder. For coordinated package and documentation releases, add the assigned version before publication. Leave it out while the release number is undecided; track that work in release preparation.
+
+Keep the original availability version when editing the page. Don't change it to the current release. Link to release notes when readers need migration details, and name the package if the page covers more than one product.
+
+Frontmatter `availability` describes feature support. The `version` field selects a documentation edition, `releaseVersion` identifies a changelog release, and `subjectLifecycle` describes feature status.

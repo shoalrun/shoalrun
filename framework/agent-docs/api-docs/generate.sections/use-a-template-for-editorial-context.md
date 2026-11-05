@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/api-docs/generate.md)
 
@@ -35,7 +35,7 @@ Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun
 
 ## Use a template for editorial context
 
-Use the built-in `api-reference` template for details OpenAPI cannot supply, such as operational context, task links, prerequisites, and limitations. Keep method, path, field lists, and example values in the spec so generated references have one source for those facts.
+Use the built-in `api-reference` template for details OpenAPI can't supply, such as operational context, task links, prerequisites, and limitations. Keep method, path, field lists, and example values in the spec so generated references have one source for those facts.
 
 ```sh
 shoalrun scaffold api-reference -n content/create-enrollment.mdx \

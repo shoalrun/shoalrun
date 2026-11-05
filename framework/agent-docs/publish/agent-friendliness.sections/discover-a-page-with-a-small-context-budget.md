@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Agent-friendly documentation
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/agent-friendliness.md)
 
@@ -33,15 +33,15 @@ Parent page: [Full Markdown page](/publish/agent-friendliness.md)
 
 - [Content negotiation](https://www.shoalrun.com/publish/content-negotiation.md) — Serve the Markdown twin when an agent asks for it.
 
-Shoalrun lets people use an interactive documentation page while agents read a Markdown copy of the same instructions. Tabs, closed disclosures, and reader choices should not make essential content disappear from that copy.
+Shoalrun lets people use an interactive documentation page while agents read a Markdown copy of the same instructions. Tabs, closed disclosures, and reader choices shouldn't make essential content disappear from that copy.
 
-The build checks that it knows how to turn each component into readable Markdown. If it does not, it stops with an error. Each generated Markdown page also has a SHA-256 digest, a fingerprint of its bytes. An agent can compare it with the fetched file to verify that the bytes match the published manifest.
+The build checks that it knows how to turn each component into readable Markdown. If it doesn't, it stops with an error. Each generated Markdown page also has a SHA-256 digest, a fingerprint of its bytes. An agent can compare it with the fetched file to verify that the bytes match the published manifest.
 
 Try the example below. Switch the client tab, open **Retry detail**, and choose a reader. Then compare what is visible with the Markdown underneath, which retains both clients, the retry advice, and both reader sections. You can also open [this page's actual Markdown](https://www.shoalrun.com/publish/agent-friendliness.md).
 
 ## Discover a page with a small context budget
 
-An agent does not need to download every discovery artifact. Start with [`/llms.min.txt`](https://www.shoalrun.com/llms.min.txt), follow a matching topic index when present, and fetch the supplied Markdown page URL. Small indexes list pages directly. Larger indexes group pages by publication and primary taxonomy area, or page type when no area is declared. Topics split into narrower indexes as they grow.
+An agent doesn't need to download every discovery artifact. Start with [`/llms.min.txt`](https://www.shoalrun.com/llms.min.txt), follow a matching topic index when present, and fetch the supplied Markdown page URL. Small indexes list pages directly. Larger indexes group pages by publication and primary taxonomy area, or page type when no area is declared. Topics split into narrower indexes as they grow.
 
 Each compact or navigation-section index is limited to 2,000 `cl100k_base` tokens. This is a limit per response, not a fixed total for every reading task. Page entries retain IDs, titles, summaries, publication labels, and Markdown links. Author-declared standalone sections retain exact sizes and a **Full page** fallback. Default to the full page for setup or broader questions. Every published page remains reachable, including pages outside navigation.
 
@@ -56,6 +56,6 @@ Choose another artifact only when the task needs it:
 | [`documents.sync.json`](https://www.shoalrun.com/documents.sync.json)     | Compare a saved inventory with the current build.                        |
 | [`build-info.json`](https://www.shoalrun.com/build-info.json)             | Check whether the assembled build has changed.                           |
 
-Both search indexes are generated when search indexing is enabled. The full `/search-index.json` includes bounded article text for browser search, CLI search, and custom lexical fallbacks. It remains available, but it is not needed to find a page through the compact list. These files are downloadable indexes, not query endpoints. Shoalrun does not produce `llms-full.txt`.
+Both search indexes are generated when search indexing is enabled. The full `/search-index.json` includes bounded article text for browser search, CLI search, and custom lexical fallbacks. It remains available, but it isn't needed to find a page through the compact list. These files are downloadable indexes, not query endpoints. Shoalrun doesn't produce `llms-full.txt`.
 
 HTML pages provide a visible **Read as Markdown** link, a `rel="alternate"` link, and optional early agent guidance. The guidance links to the article, the compact index, and the current twin. The HTML head’s `rel="describedby"` link and Markdown index backlinks also point to `/llms.min.txt`, so entering through either format leads to the same starting list. Follow those supplied links when a fetch tool rejects guessed URLs. Compact-list links are site-relative; resolve them against the fetched index's origin. Markdown page links use the configured public origin when present.

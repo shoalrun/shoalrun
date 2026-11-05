@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/api-docs/generate.md)
 
@@ -54,7 +54,7 @@ pathPrefix: /example-api/generated
 include: [getNote]
 ```
 
-`include` lists source `operationId` values to generate; an empty list generates none. You can use `exclude` instead to generate all but named operations, or set `generateReferences: true` to generate every operation without an authored binding. The build rejects unknown selection IDs. Generated IDs and URLs derive from the API ID and source `operationId`, not the operation summary, so editing a title does not move the page. If an `operationId` changes, add an authored binding when the old public identity must remain stable.
+`include` lists source `operationId` values to generate; an empty list generates none. You can use `exclude` instead to generate all but named operations, or set `generateReferences: true` to generate every operation without an authored binding. The build rejects unknown selection IDs. Generated IDs and URLs derive from the API ID and source `operationId`, not the operation summary, so editing a title doesn't move the page. If an `operationId` changes, add an authored binding when the old public identity must remain stable.
 
 For an API `notes` and `operationId: getNote`, the generator creates:
 

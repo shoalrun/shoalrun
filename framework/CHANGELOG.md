@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.18 — 2026-11-04
 
 - Add authored page availability ranges with `since` and `through` version
   labels. Reuse the release-version text style beside page dates, retain labels

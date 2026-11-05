@@ -17,7 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Customer editions
 
-**Updated: 2026-11-03.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.15.**
 
 Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
@@ -31,16 +33,14 @@ Parent page: [Full Markdown page](/publish/deployment-profiles.md)
 
 - [Check working-tree documentation edits](https://www.shoalrun.com/author/workspace.md) — Review the selected edition using captured HTML and Markdown. (Status: experimental.)
 
-Build a documentation edition for each customer from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles do not need to share a repository.
+Build a documentation edition for individual customers from one shared content project. Keep product definitions in the shared repository and supply each customer's purchases, additional features, and branding through that deployment's own profile file. Customer profiles don't need to share a repository with the content.
 
-By default, you do not need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
-
-Available since `0.1.0-alpha.15`.
+By default, you don't need to mark every page. Pages without feature requirements are shared across customer editions. For customer deployments that need a deliberate decision on each page, enable explicit classification. In either mode, add requirements to pages or sections that depend on specific features.
 
 ## Check the result
 
 Inspect the edition's sidebar, selected pages, and shared sections. Then inspect its Markdown, search indexes, `documents.json`, and exports for the same selections. An excluded feature's content should be absent from the output files, rather than hidden by browser controls.
 
-A normal site build writes a private selection report at `.shoalrun/profile-selection.json`. It lists resolved features, grant sources, and inclusion decisions. Match its `buildId` to the output before treating it as a receipt for that output. The profile itself, its source filenames, and the report are not served as public metadata.
+A normal site build writes a private selection report at `.shoalrun/profile-selection.json`. It lists resolved features, grant sources, and inclusion decisions. Match its `buildId` to the output before treating it as a receipt for that output. The profile itself, its source filenames, and the report aren't served as public metadata.
 
-Affected pages excluded from the selected profile remain listed in validation coverage with a warning that their rendered content was not checked. Validate another profile that includes those pages before accepting their content changes.
+Affected pages excluded from the selected profile remain listed in validation coverage with a warning that their rendered content wasn't checked. Validate another profile that includes those pages before accepting their content changes.

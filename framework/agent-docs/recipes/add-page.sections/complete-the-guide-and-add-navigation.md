@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Add a page to this documentation site
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/recipes/add-page.md)
 
@@ -35,7 +35,7 @@ Set a suitable `card.icon`, such as `file-text`, to meet this site's page-card a
 - { id: my-new-guide, doc: guide.my-new-guide }
 ```
 
-For useful next steps, add edges to `docs/config/relationships.yaml` and put `<RelatedReading />` at the end of the page. Preserve the page ID if you later change its title or slug. Setting public access includes the page in the local build; it does not deploy the site.
+For useful next steps, add edges to `docs/config/relationships.yaml` and put `<RelatedReading />` at the end of the page. Preserve the page ID if you later change its title or slug. Setting public access includes the page in the local build; it doesn't deploy the site.
 
 Save `authoredPage`: The completed public page and its navigation entry, ready for a local build.
 

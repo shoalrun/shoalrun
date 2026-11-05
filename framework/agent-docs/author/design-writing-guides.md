@@ -19,7 +19,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Advanced workflows > Design a writing guide
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 A project writing guide explains your readers, terminology, and editorial decisions. Give your agent the guide's file path in project instructions so it can read the same rules as human authors.
 
@@ -38,7 +38,7 @@ authoring:
     - content/reviewed-how-to.mdx
 ```
 
-Paths are relative to `docs.config.yaml` and point to files your agent should read. `docs context` returns this guidance and its configuration owner. For a new page, your agent can read it with `config resolve`. Shoalrun validates the field shapes; it does not load these files into a model, run the instructions, or require a provider key. These authoring settings do not configure a model.
+Paths are relative to `docs.config.yaml` and point to files your agent should read. `docs context` returns this guidance and its configuration owner. For a new page, your agent can read it with `config resolve`. Shoalrun validates the field shapes; it doesn't load these files into a model, run the instructions, or require a provider key. These authoring settings don't configure a model.
 
 ## State the decisions that matter
 
@@ -58,7 +58,7 @@ The [example writing guide](https://www.shoalrun.com/author/writing-style.md) sh
 
 Tell the agent to support changed technical claims with sources it has inspected, verify examples when possible, and report missing facts. Your agent handles source discovery and evidence gathering with its own tools. Keep editorial examples separate from factual sources.
 
-Define what the reviewer needs: a diff, changed claims and their sources, check results, and unresolved questions. Do not treat a clean style report as approval to publish.
+Define what the reviewer needs: a diff, changed claims and their sources, check results, and unresolved questions. Don't treat a clean style report as approval to publish.
 
 ## Automate the repeatable rules
 

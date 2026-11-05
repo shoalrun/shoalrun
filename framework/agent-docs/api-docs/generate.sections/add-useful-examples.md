@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Generate and select API pages
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/api-docs/generate.md)
 
@@ -35,11 +35,11 @@ Start with a registered local API from [Add an OpenAPI API](https://www.shoalrun
 
 ## Add useful examples
 
-API reference pages display the examples defined in the OpenAPI file; the build does not invent them. Give each example a clear name and include the fields a reader needs to use it. In this site's Notes spec, [Create a note](https://www.shoalrun.com/example-api/create-note.md) has request and response examples. [Get a note](https://www.shoalrun.com/example-api/generated/get-note-cbedb319.md) has a note ID and a response example.
+API reference pages display the examples defined in the OpenAPI file; the build doesn't invent them. Give each example a clear name and include the fields a reader needs to use it. In this site's Notes spec, [Create a note](https://www.shoalrun.com/example-api/create-note.md) has request and response examples. [Get a note](https://www.shoalrun.com/example-api/generated/get-note-cbedb319.md) has a note ID and a response example.
 
 The right panel offers **Examples** first when the spec provides them, plus a **JSON shape** view built from each JSON request or response schema. Shape values are type placeholders, not a runnable payload. Request and response examples stay in separate groups, with response status and media type in each heading. Groups of three or fewer use native disclosures. Larger groups use a compact selector with one visible preview when JavaScript is available; without JavaScript, every disclosure remains usable. The Create a note request has ten named examples so you can inspect this layout. Direct links still open the selected example.
 
-Local named request examples for ordinary, non-multipart operations also have copyable request samples. In HTML, each sample has a language selector. It offers cURL, JavaScript, Node.js, Python, Go, Java, PHP, Ruby, and C#. Webhooks have no generated request samples. A sample uses the first declared server and security option, required parameters, the example body, and its media type. Replace `YOUR_` credential and parameter placeholders before using it. Ordinary operations without a request body show a general request sample. An operation with a request body but no local named request examples usually shows no sample. A multipart body whose required fields are all binary strings can produce a file-upload sample in cURL only. An `externalValue` example has no example-specific sample. These samples are generated from the OpenAPI source and have not been executed. **The Markdown twin and agent bundle keep only the cURL sample.** Agents can translate cURL; one canonical sample keeps the `.md` output small.
+Local named request examples for ordinary, non-multipart operations also have copyable request samples. In HTML, each sample has a language selector. It offers cURL, JavaScript, Node.js, Python, Go, Java, PHP, Ruby, and C#. Webhooks have no generated request samples. A sample uses the first declared server and security option, required parameters, the example body, and its media type. Replace `YOUR_` credential and parameter placeholders before using it. Ordinary operations without a request body show a general request sample. An operation with a request body but no local named request examples usually shows no sample. A multipart body whose required fields are all binary strings can produce a file-upload sample in cURL only. An `externalValue` example has no example-specific sample. These samples are generated from the OpenAPI source and haven't been executed. **The Markdown twin and agent bundle keep only the cURL sample.** Agents can translate cURL; one canonical sample keeps the `.md` output small.
 
 An OpenAPI `summary` names an example, and `description` adds context. Without a summary, the reader turns its source key into a readable title and still shows the original key. A response without an example still has a shape: Get a note's `404` response shows `code` and `message` as strings. The full field descriptions and presence rules remain in the main reference and its Markdown twin.
 

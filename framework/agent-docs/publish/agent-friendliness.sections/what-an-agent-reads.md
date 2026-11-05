@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Agent-friendly documentation
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/agent-friendliness.md)
 
@@ -33,15 +33,15 @@ Parent page: [Full Markdown page](/publish/agent-friendliness.md)
 
 - [Content negotiation](https://www.shoalrun.com/publish/content-negotiation.md) — Serve the Markdown twin when an agent asks for it.
 
-Shoalrun lets people use an interactive documentation page while agents read a Markdown copy of the same instructions. Tabs, closed disclosures, and reader choices should not make essential content disappear from that copy.
+Shoalrun lets people use an interactive documentation page while agents read a Markdown copy of the same instructions. Tabs, closed disclosures, and reader choices shouldn't make essential content disappear from that copy.
 
-The build checks that it knows how to turn each component into readable Markdown. If it does not, it stops with an error. Each generated Markdown page also has a SHA-256 digest, a fingerprint of its bytes. An agent can compare it with the fetched file to verify that the bytes match the published manifest.
+The build checks that it knows how to turn each component into readable Markdown. If it doesn't, it stops with an error. Each generated Markdown page also has a SHA-256 digest, a fingerprint of its bytes. An agent can compare it with the fetched file to verify that the bytes match the published manifest.
 
 Try the example below. Switch the client tab, open **Retry detail**, and choose a reader. Then compare what is visible with the Markdown underneath, which retains both clients, the retry advice, and both reader sections. You can also open [this page's actual Markdown](https://www.shoalrun.com/publish/agent-friendliness.md).
 
 ## What an agent reads
 
-Here is the Markdown generated from the example above. An agent does not need to click the tabs, expand the disclosure, or choose a reader to get these instructions.
+Here is the Markdown generated from the example above. An agent doesn't need to click the tabs, expand the disclosure, or choose a reader to get these instructions.
 
 ```md
 ### Command line
@@ -65,4 +65,4 @@ Open the activity screen to inspect the result.
 Inspect the response status and returned identifier.
 ```
 
-The labels become headings or ordinary text. The controls themselves are omitted. This site's test compares the example's generated Markdown with the text shown here so they cannot drift apart unnoticed. The [reader views reference](https://www.shoalrun.com/author/reader-views.md) explains how authors configure those choices.
+The labels become headings or ordinary text. The controls themselves are omitted. This site's test compares the example's generated Markdown with the text shown here so they can't drift apart unnoticed. The [reader views reference](https://www.shoalrun.com/author/reader-views.md) explains how authors configure those choices.

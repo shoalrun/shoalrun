@@ -1,8 +1,8 @@
 ---
 id: guide.what-is-shoalrun
 title: What is Shoalrun?
-summary: A one-page introduction to Shoalrun's document-first approach, its
-  outputs, and the current prototype.
+summary: An introduction to Shoalrun's document-first approach and its outputs
+  for people and agents.
 type: overview
 area: project
 subarea: project-overview
@@ -17,9 +17,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > What is Shoalrun?
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Shoalrun is a documentation compiler for product and API docs. It reads project configuration, Markdown and supported MDX pages, and optional local OpenAPI files. From those sources, it builds a site for people and readable Markdown pages for agents. The normal build is deterministic: it makes no model calls or network requests.
+
+For a concise capability overview, see [Shoalrun features](https://www.shoalrun.com/features.md). It brings together the authoring, publishing, product-edition, and agent capabilities.
 
 ## Documents have an identity
 
@@ -46,6 +48,8 @@ The public documentation site shows output built by Shoalrun. Install the alpha 
 ## Related reading
 
 ### Next steps
+
+- [Shoalrun features](https://www.shoalrun.com/features.md) — Compare authoring, publishing, customer editions, and agent capabilities.
 
 - [How Shoalrun works](https://www.shoalrun.com/concepts.md) — Follow a document through the compiler and see how IDs and routes work.
 

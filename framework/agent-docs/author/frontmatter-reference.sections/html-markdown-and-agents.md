@@ -16,13 +16,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Generated frontmatter reference
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/frontmatter-reference.md)
 
 This is the field inventory for this documentation site. The tables below are built from Shoalrun's native field definitions and this site's `frontmatter.fields` declarations on each build. They describe source page headers, not the shorter YAML header selected for a published Markdown page.
 
-`agent.intent` in the project-defined table is an optional string. This site's authors use it to describe the task a page helps an agent complete. It is **not** a required Shoalrun field or an instruction to an agent. `editorial.reviewNote` is another site-specific field for internal review notes. A different project can declare different fields.
+`agent.intent` in the project-defined table is an optional string. This site's authors use it to describe the task a page helps an agent complete. It **isn't** a required Shoalrun field or an instruction to an agent. `editorial.reviewNote` is another site-specific field for internal review notes. A different project can declare different fields.
 
 To publish an equivalent inventory on your site, place `<FrontmatterReference />` on a page. It takes no attributes or child content and renders the current project's native and declared fields in HTML and Markdown.
 
@@ -30,4 +30,4 @@ For section exports, declare `standaloneSections` with `{ id, context: section }
 
 ## HTML, Markdown, and agents
 
-`FrontmatterReference` writes the project's field definitions into both the HTML page and its Markdown twin. An agent can read those tables without running JavaScript or opening the local schema file. The tables describe accepted source fields; they do not expose each page's private metadata values. The separate `.shoalrun` files are local authoring resources, not public routes.
+`FrontmatterReference` writes the project's field definitions into both the HTML page and its Markdown twin. An agent can read those tables without running JavaScript or opening the local schema file. The tables describe accepted source fields; they don't expose each page's private metadata values. The separate `.shoalrun` files are local authoring resources, not public routes.

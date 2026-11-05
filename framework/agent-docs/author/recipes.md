@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 A **recipe** is the complete page someone follows to finish a task. An **ingredient** is a reusable piece of source documentation used to write that page. A **cookbook** is a page that helps readers choose a recipe.
 
@@ -25,9 +25,9 @@ Readers can open a recipe directly. Ingredients help authors maintain instructio
 
 ## Use recipes for task-oriented how-tos
 
-Use the built-in `how-to` template for a task page, or `recipe` when the page should participate in Shoalrun's recipe and cookbook features. Both take a reader from a known starting state to a verifiable result. Give it prerequisites, ordered actions, failure guidance, and a final success check. A recipe can be a short, directly authored page; it does not require ingredients, a YAML composition spec, or a cookbook.
+Use the built-in `how-to` template for a task page, or `recipe` when the page should participate in Shoalrun's recipe and cookbook features. Both take a reader from a known starting state to a verifiable result. Give it prerequisites, ordered actions, failure guidance, and a final success check. A recipe can be a short, directly authored page; it doesn't require ingredients, a YAML composition spec, or a cookbook.
 
-Use the built-in `explanation` template to explain a concept or help readers understand a system. Use a reference page to describe fields, commands, or API behavior. Existing how-tos can keep their current type, stable ID, and route until a deliberate content revision calls for a change. A page's type does not prove its instructions have been tested.
+Use the built-in `explanation` template to explain a concept or help readers understand a system. Use a reference page to describe fields, commands, or API behavior. Existing how-tos can keep their current type, stable ID, and route until a deliberate content revision calls for a change. A page's type doesn't prove its instructions have been tested.
 
 | Writing task                                             | Starting format                          |
 | -------------------------------------------------------- | ---------------------------------------- |
@@ -65,7 +65,7 @@ flowchart TD
  audit -->|"added to draft"| audit_recipe
 ```
 
-The [Site workflows cookbook](https://www.shoalrun.com/cookbooks/site-workflows.md) offers these two finished recipes. Choosing the audit path displays all four steps. The reader does not have to find or assemble the ingredients.
+The [Site workflows cookbook](https://www.shoalrun.com/cookbooks/site-workflows.md) offers these two finished recipes. Choosing the audit path displays all four steps. The reader doesn't have to find or assemble the ingredients.
 
 ## What each file does
 
@@ -86,11 +86,11 @@ These are real files in this checkout:
 3. **The author reviews and tests the recipe, then publishes it.** A normal site build turns the recipe page into HTML and Markdown. It also builds the cookbook page and its choice list.
 4. **A reader chooses a recipe in the cookbook.** The browser fetches the already-published recipe and displays its instructions. The reader or their agent runs the commands and checks the results.
 
-**Selecting a cookbook option does not assemble ingredients or run a task.** It loads finished recipe content. The cookbook's own introduction and choice descriptions come from its page and configuration.
+**Selecting a cookbook option doesn't assemble ingredients or run a task.** It loads finished recipe content. The cookbook's own introduction and choice descriptions come from its page and configuration.
 
 ## What changing an ingredient updates
 
-A generated recipe is a snapshot of its ingredients. Editing an ingredient does not immediately change a published recipe. Regenerate the affected recipe, review the changes, and rebuild the site.
+A generated recipe is a snapshot of its ingredients. Editing an ingredient doesn't immediately change a published recipe. Regenerate the affected recipe, review the changes, and rebuild the site.
 
 Shoalrun's five repository recipes have a maintenance script that updates their snapshots together and a test that detects stale snapshots. The [composition guide](https://www.shoalrun.com/author/recipe-drafts.md) shows that workflow. Other projects can keep generated recipes as drafts and edit them independently.
 
@@ -106,7 +106,7 @@ Give an agent the source material that matches its task and the outcome you want
 | Complete a task                 | The finished recipe's Markdown.                                 | Follow the commands, pass values between steps, and evaluate the stated success checks. |
 | Choose a task                   | The cookbook's Markdown.                                        | Read each option's purpose and follow the appropriate recipe link.                      |
 
-The recipe assembler does not call a model. It does not execute commands, validate data types, or prove that a task succeeded. A declared output such as `builtSite` is a name and description; it does not create a directory or a shell variable. The recipe's commands produce the actual result.
+The recipe assembler doesn't call a model. It doesn't execute commands, validate data types, or prove that a task succeeded. A declared output such as `builtSite` is a name and description; it doesn't create a directory or a shell variable. The recipe's commands produce the actual result.
 
 A recipe's **Read as Markdown** link contains its complete published instructions. A cookbook's Markdown lists the choices and recipe links. The browser selection has no separate published Markdown endpoint. **Download Markdown** saves the selected recipes' instructions in a file you can give to an agent.
 

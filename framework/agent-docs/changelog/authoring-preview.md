@@ -15,7 +15,7 @@ date: 2026-10-13
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Authoring snapshot previews and review reports
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-13: Snapshot previews
 
 **Published: 2026-10-13.**
 
@@ -25,9 +25,9 @@ This change concerns the private prototype; no package release or deployment is 
 
 `docs preview REPORT` serves a private copy of that exact build on a loopback address. It returns a browser review URL and routes for every affected page that rendered. HTML pages display freshness and a review link. Source edits make the preview stale rather than replacing its content; validate again and restart from the new report. Changed artifacts prevent startup or serving.
 
-Ctrl-C or SIGTERM closes the foreground server and removes its serving copy. Validation artifacts remain available separately. Failed or skipped checks retain their actual status while previewing. The tools make no authoring provider calls and do not apply edits, commit, or publish.
+Ctrl-C or SIGTERM closes the foreground server and removes its serving copy. Validation artifacts remain available separately. Failed or skipped checks retain their actual status while previewing. The tools make no authoring provider calls and don't apply edits, commit, or publish.
 
-Snapshot builds preserve captured freshness history. Configured checks can declare sibling files and directories with `audit.tests[].inputs`; validation captures those inputs and tracks their changes. Compiler checks do not replace factual or editorial review.
+Snapshot builds preserve captured freshness history. Configured checks can declare sibling files and directories with `audit.tests[].inputs`; validation captures those inputs and tracks their changes. Compiler checks don't replace factual or editorial review.
 
 ## Related reading
 

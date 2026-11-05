@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -64,10 +64,10 @@ See the [generated frontmatter reference](https://www.shoalrun.com/author/frontm
 The build reads every `.md` and `.mdx` file in the content directory, including drafts, and checks each header:
 
 - The header must start on the first line of the file, and a key may appear only once.
-- `slug` must start with `/` and cannot contain `..`, `?`, `#`, `%2f`, or `%5c`. Slugs under `/api` and `/.well-known` are reserved for published contracts and discovery files. Routes are compared without regard to case, so `/Guide` and `/guide` collide.
+- `slug` must start with `/` and can't contain `..`, `?`, `#`, `%2f`, or `%5c`. Slugs under `/api` and `/.well-known` are reserved for published contracts and discovery files. Routes are compared without regard to case, so `/Guide` and `/guide` collide.
 - Only `access.policy: public` publishes a page. Any other value, such as `draft`, keeps it out of every publication.
 - A public page whose channel, version, and language match no enabled publication is skipped without a warning. If a page is missing from the output, check its publication fields first.
-- A page with `publications` cannot also set page-level `channel` or `version`; a project-wide enforced channel or version must agree with every entry.
+- A page with `publications` can't also set page-level `channel` or `version`; a project-wide enforced channel or version must agree with every entry.
 - A public page fails while it still contains a scaffold placeholder or a scaffolded summary. See [templates](https://www.shoalrun.com/author/templates.md) for the exact patterns.
 
 `type` is free text, but some values change behavior. An `api-reference` page must list exactly one operation. `guide` and `how-to` pages can use `relatedApiReferences`. Any type can get its own Markdown metadata through [`byType` in Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md). The HTML page header shows the type as words: `api-reference` appears as "API reference".

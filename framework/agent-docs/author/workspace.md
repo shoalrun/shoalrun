@@ -20,11 +20,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Check edits
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
-Use this procedure from your documentation project directory, containing `docs.config.yaml`, with `@shoalrun/cli` installed. [Getting started](https://www.shoalrun.com/start.md) explains how to install the alpha package from npm. You need Node.js 22.12 or newer; a framework source checkout and a separate authoring provider key are not required. Your coding agent uses its own model and file tools. Replace the example page path with your project's path.
+Use this procedure from your documentation project directory, containing `docs.config.yaml`, with `@shoalrun/cli` installed. [Getting started](https://www.shoalrun.com/start.md) explains how to install the alpha package from npm. You need Node.js 22.12 or newer; a framework source checkout and a separate authoring provider key aren't required. Your coding agent uses its own model and file tools. Replace the example page path with your project's path.
 
 Framework contributors can instead build the source checkout and run `node framework/dist/cli.js <command>` from its root. The examples below use the installed package.
 
@@ -62,13 +62,13 @@ For an existing edit without a baseline, declare its scope explicitly:
 npx --no-install shoalrun docs validate --file content/install.mdx --config docs.config.yaml
 ```
 
-Validation compiles a separate capture. Read the returned status, coverage, findings, skipped checks, and artifact paths. A failure needs correction and another validation. An incomplete or unavailable result needs investigation; it is not a passing result. Configured shell checks require explicit `--run-checks` and your harness's execution authorization.
+Validation compiles a separate capture. Read the returned status, coverage, findings, skipped checks, and artifact paths. A failure needs correction and another validation. An incomplete or unavailable result needs investigation; it isn't a passing result. Configured shell checks require explicit `--run-checks` and your harness's execution authorization.
 
 ### Inspect authoring suggestions
 
-Available since `0.1.0-alpha.13`.
+Since 0.1.0-alpha.13
 
-Project discovery and validation can report `authoring.related-reading` when a “Related reading” or “Related material” section contains document links. This is a nonblocking suggestion to inspect [native relationships](https://www.shoalrun.com/author/related-reading.md) and [RelatedReading](https://www.shoalrun.com/author/components/related-reading.md). It does not create relationships or change your source. Choose each connection's purpose and reason yourself; keep manual links when they fit better. Pages already using `RelatedReading` do not receive this hint.
+Project discovery and validation can report `authoring.related-reading` when a “Related reading” or “Related material” section contains document links. This is a nonblocking suggestion to inspect [native relationships](https://www.shoalrun.com/author/related-reading.md) and [RelatedReading](https://www.shoalrun.com/author/components/related-reading.md). It doesn't create relationships or change your source. Choose each connection's purpose and reason yourself; keep manual links when they fit better. Pages already using `RelatedReading` don't receive this hint.
 
 ## Confirm the result still applies
 
@@ -85,9 +85,9 @@ npx --no-install shoalrun docs review /path/from/result/report.json --format mar
 npx --no-install shoalrun docs preview /path/from/result/report.json --port 8771
 ```
 
-The preview command stays running and returns a local review URL plus HTML and Markdown URLs for every affected page that rendered. Open the review URL in your browser. It shows the task baseline, changed files, checks, findings, dependencies, and artifacts. Previewing a failed or incomplete result does not make it pass. A failed compile can leave no site to preview; read its findings with `docs review` first.
+The preview command stays running and returns a local review URL plus HTML and Markdown URLs for every affected page that rendered. Open the review URL in your browser. It shows the task baseline, changed files, checks, findings, dependencies, and artifacts. Previewing a failed or incomplete result doesn't make it pass. A failed compile can leave no site to preview; read its findings with `docs review` first.
 
-The server uses a private copy of the captured build. Each HTML page shows the snapshot status and a link back to the review. Source changes make that preview stale; the displayed content remains the captured version. A baseline contains digests rather than earlier file contents, so retain the task diff with your harness. The report does not attribute all dirty files to your task.
+The server uses a private copy of the captured build. Each HTML page shows the snapshot status and a link back to the review. Source changes make that preview stale; the displayed content remains the captured version. A baseline contains digests rather than earlier file contents, so retain the task diff with your harness. The report doesn't attribute all dirty files to your task.
 
 After a revision, stop the preview with Ctrl-C, validate again, and start a preview using the new report path. The server never watches or rebuilds source. Ctrl-C or SIGTERM removes its private serving copy; the validation artifacts remain. Remove only the reported validation artifact directory when finished. A forced process kill can leave the serving copy behind; its path is in the startup result.
 

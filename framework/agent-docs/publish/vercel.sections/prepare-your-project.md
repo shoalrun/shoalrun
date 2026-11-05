@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Publish on Vercel
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/vercel.md)
 
@@ -49,4 +49,4 @@ Set `site.origin` in `docs.config.yaml` to your intended public HTTPS origin bef
 npx --no-install shoalrun vercel build docs.config.yaml .vercel/output
 ```
 
-Generating output does not deploy it.
+Generating output doesn't deploy it.

@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -61,6 +61,6 @@ See the [generated frontmatter reference](https://www.shoalrun.com/author/frontm
 
 ## Audience badges
 
-This page sets `audiences: [authors, maintainers]`, so its HTML header shows an **Intended audience** row with those two badges. Without [reader views](https://www.shoalrun.com/author/reader-views.md), write the labels as you want them displayed; they do not filter content. With an `audience` facet configured, use its choice IDs and Shoalrun displays the configured labels. A page without `audiences` has no audience row. Neither field restricts access; `access.policy` controls whether the page enters the public build.
+This page sets `audiences: [authors, maintainers]`, so its HTML header shows an **Intended audience** row with those two badges. Without [reader views](https://www.shoalrun.com/author/reader-views.md), write the labels as you want them displayed; they don't filter content. With an `audience` facet configured, use its choice IDs and Shoalrun displays the configured labels. A page without `audiences` has no audience row. Neither field restricts access; `access.policy` controls whether the page enters the public build.
 
-The site's Markdown metadata projection also selects `frontmatter.audiences`, so [this page's Markdown twin](https://www.shoalrun.com/author/frontmatter.md) lists the same values in its YAML header. A site can omit that projection field if its Markdown readers do not need audience labels.
+The site's Markdown metadata projection also selects `frontmatter.audiences`, so [this page's Markdown twin](https://www.shoalrun.com/author/frontmatter.md) lists the same values in its YAML header. A site can omit that projection field if its Markdown readers don't need audience labels.

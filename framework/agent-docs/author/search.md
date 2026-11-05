@@ -16,11 +16,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
@@ -35,18 +35,18 @@ outputs:
       provider: lexical
 ```
 
-| Provider   | Behavior                                                                                                      |
-| ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                                       |
-| `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Available since `0.1.0-alpha.16`. |
-| `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                               |
-| `none`     | Removes the search box. Writes no index or provider file.                                                     |
+| Provider   | Behavior                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------ |
+| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                          |
+| `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Since 0.1.0-alpha.16 |
+| `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                  |
+| `none`     | Removes the search box. Writes no index or provider file.                                        |
 
 The build copies the provider module to `/assets/search-provider.js`. The search box imports that file when a reader first focuses the box or types.
 
 ## Enable included semantic search
 
-Available since `0.1.0-alpha.16`.
+Since 0.1.0-alpha.16
 
 Choose the included semantic provider to connect the search box to Shoalrun's endpoint without writing a browser adapter:
 
@@ -71,11 +71,11 @@ npx --no-install shoalrun index site-dist --embed --config docs.config.yaml
 npx --no-install shoalrun serve site-dist --search --config docs.config.yaml
 ```
 
-Keys remain server-side. Each semantic query calls the embedding provider; no chat model is required. The browser sends the selected publication and reader view with each request. A missing or unavailable endpoint uses the included browser keyword index. Requests cancelled by further typing do not start fallback searches.
+Keys remain server-side. Each semantic query calls the embedding provider; no chat model is required. The browser sends the selected publication and reader view with each request. A missing or unavailable endpoint uses the included browser keyword index. Requests cancelled by further typing don't start fallback searches.
 
 Confirm `mode: vector` in the endpoint response to verify semantic retrieval. Rebuild and reindex edited content, then restart the local server. The [passage index](https://www.shoalrun.com/chat/passage-index.md) explains input reuse and release-specific passage identities.
 
-This setting selects the browser connection; it does not provision production hosting. The current [Vercel integration](https://www.shoalrun.com/publish/vercel.md) supplies search through its chat-function deployment. Profiled Vercel chat-function builds remain unsupported. Static deployments retain keyword search when no endpoint is present. Custom search services can continue to use `provider: custom`.
+This setting selects the browser connection; it doesn't provision production hosting. The current [Vercel integration](https://www.shoalrun.com/publish/vercel.md) supplies search through its chat-function deployment. Profiled Vercel chat-function builds remain unsupported. Static deployments retain keyword search when no endpoint is present. Custom search services can continue to use `provider: custom`.
 
 ## Use the search box
 
@@ -92,7 +92,7 @@ The browser provider ranks matches in this order:
 1. Pages containing every query term or its mapped synonym.
 2. If none match completely, partial results ordered by matched term count, then field score.
 
-Common filler words such as “how,” “do,” and “the” do not count toward partial-match coverage. A partial result must match at least one remaining term. This helps sentence-shaped queries but does not infer meaning or handle typos and general stemming.
+Common filler words such as “how,” “do,” and “the” don't count toward partial-match coverage. A partial result must match at least one remaining term. This helps sentence-shaped queries but doesn't infer meaning or handle typos and general stemming.
 
 The [local search command](https://www.shoalrun.com/cli.md) shares the base index and weights, with additional CLI/MCP ranking rules described below.
 
@@ -122,11 +122,11 @@ Pages rank by where the terms appear:
 3. Section headings.
 4. Body text.
 
-The built-in lexical provider returns at most one result per page. It adds a section link when every query term matches one section heading and the query is not already a title match. With a reader view selected, it returns page links because the unfiltered heading list may include hidden sections. Custom providers can return multiple section results from the same page.
+The built-in lexical provider returns at most one result per page. It adds a section link when every query term matches one section heading and the query isn't already a title match. With a reader view selected, it returns page links because the unfiltered heading list may include hidden sections. Custom providers can return multiple section results from the same page.
 
-The list shows the top eight results. The provider downloads the index once, on first focus, and searches only pages in the reader's channel, version, and language. When [reader views](https://www.shoalrun.com/author/reader-views.md) are configured, it also excludes pages and marked section text outside the selected view. The local CLI search command reads the full index and does not apply a browser's saved view.
+The list shows the top eight results. The provider downloads the index once, on first focus, and searches only pages in the reader's publication. Product scope Since 0.1.0-alpha.18 includes product, channel, version, and language. When [reader views](https://www.shoalrun.com/author/reader-views.md) are configured, it also excludes pages and marked section text outside the selected view. The local CLI search command reads the full index and doesn't apply a browser's saved view.
 
-The navigation sidebar has a separate filter. Its optional node-level `search` terms help readers find menu items; they do not change `/search-index.json` or masthead results. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).
+The navigation sidebar has a separate filter. Its optional node-level `search` terms help readers find menu items; they don't change `/search-index.json` or masthead results. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).
 
 ## Hosted semantic search limits
 
@@ -144,7 +144,7 @@ These are the defaults. Each value must be a positive whole number. They apply t
 
 The Vercel adapter wires these settings into the generated search function when hosted search is included in the build. Configure the embedding provider and shared Redis/KV credentials in the hosting environment. See [Publish on Vercel](https://www.shoalrun.com/publish/vercel.md).
 
-Other hosting platforms need an adapter that runs Shoalrun's hosted search handler, passes the site's settings, and connects the shared counter store. Shoalrun does not automatically apply these limits to another host or a customer's search service. A static-only deployment can use the built-in browser keyword provider without a server function.
+Other hosting platforms need an adapter that runs Shoalrun's hosted search handler, passes the site's settings, and connects the shared counter store. Shoalrun doesn't automatically apply these limits to another host or a customer's search service. A static-only deployment can use the built-in browser keyword provider without a server function.
 
 Daily limits count attempts to embed a query and reset at midnight UTC. A caller is identified by the forwarded IP address, so people sharing a network can share an allowance. The site-wide limit applies across callers using the same counter store. Use a separate store for each site's independent allowance.
 
@@ -187,14 +187,14 @@ The `module` path resolves from the config file that declares it. The module is 
 
 The search box passes a context object to both functions.
 
-| Field             | Value                                                                                                                                                     |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`         | The page's channel, version, and language, joined by `\|`, such as `production\|current\|en`.                                                             |
-| `language`        | The page's `lang` value.                                                                                                                                  |
-| `indexUrl`        | The base-path-prefixed `/search-index.json` URL. The file exists only when the build writes an index.                                                     |
-| `limit`           | The maximum number of results the box shows.                                                                                                              |
-| `signal`          | An `AbortSignal`, passed to `search` only. It aborts when the reader types again.                                                                         |
-| `readerSelection` | The active reader view as facet IDs mapped to arrays of choice IDs. An empty object means show all. Custom providers must use it to filter their results. |
+| Field             | Value                                                                                                                                                                                                                                                       |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`         | The page’s publication key. Productless keys stay `channel\|version\|language`, such as `production\|current\|en`. Product publication keys append the product, such as `production\|v3\|en\|payments`. Forward this key unchanged; don't drop its product. |
+| `language`        | The page's `lang` value.                                                                                                                                                                                                                                    |
+| `indexUrl`        | The base-path-prefixed `/search-index.json` URL. The file exists only when the build writes an index.                                                                                                                                                       |
+| `limit`           | The maximum number of results the box shows.                                                                                                                                                                                                                |
+| `signal`          | An `AbortSignal`, passed to `search` only. It aborts when the reader types again.                                                                                                                                                                           |
+| `readerSelection` | The active reader view as facet IDs mapped to arrays of choice IDs. An empty object means show all. Custom providers must use it to filter their results.                                                                                                   |
 
 Pass `signal` to `fetch` so stale requests stop. The box ignores results from an aborted search.
 
@@ -213,7 +213,7 @@ The box drops results without a valid `url` and `title`, and it keeps the first 
 
 ### Module limits
 
-The build copies one file. It does not copy files that the module imports with relative paths. Bundle the provider into one file, or import dependencies from absolute URLs.
+The build copies one file. It doesn't copy files that the module imports with relative paths. Bundle the provider into one file, or import dependencies from absolute URLs.
 
 ## Reuse the lexical index
 
@@ -252,12 +252,12 @@ The generated index contains one record for each published page:
 The index fields have these limits:
 
 - `headings` covers levels 2 through 4, including headings later in the article.
-- `text` holds the first 5,000 characters of the HTML article as plain text. Body words beyond that limit are not searchable through this field.
+- `text` holds the first 5,000 characters of the HTML article as plain text. Body words beyond that limit aren't searchable through this field.
 - Titles and the selected summary are indexed separately from body text.
-- A section result links to a heading; it does not mean the section's full body was indexed.
+- A section result links to a heading; it doesn't mean the section's full body was indexed.
 - `id` and `markdownUrl` let local tools cite the matching page.
 
-When reader views are enabled, `readerFilters` holds page marks and `readerSegments` holds shared and marked text. A custom provider must apply those marks to respect the selected view. The full text remains in the index; reader views do not restrict access to published files.
+When reader views are enabled, `readerFilters` holds page marks and `readerSegments` holds shared and marked text. A custom provider must apply those marks to respect the selected view. The full text remains in the index; reader views don't restrict access to published files.
 
 The browser index comes from the HTML article, including HTML-only blocks and excluding Markdown-only blocks written with [Only](https://www.shoalrun.com/author/components/only.md). It excludes the surrounding header, navigation, and search UI. Marked sections stay in the stored index; the built-in browser provider filters their text when a view is active. Each `readerSegments` text value is capped at 5,000 characters.
 
@@ -274,13 +274,13 @@ outputs:
       provider: none
 ```
 
-This removes both the reader search box and its index, so the local search command has nothing to query. Markdown twins, `/llms.txt`, and `/documents.json` do not change with the provider. Agents can still discover and fetch pages, but `shoalrun search` cannot query a missing `search-index.json`. The passage index and semantic endpoint are independent of this browser setting. Changing it does not remove those artifacts or disable a deployed endpoint.
+This removes both the reader search box and its index, so the local search command has nothing to query. Markdown twins, `/llms.txt`, and `/documents.json` don't change with the provider. Agents can still discover and fetch pages, but `shoalrun search` can't query a missing `search-index.json`. The passage index and semantic endpoint are independent of this browser setting. Changing it doesn't remove those artifacts or disable a deployed endpoint.
 
 ## Local semantic preview
 
 The optional search endpoint uses vector similarity when current query and passage embeddings are available. It falls back to keyword passage search if vectors are unavailable, the provider fails, the budget is exhausted, or the deadline expires.
 
-For dotted configuration keys or command flags, the endpoint can add an exact-identifier explanation as the third result. It must contain every requested identifier in prose; tables, code listings, and identifier prefixes do not qualify. The first two semantic results stay in place. File-name queries and requests for fewer than three results keep semantic ranking.
+For dotted configuration keys or command flags, the endpoint can add an exact-identifier explanation as the third result. It must contain every requested identifier in prose; tables, code listings, and identifier prefixes don't qualify. The first two semantic results stay in place. File-name queries and requests for fewer than three results keep semantic ranking.
 
 Result snippets prefer prose matching the substantive words in your question, omit generated discovery text, and keep a matching term visible in a long paragraph. Code-only and table-only passages use the page summary.
 
@@ -288,18 +288,22 @@ Result snippets prefer prose matching the substantive words in your question, om
 
 ## Agent and MCP search scope
 
-`outputs.html.search.provider: semantic` changes the website search box. It does not change CLI or MCP search into semantic retrieval. Those tools retain keyword search and explicit publication selection.
+`outputs.html.search.provider: semantic` changes the website search box. It doesn't change CLI or MCP search into semantic retrieval. Those tools retain keyword search and explicit publication selection.
 
-For a multi-version Windows build, select the release when searching:
+Since 0.1.0-alpha.18
+
+A product is part of publication identity, even when a reader facet also uses the name `product`. A saved reader view doesn't choose a product release or remove content from generated files.
+
+For a build containing independently versioned products, select the product release when searching:
 
 ```sh
-npx --no-install shoalrun search windows-site "missing events" \
-  --channel production --version 7.1 --language en
+npx --no-install shoalrun search site-dist "missing events" \
+  --product payments --channel production --version v3 --language en
 ```
 
-A local MCP server's `search_docs` tool accepts the same `channel`, `version`, and `language` fields. Follow the returned `read.tool` and `read.arguments` to read the matching page or section in that publication. Do not substitute a current-release page with the same logical ID.
+A local MCP server’s `search_docs` tool accepts the same `product`, `channel`, `version`, and `language` fields. Call `get_publications` first when the scope is unknown; it returns a compact page of published coordinates, not a page inventory. Follow `nextOffset` for more. Follow the returned `read.tool` and `read.arguments` to read the matching page or section in that publication. Don't substitute a current-release page with the same logical ID.
 
-A hosted MCP build packages one configured publication, so its endpoint rejects requests for a different release. Product selection currently comes from the chosen build or endpoint. A combined product/version catalog is not part of this release. Customer-specific builds should expose only their selected edition to these tools.
+A hosted MCP build still packages one configured publication, including its product when present, and rejects requests for another scope. Its `get_publications` result lists only that endpoint’s publication. A local stdio MCP server can discover and select among publications in its built site. Customer-specific builds expose only their compiled edition; excluded product releases don't become available through search or reader filters.
 
 ## CLI and MCP ranking details
 
@@ -311,11 +315,11 @@ When CLI/MCP search has no complete matches, it first finds the highest meaningf
 
 ### Title plurals
 
-CLI and MCP page-title matching also accepts a simple final-`s` query plural against a singular title. It leaves short words and endings `-ss`, `-us`, and `-is` intact. This title-only rule does not add general stemming to body or heading searches.
+CLI and MCP page-title matching also accepts a simple final-`s` query plural against a singular title. It leaves short words and endings `-ss`, `-us`, and `-is` intact. This title-only rule doesn't add general stemming to body or heading searches.
 
 ### Mixed matches
 
-CLI and MCP search can also return a stronger partial match when every complete match gets all meaningful query terms from body text alone. The partial match must contain all but one meaningful term, match at least two, and score higher through title, summary, or heading matches. Common question words cannot earn this preference. A complete match with any meaningful title, summary, or heading match keeps the original preference. Results report `matchMode: mixed` when the exception applies, retain the complete matches, and rank by non-filler field score. This bounded lexical rule does not infer intent or guarantee an answer. The browser search box keeps its complete-match-first behavior.
+CLI and MCP search can also return a stronger partial match when every complete match gets all meaningful query terms from body text alone. The partial match must contain all but one meaningful term, match at least two, and score higher through title, summary, or heading matches. Common question words can't earn this preference. A complete match with any meaningful title, summary, or heading match keeps the original preference. Results report `matchMode: mixed` when the exception applies, retain the complete matches, and rank by non-filler field score. This bounded lexical rule doesn't infer intent or guarantee an answer. The browser search box keeps its complete-match-first behavior.
 
 ## Read a search result with an agent
 
@@ -327,7 +331,7 @@ Section resources exist only for pages of at least 2,000 `cl100k_base` tokens an
 
 ## HTML, Markdown, and agents
 
-The dropdown is an HTML interaction. It links to published pages and sections; it is not written into a page's Markdown twin. An agent can read the same published Markdown pages through their `.md` routes and discovery files. The local semantic endpoint returns links and short text, not an answer or a new agent-only representation. [Publishing and agent representations](https://www.shoalrun.com/publish/output.md) describes the Markdown routes and discovery files.
+The search results dropdown is an HTML interaction. It links to published pages and sections; it isn't written into a page's Markdown twin. An agent can read the same published Markdown pages through their `.md` routes and discovery files. The publication dropdown changes the active HTML product release and the search scope. It doesn't appear as an interactive control in Markdown. Agents retain the product/channel/version/language coordinates in CLI or MCP reads; a repeated page ID in another product is a different publication. The local semantic endpoint returns links and short text, not an answer or a new agent-only representation. [Publishing and agent representations](https://www.shoalrun.com/publish/output.md) describes the Markdown routes and discovery files.
 
 ## Related reading
 

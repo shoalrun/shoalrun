@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Analytics
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/analytics.md)
 
@@ -54,6 +54,6 @@ Each event has `schemaVersion`, `name`, and `properties`. For example:
 }
 ```
 
-Every event includes page identity and publication properties; `navigationSectionId` appears only for pages in a navigation tab. `pageUrl` is the published path without query or fragment. Custom properties cannot replace page identity.
+Every event includes page identity and publication properties; `navigationSectionId` appears only for pages in a navigation tab. `pageUrl` is the published path without query or fragment. Custom properties can't replace page identity.
 
 Events associated with an element add component context. `componentId` uses `data-analytics-id`, then the element’s HTML ID, then its heading, kind, and position. Generated IDs can change when content moves. `componentType` is `tabs`, `walkthrough`, `disclosure`, `code`, or `control`; `headingId` identifies the preceding article heading when available.

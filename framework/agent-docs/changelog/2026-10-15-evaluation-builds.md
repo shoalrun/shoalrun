@@ -15,11 +15,11 @@ date: 2026-10-15
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Agent reading and evaluation
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-15: Agent evaluation
 
 **Published: 2026-10-15.**
 
-This entry combines the October 15 changes to the private prototype. It does not announce a package release or a verified deployment.
+This entry combines the October 15 changes to the private prototype. It doesn't announce a package release or a verified deployment.
 
 ## Compare evaluation builds
 
@@ -27,9 +27,9 @@ Evaluation reports can now identify which published files changed. New report te
 
 Use `shoalrun eval snapshot` to save an inventory and `shoalrun eval compare` to compare builds. The check still requires the exact evaluated output. Copying a build to another machine preserves its identity; rebuilding it may produce different bytes.
 
-The repository can also capture hosted builds with their tasks and an ungraded report template for later review. Capturing a build does not run the tasks or award a passing grade.
+The repository can also capture hosted builds with their tasks and an ungraded report template for later review. Capturing a build doesn't run the tasks or award a passing grade.
 
-The packaged Markdown bundle also stops carrying a whole-site build ID for assets it does not include. Its page digests and metadata remain intact.
+The packaged Markdown bundle also stops carrying a whole-site build ID for assets it doesn't include. Its page digests and metadata remain intact.
 
 [Evaluate agent tasks against your docs](https://www.shoalrun.com/publish/evals.md) explains the workflow and its limits.
 
@@ -55,7 +55,7 @@ This private prototype update adds `subjectDeprecation` to page metadata. Author
 
 Readers see the same guidance in HTML, full-page Markdown, and published section resources. Fetch-only agents can follow the Markdown links directly. The document manifest also exposes the dates and resolved targets. Builds reject invalid dates and references outside the current publication.
 
-The guidance describes the documented subject. It does not remove the documentation page or emit HTTP retirement headers. Dates are author declarations, not evidence that a service has retired.
+The guidance describes the documented subject. It doesn't remove the documentation page or emit HTTP retirement headers. Dates are author declarations, not evidence that a service has retired.
 
 See [page metadata](https://www.shoalrun.com/author/frontmatter.md) for syntax and validation rules.
 
@@ -63,9 +63,9 @@ See [page metadata](https://www.shoalrun.com/author/frontmatter.md) for syntax a
 
 This private prototype update preserves reading guidance when an agent fetches one section of a longer page. Prerequisites and next steps from top-level, current-page `RelatedReading` views now travel with the section, including the reason to follow each link and the target's status.
 
-The added block says that the links apply to the full page. Links already in the section or its introduction are not repeated. Conditional and nested reading views stay with their original content. HTML and full-page Markdown keep their authored placement.
+The added block says that the links apply to the full page. Links already in the section or its introduction aren't repeated. Conditional and nested reading views stay with their original content. HTML and full-page Markdown keep their authored placement.
 
-The extra guidance counts toward exact section sizes and can make a section too large to publish separately. It does not establish that a section is self-contained or that the reader has completed its prerequisites. See [related reading](https://www.shoalrun.com/author/related-reading.md) for the rules.
+The extra guidance counts toward exact section sizes and can make a section too large to publish separately. It doesn't establish that a section is self-contained or that the reader has completed its prerequisites. See [related reading](https://www.shoalrun.com/author/related-reading.md) for the rules.
 
 ## Understand authored change meaning
 
@@ -73,12 +73,12 @@ This private prototype update adds optional `change` metadata to changelog entri
 
 The declaration appears in HTML, full-page Markdown, section Markdown, and the document manifest. Fetch-only agents can read it and follow the links without a tool integration.
 
-The build validates the fields and resolves public targets within the entry's publication. It does not verify the author's classification. Older entries remain visible without metadata and are unclassified. No separate change feed or deployment claim is added.
+The build validates the fields and resolves public targets within the entry's publication. It doesn't verify the author's classification. Older entries remain visible without metadata and are unclassified. No separate change feed or deployment claim is added.
 
 See [write release notes and changelog entries](https://www.shoalrun.com/author/release-notes.md) for syntax and limits.
 
 ## Check the published-output contract
 
-The [output reference](https://www.shoalrun.com/publish/output.md) now defines the existing manifest and sync contract, including optional capabilities, section identity, field meanings, and the limits of byte verification. Two repository JSON Schemas and a local check validate existing build output without rebuilding or making network requests. The check covers field shapes, document identities, manifest/sync agreement, and referenced Markdown sizes and digests. This documentation and validation update does not change the published format or enable hosted checks.
+The [output reference](https://www.shoalrun.com/publish/output.md) now defines the existing manifest and sync contract, including optional capabilities, section identity, field meanings, and the limits of byte verification. Two repository JSON Schemas and a local check validate existing build output without rebuilding or making network requests. The check covers field shapes, document identities, manifest/sync agreement, and referenced Markdown sizes and digests. This documentation and validation update doesn't change the published format or enable hosted checks.
 
 The site's five-question agent self-assessment is now retained as historical example evidence instead of a routine audit requirement. Local build, link, schema, output-consistency, behavior, and browser checks remain available. New agent evaluations should address a concrete product question.

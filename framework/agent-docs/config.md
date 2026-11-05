@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Overview
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 A project's configuration starts at `docs.config.yaml`. The CLI looks for that name by default, and `shoalrun scaffold -n` searches parent directories for it. For a guided workflow, start with [Configure your project](https://www.shoalrun.com/configuration.md). For complete working projects, see [Example configs](https://www.shoalrun.com/config/examples.md).
 
@@ -62,7 +62,7 @@ These directives compose configuration values. Paths resolve relative to the fil
 
 ### `extends`
 
-A top-level `extends: [./base.yaml]` layers one or more presets in order, followed by the current file. Mappings merge key by key; lists and scalar values replace earlier values. Presets may extend other presets. A top-level `extends` always names config files, including in an included file; it cannot serve another purpose there.
+A top-level `extends: [./base.yaml]` layers one or more presets in order, followed by the current file. Mappings merge key by key; lists and scalar values replace earlier values. Presets may extend other presets. A top-level `extends` always names config files, including in an included file; it can't serve another purpose there.
 
 ### `$concat` and `$remove`
 

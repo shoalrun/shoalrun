@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Build separate sites from shared content
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 You can keep one content directory and build separate sites for any configured facet: audience, product, area, subarea, or a custom facet such as region. Each entry config can have its own origin, base path, branding, navigation, and output directory. A developer portal is one example; the same workflow applies to an operations site, a product site, or regional resources.
 
@@ -127,7 +127,7 @@ navigation:
 
 Every selected facet must match. Choices within one facet are alternatives: `{ audience: [developer, operator], region: [eu] }` requires either audience and the European region. A page without a mark for a selected facet is excluded. Mark shared pages with all applicable values rather than leaving them unmarked. Unknown facets or choices, empty selections, and selections with no published pages fail the build.
 
-The selector does not rewrite publication metadata. Public access, enabled publications, and language still determine eligibility. Keep explicit navigation and page links within the selected set; missing targets fail validation rather than copying excluded pages into the output. Separate entry configs can replace inherited navigation lists.
+The selector doesn't rewrite publication metadata. Public access, enabled publications, and language still determine eligibility. Keep explicit navigation and page links within the selected set; missing targets fail validation rather than copying excluded pages into the output. Separate entry configs can replace inherited navigation lists.
 
 ## Build and check each output
 
@@ -141,9 +141,9 @@ shoalrun build europe.config.yaml dist/europe
 
 Check each output's `documents.json` for its page IDs and routes. The main site contains all three pages. The developer site contains the overview and API guide. The European site contains the overview and operations guide beneath `/resources`. Inspect HTML, Markdown, search indexes, `llms.min.txt`, and the sitemap to confirm that excluded pages have no published entries or files. The runnable `faceted-sites` example ships with the framework's example configurations.
 
-Deploy each output separately to its configured host. Building one site does not update the others. After editing shared content, rebuild and deploy every affected site. Keep output directories separate from sources and from one another because a successful build replaces its output directory.
+Deploy each output separately to its configured host. Building one site doesn't update the others. After editing shared content, rebuild and deploy every affected site. Keep output directories separate from sources and from one another because a successful build replaces its output directory.
 
-Selection applies to whole authored and generated pages before rendering. A selected page retains its complete body, including reader-marked sections in HTML and Markdown. Browser reader controls cannot restore excluded pages. Section variants can use [publication blocks](https://www.shoalrun.com/publish/publications.md) where the sites also have distinct publications.
+Selection applies to whole authored and generated pages before rendering. A selected page retains its complete body, including reader-marked sections in HTML and Markdown. Browser reader controls can't restore excluded pages. Section variants can use [publication blocks](https://www.shoalrun.com/publish/publications.md) where the sites also have distinct publications.
 
 Configure API sources and operation selection separately. A published OpenAPI source may contain operations beyond the selected reference pages. Generated references use their resolved facet marks, including `readerFilters.typeDefaults`. This setting is a page publication selector, not authorization for private content; protect private deployments at the host.
 
@@ -163,6 +163,6 @@ For a help drawer or another application surface, [export the shared content](ht
 
 ### Related topics
 
-- [Share pages across documentation versions](https://www.shoalrun.com/publish/publications.md) — Publish separate sites from one content source using facet selections.
+- [Share pages across products and documentation versions](https://www.shoalrun.com/publish/publications.md) — Publish separate sites from one content source using facet selections.
 
 - [Export content into your application](https://www.shoalrun.com/publish/content-export.md) — Reuse the same authored content inside an application.

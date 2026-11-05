@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > CLI reference
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/cli.md)
 
@@ -24,7 +24,11 @@ The public `@shoalrun/cli` package supplies the `shoalrun` command. It needs Nod
 
 Commands that return data print JSON to standard output. On an error, the CLI prints `{"status":"error","message":"..."}` to standard error and exits with code 1. A config argument defaults to `docs.config.yaml` in the current directory unless noted.
 
-[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render without a browser: Pele handles Mermaid syntax, and D2 handles D2 source. Development installs include Puppeteer for browser UI tests; production package installs do not need it.
+[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render without a browser: Pele handles Mermaid syntax, and D2 handles D2 source. Development installs include Puppeteer for browser UI tests; production package installs don't need it.
+
+Since 0.1.0-alpha.18
+
+Product selectors, `dev --profile`, and `get_publications` discovery add product-aware workflows. Existing productless commands keep their publication scope.
 
 ## Audit a project and API sources
 
@@ -42,7 +46,7 @@ Run before pushing. Prints a readable PASS/FAIL summary; `--json` prints the str
 shoalrun audit [config]
 ```
 
-Runs the configured project audit, including enabled reference checks, focused contracts, test commands, and evaluation reports. Prints JSON and exits with code 1 when the audit fails. It does not call an authoring model or judge prose claims. See [audit settings](https://www.shoalrun.com/publish/audit.md).
+Runs the configured project audit, including enabled reference checks, focused contracts, test commands, and evaluation reports. Prints JSON and exits with code 1 when the audit fails. It doesn't call an authoring model or judge prose claims. See [audit settings](https://www.shoalrun.com/publish/audit.md).
 
 ### `api audit`
 
@@ -88,15 +92,15 @@ Builds a local candidate without requiring the current `publicReview.digest`. It
 ### `api materialize`
 
 ```sh
-shoalrun api materialize <api-id> <config> (--all | --operation ID | --route "METHOD /path")... [--output content/subdirectory]
+shoalrun api materialize <api-id> <config> (--all | --operation ID | --route "METHOD /path")... [--output content/subdirectory] [--product P --channel C --version V --language L]
 ```
 
-Writes one-time draft MDX references from a registered local OpenAPI source. Repeat `--operation` and `--route` to select several endpoints; `--all` selects every endpoint and cannot be combined with selectors. `--route` uses an exact uppercase method and OpenAPI path. The default output is `content/api/<api-id>/`, and a custom output must stay inside the configured content directory. The JSON result lists written and skipped files. Existing matching pages are left untouched; conflicting files or unknown selectors stop the command. It does not alter config or navigation. See [Generate and select API pages](https://www.shoalrun.com/api-docs/generate.md) for the review and publishing workflow.
+Writes one-time draft MDX references from a registered local OpenAPI source. Repeat `--operation` and `--route` to select several endpoints; `--all` selects every endpoint and can't be combined with selectors. `--route` uses an exact uppercase method and OpenAPI path. Productless publications default to `content/api/<api-id>/`; product publications default to `content/api/<product>/<version>/<api-id>/`. A custom output must stay inside the configured content directory. The JSON result lists written and skipped files. Existing matching pages are left untouched; conflicting files or unknown selectors stop the command. It doesn't alter config or navigation. See [Generate and select API pages](https://www.shoalrun.com/api-docs/generate.md) for the review and publishing workflow.
 
 ### `api select`
 
 ```sh
-shoalrun api select <api-id> <config> --output <selection-file>
+shoalrun api select <api-id> <config> --output <selection-file> [--product P --channel C --version V --language L]
 ```
 
-Walks the default publication's OpenAPI operations and asks whether to generate a reference page for each. Answer `y` or `yes`, `n` or `no`, or press Enter to keep the current choice. `q` or `quit` cancels. Any other answer, or the end of input, cancels without writing. When every choice is made, it writes `pathPrefix` and an `include` list to the output file. See [generate and select API pages](https://www.shoalrun.com/api-docs/generate.md).
+Walks the selected publication’s OpenAPI operations and asks whether to generate a reference page for each. Answer `y` or `yes`, `n` or `no`, or press Enter to keep the current choice. `q` or `quit` cancels. Any other answer, or the end of input, cancels without writing. When every choice is made, it writes `pathPrefix` and an `include` list to the output file. See [generate and select API pages](https://www.shoalrun.com/api-docs/generate.md).

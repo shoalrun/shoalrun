@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
@@ -41,7 +41,7 @@ The browser provider ranks matches in this order:
 1. Pages containing every query term or its mapped synonym.
 2. If none match completely, partial results ordered by matched term count, then field score.
 
-Common filler words such as “how,” “do,” and “the” do not count toward partial-match coverage. A partial result must match at least one remaining term. This helps sentence-shaped queries but does not infer meaning or handle typos and general stemming.
+Common filler words such as “how,” “do,” and “the” don't count toward partial-match coverage. A partial result must match at least one remaining term. This helps sentence-shaped queries but doesn't infer meaning or handle typos and general stemming.
 
 The [local search command](https://www.shoalrun.com/cli.md) shares the base index and weights, with additional CLI/MCP ranking rules described below.
 
@@ -71,8 +71,8 @@ Pages rank by where the terms appear:
 3. Section headings.
 4. Body text.
 
-The built-in lexical provider returns at most one result per page. It adds a section link when every query term matches one section heading and the query is not already a title match. With a reader view selected, it returns page links because the unfiltered heading list may include hidden sections. Custom providers can return multiple section results from the same page.
+The built-in lexical provider returns at most one result per page. It adds a section link when every query term matches one section heading and the query isn't already a title match. With a reader view selected, it returns page links because the unfiltered heading list may include hidden sections. Custom providers can return multiple section results from the same page.
 
-The list shows the top eight results. The provider downloads the index once, on first focus, and searches only pages in the reader's channel, version, and language. When [reader views](https://www.shoalrun.com/author/reader-views.md) are configured, it also excludes pages and marked section text outside the selected view. The local CLI search command reads the full index and does not apply a browser's saved view.
+The list shows the top eight results. The provider downloads the index once, on first focus, and searches only pages in the reader's publication. Product scope Since 0.1.0-alpha.18 includes product, channel, version, and language. When [reader views](https://www.shoalrun.com/author/reader-views.md) are configured, it also excludes pages and marked section text outside the selected view. The local CLI search command reads the full index and doesn't apply a browser's saved view.
 
-The navigation sidebar has a separate filter. Its optional node-level `search` terms help readers find menu items; they do not change `/search-index.json` or masthead results. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).
+The navigation sidebar has a separate filter. Its optional node-level `search` terms help readers find menu items; they don't change `/search-index.json` or masthead results. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).

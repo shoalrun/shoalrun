@@ -20,7 +20,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Tools overview
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -32,13 +32,13 @@ Project discovery works without selecting a page. It lists pages, configured gui
 
 ## Edit and check
 
-The default is to edit ordinary working-tree files using your agent's file tools. A baseline records the current files, including earlier local changes. Snapshot validation captures those files and compiles a separate copy, so checking a draft does not rewrite the project. Results identify affected pages, findings, skipped checks, and retained artifacts. A freshness check tells you whether those results still apply after further edits.
+The default is to edit ordinary working-tree files using your agent's file tools. A baseline records the current files, including earlier local changes. Snapshot validation captures those files and compiles a separate copy, so checking a draft doesn't rewrite the project. Results identify affected pages, findings, skipped checks, and retained artifacts. A freshness check tells you whether those results still apply after further edits.
 
 Existing checked plan/apply commands remain available for clients that need them. Their digest checks and application protections are preserved.
 
 ## Review and release
 
-Compiler checks establish structural validity. They do not establish factual accuracy, clear writing, or a successful reader task. Review the diff, supporting evidence, and rendered documentation before using your project's release process.
+Compiler checks establish structural validity. They don't establish factual accuracy, clear writing, or a successful reader task. Review the diff, supporting evidence, and rendered documentation before using your project's release process.
 
 Local previews serve the exact captured build and show its freshness. Review reports list task scope, affected HTML/Markdown, findings, checks, and dependencies. The portable authoring skill guides this working-tree workflow. Independent author trials remain separate from these checks. Install the alpha CLI through [Getting started](https://www.shoalrun.com/start.md).
 

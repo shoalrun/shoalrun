@@ -17,16 +17,16 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 
-This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun does not automatically apply these rules to other projects.
+This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun doesn't automatically apply these rules to other projects.
 
 ## Evidence and uncertainty
 
-Distinguish implemented behavior, measured observations, and planned work. State a benchmark's inputs and scoring rule before drawing conclusions. A result from one task or model does not establish general reliability.
+Distinguish implemented behavior, measured observations, and planned work. State a benchmark's inputs and scoring rule before drawing conclusions. A result from one task or model doesn't establish general reliability.
 
-When evidence does not specify a fact, say what is missing. An undocumented policy is not proof that no policy exists. Keep a visible TODO in an unpublished draft and record the missing fact for review. Do not remove uncertainty just to clear a style check. Resolve it with evidence before publication.
+When evidence doesn't specify a fact, say what is missing. An undocumented policy isn't proof that no policy exists. Keep a visible TODO in an unpublished draft and record the missing fact for review. Don't remove uncertainty just to clear a style check. Resolve it with evidence before publication.
 
 Preserve stable IDs, routes, publication metadata, and access policy during a prose edit. Use stable document links. Set the edit date without changing an entry's original change date. Report changes to identity, scope, or technical claims explicitly for review.

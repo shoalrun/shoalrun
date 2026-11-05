@@ -16,11 +16,11 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-export.md)
 
-Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It does not need a Shoalrun browser runtime.
+Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It doesn't need a Shoalrun browser runtime.
 
 ## Assets, downloads, and notices
 
@@ -35,6 +35,6 @@ exports:
     notices: [./CONTENT-LICENSE.txt]
 ```
 
-Supported files include PNG, JPEG, GIF, WebP, AVIF, passive SVG, PDF, plain text, CSV, JSON, and YAML. Local assets use content-hashed paths. Unsupported asset types, missing files, symlink escapes, active SVG, and unresolved local links fail the export. Asset directories are not copied wholesale. Self-contained focused OpenAPI downloads are included when referenced.
+Supported files include PNG, JPEG, GIF, WebP, AVIF, passive SVG, PDF, plain text, CSV, JSON, and YAML. Local assets use content-hashed paths. Unsupported asset types, missing files, symlink escapes, active SVG, and unresolved local links fail the export. Asset directories aren't copied wholesale. Self-contained focused OpenAPI downloads are included when referenced.
 
-Remote images are not downloaded. The manifest records them in each resource's `externalDependencies`, and the command reports them in diagnostics. A document with a remote image is not offline-complete. Explicit notice files and applicable diagram-renderer notices are retained in `NOTICES.txt`.
+Remote images aren't downloaded. The manifest records them in each resource's `externalDependencies`, and the command reports them in diagnostics. A document with a remote image isn't offline-complete. Explicit notice files and applicable diagram-renderer notices are retained in `NOTICES.txt`.

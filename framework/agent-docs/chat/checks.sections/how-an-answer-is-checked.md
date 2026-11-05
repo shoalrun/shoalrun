@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Documentation chat > Answer checks and reuse
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -60,8 +60,8 @@ Jev reads each sentence that carries a citation, together with the passage it ci
 
 Fenced code, lead-ins that end in a colon, and statements that the docs lack something are skipped, because no passage can support an absence. That covers phrasings such as "the docs don't specifically describe", "no other information is given", and "it only shows".
 
-A sentence below `verify.threshold` is flagged in the notes, or removed when `onUnsupported` is `remove`. If removal leaves no supported sentence, the answer becomes "The documentation does not cover that." The check costs one more Jev call for each answer.
+A sentence below `verify.threshold` is flagged in the notes, or removed when `onUnsupported` is `remove`. If removal leaves no supported sentence, the answer becomes `The documentation does not cover that.` The check costs one more Jev call for each answer.
 
 Start with flagging while you review the results. Choose a threshold using questions and source passages from your own project; scores and useful thresholds vary by scorer. Removing sentences can leave an answer incomplete.
 
-The claims check can't catch a wrong sentence that a passage loosely supports, or a passage that is itself wrong. It reads only the passage a sentence cites.
+The claims check can't catch a wrong sentence that a passage loosely supports, or a passage that's itself wrong. It reads only the passage a sentence cites.

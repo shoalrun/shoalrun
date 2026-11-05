@@ -16,9 +16,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Overview
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
-Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, footnotes, and autolinks) and the MDX components below. Each component family has a page with syntax, attributes, HTML and Markdown behavior, and limits. Component names and attributes are case-sensitive. Unknown components, dynamic MDX expressions, and exports fail the build because they have no shared HTML and Markdown representation. The build drops `import` lines, so imported components are not available.
+Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, footnotes, and autolinks) and the MDX components below. Each component family has a page with syntax, attributes, HTML and Markdown behavior, and limits. Component names and attributes are case-sensitive. Unknown components, dynamic MDX expressions, and exports fail the build because they have no shared HTML and Markdown representation. The build drops `import` lines, so imported components aren't available.
 
 [Custom components](https://www.shoalrun.com/author/components/custom.md) let trusted project plugins lower into the shared content pipeline.
 

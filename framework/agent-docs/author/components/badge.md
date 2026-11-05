@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Badges
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 `<Badge>` adds a compact label inside prose, a heading, or a table cell. Write the state in its text; color and the optional icon only reinforce it.
 
@@ -44,7 +44,7 @@ The built-in variants follow the selected palette and color mode. A project can 
 
 ## Add a custom color
 
-For example, this site registers a teal `partner` variant. It is a custom example, not one of the built-in variants. Give a custom variant `background` and `text` hex colors for light mode, and for dark mode if the site shows dark mode. `border` is optional and defaults to the text color. The build rejects unknown variant names and checks badge text against its background at 4.5:1 in each shown mode.
+For example, this site registers a teal `partner` variant. It's a custom example, not one of the built-in variants. Give a custom variant `background` and `text` hex colors for light mode, and for dark mode if the site shows dark mode. `border` is optional and defaults to the text color. The build rejects unknown variant names and checks badge text against its background at 4.5:1 in each shown mode.
 
 ```yaml title="docs.config.yaml"
 badges:

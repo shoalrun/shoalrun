@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Content negotiation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 
@@ -44,6 +44,6 @@ Shoalrun builds two versions of every published page from one authored source. T
 
 Shoalrun creates the HTML page, its `.md` twin, and a [`/documents.json`](https://www.shoalrun.com/documents.json) manifest listing both URLs. It also writes [`/resource-headers.json`](https://www.shoalrun.com/resource-headers.json) with content types for Markdown and discovery files.
 
-The host receives each HTTP request. It must read `Accept` and select the right built file. Providers use different names for this step: a server handler, a routing rule, or an edge function. The HTTP behavior is the same. A static file alone cannot read a request header.
+The host receives each HTTP request. It must read `Accept` and select the right built file. Providers use different names for this step: a server handler, a routing rule, or an edge function. The HTTP behavior is the same. A static file alone can't read a request header.
 
 Shoalrun's Node server handles this. The standalone [Vercel build](https://www.shoalrun.com/publish/vercel.md) generates Vercel rules. On another host, use the contract below to configure its routing feature. The [host adapter guide](https://www.shoalrun.com/publish/host-adapters.md) covers adding Shoalrun's files to another build.

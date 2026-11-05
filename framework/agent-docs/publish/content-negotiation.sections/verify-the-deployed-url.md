@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Content negotiation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 
@@ -59,4 +59,4 @@ curl -i -H 'Accept: text/markdown;q=0' https://your-docs.example/publish/output/
 
 Check the status, headers, and body. The first and fourth requests should return HTML. The second and third should return readable Markdown that gives its reader what they need for the intended task. Shared facts and API constraints should stay consistent, while human- and agent-oriented content may differ; see [Shoalrun's authoring position](https://www.shoalrun.com/publish/agent-friendliness.md). The first two responses should include `Vary: Accept` so caches keep the formats separate, and a Markdown `Link` so clients can find the twin. The negotiated Markdown response should include `Content-Location` with its `.md` URL. Also check that a missing page returns 404 and the published discovery files have the types declared in `resource-headers.json`.
 
-Run these checks against the production domain after deployment. Local preview results establish what Shoalrun's Node server does; they do not prove that a CDN applies the same rules. For a whole-site audit, run the [AFDocs scorecard](https://afdocs.dev/) against the deployed site and review its findings against the site's content requirements.
+Run these checks against the production domain after deployment. Local preview results establish what Shoalrun's Node server does; they don't prove that a CDN applies the same rules. For a whole-site audit, run the [AFDocs scorecard](https://afdocs.dev/) against the deployed site and review its findings against the site's content requirements.

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Connect an MCP client
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/mcp.md)
 
@@ -27,15 +27,15 @@ Parent page: [Full Markdown page](/publish/mcp.md)
 
 - [Measure MCP tool usage](https://www.shoalrun.com/publish/mcp-analytics.md) — Optionally measure tool calls through a server adapter.
 
-Connect an MCP client to built documentation through four read-only tools. Use stdio for a client-launched local process, or enable an HTTP endpoint on Node or in a generated Vercel function. Both use the same search and Markdown reading core.
+Connect an MCP client to built documentation through read-only tools. Use stdio for a client-launched local process, or enable an HTTP endpoint on Node or in a generated Vercel function. Both use the same search and Markdown reading core.
 
-The HTTP endpoint currently supports one explicitly selected public publication. The generated Vercel endpoint is deployed and verified on this site. Netlify and Cloudflare adapters are not implemented. Analytics is off by default; an optional [server adapter](https://www.shoalrun.com/publish/mcp-analytics.md) can measure tool calls.
+The HTTP endpoint currently supports one explicitly selected public publication. The generated Vercel endpoint is deployed and verified on this site. Netlify and Cloudflare adapters aren't implemented. Analytics is off by default; an optional [server adapter](https://www.shoalrun.com/publish/mcp-analytics.md) can measure tool calls.
 
 You need Node.js 22.12 or newer, the installed Shoalrun CLI, and a client that supports MCP stdio or Streamable HTTP. Follow [Getting started](https://www.shoalrun.com/start.md) to install the public npm package.
 
 ## Serve a public endpoint on Node
 
-Use this procedure when agents should connect to a URL instead of launching the CLI themselves. Analytics is not enabled by this setting.
+Use this procedure when agents should connect to a URL instead of launching the CLI themselves. Analytics isn't enabled by this setting.
 
 1. ### Enable a public publication
 
@@ -49,6 +49,10 @@ Use this procedure when agents should connect to a URL instead of launching the 
      publication: { channel: production, version: current, language: en }
    ```
 
+   Since 0.1.0-alpha.18
+
+   Add `product` to `mcp.publication` for a product release, for example `{ product: payments, channel: production, version: v3, language: en }`. Hosting remains restricted to one configured publication; adding product support doesn't open every product in the build.
+
    The endpoint supplies those publication coordinates when the client omits them. Requests for a different publication are rejected. Its lexical search index is generated even if browser search is disabled.
 
 2. ### Build and serve the site
@@ -60,20 +64,20 @@ Use this procedure when agents should connect to a URL instead of launching the 
    shoalrun serve dist --port 8774
    ```
 
-   The server reads the MCP settings from that build. It does not need the source config. With no site base path, the local endpoint is `http://127.0.0.1:8774/mcp`; a base path such as `/docs` makes it `/docs/mcp`.
+   The server reads the MCP settings from that build. It doesn't need the source config. With no site base path, the local endpoint is `http://127.0.0.1:8774/mcp`; a base path such as `/docs` makes it `/docs/mcp`.
 
    Set `mcp: false` or remove the setting and rebuild to disable the endpoint. Restart a non-watching server after replacing its build; watched preview reloads settings with each successful build.
 
 3. ### Connect and check the tools
 
-   Add the endpoint URL in your client’s remote MCP settings. The client should discover the four tools listed below. Search for a known page, then follow the returned read instruction and verify its publication.
+   Add the endpoint URL in your client’s remote MCP settings. The client should discover the tools listed below for its installed release. Search for a known page, then follow the returned read instruction and verify its publication.
 
    The SDK integration is tested with legacy and automatic protocol negotiation using MCP TypeScript client version `2.2.0`. Compatibility with a specific desktop client or public host still needs its own check.
 
 ### Hosts, origins, and limits
 
-Local connections permit the configured loopback host. For a public Node deployment, `site.origin` supplies a trusted hostname and browser origin. Add explicit `mcp.allowedHosts` hostnames for other domains and `mcp.allowedOrigins` origins for browser-based clients. Forwarded host headers are not trusted. Native clients do not need an Origin header.
+Local connections permit the configured loopback host. For a public Node deployment, `site.origin` supplies a trusted hostname and browser origin. Add explicit `mcp.allowedHosts` hostnames for other domains and `mcp.allowedOrigins` origins for browser-based clients. Forwarded host headers aren't trusted. Native clients don't need an Origin header.
 
-The endpoint accepts JSON MCP requests through POST; it does not provide a persistent session or standalone event stream. GET and DELETE return 405. Browser preflight uses OPTIONS.
+The endpoint accepts JSON MCP requests through POST; it doesn't provide a persistent session or standalone event stream. GET and DELETE return 405. Browser preflight uses OPTIONS.
 
 Limits are 64 KiB per request, eight concurrent requests per handler, and a 15-second deadline. Excess concurrent requests return 429 with retry guidance. Tool token budgets still apply. These are process-local controls; configure deployment-level limits before exposing a public service. This is a public endpoint, not an authentication mechanism for private documentation.

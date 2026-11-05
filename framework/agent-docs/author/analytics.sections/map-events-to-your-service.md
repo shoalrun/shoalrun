@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Analytics
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/analytics.md)
 
@@ -37,6 +37,6 @@ Your adapter translates Shoalrun events into the service’s names, properties, 
 - Choose one source for each measurement. Disable equivalent automatic SDK events when the adapter supplies them.
 - Keep content interactions as custom events unless a native event matches their meaning and required properties.
 - Preserve page and component IDs, publication context, and `schemaVersion`. Check the destination’s limits on names and values.
-- Use the SDK’s separate APIs for identification, grouping, exceptions, or replay; renaming an interaction does not enable these features.
+- Use the SDK’s separate APIs for identification, grouping, exceptions, or replay; renaming an interaction doesn't enable these features.
 
-Document each source, destination, property conversion, and automatic SDK feature you enable. Shoalrun has no universal page-exit or scroll-depth event. Verify one page visit and one content interaction in the destination, check they are counted once, and confirm native events populate the intended dashboard.
+Document each source, destination, property conversion, and automatic SDK feature you enable. Shoalrun has no universal page-exit or scroll-depth event. Verify one page visit and one content interaction in the destination, check they're counted once, and confirm native events populate the intended dashboard.

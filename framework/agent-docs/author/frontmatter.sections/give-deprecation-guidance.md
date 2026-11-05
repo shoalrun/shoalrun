@@ -23,7 +23,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Page metadata > Page metadata
 
-**Updated: 2026-10-28.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/frontmatter.md)
 
@@ -72,7 +72,7 @@ subjectDeprecation:
   migration: guide.migrate-endpoint
 ```
 
-Replace the example IDs with public documents in the same channel, version, and language. Use stable IDs without the `doc:` prefix. Each target must be a different document; external URLs, missing targets, draft targets, and automatic fallback to another publication are not supported.
+Replace the example IDs with public documents in the same channel, version, and language. Use stable IDs without the `doc:` prefix. Each target must be a different document; external URLs, missing targets, draft targets, and automatic fallback to another publication aren't supported.
 
 | Field          | Meaning                                                                   |
 | -------------- | ------------------------------------------------------------------------- |
@@ -81,8 +81,8 @@ Replace the example IDs with public documents in the same channel, version, and 
 | `replacement`  | Stable ID of the page documenting the replacement.                        |
 | `migration`    | Stable ID of the page explaining how to migrate.                          |
 
-All four fields are optional, but the object must contain at least one. Unknown fields fail. Dates must be real `YYYY-MM-DD` calendar dates; when both are present, sunset cannot precede deprecation. The object stays page-specific and cannot appear in global defaults or enforced metadata. The resolved `subjectLifecycle` must be `deprecated`, whether authored or inferred from OpenAPI. A date does not change the status automatically or verify that a service has retired.
+All four fields are optional, but the object must contain at least one. Unknown fields fail. Dates must be real `YYYY-MM-DD` calendar dates; when both are present, sunset can't precede deprecation. The object stays page-specific and can't appear in global defaults or enforced metadata. The resolved `subjectLifecycle` must be `deprecated`, whether authored or inferred from OpenAPI. A date doesn't change the status automatically or verify that a service has retired.
 
 HTML, the full Markdown twin, and every published section resource show a subject deprecation notice with the supplied dates and links. HTML links open pages; Markdown links open their Markdown twins. `documents.json` carries the dates and resolved targets as `{ id, title, url, markdownUrl }` under `subjectDeprecation`. The manifest URLs are site paths, including any base path and publication prefix. Fetch-only readers can use the notice without parsing JSON or running JavaScript.
 
-These fields describe the documented subject. They do not retire the documentation resource, emit HTTP `Deprecation` or `Sunset` headers, change access, or establish verification. Fictional-example flags, editorial `lifecycle`, and `verified` remain independent. Omitting lifecycle information does not imply stability or verification.
+These fields describe the documented subject. They don't retire the documentation resource, emit HTTP `Deprecation` or `Sunset` headers, change access, or establish verification. Fictional-example flags, editorial `lifecycle`, and `verified` remain independent. Omitting lifecycle information doesn't imply stability or verification.

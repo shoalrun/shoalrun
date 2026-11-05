@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Custom components > Data-driven React components
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/components/custom/react.md)
 
@@ -31,6 +31,6 @@ Use a declared data file when a component needs to generate tables, calculations
 
 ## HTML, Markdown, and agents
 
-The calculator uses labeled native form controls, keyboard input, and an announced result. Without JavaScript, the configured settings, supported alternatives, formulas, worked schedule, safety warning, code, and specification link remain visible. Markdown contains that same explanation. Changing browser controls does not change the documented policy.
+The calculator uses labeled native form controls, keyboard input, and an announced result. Without JavaScript, the configured settings, supported alternatives, formulas, worked schedule, safety warning, code, and specification link remain visible. Markdown contains that same explanation. Changing browser controls doesn't change the documented policy.
 
-The author and agent must write the shared explanation deliberately. Shoalrun does not infer it from React. Review the essential content in both outputs, including every meaningful choice and warning. The [component-authoring skill](https://www.shoalrun.com/author/components/custom.md) guides that work.
+The author and agent must write the shared explanation deliberately. Shoalrun doesn't infer it from React. Review the essential content in both outputs, including every meaningful choice and warning. The [component-authoring skill](https://www.shoalrun.com/author/components/custom.md) guides that work.

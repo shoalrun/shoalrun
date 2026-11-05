@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Content negotiation
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/content-negotiation.md)
 
@@ -44,4 +44,4 @@ Shoalrun builds two versions of every published page from one authored source. T
 
 An agent reading HTML may receive navigation, styles, scripts, and interactive controls along with the article. It may then have to extract the useful content or convert the HTML to Markdown. Shoalrun's generated Markdown gives it the article directly, including material inside tabs and collapsibles and resolved OpenAPI examples. This can make the page easier to retrieve and less likely to lose content during conversion. [AFDocs checks](https://afdocs.dev/checks/markdown-availability) both `.md` URLs and content negotiation for this reason.
 
-The direct `.md` links in each HTML page and [`/llms.txt`](https://www.shoalrun.com/llms.txt) help agents that know to follow them. Negotiation helps an agent that arrives at the ordinary page URL and requests Markdown without first discovering a second URL. It does not require writers to maintain a separate article.
+The direct `.md` links in each HTML page and [`/llms.txt`](https://www.shoalrun.com/llms.txt) help agents that know to follow them. Negotiation helps an agent that arrives at the ordinary page URL and requests Markdown without first discovering a second URL. It doesn't require writers to maintain a separate article.

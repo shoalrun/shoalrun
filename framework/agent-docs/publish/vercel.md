@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Publish on Vercel
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Shoalrun can produce a [Vercel Build Output API](https://vercel.com/docs/build-output-api) directory. It contains the compiled static site and routing rules for each published page. Vercel serves HTML to browsers and the generated Markdown twin when a request includes `Accept: text/markdown`. The route rules also set `Vary: Accept` and an HTTP `Link` header to the `.md` page. Explicit `.md` URLs remain available.
 
@@ -41,7 +41,7 @@ Set `site.origin` in `docs.config.yaml` to your intended public HTTPS origin bef
 npx --no-install shoalrun vercel build docs.config.yaml .vercel/output
 ```
 
-Generating output does not deploy it.
+Generating output doesn't deploy it.
 
 ## Configure the project
 
@@ -72,7 +72,7 @@ The card cache lives in the previous local `.vercel/output` bundle. The command 
 
 ### Deploy without connecting GitHub
 
-You can keep building locally and deploy the Build Output API directory with the [Vercel CLI `--prebuilt` option](https://vercel.com/docs/cli/deploy#prebuilt). Use [`vercel link`](https://vercel.com/docs/cli/link) to connect the local directory to the existing Vercel project; this does not require importing your source repository. From the docs repository root, use `npm run docs:build-all` for Shoalrun's own site when you want fresh embeddings and answer cards. For another site, build its Vercel output as configured:
+You can keep building locally and deploy the Build Output API directory with the [Vercel CLI `--prebuilt` option](https://vercel.com/docs/cli/deploy#prebuilt). Use [`vercel link`](https://vercel.com/docs/cli/link) to connect the local directory to the existing Vercel project; this doesn't require importing your source repository. From the docs repository root, use `npm run docs:build-all` for Shoalrun's own site when you want fresh embeddings and answer cards. For another site, build its Vercel output as configured:
 
 ```sh
 npm run docs:vercel
@@ -80,7 +80,7 @@ vercel link
 vercel deploy --prebuilt --prod
 ```
 
-The command uploads `.vercel/output` and applies its routes and headers. A folder upload of `docs/dist` through Vercel Drop publishes the static files but does not apply Shoalrun's Vercel routing rules. It is suitable for a visual preview; the deployment checker will still report missing Markdown negotiation and response headers. Run it against the final domain after a prebuilt deploy.
+The command uploads `.vercel/output` and applies its routes and headers. A folder upload of `docs/dist` through Vercel Drop publishes the static files but doesn't apply Shoalrun's Vercel routing rules. It's suitable for a visual preview; the deployment checker will still report missing Markdown negotiation and response headers. Run it against the final domain after a prebuilt deploy.
 
 The routes also cover:
 
@@ -93,7 +93,7 @@ Each run of `vercel build` deletes and rewrites `.vercel/output/static/`, so don
 
 Enable `mcp` in your project config before running `shoalrun vercel build`. The output includes a separate Node function for the selected public publication, without requiring Ask or embeddings. See [connect an MCP client](https://www.shoalrun.com/publish/mcp.md) for configuration, host trust, limits, and the current verification status.
 
-MCP analytics remains off unless you also configure its [server adapter](https://www.shoalrun.com/publish/mcp-analytics.md). If enabled, set its credentials on the function’s runtime environment. Browser analytics settings do not collect MCP traffic.
+MCP analytics remains off unless you also configure its [server adapter](https://www.shoalrun.com/publish/mcp-analytics.md). If enabled, set its credentials on the function’s runtime environment. Browser analytics settings don't collect MCP traffic.
 
 ## Check the deployment
 

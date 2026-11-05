@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
@@ -43,11 +43,11 @@ outputs:
       provider: lexical
 ```
 
-| Provider   | Behavior                                                                                                      |
-| ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                                       |
-| `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Available since `0.1.0-alpha.16`. |
-| `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                               |
-| `none`     | Removes the search box. Writes no index or provider file.                                                     |
+| Provider   | Behavior                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------ |
+| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                          |
+| `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Since 0.1.0-alpha.16 |
+| `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                  |
+| `none`     | Removes the search box. Writes no index or provider file.                                        |
 
 The build copies the provider module to `/assets/search-provider.js`. The search box imports that file when a reader first focuses the box or types.

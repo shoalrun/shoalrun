@@ -17,9 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > SEO and social previews
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
-When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you do not need to hand-write Open Graph or Twitter tags.
+When someone shares a docs link, Slack and other services fetch the page's HTML and look for a title, description, and image. Shoalrun writes these tags at build time from page metadata and can generate a share image for every page. Start with a clear page `title` and a one-sentence `summary`; you don't need to hand-write Open Graph or Twitter tags.
 
 ## Set the public address
 
@@ -31,7 +31,7 @@ site:
   origin: https://docs.acme.com
 ```
 
-Check the domain in the built `og:image` URL. A page may display in a browser while its social preview cannot load an image from that domain. Preview deployments behind sign-in cannot be unfurled by a public crawler. [Publish on Vercel](https://www.shoalrun.com/publish/vercel.md) explains the production and preview origins for this site's build.
+Check the domain in the built `og:image` URL. A page may display in a browser while its social preview can't load an image from that domain. Preview deployments behind sign-in can't be unfurled by a public crawler. [Publish on Vercel](https://www.shoalrun.com/publish/vercel.md) explains the production and preview origins for this site's build.
 
 ## Write the page title and summary
 
@@ -94,9 +94,9 @@ site:
     history: ./config/content-updates.json
 ```
 
-The history file must be inside the project and its parent directory must already exist. The first successful build seeds each page with its declared `updated`, then `site.updated`, then today's UTC date. Later builds compare the resolved HTML and Markdown content plus displayed page metadata. Unchanged content keeps its recorded Updated date; changed content receives today's UTC date. File touches, AST source positions, and changes to verification dates do not change the content digest. The history is written after a successful build. Commit it with the source so clean CI builds use the same history. Without that file, the next build seeds a new history from declared dates.
+The history file must be inside the project and its parent directory must already exist. The first successful build seeds each page with its declared `updated`, then `site.updated`, then today's UTC date. Later builds compare the resolved HTML and Markdown content plus displayed page metadata. Unchanged content keeps its recorded Updated date; changed content receives today's UTC date. File touches, AST source positions, and changes to verification dates don't change the content digest. The history is written after a successful build. Commit it with the source so clean CI builds use the same history. Without that file, the next build seeds a new history from declared dates.
 
-The manifest records `contentDigest` for this comparison and `digest` for the complete generated Markdown. A Markdown date or metadata edit changes the latter; it does not necessarily change the technical content fingerprint.
+The manifest records `contentDigest` for this comparison and `digest` for the complete generated Markdown. A Markdown date or metadata edit changes the latter; it doesn't necessarily change the technical content fingerprint.
 
 ### Record verification separately
 
@@ -106,9 +106,9 @@ Set native frontmatter `verified` only when someone checks the page's technical 
 verified: 2026-10-01
 ```
 
-The standard HTML page header displays `Verified` with a semantic `<time>` element. Markdown and `documents.json` expose the same date independently of `Updated`, which records content revision. A build never assigns `verified`; a build or editorial review alone does not establish technical verification.
+The standard HTML page header displays `Verified` with a semantic `<time>` element. Markdown and `documents.json` expose the same date independently of `Updated`, which records content revision. A build never assigns `verified`; a build or editorial review alone doesn't establish technical verification.
 
-The HTML verification-date display and `showVerified` setting are available since `0.1.0-alpha.13`.
+The HTML verification-date display and `showVerified` setting: Since 0.1.0-alpha.13
 
 Set `showVerified: false` in a page's frontmatter to hide the verification date in HTML only. It remains in Markdown and the manifest. The default is `true`. To hide it throughout a project, set a shared default:
 
@@ -118,15 +118,15 @@ frontmatter:
     showVerified: false
 ```
 
-An individual page can override that default with `showVerified: true`. A page using a Hero replaces the standard header, so its header dates are not displayed.
+An individual page can override that default with `showVerified: true`. A page using a Hero replaces the standard header, so its header dates aren't displayed.
 
 This project also declares private `editorial.lastVerified` and `editorial.verificationNote` fields for internal review notes; use native `verified` when the date should be public. A rebuild or unchanged-content file touch establishes neither a content change nor verification.
 
-Search indexing still depends on the public host and crawler access; metadata alone does not guarantee it. If Slack does not unfurl after a corrected deployment, confirm the page and image are public, then try sharing the link in a new conversation. [Slack may omit a preview](https://slack.com/help/articles/204399343-Share-links-and-set-preview-preferences) when the same link was recently posted in that conversation.
+Search indexing still depends on the public host and crawler access; metadata alone doesn't guarantee it. If Slack doesn't unfurl after a corrected deployment, confirm the page and image are public, then try sharing the link in a new conversation. [Slack may omit a preview](https://slack.com/help/articles/204399343-Share-links-and-set-preview-preferences) when the same link was recently posted in that conversation.
 
 ## What agents receive
 
-The social tags are in HTML, and each generated share card is a public PNG. Agents reading Markdown get the authored title, body, and fields published by your [Markdown metadata settings](https://www.shoalrun.com/author/markdown-metadata.md). The Markdown body does not contain HTML meta tags. `documents.json` and `search-index.json` list the published page and its routes. Changing `seo.title` or the share image does not replace a clear page title or summary for agents that use the Markdown and search index. The [agent-friendly documentation guide](https://www.shoalrun.com/publish/agent-friendliness.md) explains how these public files differ from the documentation bundle shipped inside Shoalrun's CLI.
+The social tags are in HTML, and each generated share card is a public PNG. Agents reading Markdown get the authored title, body, and fields published by your [Markdown metadata settings](https://www.shoalrun.com/author/markdown-metadata.md). The Markdown body doesn't contain HTML meta tags. `documents.json` and `search-index.json` list the published page and its routes. Changing `seo.title` or the share image doesn't replace a clear page title or summary for agents that use the Markdown and search index. The [agent-friendly documentation guide](https://www.shoalrun.com/publish/agent-friendliness.md) explains how these public files differ from the documentation bundle shipped inside Shoalrun's CLI.
 
 ## Related reading
 

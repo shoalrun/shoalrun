@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > File trees
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 `<FileTree>` shows a file layout or other hierarchy. `<Tree>` is an alias. Add `<Folder>` branches and `<File>` leaves; folders may contain more folders or files.
 
@@ -56,7 +56,7 @@ Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > File tr
 
 ## Attributes
 
-Every node needs a nonempty `name`. Folders and files get icons automatically, and a folder’s icon changes when it opens. Optional `doc` or `href` makes its label a link; use only one. Optional `icon` accepts a lowercase Lucide name to override the default. `<File>` cannot have children.
+Every node needs a nonempty `name`. Folders and files get icons automatically, and a folder’s icon changes when it opens. Optional `doc` or `href` makes its label a link; use only one. Optional `icon` accepts a lowercase Lucide name to override the default. `<File>` can't have children.
 
 ## Expand and collapse folders
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > How Shoalrun works
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Shoalrun is a static documentation compiler. It reads a project config, Markdown and MDX pages, and local OpenAPI files. It writes an HTML site and a Markdown copy of every page. A build makes no network requests and no model calls, so the same inputs always give the same output.
 
@@ -89,7 +89,7 @@ A **publication** is one enabled combination of channel, version, and language:
 
 `publications.enabled` lists the combinations to build. A page's frontmatter picks one or several of them; files for other versions or languages can share its `id`. Links, cards, and related reading stay inside the current publication, so a v1 page never links to a v2 page by accident. Each published copy of a page is a **variant**. The HTML and Markdown copy for each variant include only content selected for that publication.
 
-Git branches and tags select source revisions for a build; they do not select publication channels or preserve earlier deployed sites. The [deployment and version guide](https://www.shoalrun.com/publish/revisions.md) explains how those choices fit together.
+Git branches and tags select source revisions for a build; they don't select publication channels or preserve earlier deployed sites. The [deployment and version guide](https://www.shoalrun.com/publish/revisions.md) explains how those choices fit together.
 
 For a complete versioning and translation workflow, follow [put multiple versions on one site](https://www.shoalrun.com/publish/publications.md).
 

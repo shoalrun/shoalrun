@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Measure MCP tool usage
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
@@ -27,9 +27,9 @@ Parent page: [Full Markdown page](/publish/mcp-analytics.md)
 
 - [Connect an MCP client](https://www.shoalrun.com/publish/mcp.md) — Enable and verify the HTTP endpoint before adding analytics.
 
-Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP does not enable tracking, and the browser analytics setting does not count tool calls.
+Add a server adapter to measure calls to your [HTTP MCP endpoint](https://www.shoalrun.com/publish/mcp.md). Analytics is off by default. Enabling MCP doesn't enable tracking, and the browser analytics setting doesn't count tool calls.
 
-Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting does not instrument stdio, direct Markdown requests, or browser page views.
+Your adapter chooses the service and sends the events. Shoalrun packages it for Node or the generated Vercel function. This setting doesn't instrument stdio, direct Markdown requests, or browser page views.
 
 ## Safeguards and limits
 
@@ -39,8 +39,8 @@ The PostHog example builds each outbound event from allowed fields. It includes 
 
 The adapter drops raw arguments, search text, responses, headers, IP properties, error messages, and arbitrary event fields. It disables exception autocapture, requests no person profiles, and disables GeoIP enrichment. These controls apply to analytics delivery, not the documentation response or infrastructure access logs.
 
-Conversation and session IDs support grouping when enabled. They are pseudonymous identifiers, not proof that data is anonymous or that a particular person made the call. Leave grouping off when aggregate tool counts are enough. Never use client labels or intent categories for authentication or billing.
+Conversation and session IDs support grouping when enabled. They're pseudonymous identifiers, not proof that data is anonymous or that a particular person made the call. Leave grouping off when aggregate tool counts are enough. Never use client labels or intent categories for authentication or billing.
 
 Check PostHog’s **Settings → Project → IP data capture configuration → Discard client IP data** setting as an additional storage control. A network service still receives the source IP of its connection; this server adapter must not forward the caller’s IP. Hosting logs and other services need their own review. See [PostHog storage controls](https://posthog.com/docs/privacy/data-storage).
 
-Test the final delivered payload with a local receiver before changing the adapter or upgrading its SDK. Include names, emails, credentials, URLs, and private text in test arguments and metadata; verify they are absent from captured events. Public page IDs remain useful for usage analysis without recording the agent’s search or explanation. These safeguards do not establish a legal basis for collection or guarantee that all infrastructure stores no personal data.
+Test the final delivered payload with a local receiver before changing the adapter or upgrading its SDK. Include names, emails, credentials, URLs, and private text in test arguments and metadata; verify they're absent from captured events. Public page IDs remain useful for usage analysis without recording the agent’s search or explanation. These safeguards don't establish a legal basis for collection or guarantee that all infrastructure stores no personal data.

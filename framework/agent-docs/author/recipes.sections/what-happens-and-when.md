@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/recipes.md)
 
@@ -42,4 +42,4 @@ Readers can open a recipe directly. Ingredients help authors maintain instructio
 3. **The author reviews and tests the recipe, then publishes it.** A normal site build turns the recipe page into HTML and Markdown. It also builds the cookbook page and its choice list.
 4. **A reader chooses a recipe in the cookbook.** The browser fetches the already-published recipe and displays its instructions. The reader or their agent runs the commands and checks the results.
 
-**Selecting a cookbook option does not assemble ingredients or run a task.** It loads finished recipe content. The cookbook's own introduction and choice descriptions come from its page and configuration.
+**Selecting a cookbook option doesn't assemble ingredients or run a task.** It loads finished recipe content. The cookbook's own introduction and choice descriptions come from its page and configuration.

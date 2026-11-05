@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Analytics
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/analytics.md)
 
@@ -38,7 +38,7 @@ Implement these exports in your browser module:
 | `track(event)`  | Yes      | Receive an event; may return a promise. The adapter owns delivery, batching, retries, and flushing before navigation. |
 | `init(context)` | No       | Initialize the service or await consent; may return a promise. Events start after it resolves.                        |
 
-The read-only context provides `page` properties, `setEnabled(boolean)`, and `track(name, properties, element?)`. Import or initialization failures disable analytics for the page. Thrown or rejected `track` calls are caught without interrupting controls or navigation; Shoalrun does not retry them.
+The read-only context provides `page` properties, `setEnabled(boolean)`, and `track(name, properties, element?)`. Import or initialization failures disable analytics for the page. Thrown or rejected `track` calls are caught without interrupting controls or navigation; Shoalrun doesn't retry them.
 
 Events are discarded while initialization is pending or delivery is disabled. After initialization, Shoalrun sends `page_view` if enabled. To delay collection, await consent in `init`, or call `setEnabled(false)` and enable delivery from your consent callback. In the latter case, call `track('page_view')` after enabling to count the current page.
 
@@ -48,4 +48,4 @@ You can also disable delivery through the public hook:
 globalThis.shoalrunAnalytics?.setEnabled(false);
 ```
 
-Connect consent changes to your SDK too. Disabling Shoalrun does not stop SDK-generated events, unload the SDK, or revoke data already sent.
+Connect consent changes to your SDK too. Disabling Shoalrun doesn't stop SDK-generated events, unload the SDK, or revoke data already sent.

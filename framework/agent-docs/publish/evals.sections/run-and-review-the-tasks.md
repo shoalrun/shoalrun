@@ -17,19 +17,19 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Evaluate agent tasks against your docs
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/evals.md)
 
-Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun does not launch agents, choose a model, or grade prose.
+Use evaluation tasks to check whether an agent can accomplish important work using your documentation. Shoalrun defines task and result formats, prepares report templates, and checks those reports during an audit. You run your own agent and arrange human or external review of its answers. Shoalrun doesn't launch agents, choose a model, or grade prose.
 
-You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build does not execute evaluations or call a model. Evaluations are opt-in audit checks.
+You need a built docs site, a few realistic tasks, and an agent or manual workflow for running them. The ordinary build doesn't execute evaluations or call a model. Evaluations are opt-in audit checks.
 
 ## Run and review the tasks
 
 Use your own agent with the declared tool access. Record the actual runner name, optional model, available tools, and any limitations in `runner`. Replace `recordedAt` with the run's UTC ISO timestamp.
 
-For each task, record its status (`pass`, `fail`, or `skipped`), answer, citations, and criterion judgments. A passing result needs a nonempty answer, at least one citation, and a passing judgment with a reason for every defined criterion. Identify citations by stable page ID and publication, so editions and languages cannot be confused:
+For each task, record its status (`pass`, `fail`, or `skipped`), answer, citations, and criterion judgments. A passing result needs a nonempty answer, at least one citation, and a passing judgment with a reason for every defined criterion. Identify citations by stable page ID and publication, so editions and languages can't be confused:
 
 ```json
 {

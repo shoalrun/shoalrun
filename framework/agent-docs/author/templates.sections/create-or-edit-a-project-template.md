@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Templates
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/templates.md)
 
@@ -30,7 +30,7 @@ Parent page: [Full Markdown page](/author/templates.md)
 
 A template supplies the starting page for a new one: commented frontmatter and a body of prompts. It tells authors and agents what to write, in what order, and what to delete. `scaffold` copies the template once and fills in the draft fields. The result is an ordinary page that authors can change. Editing a template later affects future drafts, not pages already scaffolded.
 
-Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they do not enforce a permanent page structure.
+Use a [snippet](https://www.shoalrun.com/author/snippets.md) when the same prose must stay shared across several pages. Templates guide the initial draft; they don't enforce a permanent page structure.
 
 ## Create or edit a project template
 
@@ -61,15 +61,17 @@ Three rules keep the output valid:
 
 - Quote placeholder values in the frontmatter. An unquoted value that starts with two square brackets is read as a YAML list.
 - Use only placeholder values that pass validation in every project. Comment out fields such as `audiences`, `readerFilters`, and `subjectLifecycle`, because a wrong value fails the draft build.
-- Keep nested fields in flow style, such as `card: { icon: book-open }`. A comment block after a nested block mapping is indented with it and cannot be uncommented in place.
+- Keep nested fields in flow style, such as `card: { icon: book-open }`. A comment block after a nested block mapping is indented with it and can't be uncommented in place.
 
-Frontmatter comments do not reach the published page, so they never appear in the Markdown twin.
+Frontmatter comments don't reach the published page, so they never appear in the Markdown twin.
 
 ### Write the body
 
-Write each prompt for the facts and checks an author must supply as a placeholder: `[[TODO:`, the prompt text, then two closing square brackets. Do not use braces, angle brackets, or two closing square brackets inside a placeholder, because the MDX parser and the placeholder check read them. A public page fails the build while a complete placeholder remains in its prose or frontmatter, or while its summary still starts with `Draft guide for `. Ordinary Markdown and the supported [components](https://www.shoalrun.com/author/components.md) can appear in the body.
+Write each prompt for the facts and checks an author must supply as a placeholder: `[[TODO:`, the prompt text, then two closing square brackets. Don't use braces, angle brackets, or two closing square brackets inside a placeholder, because the MDX parser and the placeholder check read them. A public page fails the build while a complete placeholder remains in its prose or frontmatter, or while its summary still starts with `Draft guide for `. Ordinary Markdown and the supported [components](https://www.shoalrun.com/author/components.md) can appear in the body.
 
-Fenced code blocks can teach the placeholder syntax without blocking publication. Available since `0.1.0-alpha.13`. For example, this code is preserved literally in HTML and Markdown:
+Since 0.1.0-alpha.13
+
+Fenced code blocks can teach the placeholder syntax without blocking publication. For example, this code is preserved literally in HTML and Markdown:
 
 ```md
 [[TODO: Explain the task and how to check the result.]]

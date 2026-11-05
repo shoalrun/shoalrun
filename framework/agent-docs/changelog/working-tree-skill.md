@@ -15,7 +15,7 @@ date: 2026-10-13
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Portable working-tree authoring workflow
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-13: Working-tree skill
 
 **Published: 2026-10-13.**
 

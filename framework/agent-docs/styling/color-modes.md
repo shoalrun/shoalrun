@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Light and dark mode
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Every [palette](https://www.shoalrun.com/styling/palettes.md) has a light set and a dark set. `theme.mode` decides which set readers see.
 
@@ -65,7 +65,7 @@ Custom callout tones need dark colors before a site can show dark mode. The [cal
 - Without JavaScript, the toggle stays hidden and the system setting still applies.
 - If the browser blocks storage, the toggle still works for the current page.
 
-Target a mode in project CSS with `[data-mode="dark"]`, or with `prefers-color-scheme` for readers who have not used the toggle:
+Target a mode in project CSS with `[data-mode="dark"]`, or with `prefers-color-scheme` for readers who haven't used the toggle:
 
 ```css title="styles/project.css"
 @media (prefers-color-scheme: dark) {

@@ -15,7 +15,7 @@ date: 2026-10-13
 
 Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt) (ID: project-updates). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > Working-tree authoring tools
+Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > 2026-10-13: Authoring tools
 
 **Published: 2026-10-13.**
 
@@ -25,7 +25,7 @@ This change concerns the private prototype; no package release is claimed.
 - Existing coding agents edit ordinary working-tree files. Baselines record the starting state; validation checks a separate capture and retains findings and build artifacts. Freshness checks detect later source changes.
 - Checked plan/apply commands retain their existing protections.
 
-Snapshot preview serving, consolidated review reports, and the portable skill's complete working-tree workflow remain planned. Compiler checks do not replace factual or editorial review.
+Snapshot preview serving, consolidated review reports, and the portable skill's complete working-tree workflow remain planned. Compiler checks don't replace factual or editorial review.
 
 ## Related reading
 

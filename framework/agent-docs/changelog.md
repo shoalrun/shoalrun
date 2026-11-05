@@ -16,11 +16,27 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > All changes
 
-**Updated: 2026-11-03.**
+**Updated: 2026-11-05.**
 
 Updates to Shoalrun and its documentation. Each entry identifies the affected versions and any upgrade steps. Earlier entries retain their private-prototype release context.
 
 ## Latest changes
+
+- 2026-11-04
+
+  Version 0.1.0-alpha.17
+
+  [Smaller hosted search and Ask functions](https://www.shoalrun.com/changelog/2026-11-04-runtime-packaging.md)
+
+  Rebuild hosted docs with alpha.17 to reduce deployment files while keeping semantic search and Ask available.
+
+- 2026-11-04
+
+  Version 0.1.0-alpha.18
+
+  [Independent product versions and customer previews](https://www.shoalrun.com/changelog/product-publications.md)
+
+  Publish independent product releases together and preview each customer's selected edition while editing.
 
 - 2026-11-03
 

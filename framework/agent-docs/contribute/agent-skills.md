@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Use the bundled agent skills
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Give an agent a bundled skill when you want it to follow Shoalrun's setup, authoring, recipe, component, or walkthrough workflow. You need an agent that can read the skill file and run commands, plus a Shoalrun checkout or installed CLI.
 
@@ -28,11 +28,11 @@ Use `shoalrun-setup` to start a site, `shoalrun-author` to add or revise pages, 
 
 Install the complete folder in your agent's skill directory using that agent's installation process. If it supports reading repository files directly, point it at the entry file instead. For a recipe task, use `framework/skills/shoalrun-recipes/SKILL.md`.
 
-In an installed package, skill folders live under `node_modules/@shoalrun/cli/skills/`. These files are portable instructions; the CLI does not install them into your agent automatically.
+In an installed package, skill folders live under `node_modules/@shoalrun/cli/skills/`. These files are portable instructions; the CLI doesn't install them into your agent automatically.
 
 Give your agent the installed `shoalrun-author/SKILL.md` path and the consumer project's `docs.config.yaml` path. Use the existing harness's file, terminal, and browser tools. No separate authoring service or model configuration is required.
 
-Ask the agent to read the skill before beginning. If it cannot discover installed skills, include the file path. If it cannot read files or run a CLI, follow the [page creation workflow](https://www.shoalrun.com/author/add-page.md) yourself.
+Ask the agent to read the skill before beginning. If it can't discover installed skills, include the file path. If it can't read files or run a CLI, follow the [page creation workflow](https://www.shoalrun.com/author/add-page.md) yourself.
 
 ## Give the agent a bounded request
 

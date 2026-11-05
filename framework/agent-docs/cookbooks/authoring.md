@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Authoring workflows
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Choose the outcome you need for Shoalrun's own documentation. Each recipe includes setup, ordered work, handoffs, and an observable final check.
 
@@ -51,11 +51,11 @@ What are you working on?. Choose one recipe.
 
 Adding a guide includes manual writing and review. The recipe then builds and audits the page and refreshes the agent bundle. Previewing an existing change starts a local server; refreshing the bundle verifies what the CLI can search and read. Choose one task at a time so shared setup runs once within that recipe.
 
-Use **Link to this path** to share the selected instructions, **Download Markdown** to work from a saved copy, or **Print this path** for a checklist. These workflows prepare local changes for review; they do not commit or deploy them.
+Use **Link to this path** to share the selected instructions, **Download Markdown** to work from a saved copy, or **Print this path** for a checklist. These workflows prepare local changes for review; they don't commit or deploy them.
 
 ## HTML, Markdown, and agents
 
-In HTML, the chooser loads and displays the selected published recipes. Without JavaScript, readers can follow the recipe links. This page's Markdown lists the choices and their destinations; it does not contain the selected recipes' full instructions. Give an agent a recipe's Markdown page or the chooser's **Download Markdown** file to follow the complete task.
+In HTML, the chooser loads and displays the selected published recipes. Without JavaScript, readers can follow the recipe links. This page's Markdown lists the choices and their destinations; it doesn't contain the selected recipes' full instructions. Give an agent a recipe's Markdown page or the chooser's **Download Markdown** file to follow the complete task.
 
 ## Related reading
 

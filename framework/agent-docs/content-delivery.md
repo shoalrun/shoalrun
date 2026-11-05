@@ -17,7 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Overview
 
-**Updated: 2026-10-29.**
+**Updated: 2026-11-05.**
+
+**Available since: 0.1.0-alpha.13.**
 
 Content delivery makes your documentation a reusable content source for applications, agents, services, and workflows. They can retrieve whole pages, individual sections, or reusable snippets in HTML or Markdown. You control how the content is displayed, combined, or processed; Shoalrun supplies the content and its metadata.
 
@@ -29,8 +31,6 @@ For example:
 - A service feeds the documentation into its own search or retrieval index.
 
 These are starting points. The consuming system decides what to build with the content.
-
-Available since `0.1.0-alpha.13`.
 
 ## Choose a resource
 
@@ -58,7 +58,7 @@ Authored pages and snippets
   -> application interface
 ```
 
-Keep the application's content access behind the [ContentSnapshot interface](https://www.shoalrun.com/content-delivery/api.md). The [REST adapter](https://www.shoalrun.com/content-delivery/rest.md) exposes the same resources through HTTP, and its client returns that interface. The host supplies its listener and authorization. The adapter does not add search or live content editing.
+Keep the application's content access behind the [ContentSnapshot interface](https://www.shoalrun.com/content-delivery/api.md). The [REST adapter](https://www.shoalrun.com/content-delivery/rest.md) exposes the same resources through HTTP, and its client returns that interface. The host supplies its listener and authorization. The adapter doesn't add search or live content editing.
 
 ## Choose the next task
 

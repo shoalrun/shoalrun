@@ -20,7 +20,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > Commands
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 
@@ -57,7 +57,7 @@ Baselines and validation artifacts must be outside the project or inside its exc
 
 Declare sibling files and directories needed by a configured check in [`audit.tests[].inputs`](https://www.shoalrun.com/config.md). Paths are relative to the project configuration directory and must remain within its parent. Snapshot builds resolve revision dates without writing freshness history. A configured check that changes captured source or history still fails validation.
 
-Configured Node checks receive Shoalrun's installed dependency search paths through `NODE_PATH` for CommonJS resolution. Consumer dependencies are not copied into the snapshot; missing modules produce an unavailable check. ESM imports do not use `NODE_PATH`.
+Configured Node checks receive Shoalrun's installed dependency search paths through `NODE_PATH` for CommonJS resolution. Consumer dependencies aren't copied into the snapshot; missing modules produce an unavailable check. ESM imports don't use `NODE_PATH`.
 
 Validation statuses include `ok`, `failed`, `incomplete`, `unavailable`, and `stale`. Read findings and coverage alongside status. These commands always return JSON. Snapshot validation requires affected page IDs to match `[A-Za-z0-9][A-Za-z0-9._-]*`.
 
@@ -75,11 +75,11 @@ Use these commands to inspect proposed changes and their rendered output.
 
 Preview binds only to `127.0.0.1`; the default port is 8771. Use port 0 to allocate a free port. Its JSON startup record contains the snapshot ID, origin, and review/status URLs. It also includes affected HTML/Markdown URLs, serving-copy directory, validation review, and lifecycle instructions. The process stays running. Ctrl-C or SIGTERM closes it, removes its private copy, and emits a stopped record. Validation artifacts remain. No browser is opened automatically.
 
-The review identifies the baseline, changed-file operations and digests, dependencies, and current freshness. It includes checks, findings and source/reference locations, coverage, and affected-page artifacts. Earlier file contents are not retained in a baseline; the report explains why it cannot generate a task diff. Evidence gathering remains with the harness. Reviewer results and author dispositions are explicitly empty; no semantic reviewer ran.
+The review identifies the baseline, changed-file operations and digests, dependencies, and current freshness. It includes checks, findings and source/reference locations, coverage, and affected-page artifacts. Earlier file contents aren't retained in a baseline; the report explains why it can't generate a task diff. Evidence gathering remains with the harness. Reviewer results and author dispositions are explicitly empty; no semantic reviewer ran.
 
 Configuration, dependency, and deletion changes conservatively list every rendered page, including generated API operations. Authored-only changes list their affected pages. Each page reports its authored or generated origin.
 
-A stale working tree can still be previewed as a clearly labelled historical snapshot. Modified or missing validation artifacts prevent startup. A missing site after a failed compile is reviewable through `docs review`, but cannot be served. A built site with failed or skipped checks can be previewed with its actual status. A running preview detects changed artifacts and refuses page serving; replacing the report never switches it to another snapshot.
+A stale working tree can still be previewed as a clearly labelled historical snapshot. Modified or missing validation artifacts prevent startup. A missing site after a failed compile is reviewable through `docs review`, but can't be served. A built site with failed or skipped checks can be previewed with its actual status. A running preview detects changed artifacts and refuses page serving; replacing the report never switches it to another snapshot.
 
 HTML pages show a freshness banner that refreshes every two seconds while open. Markdown stays the captured output; read its snapshot ID from the HTTP `X-Shoalrun-Snapshot` header and consult the status URL. After edits, revalidate and restart with the new report. Copies are limited to 20,000 regular files and 512 MiB; symlinks are rejected. A forced kill can leave the serving copy, whose path is returned at startup. Remove that directory only after the process has stopped.
 

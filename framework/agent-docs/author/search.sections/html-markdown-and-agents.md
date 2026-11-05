@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 **Verified: 2026-10-01.**
 
@@ -28,10 +28,10 @@ Parent page: [Full Markdown page](/author/search.md)
 
 - [Preview semantic search in this checkout](https://www.shoalrun.com/recipes/preview-hybrid-search.md) — Build the passage index and verify hybrid search and lexical fallback in this checkout.
 
-Site search returns links to pages and sections. It is enabled by default and matches words in the browser, with no provider account or server required.
+Site search returns links to pages and sections. It's enabled by default and matches words in the browser, with no provider account or server required.
 
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
 ## HTML, Markdown, and agents
 
-The dropdown is an HTML interaction. It links to published pages and sections; it is not written into a page's Markdown twin. An agent can read the same published Markdown pages through their `.md` routes and discovery files. The local semantic endpoint returns links and short text, not an answer or a new agent-only representation. [Publishing and agent representations](https://www.shoalrun.com/publish/output.md) describes the Markdown routes and discovery files.
+The search results dropdown is an HTML interaction. It links to published pages and sections; it isn't written into a page's Markdown twin. An agent can read the same published Markdown pages through their `.md` routes and discovery files. The publication dropdown changes the active HTML product release and the search scope. It doesn't appear as an interactive control in Markdown. Agents retain the product/channel/version/language coordinates in CLI or MCP reads; a repeated page ID in another product is a different publication. The local semantic endpoint returns links and short text, not an answer or a new agent-only representation. [Publishing and agent representations](https://www.shoalrun.com/publish/output.md) describes the Markdown routes and discovery files.

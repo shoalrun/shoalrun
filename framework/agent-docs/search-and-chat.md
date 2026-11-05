@@ -17,9 +17,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Overview
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
-Start with [site search](https://www.shoalrun.com/author/search.md) if readers need links to pages and sections. It is built in, works on a static host, and needs no provider account. Add chat when readers need answers written from your documentation.
+Start with [site search](https://www.shoalrun.com/author/search.md) if readers need links to pages and sections. It's built in, works on a static host, and needs no provider account. Add chat when readers need answers written from your documentation.
 
 ## Choose the result you want
 
@@ -31,7 +31,7 @@ These features have different setup and hosting needs. Passage retrieval and cha
 | Links that can match different wording | [Semantic search preview](https://www.shoalrun.com/recipes/preview-hybrid-search.md) | A passage index, embeddings, and a local search endpoint. The provider can fall back to keyword search.               |
 | An answer with source citations        | [Documentation chat](https://www.shoalrun.com/chat/setup.md)                         | A passage index, a configured chat service, and a terminal or server. Embeddings and a scorer are optional additions. |
 
-The sidebar's [navigation filter](https://www.shoalrun.com/author/navigation.md) only narrows the menu. Its search words do not change site-search results. The search dropdown returns links; it does not call a chat model.
+The sidebar's [navigation filter](https://www.shoalrun.com/author/navigation.md) only narrows the menu. Its search words don't change site-search results. The search dropdown returns links; it doesn't call a chat model.
 
 ## Start with a local chat
 
@@ -65,7 +65,7 @@ Fallback behavior depends on the configured feature.
 | Situation                                                    | Result                                                                      |
 | ------------------------------------------------------------ | --------------------------------------------------------------------------- |
 | Built-in search has no server or provider key                | Browser keyword search still works.                                         |
-| This site's custom search provider cannot reach its endpoint | It uses the browser keyword index.                                          |
+| This site's custom search provider can't reach its endpoint  | It uses the browser keyword index.                                          |
 | A search endpoint has no current vectors, or embeddings fail | It returns keyword passage results.                                         |
 | Chat has no current vectors                                  | Retrieval uses keywords. A configured chat model can still write an answer. |
 | A deployment has no chat function                            | The site remains available, but has no chat endpoint.                       |

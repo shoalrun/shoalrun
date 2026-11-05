@@ -16,7 +16,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Reusable Shoalrun steps > Regenerate the agent documentation bundle
 
-**Updated: 2026-10-19.**
+**Updated: 2026-11-05.**
 
 Export the already built site for the framework’s next documentation snapshot:
 
@@ -24,6 +24,6 @@ Export the already built site for the framework’s next documentation snapshot:
 npm run agent-docs:build
 ```
 
-Build the site first. The export copies that output without rebuilding and records the site build identity and pinned package integrity in `agent-docs/provenance.json`. It does not modify the installed package.
+Build the site first. The export copies that output without rebuilding and records the site build identity and pinned package integrity in `agent-docs/provenance.json`. It doesn't modify the installed package.
 
 Review and transfer the export as a versioned artifact to the framework repository. Framework releases consume an explicitly selected snapshot; they must not fetch the latest site during a package build.

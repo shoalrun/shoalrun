@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Retrieval and chat settings
 
-**Updated: 2026-10-25.**
+**Updated: 2026-11-05.**
 
 **Status: Experimental.**
 

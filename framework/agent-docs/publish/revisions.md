@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Use Git branches for separate docs sites
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 A deployment takes the docs files from a Git branch or commit, builds them, and serves the result at an address you choose. Your host or CI service chooses the source and destination. Branch names have no special meaning to Shoalrun.
 
@@ -42,7 +42,7 @@ After the deployment job checks out its chosen source, build it with the full co
 shoalrun build docs.config.yaml site-dist --source-commit "$(git rev-parse HEAD)"
 ```
 
-Deploy all of `site-dist/` to the address assigned to that source. Configure this source-to-address rule in your host or CI service; Shoalrun does not deploy files or infer a branch from `channel`. See [deploy your documentation](https://www.shoalrun.com/publish.md) for hosting options. If two separate domains should both serve `/start`, use an empty channel `pathPrefix` in each site's config.
+Deploy all of `site-dist/` to the address assigned to that source. Configure this source-to-address rule in your host or CI service; Shoalrun doesn't deploy files or infer a branch from `channel`. See [deploy your documentation](https://www.shoalrun.com/publish.md) for hosting options. If two separate domains should both serve `/start`, use an empty channel `pathPrefix` in each site's config.
 
 ## Add another site to the Version menu
 
@@ -73,7 +73,7 @@ A `baseUrl` with a path changes where the menu points. Hosting a *whole standalo
 
 ## What agents receive
 
-Each deployed site has its own Markdown pages, `documents.json`, search index, and agent discovery files, built from that site's selected Git revision. An agent using the stable site reads its stable artifacts; an agent using the next site reads its next artifacts. The external Version menu helps human readers navigate between sites, but it does not combine their manifests or Markdown copies. Preserve a built release or its tagged source if agents must be able to consult it later. See [published outputs](https://www.shoalrun.com/publish/output.md) for the file list.
+Each deployed site has its own Markdown pages, `documents.json`, search index, and agent discovery files, built from that site's selected Git revision. An agent using the stable site reads its stable artifacts; an agent using the next site reads its next artifacts. The external Version menu helps human readers navigate between sites, but it doesn't combine their manifests or Markdown copies. Preserve a built release or its tagged source if agents must be able to consult it later. See [published outputs](https://www.shoalrun.com/publish/output.md) for the file list.
 
 ## Check the deployed source
 
@@ -97,7 +97,7 @@ The checker fails if the address serves a different commit or if its published H
 
 ### Related topics
 
-- [Share pages across documentation versions](https://www.shoalrun.com/publish/publications.md) — Distinguish content editions from source revisions and retained builds.
+- [Share pages across products and documentation versions](https://www.shoalrun.com/publish/publications.md) — Distinguish content editions from source revisions and retained builds.
 
 ### Often confused with
 

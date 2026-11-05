@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Related reading
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/related-reading.md)
 
@@ -25,7 +25,7 @@ A relationship is an authored connection between two pages, with a reason to fol
 
 ## Display related documents
 
-**Related reading** presents centrally maintained connections as lists of links grouped by purpose. **Cards** are a visual presentation for page previews. The same relationship data can drive either presentation; declaring a relationship does not require a card.
+**Related reading** presents centrally maintained connections as lists of links grouped by purpose. **Cards** are a visual presentation for page previews. The same relationship data can drive either presentation; declaring a relationship doesn't require a card.
 
 Place this under a level-two heading where related reading belongs:
 
@@ -35,7 +35,7 @@ Place this under a level-two heading where related reading belongs:
 <RelatedReading />
 ```
 
-This renders nonempty groups in the order shown in the relationship-type table, with level-three headings. Within each group, links follow `order`, then relationship ID. Each list item uses the target's page title and the relationship reason. Card titles, descriptions, eyebrows, and icons do not change the default link list. Subject lifecycle status remains visible. Titles and URLs come from the target page; maintain only IDs, relationship purposes, and reasons in the central mapping.
+This renders nonempty groups in the order shown in the relationship-type table, with level-three headings. Within each group, links follow `order`, then relationship ID. Each list item uses the target's page title and the relationship reason. Card titles, descriptions, eyebrows, and icons don't change the default link list. Subject lifecycle status remains visible. Titles and URLs come from the target page; maintain only IDs, relationship purposes, and reasons in the central mapping.
 
 To show one kind of relationship under your own heading:
 

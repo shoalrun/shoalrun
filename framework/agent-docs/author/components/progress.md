@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Progress
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Use `<Progress>` for a published count in a tutorial or migration guide. It shows the amount completed as text and as a bar. Update the source and rebuild the site when the shared state changes.
 
@@ -42,13 +42,13 @@ Use these attributes to configure the component.
 
 ## When to use it
 
-Use this component when a count has a known maximum, such as 3 of 5 migration tasks complete. It is a read-only display: readers cannot mark a task complete or move the bar. For a process with named stages and descriptions, use a [timeline](https://www.shoalrun.com/author/components/timeline.md).
+Use this component when a count has a known maximum, such as 3 of 5 migration tasks complete. It's a read-only display: readers can't mark a task complete or move the bar. For a process with named stages and descriptions, use a [timeline](https://www.shoalrun.com/author/components/timeline.md).
 
 ## HTML, Markdown, and agents
 
 HTML shows “Migration tasks: 3 of 5 complete” alongside a native `<progress>` element. The text carries the count even without CSS or color. There is no JavaScript behavior or keyboard control.
 
-Markdown states the same label and count in a sentence. An agent does not need to estimate completion from the bar.
+Markdown states the same label and count in a sentence. An agent doesn't need to estimate completion from the bar.
 
 ## Related reading
 

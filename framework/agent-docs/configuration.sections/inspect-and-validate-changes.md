@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/configuration.md)
 
@@ -45,11 +45,11 @@ Use these commands while reorganizing configuration:
 | `config validate docs.config.yaml`           | Successful configuration loading and theme contrast checks                 |
 | `build docs.config.yaml dist`                | Whether content, navigation, APIs, routes, and output can compile together |
 
-Prefix each command with `npx --no-install shoalrun`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot cannot be addressed unambiguously through this CLI syntax.
+Prefix each command with `npx --no-install shoalrun`. For `explain`, the key comes before the config filename. Use numeric segments to inspect lists, such as `navigation.0.doc`. Dotted names represent traversal, so a literal key containing a dot can't be addressed unambiguously through this CLI syntax.
 
-`graph` reports dependencies, not an edge-by-edge visual graph. Its list covers loaded configuration files, not every content or API input. The resolved digest hashes effective values; it is not a digest of all referenced file contents.
+`graph` reports dependencies, not an edge-by-edge visual graph. Its list covers loaded configuration files, not every content or API input. The resolved digest hashes effective values; it isn't a digest of all referenced file contents.
 
-A successful `config validate` does not establish that document links resolve or that an API review digest is current. Run a full build after structural changes. If a setting looks correct but behaves unexpectedly, inspect its exact key and source before editing another layer.
+A successful `config validate` doesn't establish that document links resolve or that an API review digest is current. Run a full build after structural changes. If a setting looks correct but behaves unexpectedly, inspect its exact key and source before editing another layer.
 
 ### Recover common configuration failures
 
@@ -64,7 +64,7 @@ Match the build message or symptom to the corresponding correction.
 | `$remove has no inherited value`    | Add an actual inherited value or remove the unnecessary directive.               |
 | `Unknown config path`               | Inspect `resolve`, then correct the dotted key or list index.                    |
 | A list unexpectedly lost entries    | Replace a normal overlay list with `$concat` when appending was intended.        |
-| A local file cannot be found        | Inspect the path's source file and the relevant path-base rule.                  |
+| A local file can't be found         | Inspect the path's source file and the relevant path-base rule.                  |
 
 Finish the running example with:
 

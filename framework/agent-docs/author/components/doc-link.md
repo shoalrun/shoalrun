@@ -16,9 +16,9 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > DocLink
 
-**Updated: 2026-10-27.**
+**Updated: 2026-11-05.**
 
-`<DocLink>` resolves a document ID to its URL in the current publication. It is useful in MDX when the link should use a stable target and optionally inherit the target page's title.
+`<DocLink>` resolves a document ID to its URL in the current publication. It's useful in MDX when the link should use a stable target and optionally inherit the target page's title.
 
 ## Which link should I use?
 
@@ -31,7 +31,7 @@ Choose a link form based on whether the destination is a document, a section, or
 | `[Open the specification](https://example.test/spec)`       | External sites, downloads, or other URLs without a Shoalrun document ID.       | Keeps the authored URL.                                     |
 | `[Jump to fields](#fields)`                                 | A section on the current page.                                                 | Keeps the fragment link.                                    |
 
-Prefer `doc:` Markdown for ordinary prose. Both ID-based forms survive a target slug change and fail the build if the target is unavailable in this publication. A normal Markdown link to a Shoalrun route can work, but the authored URL must be updated if that route changes. Raw HTML or JSX anchors such as `<a href="...">` do not have a semantic adapter in this prototype and fail the build; use Markdown links instead.
+Prefer `doc:` Markdown for ordinary prose. Both ID-based forms survive a target slug change and fail the build if the target is unavailable in this publication. A normal Markdown link to a Shoalrun route can work, but the authored URL must be updated if that route changes. Raw HTML or JSX anchors such as `<a href="...">` don't have a semantic adapter in this prototype and fail the build; use Markdown links instead.
 
 ## Syntax
 

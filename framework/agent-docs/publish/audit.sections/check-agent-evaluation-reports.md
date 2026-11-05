@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Audit a docs project
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/publish/audit.md)
 
@@ -49,4 +49,4 @@ audit:
     report: ./evals/results.json
 ```
 
-An optional `audit.evals.run` command executes after the build and receives the temporary site path, task/report paths, and their digests through environment variables. This differs from ordinary `audit.tests`, which run before the build. The eval command's exit status and report checks are separate results; passing one does not bypass the other. See [evaluate agent tasks](https://www.shoalrun.com/publish/evals.md) for the format, preparation commands, optional-task behavior, and limits. No evals run unless configured.
+An optional `audit.evals.run` command executes after the build and receives the temporary site path, task/report paths, and their digests through environment variables. This differs from ordinary `audit.tests`, which run before the build. The eval command's exit status and report checks are separate results; passing one doesn't bypass the other. See [evaluate agent tasks](https://www.shoalrun.com/publish/evals.md) for the format, preparation commands, optional-task behavior, and limits. No evals run unless configured.

@@ -16,9 +16,9 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Let readers choose recipes with a cookbook
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
-A cookbook combines an authored introduction with a list or chooser of **published recipe pages**. It does not read ingredient files. Ingredients have already been copied into the recipes during authoring.
+A cookbook combines an authored introduction with a list or chooser of **published recipe pages**. It doesn't read ingredient files. Ingredients have already been copied into the recipes during authoring.
 
 This guide uses the [Site workflows cookbook](https://www.shoalrun.com/cookbooks/site-workflows.md). It offers a build check or a build-and-audit check. The audit recipe already includes the build, so the reader chooses one complete path.
 
@@ -51,7 +51,7 @@ site-checks:
       outcome: Checked page files and no failed configured audits.
 ```
 
-`doc` selects the recipe. `label` names the choice. The optional `when`, `needs`, and `outcome` fields explain the choice; they are descriptive text, not requirements the browser verifies. When `when` is omitted, the recipe's summary is shown.
+`doc` selects the recipe. `label` names the choice. The optional `when`, `needs`, and `outcome` fields explain the choice; they're descriptive text, not requirements the browser verifies. When `when` is omitted, the recipe's summary is shown.
 
 Load this mapping from the project configuration. Shoalrun already has this include:
 
@@ -69,11 +69,11 @@ Choose the level of validation you need. The audit path includes the build.
 <CookbookChooser id="site-checks" />
 ```
 
-The component's `id` is the configuration key `site-checks`. It is separate from the cookbook page's document ID, `cookbook.site-workflows`.
+The component's `id` is the configuration key `site-checks`. It's separate from the cookbook page's document ID, `cookbook.site-workflows`.
 
-A normal site build publishes the cookbook's own text and chooser. When a reader makes a selection, the browser fetches the selected recipe's HTML and shows the instructions under **Your path**. It does not call the recipe assembler, fetch ingredients, or execute commands.
+A normal site build publishes the cookbook's own text and chooser. When a reader makes a selection, the browser fetches the selected recipe's HTML and shows the instructions under **Your path**. It doesn't call the recipe assembler, fetch ingredients, or execute commands.
 
-For a simple directory of recipes, use [DocCards](https://www.shoalrun.com/author/components/cards.md) instead of a chooser. A page with `type: cookbook` does not require an interactive component.
+For a simple directory of recipes, use [DocCards](https://www.shoalrun.com/author/components/cards.md) instead of a chooser. A page with `type: cookbook` doesn't require an interactive component.
 
 ## Choose single or multiple selection deliberately
 
@@ -84,7 +84,7 @@ Choose the selection mode based on whether readers should follow one path or com
 | `mode: single`   | Choose one recipe with radio buttons.                                        | Alternative tasks or overlapping paths, such as build versus build-and-audit. |
 | `mode: multiple` | Select several recipes with checkboxes; display them in configuration order. | Recipes that the author has checked make sense together. This is the default. |
 
-Multiple selection displays whole recipe bodies, including any repeated setup. It does not deduplicate steps, connect outputs between recipes, or check their combined dependencies. If a combined task needs shared setup and explicit handoffs, compose it as one recipe and offer that recipe as a choice.
+Multiple selection displays whole recipe bodies, including any repeated setup. It doesn't deduplicate steps, connect outputs between recipes, or check their combined dependencies. If a combined task needs shared setup and explicit handoffs, compose it as one recipe and offer that recipe as a choice.
 
 ## What readers and agents receive
 
@@ -98,9 +98,9 @@ The published surfaces expose cookbook choices in different forms.
 | Recipe Markdown                | The complete published instructions for that one recipe.                |
 | Download Markdown              | A file containing the selected recipes' instructions.                   |
 
-**Link to this path** preserves the selection in the browser URL. It does not create a new published Markdown page. An agent reading the cookbook's Markdown can choose a recipe link. Give a task-performing agent the recipe's Markdown or the downloaded selection.
+**Link to this path** preserves the selection in the browser URL. It doesn't create a new published Markdown page. An agent reading the cookbook's Markdown can choose a recipe link. Give a task-performing agent the recipe's Markdown or the downloaded selection.
 
-**Print this path** prints the loaded instructions. If a recipe cannot load, its source link remains available. Markdown downloads fail as a whole rather than saving an incomplete selection. Without JavaScript, the visible recipe links still work.
+**Print this path** prints the loaded instructions. If a recipe can't load, its source link remains available. Markdown downloads fail as a whole rather than saving an incomplete selection. Without JavaScript, the visible recipe links still work.
 
 ## Check the result
 

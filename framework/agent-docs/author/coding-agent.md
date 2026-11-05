@@ -18,15 +18,15 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Draft a page
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Use an agent that can read project files and run commands. It writes with its own model; Shoalrun requires no additional authoring API key.
 
 ## Prepare your agent
 
-Install the [portable authoring skill](https://www.shoalrun.com/contribute/agent-skills.md) using your agent's supported skill setup. If it cannot load skills, give it the same project instructions and commands directly. Tell it where to find `docs.config.yaml`, your writing guide, and reviewed examples. The [example writing guide](https://www.shoalrun.com/author/writing-style.md) is a starting point you can adapt.
+Install the [portable authoring skill](https://www.shoalrun.com/contribute/agent-skills.md) using your agent's supported skill setup. If it can't load skills, give it the same project instructions and commands directly. Tell it where to find `docs.config.yaml`, your writing guide, and reviewed examples. The [example writing guide](https://www.shoalrun.com/author/writing-style.md) is a starting point you can adapt.
 
-The CLI's `docs search` and `docs read` commands read bundled Shoalrun guidance. The [MCP server](https://www.shoalrun.com/cli.md) offers documentation search and reads for agents that support MCP; it does not write project files. Your agent uses its own file tools and the CLI for edits.
+The CLI's `docs search` and `docs read` commands read bundled Shoalrun guidance. The [MCP server](https://www.shoalrun.com/cli.md) offers documentation search and reads for agents that support MCP; it doesn't write project files. Your agent uses its own file tools and the CLI for edits.
 
 ## Give a working-tree task
 
@@ -69,7 +69,7 @@ This uses the harness's own writer and execution permissions. Required navigatio
    shoalrun docs preview /path/from/result/report.json --port 0
    ```
 
-   Use the actual report path returned by validation. It renders affected drafts in a separate capture while preserving their authored access policy. Review findings, coverage, and skipped checks; use `--run-checks` only for applicable trusted commands under the harness's permissions. A stale, failed, incomplete, or unavailable result is not a pass. After edits, revalidate and restart the preview from the new report. Stop the foreground preview with Ctrl-C when finished.
+   Use the actual report path returned by validation. It renders affected drafts in a separate capture while preserving their authored access policy. Review findings, coverage, and skipped checks; use `--run-checks` only for applicable trusted commands under the harness's permissions. A stale, failed, incomplete, or unavailable result isn't a pass. After edits, revalidate and restart the preview from the new report. Stop the foreground preview with Ctrl-C when finished.
 
 4. ## Prepare publication
 

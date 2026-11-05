@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Analytics
 
-**Updated: 2026-10-26.**
+**Updated: 2026-11-05.**
 
 Shoalrun sends documentation interactions to an analytics service through an **adapter**: a browser module you supply to initialize the service and deliver events. Analytics is off by default. Shoalrun includes no service SDK, storage, visitor identity, or delivery queue.
 
@@ -51,7 +51,7 @@ Implement these exports in your browser module:
 | `track(event)`  | Yes      | Receive an event; may return a promise. The adapter owns delivery, batching, retries, and flushing before navigation. |
 | `init(context)` | No       | Initialize the service or await consent; may return a promise. Events start after it resolves.                        |
 
-The read-only context provides `page` properties, `setEnabled(boolean)`, and `track(name, properties, element?)`. Import or initialization failures disable analytics for the page. Thrown or rejected `track` calls are caught without interrupting controls or navigation; Shoalrun does not retry them.
+The read-only context provides `page` properties, `setEnabled(boolean)`, and `track(name, properties, element?)`. Import or initialization failures disable analytics for the page. Thrown or rejected `track` calls are caught without interrupting controls or navigation; Shoalrun doesn't retry them.
 
 Events are discarded while initialization is pending or delivery is disabled. After initialization, Shoalrun sends `page_view` if enabled. To delay collection, await consent in `init`, or call `setEnabled(false)` and enable delivery from your consent callback. In the latter case, call `track('page_view')` after enabling to count the current page.
 
@@ -61,7 +61,7 @@ You can also disable delivery through the public hook:
 globalThis.shoalrunAnalytics?.setEnabled(false);
 ```
 
-Connect consent changes to your SDK too. Disabling Shoalrun does not stop SDK-generated events, unload the SDK, or revoke data already sent.
+Connect consent changes to your SDK too. Disabling Shoalrun doesn't stop SDK-generated events, unload the SDK, or revoke data already sent.
 
 ## Event format
 
@@ -88,7 +88,7 @@ Each event has `schemaVersion`, `name`, and `properties`. For example:
 }
 ```
 
-Every event includes page identity and publication properties; `navigationSectionId` appears only for pages in a navigation tab. `pageUrl` is the published path without query or fragment. Custom properties cannot replace page identity.
+Every event includes page identity and publication properties; `navigationSectionId` appears only for pages in a navigation tab. `pageUrl` is the published path without query or fragment. Custom properties can't replace page identity.
 
 Events associated with an element add component context. `componentId` uses `data-analytics-id`, then the element’s HTML ID, then its heading, kind, and position. Generated IDs can change when content moves. `componentType` is `tabs`, `walkthrough`, `disclosure`, `code`, or `control`; `headingId` identifies the preceding article heading when available.
 
@@ -96,23 +96,23 @@ Events associated with an element add component context. `componentId` uses `dat
 
 Use these events to measure browser interactions. Each includes the page properties above.
 
-| Event                     | Additional properties                         | Trigger                                                                                                                                                                          |
-| ------------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `page_view`               | None                                          | Once after adapter initialization, when delivery is enabled.                                                                                                                     |
-| `navigation_click`        | `region`, `targetPath`, `external`            | A section, sidebar, outline, breadcrumb, related-reading, card, hero, footer, header, article, or Markdown-action link is activated.                                             |
-| `content_tab_change`      | `tabIndex`, `tabId`                           | A different content tab is selected by click or keyboard. Initial selection and hash reveals are excluded.                                                                       |
-| `disclosure_toggle`       | `open`                                        | A reader opens or closes a Collapsible or article InfoHint through its summary. Programmatic initialization is excluded.                                                         |
-| `walkthrough_step_change` | `stepIndex`, `stepCount`, `layout`, `trigger` | A different walkthrough step becomes active through click, keyboard, or step scrolling. Initial selection and layout changes are excluded.                                       |
-| `code_copy`               | `language`, optional `stepIndex`              | A code example or walkthrough pane is successfully written to the clipboard.                                                                                                     |
-| `markdown_copy`           | None                                          | The full Markdown twin is successfully written to the clipboard.                                                                                                                 |
-| `section_link_copy`       | `targetHeadingId`                             | A heading's link is successfully written to the clipboard.                                                                                                                       |
-| `search_results`          | `queryLength`, `resultCount`, `status`        | A completed search settles for 300 ms. Status is `results`, `empty`, or `error`; the count is the displayed result count.                                                        |
-| `search_result_click`     | `queryLength`, `resultIndex`, `targetPath`    | A search result is activated, including through the keyboard.                                                                                                                    |
-| `reader_filter_change`    | `scope`, `filter_<facet>`, optional `inherit` | A site or page reader selection changes through the controls or reader-view API. Initialization does not emit it. Facet hyphens become underscores; values are choice-ID arrays. |
+| Event                     | Additional properties                         | Trigger                                                                                                                                                                         |
+| ------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `page_view`               | None                                          | Once after adapter initialization, when delivery is enabled.                                                                                                                    |
+| `navigation_click`        | `region`, `targetPath`, `external`            | A section, sidebar, outline, breadcrumb, related-reading, card, hero, footer, header, article, or Markdown-action link is activated.                                            |
+| `content_tab_change`      | `tabIndex`, `tabId`                           | A different content tab is selected by click or keyboard. Initial selection and hash reveals are excluded.                                                                      |
+| `disclosure_toggle`       | `open`                                        | A reader opens or closes a Collapsible or article InfoHint through its summary. Programmatic initialization is excluded.                                                        |
+| `walkthrough_step_change` | `stepIndex`, `stepCount`, `layout`, `trigger` | A different walkthrough step becomes active through click, keyboard, or step scrolling. Initial selection and layout changes are excluded.                                      |
+| `code_copy`               | `language`, optional `stepIndex`              | A code example or walkthrough pane is successfully written to the clipboard.                                                                                                    |
+| `markdown_copy`           | None                                          | The full Markdown twin is successfully written to the clipboard.                                                                                                                |
+| `section_link_copy`       | `targetHeadingId`                             | A heading's link is successfully written to the clipboard.                                                                                                                      |
+| `search_results`          | `queryLength`, `resultCount`, `status`        | A completed search settles for 300 ms. Status is `results`, `empty`, or `error`; the count is the displayed result count.                                                       |
+| `search_result_click`     | `queryLength`, `resultIndex`, `targetPath`    | A search result is activated, including through the keyboard.                                                                                                                   |
+| `reader_filter_change`    | `scope`, `filter_<facet>`, optional `inherit` | A site or page reader selection changes through the controls or reader-view API. Initialization doesn't emit it. Facet hyphens become underscores; values are choice-ID arrays. |
 
 Indexes start at zero. Navigation regions are `sections`, `sidebar`, `toc`, `breadcrumbs`, `related`, `card`, `hero`, `footer`, `header`, `content`, and `formats`; only HTTP(S) links qualify. Target paths omit queries and fragments. Built-in payloads exclude raw search queries, copied text, article text, reader identifiers, and referrers. A service SDK may add its own properties.
 
-Changing component attributes from a script does not necessarily emit an event. Browser page loads emit page views; back-forward cache restoration has no separate built-in event.
+Changing component attributes from a script doesn't necessarily emit an event. Browser page loads emit page views; back-forward cache restoration has no separate built-in event.
 
 ## Map events to your service
 
@@ -122,9 +122,9 @@ Your adapter translates Shoalrun events into the service’s names, properties, 
 - Choose one source for each measurement. Disable equivalent automatic SDK events when the adapter supplies them.
 - Keep content interactions as custom events unless a native event matches their meaning and required properties.
 - Preserve page and component IDs, publication context, and `schemaVersion`. Check the destination’s limits on names and values.
-- Use the SDK’s separate APIs for identification, grouping, exceptions, or replay; renaming an interaction does not enable these features.
+- Use the SDK’s separate APIs for identification, grouping, exceptions, or replay; renaming an interaction doesn't enable these features.
 
-Document each source, destination, property conversion, and automatic SDK feature you enable. Shoalrun has no universal page-exit or scroll-depth event. Verify one page visit and one content interaction in the destination, check they are counted once, and confirm native events populate the intended dashboard.
+Document each source, destination, property conversion, and automatic SDK feature you enable. Shoalrun has no universal page-exit or scroll-depth event. Verify one page visit and one content interaction in the destination, check they're counted once, and confirm native events populate the intended dashboard.
 
 ## Custom interactions
 
@@ -140,7 +140,7 @@ globalThis.shoalrunAnalytics?.track(
 
 The arguments are the event name, properties, and optional element for component context. Page properties are added automatically. The optional chain skips the call when analytics is unconfigured.
 
-This hook does not register MDX components: unknown components fail the build. Use the [supported components](https://www.shoalrun.com/author/components.md) or register a [trusted component plugin](https://www.shoalrun.com/author/components/custom.md) with shared HTML and Markdown content.
+This hook doesn't register MDX components: unknown components fail the build. Use the [supported components](https://www.shoalrun.com/author/components.md) or register a [trusted component plugin](https://www.shoalrun.com/author/components/custom.md) with shared HTML and Markdown content.
 
 Event names start with a lowercase letter and contain at most 64 lowercase letters, digits, or underscores.
 
@@ -157,7 +157,7 @@ Custom properties have these limits:
 
 Copy `framework/examples/analytics/inspector.js` beside your config and set `analytics.module` to `./inspector.js`. Its **Local events** panel and `window.shoalrunDebugEvents` show the latest 100 events in memory without sending requests. Use it only in local previews.
 
-The inspector shows Shoalrun events before translation, so confirm service delivery separately. It cannot show events generated by a provider SDK.
+The inspector shows Shoalrun events before translation, so confirm service delivery separately. It can't show events generated by a provider SDK.
 
 ## PostHog example
 
@@ -216,7 +216,7 @@ This example sends native page views and page leaves to PostHog, with custom eve
 
    The adapter maps `page_view` to `$pageview` and keeps other Shoalrun event names. Automatic page views are off to avoid duplicates. PostHog supplies `$pageleave` with scroll depth and duration. Generic click capture, replay, and person profiles are disabled.
 
-   Use custom names in Product Analytics insights and funnels. Do not map them to `$autocapture`, which requires SDK-generated element metadata. PostHog adds properties and manages browser storage; review its [SDK configuration](https://posthog.com/docs/libraries/js/config) for consent and content security policy requirements.
+   Use custom names in Product Analytics insights and funnels. Don't map them to `$autocapture`, which requires SDK-generated element metadata. PostHog adds properties and manages browser storage; review its [SDK configuration](https://posthog.com/docs/libraries/js/config) for consent and content security policy requirements.
 
 3. ### Bundle and configure the module
 
@@ -251,21 +251,21 @@ This example sends native page views and page leaves to PostHog, with custom eve
    | `$prev_pageview_max_content_percentage` | Fraction of document height reached by the viewport, from `0` to `1`. |
    | `$prev_pageview_duration`               | Seconds the page was open.                                            |
 
-   These measure the document, excluding scrolling within code panes. Time open does not prove active reading, and page-leave delivery is best effort. For visual scrollmaps, configure [PostHog heatmaps](https://posthog.com/docs/toolbar/heatmaps) separately; some engagement metrics require generic autocapture.
+   These measure the document, excluding scrolling within code panes. Time open doesn't prove active reading, and page-leave delivery is best effort. For visual scrollmaps, configure [PostHog heatmaps](https://posthog.com/docs/toolbar/heatmaps) separately; some engagement metrics require generic autocapture.
 
    If events are missing, check consent, browser blockers, and network requests. Exclude development traffic from production reports or use a separate development project.
 
 ## HTML, Markdown, and agents
 
-Instrumentation runs only in the browser and leaves Markdown and discovery artifacts unchanged. Agents that fetch Markdown or call tools without running page JavaScript are not counted.
+Instrumentation runs only in the browser and leaves Markdown and discovery artifacts unchanged. Agents that fetch Markdown or call tools without running page JavaScript aren't counted.
 
-To measure those requests, collect CDN or hosting logs, add a server request hook, or enable the separate [MCP analytics adapter](https://www.shoalrun.com/publish/mcp-analytics.md). Include cache hits: origin logs alone miss responses served by a CDN. Shoalrun does not install a request collector.
+To measure those requests, collect CDN or hosting logs, add a server request hook, or enable the separate [MCP analytics adapter](https://www.shoalrun.com/publish/mcp-analytics.md). Include cache hits: origin logs alone miss responses served by a CDN. Shoalrun doesn't install a request collector.
 
 Measure discovery indexes, Markdown pages and sections, negotiated responses, and tool calls. Record the actual response representation because HTML and Markdown can share a URL. Keep health checks, `HEAD`, failures, and cache revalidation separate from successful body responses.
 
 Send a separate server event such as `documentation_request` with path, representation, status, cache status, page ID when known, and a request ID for deduplication. Keep these counts separate from browser page views. Avoid raw headers, IP addresses, query strings, and page bodies by default.
 
-A user agent is a claimed identity, not a verified one. People can fetch Markdown, and agents can use ordinary browsers; classify representation and claimed client separately. Requests do not prove reading, comprehension, or citation. Correlating them into sessions requires an explicit client or integration identifier; timing and IP address are unreliable.
+A user agent is a claimed identity, not a verified one. People can fetch Markdown, and agents can use ordinary browsers; classify representation and claimed client separately. Requests don't prove reading, comprehension, or citation. Correlating them into sessions requires an explicit client or integration identifier; timing and IP address are unreliable.
 
 ## Related reading
 

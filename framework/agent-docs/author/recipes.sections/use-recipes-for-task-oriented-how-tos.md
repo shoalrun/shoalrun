@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Recipes and cookbooks > Understand ingredients, recipes, and cookbooks
 
-**Updated: 2026-11-04.**
+**Updated: 2026-11-05.**
 
 Parent page: [Full Markdown page](/author/recipes.md)
 
@@ -37,9 +37,9 @@ Readers can open a recipe directly. Ingredients help authors maintain instructio
 
 ## Use recipes for task-oriented how-tos
 
-Use the built-in `how-to` template for a task page, or `recipe` when the page should participate in Shoalrun's recipe and cookbook features. Both take a reader from a known starting state to a verifiable result. Give it prerequisites, ordered actions, failure guidance, and a final success check. A recipe can be a short, directly authored page; it does not require ingredients, a YAML composition spec, or a cookbook.
+Use the built-in `how-to` template for a task page, or `recipe` when the page should participate in Shoalrun's recipe and cookbook features. Both take a reader from a known starting state to a verifiable result. Give it prerequisites, ordered actions, failure guidance, and a final success check. A recipe can be a short, directly authored page; it doesn't require ingredients, a YAML composition spec, or a cookbook.
 
-Use the built-in `explanation` template to explain a concept or help readers understand a system. Use a reference page to describe fields, commands, or API behavior. Existing how-tos can keep their current type, stable ID, and route until a deliberate content revision calls for a change. A page's type does not prove its instructions have been tested.
+Use the built-in `explanation` template to explain a concept or help readers understand a system. Use a reference page to describe fields, commands, or API behavior. Existing how-tos can keep their current type, stable ID, and route until a deliberate content revision calls for a change. A page's type doesn't prove its instructions have been tested.
 
 | Writing task                                             | Starting format                          |
 | -------------------------------------------------------- | ---------------------------------------- |
