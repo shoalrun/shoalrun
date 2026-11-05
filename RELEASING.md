@@ -7,7 +7,7 @@ Shoalrun is an alpha. This checklist describes release preparation; checked sour
 Run from the framework repository with the documentation checkout beside it:
 
 ```sh
-npm run release -- 0.1.0-alpha.18
+npm run release -- 0.1.0-alpha.19
 ```
 
 This prepares versions, builds a bootstrap compiler, exports and imports the
@@ -104,7 +104,7 @@ report the package and website states separately.
 
 Repository publication, package publication, and website deployment are separate operations. Hosted workflows remain manual. Do not enable automatic releases or deploy the website as a side effect of a source change.
 
-Check current dependency advisories from `framework/` with `npm audit` and `npm audit --omit=dev`. Review findings and their applicability before changing dependencies. A clean advisory report does not replace source review or behavioral tests.
+Check current dependency advisories in both repositories with `npm audit` and `npm audit --omit=dev`. The coordinated command runs both checks for the framework and documentation project, including their development tools. Review findings and their applicability before changing dependencies. A clean advisory report does not replace source review or behavioral tests.
 
 ## Verify the result
 

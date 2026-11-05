@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.1.0-alpha.19 — 2026-11-05
+
+- Give your coding agent the `shoalrun-brand` skill to match a documentation
+  site to your brand. It guides the agent through choosing colors and fonts,
+  adding your logo, and applying theme settings and CSS. It also checks search
+  results, menus, buttons, keyboard focus, and mobile layouts for readability.
+  Read it with `shoalrun skills read shoalrun-brand`.
+- Make hosted chat verify where a visitor check came from. Turnstile responses
+  must match a trusted hostname and, when configured, the expected action.
+  A session pass from a different hostname/action policy no longer skips the
+  check, even when the deployments share a secret. Changing the policy
+  invalidates existing passes. Upgrade the CLI, then rebuild and
+  redeploy hosted chat to apply these protections.
+- Keep local and hosted test previews working with Turnstile's published test
+  keys. Local preview checks the actual dummy-token response; the documentation
+  site's hosted preview requires test credentials and a separate usage store.
+- Check development dependencies as well as production dependencies in both
+  repositories during a coordinated release. Update the documentation site's
+  browser tools and affected dependencies to remove the identified security
+  advisories without forcing incompatible package versions.
+- Add security headers to the documentation site that restrict framing to the
+  same origin and set an explicit referrer policy. Deployment checks now reject
+  responses missing the required headers. A broader Content Security Policy
+  starts in report-only mode so browser violations can be reviewed before
+  enforcement; it doesn't yet block scripts. These are site-owned settings,
+  not new defaults imposed on customer sites.
+- Refresh the repository and package READMEs with product versions, customer
+  editions, branding, application content delivery, and agent workflows. Update
+  the hosted-chat guide with hostname checks, optional actions, session passes,
+  and preview configuration.
+
 ## 0.1.0-alpha.18 — 2026-11-04
 
 - Add authored page availability ranges with `since` and `through` version

@@ -1,52 +1,74 @@
 # Shoalrun
 
-Shoalrun builds a documentation website and Markdown pages from the same Markdown and MDX source. People get navigation, search, and interactive components. Agents get readable documentation with the same instructions, examples, and API details.
+Build a documentation website, Markdown pages, and application content from the same Markdown and MDX source. People get navigation, search, and interactive components. Applications and agents get stable document references, readable content, and explicit publication metadata.
 
-Write pages in your editor or with your coding agent, preview them locally, then publish the generated site. Shoalrun includes starter projects, native documentation components, agent skills, and an offline copy of its own documentation.
+[Documentation](https://www.shoalrun.com/) · [Features](https://www.shoalrun.com/features) · [Install the CLI](framework/README.md#install) · [Changelog](framework/CHANGELOG.md)
 
-[Read the documentation](https://www.shoalrun.com) · [Install the CLI](framework/README.md#install) · [Agent workflow](framework/README.md#work-with-an-agent)
+## What you can build
 
-## Try it from this checkout
+- **Documentation sites.** Write guides and reference pages with steps, tabs, diagrams, code walkthroughs, recipes, and cookbooks. Essential instructions remain readable in Markdown.
+- **API documentation.** Generate operation references from OpenAPI, add examples, and publish focused contracts for individual operations. API source changes have an explicit review gate.
+- **Independently versioned products.** Give products separate version catalogs, defaults, and routes. Publish several product releases together and reuse pages across explicit publications.
+- **Customer editions.** Use external profiles, versioned SKU mappings, feature grants, and page or section requirements to compile each edition. Preview it with `dev --profile`; excluded content is removed from generated output.
+- **Branded sites.** Configure logos, fonts, palettes, color modes, and shared presets. Add project CSS for specific layouts or interaction states.
+- **Application help.** Export pages, sections, and named snippet instances as Markdown and HTML. Read them through static-manifest or REST clients and mount trusted HTML with instance-specific IDs.
+- **Agent access.** Publish Markdown twins and compact discovery indexes, or expose read-only MCP tools scoped to a publication. Bundled skills and offline references help coding agents maintain the source.
+- **Search and answers.** Start with browser keyword search. Add semantic search and documentation chat with separately configured providers, server-side credentials, shared usage limits, and optional visitor checks.
 
-Use Node.js 22.12 or newer. From the repository root:
+Reader filters help visitors browse content. Customer-edition selection happens during compilation. Neither replaces authentication or authorization at the host.
+
+## Create a site
+
+Use Node.js 22.12 or newer. In your documentation project:
+
+```sh
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.18
+npx --no-install shoalrun init my-docs --starter showcase
+npx --no-install shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
+```
+
+Open <http://127.0.0.1:8770/>. Edit pages in `my-docs/content/` and settings in `my-docs/docs.config.yaml`; the development server rebuilds on changes. The showcase uses fictional services and example API hosts. Replace those before using its examples against a real service.
+
+Choose `--starter minimal` for a small site or `--starter api-docs` for an OpenAPI example. All three starters build without provider credentials. Installation uses the public npm registry and needs no account or package token.
+
+For customer editions, pass the external profile to the same development command:
+
+```sh
+npx --no-install shoalrun dev docs.config.yaml site-dist --profile customers/example.yaml --port 8770
+```
+
+Configure the profile's feature manifest first; see [customer editions](https://www.shoalrun.com/publish/deployment-profiles). See the [package README](framework/README.md) for standalone builds, content delivery, and agent commands.
+
+## Work with your coding agent
+
+```sh
+npx --no-install shoalrun skills list
+npx --no-install shoalrun skills read shoalrun-author
+npx --no-install shoalrun docs search "product publications" --json
+```
+
+The included skills cover setup, page authoring, components, recipes, walkthroughs, and branding. The branding skill guides visual changes and interaction-state checks. `skills list` reports the skills present in the version you're running; installing the CLI doesn't automatically install them into your coding agent.
+
+Agents can inspect a project, capture a baseline, edit source, validate changes in a copied project, and open the resulting preview. See the [authoring command reference](framework/AUTHORING.md). Project plugins and configured checks execute trusted code; the validation copy isn't a sandbox for hostile projects.
+
+## Use the right version
+
+Pin an exact release and consult its [changelog](framework/CHANGELOG.md). Product catalogs and profile-aware development preview are available in `0.1.0-alpha.18`.
+
+`shoalrun docs` reads the pinned offline snapshot included with your installed version. It doesn't fetch the live site. [Snapshot provenance](framework/agent-docs/SNAPSHOT.json) records its source commit and build identity. The website may describe features newer than an installed CLI.
+
+## Develop the framework
+
+The compiler and CLI are in `framework/src/`. Starters are in `framework/example-configs/`; runnable component and application examples are in `framework/examples/`. The public documentation site is maintained separately.
 
 ```sh
 npm ci --prefix framework
 npm --prefix framework run build
 node framework/dist/cli.js init my-docs --starter showcase
-node framework/dist/cli.js build my-docs/docs.config.yaml my-docs/site-dist
-node framework/dist/cli.js serve my-docs/site-dist --port 8770
+node framework/dist/cli.js dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
 ```
 
-Open <http://127.0.0.1:8770/> and choose **Explore the starter**, the first item in the left navigation. The fictional Cedar Parcel handbook demonstrates components, diagrams, reader views, themes, and generated API references. Its API hosts are examples; replace them before sending requests.
-
-Edit a page in `my-docs/content/`, then run the build command again and refresh the preview. Configure the site and navigation in `my-docs/docs.config.yaml`. Choose `minimal` for a small starting point or `api-docs` for a focused OpenAPI example. All three starters build without provider credentials.
-
-For a separate documentation project, follow the [package installation instructions](framework/README.md). The alpha CLI is distributed through the public npm registry; installing it needs no account or token. A basic local site needs no model provider.
-
-## Work with an agent
-
-Your existing coding agent can use the skills and references included with Shoalrun. From this checkout:
-
-```sh
-node framework/dist/cli.js skills list
-node framework/dist/cli.js skills read shoalrun-setup
-node framework/dist/cli.js docs search "Steps" --json
-```
-
-The authoring tools let an agent inspect a project, validate changes in an isolated copy, and produce a local preview. See the [package README](framework/README.md#work-with-an-agent) for the editing workflow and the [command reference](framework/AUTHORING.md) for detailed contracts.
-
-## Match documentation to your version
-
-Check [package.json](framework/package.json) and the [changelog](framework/CHANGELOG.md) for this checkout's version and feature availability. The current framework includes external deployment profiles and the built-in `semantic` search provider; see the [semantic setup](framework/README.md#enable-semantic-search).
-
-`shoalrun docs` reads a pinned offline snapshot. It does not query the live website. [Snapshot provenance](framework/agent-docs/SNAPSHOT.json) records the source commit and build identity. Unreleased branch code is not a published feature. Use your project's exact installed version when configuring a consumer site.
-
-## Develop the framework
-
-The CLI source is in `framework/src/`. Runnable starters are in `framework/example-configs/`, and component examples are in `framework/examples/`. The [documentation website](https://www.shoalrun.com) is maintained separately. Report documentation problems in this repository's issues; access to the website source is not required to report a problem.
-
-After installing dependencies and building as above:
+Set up the skill validator before running the full checks:
 
 ```sh
 python3 -m venv .venv
@@ -56,24 +78,20 @@ npm run test:compiled
 npm run authoring:package-check
 ```
 
-`npm test` builds and runs the full suite. Reuse compiled output for follow-up checks when source inputs are unchanged. Browser tests need Chrome or Puppeteer's development browser; documentation formatting tests use Vale 3.20 or newer. The test commands also run the bundled OpenAI skill validator against every packaged skill. Set `SKILL_VALIDATOR_PYTHON` to use a Python virtual environment.
+`npm test` builds and runs the suite; `npm run test:compiled` reuses compiled output. Browser checks need Chrome or Puppeteer's development browser. Documentation-format checks use Vale 3.20 or newer. The package check installs a tarball with fresh production dependencies and needs registry access. Provider-backed evaluations are opt-in.
 
-The package check installs a local tarball with fresh production dependencies and needs npm registry access.
+Bundled documentation is an explicit import: export a reviewed snapshot from the docs project, then run `npm run agent-docs:import -- PATH --source-commit FULL_DOCS_COMMIT`. Builds never fetch the latest site content.
 
-The bundled documentation is a pinned import with provenance in `framework/agent-docs/SNAPSHOT.json`. To update it, export a reviewed snapshot from the docs repository, then run `npm run agent-docs:import -- PATH --source-commit FULL_DOCS_COMMIT`. Builds never fetch the latest website content. Portable evaluation tools live in `eval/`; provider-backed studies are opt-in.
+The [release process](RELEASING.md) covers package checks, source and tag synchronization, and coordinated site deployment. Releases and hosted workflows are manual; ordinary pushes don't trigger them.
 
-Validation runs locally. Pushes, package releases, and website deployments are separate actions; no hosted workflow runs automatically.
+## Status and reporting
 
-Shoalrun is maintainer-led and does not accept unsolicited pull requests at this time. Bug reports are welcome, with no guaranteed response time. Read the [contribution policy](CONTRIBUTING.md) and [security policy](SECURITY.md) before reporting a problem.
+Shoalrun is an alpha. Configuration, commands, programmatic APIs, and generated output can change between releases; older release lines aren't maintained. Rebuild and check your site and content consumers before deploying an upgrade.
 
-## Alpha status
+Local builds, previews, keyword search, and bundled references don't need a model provider. Semantic search and generated answers need separately configured services. Production hosting, private-edition access, and application authentication remain the deployer's responsibility.
 
-Shoalrun is an alpha. Configuration, commands, programmatic APIs, and generated output may change between alpha versions; older release lines are not maintained. Pin an exact version, read the [changelog](framework/CHANGELOG.md), and rebuild and check your site before deploying an upgrade.
-
-Local site builds, previews, lexical search, and bundled documentation do not need a model provider. Semantic search and generated answers require separately configured services and credentials. Browser-based checks require Chrome; ordinary site builds do not. Custom plugins and configured validation commands execute trusted project code; see the [security policy](SECURITY.md).
-
-The [release checklist](RELEASING.md) records the checks needed before a public release. The package README includes migration instructions for users of the earlier GitHub Packages alpha.
+The project is maintainer-led and doesn't accept unsolicited pull requests. Bug reports are welcome, with no guaranteed response time. Read the [contribution policy](CONTRIBUTING.md) and [security policy](SECURITY.md) before reporting an issue.
 
 ## License
 
-[Apache-2.0](LICENSE). Authored site content keeps its own license.
+[Apache-2.0](LICENSE). Authored documentation keeps its own license; retain applicable notices when distributing generated output.

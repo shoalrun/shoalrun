@@ -1,6 +1,6 @@
 # Shoalrun
 
-Shoalrun turns Markdown and MDX into a documentation website and Markdown pages from the same content. People can browse the site; agents can read the Markdown. Native components such as steps, tabs, and API references preserve their content in both formats.
+Shoalrun builds a documentation website, Markdown pages, and application content from the same Markdown and MDX source. People can browse the site; applications and agents can read stable documents, sections, and snippet instances. Native components keep essential instructions and API details readable in both HTML and Markdown.
 
 This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. This alpha is distributed through the public npm registry. Installation requires no npm account or package token.
 
@@ -11,14 +11,6 @@ From the project where you want to keep your documentation:
 ```sh
 npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.18
 ```
-
-If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
-
-```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.18 --@shoalrun:registry=https://registry.npmjs.org
-```
-
-Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
 
 ## Create and preview a site
 
@@ -38,11 +30,34 @@ npx --no-install shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 
 
 Stop the existing preview with Ctrl-C before starting the development server on the same port. Choose **Explore the starter**, the first item in the left navigation, to find component examples, diagrams, reader views, themes, and generated API references. The service and API hosts are fictional; replace them before sending requests. Choose `--starter minimal` for a smaller starting point or `--starter api-docs` for a focused OpenAPI example. All three starters build without provider credentials.
 
+## What you can build
+
+The [features overview](https://www.shoalrun.com/features) describes the complete authoring and delivery workflow. Start with the part you need:
+
+| Need | Capability |
+| --- | --- |
+| A documentation site | Pages, navigation, local preview, themes, palettes, fonts, and project CSS. |
+| Reusable procedures | Recipes, shared ingredients, and cookbooks that help readers choose a complete task. |
+| API reference | OpenAPI operation pages, code examples, focused contracts, and an explicit source-review gate. |
+| Several product releases | Independent product versions and defaults, publication routes, and a header publication selector. |
+| Customer editions | External profiles, SKU revisions, feature grants, and conditional pages or sections. |
+| Application help | HTML and Markdown exports, stable page/section/snippet references, static and REST clients, and instance-safe mounting. |
+| Agent discovery | Markdown twins, compact linked indexes, read-only MCP tools, bundled skills, and offline references. |
+| Search and answers | Browser keyword search, optional semantic retrieval, and hosted documentation chat with shared limits. |
+
+Local builds and keyword search need no provider credentials. Semantic retrieval and generated answers use separately configured services; credentials stay server-side. Reader filters are browsing controls, not authorization. Customer profiles select output during compilation; private-edition hosting remains your responsibility.
+
+## Match your brand
+
+Use `site.logo`, `site.favicon`, and header settings for site identity. Choose a theme preset and configure `theme.palette`, `theme.mode`, and `theme.fonts`. Use `site.customCss` for changes beyond those settings. Customer profiles can supply deployment-owned branding without storing customer records in the shared source.
+
+Check controls and interactive states as well as article text: a dark header can contain light inputs, menus, and search results. Palette validation doesn't check arbitrary project CSS. See [themes and fonts](https://www.shoalrun.com/styling/themes), the [CSS reference](https://www.shoalrun.com/author/css), and [deployment profiles](DEPLOYMENT-PROFILES.md).
+
 ## Independently versioned products
 
 Projects can give each product its own version catalog and default version. Product publications carry a product, channel, version, and language; routes, document links, navigation, search, and content exports retain that scope. Existing projects without product catalogs keep their publication identities and routes.
 
-Available since `0.1.0-alpha.18`.
+Product catalogs and profile-aware development preview are available since `0.1.0-alpha.18`. The product names and versions below are an example configuration.
 
 The header publication dropdown groups the published releases by product. It hides language labels when the edition has one language; set `site.publicationSelector.showLanguage: true` or `false` to override that display without changing publication identity.
 
@@ -87,7 +102,7 @@ publications:
 The shared configuration must declare `profiles.manifest`, which defines the known features and SKU revisions. Each selected publication must be enabled by that configuration. Preview the customer edition directly:
 
 ```sh
-npx --no-install shoalrun dev docs.config.yaml site-dist --profile customers/acme.yaml --port 8770
+npx --no-install shoalrun dev docs.config.yaml site-dist --profile customers/example.yaml --port 8770
 ```
 
 The development server compiles the selected edition and watches its profile, SKU manifest, and declared assets, including files outside the project. Editing the profile rebuilds the edition and removes output that is no longer selected. The preview identifies the last successful edition. If a rebuild fails, it keeps that output and displays the failure on existing and newly opened pages. Reader views remain browsing controls; customer profile selection applies during compilation to HTML, Markdown, navigation, and indexes.
@@ -96,7 +111,7 @@ Agents can discover product scopes through MCP `get_publications` before searchi
 
 ## Work with an agent
 
-Shoalrun works with your existing coding agent. Its packaged skills explain how to set up a site, edit pages, and develop components:
+Shoalrun works with your existing coding agent. Its packaged skills cover setup, page authoring, components, recipes, and walkthroughs. Use `skills list` to discover the skills included with your installed version:
 
 ```sh
 npx --no-install shoalrun skills list
@@ -105,7 +120,7 @@ npx --no-install shoalrun skills read shoalrun-setup
 
 Ask your agent to read the skill for the task. `skills list` returns names, descriptions, and local instruction-file paths. These commands read the skills; installing the npm package does not automatically install them into your agent.
 
-The usual editing workflow is to capture a baseline, edit source files, validate the changes, then review a local preview. From your documentation project directory:
+The editing workflow is to capture a baseline, edit source files, validate the changes, then review a local preview. From your documentation project directory:
 
 ```sh
 npx --no-install shoalrun docs baseline --out .shoalrun/task-baseline.json
@@ -113,7 +128,7 @@ npx --no-install shoalrun docs baseline --out .shoalrun/task-baseline.json
 npx --no-install shoalrun docs validate --baseline .shoalrun/task-baseline.json
 ```
 
-Validation returns a report path. Pass that path to `shoalrun docs review` and `shoalrun docs preview`. Snapshot validation can render affected draft pages while preserving their draft access; ordinary site builds exclude drafts. Supply your own project writing and review requirements—the starter does not define them for you.
+Validation returns a report path. Pass that path to `shoalrun docs review` and `shoalrun docs preview`. Snapshot validation can render affected draft pages while preserving their draft access; ordinary site builds exclude drafts. Supply your own project writing and review requirements. Configured checks and custom plugins execute trusted project code; a validation copy is not an operating-system sandbox.
 
 ## Find documentation
 
@@ -297,18 +312,6 @@ The limit applies to each index response, not an entire multi-step reading sessi
 An individual title or summary too large to fit an index produces an explicit
 build error rather than silently dropping content.
 
-## Status and development
-
-This alpha may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
-
-Shoalrun is maintainer-led and does not accept unsolicited pull requests at this time. The [repository development instructions](https://github.com/shoalrun/shoalrun#develop-the-framework) explain how to build and test your own checkout or fork.
-
-Pin an exact package version and read the [changelog](CHANGELOG.md) before upgrading. Rebuild and check HTML, Markdown, links, and any application consuming exported content before deploying. See the [contribution policy](https://github.com/shoalrun/shoalrun/blob/main/CONTRIBUTING.md) and [security policy](https://github.com/shoalrun/shoalrun/blob/main/SECURITY.md) for reporting problems and project trust boundaries.
-
-## License
-
-Copyright 2026 Casey Smith. This package is licensed under [Apache-2.0](LICENSE). Your authored site content keeps its own license. Built sites contain runtime assets and may contain copied template text; retain applicable licenses and third-party notices when distributing them.
-
 ## Verification dates
 
 Set `verified` only after checking a page's technical claims. It is separate from
@@ -327,3 +330,25 @@ in HTML only; Markdown and manifest metadata retain it. Set
 `frontmatter.defaults.showVerified: false` in project configuration for a shared
 default, then override it with `showVerified: true` on individual pages. A layout
 with a Hero replaces the standard page header and does not display its dates.
+
+## Upgrade from the earlier private registry
+
+If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
+
+```sh
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.18 --@shoalrun:registry=https://registry.npmjs.org
+```
+
+Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
+
+## Status and development
+
+This alpha may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
+
+Shoalrun is maintainer-led and does not accept unsolicited pull requests at this time. The [repository development instructions](https://github.com/shoalrun/shoalrun#develop-the-framework) explain how to build and test your own checkout or fork.
+
+Pin an exact package version and read the [changelog](CHANGELOG.md) before upgrading. Rebuild and check HTML, Markdown, links, and any application consuming exported content before deploying. See the [contribution policy](https://github.com/shoalrun/shoalrun/blob/main/CONTRIBUTING.md) and [security policy](https://github.com/shoalrun/shoalrun/blob/main/SECURITY.md) for reporting problems and project trust boundaries.
+
+## License
+
+Copyright 2026 Casey Smith. This package is licensed under [Apache-2.0](LICENSE). Your authored site content keeps its own license. Built sites contain runtime assets and may contain copied template text; retain applicable licenses and third-party notices when distributing them.
