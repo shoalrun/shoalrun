@@ -11,6 +11,7 @@
     "docs:lint": "vale framework/README.md framework/example/content",
     "docs:format:test": "node --test framework/scripts/docs-format.test.mjs",
     "agent-docs:import": "node framework/scripts/import-docs-snapshot.mjs",
-    "skills:check": "node framework/scripts/check-skills.mjs framework/skills"
+    "skills:check": "node framework/scripts/check-skills.mjs framework/skills",
+    "release": "node framework/scripts/release.mjs"
   }
 }

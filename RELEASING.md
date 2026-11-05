@@ -2,6 +2,48 @@
 
 Shoalrun is an alpha. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
 
+## Coordinated release command
+
+Run from the framework repository with the documentation checkout beside it:
+
+```sh
+npm run release -- 0.1.0-alpha.18
+```
+
+This prepares versions, builds a bootstrap compiler, exports and imports the
+reviewed docs snapshot with its exact source commit, certifies the final package,
+installs that same archive with the website's exact dependency lock, checks
+dependency advisories, and checks the full prebuilt site.
+It creates local commits for release preparation. Start with a reviewed working
+tree; keep independent feature and prose changes in their own commits.
+
+On macOS, the command prevents idle sleep for its own lifetime and releases that
+assertion when it exits. The command reads existing provider credentials from the docs `.env.local`
+without logging values. Use a normal terminal with network access, a browser
+executable, npm authentication, and the existing linked Vercel project. It never
+creates hosted CI or a new hosting project. Generated state and logs stay under
+`.shoalrun/releases/VERSION/`.
+
+In an interactive terminal, review the summary and `answer-review.json`, then
+approve publication, both source pushes, and deployment once. `--prepare` stops
+before that approval. For a reviewed noninteractive run, pass `--publish --approve
+PLAN_ID` using the exact ID printed by preparation. Approval binds the package
+checksum, both commits, site build, and answer-card digest.
+
+Rerun the same command after a failure; completed stages are reused. An ambiguous
+npm upload or deployment is verified without repeating the mutation. `--status`
+reports progress; `--plan` lists steps without changing source. Source changes
+invalidate a checkpoint: use `--new-attempt` after reviewing them. Keep previous
+artifacts and reports. `--retry PHASE` repeats that phase and its successors
+before any publication attempt, while preserving prior logs.
+
+The snapshot handoff records the actual installed bootstrap archive, rather than
+claiming it was built with an older registry pin. The final archive must contain
+the identical compiler and package files, with only `agent-docs` changed. Final
+site builds use the exact final archive and a registry-form dependency lock.
+This removes the package/docs cycle without weakening provenance or publishing
+an intermediate package.
+
 ## Before the first public release
 
 - Review every Git ref and its reachable history that will become public for credentials, private material, and unintended artifacts. Review findings individually; preserve attribution and license notices.
