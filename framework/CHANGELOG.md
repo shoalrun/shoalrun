@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add authored page availability ranges with `since` and `through` version
+  labels. Reuse the release-version text style beside page dates, retain labels
+  in Markdown and metadata in the document manifest, and keep availability
+  separate from publication selection.
+
 - Add product publication catalogs with independent versions and default
   versions. Product-aware publications preserve their identity through routes,
   links, navigation, APIs, search, and content exports. Existing productless

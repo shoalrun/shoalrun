@@ -5,7 +5,7 @@ import { resolveTaxonomy, validateTaxonomy, taxonomySchema } from './taxonomy.js
 import type { Frontmatter } from './content.js';
 import { validateStandaloneSectionDeclarations } from './section-identity.js';
 
-export const nativePublicFields = new Set(['id', 'title', 'type', 'summary', 'description', 'language', 'locale', 'date', 'updated', 'verified', 'releaseVersion', 'product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'audiences', 'readerFilters', 'tags', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle']);
+export const nativePublicFields = new Set(['id', 'title', 'type', 'summary', 'description', 'language', 'locale', 'date', 'updated', 'verified', 'releaseVersion', 'availability', 'product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'audiences', 'readerFilters', 'tags', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle']);
 export const protectedMetadataRoots = new Set(['shared', 'requires', 'standaloneSections', 'access', 'seo', 'markdownMetadata', 'variables', 'tocDepth', 'layout', 'showNavigationTabs', 'showVerified', 'image', 'private', 'internal', 'card', 'displayText', 'publications']);
 const fieldTypes = new Set(['string', 'number', 'integer', 'boolean', 'object', 'array']);
 const safePath = (value: string) => /^[A-Za-z_][A-Za-z0-9_-]*(?:\.[A-Za-z_][A-Za-z0-9_-]*)*$/.test(value);
@@ -32,7 +32,7 @@ export function frontmatterLayers(config: any = {}) {
   for (const name of ['defaults', 'enforced']) {
     const layer = config[name] === undefined ? {} : config[name];
     if (!object(layer)) throw new Error(`frontmatter.${name} must be a mapping`);
-    for (const field of ['id', 'slug', 'shared', 'publications', 'standaloneSections', 'subjectDeprecation', 'change']) if (Object.hasOwn(layer, field)) throw new Error(`frontmatter.${name}.${field} must stay page-specific`);
+    for (const field of ['id', 'slug', 'shared', 'publications', 'standaloneSections', 'subjectDeprecation', 'change', 'availability']) if (Object.hasOwn(layer, field)) throw new Error(`frontmatter.${name}.${field} must stay page-specific`);
     layers[name] = mergeMetadata({}, layer);
   }
   return { defaults: layers.defaults, enforced: layers.enforced };
@@ -107,6 +107,10 @@ export function validateFrontmatter(frontmatter: Frontmatter, config: any, file:
   if (frontmatter.type === 'changelog-entry' &&
     (mode === 'date' && frontmatter.date === undefined || mode === 'version' && frontmatter.releaseVersion === undefined || mode === 'either' && frontmatter.date === undefined && frontmatter.releaseVersion === undefined))
     throw new Error(`${file}: changelog-entry pages need ${mode === 'either' ? 'date or releaseVersion' : mode === 'version' ? 'releaseVersion' : 'date'}`);
+  if (frontmatter.availability !== undefined) {
+    const value = frontmatter.availability;
+    if (!object(value) || !Object.keys(value).length || Object.keys(value).some(key => !['since', 'through'].includes(key)) || Object.values(value).some(label => typeof label !== 'string' || !label.trim())) throw new Error(`${file}: availability must contain nonempty since and/or through version labels`);
+  }
   if (frontmatter.releaseVersion !== undefined && (typeof frontmatter.releaseVersion !== 'string' || !frontmatter.releaseVersion.trim())) throw new Error(`${file}: releaseVersion must be nonempty text`);
   for (const field of ['date', 'verified']) if (frontmatter[field] !== undefined) {
     const value = frontmatter[field];
@@ -189,6 +193,7 @@ export function frontmatterSchema(config: any): any {
     date: { type: 'string', format: 'date', description: 'Publication date in YYYY-MM-DD format; optional for release notes and one possible changelog identifier.' },
     updated: { type: 'string', description: 'Date of the last meaningful page update: YYYY-MM-DD or a timezone-qualified ISO timestamp. Used as sitemap lastmod.' },
     verified: { type: 'string', format: 'date', description: 'Date someone verified the technical claims; independent of content revision and never assigned by the build.' },
+    availability: { type: 'object', minProperties: 1, additionalProperties: false, properties: { since: { type: 'string', minLength: 1, pattern: '\\S' }, through: { type: 'string', minLength: 1, pattern: '\\S' } }, description: 'Inclusive feature availability labels shown beside page dates and retained in Markdown and the document manifest. Does not select or hide publications; labels are not compared or inferred.' },
     releaseVersion: { type: 'string', minLength: 1, description: 'Release label for a note or changelog entry; separate from the documentation publication version.' },
     slug: { type: 'string', description: 'Page URL path before channel, version, and language prefixes.' },
     channel: { type: 'string', description: 'Publication environment, such as sandbox or production; selects an enabled publication and API source.' },
@@ -284,7 +289,7 @@ export function frontmatterReference(config: any, sectionsOnly = false): string 
     'Language is the content language and selects a publication. Locale describes formatting conventions in the content and does not select a publication. `frontmatter.locales` can set a project locale for each language; pages may override it.', '',
     '## Categorize, connect, and present the page', '',
     'By default, `product`, `area`, and `subarea` are optional, nonempty string categories. They can come from project defaults and appear in the document manifest and search index. A matching configured reader facet makes each category a page filter; without that facet it remains taxonomy only. `operations` links a guide or reference to stable API operation IDs. On a guide or how-to page, `relatedApiReferences` names API reference page IDs to add cross links in both directions within the same publication. Tags help document collections find the page. Card settings change its preview when another page links to it; they do not change the destination. `subjectLifecycle` displays the status of the documented API or feature; `lifecycle` is available for the document\'s editorial state. `tocDepth` limits the HTML page table of contents; use 0 to hide it. `layout` picks the HTML page layout: `docs`, `wide`, `landing`, or `splash`. `showNavigationTabs` overrides the navigation tab bar for this page; landing and splash pages hide it by default. `image` replaces the generated link-preview image. `date` and `releaseVersion` can identify a changelog entry under the project\'s `frontmatter.changelogIdentifier` rule.', '',
-    ...table, ...nativeRows(['product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'tags', 'date', 'releaseVersion', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle', 'card', 'standaloneSections', 'tocDepth', 'layout', 'showNavigationTabs', 'showVerified', 'image']), '',
+    ...table, ...nativeRows(['availability', 'product', 'area', 'subarea', 'operations', 'relatedApiReferences', 'tags', 'date', 'releaseVersion', 'subjectLifecycle', 'subjectDeprecation', 'change', 'lifecycle', 'card', 'standaloneSections', 'tocDepth', 'layout', 'showNavigationTabs', 'showVerified', 'image']), '',
     'Projects can opt into built-in category enforcement with `frontmatter.taxonomy`. It declares areas and their allowed subareas, optional required fields, and optional explicit-field requirements for authored pages. Its `multiple` list permits arrays for selected category fields; otherwise each field allows one value. Defaults and enforced values still apply; generated API references use resolved categories. Definitions appear in the document manifest and constrain the generated frontmatter schema. Omit taxonomy or set it to false to preserve optional category behavior.', '',
     'With `profiles.requireClassification: true`, every public source page in the shared enabled publications needs an explicit `shared: true` or `requires` declaration before customer selection. Defaults do not count. Shared pages may contain feature-specific sections wrapped in `<ForFeature>`; unwrapped text remains shared.', '',
     '## Control output details', '',

@@ -284,3 +284,15 @@ The public library adds `authoringReview(reportFile)`,
 `review()` and idempotent `close()` plus the connection metadata. Always await
 `close()` in cleanup. API version 1 remains unchanged; capabilities add
 `snapshot-preview` and `authoring-review-report`.
+
+## Feature availability
+
+Use page-specific `availability: { since: VERSION }` frontmatter for the first
+supported release of the feature described by a page. Add `through: VERSION`
+for its last supported release, alone or with `since`; both boundaries are
+inclusive. Available since `0.1.0-alpha.18`. These are authored labels, not
+version comparisons or publication selectors. Do not infer a support boundary.
+HTML shows the labels beside page dates. Markdown retains readable labels and
+`documents.json` retains the object. For an option or section with a different
+availability, use `<Badge variant="neutral">Since VERSION</Badge>` beside it
+rather than changing the whole page's first supported release.

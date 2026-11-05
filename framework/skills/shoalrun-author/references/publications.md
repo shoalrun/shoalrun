@@ -46,3 +46,15 @@ exports retain v1. The HTTP path remains `/content/v1`. Preserve exact product
 coordinates and use a compatible client; don't rewrite legacy resource keys or
 silently fall back to another product. Read `guide.content-export` and
 `reference.content-manifest` before changing an application consumer.
+
+## Feature availability
+
+On supported releases, use page-specific `availability: { since: VERSION }` and/or
+`through: VERSION` for authored support boundaries. Both are inclusive labels,
+not automatic version comparisons or publication selectors. They use the existing
+release-version text style beside page dates and remain readable in Markdown and
+the document manifest. Use the actual first supported release, backed by release
+evidence or an approved release plan. For a newer section in an older guide, place
+`<Badge variant="neutral">Since VERSION</Badge>` beside that section and keep the
+page's original availability. Don't assign the newest option's version to the
+whole guide.

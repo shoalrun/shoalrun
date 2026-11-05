@@ -12,7 +12,7 @@ function stable(value: any): any {
   return value;
 }
 export function contentDigest(doc: Document, htmlTree: unknown, markdownTree: unknown): string {
-  const fields = ['id', 'title', 'summary', 'description', 'type', 'slug', 'date', 'releaseVersion', 'subjectLifecycle', 'audiences', 'readerFilters', 'product', 'area', 'subarea', 'operations', 'displayText'];
+  const fields = ['id', 'title', 'summary', 'description', 'type', 'slug', 'date', 'releaseVersion', 'availability', 'subjectLifecycle', 'audiences', 'readerFilters', 'product', 'area', 'subarea', 'operations', 'displayText'];
   return createHash('sha256').update(JSON.stringify(stable({ metadata: Object.fromEntries(fields.map(key => [key, doc.frontmatter[key]])), html: htmlTree, markdown: markdownTree }))).digest('hex');
 }
 export async function loadFreshness(value: unknown, base: string, today = new Date().toISOString().slice(0, 10)) {

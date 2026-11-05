@@ -10,7 +10,7 @@ import type { StandaloneSectionDeclaration } from './section-identity.js';
 
 export type Variant = { product?: string; channel: string; version: string; language: string };
 export type Frontmatter = {
-  id: string; title: string; type: string; summary: string; description?: string; slug: string; date?: string; updated?: string; verified?: string; releaseVersion?: string;
+  id: string; title: string; type: string; summary: string; description?: string; slug: string; date?: string; updated?: string; verified?: string; releaseVersion?: string; availability?: { since?: string; through?: string };
   channel?: string; version?: string; publications?: Array<{ product?: string; channel: string; version: string }>; language?: string; locale?: string; operations?: string[]; relatedApiReferences?: string[];
   change?: AuthoredChange; subjectDeprecation?: SubjectDeprecation; product?: string; area?: string | string[]; subarea?: string | string[]; standaloneSections?: StandaloneSectionDeclaration[];
   access?: { policy: string }; audiences?: string[]; readerFilters?: ReaderSelection; seo?: Record<string, unknown>; subjectLifecycle?: 'deprecated' | 'in-development' | 'beta' | 'experimental'; lifecycle?: string; tocDepth?: 0 | 2 | 3 | 4 | 5 | 6; layout?: 'docs' | 'wide' | 'landing' | 'splash'; image?: string;
