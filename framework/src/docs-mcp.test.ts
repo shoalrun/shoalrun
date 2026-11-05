@@ -6,7 +6,7 @@ import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { bundledDocumentation, documentationTokens, getDocumentationPage } from './documentation-core.js';
+import { bundledDocumentation, documentationTokens, getDocumentationPage, searchDocumentation } from './documentation-core.js';
 
 for (const mode of ['legacy', 'auto'] as const) test(`MCP stdio ${mode} clients discover and call documentation tools`, async t => {
   const cli = path.join(path.dirname(fileURLToPath(import.meta.url)), 'cli.js');
@@ -36,7 +36,7 @@ for (const mode of ['legacy', 'auto'] as const) test(`MCP stdio ${mode} clients 
   assert.equal((narrowRead.structuredContent as any).budget.truncated, false);
   const vague = await client.callTool({ name: 'search_docs', arguments: { query: 'hide examples for different readers', limit: 3 } });
   const vagueResult = vague.structuredContent as any;
-  assert.equal(vagueResult.matchMode, 'mixed');
+  assert.deepEqual(vagueResult, await searchDocumentation(bundledDocumentation, 'hide examples for different readers', { limit: 3, maxTokens: 4096 }), 'MCP preserves the core result, including match mode, as bundled prose evolves');
   assert.equal(vagueResult.results[0].id, 'guide.reader-filters');
   assert.equal(vagueResult.results[0].read.tool, 'get_page');
   // Secondary rankings vary as the bundled corpus grows. Vague queries must
@@ -45,7 +45,7 @@ for (const mode of ['legacy', 'auto'] as const) test(`MCP stdio ${mode} clients 
   assert.ok(vagueResult.results.every((hit: any) => hit.read.tool === 'get_page'));
   const setup = await client.callTool({ name: 'search_docs', arguments: { query: 'Set up an MCP client and check token limits', limit: 1 } });
   const setupResult = setup.structuredContent as any;
-  assert.equal(setupResult.matchMode, 'partial');
+  assert.deepEqual(setupResult, await searchDocumentation(bundledDocumentation, 'Set up an MCP client and check token limits', { limit: 1, maxTokens: 4096 }));
   assert.equal(setupResult.results[0].id, 'guide.mcp');
   const setupInstruction = setupResult.results[0].read;
   assert.equal(setupInstruction.tool, 'get_page');
