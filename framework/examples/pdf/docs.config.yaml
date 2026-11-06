@@ -1,0 +1,29 @@
+schemaVersion: 1
+site:
+  title: Operations documentation
+  origin: https://docs.example.com
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels: { production: {} }
+  versions: { current: {} }
+  enabled: [{ channel: production, version: current }]
+navigation:
+  - { id: start, doc: guide.start }
+  - { id: operations, doc: guide.operations }
+outputs:
+  pdf:
+    stylesheet: ./print.css
+    size: A4
+    footer: "{title} | {page} / {pages}"
+    subtitle: Setup and daily operations
+  html:
+    pdf:
+      mode: print
+      label: Print / Save as PDF
+      placement: after

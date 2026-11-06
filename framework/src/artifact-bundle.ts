@@ -26,6 +26,7 @@ const publicationLabel = (value: PublicationCoordinate) => [...(value.product ==
 
 export type ArtifactPage = { doc: Document; html: string; markdown: string; htmlTree: unknown; sections?: import('./markdown-sections.js').MarkdownSection[] };
 export type ArtifactAssemblyInput = {
+  extraArtifacts?: Map<string, string | Buffer>;
   base: string;
   basePath: string;
   publicPath: (route: string) => string;
@@ -103,6 +104,7 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     for (const parent of parents) artifactDirectories.add(parent);
     artifacts.set(normalized, data);
   };
+  for (const [route, bytes] of input.extraArtifacts ?? []) addArtifact(route, bytes);
   const addPublicArtifact = (route: string, data: string | Buffer) => addArtifact(publicPath(route), data);
   const addMetadataArtifact = (route: string, data: string) => {
     for (const url of new Set([route, publicPath(route)])) headers[url] = { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=0, must-revalidate', ...headers[url] };

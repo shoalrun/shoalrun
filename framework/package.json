@@ -15,7 +15,8 @@
     "./authoring": "./dist/authoring-api.js",
     "./*": "./*",
     "./components": "./dist/components.js",
-    "./content/server": "./dist/content-rest-server.js"
+    "./content/server": "./dist/content-rest-server.js",
+    "./pdf/server": "./dist/pdf-http.js"
   },
   "files": [
     "dist",
@@ -70,6 +71,7 @@
     "lucide": "1.47.0",
     "parse5": "8.0.1",
     "pele": "1.6.0",
+    "puppeteer-core": "25.16.0",
     "rehype-stringify": "10.0.1",
     "remark-gfm": "4.0.1",
     "remark-mdx": "3.1.1",

@@ -44,18 +44,19 @@ async function recoverOutput(target: string): Promise<void> {
   for (const file of abandoned) await rm(file, { recursive: true, force: true });
 }
 
-async function checkReplaceable(target: string, kind: 'site' | 'export'): Promise<void> {
+async function checkReplaceable(target: string, kind: 'site' | 'export' | 'pdf'): Promise<void> {
   const entries = await readdir(target).catch((error: NodeJS.ErrnoException) => { if (error.code === 'ENOENT') return [] as string[]; throw error; });
   if (!entries.length) return;
   if (kind === 'site' && entries.includes('documents.json') && entries.includes('resource-headers.json')) return;
-  if (kind === 'export' && entries.includes('manifest.json')) {
+  if ((kind === 'export' || kind === 'pdf') && entries.includes('manifest.json')) {
     const manifest = JSON.parse(await readFile(path.join(target, 'manifest.json'), 'utf8'));
-    if (manifest.kind === 'shoalrun-content-export' && manifest.schemaVersion === 1) return;
+    if (kind === 'export' && manifest.kind === 'shoalrun-content-export' && [1, 2].includes(manifest.schemaVersion)) return;
+    if (kind === 'pdf' && manifest.kind === 'shoalrun-pdf-export' && manifest.schemaVersion === 1) return;
   }
   throw new Error(`Output directory ${target} already exists and is not an earlier Shoalrun ${kind === 'site' ? 'build (it has no documents.json and resource-headers.json)' : 'content export'}. The build replaces its output directory, so it stopped instead of deleting it. Choose a new or empty directory`);
 }
 
-export async function commitArtifacts(target: string, artifacts: Map<string, string | Buffer>, prepare?: () => Promise<void>, kind: 'site' | 'export' = 'site'): Promise<void> {
+export async function commitArtifacts(target: string, artifacts: Map<string, string | Buffer>, prepare?: () => Promise<void>, kind: 'site' | 'export' | 'pdf' = 'site'): Promise<void> {
   // A leading slash denotes a public route, never an absolute filesystem path.
   // Check every entry before acquiring a lock or running preparation callbacks.
   const names = new Set<string>();

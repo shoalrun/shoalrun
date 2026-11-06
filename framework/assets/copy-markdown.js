@@ -1,6 +1,6 @@
 const button = document.querySelector('[data-copy-markdown]');
 const status = document.querySelector('[data-copy-markdown-status]');
-const link = document.querySelector('.page-formats a');
+const link = document.querySelector('[data-markdown-link]');
 if (button && status && link) {
   button.hidden = false;
   button.addEventListener('click', async () => {

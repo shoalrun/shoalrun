@@ -1,4 +1,4 @@
-import { documentKey, samePublication } from './publication-identity.js';
+import { documentKey, publicationKey, samePublication } from './publication-identity.js';
 import { pruneFeatureTree, profileSelection } from './deployment-profile.js';
 import { readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
@@ -19,7 +19,7 @@ import { resolveCardTree, publicationRelationships, validateRelationships } from
 import { resolveCookbookTree, validateCookbooks } from './cookbook-chooser.js';
 import { resolveDiagramTrees, peleLicenseFile } from './diagrams.js';
 import { reviewApiPublication } from './api-publication-review.js';
-import { validateExportTarget, type ExportFormat } from './content-export-config.js';
+import { validateExportTarget, type ExportFormat, type PortableExportFormat } from './content-export-config.js';
 import { ExportAssets, exportDigest, type ExportAsset } from './content-export-assets.js';
 import { portableTree, passiveHtml, portableMarkdown } from './content-export-render.js';
 import { checkOutputDirectory } from './output-location.js';
@@ -32,10 +32,22 @@ import { resolveAuthoredChange, authoredChangeNotice } from './authored-change.j
 import { resolveSnippetValues } from './snippets.js';
 import { isolateExportTree, markExportSource, exportHeadingInventory, preserveExportHeadingIds } from './content-export-anchors.js';
 import { selectSection } from './section-identity.js';
+import { profileNavigation, resolveProjectNavigation } from './project-navigation.js';
+import { createCodeHighlighter } from './highlight.js';
+import { projectPdfSettings } from './pdf-project.js';
+import { renderPdf, type PdfRenderInput } from './pdf-renderer.js';
 import { compareContentManifests } from './content-export-comparison.js';
 import type { ContentRef, ContentResource, ContentLink } from './content-delivery-contract.js';
 
-export type ContentExportOptions = { profile?: string; target?: string; formats?: ExportFormat[]; documents?: string[]; publication?: Variant; publicBase?: string; review?: boolean; previousManifest?: string; failOnRemoved?: boolean };
+export type ContentExportOptions = { profile?: string; target?: string; formats?: ExportFormat[]; documents?: string[]; publication?: Variant; publicBase?: string; review?: boolean; previousManifest?: string; failOnRemoved?: boolean; preparePdfOnly?: boolean; pdfLinks?: 'internal' | 'canonical'; pdfStyleTarget?: string };
+export type PdfExportPreparation = { input: PdfRenderInput; manifest: { schemaVersion: number; kind: string; publication: Variant; title: string; documents: Array<{ id: string; title: string; contentDigest: string; anchors: Representation['anchors']; links: ExportLink[] }>; review: { status: string; apis: Array<{ apiId: string; digest: string }> }; diagnostics: Array<{ code: string; documentId?: string; message: string }> }; inputs: string[] };
+
+/** Prepare passive, scoped print inputs without launching a browser or writing output. */
+export async function preparePdfExport(configFile: string, options: Omit<ContentExportOptions, 'formats' | 'preparePdfOnly'> = {}): Promise<PdfExportPreparation> {
+  const result = await exportContent(configFile, '', { ...options, formats: ['pdf'], preparePdfOnly: true });
+  if (!('preparedPdf' in result) || !result.preparedPdf) throw new Error('PDF preparation failed');
+  return result.preparedPdf;
+}
 type ExportLink = ContentLink;
 type Representation = { path: string; mediaType: string; bytes: number; digest: string; anchors: Array<{ id: string; exportedId: string; title?: string }>; links: ExportLink[] };
 const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
@@ -73,7 +85,19 @@ export async function exportContent(configFile: string, destination: string, opt
     if (!isConfigMapping(config.exports) || !Object.hasOwn(config.exports, options.target)) throw new Error(`Unknown export target ${options.target}`);
     raw = config.exports[options.target] as Record<string, unknown>;
   }
+  // Website buttons can reuse a target's print styling without inheriting its
+  // content selection, publication, asset roots, or API review approvals.
+  let styleTarget = raw;
+  const styleTargetName = options.pdfStyleTarget ?? options.target;
+  if (options.pdfStyleTarget) {
+    if (!isConfigMapping(config.exports) || !Object.hasOwn(config.exports, options.pdfStyleTarget)) throw new Error(`Unknown PDF style target ${options.pdfStyleTarget}`);
+    styleTarget = config.exports[options.pdfStyleTarget] as Record<string, unknown>;
+    if (!isConfigMapping(styleTarget.pdf)) throw new Error(`PDF style target ${options.pdfStyleTarget} needs a pdf mapping`);
+  }
   const target = validateExportTarget({ ...raw, ...(options.formats ? { formats: options.formats } : {}), ...(options.documents ? { documents: options.documents } : {}), ...(options.publication ? { publication: options.publication } : {}), ...(options.publicBase ? { publicBase: options.publicBase } : {}) }, config.readerFilters);
+  const pdf = target.formats.includes('pdf');
+  if (pdf && (options.previousManifest || options.failOnRemoved)) throw new Error('PDF exports do not support content-reference manifest comparison; compare their PDF manifests separately');
+  const formats: PortableExportFormat[] = pdf ? ['html'] : target.formats as PortableExportFormat[];
   const language = defaultLanguage(config);
   const enabled = config.publications.enabled;
   if (!Array.isArray(enabled) || !enabled.length || enabled.some(value => !isConfigMapping(value))) throw new Error('publications.enabled must declare valid publication combinations');
@@ -83,6 +107,8 @@ export async function exportContent(configFile: string, destination: string, opt
   if (!publication) throw new Error('Export has multiple enabled publications; select one channel/version/language in the target or command');
   if (!unique.some(variant => sameVariant(variant, publication))) throw new Error('The selected export publication is not enabled');
   const readerFilters = validateReaderFilters(config.readerFilters);
+  const siteSelection = validateContentFilter(site.contentFilter, readerFilters);
+  const selection = target.contentFilter ?? (pdf ? siteSelection : undefined);
   if (config.metadata !== undefined && (!isConfigMapping(config.metadata) || Object.keys(config.metadata).some(key => key !== 'provider'))) throw new Error('metadata accepts only provider');
   const providerSetting = configField(config.metadata, 'provider');
   const metadataProvider = await loadMetadataProvider(providerSetting, providerSetting ? explainSegments(loaded, ['metadata', 'provider', 'module']).source.file : configFile);
@@ -93,9 +119,9 @@ export async function exportContent(configFile: string, destination: string, opt
   for (const id of ids) {
     const doc = [...eligible.values()].find(doc => doc.frontmatter.id === id);
     if (!doc) throw new Error(`Requested export document ${id} is missing, non-public, or unavailable in the selected publication`);
-    if (!matchesContentFilter(doc.readerFilters, target.contentFilter)) throw new Error(`Requested export document ${id} is excluded by the export contentFilter`);
+    if (!matchesContentFilter(doc.readerFilters, selection)) throw new Error(`Requested export document ${id} is excluded by the export contentFilter`);
   }
-  const docs = new Map([...eligible].filter(([, doc]) => (!(target.documents || target.resources) || ids.has(doc.frontmatter.id)) && matchesContentFilter(doc.readerFilters, target.contentFilter)).sort(([, a], [, b]) => compare(keyFor(a), keyFor(b))));
+  const docs = new Map([...eligible].filter(([, doc]) => (!(target.documents || target.resources) || ids.has(doc.frontmatter.id)) && matchesContentFilter(doc.readerFilters, selection)).sort(([, a], [, b]) => compare(keyFor(a), keyFor(b))));
   if (!docs.size && !target.resources?.some(item => item.kind === 'snippet')) throw new Error('Export selection matched no eligible pages');
   const plugins = await loadComponentPlugins(loaded, { browser: false });
   const materialized = await materializePages({ variables: isConfigMapping(config.variables) ? config.variables : {}, frontmatterConfig: config.frontmatter, publications, docs, linkDocuments: eligible, apiPlan, sourceForOperation,
@@ -171,6 +197,22 @@ export async function exportContent(configFile: string, destination: string, opt
     }
   }
   selected.sort((a, b) => compare(resourceIdentity(a), resourceIdentity(b)));
+  if (pdf) {
+    const order: string[] = [];
+    if (target.documents) order.push(...target.documents);
+    else if (config.navigation !== undefined) {
+      // Validate against known identities before pruning this publication/edition.
+      const layout = profileNavigation(config.navigation, docs, workspace.knownDocumentIds, apiPlan.knownOperations, new Set(Object.keys(apiPlan.apiDefinitions)));
+      const navigation = resolveProjectNavigation(layout, publication, docs, materialized.navigationEntries.get(publicationKey(publication)) ?? [], materialized.navigationTagOrder.get(publicationKey(publication)) ?? new Map());
+      const byRoute = new Map([...docs.values()].map(doc => [doc.route, doc.frontmatter.id]));
+      const walk = (nodes: typeof navigation) => { for (const node of nodes) { if (node.route) { const id = byRoute.get(node.route); if (id && !order.includes(id)) order.push(id); } if (node.items) walk(node.items); } };
+      walk(navigation);
+      const unlisted = [...docs.values()].map(doc => doc.frontmatter.id).filter(id => !order.includes(id)).sort(compare);
+      if (unlisted.length) diagnostics.push({ code: 'pdf-unlisted-pages', message: `${unlisted.length} eligible page(s) outside navigation were appended in stable document-ID order.` });
+      order.push(...unlisted);
+    } else order.push(...[...docs.values()].map(doc => doc.frontmatter.id).sort(compare));
+    selected.sort((a, b) => order.indexOf(a.doc.frontmatter.id) - order.indexOf(b.doc.frontmatter.id));
+  }
   const diagrams = await resolveDiagramTrees(selected.map(item => item.tree));
   const assets = new ExportAssets(target.publicBase);
   const assetRootsOrigin = options.target && target.assetRoots.length ? explainSegments(loaded, ['exports', options.target, 'assetRoots']).source.file : configFile;
@@ -185,9 +227,11 @@ export async function exportContent(configFile: string, destination: string, opt
   const reviews = await reviewApiPublication(configFile, apiPlan, materialized.rendered, materialized.apiEmbedUses, materialized.focusedContracts, [...materialized.apiPublications.values()].map(source => ({ apiId: source.apiId, sourceUrl: source.sourceUrl })), sourceForOperation, 'report');
   const unreviewed = reviews.filter(review => (target.apiReview[review.apiId] ?? configField(apiPlan.apiDefinitions[review.apiId].publicReview, 'digest')) !== review.digest);
   if (unreviewed.length && !options.review) throw new Error(`Export API review required: ${unreviewed.map(row => `${row.apiId}=${row.digest}`).join(', ')}. Run export with --review, inspect the candidate, and pin these digests in exports.<target>.apiReview`);
-  const siteSelection = validateContentFilter(site.contentFilter, readerFilters);
   const website = [...eligible.values()].filter(doc => matchesContentFilter(doc.readerFilters, siteSelection));
   const canonicalDestination = (doc: Document) => website.includes(doc) && website.filter(other => other.route.toLowerCase() === doc.route.toLowerCase()).length === 1;
+  const publishedAssetRoutes = new Map<string, string>();
+  for (const route of materialized.focusedContracts.keys()) publishedAssetRoutes.set(route, route);
+  for (const asset of diagrams) publishedAssetRoutes.set(asset.route, publicPath(asset.route));
   const byId = new Map([...eligible.values()].map(doc => [doc.frontmatter.id, doc]));
   const byRoute = (pathname: string) => {
     const matches = [...eligible.values()].filter(doc => doc.route === pathname.replace(/\/$/, '') || doc.route === pathname || doc.markdownRoute === pathname);
@@ -199,12 +243,12 @@ export async function exportContent(configFile: string, destination: string, opt
   const routes = new Set([...eligible.values()].map(doc => doc.route));
   const sourceInventories = new Map<string, ReturnType<typeof exportHeadingInventory>>();
   const sourceAliases = new Map<string, Map<string, string>>();
-  for (const item of selected) for (const format of target.formats) {
+  for (const item of selected) for (const format of formats) {
     const sourceKey = `${selectedSourceKey(item)}:${format}`;
-    if (!sourceInventories.has(sourceKey)) sourceInventories.set(sourceKey, exportHeadingInventory(portableTree(structuredClone(item.doc.tree), format, routes, basePath)));
-    const tree = portableTree(structuredClone(item.tree), format, routes, basePath);
+    if (!sourceInventories.has(sourceKey)) sourceInventories.set(sourceKey, exportHeadingInventory(portableTree(structuredClone(item.doc.tree), format, routes, basePath, { print: pdf })));
+    const tree = portableTree(structuredClone(item.tree), format, routes, basePath, { print: pdf });
     if (item.ref.kind !== 'page') {
-      const meaning = item.meaningTree ? portableTree(structuredClone(item.meaningTree), format, routes, basePath) : tree;
+      const meaning = item.meaningTree ? portableTree(structuredClone(item.meaningTree), format, routes, basePath, { print: pdf }) : tree;
       const body = (meaning.children ?? []).filter((node: any) => node.type !== 'heading' && node.type !== 'definition' && node.type !== 'footnoteDefinition');
       if (!portableMarkdown(root(body)).trim()) throw new Error(`Resource ${resourceIdentity(item)} has no content in ${format}`);
     }
@@ -212,10 +256,10 @@ export async function exportContent(configFile: string, destination: string, opt
     sourceAliases.set(`${resourceIdentity(item)}:${format}`, aliases);
     trees.set(`${resourceIdentity(item)}:${format}`, tree);
     // Resolve anchors independently in each representation, before URL rewriting.
-    anchors.set(`${resourceIdentity(item)}:${format}`, passiveHtml(tree, `sr-${resourceKey(item)}`, false).anchors);
+    anchors.set(`${resourceIdentity(item)}:${format}`, passiveHtml(tree, `sr-${resourceKey(item)}`, false, { print: pdf }).anchors);
   }
   const canonicalAnchors = new Map<string, Set<string>>();
-  const verifiedCanonicalAnchors = (destination: Document, format: ExportFormat) => {
+  const verifiedCanonicalAnchors = (destination: Document, format: PortableExportFormat) => {
     const key = `${sourceKeyFor(destination)}:${format}`;
     if (canonicalAnchors.has(key)) return canonicalAnchors.get(key)!;
     const source = sourceInventories.get(key);
@@ -235,13 +279,25 @@ export async function exportContent(configFile: string, destination: string, opt
   };
   const records: ContentResource[] = [];
   const artifacts = new Map<string, string | Buffer>();
+  const printDocuments: PdfRenderInput['documents'] = [];
+  const highlightDependencies = new Set<string>();
+  const highlighting = configField(configField(config.outputs, 'html'), 'highlighting');
+  // PDF has a light paper background, independent of the site's screen mode.
+  const printHighlighting = isConfigMapping(highlighting) && highlighting.provider !== 'custom' && highlighting.provider !== 'none' ? { ...highlighting, theme: 'github-light' } : highlighting ?? { theme: 'github-light' };
+  const highlighter = pdf ? await createCodeHighlighter(printHighlighting, highlighting ? explainSegments(loaded, ['outputs', 'html', 'highlighting']).source.file : configFile, {
+    grammarOrigin: index => explainSegments(loaded, ['outputs', 'html', 'highlighting', 'languages', String(index), 'grammar']).source.file,
+    onDependency: file => highlightDependencies.add(file)
+  }) : undefined;
+  if (highlighter?.dependency) highlightDependencies.add(highlighter.dependency);
+  for (const file of highlighter?.dependencies ?? []) highlightDependencies.add(file);
+  try {
   for (const item of selected) {
     const doc = item.doc;
     const externalDependencies = new Map<string, { url: string; kind: 'image' }>();
     const usedAssets = new Set<string>();
-    const representations: Partial<Record<ExportFormat, Representation>> = {};
+    const representations: Partial<Record<PortableExportFormat, Representation>> = {};
     const canonicalUrl = item.ref.kind !== 'snippet' && origin && canonicalDestination(doc) ? `${origin}${doc.route}` : undefined;
-    for (const format of target.formats) {
+    for (const format of formats) {
       const links: ExportLink[] = [];
       const tree = trees.get(`${resourceIdentity(item)}:${format}`);
       const resolve = async (node: any): Promise<void> => {
@@ -301,7 +357,18 @@ export async function exportContent(configFile: string, destination: string, opt
               const markdownAnchor = anchor?.id ?? fragment;
               const suffix = parsed.search + (fragment && !(format === 'markdown' && leadingSection) ? `#${format === 'html' ? anchor!.exportedId : markdownAnchor}` : '');
               href = chosen === item && !parsed.search && fragment && format === 'html' ? suffix : `${target.publicBase}content/${resourceKey(chosen)}.${format === 'html' ? 'html' : 'md'}${suffix}`;
-              kind = 'resource';
+              if (pdf) {
+                if (options.pdfLinks === 'canonical' && chosen !== item) {
+                  if (!origin || !canonicalDestination(destination)) throw new Error(`PDF page link to ${destination.frontmatter.id} requires site.origin and an eligible canonical website route`);
+                  if (fragment && !verifiedCanonicalAnchors(destination, format).has(fragment)) throw new Error(`Cannot verify canonical anchor ${fragment} in ${destination.frontmatter.id}; use its page URL without a fragment`);
+                  href = `${origin}${destination.route}${parsed.search}${parsed.hash}`;
+                  kind = 'canonical';
+                } else {
+                  if (parsed.search) throw new Error(`PDF internal links cannot retain query parameters: ${value}. Use an explicit canonical HTTPS link instead`);
+                  href = `#${fragment ? anchor!.exportedId : `pdf-document-${options.pdfLinks === 'canonical' ? 1 : selected.indexOf(chosen) + 1}`}`;
+                  kind = 'resource';
+                }
+              } else kind = 'resource';
             } else {
               if (!origin || !canonicalDestination(destination)) throw new Error(`Document ${destination.frontmatter.id} is outside the export and has no eligible canonical website fallback`);
               if (fragment) {
@@ -319,28 +386,36 @@ export async function exportContent(configFile: string, destination: string, opt
             if (format === 'html' && node.type === 'link') node.data = { ...node.data, hProperties: { ...node.data?.hProperties, 'data-export-link': key } };
           } else if (parsed.origin !== 'https://export.invalid') {
             node.url = value.startsWith('//') ? `https:${value}` : value;
-            if (node.type === 'image') externalDependencies.set(node.url, { url: node.url, kind: 'image' });
+            if (node.type === 'image') { if (pdf) throw new Error(`PDF images must be local staged assets: ${node.url}`); externalDependencies.set(node.url, { url: node.url, kind: 'image' }); }
             else links.push({ key: `link-${links.length + 1}`, kind: 'external', href: node.url });
           } else {
             const asset = await assets.resolve(value, doc.file, selectedSourceKey(item));
             if (!asset) throw new Error(`Unresolved local export ${node.type === 'image' ? 'image' : 'link'} ${value} in ${doc.frontmatter.id}`);
             usedAssets.add(asset.path);
             node.url = `${target.publicBase}${asset.path}${parsed.search}${parsed.hash}`;
-            if (node.type !== 'image') links.push({ key: `link-${links.length + 1}`, kind: 'asset', href: node.url, asset: asset.path });
+            if (node.type !== 'image') {
+              if (pdf) {
+                if (!origin || !canonicalDestination(doc) || !publishedAssetRoutes.has(parsed.pathname)) throw new Error(`PDF cannot embed local download link ${value}; use an explicit canonical HTTPS download URL instead`);
+                node.url = `${origin}${publishedAssetRoutes.get(parsed.pathname)}${parsed.search}${parsed.hash}`;
+              }
+              links.push({ key: `link-${links.length + 1}`, kind: 'asset', href: node.url, asset: asset.path });
+            }
           }
         }
         for (const child of node.children ?? []) await resolve(child);
       };
       await resolve(tree);
       const filename = `content/${resourceKey(item)}.${format === 'html' ? 'html' : 'md'}`;
-      const rendered = format === 'html' ? passiveHtml(tree, `sr-${resourceKey(item)}`) : undefined;
+      const rendered = format === 'html' ? passiveHtml(tree, `sr-${resourceKey(item)}`, !pdf, { print: pdf, highlighter }) : undefined;
       const content = rendered?.html ?? portableMarkdown(tree);
-      artifacts.set(filename, content);
+      if (pdf) printDocuments.push({ id: doc.frontmatter.id, title: item.title, html: content });
+      else artifacts.set(filename, content);
       representations[format] = { path: filename, mediaType: format === 'html' ? 'text/html' : 'text/markdown', bytes: Buffer.byteLength(content), digest: exportDigest(content), anchors: rendered?.anchors ?? [], links };
     }
     if (externalDependencies.size) diagnostics.push({ code: 'external-render-dependencies', documentId: doc.frontmatter.id, message: `${externalDependencies.size} remote image(s) remain external; this document is not offline-complete.` });
     records.push({ ref: item.ref, publication, title: item.title, summary: item.summary, type: item.type, ...(item.source ? { source: item.source } : {}), ...(canonicalUrl ? { canonicalUrl } : {}), representations, assets: [...usedAssets].sort(), externalDependencies: [...externalDependencies.values()].sort((a, b) => compare(a.url, b.url)) });
   }
+  } finally { highlighter?.dispose?.(); }
   for (const [filename, bytes] of assets.artifacts) artifacts.set(filename, bytes);
   let notices = 'Content retains its owner\'s license. This bundle contains static content, not a Shoalrun runtime.\n';
   if (diagrams.some(asset => asset.route.includes('/mermaid-'))) notices += '\nPele diagram renderer notice:\n' + await readFile(peleLicenseFile, 'utf8');
@@ -363,6 +438,39 @@ export async function exportContent(configFile: string, destination: string, opt
     notices += `\n${path.basename(file)}:\n${await readFile(resolvedNotice, 'utf8')}\n`;
   }
   artifacts.set('NOTICES.txt', notices);
+  if (pdf) {
+    const singlePage = target.documents?.length === 1;
+    const standalone = singlePage || options.pdfLinks === 'canonical';
+    const projectPdf = projectPdfSettings(loaded, configFile, styleTargetName);
+    const pdfConfig = { cover: !standalone, toc: !standalone, ...projectPdf.config };
+    const pdfInputs = projectPdf.files;
+    const inputs = [...noticeFiles, ...loaded.dependencies, ...metadataDependencies, ...plugins.dependencies, ...apiPlan.api.dependencies, ...[...eligible.values()].map(doc => doc.file), ...[...snippets.values()].map(snippet => snippet.file), ...highlightDependencies, ...pdfInputs];
+    const manifest: PdfExportPreparation['manifest'] = {
+      schemaVersion: 1, kind: 'shoalrun-pdf-export', publication, title: site.title,
+      review: { status: unreviewed.length ? 'required' : 'ok', apis: reviews.map(row => ({ apiId: row.apiId, digest: row.digest })) },
+      documents: records.map((record, index) => ({ id: selected[index].doc.frontmatter.id, title: record.title, contentDigest: exportDigest(printDocuments[index].html), anchors: record.representations.html!.anchors, links: record.representations.html!.links })), diagnostics
+    };
+    const input: PdfRenderInput = { documents: printDocuments, title: selected.length === 1 ? selected[0].title : site.title, publication, assets: assets.artifacts, publicBase: target.publicBase, config: pdfConfig, configFile, assetRoots: [...roots, ...pdfInputs.map(file => path.dirname(file))] };
+    const preparedPdf: PdfExportPreparation = { input, manifest, inputs };
+    const common = { status: unreviewed.length ? 'needs-review' : 'ok', output: path.resolve(destination || base), publication, formats: target.formats, profileSelection: profileSelection(loaded.deployment), resources: records.length, documents: records.length, documentIds: selected.map(item => item.doc.frontmatter.id), comparison: { status: 'no-baseline' as const, added: [], removed: [], diagnostics: [] }, assets: assets.records.size, apiReview: manifest.review.apis, diagnostics };
+    if (options.preparePdfOnly) return { ...common, digest: exportDigest(JSON.stringify(manifest)), preparedPdf };
+    checkOutputDirectory(destination, base, workspace.contentDir, inputs);
+    // Style/font/logo files are protected by the explicit input list. Their
+    // parent directory can be the project root and isn't a content directory.
+    for (const directory of roots) checkOutputDirectory(destination, base, directory, inputs);
+    if (unreviewed.length) {
+      const prior = await readFile(path.join(destination, 'manifest.json'), 'utf8').then(JSON.parse).catch(() => undefined);
+      if (prior?.review?.status === 'ok') throw new Error('Review candidate cannot overwrite an approved export; choose a separate review destination');
+    }
+    const rendered = await renderPdf(input);
+    const filename = singlePage ? 'page.pdf' : 'publication.pdf';
+    const pdfArtifacts = new Map<string, string | Buffer>([[filename, rendered.bytes], ['NOTICES.txt', notices]]);
+    const payload = { ...manifest, renderer: rendered.metadata, files: [...pdfArtifacts].map(([file, bytes]) => ({ path: file, bytes: Buffer.byteLength(bytes), digest: exportDigest(bytes) })) };
+    const digest = exportDigest(JSON.stringify(payload));
+    pdfArtifacts.set('manifest.json', JSON.stringify({ ...payload, digest }, null, 2) + '\n');
+    await commitArtifacts(path.resolve(destination), pdfArtifacts, undefined, 'pdf');
+    return { ...common, digest, pdf: filename };
+  }
   const manifest = { schemaVersion: publication.product === undefined ? 1 : 2, kind: 'shoalrun-content-export', publicBase: target.publicBase, publication,
     review: { status: unreviewed.length ? 'required' : 'ok', apis: reviews.map(row => ({ apiId: row.apiId, digest: row.digest })) },
     resources: records, assets: [...assets.records.values()].sort((a, b) => compare(a.path, b.path)),

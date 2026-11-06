@@ -31,6 +31,8 @@ For SKU-selected or white-label documentation, read [references/customer-edition
 
 ## Record scope and edit
 
+For PDF export or page print/download actions, read [references/pdf-export.md](references/pdf-export.md). Keep PDF selection distinct from reader-view controls. Use browser printing on static sites, optional CLI manual downloads, and explicit Node-hosted generation when needed.
+
 Before editing, capture the current state with `docs baseline --out <new-baseline> --config <config>`. Put baselines inside the project's excluded `.shoalrun` directory or outside the project. This includes earlier dirty/untracked files rather than comparing with Git HEAD. Retain the corresponding before-content/task diff with your harness; a baseline stores digests, not earlier text. For an existing rendering failure, reproduce its located finding before repairing it.
 
 Edit ordinary source files and required companions. Choose a page type and reviewed example for the reader's goal. Preserve stable IDs, routes, original `date` and access policy; set `updated` to the actual edit date. For a new page, use `shoalrun scaffold <template> -n <target> --config <config>` and resolve its prompts. Keep it draft until reviewed; snapshot validation renders affected drafts without changing their publication metadata. API materialization and recipe tasks have focused references/skills when needed.

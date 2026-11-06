@@ -1,3 +1,5 @@
+import { buildPdfSiteArtifacts } from './pdf-site.js';
+import { resolvePdfButton, validatePdfButtonStyle } from './pdf-button.js';
 import { documentKey, publicationKey, samePublication } from './publication-identity.js';
 import { validateHeader, validateFooter } from './site-identity.js';
 import { profileSelection } from './deployment-profile.js';
@@ -124,6 +126,8 @@ async function compileProject(configFile: string, destination: string | undefine
   const calloutTypes = resolveCalloutTypes(config.callouts, configFile);
   const badgeVariants = resolveBadgeVariants(config.badges, configFile);
   const htmlOptions = configField(config.outputs, 'html');
+  const pdfButton = resolvePdfButton(config.outputs);
+  validatePdfButtonStyle(pdfButton, config.exports);
   const highlighting = configField(htmlOptions, 'highlighting');
   const highlightingOrigin = configField(highlighting, 'module') === undefined ? configFile : explainSegments(loaded, ['outputs', 'html', 'highlighting', 'module']).source.file;
   const highlighter = await createCodeHighlighter(highlighting, highlightingOrigin, {
@@ -284,7 +288,7 @@ async function compileProject(configFile: string, destination: string | undefine
   const cardUses = new Map<Document, CardUse>();
   const publishedRelationships: Array<ReturnType<typeof validateRelationships>[number] & { variant: Variant }> = [];
   const styleFiles = ['site.css', 'tokens.css', 'header.css'].map(name => path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../styles', name));
-  const scriptFiles = [...(analyticsModule ? ['analytics.js'] : []), 'code-samples.js', 'cookbook-chooser.js', 'example-panel.js', 'mode.js', 'copy-markdown.js', 'components.js', 'navigation.js', 'reader.js', ...(readerFilters ? ['reader-filters.js'] : []), 'search-highlight.js', 'search.js', 'table-filter.js', 'tabs.js', 'tooltips.js', 'file-tree.js', 'image-viewer.js', 'walkthrough.js'].map(name => path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../assets', name));
+  const scriptFiles = [...(analyticsModule ? ['analytics.js'] : []), 'code-samples.js', 'cookbook-chooser.js', 'example-panel.js', 'mode.js', ...(pdfButton?.mode === 'print' ? ['print.js', 'print-view.js'] : []), 'copy-markdown.js', 'components.js', 'navigation.js', 'reader.js', ...(readerFilters ? ['reader-filters.js'] : []), 'search-highlight.js', 'search.js', 'table-filter.js', 'tabs.js', 'tooltips.js', 'file-tree.js', 'image-viewer.js', 'walkthrough.js'].map(name => path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../assets', name));
   const documentRoutes = new Set([...docs.values()].map(doc => doc.route));
   const { apiPublications, focusedContracts, navigationEntries, navigationTagOrder, rendered, snippetUses, apiEmbedUses, operations } = await materializePages({
     variables: isConfigMapping(config.variables) ? config.variables : {}, frontmatterConfig: config.frontmatter,
@@ -339,7 +343,7 @@ async function compileProject(configFile: string, destination: string | undefine
   const resolvedNavigation = renderPublicationPages({
     freshness,
     rendered, docs, relationships, knownOperations, cardUses, publishedRelationships, cookbooks, documentRoutes,
-    basePath, siteOrigin, colorMode, config, highlighter, editionLabel, customStyleFile, themePreset, palette,
+    basePath, siteOrigin, colorMode, config: options.authoringFiles ? { ...config, outputs: { ...(config.outputs as Record<string, unknown>), html: { ...(htmlOptions as Record<string, unknown>), pdf: false } } } : config, highlighter, editionLabel, customStyleFile, themePreset, palette,
     themeStyleFile, generatedPaletteCss, generatedBadgeCss, themeSwitcherData, generatedFontsCss, fontsPreload: fonts.preload,
     shareFor, faviconRoute, logoRoute, modeToggle, header, footer, search, readerFilters, variants, externalDocuments,
     externalSiteLinks, navigationSpec, navigationEntries, navigationTagOrder
@@ -390,7 +394,13 @@ async function compileProject(configFile: string, destination: string | undefine
     ] };
   }
   const apiPublicationReview = await reviewApiPublication(configFile, apiPlan, rendered, apiEmbedUses, focusedContracts, apiSources, sourceForOperation, options.apiReview);
-  const manifestDependencies = [...new Set([...loaded.dependencies, ...componentPlugins.dependencies, ...externalManifestFiles, ...api.dependencies, ...(metadataProvider ? [metadataProvider.module] : []), ...metadataDependencies, ...(highlighter.dependency ? [highlighter.dependency] : []), ...(highlighter.dependencies ?? []), ...styleFiles, ...(themeStyleFile ? [themeStyleFile] : []), ...palette.files, ...(search.module ? [search.module] : []), ...previewFiles, ...(customStyleFile ? [customStyleFile] : []), ...(customReaderModule ? [customReaderModule] : []), ...(analyticsModule ? [analyticsModule] : []), ...(mcpAnalyticsModule ? [mcpAnalyticsModule] : []), ...(shareImages.template ? [shareImages.template] : []), ...shareImages.fonts, ...(faviconFile ? [faviconFile] : []), ...heroImages.values(), ...walkthroughSources, ...fontFiles, ...fonts.faces.map(face => face.file), ...scriptFiles, iconLicenseFile, ...[...snippets.values()].map(s => s.file), ...[...docs.values()].map(d => d.file)])].sort();
+  if (pdfButton?.mode === 'endpoint') {
+    const endpoint = publicPath(pdfButton.endpoint);
+    const mcpEndpoint = configField(config.mcp, 'path') ?? '/mcp';
+    if (rendered.some(({ doc }) => doc.route === endpoint || endpoint.startsWith(`${doc.route}/`)) || redirects.some(rule => rule.from === endpoint) || endpoint === publicPath(String(mcpEndpoint))) throw new Error(`PDF endpoint shadows an existing route: ${endpoint}`);
+  }
+  const sitePdfs = options.authoringFiles ? { artifacts: new Map<string, string | Buffer>(), dependencies: new Set<string>() } : await buildPdfSiteArtifacts(configFile, { outputs: config.outputs, exports: config.exports, documents: rendered.map(page => page.doc), knownDocumentIds, basePath, profile: options.profile });
+  const manifestDependencies = [...new Set([...sitePdfs.dependencies, ...loaded.dependencies, ...componentPlugins.dependencies, ...externalManifestFiles, ...api.dependencies, ...(metadataProvider ? [metadataProvider.module] : []), ...metadataDependencies, ...(highlighter.dependency ? [highlighter.dependency] : []), ...(highlighter.dependencies ?? []), ...styleFiles, ...(themeStyleFile ? [themeStyleFile] : []), ...palette.files, ...(search.module ? [search.module] : []), ...previewFiles, ...(customStyleFile ? [customStyleFile] : []), ...(customReaderModule ? [customReaderModule] : []), ...(analyticsModule ? [analyticsModule] : []), ...(mcpAnalyticsModule ? [mcpAnalyticsModule] : []), ...(shareImages.template ? [shareImages.template] : []), ...shareImages.fonts, ...(faviconFile ? [faviconFile] : []), ...heroImages.values(), ...walkthroughSources, ...fontFiles, ...fonts.faces.map(face => face.file), ...scriptFiles, iconLicenseFile, ...[...snippets.values()].map(s => s.file), ...[...docs.values()].map(d => d.file)])].sort();
   const llmsDiscovery = resolveLlmsDiscovery(configField(config.outputs, 'llms'));
   const { manifest, headers, sitemaps } = buildPublicationManifest({
     configPublications: config.publications,
@@ -402,6 +412,7 @@ async function compileProject(configFile: string, destination: string | undefine
   });
   const artifactConfig = options.authoringFiles ? { ...config, mcp: false } : config;
   const { artifacts, buildId } = await assembleArtifacts({
+    extraArtifacts: sitePdfs.artifacts,
     base, basePath, publicPath, canonical, siteOrigin, manifest, provenanceRecord, rendered, sitemaps,
     privateDependencies: new Set([...(loaded.deployment?.file ? [loaded.deployment.file] : []), ...(loaded.deployment?.assetFiles ?? [])]),
     diagramAssets, heroImages, focusedContracts, styleFiles, themeStyleFile, generatedPaletteCss,

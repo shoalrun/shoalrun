@@ -1,0 +1,28 @@
+---
+id: guide.start
+title: Start your workspace
+summary: Configure a workspace and confirm its status.
+slug: /start
+---
+
+Create a workspace before running daily operations. Keep its configuration in your project so another operator can reproduce the setup.
+
+## Configure the workspace
+
+Save the following example configuration:
+
+```yaml
+workspace:
+  name: training
+  retentionDays: 30
+```
+
+## Verify the result
+
+Confirm that the workspace name is `training` and that retention is 30 days. Continue with [daily operations](doc:guide.operations).
+
+<Collapsible title="Configuration checklist">
+
+Record the workspace owner, retention period, and expected data source before adding live data.
+
+</Collapsible>

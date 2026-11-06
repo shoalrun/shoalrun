@@ -503,12 +503,14 @@ button{cursor:pointer}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 @media(forced-colors:active){.side a[aria-current=page]{outline:2px solid Highlight}.code-copy{border:1px solid ButtonText}}
 @media print{
-  .mast,.side,.page-toc,.navigation-dialog,.page-shortcuts,.region-return,.formats,.code-toolbar,.skip,.heading-anchor{display:none}
+  .mast,.side,.page-toc,.navigation-dialog,.page-shortcuts,.region-return,.formats,.code-toolbar,.skip,.heading-anchor,.reader-filter-slot,.reader-outside-view,.doc-tablist,.code-samples-bar{display:none!important}
   .layout,.layout.has-examples{display:flex;flex-direction:column;padding:0}
   .content{max-width:none}
   .page-rail{position:static;max-height:none;overflow:visible;order:2}
   .examples{display:block;position:static;max-height:none;overflow:visible;margin-top:2rem}
   .content pre,.example-body pre{white-space:pre-wrap;overflow-wrap:anywhere;background:white;color:black;border:1px solid #aaa}
+  .content .reader-section[hidden],.code-samples-panes>div[hidden]{display:block!important;visibility:visible!important}
+  .reader-section[data-reader-print-label]::before{content:attr(data-reader-print-label);display:block;font-weight:650;margin:.8rem 0 .4rem}
 }
 
 /* Document cards share their content with the Markdown representation. */

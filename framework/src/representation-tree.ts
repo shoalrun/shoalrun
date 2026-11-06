@@ -51,7 +51,7 @@ export function publicTree(tree: any, representation: 'html' | 'markdown', docum
     if (node.type === 'docReaderSection') {
       const children = node.children.flatMap(walk);
       return representation === 'markdown' ? [paragraph({ type: 'strong', children: [text(`For ${node.description}.`)] }), ...children]
-        : [element('section', { className: ['reader-section'], 'data-reader-filters': JSON.stringify(node.selection) }, children)];
+        : [element('section', { className: ['reader-section'], 'data-reader-filters': JSON.stringify(node.selection), 'data-reader-print-label': `For ${node.description}.` }, children)];
     }
     if (node.type === 'docReaderChoice') {
       if (representation === 'markdown') {

@@ -1,0 +1,26 @@
+---
+id: guide.operations
+title: Run daily operations
+summary: Review workspace activity and record an outcome.
+slug: /operations
+---
+
+Start each review by checking the [workspace setup](doc:guide.start). Record the review date and result with your operating notes.
+
+## Review activity
+
+Use these example thresholds to decide whether activity needs investigation:
+
+| Signal | Expected value | Follow-up |
+| --- | --- | --- |
+| Queued work | Below 100 items | Check worker capacity. |
+| Oldest item | Below 10 minutes | Inspect the processing log. |
+| Failed items | Zero | Review the reported failure. |
+
+For a completed-work count of 90 out of 100, the completion ratio is:
+
+<Math display expression="r = \frac{90}{100} = 0.9" />
+
+## Record the outcome
+
+Save a brief report with the observed counts and any follow-up action. Link to [the review section](#review-activity) so the next operator can repeat the checks.

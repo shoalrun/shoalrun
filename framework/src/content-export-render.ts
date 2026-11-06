@@ -3,10 +3,11 @@ import { publicTree } from './representation-tree.js';
 import { renderHtmlWithHeadings } from './html-renderer.js';
 import { heading, link, paragraph, root, text, renderMarkdown } from './content.js';
 import { walkthroughMarkdown } from './walkthrough.js';
-import type { ExportFormat } from './content-export-config.js';
+import type { PortableExportFormat } from './content-export-config.js';
+import type { CodeHighlighter } from './highlight.js';
 
 /** Lower interactions while representation-specific source blocks still exist. */
-export function portableTree(tree: any, format: ExportFormat, routes: Set<string>, basePath: string): any {
+export function portableTree(tree: any, format: PortableExportFormat, routes: Set<string>, basePath: string, options: { print?: boolean } = {}): any {
   // Provenance is internal export metadata. Keep it when component lowering
   // synthesizes headings so a slice can retain its full-source identities.
   const inherit = (node: any, key: string) => {
@@ -28,7 +29,7 @@ export function portableTree(tree: any, format: ExportFormat, routes: Set<string
     if (node.type === 'docWalkthrough') return walkthroughMarkdown(node, walk, { heading, paragraph, text });
     if (node.type === 'docCollapsible') return [heading(3, node.title), ...node.children.flatMap(walk)];
     if (['docTooltip', 'docInfoHint'].includes(node.type)) return [node.inline ? text(`${node.label} (${node.definition})`) : paragraph(text(`${node.label}: ${node.definition}`))];
-    if (node.type === 'docMath') return [node.display ? { type: 'code', lang: 'latex', value: node.expression } : { type: 'inlineCode', value: node.expression }];
+    if (node.type === 'docMath' && !options.print) return [node.display ? { type: 'code', lang: 'latex', value: node.expression } : { type: 'inlineCode', value: node.expression }];
     if (node.type === 'docDiagram') return [paragraph({ type: 'image', url: node.url, alt: node.title }), paragraph(text(`${node.title}: ${node.summary}`)), ...(format === 'markdown' ? [{ type: 'code', lang: node.engine, value: node.source }] : [])];
     if (node.type === 'docCookbookChooser') return [paragraph(text(node.title)), ...node.options.flatMap((option: any) => [paragraph({ ...link(option.route, option.title), exportDocumentId: option.doc }), paragraph(text([option.when ?? option.summary, option.needs, option.outcome].filter(Boolean).join(' ')))])];
     if (node.type === 'docTable') return [{ ...node, filter: false, children: node.children.flatMap(walk) }];
@@ -57,7 +58,7 @@ export function portableTree(tree: any, format: ExportFormat, routes: Set<string
     }
     // Browser-only data and injected SVG icons are not part of the content contract.
     const data = node.data ? { ...node.data } : undefined;
-    if (data) { delete data.hChildren; delete data.mathMarkup; }
+    if (data) { delete data.hChildren; if (!options.print) delete data.mathMarkup; }
     return { ...node, ...(data ? { data } : {}), ...(node.children ? { children: node.children.filter((child: any) => child.type !== 'definition').map(clean) } : {}) };
   };
   return clean(lowered);
@@ -65,15 +66,17 @@ export function portableTree(tree: any, format: ExportFormat, routes: Set<string
 
 const tags = new Set('a abbr article b blockquote br caption code col colgroup dd del details div dl dt em figcaption figure h1 h2 h3 h4 h5 h6 hr i img input kbd li ol p pre progress s section small span strong sub summary sup table tbody td th thead time tr ul'.split(' '));
 const attrs = new Set(['id', 'href', 'src', 'alt', 'title', 'colspan', 'rowspan', 'start', 'reversed', 'value', 'max', 'datetime', 'scope', 'align', 'type', 'checked', 'disabled', 'aria-label', 'aria-labelledby', 'aria-describedby', 'aria-hidden', 'role', 'tabindex', 'data-footnote-ref', 'data-footnote-backref', 'data-export-link']);
-export function passiveHtml(tree: any, prefix: string, checkAnchors = true): { html: string; anchors: Array<{ id: string; exportedId: string; title?: string }> } {
-  const rendered = renderHtmlWithHeadings(tree);
+const mathTags = new Set('math semantics annotation mrow mi mn mo mtext mspace ms mfrac msqrt mroot mstyle merror mpadded mphantom mfenced menclose msub msup msubsup munder mover munderover mmultiscripts mprescripts none mtable mtr mtd mlabeledtr'.split(' '));
+const mathAttrs = new Set('xmlns display mathvariant encoding stretchy fence separator accent accentunder form lspace rspace minsize maxsize symmetric largeop movablelimits scriptlevel displaystyle linethickness notation columnalign columnspacing rowalign rowspacing columnspan rowspan width height depth voffset'.split(' '));
+export function passiveHtml(tree: any, prefix: string, checkAnchors = true, options: { print?: boolean; highlighter?: CodeHighlighter } = {}): { html: string; anchors: Array<{ id: string; exportedId: string; title?: string }> } {
+  const rendered = renderHtmlWithHeadings(tree, options.highlighter);
   const fragment: any = parseFragment(rendered.html);
   const anchors: Array<{ id: string; exportedId: string; title?: string }> = [];
   const ids = new Set<string>();
   const visit = (node: any) => {
     if (node.nodeName === '#text') return;
     if (node.tagName) {
-      if (!tags.has(node.tagName)) throw new Error(`Unsupported passive HTML element <${node.tagName}>`);
+      if (!tags.has(node.tagName) && !(options.print && mathTags.has(node.tagName))) throw new Error(`Unsupported passive HTML element <${node.tagName}>`);
       const original = node.attrs ?? [];
       for (const attr of original) {
         if (/^on/i.test(attr.name)) throw new Error('Event handlers are not allowed in exported HTML');
@@ -82,7 +85,8 @@ export function passiveHtml(tree: any, prefix: string, checkAnchors = true): { h
           if (!['https:', 'http:', ...(attr.name === 'href' ? ['mailto:', 'tel:'] : [])].includes(url.protocol) || url.username || url.password) throw new Error(`Unsafe exported URL: ${attr.value}`);
         }
       }
-      node.attrs = original.filter((attr: any) => attrs.has(attr.name));
+      node.attrs = original.filter((attr: any) => attrs.has(attr.name) || options.print && (attr.name === 'class' || mathTags.has(node.tagName) && mathAttrs.has(attr.name)
+        || attr.name === 'style' && /^(?:(?:color|background-color):(?:#[a-f\d]{3,8}|var\(--code-(?:foreground|token-[a-z-]+)\));?)+$/i.test(attr.value)));
       const id = node.attrs.find((attr: any) => attr.name === 'id');
       if (id) {
         if (ids.has(id.value)) throw new Error(`Duplicate exported anchor ${id.value}`);

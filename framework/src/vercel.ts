@@ -6,6 +6,9 @@ import { compile } from './compiler.js';
 import type { BuildProvenance } from './build-info.js';
 import { homeUrl } from './negotiation.js';
 import { addAskFunction, type AskFunctionResult } from './vercel-function.js';
+import { loadConfig } from './config.js';
+import { resolvedCompilerConfig } from './compiler-config.js';
+import { resolvePdfButton } from './pdf-button.js';
 
 type HeaderMatch = { type: 'header'; key: string; value: { re: string } };
 type Route = { src: string; dest?: string; headers?: Record<string, string>; has?: HeaderMatch[]; missing?: HeaderMatch[]; status?: number; continue?: boolean };
@@ -31,6 +34,8 @@ async function removeStaleFunctions(directory: string, keep = new Set<string>())
 }
 
 export async function buildVercel(configFile: string, outputDirectory: string, provenance: BuildProvenance = {}, options: { chat?: boolean; profile?: string } = {}): Promise<{ documents: number; output: string; chat?: AskFunctionResult; mcp?: McpFunctionResult }> {
+  const settings = resolvedCompilerConfig((await loadConfig(configFile, { profile: options.profile })).value);
+  if (resolvePdfButton(settings.outputs)?.mode === 'endpoint') throw new Error('On-demand PDF generation requires a Node server with an installed Chromium browser. Use outputs.html.pdf.mode: print for Vercel builds.');
   const output = path.resolve(outputDirectory);
   const staticDirectory = path.join(output, 'static');
   if (options.profile && options.chat) throw new Error('Profiled Vercel builds do not support chat functions yet');

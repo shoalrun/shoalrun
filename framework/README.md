@@ -53,6 +53,16 @@ Use `site.logo`, `site.favicon`, and header settings for site identity. Choose a
 
 Check controls and interactive states as well as article text: a dark header can contain light inputs, menus, and search results. Palette validation doesn't check arbitrary project CSS. See [themes and fonts](https://www.shoalrun.com/styling/themes), the [CSS reference](https://www.shoalrun.com/author/css), and [deployment profiles](DEPLOYMENT-PROFILES.md).
 
+## Export styled PDFs
+
+Export a page with `shoalrun export docs.config.yaml --format pdf --document guide.start --out pdf/page`, or omit `--document` for a complete selected publication. PDF exports respect publication coordinates, customer profiles, and the target's content filter (falling back to the site's filter). Set shared fonts, local print CSS, paper size, margins, cover, linked contents, and page numbering under `outputs.pdf`; named export targets can override those settings.
+
+PDF generation needs an installed Chrome/Chromium executable, selected through `SHOALRUN_PDF_BROWSER` or `outputs.pdf.executablePath`. Ordinary package installation doesn't download a browser. PDF rendering runs offline with page scripts disabled.
+
+Enable `outputs.html.pdf: { mode: print }` for a **Print / Save as PDF** page action on a static site. The browser fills a separate branded print view with the current article and uses `outputs.pdf` styling. Scripts, theme CSS, settings, and configured fonts/logo are shared across pages; builds generate no page PDFs or extra print documents and need no Chromium for this action. The action is off by default; an enabled mapping defaults to print mode. Configure its label, placement, include/exclude IDs, and optional `style` target; `pdf: false` suppresses a page. The original page remains unchanged. Native browser printing remains a fallback using website print CSS.
+
+Generate a full manual with the CLI only when you want a downloadable PDF, then deliberately add it and its link to the static deployment. Explicit `{ mode: endpoint }` offers on-demand PDF downloads through the Node server; optional `style` selects a named target's PDF settings without changing page selection. Vercel supports print mode. Keep endpoint-mode private inputs behind the Node server or equivalent authenticated custom handler, never in generic public static serving. See [the runnable PDF example](examples/pdf/README.md).
+
 ## Independently versioned products
 
 Projects can give each product its own version catalog and default version. Product publications carry a product, channel, version, and language; routes, document links, navigation, search, and content exports retain that scope. Existing projects without product catalogs keep their publication identities and routes.
@@ -111,7 +121,7 @@ Agents can discover product scopes through MCP `get_publications` before searchi
 
 ## Work with an agent
 
-Shoalrun works with your existing coding agent. Its packaged skills cover setup, page authoring, components, recipes, and walkthroughs. Use `skills list` to discover the skills included with your installed version:
+Shoalrun works with your existing coding agent. Its packaged skills cover setup, page authoring, components, recipes, walkthroughs, branding, and styled PDF exports. Use `skills list` to discover the skills included with your installed version:
 
 ```sh
 npx --no-install shoalrun skills list

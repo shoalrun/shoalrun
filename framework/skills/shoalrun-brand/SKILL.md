@@ -45,6 +45,8 @@ Check every requested color mode. Normal text needs at least 4.5:1 contrast; lar
 
 ## Validate and preview
 
+For branded PDF output, read the [PDF skill](../shoalrun-pdf/SKILL.md). Configure print styling separately from website styling, retain the intended publication/profile selection, and inspect actual rendered PDF pages. A passing HTML build doesn't verify PDF appearance.
+
 Validate against the baseline with `shoalrun docs validate --baseline .shoalrun/brand-before.json --config docs.config.yaml`, including the selected profile when applicable. Read the report's findings and coverage. Reuse its captured output with `shoalrun docs preview REPORT --port 0`, or follow the project's required build workflow and serve that output. Rebuild when styles, configuration, or assets change.
 
 Inspect a landing page and a representative article at desktop and mobile widths. Check font and image loading, overflow, keyboard navigation, dropdown destinations, and search interactions. Confirm HTML navigation and Markdown twins retain the documentation's meaning. A successful build doesn't establish visual correctness; state any browser checks that couldn't run.

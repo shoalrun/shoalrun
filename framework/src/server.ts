@@ -1,5 +1,6 @@
 import { loadMcpRuntime, createMcpHttpHandler } from './mcp-http.js';
 import { bridgeMcp } from './mcp-node.js';
+import { loadPdfRuntime, createPdfHttpHandler } from './pdf-http.js';
 import { notFoundPage, addNotFoundTwin } from './not-found.js';
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import { readFile, realpath, stat } from 'node:fs/promises';
@@ -10,7 +11,17 @@ type Manifest = { buildId?: string; basePath?: string; documents: Array<Publishe
 type Redirect = { from: string; to: string; markdownFrom?: string; markdownTo?: string; status: number };
 type ResourceHeaders = Record<string, Record<string, string>>;
 
-const types: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.md': 'text/markdown; charset=utf-8', '.xml': 'application/xml; charset=utf-8', '.json': 'application/json', '.yaml': 'application/yaml', '.yml': 'application/yaml', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.otf': 'font/otf' };
+export function canonicalSitePath(url: string): string {
+  const decoded = decodeURIComponent(new URL(url, 'http://localhost').pathname).replace(/\\/g, '/');
+  if (decoded.includes('\0') || decoded.split('/').some(segment => segment === '..' || segment === '.')) throw new Error('Invalid path');
+  return decoded.replace(/\/{2,}/g, '/');
+}
+export function privateSitePath(pathname: string): boolean {
+  const internal = pathname.toLowerCase().replace(/\/+$/, '');
+  return ['/mcp-runtime.json', '/pdf-runtime.json', '/__shoalrun/mcp-data', '/__shoalrun/pdf-data'].some(privatePath => internal === privatePath || internal.startsWith(privatePath + '/'));
+}
+
+const types: Record<string, string> = { '.pdf': 'application/pdf', '.html': 'text/html; charset=utf-8', '.md': 'text/markdown; charset=utf-8', '.xml': 'application/xml; charset=utf-8', '.json': 'application/json', '.yaml': 'application/yaml', '.yml': 'application/yaml', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.otf': 'font/otf' };
 
 // An optional local question-answering endpoint and its chat panel, for previewing `shoalrun ask` in a browser. `ask` is a
 // Web-standard handler and `widget` is the browser script that talks to it.
@@ -63,6 +74,9 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
   let mcp = await loadMcpRuntime(root);
   let mcpHandler = mcp ? createMcpHttpHandler(mcp) : undefined;
   let mcpBuild = mcp?.runtime.buildId;
+  let pdf = await loadPdfRuntime(root);
+  let pdfHandler = pdf ? createPdfHttpHandler(pdf) : undefined;
+  let pdfBuild = initialState.manifest.buildId;
 
 
   async function siteFile(route: string): Promise<string> {
@@ -79,8 +93,7 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
     let pathname = '';
     let recoveryState = initialState;
     try {
-      pathname = decodeURIComponent(new URL(request.url ?? '/', 'http://localhost').pathname);
-      if (pathname.includes('\0') || pathname.split('/').includes('..')) throw new Error('Invalid path');
+      pathname = canonicalSitePath(request.url ?? '/');
       const { headers, manifest, redirects, search, errorHtml, home, routes } = liveClients ? await loadState() : initialState;
       recoveryState = { headers, manifest, redirects, search, errorHtml, home, routes };
       const basePath = manifest.basePath ?? '';
@@ -90,8 +103,17 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
         mcpHandler = next ? createMcpHttpHandler(next) : undefined;
         mcpBuild = manifest.buildId;
       }
-      const internalPath = pathname.toLowerCase().replace(/\/+$/, '');
-      if (internalPath === '/mcp-runtime.json' || internalPath === '/__shoalrun/mcp-data' || internalPath.startsWith('/__shoalrun/mcp-data/')) { response.writeHead(404); response.end(); return; }
+      if (privateSitePath(pathname)) { response.writeHead(404); response.end(); return; }
+      if (liveClients && manifest.buildId !== pdfBuild) {
+        pdf = await loadPdfRuntime(root);
+        pdfHandler = pdf ? createPdfHttpHandler(pdf) : undefined;
+        pdfBuild = manifest.buildId;
+      }
+      if (pdf && pdfHandler && pathname === pdf.runtime.endpoint) {
+        try { await bridge(request, response, pdfHandler); }
+        catch { if (!response.headersSent) { response.writeHead(503, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); response.end('{"error":"PDF generation is unavailable."}'); } }
+        return;
+      }
       if (mcp && mcpHandler && pathname === mcp.runtime.path) { await bridgeMcp(request, response, mcpHandler); return; }
 
       if (liveClients && pathname === `${basePath}/__shoalrun/reload`) {
@@ -180,8 +202,7 @@ export async function createSiteServer(directory: string, liveClients?: Set<Serv
         mcpHandler = next ? createMcpHttpHandler(next) : undefined;
         mcpBuild = manifest.buildId;
       }
-      const internalPath = pathname.toLowerCase().replace(/\/+$/, '');
-      if (internalPath === '/mcp-runtime.json' || internalPath === '/__shoalrun/mcp-data' || internalPath.startsWith('/__shoalrun/mcp-data/')) { response.writeHead(404); response.end(); return; }
+      if (privateSitePath(pathname)) { response.writeHead(404); response.end(); return; }
       if (mcp && mcpHandler && pathname === mcp.runtime.path) { await bridgeMcp(request, response, mcpHandler); return; }
 
       const markdown = pathname.endsWith('.md') || !!negotiatedDocument('/', request.headers.accept, [{ url: '/', markdownUrl: '/index.md' }]);

@@ -1,0 +1,49 @@
+/* Copy into the documentation project and adapt to its brand and local fonts. */
+:root {
+  --pdf-accent: #234c44;
+  --pdf-text: #263e3a;
+  --pdf-muted: #62766c;
+  --pdf-font: Arial, sans-serif;
+  --pdf-code-font: monospace;
+}
+body { font-size: 10.5pt; line-height: 1.6; }
+h1, h2, h3 { break-after: avoid; }
+h1 { font-family: Georgia, serif; font-weight: 400; }
+.pdf-cover {
+  position: relative;
+  min-height: 220mm;
+  padding: 16mm 12mm 26mm;
+  color: #f4f1e8;
+  background: #234c44;
+  border-top: 5pt solid #bbd58a;
+}
+.pdf-cover h1 {
+  color: inherit;
+  font-size: 38pt;
+  line-height: 1.12;
+  max-width: 15ch;
+  margin: 12mm 0 8mm;
+}
+.pdf-cover .pdf-subtitle { max-width: 30ch; font-size: 13pt; }
+.pdf-cover .pdf-publication {
+  color: #e0e9d8;
+  font-size: 8pt;
+  margin-top: 14mm;
+}
+.pdf-logo { max-width: 40mm; max-height: 20mm; object-fit: contain; }
+.pdf-toc { padding-top: 10mm; }
+.pdf-toc h1 { font-size: 30pt; margin-bottom: 12mm; }
+.pdf-toc ol { padding-left: 7mm; }
+.pdf-toc li { padding: 4mm 0; border-top: .5pt solid #d2ddd2; }
+.pdf-toc a { text-decoration: none; font-size: 13pt; }
+.pdf-chapter { break-before: page; padding-top: 4mm; }
+.pdf-chapter h1 { font-size: 29pt; line-height: 1.15; margin-bottom: 8mm; }
+.pdf-chapter h2 { font-size: 13pt; margin: 8mm 0 3mm; }
+.pdf-chapter > p:first-of-type { color: var(--pdf-muted); font-size: 11.5pt; }
+blockquote { padding: 4mm 5mm; background: #f0f4ea; border-left: 3pt solid #bbd58a; }
+table { font-size: 9pt; margin: 5mm 0; }
+th { padding: 3mm; color: #fff; background: #234c44; }
+td { padding: 3mm; border-color: #d2ddd2; }
+tbody tr:nth-child(even) { background: #f4f6f0; }
+pre { padding: 5mm; font-size: 8.5pt; background: #f0f4ed; border: 0; border-left: 3pt solid #bbd58a; }
+a { text-underline-offset: 2pt; }

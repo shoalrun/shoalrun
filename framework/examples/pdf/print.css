@@ -1,0 +1,9 @@
+:root {
+  --pdf-accent: #28584b;
+  --pdf-text: #172722;
+  --pdf-muted: #53665e;
+  --pdf-font: Arial, sans-serif;
+}
+.pdf-cover { border-top: 6pt solid var(--pdf-accent); }
+.pdf-cover h1 { max-width: 15ch; }
+th { background: #e5eee9; }
