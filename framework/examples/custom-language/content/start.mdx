@@ -1,0 +1,28 @@
+---
+id: guide.custom-language
+title: Highlight a custom language
+summary: Register a local TextMate grammar and use its language ID or alias in fenced examples.
+type: guide
+slug: /
+channel: production
+version: current
+language: en
+access: { policy: public }
+---
+
+This illustrative Python-like language adds `publish` and `unless`. The grammar
+recognizes these keywords before falling back to the bundled Python grammar.
+
+```custompy title="Language ID"
+def welcome(name):
+    unless name is None:
+        publish "Hello, " + name
+```
+
+The alias selects the same grammar:
+
+```cpy title="Language alias"
+publish "The same syntax colors, with a shorter fence label."
+```
+
+This example only defines syntax colors. It doesn't implement an executable language.

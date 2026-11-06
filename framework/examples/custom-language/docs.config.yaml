@@ -1,0 +1,18 @@
+schemaVersion: 1
+site:
+  title: Custom language example
+  contentDir: ./content
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels: { production: {} }
+  versions: { current: {} }
+  enabled: [{ channel: production, version: current, language: en }]
+outputs:
+  html:
+    shareImages: false
+    highlighting:
+      provider: shiki
+      languages:
+        - id: custompy
+          grammar: ./grammars/custompy.tmLanguage.json
+          aliases: [cpy]

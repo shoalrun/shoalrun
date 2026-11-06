@@ -2,19 +2,21 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { unified } from 'unified';
 import rehypeStringify from 'rehype-stringify';
+import { customHighlightLanguages, type LanguageFiles } from './highlight-languages.js';
 
 export type HighlightToken = { text: string; color?: string };
-export type CodeHighlighter = { highlight: (code: string, language?: string) => HighlightToken[]; background?: string; foreground?: string; dark?: boolean; dependency?: string };
+export type CodeHighlighter = { highlight: (code: string, language?: string) => HighlightToken[]; background?: string; foreground?: string; dark?: boolean; dependency?: string; dependencies?: string[]; dispose?: () => void };
 const plain: CodeHighlighter = { highlight: text => [{ text }] };
 const stringify = unified().use(rehypeStringify);
 const hex = /^#(?:[\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/i;
 // The site theme colors tokens with CSS variables that each palette sets.
 const siteColor = /^var\(--code-(?:foreground|token-[a-z-]+)\)$/;
+const defaultLanguages = ['json', 'yaml', 'bash', 'javascript', 'typescript', 'python', 'html', 'css', 'mdx', 'markdown', 'http', 'xml', 'sql', 'go', 'java', 'ruby', 'csharp', 'php', 'rust'] as const;
 
-export async function createCodeHighlighter(config: any = {}, declaringFile?: string): Promise<CodeHighlighter> {
+export async function createCodeHighlighter(config: any = {}, declaringFile?: string, options: LanguageFiles = {}): Promise<CodeHighlighter> {
   if (!config || typeof config !== 'object' || Array.isArray(config)) throw new Error('outputs.html.highlighting must be a mapping');
   const provider = config.provider ?? 'shiki';
-  const allowed = provider === 'shiki' ? ['provider', 'theme'] : provider === 'custom' ? ['provider', 'module'] : ['provider'];
+  const allowed = provider === 'shiki' ? ['provider', 'theme', 'languages'] : provider === 'custom' ? ['provider', 'module'] : ['provider'];
   for (const key of Object.keys(config)) if (!allowed.includes(key)) throw new Error(`Unsupported highlighting setting ${key} for ${provider}`);
   if (provider === 'none') return plain;
   if (provider === 'custom') {
@@ -26,16 +28,26 @@ export async function createCodeHighlighter(config: any = {}, declaringFile?: st
   }
   if (provider !== 'shiki') throw new Error(`Unknown highlighting provider ${provider}`);
   // Load only when selected. Shiki caches its build-time instance and grammars.
-  const { getSingletonHighlighter, bundledThemes, createCssVariablesTheme } = await import('shiki');
+  const { getSingletonHighlighter, createHighlighter, bundledLanguages, bundledThemes, createCssVariablesTheme } = await import('shiki');
   const theme = config.theme ?? 'site';
   if (typeof theme !== 'string' || (theme !== 'site' && !Object.hasOwn(bundledThemes, theme))) throw new Error(`Unknown Shiki theme ${theme}; use site or a bundled Shiki theme name`);
-  const highlighter = await getSingletonHighlighter({
+  const builtinGrammars = Array.isArray(config.languages) && config.languages.length ? (await Promise.all(defaultLanguages.map(async language => (await bundledLanguages[language]()).default))).flat() : [];
+  const custom = await customHighlightLanguages(config.languages, declaringFile, new Set([...Object.keys(bundledLanguages), 'text', 'txt', 'plain', 'plaintext', 'ansi']), options, new Set(builtinGrammars.map(grammar => grammar.scopeName)));
+  // Custom grammars belong to this compilation, never Shiki's process-wide registry.
+  const create = custom.length ? createHighlighter : getSingletonHighlighter;
+  const highlighter = await create({
     themes: [theme === 'site' ? createCssVariablesTheme({ name: 'site', variablePrefix: '--code-' }) : theme as keyof typeof bundledThemes],
-    langs: ['json', 'yaml', 'bash', 'javascript', 'typescript', 'python', 'html', 'css', 'mdx', 'markdown', 'http', 'xml', 'sql', 'go', 'java', 'ruby', 'csharp', 'php', 'rust']
+    langs: [...defaultLanguages]
   });
+  try { if (custom.length) await highlighter.loadLanguage(...custom.map(item => item.grammar)); }
+  catch (error) {
+    highlighter.dispose();
+    throw new Error(`Cannot load TextMate grammars ${custom.map(item => item.file).join(', ')}: ${(error as Error).message}`);
+  }
   const languages = new Set(highlighter.getLoadedLanguages());
   const colors = highlighter.getTheme(theme);
   return {
+    ...(custom.length ? { dependencies: custom.map(item => item.file), dispose: () => highlighter.dispose() } : {}),
     ...(theme === 'site' ? {} : { background: colors.bg, foreground: colors.fg, dark: colors.type === 'dark' }),
     highlight(value, language) {
       const lang = language?.toLowerCase();

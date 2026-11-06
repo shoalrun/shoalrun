@@ -99,7 +99,15 @@ export async function checkThemeContrast(configFile: string): Promise<{ modes: M
   return { modes, palette: palette.name };
 }
 
-export async function compile(configFile: string, destination?: string, provenance: BuildProvenance = {}, options: { apiReview?: 'report'; sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; profile?: string; onDependency?: (file: string) => void } = {}) {
+type CompileOptions = { apiReview?: 'report'; sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; profile?: string; onDependency?: (file: string) => void };
+
+export async function compile(configFile: string, destination?: string, provenance: BuildProvenance = {}, options: CompileOptions = {}) {
+  let dispose: (() => void) | undefined;
+  try { return await compileProject(configFile, destination, provenance, options, release => { dispose = release; }); }
+  finally { dispose?.(); }
+}
+
+async function compileProject(configFile: string, destination: string | undefined, provenance: BuildProvenance, options: CompileOptions, ownHighlighter: (dispose: (() => void) | undefined) => void) {
   const loaded = await loadConfig(configFile, { profile: options.profile, onDependency: options.onDependency });
   const componentPlugins = await loadComponentPlugins(loaded);
   const provenanceRecord = buildInfo(loaded.digest, provenance);
@@ -118,7 +126,11 @@ export async function compile(configFile: string, destination?: string, provenan
   const htmlOptions = configField(config.outputs, 'html');
   const highlighting = configField(htmlOptions, 'highlighting');
   const highlightingOrigin = configField(highlighting, 'module') === undefined ? configFile : explainSegments(loaded, ['outputs', 'html', 'highlighting', 'module']).source.file;
-  const highlighter = await createCodeHighlighter(highlighting, highlightingOrigin);
+  const highlighter = await createCodeHighlighter(highlighting, highlightingOrigin, {
+    grammarOrigin: index => explainSegments(loaded, ['outputs', 'html', 'highlighting', 'languages', String(index), 'grammar']).source.file,
+    onDependency: options.onDependency
+  });
+  ownHighlighter(highlighter.dispose);
   const base = path.dirname(path.resolve(configFile));
   if (config.site.customCss !== undefined && (typeof config.site.customCss !== 'string' || !config.site.customCss.endsWith('.css'))) throw new Error('site.customCss must be a local .css path');
   const customStyleFile = config.site.customCss === undefined ? undefined : path.resolve(path.dirname(explainSegments(loaded, ['site', 'customCss']).source.file), config.site.customCss);
@@ -378,7 +390,7 @@ export async function compile(configFile: string, destination?: string, provenan
     ] };
   }
   const apiPublicationReview = await reviewApiPublication(configFile, apiPlan, rendered, apiEmbedUses, focusedContracts, apiSources, sourceForOperation, options.apiReview);
-  const manifestDependencies = [...new Set([...loaded.dependencies, ...componentPlugins.dependencies, ...externalManifestFiles, ...api.dependencies, ...(metadataProvider ? [metadataProvider.module] : []), ...metadataDependencies, ...(highlighter.dependency ? [highlighter.dependency] : []), ...styleFiles, ...(themeStyleFile ? [themeStyleFile] : []), ...palette.files, ...(search.module ? [search.module] : []), ...previewFiles, ...(customStyleFile ? [customStyleFile] : []), ...(customReaderModule ? [customReaderModule] : []), ...(analyticsModule ? [analyticsModule] : []), ...(mcpAnalyticsModule ? [mcpAnalyticsModule] : []), ...(shareImages.template ? [shareImages.template] : []), ...shareImages.fonts, ...(faviconFile ? [faviconFile] : []), ...heroImages.values(), ...walkthroughSources, ...fontFiles, ...fonts.faces.map(face => face.file), ...scriptFiles, iconLicenseFile, ...[...snippets.values()].map(s => s.file), ...[...docs.values()].map(d => d.file)])].sort();
+  const manifestDependencies = [...new Set([...loaded.dependencies, ...componentPlugins.dependencies, ...externalManifestFiles, ...api.dependencies, ...(metadataProvider ? [metadataProvider.module] : []), ...metadataDependencies, ...(highlighter.dependency ? [highlighter.dependency] : []), ...(highlighter.dependencies ?? []), ...styleFiles, ...(themeStyleFile ? [themeStyleFile] : []), ...palette.files, ...(search.module ? [search.module] : []), ...previewFiles, ...(customStyleFile ? [customStyleFile] : []), ...(customReaderModule ? [customReaderModule] : []), ...(analyticsModule ? [analyticsModule] : []), ...(mcpAnalyticsModule ? [mcpAnalyticsModule] : []), ...(shareImages.template ? [shareImages.template] : []), ...shareImages.fonts, ...(faviconFile ? [faviconFile] : []), ...heroImages.values(), ...walkthroughSources, ...fontFiles, ...fonts.faces.map(face => face.file), ...scriptFiles, iconLicenseFile, ...[...snippets.values()].map(s => s.file), ...[...docs.values()].map(d => d.file)])].sort();
   const llmsDiscovery = resolveLlmsDiscovery(configField(config.outputs, 'llms'));
   const { manifest, headers, sitemaps } = buildPublicationManifest({
     configPublications: config.publications,

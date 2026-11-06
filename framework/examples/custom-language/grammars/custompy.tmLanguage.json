@@ -1,0 +1,7 @@
+{
+  "scopeName": "source.custompy",
+  "patterns": [
+    { "name": "keyword.control.custompy", "match": "\\b(?:publish|unless)\\b" },
+    { "include": "source.python" }
+  ]
+}

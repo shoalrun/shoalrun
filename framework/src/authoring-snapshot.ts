@@ -155,7 +155,7 @@ export async function captureSnapshotInputs(configFile: string, options: { profi
     const visit = async (value: any, segments: string[]) => {
       if (value && typeof value === 'object') {
         for (const key of Object.keys(value)) await visit(value[key], [...segments, key]);
-      } else if (typeof value === 'string' && (['file', 'path', 'module', 'manifest', 'customCss', 'customReaderModule', 'body', 'template', 'favicon', 'logo'].includes(segments.at(-1)!) || segments.at(-2) === 'files') && !/^(?:[a-z][a-z0-9+.-]*:|#)/i.test(value)) {
+      } else if (typeof value === 'string' && (['file', 'path', 'module', 'manifest', 'customCss', 'customReaderModule', 'body', 'template', 'favicon', 'logo'].includes(segments.at(-1)!) || segments.at(-2) === 'files' || (segments[0] === 'outputs' && segments[1] === 'html' && segments[2] === 'highlighting' && segments.at(-1) === 'grammar')) && !/^(?:[a-z][a-z0-9+.-]*:|#)/i.test(value)) {
         if (path.isAbsolute(value)) throw new SnapshotError('unsupported_dependency', `Absolute dependency at ${segments.join('.')} cannot be isolated; use a relative path.`);
         if (segments[0] === 'components' && segments.at(-1) === 'module' && !value.startsWith('.')) return;
         const owner = explainSegments(loaded!, segments).source.file;
