@@ -22,7 +22,7 @@ Reader filters help visitors browse content. Customer-edition selection happens 
 Use Node.js 22.12 or newer. In your documentation project:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.19
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-beta.1
 npx --no-install shoalrun init my-docs --starter showcase
 npx --no-install shoalrun dev my-docs/docs.config.yaml my-docs/site-dist --port 8770
 ```
@@ -86,7 +86,7 @@ The [release process](RELEASING.md) covers package checks, source and tag synchr
 
 ## Status and reporting
 
-Shoalrun is an alpha. Configuration, commands, programmatic APIs, and generated output can change between releases; older release lines aren't maintained. Rebuild and check your site and content consumers before deploying an upgrade.
+Shoalrun is in beta. Configuration, commands, programmatic APIs, and generated output can change between releases; older release lines aren't maintained. Rebuild and check your site and content consumers before deploying an upgrade.
 
 Local builds, previews, keyword search, and bundled references don't need a model provider. Semantic search and generated answers need separately configured services. Production hosting, private-edition access, and application authentication remain the deployer's responsibility.
 

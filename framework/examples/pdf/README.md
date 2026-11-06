@@ -9,7 +9,7 @@ shoalrun build docs.config.yaml site-dist
 shoalrun serve site-dist --port 8892
 ```
 
-Open `/start` and choose **Print / Save as PDF**. The browser fills a separate print view using the shared PDF theme and opens its print dialog. Site builds add shared scripts, styling, settings, and configured print assets; they generate no page PDFs or extra print documents. This works on static hosting, including Vercel. Allow the print view to open if the browser blocks it. Without JavaScript, use the browser's own Print command.
+Open `/start` and choose **Print PDF**. The browser fills a separate print view using the shared PDF theme and opens its print dialog. Site builds add shared scripts, styling, settings, and configured print assets; they generate no page PDFs or extra print documents. This works on static hosting, including Vercel. Allow the print view to open if the browser blocks it. Without JavaScript, use the browser's own Print command.
 
 For a downloadable full manual, explicitly run the CLI export with an installed browser:
 

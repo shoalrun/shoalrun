@@ -1,8 +1,8 @@
 # Release checklist
 
-Shoalrun is an alpha. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
+Shoalrun is in beta. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
 
-## 0.1.0-alpha.20 release scope
+## 0.1.0-beta.1 release scope
 
 Include custom language highlighting through local TextMate JSON grammars.
 Customers register a language ID and optional aliases under
@@ -30,7 +30,7 @@ Browser-free passing tests don't complete the PDF rendering review.
 Run from the framework repository with the documentation checkout beside it:
 
 ```sh
-npm run release -- 0.1.0-alpha.20
+npm run release -- 0.1.0-beta.1
 ```
 
 This prepares versions, builds a bootstrap compiler, exports and imports the

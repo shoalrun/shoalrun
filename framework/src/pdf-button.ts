@@ -14,7 +14,7 @@ export function resolvePdfButton(outputs: unknown): PdfButtonConfig | undefined 
   if (!isConfigMapping(value) || Object.keys(value).some(key => !['mode', 'label', 'endpoint', 'placement', 'style', 'include', 'exclude'].includes(key))) throw new Error('outputs.html.pdf must be false or a mapping containing mode, label, endpoint, placement, style, include, and exclude');
   const mode = value.mode ?? 'print';
   if (mode !== 'print' && mode !== 'endpoint') throw new Error('outputs.html.pdf.mode must be print or endpoint; site builds do not generate per-page PDFs');
-  const label = value.label ?? (mode === 'print' ? 'Print / Save as PDF' : 'Download PDF');
+  const label = value.label ?? (mode === 'print' ? 'Print PDF' : 'Download PDF');
   if (typeof label !== 'string' || !label.trim() || label.length > 128) throw new Error('outputs.html.pdf.label must be 1–128 characters');
   const endpoint = value.endpoint ?? '/__shoalrun/pdf';
   if (typeof endpoint !== 'string' || !/^\/[A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*$/.test(endpoint)) throw new Error('outputs.html.pdf.endpoint must be a same-origin absolute path without query, fragment, or encoded separators');

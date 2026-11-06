@@ -2,14 +2,14 @@
 
 Shoalrun builds a documentation website, Markdown pages, and application content from the same Markdown and MDX source. People can browse the site; applications and agents can read stable documents, sections, and snippet instances. Native components keep essential instructions and API details readable in both HTML and Markdown.
 
-This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. This alpha is distributed through the public npm registry. Installation requires no npm account or package token.
+This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. This beta is distributed through the public npm registry. Installation requires no npm account or package token.
 
 ## Install
 
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.19
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-beta.1
 ```
 
 ## Create and preview a site
@@ -59,7 +59,7 @@ Export a page with `shoalrun export docs.config.yaml --format pdf --document gui
 
 PDF generation needs an installed Chrome/Chromium executable, selected through `SHOALRUN_PDF_BROWSER` or `outputs.pdf.executablePath`. Ordinary package installation doesn't download a browser. PDF rendering runs offline with page scripts disabled.
 
-Enable `outputs.html.pdf: { mode: print }` for a **Print / Save as PDF** page action on a static site. The browser fills a separate branded print view with the current article and uses `outputs.pdf` styling. Scripts, theme CSS, settings, and configured fonts/logo are shared across pages; builds generate no page PDFs or extra print documents and need no Chromium for this action. The action is off by default; an enabled mapping defaults to print mode. Configure its label, placement, include/exclude IDs, and optional `style` target; `pdf: false` suppresses a page. The original page remains unchanged. Native browser printing remains a fallback using website print CSS.
+Enable `outputs.html.pdf: { mode: print }` for a **Print PDF** page action on a static site. The browser fills a separate branded print view with the current article and uses `outputs.pdf` styling. Scripts, theme CSS, settings, and configured fonts/logo are shared across pages; builds generate no page PDFs or extra print documents and need no Chromium for this action. The action is off by default; an enabled mapping defaults to print mode. Configure its label, placement, include/exclude IDs, and optional `style` target; `pdf: false` suppresses a page. The original page remains unchanged. Native browser printing remains a fallback using website print CSS.
 
 Generate a full manual with the CLI only when you want a downloadable PDF, then deliberately add it and its link to the static deployment. Explicit `{ mode: endpoint }` offers on-demand PDF downloads through the Node server; optional `style` selects a named target's PDF settings without changing page selection. Vercel supports print mode. Keep endpoint-mode private inputs behind the Node server or equivalent authenticated custom handler, never in generic public static serving. See [the runnable PDF example](examples/pdf/README.md).
 
@@ -346,14 +346,14 @@ with a Hero replaces the standard page header and does not display its dates.
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@0.1.0-alpha.19 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@0.1.0-beta.1 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.
 
 ## Status and development
 
-This alpha may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
+This beta may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
 
 Shoalrun is maintainer-led and does not accept unsolicited pull requests at this time. The [repository development instructions](https://github.com/shoalrun/shoalrun#develop-the-framework) explain how to build and test your own checkout or fork.
 

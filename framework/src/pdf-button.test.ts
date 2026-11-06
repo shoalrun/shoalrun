@@ -18,7 +18,7 @@ test('page printing is opt-in, defaults to the browser, and is independently sup
   const action = pdfPageAction(doc, { html: { pdf: {} } }, '/help')!;
   assert.equal(action.mode, 'print');
   assert.equal(action.href, undefined);
-  assert.equal(action.label, 'Print / Save as PDF');
+  assert.equal(action.label, 'Print PDF');
   assert.notEqual(pdfPageKey('guide', doc.variant), pdfPageKey('guide', { ...doc.variant, product: 'other' }));
   assert.equal(pdfPageAction({ ...doc, frontmatter: { ...doc.frontmatter, pdf: false } }, { html: { pdf: {} } }), undefined);
 });

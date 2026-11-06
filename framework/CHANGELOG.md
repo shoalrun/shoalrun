@@ -1,17 +1,16 @@
 # Changelog
 
-## 0.1.0-alpha.20 — 2026-11-05
+## 0.1.0-beta.1 — 2026-11-05
 
 - Add custom code-fence highlighting with local TextMate JSON grammars and aliases.
 - Export styled page or publication PDFs with custom fonts, covers, contents,
-  and page layouts. CLI and optional Node downloads require installed Chromium.
-- Add configurable branded browser printing for static sites, with shared assets
-  and no per-page PDF files. This mode needs no build-time browser or PDF server.
+  and page layouts. CLI and optional Node downloads require Chrome or Chromium.
+- Add configurable branded Print PDF buttons for static sites using the
+  reader's browser.
 - Add the `shoalrun-pdf` agent skill, runnable examples, and configuration guides.
-- Fix Firefox print styling, blank leading pages, and Markdown copying beside PDF
-  actions. Preserve image privacy controls and restrict print CSS resource loading.
+- Harden private runtime paths and print asset loading.
 
-Upgrade to CLI `0.1.0-alpha.20` and rebuild. Page printing is off by default;
+Upgrade to CLI `0.1.0-beta.1` and rebuild. Page printing is off by default;
 manual downloads require an explicit export and deployment.
 
 ## 0.1.0-alpha.19 — 2026-11-05

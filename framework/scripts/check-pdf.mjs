@@ -19,6 +19,6 @@ await mkdir(destination, { recursive: true });
 const page = await exportContent(config, path.join(destination, 'page'), { formats: ['pdf'], documents: ['guide.start'] });
 const publication = await exportContent(config, path.join(destination, 'publication'), { formats: ['pdf'] });
 const site = await compile(config, path.join(destination, 'site'), { releaseLabel: 'pdf-review' });
-const summary = { status: 'rendered-needs-visual-review', page: path.join(destination, 'page/page.pdf'), publication: path.join(destination, 'publication/publication.pdf'), pageDigest: page.digest, publicationDigest: publication.digest, site: path.join(destination, 'site'), siteBuildId: site.buildId, review: 'Open both PDFs; check fonts, math, tables, links, bookmarks, and page breaks. Serve the site to check Print / Save as PDF; the site build generates no page PDFs.' };
+const summary = { status: 'rendered-needs-visual-review', page: path.join(destination, 'page/page.pdf'), publication: path.join(destination, 'publication/publication.pdf'), pageDigest: page.digest, publicationDigest: publication.digest, site: path.join(destination, 'site'), siteBuildId: site.buildId, review: 'Open both PDFs; check fonts, math, tables, links, bookmarks, and page breaks. Serve the site and check the Print PDF button.' };
 await writeFile(path.join(destination, 'render-summary.json'), JSON.stringify(summary, null, 2) + '\n');
 console.log(JSON.stringify(summary, null, 2));

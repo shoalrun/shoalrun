@@ -51,7 +51,7 @@ outputs:
   html:
     pdf:
       mode: print
-      label: Print / Save as PDF
+      label: Print PDF
       placement: after
       include: [guide.start, guide.configure]
 ```

@@ -112,7 +112,7 @@ export async function populatePrintView(view, source, metadata, settings, signal
   margins.textContent = `@page{${settings.header ? `@top-center{content:${marginContent(settings.header, metadata.title)};font:9px Arial,sans-serif;color:#555}` : ''}${settings.footer ? `@bottom-center{content:${marginContent(settings.footer, metadata.title)};font:9px Arial,sans-serif;color:#555}` : ''}}`;
   doc.head.append(margins);
   const tools = element(doc, 'nav', undefined, 'pdf-print-tools'); tools.setAttribute('aria-label', 'Print controls');
-  const print = element(doc, 'button', 'Print / Save as PDF'); print.type = 'button'; print.disabled = true;
+  const print = element(doc, 'button', 'Print PDF'); print.type = 'button'; print.disabled = true;
   const close = element(doc, 'button', 'Close'); close.type = 'button'; close.addEventListener('click', () => view.close());
   const note = element(doc, 'span', 'Preparing document…', 'pdf-print-note'); note.setAttribute('role', 'status');
   tools.append(print, close, note);
