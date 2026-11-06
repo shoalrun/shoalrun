@@ -6,7 +6,7 @@ Use GitHub's **Report a vulnerability** action in this repository's **Security**
 
 Private reporting is a prerequisite for the public launch. If the action is unavailable, use your existing private project contact. Otherwise, open an issue asking only for a private reporting channel. Omit vulnerability details.
 
-Include the affected version, the feature or endpoint involved, a minimal reproduction, and the impact you observed. Use synthetic data and remove secrets. There is no guaranteed response time or maintained older release line during the alpha; fixes target the current development line and subsequent releases.
+Include the affected version, the feature or endpoint involved, a minimal reproduction, and the impact you observed. Use synthetic data and remove secrets. There is no guaranteed response time or maintained older release line during the beta; fixes target the current development line and subsequent releases.
 
 ## Trust boundaries
 
