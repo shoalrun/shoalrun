@@ -16,7 +16,7 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > All changes
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 Updates to Shoalrun and its documentation. Each entry identifies the affected versions and any upgrade steps. Earlier entries retain their private-prototype release context.
 
@@ -29,6 +29,14 @@ Updates to Shoalrun and its documentation. Each entry identifies the affected ve
   [Branding guidance and safer hosted chat](https://www.shoalrun.com/changelog/branding-security.md)
 
   Match your documentation to your brand with an agent skill, and bind hosted-chat visitor checks to the intended site.
+
+- 2026-11-05
+
+  Version 0.1.0-beta.1
+
+  [Styled PDFs and custom code languages](https://www.shoalrun.com/changelog/pdf-custom-languages.md)
+
+  Print branded pages, export a complete PDF manual, and highlight your own code language.
 
 - 2026-11-04
 

@@ -69,4 +69,4 @@ Repository contributors now have a separate maintainer guide covering architectu
 
 ### Related topics
 
-- [Project status](https://www.shoalrun.com/status.md) — Check the alpha's capabilities and current limits.
+- [Project status](https://www.shoalrun.com/status.md) — Check the current capabilities and limits.

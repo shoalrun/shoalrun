@@ -18,11 +18,13 @@ Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write docume
 
 **Updated: 2026-11-05.**
 
-Give an agent a bundled skill when you want it to follow Shoalrun's setup, authoring, recipe, component, or walkthrough workflow. You need an agent that can read the skill file and run commands, plus a Shoalrun checkout or installed CLI.
+Give an agent a bundled skill for Shoalrun setup, authoring, components, recipes, walkthroughs, branding, or PDF exports. You need an agent that can read the skill file and run commands, plus a Shoalrun checkout or installed CLI.
 
 ## Choose the skill for your task
 
 Use `shoalrun-setup` to start a site, `shoalrun-author` to add or revise pages, `shoalrun-recipes` to write a complete task recipe, or `shoalrun-walkthrough` to explain code in steps. Use `shoalrun-component-author` to create trusted custom components. The [skill reference](https://www.shoalrun.com/reference/agent-skills.md) lists their locations and behavior.
+
+Use `shoalrun-brand` for website branding and `shoalrun-pdf` for [styled PDF exports](https://www.shoalrun.com/publish/pdf.md). The PDF skill includes a print stylesheet starter and instructions for covers, typography, publication selection, download actions, and visual verification. Keep its complete folder when making it available to an agent.
 
 ## Make the instructions available
 

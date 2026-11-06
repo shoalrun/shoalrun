@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Getting started
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 Parent page: [Full Markdown page](/start.md)
 
@@ -28,7 +28,7 @@ Parent page: [Full Markdown page](/start.md)
 
 This quickstart takes you from installing Shoalrun to your own working documentation site. You'll scaffold a page from a template, complete its draft, put it in the sidebar, and read its HTML and Markdown output.
 
-> **Alpha:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between alpha releases.
+> **Beta:** Pin an exact version and review release notes before upgrading. Configuration and output formats may change between beta releases.
 
 ## Create a page
 

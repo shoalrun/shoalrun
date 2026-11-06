@@ -3,7 +3,7 @@
 ## 0.1.0-beta.1 — 2026-11-05
 
 - Add custom code-fence highlighting with local TextMate JSON grammars and aliases.
-- Export styled page or publication PDFs with custom fonts, covers, contents,
+- Export [styled page or publication PDFs](https://www.shoalrun.com/publish/pdf) with custom fonts, covers, contents,
   and page layouts. CLI and optional Node downloads require Chrome or Chromium.
 - Add configurable branded Print PDF buttons for static sites using the
   reader's browser.

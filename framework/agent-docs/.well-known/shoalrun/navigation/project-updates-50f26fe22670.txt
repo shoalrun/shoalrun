@@ -26,17 +26,19 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Branding guidance and safer hosted chat](https://www.shoalrun.com/changelog/branding-security.md) — ID: change.branding-security. changelog-entry; 936 tokens. Match your documentation to your brand with an agent skill, and bind hosted-chat visitor checks to the intended site.
 
+- [Styled PDFs and custom code languages](https://www.shoalrun.com/changelog/pdf-custom-languages.md) — ID: change.pdf-custom-languages. changelog-entry; 487 tokens. Print branded pages, export a complete PDF manual, and highlight your own code language.
+
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 554 tokens. Snapshot previews with coverage and freshness reports.
 
 - [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 468 tokens. Reviewed agent drafts, search improvements, and answer context.
 
 - [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 384 tokens. Project discovery and captured working-tree validation.
 
-- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1407 tokens. Compiler, CLI, and reader changes.
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1472 tokens. Compiler, CLI, and reader changes.
 
 - [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1147 tokens. MCP hosting, analytics, and shared component content.
 
-- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — ID: change.navigation-layouts. changelog-entry; 1095 tokens. Navigation sections, reader controls, layouts, and browser analytics.
+- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — ID: change.navigation-layouts. changelog-entry; 1093 tokens. Navigation sections, reader controls, layouts, and browser analytics.
 
 - [Search results and tooltips](https://www.shoalrun.com/changelog/2026-10-18-search-and-tooltips.md) — ID: change.search-and-tooltips. changelog-entry; 675 tokens. Indexed search and hover and focus tooltips.
 
@@ -46,4 +48,4 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. explanation; 821 tokens. Scope limits for skill generation, agent orchestration, and reader-view authorization.
 
-- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1850 tokens. Current capabilities, planned features, and known limits.
+- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1918 tokens. Current capabilities, planned features, and known limits.

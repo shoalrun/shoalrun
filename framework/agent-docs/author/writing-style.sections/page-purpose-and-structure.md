@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 
@@ -36,7 +36,7 @@ Choose the page type by the reader's goal and the actual content. Keep one prima
 | Ingredient      | Reuse one task step in several recipes.        | Required inputs and prerequisites, one action with its instructions, named outputs, and an observable check. Keep the step independent of any recipe's position or neighboring wording. |
 | Recipe          | Complete one task from a known starting state. | Outcome, prerequisites, ordered actions, failure guidance, and a final success check. Include everything needed to follow the published page on its own.                                |
 | Cookbook        | Choose between complete recipes.               | Explain who each path is for, what it needs, and what it produces; link to the published recipe pages. State whether choices are alternatives or can be combined.                       |
-| Changelog entry | Understand a dated change.                     | User-visible behavior, scope, migration when needed, and limitations. Say when a change concerns the private prototype; claim a release only with release evidence.                     |
+| Changelog entry | Understand a dated change.                     | A short capability summary, links to the feature guides, and required upgrade or migration actions. Claim a release only with release evidence.                                         |
 
 Use **Before you begin**, **Check the result**, and **Next steps** for recurring task sections when revising a procedure. Keep action headings specific to the task. Existing tutorials can retain established headings when tools or incoming fragments depend on them. A short procedure may put prerequisites in its introduction; omit sections that add no useful information.
 

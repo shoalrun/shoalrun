@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Code blocks
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 Fenced code is ordinary Markdown rather than an MDX component. It belongs in the component reference because authors use it beside components to show commands, configuration, and payloads.
 
@@ -69,6 +69,51 @@ The default is equivalent to that configuration. The `site` theme takes code col
 To use a theme you know from your editor, set `theme` to a bundled Shiki theme name, such as `github-dark`, `dracula`, or `one-dark-pro`. A dark theme sets the syntax colors, and the palette still sets the block background so it matches the toolbar. A light theme, such as `github-light`, sets both its colors and its background. [Shiki's theme list](https://shiki.style/themes) shows available names. Site typography and surrounding colors still come from [CSS tokens](https://www.shoalrun.com/author/css.md). An unknown theme fails the build.
 
 The built-in grammars are JSON, YAML, shell, JavaScript, TypeScript, Python, HTML, CSS, MDX, Markdown, HTTP, XML, SQL, Go, Java, Ruby, C#, PHP, and Rust. Shiki also recognizes loaded aliases such as `sh` and `js`. Unknown or unlabeled code stays plain. JSON-compatible API examples use JSON highlighting; text media currently use plain text.
+
+### Add your language's grammar
+
+Since 0.1.0-beta.1
+
+Use `languages` with Shiki to add a custom language without writing a highlighter adapter. Give it an ID, a local TextMate JSON grammar, and optional aliases:
+
+```yaml title="docs.config.yaml"
+outputs:
+  html:
+    highlighting:
+      provider: shiki
+      languages:
+        - id: custompy
+          grammar: ./grammars/custompy.tmLanguage.json
+          aliases: [cpy]
+```
+
+For example, this small grammar adds two illustrative keywords before using Python's bundled syntax rules:
+
+```json title="grammars/custompy.tmLanguage.json"
+{
+  "scopeName": "source.custompy",
+  "patterns": [
+    { "name": "keyword.control.custompy", "match": "\\b(?:publish|unless)\\b" },
+    { "include": "source.python" }
+  ]
+}
+```
+
+Use `custompy` or `cpy` as the fence language:
+
+````md
+```custompy
+def welcome(name):
+    unless name is None:
+        publish "Hello, " + name
+```
+````
+
+The grammar path is relative to the config file that declares it, including imported fragments. Use a local JSON file no larger than 4 MiB; XML `.tmLanguage` files aren't supported. The grammar needs a `scopeName` and a `patterns` array. Choose a distinct scope name, and don't reuse a bundled language ID or alias. IDs and aliases use lowercase letters, digits, underscores, or hyphens and start with a letter.
+
+The grammar is a build dependency. `dev` watches it, and isolated authoring validation captures it. Changing the rules rebuilds the colors; a missing or malformed grammar fails the build without replacing valid output. Registrations are isolated between projects built in the same process. Grammar files aren't copied into the browser's assets.
+
+This adds syntax colors to website HTML, not language validation or autocomplete. Filenames remain labels; they don't choose a grammar. The Markdown twin keeps the original code and language ID. Retain applicable license notices when using or adapting an existing grammar.
 
 ### Choose plain code
 

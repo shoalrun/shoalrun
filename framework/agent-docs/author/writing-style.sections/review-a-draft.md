@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 Parent page: [Full Markdown page](/author/writing-style.md)
 

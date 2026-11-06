@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Authoring reference > Example writing guide
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 This page is an example of a project writing guide. The rules below are the house style for Shoalrun's own documentation site, and authors and agents use them through project instructions. Shoalrun doesn't automatically apply these rules to other projects.
 
@@ -42,7 +42,7 @@ Choose the page type by the reader's goal and the actual content. Keep one prima
 | Ingredient      | Reuse one task step in several recipes.        | Required inputs and prerequisites, one action with its instructions, named outputs, and an observable check. Keep the step independent of any recipe's position or neighboring wording. |
 | Recipe          | Complete one task from a known starting state. | Outcome, prerequisites, ordered actions, failure guidance, and a final success check. Include everything needed to follow the published page on its own.                                |
 | Cookbook        | Choose between complete recipes.               | Explain who each path is for, what it needs, and what it produces; link to the published recipe pages. State whether choices are alternatives or can be combined.                       |
-| Changelog entry | Understand a dated change.                     | User-visible behavior, scope, migration when needed, and limitations. Say when a change concerns the private prototype; claim a release only with release evidence.                     |
+| Changelog entry | Understand a dated change.                     | A short capability summary, links to the feature guides, and required upgrade or migration actions. Claim a release only with release evidence.                                         |
 
 Use **Before you begin**, **Check the result**, and **Next steps** for recurring task sections when revising a procedure. Keep action headings specific to the task. Existing tutorials can retain established headings when tools or incoming fragments depend on them. A short procedure may put prerequisites in its introduction; omit sections that add no useful information.
 
@@ -53,6 +53,12 @@ Use **Next steps** to continue a task and **Related reading** for supporting ref
 Run customer commands from a project with the pinned npm package installed, using `npx --no-install shoalrun`. Label contributor-only paths and repository scripts explicitly. Don't assume the quickstart compiled a framework checkout. Recipes maintained through composition must declare every required artifact, including a current build before an export.
 
 These are editorial shapes, not a reason to add empty boilerplate. Follow the [template rules](https://www.shoalrun.com/author/templates.md) and adapt the outline to the reader's need. Headings in a page body start at level two because the renderer supplies the title. Don't add step numbers to authored headings. For a procedure with titled steps, use the [Steps component](https://www.shoalrun.com/author/components/steps.md); it supplies the numbering in HTML and Markdown.
+
+## Release notes
+
+Keep release notes short and factual. Name what readers can do, link each feature heading to its guide, and state the exact upgrade or rebuild action. Prefer a brief paragraph per feature; leave configuration examples and detailed behavior in the linked documentation.
+
+Include before/after explanations only when readers upgrading from a published release need them. Omit development history, discarded designs, implementation walkthroughs, test counts, and generic recaps. Expand when a migration or security action needs explanation. Release-note summaries link to feature guides for HTML, Markdown, and agent details instead of repeating those sections.
 
 ## Voice and explanations
 
@@ -107,7 +113,7 @@ Choose the structure that helps readers use the information or complete the task
 
 Introduce every table with a sentence explaining what readers should use it for. Never place a table directly after a heading. The formatting check enforces this rule with `DocShape.TableIntroduction`.
 
-Don't hide an essential instruction inside decoration. Every page documenting a component or presentation feature needs an **HTML, Markdown, and agents** section, or an existing clearly named equivalent. Explain what HTML shows or lets readers do, what Markdown retains or omits, and how an agent gets the information needed for the task. Include limitations and keyboard or JavaScript behavior when relevant. Check both rendered outputs.
+Don't hide an essential instruction inside decoration. Component references and guides that explain a presentation feature need an **HTML, Markdown, and agents** section, or an existing clearly named equivalent. Explain what HTML shows or lets readers do, what Markdown retains or omits, and how an agent gets the information needed for the task. Include limitations and keyboard or JavaScript behavior when relevant. Check both rendered outputs.
 
 A page that merely uses a callout, link, or Steps component needs the section only when that use changes access to information. Avoid generic claims that both formats are identical: explain the actual representation. Cookbook pages must distinguish their recipe links from the complete instructions in the linked recipes or a downloaded selection.
 

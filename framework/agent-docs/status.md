@@ -16,11 +16,11 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Project > Project status
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
-Shoalrun is an alpha for publishing documentation for people and agents from the same source. This site is built with it. Install the public `@shoalrun/cli` npm package through [Getting started](https://www.shoalrun.com/start.md). No account or package token is needed.
+Shoalrun is in beta for publishing documentation for people and agents from the same source. This site is built with it. Install the public `@shoalrun/cli` npm package through [Getting started](https://www.shoalrun.com/start.md). No account or package token is needed.
 
-The [features overview](https://www.shoalrun.com/features.md) summarizes the platform on one page. The capabilities below include `0.1.0-alpha.18`.
+The [features overview](https://www.shoalrun.com/features.md) summarizes the platform on one page. The capabilities below include `0.1.0-beta.1`.
 
 ## What works today
 
@@ -29,6 +29,8 @@ The [features overview](https://www.shoalrun.com/features.md) summarizes the pla
 - **Structured authoring.** Templates, reusable snippets, custom metadata, and composable configuration support guides and reference pages. Stable page IDs connect links, cards, navigation, and related reading. [Recipes and cookbooks](https://www.shoalrun.com/author/recipes.md) combine reusable instructions into complete workflows. [Agent authoring tools](https://www.shoalrun.com/author/agents.md) provide project discovery, source context, draft previews, and local validation for your existing coding agent.
 
 - **Rich documentation pages.** Built-in [components](https://www.shoalrun.com/author/components.md) include tabs, callouts, tables, code walkthroughs, steps, timelines, and API embeds, with defined Markdown output. [Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render D2 and Mermaid syntax as SVG during the build; Pele renders the Mermaid diagrams. Markdown retains the diagram source and explanation.
+
+- **Code highlighting and PDFs.** Register [custom code languages](https://www.shoalrun.com/author/components/code-blocks.md) and offer [styled page printing or PDF exports](https://www.shoalrun.com/publish/pdf.md), including optional publication manuals and the `shoalrun-pdf` agent skill.
 
 - **Reader controls.** [File trees](https://www.shoalrun.com/author/components/file-tree.md) have expandable folders and keyboard navigation. [Collapsible groups](https://www.shoalrun.com/author/components/collapsible.md) join related disclosures without gaps. Authors can synchronize related [tabs](https://www.shoalrun.com/author/components/tabs.md) and add captions or expanded viewing to [images](https://www.shoalrun.com/author/components/images.md).
 
@@ -60,7 +62,7 @@ These are intended additions, without a promised release date.
 
 ## Current limits
 
-- **Alpha stability.** Configuration, extension points, and output formats can still change. There is no stable release or compatibility promise yet.
+- **Beta stability.** Configuration, extension points, and output formats can still change. There is no stable release or compatibility promise yet.
 - **Component extensibility.** [Trusted custom components](https://www.shoalrun.com/author/components/custom.md) lower into shared content, with a portable authoring skill. Arbitrary executable MDX remains unsupported. Project CSS, browser modules, and configured build extensions are trusted project code.
 - **API coverage.** OpenAPI and JSON Schema support is partial; check the [support reference](https://www.shoalrun.com/api-docs/support.md) against your source. Request examples are copyable, but Shoalrun doesn't provide a live API explorer that sends requests.
 - **Private content.** Reader views don't restrict access to published files. Shoalrun has no built-in reader authentication, and its HTTP MCP endpoint currently serves one selected public publication. Host-level authorization is a separate responsibility.
@@ -82,4 +84,4 @@ Automatic skill generation and general agent orchestration are [deliberate non-g
 
 - [Changelog](https://www.shoalrun.com/changelog.md) — Check implemented capabilities and the remaining release work.
 
-- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — Check the alpha's capabilities and current limits.
+- [Navigation, page layouts, and browser analytics](https://www.shoalrun.com/changelog/2026-10-16-navigation-layouts.md) — Check the current capabilities and limits.

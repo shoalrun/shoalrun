@@ -19,7 +19,7 @@ Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > Bundled a
 
 **Updated: 2026-11-05.**
 
-Shoalrun ships five portable skill folders under `framework/skills/`. Each folder contains a `SKILL.md` with instructions for an agent that can read files and run the Shoalrun CLI. A skill supplies guidance; it doesn't run a separate authoring service.
+Shoalrun ships portable skill folders under `framework/skills/`. Each folder contains a `SKILL.md` with instructions for an agent that can read files and run the Shoalrun CLI. A skill supplies guidance; it doesn't run a separate authoring service.
 
 These are authoring skills for Shoalrun. The build doesn't create a reader-side skill for each published site. Agents reading a generated site use its Markdown twins, `/llms.txt`, and `/documents.json`. A non-interactive skill builder is a [non-goal](https://www.shoalrun.com/non-goals.md): skill creation and maintenance need guidance from a human expert.
 
@@ -34,12 +34,16 @@ Each skill supplies instructions for a specific part of the authoring workflow.
 | `shoalrun-recipes`          | Write task-oriented how-tos as complete recipes, reuse ingredients where helpful, and configure cookbook choices.                                                                                                          |
 | `shoalrun-component-author` | Create trusted [custom components](https://www.shoalrun.com/author/components/custom.md), validate their schemas and shared content, and review HTML/Markdown parity.                                                      |
 | `shoalrun-walkthrough`      | Turn notes, a tutorial, or project code into a [walkthrough](https://www.shoalrun.com/author/components/walkthroughs.md) that explains code step by step.                                                                  |
+| `shoalrun-brand`            | Apply website branding through themes, fonts, local assets, and CSS, then check contrast and interactive states.                                                                                                           |
+| `shoalrun-pdf`              | Style and export pages or publications as [PDFs](https://www.shoalrun.com/publish/pdf.md), configure optional downloads, and inspect actual PDF output. Includes a print design reference and stylesheet starter.          |
 
 Each folder name matches its skill name. For example, the author skill's entry file is `framework/skills/shoalrun-author/SKILL.md`. Installation locations depend on the agent. [Use the bundled agent skills](https://www.shoalrun.com/contribute/agent-skills.md) describes choosing and invoking one.
 
 ## Workflow behavior
 
-The setup skill uses `shoalrun init` to create a project from the bundled `minimal` or `api-docs` starter, then uses `config validate`, `build`, and `dev` to check the result. The author skill uses stable IDs and project config provenance so edits stay attached to the intended publication. The walkthrough skill chooses a mode and layout, prefers code taken from project files, and checks each step's highlight. The recipes skill starts from a reader goal and success check, reuses ingredient source when useful, and distinguishes authoring from browser selection. All five ask the agent to inspect generated HTML and Markdown. They leave deployment decisions with the site owner.
+The setup skill uses `shoalrun init` to create a project from the bundled `minimal` or `api-docs` starter, then uses `config validate`, `build`, and `dev` to check the result. The author skill uses stable IDs and project config provenance so edits stay attached to the intended publication. The walkthrough skill chooses a mode and layout, prefers code taken from project files, and checks each step's highlight. The recipes skill starts from a reader goal and success check, reuses ingredient source when useful, and distinguishes authoring from browser selection.
+
+The branding skill checks website surfaces and interactive states. The PDF skill checks print layout, exact publication/profile selection, links, fonts, and rendered PDF pages. Static sites use browser page printing; downloadable manuals are optional CLI exports. Direct on-demand PDF downloads need a Node host. The skills ask the agent to inspect the outputs relevant to its task and leave deployment decisions with the site owner.
 
 The author skill starts with project-wide discovery and policy reads, captures a task baseline, and edits ordinary working-tree files. It validates a separate capture and opens the matching snapshot review/preview. Required companions come from project policy; compiler success doesn't waive them. Existing local edits are included in the baseline rather than attributed to the new task. No extra authoring model key is needed. Explicit checked-plan clients can still use [Apply a checked edit plan](https://www.shoalrun.com/author/authoring-agent.md).
 
@@ -51,7 +55,7 @@ The skill is an instruction file, not a compiler feature or an automatic React-t
 
 ## Offline documentation
 
-All five skills can consult Shoalrun's bundled docs through a local, agent-neutral tool:
+The skills can consult Shoalrun's bundled docs through a local, agent-neutral tool:
 
 ```sh
 shoalrun docs search "API reference navigation"

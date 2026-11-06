@@ -1,8 +1,8 @@
 ---
 id: reference.config-outputs
 title: Output and export settings
-summary: Configure metadata providers, application exports, Markdown headers,
-  and discovery indexes.
+summary: Configure application exports, PDF styling, Markdown headers, and
+  discovery indexes.
 type: reference
 area: publishing
 subarea: publishing-configuration
@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Output and export
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 Parent page: [Full Markdown page](/config/outputs.md)
 

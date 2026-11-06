@@ -12,7 +12,7 @@ canonical: /
 
 > Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 **Docs for people. Context for agents.**
 
@@ -22,7 +22,7 @@ One source, two audiences. Build interactive docs for people and readable conten
 - [See what an agent gets](https://www.shoalrun.com/publish/agent-friendliness.md)
 - [See what works today](https://www.shoalrun.com/status.md)
 
-> **Try the alpha:** Install `@shoalrun/cli` from npm. No account or token is needed, and the normal build makes no model calls or network requests. Pin an exact version while the alpha evolves.
+> **Try the beta:** Install `@shoalrun/cli` from npm. No account or token is needed, and the normal build makes no model calls or network requests. Pin an exact version during the beta.
 >
 > [Install Shoalrun →](https://www.shoalrun.com/start.md)
 

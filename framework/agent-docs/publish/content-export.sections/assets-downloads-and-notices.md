@@ -22,6 +22,8 @@ Parent page: [Full Markdown page](/publish/content-export.md)
 
 Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It doesn't need a Shoalrun browser runtime.
 
+For printable pages and manuals, use [styled PDF export](https://www.shoalrun.com/publish/pdf.md). PDF exports use the site's selection by default and have their own artifact manifest. The HTML and Markdown bundles described here keep their independent selection contract.
+
 ## Assets, downloads, and notices
 
 Local assets must be inside the content directory or an explicitly configured `assetRoots` directory. Roots and notice paths resolve relative to the config file that declares them:

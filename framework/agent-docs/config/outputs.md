@@ -1,8 +1,8 @@
 ---
 id: reference.config-outputs
 title: Output and export settings
-summary: Configure metadata providers, application exports, Markdown headers,
-  and discovery indexes.
+summary: Configure application exports, PDF styling, Markdown headers, and
+  discovery indexes.
 type: reference
 area: publishing
 subarea: publishing-configuration
@@ -17,9 +17,30 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Output and export
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-06.**
 
 Configure metadata providers, application exports, Markdown headers, and discovery indexes. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
+
+## PDF output
+
+Since 0.1.0-beta.1
+
+Use `outputs.pdf` for shared PDF styling and `exports.<target>.pdf` for target overrides. Enable the optional page action separately with `outputs.html.pdf`; it's off by default. See [Export styled PDFs](https://www.shoalrun.com/publish/pdf.md) for complete commands, settings, local asset requirements, and the static or on-demand delivery choices.
+
+```yaml
+outputs:
+  pdf:
+    size: A4
+    stylesheet: ./styles/print.css
+    footer: "{page} / {pages}"
+  html:
+    pdf:
+      mode: print
+      label: Print PDF
+      placement: after
+```
+
+PDF formats use their own export bundle; they aren't Content REST page representations. Browser print mode uses a shared branded layout, CSS, and fonts from `outputs.pdf`, with optional named-target styling through `outputs.html.pdf.style`. It generates no page PDFs or print documents. Optional manual downloads come from explicit CLI exports. Endpoint mode requires a Node host with Chromium. Header and footer text accepts `{title}`, `{page}`, and `{pages}` placeholders; browser views use browser-supported CSS page margins.
 
 ## `metadata`
 
@@ -73,15 +94,15 @@ For a product release, set `publication: { product: payments, channel: productio
 
 Use `outputs` to configure the HTML, Markdown, discovery, and text artifacts produced by a build.
 
-| Key                          | Meaning                                                                                                                                                                                                                             |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `markdown.metadata`          | The Markdown twin's YAML header: `format`, `fields`, `addFields`, `removeFields`, `omitNull`, `byType`, and `profiles`. `format` defaults to `none`. See [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md). |
-| `html.shareImages`           | `true`: a generated 1200×630 link-preview image per page. `false` turns them off; a mapping with `template` and `fonts` replaces the design. See [share images and favicon](https://www.shoalrun.com/styling/share-images.md).      |
-| `html.highlighting`          | Code highlighting `provider`, `theme`, and `module`. Defaults to Shiki with the `site` theme, which takes code colors from the palette. See [code blocks](https://www.shoalrun.com/author/components/code-blocks.md).               |
-| `html.navigation.heading`    | Heading above the sidebar filter. Defaults to `Explore`; use nonempty text to replace it or `false` to hide it. Since 0.1.0-alpha.13                                                                                                |
-| `html.navigation.showCounts` | Show page counts beside navigation groups. Defaults to `true`; set `false` to omit them. See [navigation](https://www.shoalrun.com/author/navigation.md).                                                                           |
-| `html.search`                | Search `provider`, `module`, and `index`. See [search](https://www.shoalrun.com/author/search.md).                                                                                                                                  |
-| `text`                       | Ordered frontmatter field paths for `card`, `pageHeader`, `search`, `htmlDescription`, and `socialCard`. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md).                                                 |
+| Key                          | Meaning                                                                                                                                                                                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `markdown.metadata`          | The Markdown twin's YAML header: `format`, `fields`, `addFields`, `removeFields`, `omitNull`, `byType`, and `profiles`. `format` defaults to `none`. See [Markdown metadata](https://www.shoalrun.com/author/markdown-metadata.md).                                 |
+| `html.shareImages`           | `true`: a generated 1200×630 link-preview image per page. `false` turns them off; a mapping with `template` and `fonts` replaces the design. See [share images and favicon](https://www.shoalrun.com/styling/share-images.md).                                      |
+| `html.highlighting`          | Code highlighting `provider`, `theme`, custom `languages` for Shiki, or a custom adapter `module`. Defaults to Shiki with the `site` theme, which takes code colors from the palette. See [code blocks](https://www.shoalrun.com/author/components/code-blocks.md). |
+| `html.navigation.heading`    | Heading above the sidebar filter. Defaults to `Explore`; use nonempty text to replace it or `false` to hide it. Since 0.1.0-alpha.13                                                                                                                                |
+| `html.navigation.showCounts` | Show page counts beside navigation groups. Defaults to `true`; set `false` to omit them. See [navigation](https://www.shoalrun.com/author/navigation.md).                                                                                                           |
+| `html.search`                | Search `provider`, `module`, and `index`. See [search](https://www.shoalrun.com/author/search.md).                                                                                                                                                                  |
+| `text`                       | Ordered frontmatter field paths for `card`, `pageHeader`, `search`, `htmlDescription`, and `socialCard`. See [custom metadata](https://www.shoalrun.com/author/custom-metadata.md).                                                                                 |
 
 The build always writes `/llms.txt`, `documents.json`, `redirects.json`, and `resource-headers.json`; there are no settings for them.
 
