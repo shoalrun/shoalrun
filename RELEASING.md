@@ -2,12 +2,35 @@
 
 Shoalrun is an alpha. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
 
+## 0.1.0-alpha.20 release scope
+
+Include custom language highlighting through local TextMate JSON grammars.
+Customers register a language ID and optional aliases under
+`outputs.html.highlighting.languages`, then use those names in code fences.
+Ship the implementation with the runnable `framework/examples/custom-language/`
+example and the updated code-block and output-configuration references.
+Retain the grammar reload, project isolation, exact-code preservation, and
+authoring-capture checks in release verification.
+
+Include styled PDF page/publication export and the configurable page print action.
+Static builds must use a shared branded browser print view, produce no page PDFs
+or extra print documents, and need no build-time browser for the action. Verify
+that configured print CSS/fonts/logo are shared and the original page is unchanged.
+Keep whole-manual CLI
+downloads optional and Node endpoint downloads explicit.
+Ship the PDF example, configuration/export guide, and updated
+author/branding guidance and the `shoalrun-pdf` skill, print reference, and
+stylesheet starter together. Run the PDF checks with a supported installed
+Chromium and inspect page images, links, bookmarks, and font embedding before
+release. Verify profile/audience exclusions and private on-demand input serving.
+Browser-free passing tests don't complete the PDF rendering review.
+
 ## Coordinated release command
 
 Run from the framework repository with the documentation checkout beside it:
 
 ```sh
-npm run release -- 0.1.0-alpha.19
+npm run release -- 0.1.0-alpha.20
 ```
 
 This prepares versions, builds a bootstrap compiler, exports and imports the
