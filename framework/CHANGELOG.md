@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.2.0 — 2026-11-07
+
+- Improve [search](https://www.shoalrun.com/author/search) with a build-time
+  index of complete pages, stronger title and heading matches, exact API symbol
+  and CLI flag lookup, and recovery from common typos. Give current documentation
+  priority over changelog entries for everyday questions.
+- Add optional, configurable model assistance to help hosted search select the
+  best result. Static keyword search works without a search server.
+
+Upgrade to CLI `1.2.0` and rebuild the site and application exports.
+
 ## 1.1.0 — 2026-11-07
 
 - Select additional sections with [ForFacet](https://www.shoalrun.com/author/components/for-facet)

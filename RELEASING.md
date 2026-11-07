@@ -2,11 +2,11 @@
 
 Shoalrun 1.x is the stable release line. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
 
-## 1.1.0 release scope
+## 1.2.0 release scope
 
-This release includes build-time facet sections, optional TypeScript extraction,
-generated content-client references, content-term search ranking, and HTML-only
-parity markers. Public feature guides, skills, and the concise release note live
+This release includes full-page compiled keyword search, exact technical lookups,
+typo recovery, and optional hosted decision-model selection. Public feature
+guides and the concise release note live
 in the matching source and docs checkouts. Retain exact package, snapshot, and
 site provenance throughout preparation.
 
@@ -15,7 +15,7 @@ site provenance throughout preparation.
 Run from the framework repository with the documentation checkout beside it:
 
 ```sh
-npm run release -- 1.1.0
+npm run release -- 1.2.0
 ```
 
 This prepares versions, builds a bootstrap compiler, exports and imports the

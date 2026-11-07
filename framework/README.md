@@ -45,7 +45,7 @@ The [features overview](https://www.shoalrun.com/features) describes the complet
 | Customer editions | External profiles, SKU revisions, feature grants, and conditional pages or sections. |
 | Application help | HTML and Markdown exports, stable page/section/snippet references, static and REST clients, and instance-safe mounting. |
 | Agent discovery | Markdown twins, compact linked indexes, read-only MCP tools, bundled skills, and offline references. |
-| Search and answers | Browser keyword search, optional semantic retrieval, and hosted documentation chat with shared limits. |
+| Search and answers | Precompiled keyword search, optional semantic retrieval and decision-model selection, and hosted documentation chat with shared limits. |
 
 Local builds and keyword search need no provider credentials. Semantic retrieval and generated answers use separately configured services; credentials stay server-side. Reader filters are browsing controls, not authorization. Customer profiles select output during compilation; private-edition hosting remains your responsibility.
 
@@ -197,7 +197,7 @@ branding supplied outside the shared repository, see [deployment profiles](DEPLO
 
 ## Enable semantic search
 
-The default search runs in the browser with no server or API key. To use
+The default search uses a build-time inverted index in the browser, with no server or API key. Browser, CLI, and MCP keyword lookups share that engine. Term postings cover the published HTML article; the existing excerpt-oriented `search-index.json` remains available to custom consumers. To use
 Shoalrun's semantic endpoint, select the included provider:
 
 ```yaml
@@ -223,9 +223,11 @@ shoalrun serve site-dist --search --config docs.config.yaml
 
 No custom browser adapter or chat model is needed. The browser sends the selected
 publication and reader view to the same-origin endpoint and uses keyword search
-if it is missing or unavailable. Each semantic query calls the embedding
-provider; keys stay server-side. Reindex changed content and restart the preview
+if it is missing or unavailable. Ordinary semantic queries call the embedding
+provider; exact indexed symbols can use the keyword path. Keys stay server-side. Reindex changed content and restart the preview
 after rebuilding indexes. Existing matching embedding inputs are reused.
+
+Optional `search.rerank` selects a compatible typed-decision endpoint, model, and server credential variable. It can promote one existing search destination after publication and reader filtering. Exact titles, technical identifiers, and release-history queries retain their retrieval order; deadlines and model failures preserve the original results. No model or vendor is selected by default. See the [search configuration](https://www.shoalrun.com/author/search) for fields and limits.
 
 `provider: semantic` configures the browser connection; production hosting still
 needs a search endpoint. The current Vercel integration supplies search through
