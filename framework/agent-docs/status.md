@@ -16,11 +16,11 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Project > Project status
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
-Shoalrun is in beta for publishing documentation for people and agents from the same source. This site is built with it. Install the public `@shoalrun/cli` npm package through [Getting started](https://www.shoalrun.com/start.md). No account or package token is needed.
+Shoalrun 1.0 publishes documentation for people and agents from the same source. This site is built with it. Install the public `@shoalrun/cli` npm package through [Getting started](https://www.shoalrun.com/start.md). No account or package token is needed.
 
-The [features overview](https://www.shoalrun.com/features.md) summarizes the platform on one page. The capabilities below include `0.1.0-beta.1`.
+The [features overview](https://www.shoalrun.com/features.md) summarizes the platform on one page. The capabilities below describe `1.0.0`.
 
 ## What works today
 
@@ -37,6 +37,8 @@ The [features overview](https://www.shoalrun.com/features.md) summarizes the pla
 - **Configurable sites.** Themes, palettes, layouts, headers, and footers shape the presentation. [Navigation tabs](https://www.shoalrun.com/author/navigation.md) organize larger sites into sections. Explicit [versions and languages](https://www.shoalrun.com/publish/publications.md) publish separate page variants, while reader views tailor navigation and marked content to different audiences.
 
 - **API documentation.** [OpenAPI sources](https://www.shoalrun.com/publish/api-references.md) supply reference pages, named examples, request samples, and contracts for individual operations. Authors can combine generated references with guides and review imported API content before publishing it.
+
+- **SDK references.** [Code API references](https://www.shoalrun.com/api-docs/code-references.md) use Python source and docstrings or a converter snapshot. Choose separate symbols, inline class/module pages, and an optional complete reference, with linked types and field defaults.
 
 - **Search and documentation tools.** Built-in search works in the browser without a model key. Optional [semantic search and cited answers](https://www.shoalrun.com/search-and-chat.md) use your configured providers. Read-only [Model Context Protocol (MCP) tools](https://www.shoalrun.com/publish/mcp.md) let agents search and read pages or sections. They run through a local stdio process or a public HTTP endpoint on Node or Vercel.
 
@@ -62,7 +64,7 @@ These are intended additions, without a promised release date.
 
 ## Current limits
 
-- **Beta stability.** Configuration, extension points, and output formats can still change. There is no stable release or compatibility promise yet.
+- **Upgrade checks.** Pin exact versions and review release notes before upgrading. Rebuild and verify the site and application content consumers before deploying. Older release lines aren't maintained; experimental features keep their lifecycle labels.
 - **Component extensibility.** [Trusted custom components](https://www.shoalrun.com/author/components/custom.md) lower into shared content, with a portable authoring skill. Arbitrary executable MDX remains unsupported. Project CSS, browser modules, and configured build extensions are trusted project code.
 - **API coverage.** OpenAPI and JSON Schema support is partial; check the [support reference](https://www.shoalrun.com/api-docs/support.md) against your source. Request examples are copyable, but Shoalrun doesn't provide a live API explorer that sends requests.
 - **Private content.** Reader views don't restrict access to published files. Shoalrun has no built-in reader authentication, and its HTTP MCP endpoint currently serves one selected public publication. Host-level authorization is a separate responsibility.

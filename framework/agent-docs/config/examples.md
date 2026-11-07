@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Starters and discovery > Example projects
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 The installed package includes complete projects under `node_modules/@shoalrun/cli/example-configs/`, with their pages and local OpenAPI files. Start with a bundled starter in a new directory:
 
@@ -27,7 +27,7 @@ Install Node.js 22.12 or newer and npm before running these commands.
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-beta.1
+npm install --save-exact @shoalrun/cli@1.0.0
 npx --no-install shoalrun init . --starter minimal
 npx --no-install shoalrun build docs.config.yaml site-dist
 npx --no-install shoalrun serve site-dist
@@ -52,7 +52,7 @@ The `showcase` starter provides 18 connected pages. Its component examples cover
 mkdir my-handbook
 cd my-handbook
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-beta.1
+npm install --save-exact @shoalrun/cli@1.0.0
 npx --no-install shoalrun init . --starter showcase
 npx --no-install shoalrun build docs.config.yaml site-dist
 npx --no-install shoalrun serve site-dist

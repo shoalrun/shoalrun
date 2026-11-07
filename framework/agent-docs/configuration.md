@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Configure your project
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 `docs.config.yaml` connects your content, presentation, and publication settings. Start with one file, then extract sections or share defaults when several projects need them. This guide explains how those choices interact and how to inspect the result.
 
@@ -59,7 +59,7 @@ CONFIG_DEMO="$(mktemp -d)"
 mkdir "$CONFIG_DEMO/site"
 cd "$CONFIG_DEMO/site"
 npm init -y
-npm install --save-exact @shoalrun/cli@0.1.0-beta.1
+npm install --save-exact @shoalrun/cli@1.0.0
 npx --no-install shoalrun init . --starter minimal
 ```
 

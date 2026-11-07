@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Get started > Shoalrun features
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 Shoalrun compiles product and API documentation into a website and agent-readable content from the same source. You own the source files, build output, and deployment. The normal compiler build makes no model calls or network requests.
 
@@ -31,6 +31,7 @@ Follow a topic link for configuration, examples, and limits.
 | [Documentation components](https://www.shoalrun.com/author/components.md)              | Use tabs, callouts, tables, steps, walkthroughs, diagrams, and trusted custom components with defined Markdown representations.                                                                                               |
 | [Code highlighting](https://www.shoalrun.com/author/components/code-blocks.md)         | Highlight built-in languages or register a custom language with a local TextMate JSON grammar and aliases. Preserve the original code in Markdown.                                                                            |
 | [OpenAPI documentation](https://www.shoalrun.com/publish/api-references.md)            | Generate reference pages, embed API examples and schemas, show request samples, and publish focused operation contracts. Review source changes before publishing.                                                             |
+| [Code API references](https://www.shoalrun.com/api-docs/code-references.md)            | Generate SDK references from Python docstrings or a converter snapshot. Show linked types, defaults, and member details on symbol, class, module, or optional complete-reference pages.                                       |
 | [Customer editions](https://www.shoalrun.com/publish/deployment-profiles.md)           | Select exact product releases, SKU revisions, and feature grants. Remove excluded pages and sections during compilation.                                                                                                      |
 | [Independent products and versions](https://www.shoalrun.com/publish/publications.md)  | Give each product its own documentation versions and defaults, with explicit languages and routes.                                                                                                                            |
 | [Search and agent tools](https://www.shoalrun.com/search-and-chat.md)                  | Search the selected publication by keyword or optional semantic retrieval. Read-only Model Context Protocol (MCP) tools discover publications and read pages within token budgets. Optional cited answers use your providers. |
@@ -43,7 +44,7 @@ Follow a topic link for configuration, examples, and limits.
 
 ## Before you choose Shoalrun
 
-Configuration and output contracts can change as Shoalrun develops. OpenAPI and JSON Schema support is partial. Arbitrary executable MDX and a live API request explorer aren't supported.
+Pin releases and review upgrade notes before deploying. OpenAPI and JSON Schema support is partial. Arbitrary executable MDX and a live API request explorer aren't supported.
 
 You supply hosting, reader authentication, authored translations, and any optional model or analytics services. Reader views change browsing convenience; they don't restrict access to published files. The hosted public MCP endpoint serves one configured publication, and profiled Vercel chat builds aren't supported.
 

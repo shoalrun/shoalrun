@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > CLI reference
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 The public `@shoalrun/cli` package supplies the `shoalrun` command. It needs Node.js 22.12 or newer. Follow [Getting started](https://www.shoalrun.com/start.md) to install it from npm, then run commands as `npx --no-install shoalrun <command>`. Framework contributors can build the source checkout and run `node framework/dist/cli.js <command>` from its root.
 
@@ -243,6 +243,16 @@ These commands print configuration and API operation details for inspection.
 | `shoalrun operation inspect <id> [config] [--product P] [--channel C] [--version V] [--language L]` | Each publication where a stable operation ID has a reference page.                                                                                                                           |
 
 `operation inspect` compiles the whole project without writing a site. When the operation isn't found in the selected publications, it prints `"status": "missing-variant"` and still exits with code 0. Put flags after the optional config path. An unknown or repeated flag fails before the project is compiled.
+
+## Validate code reference snapshots
+
+`references check` validates a converter's snapshot without invoking Python, running a converter, or building the site:
+
+```sh
+shoalrun references check ./reference/python.json
+```
+
+Success prints JSON with `status: "ok"`, `programmingLanguage`, and the symbol count. Invalid schema fields, duplicate IDs, missing symbol targets, or cyclic parents fail with exit code 1. See [Generate code API references](https://www.shoalrun.com/api-docs/code-references.md) for extraction and [Code API reference settings](https://www.shoalrun.com/api-docs/code-reference-settings.md) for the snapshot contract.
 
 ## Audit a project and API sources
 

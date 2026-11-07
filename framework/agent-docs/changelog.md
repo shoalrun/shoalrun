@@ -16,11 +16,19 @@ Navigation section: [Project](https://www.shoalrun.com/.well-known/shoalrun/navi
 
 Breadcrumbs: [Project](https://www.shoalrun.com/status.md) > Changelog > All changes
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 Updates to Shoalrun and its documentation. Each entry identifies the affected versions and any upgrade steps. Earlier entries retain their private-prototype release context.
 
 ## Latest changes
+
+- 2026-11-06
+
+  Version 1.0.0
+
+  [Shoalrun 1.0 — SDK references and smoother font loading](https://www.shoalrun.com/changelog/code-api-references.md)
+
+  Generate code API references from source and docstrings, choose how readers browse them, and load custom fonts earlier.
 
 - 2026-11-05
 

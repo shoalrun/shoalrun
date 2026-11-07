@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Overview
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 A project's configuration starts at `docs.config.yaml`. The CLI looks for that name by default, and `shoalrun scaffold -n` searches parent directories for it. For a guided workflow, start with [Configure your project](https://www.shoalrun.com/configuration.md). For complete working projects, see [Example configs](https://www.shoalrun.com/config/examples.md).
 
@@ -29,7 +29,7 @@ Each reference below contains the field definitions, defaults, validation rules,
 | [Site and theme settings](https://www.shoalrun.com/config/site.md)                 | `site`, `theme`                                                                                                                       |
 | [Publications and routing settings](https://www.shoalrun.com/config/publishing.md) | `publications`, `navigation`, `redirects`                                                                                             |
 | [Authoring and content settings](https://www.shoalrun.com/config/content.md)       | `authoring`, `frontmatter`, `variables`, `snippets`, `templates`, `callouts`, `badges`, `cookbooks`, `relationships`, `readerFilters` |
-| [API and audit settings](https://www.shoalrun.com/config/apis.md)                  | `apis`, `audit`                                                                                                                       |
+| [API and audit settings](https://www.shoalrun.com/config/apis.md)                  | `apis`, `codeReferences`, `audit`                                                                                                     |
 | [Search and integration settings](https://www.shoalrun.com/config/integrations.md) | `search`, `mcp`, `analytics`                                                                                                          |
 | [Output and export settings](https://www.shoalrun.com/config/outputs.md)           | `metadata`, `exports`, `outputs`                                                                                                      |
 

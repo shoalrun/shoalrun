@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > CLI reference
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Parent page: [Full Markdown page](/cli.md)
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Configure and customize > Themes
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 The `theme` setting controls how the HTML site looks. It has five keys, and each has a default:
 
@@ -60,7 +60,7 @@ Each preset ships its own fonts, so the site looks the same on every operating s
 | `ledger` | Source Serif 4 | JetBrains Mono | JetBrains Mono   |
 | `vice`   | Figtree        | Jost           | System monospace |
 
-The fonts are Latin variable fonts under the SIL Open Font License. The build copies them to `/assets/fonts/` with their license files. A browser downloads only the faces a page uses, and the page preloads its body font. Characters outside the Latin set use the system fallback. Until a font arrives, the page uses a local font resized to match it. Text doesn't shift when the bundled font loads. Agents read the Markdown twins, which load no fonts.
+The fonts are Latin variable fonts under the SIL Open Font License. The build copies them to `/assets/fonts/` with their license files. A browser downloads the faces a page uses; preload hints can start key font downloads earlier. Characters outside the Latin set use the system fallback. Until a font arrives, the page uses a local font resized to match it. A fallback can still look different from the final font, especially when a custom face has different metrics. Agents read the Markdown twins, which load no fonts.
 
 To use system fonts only, set `fonts: system`. Each preset then falls back to its system font stack.
 
@@ -84,8 +84,12 @@ theme:
 ```
 
 - `family` is the name CSS uses. A plain string, such as `headings: Acme Display`, names a font without shipping files. Use it for a font that [project CSS](https://www.shoalrun.com/author/css.md) loads, or one installed on readers' machines.
-- `files` lists local `.woff2`, `.woff`, `.ttf`, or `.otf` files, relative to the config file that declares them. The build copies them to `/assets/fonts/project/`. File names can use letters, numbers, dots, dashes, and underscores, and two files can't share a name.
+- `files` lists local `.woff2`, `.woff`, `.ttf`, or `.otf` files, relative to the config file that declares them. The build copies them to content-versioned URLs under `/assets/fonts/project/`. File names can use letters, numbers, dots, dashes, and underscores, and two files can't share a name.
 - Each file can set `style` (`normal` or `italic`) and `weight`, such as `400` or `"100 900"`. The default weight, `"100 900"`, suits variable fonts; give each static file its own weight.
+
+Since 1.0.0
+
+Local custom body and heading faces are preloaded to start their downloads earlier. Versioned custom-font URLs support long-lived caching; changing a font's bytes changes its URL. Bundled font URLs revalidate so a development browser doesn't keep an older file indefinitely. These settings reduce late font loading, but don't guarantee that every custom font matches its fallback without a visible change. Family names supplied without local files don't create a preload.
 
 A missing file, an unsupported format, or an unknown key fails the build. Check that your font license allows web embedding.
 

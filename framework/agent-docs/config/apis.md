@@ -17,9 +17,13 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > API and audit
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Configure OpenAPI sources, generated references, focused contracts, and local validation. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
+
+## `codeReferences`
+
+Register converter snapshots for code API references independently of OpenAPI sources. Each catalog can choose `layout: symbols`, `classes`, or `modules`, and optionally add a `singlePage` reference. See [Code API reference settings](https://www.shoalrun.com/api-docs/code-reference-settings.md) for source bindings, symbol selection, metadata, and the converter contract.
 
 ## `apis`
 

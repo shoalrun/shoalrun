@@ -28,13 +28,15 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Styled PDFs and custom code languages](https://www.shoalrun.com/changelog/pdf-custom-languages.md) — ID: change.pdf-custom-languages. changelog-entry; 487 tokens. Print branded pages, export a complete PDF manual, and highlight your own code language.
 
+- [Shoalrun 1.0 — SDK references and smoother font loading](https://www.shoalrun.com/changelog/code-api-references.md) — ID: change.code-api-references. changelog-entry; 538 tokens. Generate code API references from source and docstrings, choose how readers browse them, and load custom fonts earlier.
+
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 554 tokens. Snapshot previews with coverage and freshness reports.
 
 - [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 468 tokens. Reviewed agent drafts, search improvements, and answer context.
 
 - [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 384 tokens. Project discovery and captured working-tree validation.
 
-- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1472 tokens. Compiler, CLI, and reader changes.
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1547 tokens. Compiler, CLI, and reader changes.
 
 - [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1147 tokens. MCP hosting, analytics, and shared component content.
 
@@ -48,4 +50,4 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Non-goals](https://www.shoalrun.com/non-goals.md) — ID: guide.non-goals. explanation; 821 tokens. Scope limits for skill generation, agent orchestration, and reader-view authorization.
 
-- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1918 tokens. Current capabilities, planned features, and known limits.
+- [Project status](https://www.shoalrun.com/status.md) — ID: guide.status. reference; 1990 tokens. Current capabilities, planned features, and known limits.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "configDigest": "e3d0124ef8866a0cd2080cd8b3822909d5b4e288ef0c642b1ebcaebe2591c305",
+  "configDigest": "29b56e216858565721d2a6773b9e22346061341ae078717ac05c19dd686f2f3b",
   "searchSynonyms": [
     [
       "walkthrough",
@@ -180,6 +180,7 @@
     "content/changelog/2026-11-04-runtime-packaging.mdx",
     "content/changelog/2026-11-05-branding-security.mdx",
     "content/changelog/2026-11-05-pdf-custom-languages.mdx",
+    "content/changelog/2026-11-06-code-api-references.mdx",
     "content/changelog/authoring-preview.mdx",
     "content/changelog/authoring-search.mdx",
     "content/changelog/authoring-tools.mdx",
@@ -192,6 +193,8 @@
     "content/chat-checks.mdx",
     "content/chat-settings.mdx",
     "content/cli-reference.mdx",
+    "content/code-api-reference-settings.mdx",
+    "content/code-api-references.mdx",
     "content/coding-agent-authoring.mdx",
     "content/color-modes.mdx",
     "content/component-action-link.mdx",
@@ -1067,7 +1070,7 @@
       "demo": false,
       "type": "overview",
       "title": "About Shoalrun",
-      "summary": "Learn what Shoalrun is exploring and where the beta stands.",
+      "summary": "Learn what Shoalrun does and where the project is heading.",
       "subjectLifecycle": null,
       "variant": {
         "channel": "production",
@@ -1077,8 +1080,8 @@
       "url": "/about",
       "markdownUrl": "/about.md",
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "9eedf9344a1c06e8a51ab340fbfeefcc11ad5496902f4b629ee2bfd312cdb831",
+      "updated": "2026-11-07",
+      "contentDigest": "d0c9f68589f20722d5d6d5cb420dffe77f9f56434281c154687576d9c0f630fd",
       "breadcrumbs": [],
       "area": "project",
       "subarea": "project-overview",
@@ -1091,10 +1094,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 4616,
-      "markdownTokens": 988,
+      "markdownBytes": 4610,
+      "markdownTokens": 987,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "96aba9fcbb4a9c105b97d98ba81cb7afc883a50da92770b1eb619406148671fb"
+      "digest": "ed9bb0518dce7df45d2b97e5b3bcea1c4144d398f53e526fe97d08f105b57f69"
     },
     {
       "id": "guide.add-page",
@@ -1983,8 +1986,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-05",
-      "contentDigest": "1c3a864a47a30cf8eec6daf48aa8f38cdaa2f413c3be51996a140633af580f9e",
+      "updated": "2026-11-07",
+      "contentDigest": "6663db0cdc6aa96b88b11a3ec12761a7411b966b426abfb329e303489f7eaf19",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2028,10 +2031,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/put-the-spec-in-your-project.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "3a58eec1144b8ae4d24ef301c4049e1ae815531b598d27bed5740ddfcce84f5f",
-          "markdownBytes": 2574,
-          "markdownTokens": 622,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "8db56b7ec3fbb0b6cf2a6727e95b946501e4723b97762d7b2960474e52d3921c",
+          "markdownBytes": 2753,
+          "markdownTokens": 661,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2040,10 +2043,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/register-the-operation.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "c8b27454f840e035bcbb7bbc8c7c89d99c4b0c04e06c44586703a85fc10439d8",
-          "markdownBytes": 3383,
-          "markdownTokens": 825,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "3a2483e56472ad298ffc8ac6c351fa3d8bef8c9db82956f26610f55998a4939e",
+          "markdownBytes": 3562,
+          "markdownTokens": 864,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2052,10 +2055,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/author-the-reference-page.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "1733411604898555462db94d5bcb4f24e16f40bf81d57bfe88cc73579219f276",
-          "markdownBytes": 2707,
-          "markdownTokens": 646,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "96f619db648f9a20f345b9340c52a962325ef95065e64c92d5d5a3402b2d1476",
+          "markdownBytes": 2886,
+          "markdownTokens": 685,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2064,10 +2067,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/review-imported-content-before-publishing.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "1981984a492d0cbbeddc5dbfacc82a6bd3e2e016e088af459e2983357f0b9cf6",
-          "markdownBytes": 2986,
-          "markdownTokens": 696,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "8f761dcd3af9895155383fd2ea5a01f4ff5ffed3de5f127cdb6e48f2de57a25b",
+          "markdownBytes": 3165,
+          "markdownTokens": 735,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2076,10 +2079,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/build-and-verify-the-output.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "42eb0a295118c3f1386a8df5c7c2cfbe3a78b5622cf8331e535e3e683d8b993f",
-          "markdownBytes": 3038,
-          "markdownTokens": 738,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "60e42c5ecb5c7e8d823e8de6de81a635c65412f72f1205a9b33a2d653ad84d27",
+          "markdownBytes": 3217,
+          "markdownTokens": 777,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2088,10 +2091,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/what-readers-get.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "17589e3c65c7ea1b6b8eaa8b09dc14bbf5c645581d41a7c1d3c5edbc7ca42c57",
-          "markdownBytes": 2423,
-          "markdownTokens": 565,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "e9b80e4ef1846f4cabeffee759e3fa73a9853e865497c0959630dd06175db0b1",
+          "markdownBytes": 2602,
+          "markdownTokens": 604,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2100,10 +2103,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/next-steps.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "443a4685fc5dcf0ab366bb1094f46c9a6aa943115b1010e204a330709cdb0943",
-          "markdownBytes": 2997,
-          "markdownTokens": 709,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "23b36cd6313660da2a07829fda5ebaa0bc7ad7c38c41130f752170d2c8b00bf4",
+          "markdownBytes": 3176,
+          "markdownTokens": 748,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2112,10 +2115,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/inspect-the-machine-readable-contract.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "35bad09a9af8d7694278e3051d3963a74082681d3e97414712970cbf4a685ea1",
-          "markdownBytes": 2052,
-          "markdownTokens": 503,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "af761b74b50380edd83efa8c46883e6220ec81597d5873e1dd835129818678e7",
+          "markdownBytes": 2231,
+          "markdownTokens": 542,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2124,10 +2127,10 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/preview-a-small-api-reference.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "2dd32fab88ea32086b884692dedfcc78365ee308ad045e0e1cac6fce58b13b34",
-          "markdownBytes": 2224,
-          "markdownTokens": 548,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "006e12a6af657a48c3183112f67fe66b53d0ff3e885de7b59b0925d4ed2c9822",
+          "markdownBytes": 2403,
+          "markdownTokens": 587,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -2136,17 +2139,17 @@
           "depth": 2,
           "markdownUrl": "/publish/api-references.sections/related-reading.md",
           "parentMarkdownUrl": "/publish/api-references.md",
-          "parentDigest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689",
-          "digest": "7aac3c92fb14ef4bd622948bd31b63559f08c629c7fdc332cc9467b83ade33d4",
-          "markdownBytes": 2116,
-          "markdownTokens": 524,
+          "parentDigest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c",
+          "digest": "db1a8bae91852d2ff6464f3e22deb84d0a47aec526d6267c09a3a10413fe97ab",
+          "markdownBytes": 2295,
+          "markdownTokens": 563,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 11704,
-      "markdownTokens": 2644,
+      "markdownBytes": 11883,
+      "markdownTokens": 2683,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "23482a019ddbf92c71ec332d0ac6550f8bf40a2b8e2c3c8498e34bc6e9b29689"
+      "digest": "0ee588452f62ccf3c988d9cafc5a4d08afd69b1e9b1adf27a37f1a14b304e80c"
     },
     {
       "id": "guide.audit",
@@ -2319,8 +2322,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "d7625ff094db88b3ef4a639a0e5d694e905cef53caaea6fdfd09c264b92c0321",
+      "updated": "2026-11-07",
+      "contentDigest": "bf26c4cccd46cf46369cf9f5f28d9a44865c43190cdb303a998ca2e0c9fe9408",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -2364,10 +2367,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 3608,
-      "markdownTokens": 751,
+      "markdownBytes": 3603,
+      "markdownTokens": 750,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "69a098fc74250f2b6fa0645a6d3cfbfbe14789ce37ad41a85bd4a8813a4c6e8b"
+      "digest": "ed16d5c8afe9db3f3046f9f2011b138a81631e8e12a41cb22d766f62fc3c5dea"
     },
     {
       "id": "guide.authoring-agent-workflow",
@@ -3674,6 +3677,72 @@
       "digest": "72923ab92ea77feeb6e3faa7cbc9f91c9328a0bd674369302ccbc694ab4dc4cd"
     },
     {
+      "id": "change.code-api-references",
+      "demo": false,
+      "type": "changelog-entry",
+      "title": "Shoalrun 1.0 — SDK references and smoother font loading",
+      "summary": "Generate code API references from source and docstrings, choose how readers browse them, and load custom fonts earlier.",
+      "subjectLifecycle": null,
+      "variant": {
+        "channel": "production",
+        "version": "current",
+        "language": "en"
+      },
+      "url": "/changelog/code-api-references",
+      "markdownUrl": "/changelog/code-api-references.md",
+      "navigationTab": {
+        "id": "project-updates",
+        "label": "Project",
+        "variant": {
+          "channel": "production",
+          "version": "current",
+          "language": "en"
+        },
+        "url": "/status",
+        "markdownUrl": "/status.md",
+        "indexUrl": "/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt"
+      },
+      "indexable": true,
+      "updated": "2026-11-07",
+      "contentDigest": "2a84b3560f02a64872fabc67d3484106ec7cdd32289cc60fedd09c71ef6b2254",
+      "breadcrumbs": [
+        {
+          "label": "Project",
+          "url": "/status"
+        },
+        {
+          "label": "Changelog"
+        },
+        {
+          "label": "1.0: SDK references and font loading",
+          "url": "/changelog/code-api-references"
+        }
+      ],
+      "area": [
+        "api",
+        "appearance",
+        "project"
+      ],
+      "subarea": [
+        "api-generation",
+        "appearance-themes",
+        "project-releases"
+      ],
+      "readerFilters": {},
+      "cardTargets": [],
+      "cardQueries": [],
+      "snippets": [],
+      "apiEmbeds": [],
+      "focusedContractUrl": null,
+      "focusedContractBytes": null,
+      "focusedContractDigest": null,
+      "sections": [],
+      "markdownBytes": 2241,
+      "markdownTokens": 538,
+      "markdownTokenEncoding": "cl100k_base",
+      "digest": "9aa7d3ac58ddeb38c3da21651672206ca6bcd8151af7258221bfe2f91c2a8998"
+    },
+    {
       "id": "change.authoring-preview",
       "demo": false,
       "type": "changelog-entry",
@@ -3895,8 +3964,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "663a4a7ea2e489791b5861c8cba71e38553fe09105085637be00f8e492bc1daa",
+      "updated": "2026-11-07",
+      "contentDigest": "2f510e9c66b46917e567ab78719266e64548f1ecbf77cd864810138796c77c0f",
       "breadcrumbs": [
         {
           "label": "Project",
@@ -3914,6 +3983,7 @@
       "subarea": "project-releases",
       "readerFilters": {},
       "cardTargets": [
+        "change.code-api-references",
         "change.branding-security",
         "change.pdf-custom-languages",
         "change.2026-11-04-runtime-packaging",
@@ -3953,10 +4023,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 5585,
-      "markdownTokens": 1472,
+      "markdownBytes": 5861,
+      "markdownTokens": 1547,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "24d7e61f614834a6ac05bcd3e91988cd568a15b29916db282da950149ee1912f"
+      "digest": "8ae73bce4cfb198d48f5351ce8dd18ac2b6a21b45c131eafcd3b27b52adf3936"
     },
     {
       "id": "change.mcp-hosting",
@@ -4613,8 +4683,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-05",
-      "contentDigest": "e8406bb26cc3c3de473c625c3eda88e2ecf23272a44215e6abd2000e8a04e691",
+      "updated": "2026-11-07",
+      "contentDigest": "8fa04fe33ea38dd80623ffcf3ce8cf2e6d98d1d5eedd9d370d15c8b5e7e0ff32",
       "breadcrumbs": [
         {
           "label": "Reference",
@@ -4651,8 +4721,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/start-a-project.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "c3490306954e3482bf7214475d4ae1c6a03dd364e64c37c2e3b87f402f8332fa",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "dd1f3fd63c3ecd36e4c42ae6917da0d8533d42e9f51e63cb9486b1da14480bc4",
           "markdownBytes": 2852,
           "markdownTokens": 670,
           "markdownTokenEncoding": "cl100k_base"
@@ -4663,8 +4733,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/build-and-serve.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "197dd259d8e6387aeefe7085700aefef61dc0d9ba9e108054e55f20bdb135418",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "0a4e58d20228f96a68c452652213ed9be590f7c492f0ac304c72cd2833088aa1",
           "markdownBytes": 12941,
           "markdownTokens": 2990,
           "markdownTokenEncoding": "cl100k_base"
@@ -4675,8 +4745,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/author-pages.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "77c2954b84475f96dc5af70c06b79ca48644cff24f2bb4cc4ebdca0d4806221c",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "3e462c7e17ce8f6549375356266c259cf08f40ede9187b9d2eabadcfe25662dc",
           "markdownBytes": 7903,
           "markdownTokens": 1677,
           "markdownTokenEncoding": "cl100k_base"
@@ -4687,10 +4757,22 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/inspect-config-and-operations.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "9b974d02a75da21e60c8e819a87effed4910039bdcd4c1ed82b10422ea8ad8bd",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "d0f410253ada3beacbf8baf453afbf74ebe9ff5e8098e0506e21ec496bcc81f2",
           "markdownBytes": 4260,
           "markdownTokens": 765,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "validate-code-reference-snapshots",
+          "title": "Validate code reference snapshots",
+          "depth": 2,
+          "markdownUrl": "/cli.sections/validate-code-reference-snapshots.md",
+          "parentMarkdownUrl": "/cli.md",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "88de7230491ba2ff0dd168c94cdb0c864987d08dfbf0ee419b697ebe6e0dda72",
+          "markdownBytes": 2409,
+          "markdownTokens": 583,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -4699,8 +4781,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/audit-a-project-and-api-sources.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "2109885b44608cc133f471ae385a15f5c3d256eb440523c5cbfdf4190bbe7a34",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "980e1a9269e2dd76357591abdb2cdce8d1743f26a7bc4f2dd089345682d70522",
           "markdownBytes": 6981,
           "markdownTokens": 1646,
           "markdownTokenEncoding": "cl100k_base"
@@ -4711,8 +4793,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/npm-scripts-in-this-repository.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "618d45dd7346298be8372e0cdab255b962c2bb49f303505dba2744409bdc68af",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "99116648fd630f8b3136b54db36ea0f2ec12c90acdde6bd44a3385632cb03719",
           "markdownBytes": 4175,
           "markdownTokens": 878,
           "markdownTokenEncoding": "cl100k_base"
@@ -4723,8 +4805,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/search-and-chat.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "3cc835746b224fa63ffd64f93d3e9a4a45f2f0ee6efc8a94b003466eff0adce9",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "a9a2188e82557f87440d4aafca9b5a08988374c1d50eacd499023c772e68c73e",
           "markdownBytes": 13964,
           "markdownTokens": 2988,
           "markdownTokenEncoding": "cl100k_base"
@@ -4735,8 +4817,8 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/working-tree-authoring-tools.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "1081581eec3f57e9c3380c67339d79eabca3180c6272741185759ccd0f2e824e",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "b60fda85a77a72155f6c0dea5b541fd4732d7b65b73776813582ce83ff9089a2",
           "markdownBytes": 2890,
           "markdownTokens": 667,
           "markdownTokenEncoding": "cl100k_base"
@@ -4747,17 +4829,281 @@
           "depth": 2,
           "markdownUrl": "/cli.sections/related-reading.md",
           "parentMarkdownUrl": "/cli.md",
-          "parentDigest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523",
-          "digest": "6090089ed9c660d7b6373710908f4b0f25d703b71de162310d0e2656befa9518",
+          "parentDigest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d",
+          "digest": "785b18b7ceecb5920dfcf71c5d4cecde1439e61487d227994dfe12e7ff4aebc5",
           "markdownBytes": 1939,
           "markdownTokens": 483,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 43654,
-      "markdownTokens": 9183,
+      "markdownBytes": 44291,
+      "markdownTokens": 9321,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "f02c9c73d7e8469bdcaad3d03bd10d9144714a2c59f822c0dea7d3c05cd75523"
+      "digest": "f34aef19d758d9a92a26ba6c093ab35f9cf7480c2b7a77307b93921d8b31c25d"
+    },
+    {
+      "id": "reference.code-api-references",
+      "demo": false,
+      "type": "reference",
+      "title": "Code API reference settings",
+      "summary": "Catalog configuration, converter snapshots, Python extraction limits, and generated reference behavior.",
+      "subjectLifecycle": null,
+      "variant": {
+        "channel": "production",
+        "version": "current",
+        "language": "en"
+      },
+      "url": "/api-docs/code-reference-settings",
+      "markdownUrl": "/api-docs/code-reference-settings.md",
+      "navigationTab": {
+        "id": "docs",
+        "label": "Docs",
+        "variant": {
+          "channel": "production",
+          "version": "current",
+          "language": "en"
+        },
+        "url": "/what-is-shoalrun",
+        "markdownUrl": "/what-is-shoalrun.md",
+        "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
+      },
+      "indexable": true,
+      "updated": "2026-11-06",
+      "availability": {
+        "since": "1.0.0"
+      },
+      "contentDigest": "fe028a21365c55583066361689081a7ead8e475ce78c8703c2e2180e23be1ca7",
+      "breadcrumbs": [
+        {
+          "label": "Docs",
+          "url": "/what-is-shoalrun"
+        },
+        {
+          "label": "Document an API"
+        },
+        {
+          "label": "Code API reference settings",
+          "url": "/api-docs/code-reference-settings"
+        }
+      ],
+      "area": "api",
+      "subarea": "api-generation",
+      "readerFilters": {
+        "focus": [
+          "configure"
+        ]
+      },
+      "cardTargets": [
+        "guide.code-api-references"
+      ],
+      "cardQueries": [
+        {
+          "component": "RelatedReading"
+        }
+      ],
+      "snippets": [],
+      "apiEmbeds": [],
+      "focusedContractUrl": null,
+      "focusedContractBytes": null,
+      "focusedContractDigest": null,
+      "sections": [
+        {
+          "id": "catalog-settings",
+          "title": "Catalog settings",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/catalog-settings.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "9576d49f52bd3954678ff82ac4bee9a6ad2772cd7ee0a0ab33bacebf4239b0f5",
+          "markdownBytes": 4048,
+          "markdownTokens": 743,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "complete-reference-page",
+          "title": "Complete reference page",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/complete-reference-page.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "cc2107c7dc77a184813958bdeeb875a0b1b1d239cfa7c7a6d9199fa8502e2323",
+          "markdownBytes": 2370,
+          "markdownTokens": 520,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "publication-sources",
+          "title": "Publication sources",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/publication-sources.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "96b851750aeb41a3bf87a5d57665f56300e57b7248c792fc98a5643d6244c530",
+          "markdownBytes": 2133,
+          "markdownTokens": 506,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "metadata-and-selection",
+          "title": "Metadata and selection",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/metadata-and-selection.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "8970dca13e3727ad141315d08b58208be59bd7ebc08742f1914abdb9d38344b9",
+          "markdownBytes": 2198,
+          "markdownTokens": 479,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "converter-snapshot",
+          "title": "Converter snapshot",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/converter-snapshot.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "1dc218ded3515df31ec5e933661283002799f3e848ce1c687a77611ba81c1ae0",
+          "markdownBytes": 2669,
+          "markdownTokens": 657,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "symbol-fields",
+          "title": "Symbol fields",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/symbol-fields.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "47a49b3ee1b576b6360cc40e74791650abdab4f04814746d1922c9dde8d923da",
+          "markdownBytes": 4833,
+          "markdownTokens": 798,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "descriptions-type-links-and-source-links",
+          "title": "Descriptions, type links, and source links",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/descriptions-type-links-and-source-links.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "b64ee32c7dc82ee978f329ed88d37cb334dfd8581b953708a47e7d10423dec2f",
+          "markdownBytes": 2365,
+          "markdownTokens": 539,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "python-adapter-limits",
+          "title": "Python adapter limits",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/python-adapter-limits.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "5fecca505799782b56cb1de13990aef568757af186e1f624b67b4033c5d7e8d3",
+          "markdownBytes": 2243,
+          "markdownTokens": 503,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "html-markdown-and-agents",
+          "title": "HTML, Markdown, and agents",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/html-markdown-and-agents.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "6bab992872e218d2dae14ba7bc041cbe3f9cc1998da71b22af41df76db8c2b51",
+          "markdownBytes": 2248,
+          "markdownTokens": 496,
+          "markdownTokenEncoding": "cl100k_base"
+        },
+        {
+          "id": "related-reading",
+          "title": "Related reading",
+          "depth": 2,
+          "markdownUrl": "/api-docs/code-reference-settings.sections/related-reading.md",
+          "parentMarkdownUrl": "/api-docs/code-reference-settings.md",
+          "parentDigest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51",
+          "digest": "c531372c8bc531e8e72fd08944802b05b161b3cf997687b3e9d0248703bb3454",
+          "markdownBytes": 1403,
+          "markdownTokens": 345,
+          "markdownTokenEncoding": "cl100k_base"
+        }
+      ],
+      "markdownBytes": 13423,
+      "markdownTokens": 2374,
+      "markdownTokenEncoding": "cl100k_base",
+      "digest": "683c0d7d83e7379af9d383be33b20157875842275c444bf6c9b6f8991d92ce51"
+    },
+    {
+      "id": "guide.code-api-references",
+      "demo": false,
+      "type": "how-to",
+      "title": "Generate code API references",
+      "summary": "Turn Python source and docstrings into SDK reference pages, with separate, grouped, or complete-page layouts.",
+      "subjectLifecycle": null,
+      "variant": {
+        "channel": "production",
+        "version": "current",
+        "language": "en"
+      },
+      "url": "/api-docs/code-references",
+      "markdownUrl": "/api-docs/code-references.md",
+      "navigationTab": {
+        "id": "docs",
+        "label": "Docs",
+        "variant": {
+          "channel": "production",
+          "version": "current",
+          "language": "en"
+        },
+        "url": "/what-is-shoalrun",
+        "markdownUrl": "/what-is-shoalrun.md",
+        "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
+      },
+      "indexable": true,
+      "updated": "2026-11-07",
+      "availability": {
+        "since": "1.0.0"
+      },
+      "contentDigest": "863666f320fe916f38f283b10af86b51ccbe1682b470c54ccb3f7595b689f71d",
+      "breadcrumbs": [
+        {
+          "label": "Docs",
+          "url": "/what-is-shoalrun"
+        },
+        {
+          "label": "Document an API"
+        },
+        {
+          "label": "Generate code API references",
+          "url": "/api-docs/code-references"
+        }
+      ],
+      "area": "api",
+      "subarea": "api-generation",
+      "readerFilters": {
+        "focus": [
+          "write"
+        ]
+      },
+      "cardTargets": [
+        "guide.api-references",
+        "reference.code-api-references"
+      ],
+      "cardQueries": [
+        {
+          "component": "RelatedReading"
+        }
+      ],
+      "snippets": [],
+      "apiEmbeds": [],
+      "focusedContractUrl": null,
+      "focusedContractBytes": null,
+      "focusedContractDigest": null,
+      "sections": [],
+      "markdownBytes": 9387,
+      "markdownTokens": 1936,
+      "markdownTokenEncoding": "cl100k_base",
+      "digest": "a7ae9986be38b666e9f6e33116f74ca20029beb1228b6abe2b282863a61feb9e"
     },
     {
       "id": "guide.coding-agent-authoring",
@@ -6979,8 +7325,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-05",
-      "contentDigest": "6b64ab6cad978bd088e5f7a2db904dc88c6eac05144fb2ae737d95d0eb9de247",
+      "updated": "2026-11-07",
+      "contentDigest": "21055f3927415c0cb233c3f0a091baa3fbb80ec447aed85fc0b9c92624996272",
       "breadcrumbs": [
         {
           "label": "Reference",
@@ -7016,10 +7362,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 9832,
-      "markdownTokens": 1893,
+      "markdownBytes": 10227,
+      "markdownTokens": 1974,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "c5a46ecf979c6bdf3935d5fabb7122735c546ec967201dd763032ac8412ad9e5"
+      "digest": "4e7c34e80feb82883b4ddf553901fd3bd42cdfa26c4d0803ddb32d70ab1ff9c8"
     },
     {
       "id": "reference.config-content",
@@ -7637,8 +7983,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-05",
-      "contentDigest": "4ee7cb6125f79de776ec8ace10f1391efa68256d49cd78ae8fae8098629d3ae1",
+      "updated": "2026-11-07",
+      "contentDigest": "0007a02ed417ee039f47acf63fe391618372f3652dfa17c3901951a810a169fa",
       "breadcrumbs": [
         {
           "label": "Reference",
@@ -7676,9 +8022,9 @@
       "focusedContractDigest": null,
       "sections": [],
       "markdownBytes": 8302,
-      "markdownTokens": 1803,
+      "markdownTokens": 1807,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "1d41ab0be914623eb230c6a2954f80f50a3ddcbcf9b43b3e2c2d31d6012503aa"
+      "digest": "498381b68cfa64a7094305d530b54245c29672517b1fdd51ab7c0a16bc729440"
     },
     {
       "id": "guide.configuration",
@@ -7707,8 +8053,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "a190a93d35b3193247d339cea874e14e4f4ad7f308b167d8162eb66e06a284ac",
+      "updated": "2026-11-07",
+      "contentDigest": "d0755bffc9169872603d7fa935f70be729249622037cd4bd15c16df465730622",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -7752,8 +8098,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/understand-the-three-stages.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "289784f9cb2602716d43b37ad1fbffdd70ec16eba8ce15ab3a1bcd715554e620",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "dfce40775d9087555377b13f3808b8a446cc31118878dfdf1d7e881caa4ade45",
           "markdownBytes": 3758,
           "markdownTokens": 741,
           "markdownTokenEncoding": "cl100k_base"
@@ -7764,10 +8110,10 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/start-with-one-working-file.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "30ceeb9fc51e029730c61985d48a442e59fcd8f6bcd78b4ba03459d507cdfed2",
-          "markdownBytes": 2891,
-          "markdownTokens": 701,
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "221f6919538f389a979757bb87989c0603cbbbbcd624c29199309dd23e3408ed",
+          "markdownBytes": 2884,
+          "markdownTokens": 698,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -7776,8 +8122,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/extract-a-section-with-include.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "ccaba33e6983d322c5caf168f1ba30435a99b37c8f7a5a7677127528ae0b6fd0",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "c9d77597ed804eed9be2dfa48504dc674a3d014c78c4402f496c9eff6684b2e7",
           "markdownBytes": 3101,
           "markdownTokens": 704,
           "markdownTokenEncoding": "cl100k_base"
@@ -7788,8 +8134,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/share-defaults-through-extends.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "7c1d6df0c70a6c5be9b0a703b2065f53a2852d3e618b8a0f5369d02a9a8e3193",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "05c8558af86a41ea8910e407e02b96992ca05cbd5f036be26ad343a0041f4d54",
           "markdownBytes": 5192,
           "markdownTokens": 1133,
           "markdownTokenEncoding": "cl100k_base"
@@ -7800,8 +8146,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/change-inherited-lists-deliberately.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "bf0f8e62590d5b7f2ed5d07cf88da138cfb10a9c6240faed5e0c2ce4dc9ac09e",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "cf52ea0d1afa6b362f16654a543ea97d9c149fb67bdc5cc8ab580276476e82f3",
           "markdownBytes": 3585,
           "markdownTokens": 809,
           "markdownTokenEncoding": "cl100k_base"
@@ -7812,8 +8158,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/understand-where-paths-point.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "bab1d04effe78f5fcd8da33eb17545b8898cd761263c066e0d2d0094351e3a74",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "3eae415867c9a314696359f3cb920eed711ab5e65db8dd8d74d86d1f66deba9a",
           "markdownBytes": 3480,
           "markdownTokens": 724,
           "markdownTokenEncoding": "cl100k_base"
@@ -7824,8 +8170,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/separate-config-inheritance-from-page-metadata.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "e511769af9d96fa1d288eeabed43bbb60df0308de880c10a667a89c104b4966f",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "212c7bb97de7b886a9114c724310361bdf10e8edb925e15ce6c1f4568f346f58",
           "markdownBytes": 3438,
           "markdownTokens": 724,
           "markdownTokenEncoding": "cl100k_base"
@@ -7836,8 +8182,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/inspect-and-validate-changes.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "b3dfac7d752adf80608db69cbec10d0960ddc7ae83c34f7252fa1ed1f6e7ef54",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "00453391b7dd2f33a3ec69a695247e592eb5f440a62a00c7b8ff22643c3c998a",
           "markdownBytes": 5496,
           "markdownTokens": 1086,
           "markdownTokenEncoding": "cl100k_base"
@@ -7848,8 +8194,8 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/build-several-sites-from-shared-content.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "468efc0378a0d5fd9b919a9639e3dc72b02fd7ec4fe8cc01c000e8a25778c253",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "bfd668ef5b84a35f33697c3d5ef279d804dfdedc8c3612101a0242d88460a752",
           "markdownBytes": 2020,
           "markdownTokens": 457,
           "markdownTokenEncoding": "cl100k_base"
@@ -7860,17 +8206,17 @@
           "depth": 2,
           "markdownUrl": "/configuration.sections/related-reading.md",
           "parentMarkdownUrl": "/configuration.md",
-          "parentDigest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1",
-          "digest": "c34c93f7866a9045f6d31dbbdcbc236f22e45f942145d2c9d3c3507d0ae5443f",
+          "parentDigest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50",
+          "digest": "34b7044c862cefe4c1f25f6f54b397233663ea121827f15e2d1607f864f739e7",
           "markdownBytes": 2018,
           "markdownTokens": 459,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 20507,
-      "markdownTokens": 4169,
+      "markdownBytes": 20500,
+      "markdownTokens": 4166,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "78502eb3b9bbe7e8d09900388ea81cc77190a0d81d467c5011938e77fc0fc6c1"
+      "digest": "d2b2dde0b18d05eddc28bcfc148ad6b60b38994ac029dd3334e323c6e9bb1f50"
     },
     {
       "id": "guide.site-mcp",
@@ -10930,8 +11276,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/examples-tab-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "5d59d411b35261771a438a6fa29ce3c7d17c1d53cbe198c03bcd98a37e1b1d0a",
+      "updated": "2026-11-07",
+      "contentDigest": "26efd7fa5b6798d2ddef3fb02942e2f01669bd1ef9a3d7c0b3619cd14b391419",
       "breadcrumbs": [
         {
           "label": "Examples",
@@ -10973,10 +11319,10 @@
           "depth": 2,
           "markdownUrl": "/config/examples.sections/feature-showcase.md",
           "parentMarkdownUrl": "/config/examples.md",
-          "parentDigest": "c92096e769920aa55b338fad3df631a88fef4cc58cde561d1a85484435c8d66f",
-          "digest": "f43c9a7ff230621fbbf000620b00a1e7d93516a0992385db3c2b381715522da9",
-          "markdownBytes": 3262,
-          "markdownTokens": 785,
+          "parentDigest": "67662031e046723d74447a0760fd568d40ce33cdd1a0e5ecaf056350395fbb86",
+          "digest": "d45352329481e7f0c616f8d4515ae2b693d2473738ff5ca17ea3b0ba5965c67f",
+          "markdownBytes": 3248,
+          "markdownTokens": 779,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -10985,10 +11331,10 @@
           "depth": 2,
           "markdownUrl": "/config/examples.sections/minimal-site.md",
           "parentMarkdownUrl": "/config/examples.md",
-          "parentDigest": "c92096e769920aa55b338fad3df631a88fef4cc58cde561d1a85484435c8d66f",
-          "digest": "38d2869e8b5a17235a38daaf052bbb104ec580204b7fdd1504cd7284bf710504",
-          "markdownBytes": 3133,
-          "markdownTokens": 774,
+          "parentDigest": "67662031e046723d74447a0760fd568d40ce33cdd1a0e5ecaf056350395fbb86",
+          "digest": "8ee5c0e45e1bd1ed3f932fff54e222a3579d452b5681244ba50726c4406a4587",
+          "markdownBytes": 3126,
+          "markdownTokens": 771,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -10997,10 +11343,10 @@
           "depth": 2,
           "markdownUrl": "/config/examples.sections/parcel-api-documentation.md",
           "parentMarkdownUrl": "/config/examples.md",
-          "parentDigest": "c92096e769920aa55b338fad3df631a88fef4cc58cde561d1a85484435c8d66f",
-          "digest": "e5402c87671924ea99e89bb377193af7a9c3203dd2170a6d541a1e0218f7b5ef",
-          "markdownBytes": 5807,
-          "markdownTokens": 1388,
+          "parentDigest": "67662031e046723d74447a0760fd568d40ce33cdd1a0e5ecaf056350395fbb86",
+          "digest": "60d2a05b5171c3da9125765e2a184e17b2c53dabb8e249804615421ce4fdc2d9",
+          "markdownBytes": 5800,
+          "markdownTokens": 1385,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -11009,10 +11355,10 @@
           "depth": 2,
           "markdownUrl": "/config/examples.sections/multilingual-help-center.md",
           "parentMarkdownUrl": "/config/examples.md",
-          "parentDigest": "c92096e769920aa55b338fad3df631a88fef4cc58cde561d1a85484435c8d66f",
-          "digest": "94c7f6aa3958803e8adac8932887a10ea87cbff3d122161b74b86908d806992e",
-          "markdownBytes": 4097,
-          "markdownTokens": 1012,
+          "parentDigest": "67662031e046723d74447a0760fd568d40ce33cdd1a0e5ecaf056350395fbb86",
+          "digest": "65558aed6a43aa09765a4ae0e06cb6cea555a043f1f723f661cef76c9f646e6c",
+          "markdownBytes": 4090,
+          "markdownTokens": 1009,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -11021,10 +11367,10 @@
           "depth": 2,
           "markdownUrl": "/config/examples.sections/shared-company-preset.md",
           "parentMarkdownUrl": "/config/examples.md",
-          "parentDigest": "c92096e769920aa55b338fad3df631a88fef4cc58cde561d1a85484435c8d66f",
-          "digest": "4d77f3b997a12729e224eecf0cad0ecc70d52c5fead85b8d13fe77c82fc4d011",
-          "markdownBytes": 4561,
-          "markdownTokens": 1105,
+          "parentDigest": "67662031e046723d74447a0760fd568d40ce33cdd1a0e5ecaf056350395fbb86",
+          "digest": "e57474e337b54c4228a9b077d2f3739736eca16c466a1a972efef38fb613f280",
+          "markdownBytes": 4554,
+          "markdownTokens": 1102,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -11033,17 +11379,17 @@
           "depth": 2,
           "markdownUrl": "/config/examples.sections/related-reading.md",
           "parentMarkdownUrl": "/config/examples.md",
-          "parentDigest": "c92096e769920aa55b338fad3df631a88fef4cc58cde561d1a85484435c8d66f",
-          "digest": "ef455f2acba8c575f063d3826d33c8c86ddda482c071191226d96a84a8c0e112",
-          "markdownBytes": 2591,
-          "markdownTokens": 622,
+          "parentDigest": "67662031e046723d74447a0760fd568d40ce33cdd1a0e5ecaf056350395fbb86",
+          "digest": "c849586370666734ca432a2bfc4374014e4991d9190c9d67444e26526312c3be",
+          "markdownBytes": 2584,
+          "markdownTokens": 619,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 12040,
-      "markdownTokens": 2893,
+      "markdownBytes": 12026,
+      "markdownTokens": 2887,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "c92096e769920aa55b338fad3df631a88fef4cc58cde561d1a85484435c8d66f"
+      "digest": "67662031e046723d74447a0760fd568d40ce33cdd1a0e5ecaf056350395fbb86"
     },
     {
       "id": "guide.explore",
@@ -11130,8 +11476,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "44e938898bebdab5d4359a7bd35e9a563cbcf02e075d974a75e2e97c0fa93b23",
+      "updated": "2026-11-07",
+      "contentDigest": "03fbf12a946e4543983c18e4cc475818308aa9fa8efc7243c796a7614e75b900",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -11156,10 +11502,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 6999,
-      "markdownTokens": 1156,
+      "markdownBytes": 7302,
+      "markdownTokens": 1213,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "e35bb8da4137ba82715286a4e53e7866e72509c0012cfd363897e75564dcf12d"
+      "digest": "e8915a88c4f1c367a5a8fb6d8ebc5d179f082636f01e8da38ce8ba1cb812f950"
     },
     {
       "id": "guide.focused-contracts",
@@ -16988,8 +17334,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "7b6498c7d0f9f01a0485ea8cb7ebc8d5f9d72d35de43084db87ff9d31ad59845",
+      "updated": "2026-11-07",
+      "contentDigest": "c782fe5ca7df6ca902839f33883cef4400df41ecc4317a522c3ff8de8add154e",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -17031,10 +17377,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/prerequisites.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "3cca3982a5dd5f093bcfc6818f569feb9847eaff71a4abf020e05fee823b0927",
-          "markdownBytes": 1515,
-          "markdownTokens": 382,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "dc419445fcb6626dd66ed068fe8de2ab0d0be6055ef77c838bb0a41cf83db80d",
+          "markdownBytes": 1542,
+          "markdownTokens": 389,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17043,10 +17389,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/start-your-own-project.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "3903bad1b39a9f7b63cb6ae9166e31542d40240cb279b5186054abad00ce21c4",
-          "markdownBytes": 1974,
-          "markdownTokens": 505,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "6f227f4af53b3f42a11e4ebb1d51461ee5119bf8b06a9f52a9df4ee31f637545",
+          "markdownBytes": 1994,
+          "markdownTokens": 509,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17055,10 +17401,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/create-a-page.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "195e89d4317a3946d6b25fe5ded004bc09c00884a75df18a6c42e0d7d936ee39",
-          "markdownBytes": 4403,
-          "markdownTokens": 995,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "b0e432b8364daf3cfb0a79dcb79c03a02267f4335dc33fc8916b1bde756aecca",
+          "markdownBytes": 4430,
+          "markdownTokens": 1002,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17067,10 +17413,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/add-the-page-to-navigation.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "cc71fc32e4c534c8396f288aed463e89d3b919fad11f96cc343a1796a14bd675",
-          "markdownBytes": 1796,
-          "markdownTokens": 451,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "287e9e1dfdc90827e4b389ecfefed4ae9b24d82d982bd223e21c0a691bd59ad3",
+          "markdownBytes": 1823,
+          "markdownTokens": 458,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17079,10 +17425,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/build-and-check-both-outputs.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "eac960e12eaaae44e15ce558771b46f5bf437f381bf15c34025429292e8fa3f2",
-          "markdownBytes": 2338,
-          "markdownTokens": 592,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "78ae6565086cc9af9aef617e0b50c87faa874d9ced30a02458c93e979de649e5",
+          "markdownBytes": 2365,
+          "markdownTokens": 599,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17091,10 +17437,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/make-it-yours.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "b0d3b4afa8294deba1086a236d9eb08d62c5c6837bb8aac693f9ea07728a8c3e",
-          "markdownBytes": 1948,
-          "markdownTokens": 493,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "2b5099478d6f1ff2c9b7835cae3b985cf84e8a80eedbea49a55a56ae8a749167",
+          "markdownBytes": 1975,
+          "markdownTokens": 500,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17103,10 +17449,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/migrating-from-github-packages.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "50dd0b93580e85c9285c3344c99d444e751ebd0930483b5c8fff2d67304efbfe",
-          "markdownBytes": 1792,
-          "markdownTokens": 447,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "c387ac0239ac6fef90156da8ca41870253aee7e6d936e90b67229bb8bf10b17f",
+          "markdownBytes": 1819,
+          "markdownTokens": 454,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17115,10 +17461,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/build-this-site.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "7e429bc160a57d6244a67f79756b26aa34cf33bcd8905acc8e166cc8b05bea1c",
-          "markdownBytes": 1490,
-          "markdownTokens": 371,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "28be58140085dbc46a8490279b06b0197798b05a2d787fe0a55df5690ae14f6d",
+          "markdownBytes": 1517,
+          "markdownTokens": 378,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17127,10 +17473,10 @@
           "depth": 2,
           "markdownUrl": "/start.sections/check-writing-style.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "4345823aa34027a9138108cde3da46c08deaa1caff995192b22864da8caa9672",
-          "markdownBytes": 1400,
-          "markdownTokens": 355,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "cbd3a92fa4f8785caa1f68db70438a7c9296f9d2e0b9316e5b76432337d9a366",
+          "markdownBytes": 1427,
+          "markdownTokens": 362,
           "markdownTokenEncoding": "cl100k_base"
         },
         {
@@ -17139,17 +17485,17 @@
           "depth": 2,
           "markdownUrl": "/start.sections/related-reading.md",
           "parentMarkdownUrl": "/start.md",
-          "parentDigest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398",
-          "digest": "77167f188bf2b425578cfbc4735ebed0703a5915dea289e0fff9a1115c07852e",
-          "markdownBytes": 1921,
-          "markdownTokens": 489,
+          "parentDigest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9",
+          "digest": "fbf9df75775741c9bad88b57d3183329b47daa40c0351b2a948c96287afdc5e6",
+          "markdownBytes": 1948,
+          "markdownTokens": 496,
           "markdownTokenEncoding": "cl100k_base"
         }
       ],
-      "markdownBytes": 9101,
-      "markdownTokens": 2161,
+      "markdownBytes": 9121,
+      "markdownTokens": 2165,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "da49f7e8c8fe92cc4a2922446d5290d6a444c769b183a72e3a317df22fc4f398"
+      "digest": "de9adec68f61ae5330b74e64ce67d9301e380dc431b66df9f2998a03d32217d9"
     },
     {
       "id": "guide.status",
@@ -17178,8 +17524,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/project-updates-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "bb1de3abe37815a7bca135471cebc2aaaff460751b4d83afef25abb72f0176d0",
+      "updated": "2026-11-07",
+      "contentDigest": "b153150ae2e8c2cebbc94058e3f2c2ef45c91641f8795f05eccad8d64697a16f",
       "breadcrumbs": [
         {
           "label": "Project",
@@ -17214,10 +17560,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 8922,
-      "markdownTokens": 1918,
+      "markdownBytes": 9292,
+      "markdownTokens": 1990,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "c56e1719016906f79a8710f616567b778a300174949099d33ca93c76b81206d6"
+      "digest": "7da698ed8670debd60fd34934be806b8d43792330774a52306e8cc6794ac0e12"
     },
     {
       "id": "guide.templates",
@@ -17510,8 +17856,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-05",
-      "contentDigest": "d1b85e4f0d4aa9e2dbd29ad96eca22b2e28055114c913de65ca5d2884a2ffb5e",
+      "updated": "2026-11-07",
+      "contentDigest": "7e9b62e51a73f7e6810944fcc4655c19b8c803d3ffc39da9e494bf9d1641b5fb",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -17549,10 +17895,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 7176,
-      "markdownTokens": 1734,
+      "markdownBytes": 7763,
+      "markdownTokens": 1843,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "2c4eb856479750d531a5c2b7333dd1e9bb32a0c1f7e881aa8d2446881da05071"
+      "digest": "744ee42ab325dc9ad7e555c774cb15ddd44b05269a7e99f9235880bae9e946fd"
     },
     {
       "id": "guide.troubleshooting",
@@ -17769,8 +18115,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-06",
-      "contentDigest": "ff92db9ab6a73a23703ebbc6c111d1ef3da64534b1075c23afa658a1a5a78ead",
+      "updated": "2026-11-07",
+      "contentDigest": "89ca3d6c90bc64c39757ba8fb65311772fe4a8b3769c017af7e9b5eed8449b06",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -17804,10 +18150,10 @@
       "focusedContractBytes": null,
       "focusedContractDigest": null,
       "sections": [],
-      "markdownBytes": 4189,
-      "markdownTokens": 927,
+      "markdownBytes": 4184,
+      "markdownTokens": 926,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "f1e159df172c9df27e3b6e5b2d1be331921b92fcce35384edefd572b2fa50648"
+      "digest": "1ecb7b1600a78a0f364b4d7f772a51011d9288bb7d8991b94e15fd2d4cb19dc0"
     },
     {
       "id": "guide.example-note",
@@ -19687,6 +20033,54 @@
       "to": "reference.chat-config",
       "type": "reference",
       "reason": "Look up the settings that turn each check on.",
+      "variant": {
+        "channel": "production",
+        "version": "current",
+        "language": "en"
+      }
+    },
+    {
+      "id": "code-api-guide-openapi",
+      "from": "guide.code-api-references",
+      "to": "guide.api-references",
+      "type": "reference",
+      "reason": "Generate HTTP endpoint references when an OpenAPI contract describes the interface.",
+      "variant": {
+        "channel": "production",
+        "version": "current",
+        "language": "en"
+      }
+    },
+    {
+      "id": "code-api-guide-settings",
+      "from": "guide.code-api-references",
+      "to": "reference.code-api-references",
+      "type": "reference",
+      "reason": "Check catalog settings, snapshot fields, and converter limits.",
+      "variant": {
+        "channel": "production",
+        "version": "current",
+        "language": "en"
+      }
+    },
+    {
+      "id": "code-api-release-guide",
+      "from": "change.code-api-references",
+      "to": "guide.code-api-references",
+      "type": "next-step",
+      "reason": "Generate a reference from Python source or a converter snapshot.",
+      "variant": {
+        "channel": "production",
+        "version": "current",
+        "language": "en"
+      }
+    },
+    {
+      "id": "code-api-settings-guide",
+      "from": "reference.code-api-references",
+      "to": "guide.code-api-references",
+      "type": "next-step",
+      "reason": "Extract a Python snapshot and preview both grouped and complete SDK references.",
       "variant": {
         "channel": "production",
         "version": "current",

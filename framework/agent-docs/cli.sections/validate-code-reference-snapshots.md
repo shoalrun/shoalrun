@@ -1,0 +1,41 @@
+---
+id: reference.cli
+title: CLI reference
+summary: Commands, arguments, defaults, output, and errors.
+type: reference
+area: authoring
+subarea: authoring-command-line
+canonical: /cli
+---
+
+# CLI reference
+
+> Documentation index: [llms.min.txt](https://www.shoalrun.com/llms.min.txt) · Document manifest: [documents.json](https://www.shoalrun.com/documents.json)
+
+Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
+
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > CLI reference
+
+**Updated: 2026-11-07.**
+
+Parent page: [Full Markdown page](/cli.md)
+
+The public `@shoalrun/cli` package supplies the `shoalrun` command. It needs Node.js 22.12 or newer. Follow [Getting started](https://www.shoalrun.com/start.md) to install it from npm, then run commands as `npx --no-install shoalrun <command>`. Framework contributors can build the source checkout and run `node framework/dist/cli.js <command>` from its root.
+
+Commands that return data print JSON to standard output. On an error, the CLI prints `{"status":"error","message":"..."}` to standard error and exits with code 1. A config argument defaults to `docs.config.yaml` in the current directory unless noted.
+
+[Diagrams](https://www.shoalrun.com/author/components/diagrams.md) render without a browser: Pele handles Mermaid syntax, and D2 handles D2 source. Development installs include Puppeteer for browser UI tests; production package installs don't need it.
+
+Since 0.1.0-alpha.18
+
+Product selectors, `dev --profile`, and `get_publications` discovery add product-aware workflows. Existing productless commands keep their publication scope.
+
+## Validate code reference snapshots
+
+`references check` validates a converter's snapshot without invoking Python, running a converter, or building the site:
+
+```sh
+shoalrun references check ./reference/python.json
+```
+
+Success prints JSON with `status: "ok"`, `programmingLanguage`, and the symbol count. Invalid schema fields, duplicate IDs, missing symbol targets, or cyclic parents fail with exit code 1. See [Generate code API references](https://www.shoalrun.com/api-docs/code-references.md) for extraction and [Code API reference settings](https://www.shoalrun.com/api-docs/code-reference-settings.md) for the snapshot contract.
