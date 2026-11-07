@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Write documentation > Write with agents > Use the bundled agent skills
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Give an agent a bundled skill for Shoalrun setup, authoring, components, recipes, walkthroughs, branding, or PDF exports. You need an agent that can read the skill file and run commands, plus a Shoalrun checkout or installed CLI.
 
@@ -28,20 +28,47 @@ Use `shoalrun-brand` for website branding and `shoalrun-pdf` for [styled PDF exp
 
 ## Make the instructions available
 
-Install the complete folder in your agent's skill directory using that agent's installation process. If it supports reading repository files directly, point it at the entry file instead. For a recipe task, use `framework/skills/shoalrun-recipes/SKILL.md`.
+Find the skill in the installed package, then make it discoverable to your agent. `shoalrun skills list` and `shoalrun skills read NAME` only read packaged instructions. Installing the npm package doesn't register skills in an agent session.
 
-In an installed package, skill folders live under `node_modules/@shoalrun/cli/skills/`. These files are portable instructions; the CLI doesn't install them into your agent automatically.
+Install complete skill folders using your agent's installation process. Keep supporting references and assets, including sibling skills when a workflow links to them. Skill folders in an installed project live under `node_modules/@shoalrun/cli/skills/`; you don't need a framework checkout.
 
-Give your agent the installed `shoalrun-author/SKILL.md` path and the consumer project's `docs.config.yaml` path. Use the existing harness's file, terminal, and browser tools. No separate authoring service or model configuration is required.
+### Expose skills to your agent
 
-Ask the agent to read the skill before beginning. If it can't discover installed skills, include the file path. If it can't read files or run a CLI, follow the [page creation workflow](https://www.shoalrun.com/author/add-page.md) yourself.
+Use the skill directory and project scope documented by your agent. If it discovers project skills under `.agents/skills`, the following example copies the bundled workflows there from the project root. Use your host's actual directory when it differs. Existing folders are preserved:
+
+```sh
+mkdir -p .agents/skills
+for skill in node_modules/@shoalrun/cli/skills/*; do
+  name="${skill##*/}"
+  if [ ! -e ".agents/skills/$name" ] && [ ! -L ".agents/skills/$name" ]; then
+    cp -R "$skill" ".agents/skills/$name"
+  fi
+done
+```
+
+Keep references, assets, and sibling skills together. These copies are snapshots; compare them with the installed package when upgrading and preserve project customizations. Shoalrun's isolated source capture rejects symlinked project inputs, so use copied folders when those skills live inside the captured project.
+
+Verify the skill appears in your agent's skill list. Invoke it using that agent's supported method, or let the agent select it by its description. Follow the host's refresh or restart instructions when discovery doesn't update. If the host doesn't expose native skills, give the agent the exact `SKILL.md` path to read instead.
+
+### Give project instructions an exact path
+
+Put a concrete loading instruction in the project instructions file your agent reads, such as `AGENTS.md`. Adjust the content and skill paths to your project:
+
+```text
+Before editing content/, load .agents/skills/shoalrun-author/SKILL.md.
+Use the session's skill loader when available. If it doesn't expose the
+skill, read that exact file before editing. Follow the project's writing
+guide and checks, then reuse the validated output for preview.
+```
+
+A file pointer remains useful when a host doesn't expose native skills. Give the agent the project's `docs.config.yaml` path as well. Each packaged skill starts with a short task checklist; project policy supplies the required dates, taxonomy, navigation, and validation rules. If the agent can't read files or run a CLI, follow the [page creation workflow](https://www.shoalrun.com/author/add-page.md) yourself.
 
 ## Give the agent a bounded request
 
 Name the task, documentation project, relevant source files, and result to check. For example:
 
 ```text
-Read framework/skills/shoalrun-recipes/SKILL.md and use its workflow.
+Load the installed shoalrun-recipes skill before editing.
 Write a complete recipe for previewing a Shoalrun documentation change.
 Work in this checkout's docs project. Include setup, commands, failure
 guidance, and a final success check. Reuse existing ingredients where

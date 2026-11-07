@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Build separate sites from shared content
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 You can keep one content directory and build separate sites for any configured facet: audience, product, area, subarea, or a custom facet such as region. Each entry config can have its own origin, base path, branding, navigation, and output directory. A developer portal is one example; the same workflow applies to an operations site, a product site, or regional resources.
 
@@ -129,6 +129,24 @@ Every selected facet must match. Choices within one facet are alternatives: `{ a
 
 The selector doesn't rewrite publication metadata. Public access, enabled publications, and language still determine eligibility. Keep explicit navigation and page links within the selected set; missing targets fail validation rather than copying excluded pages into the output. Separate entry configs can replace inherited navigation lists.
 
+## Include additional sections in a build
+
+Use [ForFacet](https://www.shoalrun.com/author/components/for-facet.md) for additional instructions inside a shared page. The component uses the same resolved build filter, with no profile file:
+
+```mdx
+<ForFacet audience="operator">
+
+## Operational checks
+
+Record the job identifier before replaying a failed job.
+
+</ForFacet>
+```
+
+The developer build omits this block. The unfiltered main build includes it. A build that only filters region also includes it because audience isn't selected. Use whitespace-separated alternatives, such as `audience="developer operator"`; multiple facet attributes must all match.
+
+**Unmarked sections remain included. Pages without a mark for a selected facet are excluded.** Mark the containing page for every intended audience. Section selection adds information; an unfiltered build includes every valid block rather than choosing one replacement variant.
+
 ## Build and check each output
 
 From `resources/`, build each site into its own directory:
@@ -143,11 +161,15 @@ Check each output's `documents.json` for its page IDs and routes. The main site 
 
 Deploy each output separately to its configured host. Building one site doesn't update the others. After editing shared content, rebuild and deploy every affected site. Keep output directories separate from sources and from one another because a successful build replaces its output directory.
 
-Selection applies to whole authored and generated pages before rendering. A selected page retains its complete body, including reader-marked sections in HTML and Markdown. Browser reader controls can't restore excluded pages. Section variants can use [publication blocks](https://www.shoalrun.com/publish/publications.md) where the sites also have distinct publications.
+Page selection applies to authored and generated pages before rendering. ForFacet then selects sections within retained pages, before headings and dependencies expand. ReaderSection remains a browser visibility control: its content stays in HTML and Markdown. Browser controls can't restore excluded pages or ForFacet sections. Use [publication blocks](https://www.shoalrun.com/publish/publications.md) when a section belongs to particular publications.
 
 Configure API sources and operation selection separately. A published OpenAPI source may contain operations beyond the selected reference pages. Generated references use their resolved facet marks, including `readerFilters.typeDefaults`. This setting is a page publication selector, not authorization for private content; protect private deployments at the host.
 
 For a help drawer or another application surface, [export the shared content](https://www.shoalrun.com/publish/content-export.md) instead of building another website. Export targets choose their own documents and produce portable content without the website shell.
+
+## HTML, Markdown, and agents
+
+Each site's selected pages and sections determine its HTML, Markdown, search, and discovery content. Agents reading that artifact receive the selected instructions; browser reader controls don't change the published files. Inspect `.shoalrun/content-selection.json` for the latest artifact's effective filter, section decisions, and warnings. Portable exports use their own target filters; PDF exports inherit the site's filter unless overridden. Check each artifact before distributing it.
 
 ## Related reading
 
@@ -160,6 +182,8 @@ For a help drawer or another application surface, [export the shared content](ht
 - [Configuration reference](https://www.shoalrun.com/config.md) — Look up content selection and configuration inheritance settings.
 
 - [Reader views](https://www.shoalrun.com/author/reader-views.md) — Define the page facets used to select each site's content.
+
+- [ForFacet](https://www.shoalrun.com/author/components/for-facet.md) — Look up section matching, export behavior, and selection reports.
 
 ### Related topics
 

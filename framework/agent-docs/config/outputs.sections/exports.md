@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Output and export
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 Parent page: [Full Markdown page](/config/outputs.md)
 
@@ -37,17 +37,17 @@ Optional named targets for `shoalrun export`. They select portable application c
 
 Each target accepts these fields:
 
-| Field           | Default                                         | Meaning                                                                                                                                            |
-| --------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `formats`       | `[markdown, html]`                              | A nonempty unique list of `markdown` and/or `html`.                                                                                                |
-| `documents`     | All eligible pages when neither selector is set | Explicit document IDs. Missing, inaccessible, or export-filtered IDs fail. Mutually exclusive with `resources`.                                    |
-| `resources`     | None                                            | Typed page, section, or snippet selectors. Mutually exclusive with `documents`.                                                                    |
-| `publication`   | The only enabled publication                    | One complete `{ channel, version, language }` combination. Product-scoped selection also requires `product`. Required when selection is ambiguous. |
-| `contentFilter` | None                                            | Optional configured reader facets; every facet must match any listed choice. Unmarked pages don't match.                                           |
-| `publicBase`    | `/`                                             | Root-relative mount with a trailing slash, such as `/help/`. It locates bundle content and assets in the app.                                      |
-| `assetRoots`    | Content directory only                          | Extra local asset directories, relative to the declaring config file. Only referenced supported files are copied.                                  |
-| `notices`       | Renderer notices only                           | Local text or Markdown license/notice files to retain in `NOTICES.txt`. Paths are relative to the declaring config file.                           |
-| `apiReview`     | Matching API-level approval, if any             | API IDs mapped to reviewed SHA-256 digests for this export selection.                                                                              |
+| Field           | Default                                         | Meaning                                                                                                                                                                                                                     |
+| --------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `formats`       | `[markdown, html]`                              | A nonempty unique list of `markdown` and/or `html`.                                                                                                                                                                         |
+| `documents`     | All eligible pages when neither selector is set | Explicit document IDs. Missing, inaccessible, or export-filtered IDs fail. Mutually exclusive with `resources`.                                                                                                             |
+| `resources`     | None                                            | Typed page, section, or snippet selectors. Mutually exclusive with `documents`.                                                                                                                                             |
+| `publication`   | The only enabled publication                    | One complete `{ channel, version, language }` combination. Product-scoped selection also requires `product`. Required when selection is ambiguous.                                                                          |
+| `contentFilter` | None                                            | Optional configured reader facets; every facet must match any listed choice. Unmarked pages don't match; unmarked sections remain. Also selects [ForFacet](https://www.shoalrun.com/author/components/for-facet.md) blocks. |
+| `publicBase`    | `/`                                             | Root-relative mount with a trailing slash, such as `/help/`. It locates bundle content and assets in the app.                                                                                                               |
+| `assetRoots`    | Content directory only                          | Extra local asset directories, relative to the declaring config file. Only referenced supported files are copied.                                                                                                           |
+| `notices`       | Renderer notices only                           | Local text or Markdown license/notice files to retain in `NOTICES.txt`. Paths are relative to the declaring config file.                                                                                                    |
+| `apiReview`     | Matching API-level approval, if any             | API IDs mapped to reviewed SHA-256 digests for this export selection.                                                                                                                                                       |
 
 ```yaml
 exports:

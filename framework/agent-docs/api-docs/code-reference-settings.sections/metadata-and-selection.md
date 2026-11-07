@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Document an API > Code API reference settings
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 **Available since: 1.0.0.**
 
@@ -29,7 +29,7 @@ Parent page: [Full Markdown page](/api-docs/code-reference-settings.md)
 
 - [Generate code API references](https://www.shoalrun.com/api-docs/code-references.md) — Extract a Python snapshot and preview both grouped and complete SDK references.
 
-`codeReferences` maps a catalog ID to a local converter snapshot and presentation settings. Start with [Generate code API references](https://www.shoalrun.com/api-docs/code-references.md) for a complete Python workflow. This setting is separate from `apis`, which registers OpenAPI sources.
+`codeReferences` maps a catalog ID to a local converter snapshot and presentation settings. Start with [Generate code API references](https://www.shoalrun.com/api-docs/code-references.md) for a complete Python workflow, or use [TypeScript extraction](https://www.shoalrun.com/api-docs/typescript-references.md) for a public source or declaration entry point. This setting is separate from `apis`, which registers OpenAPI sources.
 
 ## Metadata and selection
 

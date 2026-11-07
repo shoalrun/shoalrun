@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export styled PDFs
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 **Available since: 0.1.0-beta.1.**
 
@@ -54,7 +54,7 @@ If several publications are enabled, select one explicitly. These product and ve
 npx --no-install shoalrun export docs.config.yaml --format pdf --product core --channel production --version v2 --language en --out pdf/core-v2
 ```
 
-Pass `--profile customer.yaml` when exporting a [customer edition](https://www.shoalrun.com/publish/deployment-profiles.md). PDF selection uses the target's `contentFilter`, or the site's `site.contentFilter` when the target doesn't specify one. Product, version, language, page access policy, and feature requirements apply before rendering. A missing or excluded explicitly requested page fails.
+Pass `--profile customer.yaml` when exporting a [customer edition](https://www.shoalrun.com/publish/deployment-profiles.md). PDF selection uses the target's `contentFilter`, or the site's `site.contentFilter` when the target doesn't specify one. Product, version, language, page access policy, and feature requirements apply before rendering. A missing or excluded explicitly requested page fails. The effective filter also selects [ForFacet](https://www.shoalrun.com/author/components/for-facet.md) sections before PDF rendering; unmarked sections remain included.
 
 Publication chapters follow navigation order. Eligible pages outside navigation are appended in stable document-ID order and reported in diagnostics. A named export target can supply an explicit document order:
 

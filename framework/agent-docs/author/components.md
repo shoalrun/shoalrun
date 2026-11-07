@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Overview
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Shoalrun accepts GitHub Flavored Markdown (tables, task lists, strikethrough, footnotes, and autolinks) and the MDX components below. Each component family has a page with syntax, attributes, HTML and Markdown behavior, and limits. Component names and attributes are case-sensitive. Unknown components, dynamic MDX expressions, and exports fail the build because they have no shared HTML and Markdown representation. The build drops `import` lines, so imported components aren't available.
 
@@ -60,6 +60,7 @@ Start with the reader's task, then open the linked reference before choosing syn
 - [Walkthroughs](https://www.shoalrun.com/author/components/walkthroughs.md) — code explained step by step beside a scrolling code pane.
 - [Hero](https://www.shoalrun.com/styling/layouts.md) — a landing page opener with a title, tagline, and action buttons.
 - [Section](https://www.shoalrun.com/styling/layouts.md) — a full-width band on a splash page.
+- [ForFacet](https://www.shoalrun.com/author/components/for-facet.md) — include additional sections in selected builds using configured facets.
 - [ReaderSection, ReaderChoice, and ReaderFilter](https://www.shoalrun.com/author/reader-views.md) — marked sections, choice buttons, and in-page filter controls.
 - [FrontmatterReference](https://www.shoalrun.com/author/frontmatter-reference.md) — publish this project's built-in and declared page fields as a live reference.
 

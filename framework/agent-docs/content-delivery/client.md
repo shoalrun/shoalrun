@@ -17,11 +17,15 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Content delivery > Read content with a client
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Available since: 0.1.0-alpha.13.**
 
 Use the content client in an application to read a static export. Serve the bundle from the application's origin and use your normal JavaScript build tooling to import `@shoalrun/cli/content`.
+
+## Generated TypeScript reference
+
+Use the [generated content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) to browse public exports from `@shoalrun/cli/content`. It follows the source declarations and JSDoc, including [snapshot methods](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md), [source options](https://www.shoalrun.com/content-delivery/sdk/manifest-content-source-options.md), [results](https://www.shoalrun.com/content-delivery/sdk/content-result.md), and [delivery errors](https://www.shoalrun.com/content-delivery/sdk/content-delivery-error.md). The guide and behavior reference explain how to use those interfaces and where their trust boundaries apply.
 
 ## Open a revision
 
@@ -75,6 +79,10 @@ Request HTML for [application rendering](https://www.shoalrun.com/content-delive
 ### Read first
 
 - [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
+
+### Reference while working
+
+- [Complete content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) — Look up the public functions and types while integrating a content source.
 
 ### Related topics
 

@@ -22,6 +22,14 @@ Updates to Shoalrun and its documentation. Each entry identifies the affected ve
 
 ## Latest changes
 
+- 2026-11-07
+
+  Version 1.1.0
+
+  [Build selection and TypeScript references](https://www.shoalrun.com/changelog/facet-typescript.md)
+
+  Select additional sections for each build, generate TypeScript SDK references, and improve search queries written as questions.
+
 - 2026-11-06
 
   Version 1.0.0

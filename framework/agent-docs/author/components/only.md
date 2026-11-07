@@ -16,7 +16,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Components > Content for one format
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Use `<Only>` to author content for one output format. Shared material stays outside the blocks; a block can contain an instruction, explanation, example, or link that serves only one version:
 
@@ -55,6 +55,8 @@ An agent that fetches the direct `.md` URL, or requests this page with `Accept: 
 ```md
 This sentence appears only in the Markdown twin.
 ```
+
+HTML-only blocks are wrapped in an element marked `data-markdown-ignore`. Agent-parity checks can use that marker to tell intentional format-specific content from content that is missing by mistake.
 
 Keep facts, warnings, and task steps that both readers need outside `<Only>`, or provide suitable versions in both formats. You can add or suppress content in either output when that helps its intended reader. Check that each version remains accurate and usable for its task; see [Shoalrun's position on shared and format-specific content](https://www.shoalrun.com/publish/agent-friendliness.md). The browser search index uses the HTML output, so Markdown-only text isn't included in that search. See [publishing and agent representations](https://www.shoalrun.com/publish/output.md) for the full output contract.
 

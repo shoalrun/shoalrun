@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Output and export
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 Parent page: [Full Markdown page](/config/outputs.md)
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export styled PDFs
 
-**Updated: 2026-11-06.**
+**Updated: 2026-11-07.**
 
 **Available since: 0.1.0-beta.1.**
 

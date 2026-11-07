@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "sourceRepository": "https://github.com/shoalrun/docs",
-  "sourceCommit": "0af50d753fc59c1e332d5e710999e3219c3e2443",
-  "siteBuildId": "6b51e1bac3826424f2ec68156866ec40c1761f7765901fc6dfc2f2d4f24a8596",
-  "manifestDigest": "2cb3bc1d411d08d4156fb139c6257dd4e56ea79ea1aed38c85eb32986b2a1743",
-  "indexDigest": "a6c8b514805bfd808949c3d22a01deee1ae9c35b4c6e54009ae3866b21df2c6e",
-  "packageIntegrity": "sha512-TVNgFm5dtSyO7c+njfPC2fta5IWnIVALrTD0CYktEUeuFbKv0pdKg8C7ihBiQ3svOhXNnyjZSDF96N23lVl/Tw=="
+  "sourceCommit": "6198b4fcbc880b56999926ea74c69cd3d122a86a",
+  "siteBuildId": "ead78e4f9fa835d4189aade2c8d34a51b43400308304d415029ae2320db07da4",
+  "manifestDigest": "16d07fdeb5b061d6838131d603e76c475f85fcde040d5625d65516fdc19be7f8",
+  "indexDigest": "d23c76564004ef45e9523730cea63c4ed0e96d6889c2b17a49d207b1063bbb3e",
+  "packageIntegrity": "sha512-oZG3QJeXiQYa/b0Vf6j13lFj/grebtzaeLsRkL+QbLqxGjcmnR/Gs5q/nQDai358sJcDh0XUUAcMFarbPLooHQ=="
 }

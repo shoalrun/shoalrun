@@ -15,13 +15,17 @@ canonical: /content-delivery/api
 
 Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/navigation/reference-tab-50f26fe22670.txt) (ID: reference-tab). [All sections and pages](https://www.shoalrun.com/llms.min.txt)
 
-Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Content client API
+Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Content delivery > Client behavior
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Available since: 0.1.0-alpha.13.**
 
 Import the browser-safe delivery API from `@shoalrun/cli/content`. It reads exports and mounts trusted HTML without loading the compiler. Browser use requires HTTPS or localhost for Web Crypto.
+
+## Generated TypeScript reference
+
+Use the [generated content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) to browse public exports from `@shoalrun/cli/content`. It follows the source declarations and JSDoc, including [snapshot methods](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md), [source options](https://www.shoalrun.com/content-delivery/sdk/manifest-content-source-options.md), [results](https://www.shoalrun.com/content-delivery/sdk/content-result.md), and [delivery errors](https://www.shoalrun.com/content-delivery/sdk/content-delivery-error.md). The guide and behavior reference explain how to use those interfaces and where their trust boundaries apply.
 
 ## Open a source
 
@@ -135,6 +139,10 @@ The same typed reference selects either available representation. HTML mounting 
 ### Read first
 
 - [Content delivery](https://www.shoalrun.com/content-delivery.md) — Understand resource delivery and its application boundary.
+
+### Reference while working
+
+- [ContentSnapshot](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md) — Inspect the source-derived snapshot methods and their typed parameters.
 
 ### Related topics
 

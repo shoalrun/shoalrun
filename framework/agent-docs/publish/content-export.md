@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Publish and maintain > Export content into your application
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Keep application help and your documentation website in one content source. `shoalrun export` produces a directory of resolved Markdown, passive HTML fragments, referenced assets, and a manifest. Your application owns the help drawer, onboarding screen, or other interface that displays the content. It doesn't need a Shoalrun browser runtime.
 
@@ -65,6 +65,8 @@ The `documents` configuration selector remains shorthand for whole pages. Use [r
    ```
 
    Optional `contentFilter` uses configured reader facets. Every selected facet must match; choices within a facet are alternatives. Pages missing a selected facet are excluded. An explicitly requested ID that's absent, private, unavailable in the publication, or excluded by the export filter fails with a diagnostic.
+
+   The export's filter also evaluates [ForFacet](https://www.shoalrun.com/author/components/for-facet.md) sections, including isolated snippet resources. Unmarked sections remain included. With no export filter, all valid ForFacet blocks are retained.
 
    Export selection is independent of the website's `site.contentFilter` and navigation. Changing a website menu doesn't change the app's help collection. See [separate sites from shared content](https://www.shoalrun.com/publish/single-source-sites.md) for website selection.
 

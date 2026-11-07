@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Commands > Bundled agent skills
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Shoalrun ships portable skill folders under `framework/skills/`. Each folder contains a `SKILL.md` with instructions for an agent that can read files and run the Shoalrun CLI. A skill supplies guidance; it doesn't run a separate authoring service.
 
@@ -37,7 +37,7 @@ Each skill supplies instructions for a specific part of the authoring workflow.
 | `shoalrun-brand`            | Apply website branding through themes, fonts, local assets, and CSS, then check contrast and interactive states.                                                                                                           |
 | `shoalrun-pdf`              | Style and export pages or publications as [PDFs](https://www.shoalrun.com/publish/pdf.md), configure optional downloads, and inspect actual PDF output. Includes a print design reference and stylesheet starter.          |
 
-Each folder name matches its skill name. For example, the author skill's entry file is `framework/skills/shoalrun-author/SKILL.md`. Installation locations depend on the agent. [Use the bundled agent skills](https://www.shoalrun.com/contribute/agent-skills.md) describes choosing and invoking one.
+Each folder name matches its skill name. For example, the author skill's entry file is `framework/skills/shoalrun-author/SKILL.md`. Native session discovery depends on the agent and its launch directory. CLI discovery only lists or reads packaged files. The installed package keeps them under `node_modules/@shoalrun/cli/skills/`. [Use the bundled agent skills](https://www.shoalrun.com/contribute/agent-skills.md) describes choosing and invoking one.
 
 ## Workflow behavior
 
