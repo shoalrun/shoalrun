@@ -54,7 +54,8 @@ Agent-only instructions. [Home](doc:guide.start).
   assert.match(markdown, /Shared paragraph/);
   assert.match(html, /Browser-only instructions/);
   assert.match(html, /Browser-only instructions\. <a href="\/">Home<\/a>/);
-  assert.doesNotMatch(markdown, /Browser-only instructions|<Only/);
+  assert.match(html, /<div data-markdown-ignore="">[\s\S]*Browser-only instructions/);
+  assert.doesNotMatch(markdown, /Browser-only instructions|<Only|data-markdown-ignore/);
   assert.match(markdown, /Agent-only instructions/);
   assert.match(markdown, /\[Home\]\(\/index\.md\)/);
   assert.doesNotMatch(html, /Agent-only instructions|<Only/);
