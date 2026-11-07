@@ -6,12 +6,29 @@ import { contentResourceKey } from './content-rest-contract.js';
 import { validContentPublication, validContentRef, validateContentResources, safeContentPath } from './content-delivery-validation.js';
 import { freeze, sha256, readBounded } from './content-delivery-transport.js';
 
-export type RestContentSourceOptions = { baseUrl: string | URL; publication: ContentPublication; revision?: string; fetch?: typeof globalThis.fetch; signal?: AbortSignal; limits?: ContentDeliveryLimits };
+/** Options for a REST inventory and its revision-pinned resource reads. */
+export type RestContentSourceOptions = {
+  /** REST mount URL, such as /content/v1. Browser requests must use the application's origin. */
+  baseUrl: string | URL;
+  /** Exact publication to request; include product for a product-scoped source. */
+  publication: ContentPublication;
+  /** Expected inventory revision. Omit it to open the current revision. */
+  revision?: string;
+  /** Fetch implementation. Defaults to globalThis.fetch. */
+  fetch?: typeof globalThis.fetch;
+  /** Cancel the inventory-opening request. */
+  signal?: AbortSignal;
+  /** Inventory and representation bounds. */
+  limits?: ContentDeliveryLimits;
+};
 const digestPattern = /^[a-f0-9]{64}$/;
 const record = (value: any): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
 const exactKeys = (value: any, keys: string[]) => record(value) && Object.keys(value).length === keys.length && Object.keys(value).every(key => keys.includes(key));
 const invalid = (message: string): never => { throw new ContentDeliveryError('invalid_manifest', message); };
-/** Preloads a REST inventory and pins all subsequent reads to that revision. */
+/** Open a REST inventory and pin subsequent resource reads to its revision.
+ * @param options REST mount, exact publication, optional revision, and request settings.
+ * @returns A snapshot with the same list/get/dispose interface as the manifest source.
+ */
 export async function openRestContentSource(options: RestContentSourceOptions): Promise<ContentSnapshot> {
   let baseUrl: URL;
   try { baseUrl = new URL(options.baseUrl, typeof location === 'undefined' ? undefined : location.href); } catch { return invalid('REST base URL must be a valid HTTP(S) URL.'); }

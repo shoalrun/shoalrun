@@ -18,6 +18,12 @@ export function validContentRef(value: any): value is ContentRef {
 function safeExternal(value: any, image = false): boolean {
   try { const url = new URL(value); return typeof value === 'string' && !url.username && !url.password && (image ? ['http:', 'https:'] : ['http:', 'https:', 'mailto:', 'tel:']).includes(url.protocol); } catch { return false; }
 }
+/** Validate a parsed manifest's shape, identities, paths, and resource bounds.
+ * This assertion narrows the value but doesn't verify fetched file bytes or trust in a host.
+ * @param value Parsed JSON manifest to validate.
+ * @param maxResources Maximum allowed resource count; defaults to 10,000.
+ * @param maxResourceBytes Maximum declared representation bytes; defaults to 8,000,000.
+ */
 export function validateContentManifest(value: any, maxResources = 10_000, maxResourceBytes = 8_000_000): asserts value is ContentManifest {
   if (!keys(value, ['schemaVersion', 'kind', 'digest', 'publicBase', 'publication', 'review', 'resources', 'assets', 'files', 'diagnostics']) || ![1, 2].includes(value.schemaVersion) || value.kind !== 'shoalrun-content-export' || !digestPattern.test(value.digest ?? '')) invalid('Unsupported content manifest.');
   if (typeof value.publicBase !== 'string' || !/^\/(?:[A-Za-z0-9_~.-]+\/)*$/.test(value.publicBase) || value.publicBase.split('/').some((part: string) => part === '.' || part === '..')) invalid('Invalid content mount.');

@@ -9,9 +9,36 @@ const invalid = (message: string): never => { throw new ContentDeliveryError('in
 export { mountContent } from './content-mount.js';
 export type { ContentMount } from './content-mount.js';
 
-export type ContentDeliveryLimits = { manifestBytes?: number; resourceBytes?: number; resources?: number };
-export type ManifestContentSourceOptions = { manifestUrl: string | URL; fetch?: typeof globalThis.fetch; signal?: AbortSignal; limits?: ContentDeliveryLimits };
-/** Opens one immutable manifest revision. The caller owns trust in the build/host. */
+/** Positive safe-integer bounds applied when opening and reading content. */
+export type ContentDeliveryLimits = {
+  /** Maximum manifest or REST inventory bytes. Defaults to 5,000,000. */
+  manifestBytes?: number;
+  /** Maximum bytes for an individual representation. Defaults to 8,000,000. */
+  resourceBytes?: number;
+  /** Maximum resource count in the inventory. Defaults to 10,000. */
+  resources?: number;
+};
+/** Configuration for opening a static content-export manifest. */
+export type ManifestContentSourceOptions = {
+  /** Manifest URL; a browser resolves relative URLs against its current location. */
+  manifestUrl: string | URL;
+  /** Fetch implementation. Defaults to globalThis.fetch. */
+  fetch?: typeof globalThis.fetch;
+  /** Cancel the opening request. Use get's signal to cancel an individual read. */
+  signal?: AbortSignal;
+  /** Inventory and representation bounds. */
+  limits?: ContentDeliveryLimits;
+};
+/** Open and validate one immutable static manifest revision.
+ * The caller owns trust in the compiler output and host. Browser URLs must use
+ * the application's origin. Requests reject redirects and unexpected content types.
+ * @param options Manifest URL, request implementation, cancellation, and limits.
+ * @returns A revision-pinned snapshot for listing and reading exported resources.
+ * @example
+ * const snapshot = await openManifestContentSource({ manifestUrl: '/help/manifest.json' });
+ * const page = await snapshot.get({ kind: 'page', documentId: 'guide.start' }, { format: 'markdown' });
+ * snapshot.dispose();
+ */
 export async function openManifestContentSource(options: ManifestContentSourceOptions): Promise<ContentSnapshot> {
   const fetcher = options.fetch ?? globalThis.fetch;
   let manifestUrl: URL;

@@ -11,7 +11,7 @@ export function checkPackageInventory(files) {
     assert.ok(!parts.some(part => /^(?:\.env(?:\.|$)|\.git$|\.vercel$|\.shoalrun$|node_modules$|site-dist$|__pycache__$)|\.(?:local|override)\.md$/i.test(part)), `Local file in package: ${file}`);
     assert.ok(!/(?:\.pyc$|(?:^|\/)test_[^/]+\.py$)|\.test\.(?:js|d\.ts)(?:\.map)?$|\.(?:tgz|tar|zip|log)$/i.test(file), `Development artifact in package: ${file}`);
   }
-  for (const required of ['CODE-REFERENCES.md', 'schemas/code-reference.schema.json', 'adapters/python/shoalrun_reference.py', 'adapters/python/requirements.txt', 'LICENSE', 'CHANGELOG.md', 'DEPLOYMENT-PROFILES.md', 'schemas/content-export.schema.json', 'dist/cli.js', 'dist/authoring-api.js', 'dist/components.js']) {
+  for (const required of ['adapters/typescript/shoalrun-reference.mjs', 'adapters/typescript/README.md', 'CODE-REFERENCES.md', 'schemas/code-reference.schema.json', 'adapters/python/shoalrun_reference.py', 'adapters/python/requirements.txt', 'LICENSE', 'CHANGELOG.md', 'DEPLOYMENT-PROFILES.md', 'schemas/content-export.schema.json', 'dist/cli.js', 'dist/authoring-api.js', 'dist/components.js']) {
     assert.ok(files.includes(required), `Missing package contract: ${required}`);
   }
 }

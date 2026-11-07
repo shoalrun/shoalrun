@@ -1,8 +1,12 @@
 # Code API reference authoring
 
-Read `guide.code-api-references` and `reference.code-api-references` from the installed package's bundled docs when present. Check installed-version support; the feature starts in 1.0.0. A source checkout also provides `CODE-REFERENCES.md` and a runnable `examples/code-references` project.
+Read `guide.code-api-references` and `reference.code-api-references` from the installed package's bundled docs when present. Check installed-version support for the chosen adapter and fields; base code references start in 1.0.0. A source checkout also provides `CODE-REFERENCES.md` and a runnable `examples/code-references` project.
 
 Use `codeReferences` for a language library or SDK, and `apis` for OpenAPI HTTP endpoints. A converter writes the versioned snapshot; normal builds never invoke it. The optional Python adapter requires an explicitly prepared Python 3.11+ environment with its pinned requirements. Keep extraction roots narrow and don't enable runtime inspection or external discovery to make an unsupported package appear to work. Other languages can provide their own converter; don't claim a bundled Kotlin extractor.
+
+For TypeScript, confirm the installed package includes `adapters/typescript/shoalrun-reference.mjs`. Install `typescript@5.9.3` explicitly in the project supplying `tsconfig.json`, then run the adapter with `--project`, `--entry`, stable `--module`, `--out`, and optional narrower `--root`. Entry paths resolve against the configuration; output resolves against the current directory. Use source or built declaration files. Never infer support from the base code-reference version alone.
+
+Keep the adapter's failure checks: excluded structural members and copied defaults can require a separate public type/value; unsupported conditional expansions fail. Don't remove visibility annotations to force extraction. Review inferred signatures, every overload, optional/readonly markers, copied defaults, and grouped/complete output for excluded details. Extraction doesn't sanitize arbitrary strings or authorize publication. The digest includes effective options and external type dependency bytes, and graph limits apply after loading rather than providing process isolation. Output/input collisions, including symlinks, fail before writes.
 
 Run `shoalrun references check FILE`, inspect the snapshot's public symbols and prose, then configure the catalog. Snapshot descriptions are inert Markdown; MDX, project directives, relative links, and images aren't supported. Preserve exact symbol IDs and use explicit document IDs/slugs when public identities must survive a rename. Keep snapshots in the project and regenerate them after source changes.
 
