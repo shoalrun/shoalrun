@@ -41,12 +41,21 @@ The [features overview](https://www.shoalrun.com/features) describes the complet
 | HTTP API references | OpenAPI operation pages, code examples, focused contracts, and an explicit source-review gate. |
 | Code API references | [Python docstrings and converter-supplied symbols](CODE-REFERENCES.md), rendered as native reference pages. |
 | Several product releases | Independent product versions and defaults, publication routes, and a header publication selector. |
+| Audience or regional sites | Shared source, build-time page selection, and `<ForFacet>` sections without customer profiles. |
 | Customer editions | External profiles, SKU revisions, feature grants, and conditional pages or sections. |
 | Application help | HTML and Markdown exports, stable page/section/snippet references, static and REST clients, and instance-safe mounting. |
 | Agent discovery | Markdown twins, compact linked indexes, read-only MCP tools, bundled skills, and offline references. |
 | Search and answers | Browser keyword search, optional semantic retrieval, and hosted documentation chat with shared limits. |
 
 Local builds and keyword search need no provider credentials. Semantic retrieval and generated answers use separately configured services; credentials stay server-side. Reader filters are browsing controls, not authorization. Customer profiles select output during compilation; private-edition hosting remains your responsibility.
+
+## Select pages and sections for a build
+
+Declare choices under `readerFilters.facets` and set `site.contentFilter`, for example `{ audience: [customer] }`. Mark shared pages with `audiences: [customer, internal]`, then wrap additional internal instructions in `<ForFacet audience="internal">` blocks. The customer build omits those blocks from HTML, Markdown, search, discovery, and expanded resources. An unfiltered build includes them.
+
+Unmarked sections remain included; pages without a mark for a selected facet are excluded. Every facet attribute must match, with whitespace-separated alternative choices inside each attribute. This is additive information in selected builds, not replacement text. `<ReaderSection>` remains a browser visibility control and its content ships.
+
+Portable export targets need their own `contentFilter`; PDF exports inherit the site's filter unless overridden. Selection reports stay in `.shoalrun/content-selection.json`, outside public output. See the [runnable audience example](example-configs/facet-sections/README.md) and [authoring selection guidance](skills/shoalrun-author/references/facet-selection.md).
 
 ## Match your brand
 

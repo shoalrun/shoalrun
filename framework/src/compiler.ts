@@ -1,3 +1,4 @@
+import { sectionSelectionReport, writeSectionSelectionReport } from './section-selection.js';
 import { buildPdfSiteArtifacts } from './pdf-site.js';
 import { resolvePdfButton, validatePdfButtonStyle } from './pdf-button.js';
 import { documentKey, publicationKey, samePublication } from './publication-identity.js';
@@ -267,7 +268,7 @@ async function compileProject(configFile: string, destination: string | undefine
   const varying = (field: keyof Variant) => new Set(variants.map(variant => variant[field])).size > 1;
   const editionLabel = (variant: Variant) => editionBadge === 'never' ? '' : (['product', 'channel', 'version', 'language'] as const)
     .filter(field => variant[field] !== undefined && (editionBadge === 'always' || varying(field))).map(field => variant[field]).join(' · ');
-  const { docs, knownDocumentIds, knownDocumentTypes, routeOwners, contentDir, snippets, apiPlan, api,
+  const { sectionSelection, docs, knownDocumentIds, knownDocumentTypes, routeOwners, contentDir, snippets, apiPlan, api,
     sourceForVariant, knownOperations, relatedApiTargets, guidesByApi, sourceForOperation } = await prepareContentWorkspace({
       base, basePath, config, loaded, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies,
       sourceOverrides: options.sourceOverrides, authoringFiles: options.authoringFiles
@@ -415,12 +416,14 @@ async function compileProject(configFile: string, destination: string | undefine
   const { artifacts, buildId } = await assembleArtifacts({
     extraArtifacts: sitePdfs.artifacts,
     base, basePath, publicPath, canonical, siteOrigin, manifest, provenanceRecord, rendered, sitemaps,
-    privateDependencies: new Set([...(loaded.deployment?.file ? [loaded.deployment.file] : []), ...(loaded.deployment?.assetFiles ?? [])]),
+    privateDependencies: new Set([
+      ...[...snippets.values()].filter(snippet => !snippetUses.some(use => use.file === snippet.file)).map(snippet => snippet.file),
+      ...(sectionSelection.hasConditions || contentFilter ? componentPlugins.dependencies : []),...(loaded.deployment?.file ? [loaded.deployment.file] : []), ...(loaded.deployment?.assetFiles ?? [])]),
     diagramAssets, heroImages, focusedContracts, styleFiles, themeStyleFile, generatedPaletteCss,
     generatedBadgeCss, search, synonyms, config: artifactConfig, builtInSearchProvider, customReaderModule, analyticsModule, mcpAnalyticsModule,
     previewFiles, assetDirectory, themeSwitcher, themeDirectory, palette, colorMode, generatedFontsCss,
     fontFiles, projectFontAssets, fonts, shareImages, shareFor, themePreset, shareFontFiles, shareCache, faviconFile,
-    faviconRoute, customStyleFile, scriptFiles, componentAssets: loaded.deployment?.context.grants ? componentPlugins.assets.filter(asset => usedComponentAssets.has(asset.route)) : componentPlugins.assets, redirects, apiPublications, api, catalog, headers,
+    faviconRoute, customStyleFile, scriptFiles, componentAssets: loaded.deployment?.context.grants || sectionSelection.hasConditions || contentFilter ? componentPlugins.assets.filter(asset => usedComponentAssets.has(asset.route)) : componentPlugins.assets, redirects, apiPublications, api, catalog, headers,
     documentRoutes, readerFilters, apiSources
   });
   if (destination) {
@@ -433,8 +436,9 @@ async function compileProject(configFile: string, destination: string | undefine
       await writeFile(path.join(localGuide, 'frontmatter.schema.json'), JSON.stringify(frontmatterSchema(config.frontmatter), null, 2) + '\n');
       if (loaded.deployment?.context.grants && !options.authoringFiles) await writeFile(path.join(localGuide, 'profile-selection.json'), JSON.stringify({ ...profileSelection(loaded.deployment), buildId, configDigest: loaded.digest }, null, 2) + '\n');
     });
+    if (!options.authoringFiles) await writeSectionSelectionReport(base, sectionSelection, { target: { kind: 'site', output: target }, buildId, configDigest: loaded.digest, filterOrigin: 'site.contentFilter' });
     // Authoring captures resolve revision dates without changing captured inputs.
     if (!options.authoringFiles) await freshness?.commit();
   }
-  return { ...manifest, buildId, apiPublicationReview, profileSelection: profileSelection(loaded.deployment), ...(options.authoringFiles ? { authoringSources: rendered.map(({ doc }) => ({ id: doc.frontmatter.id, file: doc.file, url: doc.route, markdownUrl: doc.markdownRoute })) } : {}) };
+  return { ...manifest, buildId, apiPublicationReview, contentSelection: sectionSelectionReport(sectionSelection), profileSelection: profileSelection(loaded.deployment), ...(options.authoringFiles ? { authoringSources: rendered.map(({ doc }) => ({ id: doc.frontmatter.id, file: doc.file, url: doc.route, markdownUrl: doc.markdownRoute })) } : {}) };
 }

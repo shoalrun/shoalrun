@@ -15,3 +15,8 @@ export function matchesContentFilter(marks: ReaderSelection | undefined, selecti
   return !selection || Object.entries(selection).every(([facet, choices]) =>
     choices.some(choice => marks?.[facet]?.includes(choice)));
 }
+
+/** Section requirements narrow a selected page; unselected facets pass. */
+export function matchesSectionContentFilter(requirements: ReaderSelection, selection: ReaderSelection | undefined): boolean {
+  return Object.entries(requirements).every(([facet, choices]) => !selection?.[facet] || choices.some(choice => selection[facet].includes(choice)));
+}

@@ -1,3 +1,4 @@
+import { pruneConditionalTree } from './conditional-tree.js';
 import { resolvePublication, type CompilerPublicationsConfig } from './compiler-config.js';
 import { publicationKey } from './publication-identity.js';
 import { readFile, lstat, realpath } from 'node:fs/promises';
@@ -65,23 +66,22 @@ export function matchesFeatures(value: unknown, context: FeatureContext | undefi
   return included;
 }
 
-/** Validate every condition, but never resolve a dependency in an excluded branch. */
+/** Evaluate a feature guard without expanding its children. */
+export function evaluateFeatureGuard(node: any, context: FeatureContext | undefined, file: string, ancestorIncluded = true, record = true): boolean | undefined {
+  if (node.name !== 'ForFeature') return;
+  const label = `${file}:${node.position?.start?.line ?? 1}: <ForFeature>`;
+  const attributes = node.attributes ?? [];
+  if (node.type !== 'mdxJsxFlowElement' || !node.children?.length || !attributes.length || attributes.some((item: any) => item.type !== 'mdxJsxAttribute' || !['allOf', 'anyOf'].includes(item.name) || typeof item.value !== 'string') || new Set(attributes.map((item: any) => item.name)).size !== attributes.length) throw new Error(`${label} needs block content and distinct literal allOf/anyOf attributes`);
+  const requirements = Object.fromEntries(attributes.map((item: any) => [item.name, item.value.trim().split(/\s+/).filter(Boolean)]));
+  const target = !record && context ? { ...context, decisions: [] } : context;
+  const included = matchesFeatures(requirements, target, label, 'section');
+  if (!ancestorIncluded && target?.decisions.length) target.decisions[target.decisions.length - 1].included = false;
+  return included;
+}
+
+/** Compatibility entry point for consumers that only select feature grants. */
 export function pruneFeatureTree(tree: any, context: FeatureContext | undefined, file: string): any {
-  const walk = (node: any, parentIncluded = true): any[] => {
-    if (!node || typeof node !== 'object') return [node];
-    if (node.name === 'ForFeature') {
-      const label = `${file}:${node.position?.start?.line ?? 1}: <ForFeature>`;
-      const attributes = node.attributes ?? [];
-      if (node.type !== 'mdxJsxFlowElement' || !node.children?.length || !attributes.length || attributes.some((item: any) => item.type !== 'mdxJsxAttribute' || !['allOf', 'anyOf'].includes(item.name) || typeof item.value !== 'string') || new Set(attributes.map((item: any) => item.name)).size !== attributes.length) throw new Error(`${label} needs block content and distinct literal allOf/anyOf attributes`);
-      const requirements = Object.fromEntries(attributes.map((item: any) => [item.name, item.value.trim().split(/\s+/).filter(Boolean)]));
-      const included = matchesFeatures(requirements, context, label, 'section');
-      if (!parentIncluded && context?.decisions.length) context.decisions[context.decisions.length - 1].included = false;
-      const children = node.children.flatMap((child: any) => walk(child, parentIncluded && included));
-      return included && parentIncluded ? children : [];
-    }
-    return [{ ...node, ...(node.children ? { children: node.children.flatMap((child: any) => walk(child, parentIncluded)) } : {}) }];
-  };
-  return walk(tree)[0];
+  return pruneConditionalTree(tree, (node, ancestorIncluded) => evaluateFeatureGuard(node, context, file, ancestorIncluded));
 }
 
 /** Returned to the caller or written under .shoalrun, never a served artifact. */
