@@ -24,6 +24,25 @@ Use `--style google`, `--style numpy`, or `--style sphinx` for the docstring con
 
 The adapter emits locally defined symbols, skips aliases and underscore-prefixed members except constructors, and rejects symlinks in its declared source root. It doesn't expand inherited members, execute decorators, resolve external re-exports, or infer undocumented behavior. Its example SDK stores records in memory and doesn't contact a live service.
 
+## Generate TypeScript references
+
+The optional TypeScript adapter follows the public exports of one entry module, including local re-exports. It reads source or declaration files with the TypeScript compiler API; it doesn't import, execute, or emit documented code. Install `typescript@5.9.3` explicitly in the project that supplies the compiler configuration. The adapter supports TypeScript 5.9.x and rejects other compiler versions.
+
+From that project, run:
+
+```sh
+node node_modules/@shoalrun/cli/adapters/typescript/shoalrun-reference.mjs \
+  --project tsconfig.json --entry src/index.ts --module example.sdk \
+  --out reference.json
+shoalrun references check reference.json
+```
+
+`--entry` resolves relative to the compiler configuration. `--root` defaults to its directory and bounds emitted declarations and relative provenance paths; an entry or exported declaration outside that root fails. The configuration may be outside an explicitly supplied root. `--out` resolves relative to the current working directory. Extraction reports TypeScript errors rather than publishing an incomplete entry point. It doesn't install dependencies, run project plugins, or fetch remote declarations.
+
+Functions, overloads, classes, interfaces, type aliases, enums, and constants retain signatures. Object/interface fields and methods become child symbols. JSDoc descriptions, `@param`, `@returns`, and `@example` supply prose. Private/protected members and `@internal`/`@private` symbols are omitted. Local type references link eligible exports. Inherited members aren't expanded; union alternatives remain in their full alias declaration. Namespace exports and other unsupported declarations fail explicitly. See [the adapter guide](adapters/typescript/README.md) for limits.
+
+Normal site builds still read the saved JSON and don't need TypeScript. Refresh explicitly after changing the public source or JSDoc, then validate and review the generated reference. Type extraction doesn't prove runtime behavior.
+
 ## Configure a catalog
 
 ```yaml

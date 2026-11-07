@@ -1,8 +1,23 @@
 import { ContentDeliveryError, contentRefKey } from './content-delivery-contract.js';
 import type { ContentAnchor, ContentLink, ContentResult } from './content-delivery-contract.js';
 
-export type ContentMount = { anchors: readonly ContentAnchor[]; links: readonly ContentLink[]; unmount(): void };
-/** Mount trusted compiler output, not arbitrary HTML. This is not a sanitizer. */
+/** Handles and rewritten routing metadata for one mounted HTML instance. */
+export type ContentMount = {
+  /** Anchors after instance-specific ID rewriting. */
+  anchors: readonly ContentAnchor[];
+  /** Typed links, including rewritten local fragments for this instance. */
+  links: readonly ContentLink[];
+  /** Remove nodes that still belong to this mount. */
+  unmount(): void;
+};
+/** Mount trusted compiler HTML with instance-specific anchor and accessibility IDs.
+ * This is not a sanitizer. The result must come from trusted compiler output.
+ * The mount replaces the container's children and rewrites local routing metadata.
+ * @param container DOM element receiving the content.
+ * @param result A validated HTML representation; Markdown results aren't accepted.
+ * @param options Optional unique instance ID and cancellation signal.
+ * @returns Rewritten anchors, typed links, and an unmount handle.
+ */
 export function mountContent(container: Element, result: ContentResult, options: { instanceId?: string; signal?: AbortSignal } = {}): ContentMount {
   options.signal?.throwIfAborted();
   if (result.format !== 'html') throw new ContentDeliveryError('unsupported_format', 'Mounting requires HTML content.');

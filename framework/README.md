@@ -39,7 +39,7 @@ The [features overview](https://www.shoalrun.com/features) describes the complet
 | A documentation site | Pages, navigation, local preview, themes, palettes, fonts, and project CSS. |
 | Reusable procedures | Recipes, shared ingredients, and cookbooks that help readers choose a complete task. |
 | HTTP API references | OpenAPI operation pages, code examples, focused contracts, and an explicit source-review gate. |
-| Code API references | [Python docstrings and converter-supplied symbols](CODE-REFERENCES.md), rendered as native reference pages. |
+| Code API references | [Python docstrings, TypeScript declarations, and converter-supplied symbols](CODE-REFERENCES.md), rendered as native reference pages. |
 | Several product releases | Independent product versions and defaults, publication routes, and a header publication selector. |
 | Customer editions | External profiles, SKU revisions, feature grants, and conditional pages or sections. |
 | Application help | HTML and Markdown exports, stable page/section/snippet references, static and REST clients, and instance-safe mounting. |

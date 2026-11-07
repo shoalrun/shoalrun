@@ -40,6 +40,7 @@
     "DEPLOYMENT-PROFILES.md",
     "schemas/code-reference.schema.json",
     "adapters/python",
+    "adapters/typescript",
     "!**/__pycache__/**",
     "!adapters/python/test_*.py",
     "schemas/content-export.schema.json",
