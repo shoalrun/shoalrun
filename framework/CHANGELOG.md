@@ -9,6 +9,8 @@
   from public declarations and JSDoc. Preserve overloads, optional methods,
   readonly properties, and linked types. The authoring skill covers extraction
   and build selection; the website includes the generated content client API.
+- Add project skill discovery links, explicit loading instructions, and short
+  task checklists for the bundled agent workflows.
 - Improve browser and CLI keyword ranking for queries written as questions.
 - Mark intentional HTML-only blocks for compatible parity checks while retaining
   tooltip and info-hint comparison.

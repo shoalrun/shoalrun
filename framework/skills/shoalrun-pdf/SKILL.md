@@ -5,6 +5,15 @@ description: Style and export Shoalrun pages or publications as PDFs, including 
 
 # Style and export documentation PDFs
 
+## Before you start
+
+- Check the installed CLI, print settings, and required browser before exporting.
+- Keep product, version, language, profile, and build filters consistent with the requested artifact.
+- Use local print assets with appropriate rights and keep output separate from source.
+- Inspect rendered pages, extracted text, links, and absence of excluded content.
+- Reuse each verified artifact until inputs change; enable download actions only within the requested scope.
+
+
 Inspect the documentation project's instructions, installed CLI, content selection, and existing print assets. Check `shoalrun export --help` before using PDF options; a skill folder alone doesn't establish installed-version support. Use the project's installed CLI and package references without requiring a framework checkout. Preserve existing source, routes, IDs, and unrelated edits.
 
 ## Choose the publication and output

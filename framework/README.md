@@ -9,7 +9,7 @@ This package provides the `shoalrun` CLI, starter projects, agent skills, and of
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@1.0.0
+npm install --save-dev --save-exact @shoalrun/cli@1.1.0
 ```
 
 ## Create and preview a site
@@ -41,7 +41,7 @@ The [features overview](https://www.shoalrun.com/features) describes the complet
 | HTTP API references | OpenAPI operation pages, code examples, focused contracts, and an explicit source-review gate. |
 | Code API references | [Python docstrings, TypeScript declarations, and converter-supplied symbols](CODE-REFERENCES.md), rendered as native reference pages. |
 | Several product releases | Independent product versions and defaults, publication routes, and a header publication selector. |
-| Audience or regional sites | Shared source, build-time page selection, and `<ForFacet>` sections without customer profiles. |
+| Build selection | Select pages and `<ForFacet>` sections with configured facets and choices, without customer profiles. |
 | Customer editions | External profiles, SKU revisions, feature grants, and conditional pages or sections. |
 | Application help | HTML and Markdown exports, stable page/section/snippet references, static and REST clients, and instance-safe mounting. |
 | Agent discovery | Markdown twins, compact linked indexes, read-only MCP tools, bundled skills, and offline references. |
@@ -140,7 +140,7 @@ npx --no-install shoalrun skills list
 npx --no-install shoalrun skills read shoalrun-setup
 ```
 
-Ask your agent to read the skill for the task. `skills list` returns names, descriptions, and local instruction-file paths. These commands read the skills; installing the npm package does not automatically install them into your agent.
+Ask your agent to read the skill for the task. `skills list` returns names, descriptions, and local instruction-file paths. These commands read the skills; installing the npm package does not automatically install them into your agent. Expose complete folders through your agent's discovery directory. Copy complete folders into the skill directory supported by your agent, preserving existing skills and reviewing copied versions when upgrading. Give the project's agent instructions an exact path to load before editing, with direct file reading as a fallback. See [skill setup](https://www.shoalrun.com/contribute/agent-skills).
 
 The editing workflow is to capture a baseline, edit source files, validate the changes, then review a local preview. From your documentation project directory:
 
@@ -358,7 +358,7 @@ with a Hero replaces the standard page header and does not display its dates.
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@1.0.0 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@1.1.0 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.

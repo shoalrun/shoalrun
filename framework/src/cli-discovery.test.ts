@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,4 +45,23 @@ test('skill discovery rejects unknown names, path traversal and malformed argume
     assert.equal(JSON.parse(result.stderr).status, 'error');
     assert.equal(result.stdout, '');
   }
+});
+
+
+test('complete project skill copies retain references and support isolated baseline capture', async t => {
+  const cwd = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-project-skills-'));
+  t.after(() => rm(cwd, { recursive: true, force: true }));
+  const initialized = run(cwd, 'init', cwd, '--starter', 'minimal');
+  assert.equal(initialized.status, 0, initialized.stderr);
+  const source = fileURLToPath(new URL('../skills/', import.meta.url));
+  await mkdir(path.join(cwd, '.agents/skills'), { recursive: true });
+  await cp(source, path.join(cwd, '.agents/skills'), { recursive: true });
+  await writeFile(path.join(cwd, 'AGENTS.md'), 'Before editing content/, load .agents/skills/shoalrun-author/SKILL.md.');
+  const entries = await readdir(path.join(cwd, '.agents/skills'));
+  assert.ok(entries.includes('shoalrun-author'));
+  for (const name of entries) assert.match(await readFile(path.join(cwd, '.agents/skills', name, 'SKILL.md'), 'utf8'), /^---\nname:/);
+  assert.equal(await readFile(path.join(cwd, '.agents/skills/shoalrun-author/references/facet-selection.md'), 'utf8'), await readFile(path.join(source, 'shoalrun-author/references/facet-selection.md'), 'utf8'));
+  assert.equal(await readFile(path.join(cwd, '.agents/skills/shoalrun-pdf/assets/print.css'), 'utf8'), await readFile(path.join(source, 'shoalrun-pdf/assets/print.css'), 'utf8'));
+  const baseline = run(cwd, 'docs', 'baseline', '--config', path.join(cwd, 'docs.config.yaml'), '--out', path.join(cwd, '.shoalrun/baseline.json'));
+  assert.equal(baseline.status, 0, baseline.stderr);
 });

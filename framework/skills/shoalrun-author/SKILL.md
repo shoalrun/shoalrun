@@ -5,6 +5,15 @@ description: Write or revise documentation in an existing Shoalrun project using
 
 # Author Shoalrun documentation
 
+## Before you start
+
+- Read project `AGENTS.md`, writing guidance, and installed-version references before editing.
+- Preserve IDs, routes, access, and original dates; update `updated` and required taxonomy for edited pages.
+- Explain HTML, Markdown, and agent behavior when documenting components or presentation features.
+- Keep navigation, relationships, generated sources, and publication/build selection consistent.
+- Validate the affected set; build once per input set, inspect both representations, and reuse that output for preview.
+
+
 Use normal working-tree file tools. Shoalrun supplies project discovery, canonical references, isolated validation and snapshot previews; your harness supplies planning, evidence gathering, writing and permissions. No additional authoring model key or replacement-file JSON is required. Preserve unrelated local edits and never hand-edit generated output.
 
 ## Discover the task and its policy
@@ -31,7 +40,7 @@ For independently versioned products, cross-product reuse, product-scoped delive
 
 ## Build-time facet selection
 
-For audience, region, or other facet-selected sites, read [references/facet-selection.md](references/facet-selection.md). Use `contentFilter` for pages and `<ForFacet>` for additional sections. Keep build-time omission distinct from the presentation-only `<ReaderSection>` and from customer feature grants.
+For builds selected by configured facets, read [references/facet-selection.md](references/facet-selection.md). Use `contentFilter` for pages and `<ForFacet>` for additional sections. Keep build-time omission distinct from the presentation-only `<ReaderSection>` and from customer feature grants.
 
 ## Customer editions and feature selection
 

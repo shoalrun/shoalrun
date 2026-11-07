@@ -5,6 +5,15 @@ description: Turn notes, a tutorial, or a piece of code into a Shoalrun Walkthro
 
 # Write a Shoalrun walkthrough
 
+## Before you start
+
+- Read the installed Walkthrough contract and the actual source being explained.
+- Choose separate complete code steps or one shared block to match the material.
+- Keep each explanation and highlight range consistent with the code shown.
+- Preserve page IDs and dates; update `updated`, required taxonomy, and companion links when editing a page.
+- Build once per input set; inspect complete Markdown and interactive HTML, then reuse the preview.
+
+
 Read the component guide first with `shoalrun docs read guide.component.walkthrough`. It has the exact syntax, attributes, and build errors. Then read the source material: the user's notes, the guide being converted, and any code files it names.
 
 Choose the mode from the material. Use separate steps, each with its own complete code, when the code grows or changes from step to step. Use one shared code block with a `highlight` per step when the steps explain parts of a single file. Use the default `scroll` layout for code that builds up in order, and `layout="spotlight"` for reference material that readers jump around in. A list of steps without code is an ordinary numbered list, not a walkthrough.

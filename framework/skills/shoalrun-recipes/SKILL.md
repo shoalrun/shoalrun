@@ -5,6 +5,15 @@ description: Write or revise task-oriented how-tos, reusable ingredients, recipe
 
 # Write Shoalrun recipes
 
+## Before you start
+
+- Choose the reader goal: reusable ingredient, complete recipe, or cookbook selection.
+- Find the maintained source before editing a generated recipe.
+- Preserve IDs and original dates; set `updated` and required project taxonomy.
+- Keep task handoffs, navigation, relationships, and representation explanations complete.
+- Build once per input set; check the full procedure in HTML and Markdown and reuse its output.
+
+
 Start with the reader's goal and an observable success condition. Use `how-to` for a task page, or `recipe` when it participates in recipe composition or cookbook choices. Both need practical actions and an observable result. Preserve the user's requested format and established page IDs and routes. Use `explanation` for conceptual discussion and `reference` for exact facts; an existing how-to does not need an automatic type migration.
 
 The CLI includes overrideable `recipe`, `ingredient`, and `cookbook` templates; scaffold with `shoalrun scaffold <template> -n <target>` without project registration.

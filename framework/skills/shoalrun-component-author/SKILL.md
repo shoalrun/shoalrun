@@ -5,6 +5,15 @@ description: Create or repair Shoalrun component packages with shared documentat
 
 # Author a Shoalrun component
 
+## Before you start
+
+- Read project policy and the installed component contract before changing a package.
+- Keep essential content in one shared model for HTML and Markdown.
+- Check attributes, dependencies, instance data, and state isolation.
+- Verify keyboard behavior and the no-JavaScript fallback for browser enhancements.
+- Update required companion docs and metadata; reuse verified output until inputs change.
+
+
 Read project policy and `shoalrun docs read guide.custom-components` from the installed CLI. Distinguish using an existing component from developing its package. Page authors need the documented tag and attributes; component developers own the manifest, implementation, dependencies, and tests. Keep task-specific prose in MDX.
 
 Start with the smallest content model that solves the request. Export `defineComponent({ attributes?, children?, content })` from `@shoalrun/cli/components`. The required synchronous `content()` function receives validated attributes and opaque authored children. Return the children, supported `content` helpers, or `{ content, data }`. Do not construct compiler nodes or add separate HTML/Markdown renderers. Shoalrun renders the same shared content into both formats; authors must review its adequacy.

@@ -5,6 +5,15 @@ description: Apply a visual brand to a Shoalrun documentation site or local demo
 
 # Brand a documentation site
 
+## Before you start
+
+- Read project policy and use supplied brand evidence for visual decisions.
+- Preserve content, IDs, routes, navigation, and publication/profile selection.
+- Configure palette, fonts, logos, and supported settings before adding scoped CSS.
+- Check text, inputs, menus, search results, and keyboard focus in each requested mode.
+- Reuse validated output until inputs change; review Markdown and PDF effects when affected.
+
+
 Inspect the target project's configuration, styles, assets, installed package version, and applicable project instructions. Preserve documentation, routes, navigation, publication selection, and existing edits. For a separate demo, copy source into a new directory and keep its build output separate. Visual branding doesn't establish product facts; retain sample-content labels and don't invent product capabilities or release histories.
 
 ## Establish the brand

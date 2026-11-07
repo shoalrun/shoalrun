@@ -5,6 +5,15 @@ description: Start a Shoalrun documentation project from a working example, conf
 
 # Set up Shoalrun docs
 
+## Before you start
+
+- Inspect the existing project and preserve its source and local edits.
+- Use a supported starter and the project’s installed CLI; verify unfamiliar settings.
+- Set publication identity, access, and required page metadata and taxonomy deliberately.
+- Check navigation, API bindings, and essential content in HTML and Markdown.
+- Build into a dedicated output directory and reuse that build for preview.
+
+
 First inspect the target repository for an existing `docs.config.yaml`, content, OpenAPI files, and build scripts. Preserve an existing project rather than copying a starter over it. Ask for missing publication choices only when they affect the first build, such as the intended API version or whether pages are ready to be public.
 
 When adapting existing documentation, start with a connected, representative set of pages. Identify each page's reader goal and choose native structures accordingly: `Fields` for authored configuration or parameter lists, source-backed schemas and references for OpenAPI contracts, `Steps` for titled procedures, and document cards for reading paths. Read the matching bundled component references before writing syntax. Preserve IDs, routes, examples, defaults, bounds, and the distinction between an optional value and a nullable one. A successful build does not establish that these meanings survived.
