@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "configDigest": "4e5898e91b505029f70c2af41fd6d39f05454d9ed4575aea0f64a78c4a78a0d0",
+  "configDigest": "9124a05bcc1fd01b32a5245db7f301b471396ed0c802d9d303c04f92b484eaca",
   "searchSynonyms": [
     [
       "walkthrough",
@@ -54,6 +54,10 @@
     [
       "publish",
       "publishing"
+    ],
+    [
+      "on this page",
+      "table of contents"
     ]
   ],
   "basePath": "",
@@ -13516,8 +13520,8 @@
         "indexUrl": "/.well-known/shoalrun/navigation/docs-50f26fe22670.txt"
       },
       "indexable": true,
-      "updated": "2026-11-05",
-      "contentDigest": "e788337e6a27d6f0bf5352498a1da1e52a315c18c83a8fce5abef3d8ff9e0622",
+      "updated": "2026-11-07",
+      "contentDigest": "f9a4fe8011c04b96baa7f0aecd00e76ad670f81f5656c190eb42c92b5dcd8344",
       "breadcrumbs": [
         {
           "label": "Docs",
@@ -13558,8 +13562,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/hide-the-table-of-contents-or-give-content-more-room.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "03976c6d5e28d4499d1790e34a9444eee24c7627ae65787567f89488137f7ff9",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "f9e0d2530e45abbf60df809a8f06d6c3cc76e6c38fb72be3bc1144e671b055c2",
           "markdownBytes": 3746,
           "markdownTokens": 766,
           "markdownTokenEncoding": "cl100k_base"
@@ -13570,8 +13574,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/control-navigation-tabs.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "3162ddaff57de71e9f25ba3669db24be365b8dd0efa67480a263f4911d36d4d3",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "8d975c580e645608f5ded31769dde79573003d05a0005b38145fbaf650bce404",
           "markdownBytes": 3563,
           "markdownTokens": 759,
           "markdownTokenEncoding": "cl100k_base"
@@ -13582,8 +13586,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/build-a-landing-page.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "79defc900c175d509abce1f8c07dc4d8e163f6b872be8502943274961f8271a2",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "a76e32a1d8d0440e8e9654eb4a893380c24672bbdca74c6637b72893af97d973",
           "markdownBytes": 3261,
           "markdownTokens": 735,
           "markdownTokenEncoding": "cl100k_base"
@@ -13594,8 +13598,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/hero.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "7d033c1cd3915768fa76735e299404aac3b946d1abd0727189d5b14a5c7fe3d2",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "57b26dff5e8b5b7252e8bd38a1249a752f72b8f57168cffbf10e49e9c5841d38",
           "markdownBytes": 5360,
           "markdownTokens": 1192,
           "markdownTokenEncoding": "cl100k_base"
@@ -13606,8 +13610,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/build-a-splash-page.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "5a2b072b5256717ce6ad949206f150c11e5eb3e44322aa27449ef8e3c97e7be2",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "b2f4c146b31e03c96949937ebd2c299ab7160a28ad45627f7098e437d1e62bd0",
           "markdownBytes": 5314,
           "markdownTokens": 1072,
           "markdownTokenEncoding": "cl100k_base"
@@ -13618,8 +13622,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/customize-the-hero.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "dd206c54341a1d7df9ad5c2806b53263c79b5471d6e1e1cdb385ef70787ae06e",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "347d639da1a8be519f364f1d3521e144b2f6c689d35d989550e96edf64b19d6b",
           "markdownBytes": 3418,
           "markdownTokens": 769,
           "markdownTokenEncoding": "cl100k_base"
@@ -13630,8 +13634,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/html-markdown-and-agents.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "8b482a14be4b736b6ee882b6587727f709e8605c1f9a8ee94d3061bc94792243",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "3dcb4976377db79a8179742bbe9e5c393108028e213c8e73c7c2999278dc3c02",
           "markdownBytes": 3081,
           "markdownTokens": 647,
           "markdownTokenEncoding": "cl100k_base"
@@ -13642,8 +13646,8 @@
           "depth": 2,
           "markdownUrl": "/styling/layouts.sections/related-reading.md",
           "parentMarkdownUrl": "/styling/layouts.md",
-          "parentDigest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad",
-          "digest": "75484f458ee6dee265075680fa1895e2c8d61ac234d1b727184334c449c080ea",
+          "parentDigest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6",
+          "digest": "d93ba71e82d0d0ea58c997d868836a1312d237808911fb79a9a74019e06a4648",
           "markdownBytes": 2733,
           "markdownTokens": 584,
           "markdownTokenEncoding": "cl100k_base"
@@ -13652,7 +13656,7 @@
       "markdownBytes": 12472,
       "markdownTokens": 2695,
       "markdownTokenEncoding": "cl100k_base",
-      "digest": "83be35b6c35190bd332843b60321e5398339ec52ff2c2b026cb7a65bba682dad"
+      "digest": "d3f9e75528f358e6b15ee362beae7308abfee5c862f946ddb200434b55633fb6"
     },
     {
       "id": "guide.manni",
@@ -25316,769 +25320,6 @@
       "to": "/author/components/collapsible",
       "markdownFrom": "/author/components/collapsible-group.md",
       "markdownTo": "/author/components/collapsible.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/exports",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/exports.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-anchor",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-anchor.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-anchor/exported-id",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-anchor/exported-id.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-anchor/id",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-anchor/id.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-anchor/title",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-anchor/title.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-asset",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-asset.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-asset/media-type",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-asset/media-type.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-delivery-error",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-delivery-error.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-delivery-error/code",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-delivery-error/code.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-delivery-limits",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-delivery-limits.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-delivery-limits/manifest-bytes",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-delivery-limits/manifest-bytes.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-delivery-limits/resource-bytes",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-delivery-limits/resource-bytes.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-delivery-limits/resources",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-delivery-limits/resources.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-error-code",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-error-code.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-file",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-file.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-file/bytes",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-file/bytes.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-file/digest",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-file/digest.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-file/path",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-file/path.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-format",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-format.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link/asset",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link/asset.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link/fragment",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link/fragment.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link/href",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link/href.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link/key",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link/key.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link/kind",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link/kind.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link/query",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link/query.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-link/ref",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-link/ref.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/assets",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/assets.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/diagnostics",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/diagnostics.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/digest",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/digest.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/files",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/files.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/kind",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/kind.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/public-base",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/public-base.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/publication",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/publication.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/resources",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/resources.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/review",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/review.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-manifest/schema-version",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-manifest/schema-version.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-mount",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-mount.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-mount/anchors",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-mount/anchors.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-mount/links",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-mount/links.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-mount/unmount",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-mount/unmount.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-publication",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-publication.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-publication/channel",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-publication/channel.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-publication/language",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-publication/language.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-publication/product",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-publication/product.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-publication/version",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-publication/version.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-ref",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-ref.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-representation",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-representation.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-representation/anchors",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-representation/anchors.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-representation/links",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-representation/links.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/assets",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/assets.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/canonical-url",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/canonical-url.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/external-dependencies",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/external-dependencies.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/publication",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/publication.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/ref",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/ref.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/representations",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/representations.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/source",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/source.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/summary",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/summary.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/title",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/title.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource/type",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource/type.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-entry",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-entry.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-entry/key",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-entry/key.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-entry/resource",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-entry/resource.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-error",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-error.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-error/error",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-error/error.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-error-code",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-error-code.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-list",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-list.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-list/publication",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-list/publication.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-list/resources",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-list/resources.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-list/revision",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-list/revision.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-list/schema-version",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-list/schema-version.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-resource",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-resource.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-resource/key",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-resource/key.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-resource/publication",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-resource/publication.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-resource/resource",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-resource/resource.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-resource/revision",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-resource/revision.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-rest-resource/schema-version",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-rest-resource/schema-version.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-result",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-result.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-result/content",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-result/content.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-result/format",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-result/format.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-result/representation",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-result/representation.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-result/resource",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-result/resource.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-result/revision",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-result/revision.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-snapshot",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-snapshot.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-snapshot/dispose",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-snapshot/dispose.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-snapshot/get",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-snapshot/get.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-snapshot/list",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-snapshot/list.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-snapshot/publication",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-snapshot/publication.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-snapshot/revision",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-snapshot/revision.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/manifest-content-source-options",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/manifest-content-source-options.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/manifest-content-source-options/fetch",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/manifest-content-source-options/fetch.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/manifest-content-source-options/limits",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/manifest-content-source-options/limits.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/manifest-content-source-options/manifest-url",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/manifest-content-source-options/manifest-url.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/manifest-content-source-options/signal",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/manifest-content-source-options/signal.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/rest-content-source-options",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/rest-content-source-options.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/rest-content-source-options/base-url",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/rest-content-source-options/base-url.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/rest-content-source-options/fetch",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/rest-content-source-options/fetch.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/rest-content-source-options/limits",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/rest-content-source-options/limits.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/rest-content-source-options/publication",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/rest-content-source-options/publication.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/rest-content-source-options/revision",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/rest-content-source-options/revision.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/rest-content-source-options/signal",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/rest-content-source-options/signal.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-ref-key",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-ref-key.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/content-resource-key",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/content-resource-key.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/mount-content",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/mount-content.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/open-manifest-content-source",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/open-manifest-content-source.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/open-rest-content-source",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/open-rest-content-source.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
-      "status": 308
-    },
-    {
-      "from": "/content-delivery/sdk/validate-content-manifest",
-      "to": "/content-delivery/sdk/all",
-      "markdownFrom": "/content-delivery/sdk/validate-content-manifest.md",
-      "markdownTo": "/content-delivery/sdk/all.md",
       "status": 308
     }
   ],

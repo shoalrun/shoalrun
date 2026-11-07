@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "siteBuild": {
     "schemaVersion": 1,
-    "configDigest": "4e5898e91b505029f70c2af41fd6d39f05454d9ed4575aea0f64a78c4a78a0d0",
-    "buildId": "be1caebb0785166e36c032fa29a8fecbdd44ab1bbdeb294622793dc47bcffc47"
+    "configDigest": "9124a05bcc1fd01b32a5245db7f301b471396ed0c802d9d303c04f92b484eaca",
+    "buildId": "05008aafb965ba8960dd8308b99cd4173e886f9f7fa63859d1d6cc3986c9233d"
   },
-  "packageIntegrity": "sha512-Mtt54ybF0TxVQRAkQFIRJlMrrZRzi8s3XFknRKrpanIt6/vuoT3L+9yC2GZ87XlBBTlOSh6WvW75z//H5AOECQ==",
+  "packageIntegrity": "sha512-WKG6GfAaen/a+7CG5lz7YX61LHi3DrJj9TOtW4iXP9am0ozrkAhHhdMyNCvVMRiu7UYRyYDCRwhqlukV4penBg==",
   "compilerPackage": {
     "kind": "reviewed-local-artifact",
     "name": "@shoalrun/cli",
     "version": "1.2.0",
-    "integrity": "sha512-Mtt54ybF0TxVQRAkQFIRJlMrrZRzi8s3XFknRKrpanIt6/vuoT3L+9yC2GZ87XlBBTlOSh6WvW75z//H5AOECQ=="
+    "integrity": "sha512-WKG6GfAaen/a+7CG5lz7YX61LHi3DrJj9TOtW4iXP9am0ozrkAhHhdMyNCvVMRiu7UYRyYDCRwhqlukV4penBg=="
   },
-  "manifestDigest": "b2ce5af56b47d4568a643bbd084d1c0f1ccdee7f1ee3936632b8d638635d3ca3"
+  "manifestDigest": "97f713935e52669e6e97311cbcd723745064032f7f831865163e0c5e502e8f1d"
 }
