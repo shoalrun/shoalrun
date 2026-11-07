@@ -1,6 +1,6 @@
 # Build-time facet selection
 
-Check the installed compiler's support before using `<ForFacet>`; an older bundled documentation snapshot doesn't establish availability. Use `readerFilters.facets` to declare choices, `site.contentFilter` to select a site's pages, and `<ForFacet>` to omit unmatched sections. No customer profile or SKU manifest is needed.
+ForFacet requires Shoalrun 1.1.0 or newer. Check the installed compiler's support before using `<ForFacet>`; an older bundled documentation snapshot doesn't establish availability. Use `readerFilters.facets` to declare choices, `site.contentFilter` to select a site's pages, and `<ForFacet>` to omit unmatched sections. No customer profile or SKU manifest is needed.
 
 **Unmarked sections remain included. Pages without a mark for a selected facet are excluded.** Give a shared page all applicable page-level marks; a section guard can't bring an excluded page back.
 

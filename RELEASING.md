@@ -1,21 +1,21 @@
 # Release checklist
 
-Shoalrun 1.0 is the stable release line. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
+Shoalrun 1.x is the stable release line. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
 
-## 1.0.0 release scope
+## 1.1.0 release scope
 
-This release includes code API references with optional Python extraction,
-configurable grouped and complete-page layouts, custom-font preload/cache fixes,
-shared header spacing, and npm distribution-tag verification. The public release
-note and feature guides live in the matching docs checkout. Retain the exact
-package, documentation snapshot, and site provenance throughout preparation.
+This release includes build-time facet sections, optional TypeScript extraction,
+generated content-client references, content-term search ranking, and HTML-only
+parity markers. Public feature guides, skills, and the concise release note live
+in the matching source and docs checkouts. Retain exact package, snapshot, and
+site provenance throughout preparation.
 
 ## Coordinated release command
 
 Run from the framework repository with the documentation checkout beside it:
 
 ```sh
-npm run release -- 1.0.0
+npm run release -- 1.1.0
 ```
 
 This prepares versions, builds a bootstrap compiler, exports and imports the

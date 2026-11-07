@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.0 — 2026-11-07
+
+- Select additional sections with [ForFacet](https://www.shoalrun.com/author/components/for-facet)
+  and existing build facets, without customer profiles. Omit unmatched content
+  before rendering, indexing, and dependency expansion.
+- Generate [TypeScript SDK references](https://www.shoalrun.com/api-docs/typescript-references)
+  from public declarations and JSDoc. Preserve overloads, optional methods,
+  readonly properties, and linked types. The authoring skill covers extraction
+  and build selection; the website includes the generated content client API.
+- Improve browser and CLI keyword ranking for queries written as questions.
+- Mark intentional HTML-only blocks for compatible parity checks while retaining
+  tooltip and info-hint comparison.
+
+Upgrade to CLI `1.1.0` and rebuild the site and application exports. TypeScript
+extraction requires an explicit `typescript@5.9.3` development dependency;
+normal builds consume the saved snapshot without running extraction.
+
 ## 1.0.0 — 2026-11-06
 
 - Generate [code API references](https://www.shoalrun.com/api-docs/code-references)
