@@ -1,0 +1,15 @@
+# Code API reference authoring
+
+Read `guide.code-api-references` and `reference.code-api-references` from the installed package's bundled docs when present. Check installed-version support; the feature starts in 1.0.0. A source checkout also provides `CODE-REFERENCES.md` and a runnable `examples/code-references` project.
+
+Use `codeReferences` for a language library or SDK, and `apis` for OpenAPI HTTP endpoints. A converter writes the versioned snapshot; normal builds never invoke it. The optional Python adapter requires an explicitly prepared Python 3.11+ environment with its pinned requirements. Keep extraction roots narrow and don't enable runtime inspection or external discovery to make an unsupported package appear to work. Other languages can provide their own converter; don't claim a bundled Kotlin extractor.
+
+Run `shoalrun references check FILE`, inspect the snapshot's public symbols and prose, then configure the catalog. Snapshot descriptions are inert Markdown; MDX, project directives, relative links, and images aren't supported. Preserve exact symbol IDs and use explicit document IDs/slugs when public identities must survive a rename. Keep snapshots in the project and regenerate them after source changes.
+
+Choose `layout: symbols`, `classes`, or `modules` by reading needs. All retain individual symbol URLs. Add `singlePage` only when a complete reference is useful; configure its ID, slug, title, summary, and optional metadata, then link that ID in navigation. Group class or module pages in navigation instead of listing every symbol when a shorter menu is wanted.
+
+Preserve product/channel/version/language source bindings. Catalog and symbol metadata classify their content; a parent's feature requirements aren't inherited by children. Strict source classification also applies to the complete page. Pass the same profile through validation, build, and export. Check that private, restricted, or audience-excluded symbols don't reappear inside grouped or complete pages.
+
+Type links use explicit converter targets and remain within eligible catalog/publication scope. Keep unknown types unlinked. Required fields are distinct from nullable fields; show defaults as unevaluated expressions. Configure repository source links only with a real HTTPS base directory and intended release/commit; never invent a repository location.
+
+Review class/module and complete pages in HTML and Markdown. Check inline symbol links, retained individual URLs, narrow-screen table scrolling and keyboard focus, and content-export/PDF selection by ID where relevant. Reading references doesn't require JavaScript; Copy controls do. Extraction doesn't prove runtime behavior or execute examples.

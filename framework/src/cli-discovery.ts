@@ -46,6 +46,7 @@ Start and build:
   dev [config] [output] [--profile FILE] [--port PORT]
   serve <site-directory> [--host HOST] [--port PORT]
   check [config] [--json]
+  references check <snapshot.json>
   audit [config]
   scaffold <template> -n <target> [--config FILE] [--product P]
 

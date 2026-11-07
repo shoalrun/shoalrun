@@ -1,0 +1,262 @@
+schemaVersion: 1
+site:
+  title: Python SDK documentation
+publications:
+  channels:
+    production: {}
+  versions:
+    current: {}
+  defaults:
+    channel: production
+    version: current
+    language: en
+  enabled:
+    - channel: production
+      version: current
+      language: en
+codeReferences:
+  sdk:
+    source:
+      kind: file
+      path: ./reference.json
+    symbols:
+      orchard:
+        documentId: reference.orchard
+        slug: /reference/orchard
+      orchard.client:
+        documentId: reference.clients
+        slug: /reference/clients
+      orchard.client.AsyncClient:
+        documentId: reference.AsyncClient
+        slug: /reference/async-client
+      orchard.client.AsyncClient.__init__:
+        documentId: reference.AsyncClient.__init__
+        slug: /reference/async-client/constructor
+      orchard.client.AsyncClient.fetch:
+        documentId: reference.AsyncClient.fetch
+        slug: /reference/async-client/fetch
+      orchard.client.AsyncClient.iter_records:
+        documentId: reference.AsyncClient.iter_records
+        slug: /reference/async-client/iter-records
+      orchard.client.Client:
+        documentId: reference.client
+        slug: /reference/client
+      orchard.client.Client.__init__:
+        documentId: reference.Client.__init__
+        slug: /reference/client/constructor
+      orchard.client.Client.base_url:
+        documentId: reference.Client.base_url
+        slug: /reference/client/base-url
+      orchard.client.Client.bulk_create:
+        documentId: reference.Client.bulk_create
+        slug: /reference/client/bulk-create
+      orchard.client.Client.create_record:
+        documentId: reference.Client.create_record
+        slug: /reference/client/create-record
+      orchard.client.Client.fetch:
+        documentId: reference.fetch
+        slug: /reference/client/fetch
+      orchard.client.Client.iter_records:
+        documentId: reference.Client.iter_records
+        slug: /reference/client/iter-records
+      orchard.client.Client.list_records:
+        documentId: reference.Client.list_records
+        slug: /reference/client/list-records
+      orchard.client.Client.max_retries:
+        documentId: reference.Client.max_retries
+        slug: /reference/client/max-retries
+      orchard.client.Client.timeout:
+        documentId: reference.Client.timeout
+        slug: /reference/client/timeout
+      orchard.errors:
+        documentId: reference.errors
+        slug: /reference/errors
+      orchard.errors.APIError:
+        documentId: reference.errors.APIError
+        slug: /reference/errors/apierror
+      orchard.errors.APIError.__init__:
+        documentId: reference.errors.APIError.__init__
+        slug: /reference/errors/apierror/constructor
+      orchard.errors.APIError.request_id:
+        documentId: reference.errors.APIError.request_id
+        slug: /reference/errors/apierror/request-id
+      orchard.errors.AuthenticationError:
+        documentId: reference.errors.AuthenticationError
+        slug: /reference/errors/authenticationerror
+      orchard.errors.NotFoundError:
+        documentId: reference.errors.NotFoundError
+        slug: /reference/errors/notfounderror
+      orchard.errors.RateLimitError:
+        documentId: reference.errors.RateLimitError
+        slug: /reference/errors/ratelimiterror
+      orchard.errors.RateLimitError.__init__:
+        documentId: reference.errors.RateLimitError.__init__
+        slug: /reference/errors/ratelimiterror/constructor
+      orchard.errors.RateLimitError.retry_after:
+        documentId: reference.errors.RateLimitError.retry_after
+        slug: /reference/errors/ratelimiterror/retry-after
+      orchard.models:
+        documentId: reference.models
+        slug: /reference/models
+      orchard.models.Record:
+        documentId: reference.models.Record
+        slug: /reference/models/record
+      orchard.models.Record.created_at:
+        documentId: reference.models.Record.created_at
+        slug: /reference/models/record/created-at
+      orchard.models.Record.id:
+        documentId: reference.models.Record.id
+        slug: /reference/models/record/id
+      orchard.models.Record.labels:
+        documentId: reference.models.Record.labels
+        slug: /reference/models/record/labels
+      orchard.models.Record.status:
+        documentId: reference.models.Record.status
+        slug: /reference/models/record/status
+      orchard.models.Record.title:
+        documentId: reference.models.Record.title
+        slug: /reference/models/record/title
+      orchard.models.Record.to_dict:
+        documentId: reference.models.Record.to_dict
+        slug: /reference/models/record/to-dict
+      orchard.models.RecordDict:
+        documentId: reference.models.RecordDict
+        slug: /reference/models/recorddict
+      orchard.models.RecordDict.id:
+        documentId: reference.models.RecordDict.id
+        slug: /reference/models/recorddict/id
+      orchard.models.RecordDict.status:
+        documentId: reference.models.RecordDict.status
+        slug: /reference/models/recorddict/status
+      orchard.models.RecordDict.title:
+        documentId: reference.models.RecordDict.title
+        slug: /reference/models/recorddict/title
+      orchard.models.RecordInput:
+        documentId: reference.models.RecordInput
+        slug: /reference/models/recordinput
+      orchard.models.RecordInput.labels:
+        documentId: reference.models.RecordInput.labels
+        slug: /reference/models/recordinput/labels
+      orchard.models.RecordInput.title:
+        documentId: reference.models.RecordInput.title
+        slug: /reference/models/recordinput/title
+      orchard.models.RecordStatus:
+        documentId: reference.models.RecordStatus
+        slug: /reference/models/recordstatus
+      orchard.models.RecordStatus.FAILED:
+        documentId: reference.models.RecordStatus.FAILED
+        slug: /reference/models/recordstatus/failed
+      orchard.models.RecordStatus.PENDING:
+        documentId: reference.models.RecordStatus.PENDING
+        slug: /reference/models/recordstatus/pending
+      orchard.models.RecordStatus.READY:
+        documentId: reference.models.RecordStatus.READY
+        slug: /reference/models/recordstatus/ready
+      orchard.pagination:
+        documentId: reference.pagination
+        slug: /reference/pagination
+      orchard.pagination.Page:
+        documentId: reference.pagination.Page
+        slug: /reference/pagination/page
+      orchard.pagination.Page.has_more:
+        documentId: reference.pagination.Page.has_more
+        slug: /reference/pagination/page/has-more
+      orchard.pagination.Page.items:
+        documentId: reference.pagination.Page.items
+        slug: /reference/pagination/page/items
+      orchard.pagination.Page.map:
+        documentId: reference.pagination.Page.map
+        slug: /reference/pagination/page/map
+      orchard.pagination.Page.next_cursor:
+        documentId: reference.pagination.Page.next_cursor
+        slug: /reference/pagination/page/next-cursor
+      orchard.pagination.Page.total:
+        documentId: reference.pagination.Page.total
+        slug: /reference/pagination/page/total
+      orchard.pagination.T:
+        documentId: reference.pagination.T
+        slug: /reference/pagination/t
+      orchard.pagination.U:
+        documentId: reference.pagination.U
+        slug: /reference/pagination/u
+    layout: classes
+    singlePage:
+      documentId: reference.complete
+      slug: /reference/all
+      title: Complete Python SDK reference
+      summary: Browse every public module, class, method, and field on one page.
+navigation:
+  - id: start
+    doc: guide.start
+  - id: complete
+    doc: reference.complete
+  - id: overview
+    label: Package
+    items:
+      - id: orchard
+        doc: reference.orchard
+      - id: orchard.client
+        doc: reference.clients
+  - id: client
+    label: Synchronous client
+    items:
+      - id: orchard.client.Client
+        doc: reference.client
+      - id: orchard.client.Client.__init__
+        doc: reference.Client.__init__
+      - id: orchard.client.Client.fetch
+        doc: reference.fetch
+      - id: orchard.client.Client.list_records
+        doc: reference.Client.list_records
+      - id: orchard.client.Client.iter_records
+        doc: reference.Client.iter_records
+      - id: orchard.client.Client.create_record
+        doc: reference.Client.create_record
+      - id: orchard.client.Client.bulk_create
+        doc: reference.Client.bulk_create
+  - id: async
+    label: Asynchronous client
+    items:
+      - id: orchard.client.AsyncClient
+        doc: reference.AsyncClient
+      - id: orchard.client.AsyncClient.fetch
+        doc: reference.AsyncClient.fetch
+      - id: orchard.client.AsyncClient.iter_records
+        doc: reference.AsyncClient.iter_records
+  - id: models
+    label: Models
+    items:
+      - id: orchard.models
+        doc: reference.models
+      - id: orchard.models.Record
+        doc: reference.models.Record
+      - id: orchard.models.RecordInput
+        doc: reference.models.RecordInput
+      - id: orchard.models.RecordDict
+        doc: reference.models.RecordDict
+      - id: orchard.models.RecordStatus
+        doc: reference.models.RecordStatus
+      - id: orchard.models.Record.to_dict
+        doc: reference.models.Record.to_dict
+  - id: pagination
+    label: Pagination
+    items:
+      - id: orchard.pagination.Page
+        doc: reference.pagination.Page
+      - id: orchard.pagination.Page.map
+        doc: reference.pagination.Page.map
+      - id: orchard.pagination.Page.has_more
+        doc: reference.pagination.Page.has_more
+  - id: errors
+    label: Exceptions
+    items:
+      - id: orchard.errors
+        doc: reference.errors
+      - id: orchard.errors.APIError
+        doc: reference.errors.APIError
+      - id: orchard.errors.AuthenticationError
+        doc: reference.errors.AuthenticationError
+      - id: orchard.errors.NotFoundError
+        doc: reference.errors.NotFoundError
+      - id: orchard.errors.RateLimitError
+        doc: reference.errors.RateLimitError

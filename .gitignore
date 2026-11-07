@@ -31,3 +31,5 @@ SOURCE-INVENTORY.local.json
 
 # Generated application example content
 /framework/examples/*/public/
+
+__pycache__/

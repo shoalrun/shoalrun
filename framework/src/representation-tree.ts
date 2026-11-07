@@ -64,6 +64,10 @@ export function publicTree(tree: any, representation: 'html' | 'markdown', docum
     if (node.type === 'docReaderFilter') {
       return representation === 'markdown' ? [] : [element('div', { className: ['reader-filter-slot'], 'data-reader-filter': JSON.stringify(node.control) }, [])];
     }
+    if (node.type === 'table' && node.data?.referenceTableLabel && representation === 'html') {
+      const table = { ...node, children: node.children.flatMap(walk) };
+      return [element('div', { className: ['code-reference-table-scroll'], role: 'region', 'aria-label': node.data.referenceTableLabel, tabIndex: 0 }, [table])];
+    }
     if (node.type === 'docTable') {
       const table = node.children.flatMap(walk);
       if (representation === 'markdown') return table;

@@ -836,3 +836,61 @@ button[data-copy-markdown][hidden]{display:none}
 .content .doc-image-align-left{display:block;margin-left:0;margin-right:auto}
 .content .doc-image-align-center{display:block;margin-left:auto;margin-right:auto}
 .content .doc-image-align-right{display:block;margin-left:auto;margin-right:0}
+
+/* Code API references share one type scale across prose, declarations and tables. */
+.content[data-document-type=code-reference]{--reference-text:.9375rem;--reference-code:.875rem;--reference-small:.8125rem;font-size:var(--reference-text);line-height:1.65}
+.content[data-document-type=code-reference] .page-head h1{font-family:var(--font-code);font-size:clamp(1.75rem,2.2vw,2.25rem);letter-spacing:-.035em;line-height:1.2;overflow-wrap:anywhere}
+.content[data-document-type=code-reference] .summary{font-size:var(--reference-text);line-height:1.65;max-width:68ch}
+.content[data-document-type=code-reference] .eyebrow{font-size:var(--reference-small)}
+.content[data-document-type=code-reference] .page-formats{margin-bottom:1rem}
+.content[data-document-type=code-reference] .formats{font-size:var(--reference-small)}
+.content[data-document-type=code-reference] article p{font-size:inherit;line-height:1.65;margin:.75rem 0 1rem}
+.content[data-document-type=code-reference] article>h2{font-size:1.25rem;line-height:1.35;letter-spacing:-.025em;margin:1.75rem 0 .85rem;padding-top:1rem}
+.content[data-document-type=code-reference] article h3{font-size:1rem;line-height:1.4;margin:1.4rem 0 .65rem}
+.content[data-document-type=code-reference] article :is(h4,h5){font-size:var(--reference-text);line-height:1.4}
+.content[data-document-type=code-reference] article code{font-size:var(--reference-code)}
+.content[data-document-type=code-reference] .code-reference-identity{display:flex;align-items:baseline;flex-wrap:wrap;gap:.65rem;font-size:var(--reference-small);color:var(--color-muted);margin:.35rem 0 .65rem}
+.content[data-document-type=code-reference] .code-reference-identity strong{font-size:inherit;text-transform:none;letter-spacing:0;font-weight:600;color:var(--color-emphasis)}
+.content[data-document-type=code-reference] .code-reference-identity code{background:none;padding:0;color:inherit;max-width:100%;overflow-wrap:anywhere}
+.content[data-document-type=code-reference] .code-reference-identity a{text-decoration:none}
+.content[data-document-type=code-reference] .code-reference-identity a:hover{text-decoration:underline}
+.content[data-document-type=code-reference] .code-block:has(code.code-reference-signature){display:grid;grid-template-columns:minmax(0,1fr) auto;position:relative;margin:.65rem 0 1rem;box-shadow:none;background:var(--color-field-surface);border:1px solid var(--color-border);border-radius:var(--radius-small)}
+.content[data-document-type=code-reference] pre:has(>code.code-reference-signature){grid-column:1;grid-row:1;min-width:0;padding:.85rem 1rem;font-size:var(--reference-code);line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--color-field-surface)!important;color:var(--color-ink)!important}
+.code-block:has(code.code-reference-signature)>.code-toolbar{grid-column:2;grid-row:1;align-self:start;min-height:0;height:auto;padding:.45rem .4rem 0 0;border:0}
+.code-block:has(code.code-reference-signature)>.code-toolbar>:not(.code-copy){display:none}
+.code-block:has(code.code-reference-signature)>.code-toolbar>.code-copy{position:static;min-height:2rem;font-size:var(--reference-small)}
+.content[data-document-type=code-reference] code.code-reference-signature,.content[data-document-type=code-reference] code.code-reference-signature span{color:var(--color-ink)!important;font-weight:400;white-space:inherit;overflow-wrap:inherit}
+.content[data-document-type=code-reference] .code-block:has(code.code-reference-signature) .code-copy{color:var(--color-muted)}
+.content[data-document-type=code-reference] .code-block:has(code.code-reference-signature) .code-copy:hover{color:var(--color-ink);background:var(--color-nav-hover);border-color:var(--color-border)}
+.content[data-document-type=code-reference] .code-block:has(code.code-reference-signature) .code-copy:focus-visible{outline-color:var(--color-accent)}
+.content[data-document-type=code-reference] table.code-reference-table{table-layout:auto;font-size:var(--reference-text);line-height:1.65;margin:.75rem 0 1.25rem}
+.content[data-document-type=code-reference] .code-reference-table th{font-size:var(--reference-small);text-transform:none;letter-spacing:0;background:transparent;color:var(--color-muted);font-weight:600;border-bottom:1px solid var(--color-border)}
+.content[data-document-type=code-reference] .code-reference-table :is(th,td){padding:.65rem .6rem;overflow-wrap:normal}
+.content[data-document-type=code-reference] .code-reference-table td{font-size:var(--reference-text)}
+.content[data-document-type=code-reference] .code-reference-table td:first-child{width:22%;font-weight:500}
+.content[data-document-type=code-reference] .code-reference-table td:nth-child(2){width:26%;color:var(--color-muted)}
+.content[data-document-type=code-reference] .code-reference-table td:last-child{min-width:12rem}
+.content[data-document-type=code-reference] .code-reference-table code{font-size:var(--reference-code);overflow-wrap:normal;background:none;padding:0}
+.content[data-document-type=code-reference] .code-reference-table a{font-weight:600;text-decoration:none}
+.content[data-document-type=code-reference] .code-reference-table a code{color:var(--color-link)}
+.content[data-document-type=code-reference] .code-reference-table a:hover{text-decoration:underline}
+.content[data-document-type=code-reference] .code-reference-table tbody tr:hover{background:var(--color-field-surface)}
+.content[data-document-type=code-reference] .code-reference-table:has(th:nth-child(4)) td:first-child{width:18%}
+.content[data-document-type=code-reference] .code-reference-table:has(th:nth-child(4)) td:nth-child(2){width:23%}
+.content[data-document-type=code-reference] .code-reference-table:has(th:nth-child(4)) td:nth-child(3){width:22%;color:var(--color-muted)}
+.content[data-document-type=code-reference] .code-reference-summary{display:none}
+.content[data-document-type=code-reference] .code-reference-table-scroll{max-width:100%;min-width:0;overflow-x:auto;margin:.75rem 0 1.25rem;scrollbar-width:thin}
+.content[data-document-type=code-reference] .code-reference-table-scroll:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+.content[data-document-type=code-reference] .code-reference-table-scroll table{min-width:38rem;margin:0}
+.content[data-document-type=code-reference] .code-reference-table-scroll table:has(th:nth-child(4)){min-width:46rem}
+@media print{
+  .content[data-document-type=code-reference] .code-reference-table-scroll{overflow:visible}
+  .content[data-document-type=code-reference] .code-reference-table-scroll table,.content[data-document-type=code-reference] .code-reference-table-scroll table:has(th:nth-child(4)){min-width:0;table-layout:fixed}
+  .content[data-document-type=code-reference] .code-reference-table-scroll :is(th,td,code){overflow-wrap:anywhere;min-width:0}
+}
+@media(max-width:48rem){
+  .content[data-document-type=code-reference] .page-head h1{font-size:1.75rem}
+  .content[data-document-type=code-reference] table.code-reference-table{table-layout:auto}
+  .content[data-document-type=code-reference] .code-reference-table :is(th,td){padding:.55rem .3rem}
+  .content[data-document-type=code-reference] .code-reference-table td:last-child{min-width:14rem}
+}

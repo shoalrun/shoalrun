@@ -13,7 +13,7 @@ import { validateCookbooks } from './cookbook-chooser.js';
 export type Source = { file: string; history: string[] };
 type Tree = { source: Source; value: unknown };
 type Directive = { kind: 'concat' | 'remove'; items: Tree[] | string[] };
-const allowed = new Set(['profiles', 'exports', 'schemaVersion', 'site', 'navigation', 'redirects', 'apis', 'relationships', 'variables', 'snippets', 'callouts', 'badges', 'publications', 'outputs', 'templates', 'theme', 'frontmatter', 'metadata', 'audit', 'readerFilters', 'retrieval', 'chat', 'authoring', 'search', 'cookbooks', 'analytics', 'mcp', 'components']);
+const allowed = new Set(['profiles', 'exports', 'schemaVersion', 'site', 'navigation', 'redirects', 'apis', 'codeReferences', 'relationships', 'variables', 'snippets', 'callouts', 'badges', 'publications', 'outputs', 'templates', 'theme', 'frontmatter', 'metadata', 'audit', 'readerFilters', 'retrieval', 'chat', 'authoring', 'search', 'cookbooks', 'analytics', 'mcp', 'components']);
 const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const treeObject = (v: unknown): v is Record<string, Tree> => object(v) && !('kind' in v && 'items' in v);
 export class ConfigError extends Error {}

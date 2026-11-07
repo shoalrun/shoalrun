@@ -14,6 +14,7 @@ export interface ResolvedCompilerConfig extends ConfigMapping {
   navigation?: unknown;
   redirects?: unknown;
   apis?: unknown;
+  codeReferences?: unknown;
   relationships?: unknown;
   variables?: unknown;
   snippets?: unknown;

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { type Document, type Variant, parse } from './content.js';
 import { planAuthoredDocuments, type AuthoredPublicationConfig } from './publication-plan.js';
+import { materializeCodeReferences } from './code-references.js';
 import { materializeApiReferences } from './api-publication-plan.js';
 import { explainSegments, type loadConfig } from './config.js';
 import { validateSnippetConfig, type SnippetDefinition } from './snippets.js';
@@ -14,7 +15,7 @@ const keyFor = documentKey;
 
 /** Shared source resolution. No website navigation, styles, hosting or provider setup. */
 export async function prepareContentWorkspace({ base, basePath, config, loaded, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions }: {
-  base: string; basePath: string; config: AuthoredPublicationConfig & { snippets?: unknown; variables?: unknown; apis?: unknown }; loaded: Awaited<ReturnType<typeof loadConfig>>;
+  base: string; basePath: string; config: AuthoredPublicationConfig & { snippets?: unknown; variables?: unknown; apis?: unknown; codeReferences?: unknown }; loaded: Awaited<ReturnType<typeof loadConfig>>;
   variants: Variant[]; language: string; readerFilters?: ReaderFiltersConfig; contentFilter?: ReaderSelection;
   metadataProvider?: Awaited<ReturnType<typeof loadMetadataProvider>>; metadataDependencies: Set<string>;
   sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; allowRouteCollisions?: boolean;
@@ -22,6 +23,7 @@ export async function prepareContentWorkspace({ base, basePath, config, loaded, 
   const { docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir } = await planAuthoredDocuments({
     base, basePath, config, variants, language, readerFilters, contentFilter, featureContext: loaded.deployment?.context, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions
   });
+  await materializeCodeReferences({ config, loaded, plan: { docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir }, base, basePath, variants, language, readerFilters, contentFilter, dependencies: metadataDependencies, allowRouteCollisions });
   if (config.snippets !== undefined && (!config.snippets || typeof config.snippets !== 'object' || Array.isArray(config.snippets))) throw new Error('snippets must be a mapping');
   const snippets = new Map<string, SnippetDefinition>();
   for (const [id, definition] of Object.entries(config.snippets as Record<string, unknown> ?? {})) {

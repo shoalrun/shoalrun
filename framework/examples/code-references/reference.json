@@ -1,0 +1,1244 @@
+{
+  "schemaVersion": 1,
+  "kind": "shoalrun-code-reference",
+  "programmingLanguage": "python",
+  "producer": {
+    "name": "shoalrun-python",
+    "version": "1.0.0",
+    "extractorVersion": "2.4.1"
+  },
+  "sourceDigest": "753e7dedf38cfd83caeff31498e46b699b63cfe83f8177a0b970074a87b061f4",
+  "symbols": [
+    {
+      "id": "orchard",
+      "name": "orchard",
+      "kind": "module",
+      "visibility": "public",
+      "source": {
+        "path": "orchard/__init__.py"
+      },
+      "description": "A sample SDK for working with records, collections, and paginated results.\n\nUse [Client](symbol:orchard.client.Client) in synchronous applications, or\n[AsyncClient](symbol:orchard.client.AsyncClient) in an async service. Models,\npagination helpers, and typed exceptions have their own reference pages.\n\nThis package is documentation example code. It doesn't contact a live service.",
+      "summary": "A sample SDK for working with records, collections, and paginated results."
+    },
+    {
+      "id": "orchard.client",
+      "name": "client",
+      "kind": "module",
+      "visibility": "public",
+      "parent": "orchard",
+      "source": {
+        "path": "orchard/client.py"
+      },
+      "description": "Synchronous and asynchronous clients for the sample records SDK.",
+      "summary": "Synchronous and asynchronous clients for the sample records SDK."
+    },
+    {
+      "id": "orchard.client.AsyncClient",
+      "name": "AsyncClient",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 165
+      },
+      "description": "Use the records SDK from an async Python application.\n\nAwait individual operations, or use `async for` to consume a record iterator.\nThis example delegates to an in-memory client; no network calls are made.",
+      "summary": "Use the records SDK from an async Python application.",
+      "constructorSignature": "AsyncClient(api_key: str, *, timeout: float = 10.0)",
+      "signatures": [
+        "class AsyncClient"
+      ]
+    },
+    {
+      "id": "orchard.client.AsyncClient.__init__",
+      "name": "__init__",
+      "kind": "constructor",
+      "visibility": "public",
+      "parent": "orchard.client.AsyncClient",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 171
+      },
+      "description": "Configure an async client.",
+      "summary": "Configure an async client.",
+      "signatures": [
+        "def __init__(api_key: str, *, timeout: float = 10.0)"
+      ],
+      "parameters": [
+        {
+          "name": "api_key",
+          "type": "str",
+          "description": "Application credential."
+        },
+        {
+          "name": "timeout",
+          "type": "float",
+          "default": "10.0",
+          "description": "Default request timeout, in seconds."
+        }
+      ]
+    },
+    {
+      "id": "orchard.client.AsyncClient.fetch",
+      "name": "fetch",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.client.AsyncClient",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 180
+      },
+      "returns": {
+        "description": "The matching record model.",
+        "type": "Record"
+      },
+      "raises": [
+        {
+          "name": "NotFoundError",
+          "description": "If the record doesn't exist."
+        }
+      ],
+      "examples": [
+        {
+          "code": ">>> record = await client.fetch(\"rec_42\")"
+        }
+      ],
+      "description": "Await a typed record response.",
+      "summary": "Await a typed record response.",
+      "signatures": [
+        "async def fetch(record_id: str, *, timeout: float | None = None) -> Record"
+      ],
+      "parameters": [
+        {
+          "name": "record_id",
+          "type": "str",
+          "description": "Stable record identifier."
+        },
+        {
+          "name": "timeout",
+          "type": "float | None",
+          "default": "None",
+          "description": "Optional request timeout override, in seconds."
+        }
+      ],
+      "typeReferences": {
+        "Record": "orchard.models.Record",
+        "NotFoundError": "orchard.errors.NotFoundError"
+      }
+    },
+    {
+      "id": "orchard.client.AsyncClient.iter_records",
+      "name": "iter_records",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.client.AsyncClient",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 198
+      },
+      "yields": {
+        "description": "Typed records from successive pages.",
+        "type": "AsyncIterator[Record]"
+      },
+      "examples": [
+        {
+          "code": ">>> async for record in client.iter_records(page_size=50):\n...     print(record.title)"
+        }
+      ],
+      "description": "Consume paginated records using asynchronous iteration.",
+      "summary": "Consume paginated records using asynchronous iteration.",
+      "signatures": [
+        "async def iter_records(*, page_size: int = 20) -> AsyncIterator[Record]"
+      ],
+      "parameters": [
+        {
+          "name": "page_size",
+          "type": "int",
+          "default": "20",
+          "description": "Maximum number of records read in one page."
+        }
+      ],
+      "returns": {
+        "type": "AsyncIterator[Record]"
+      },
+      "typeReferences": {
+        "Record": "orchard.models.Record"
+      }
+    },
+    {
+      "id": "orchard.client.Client",
+      "name": "Client",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 8
+      },
+      "description": "Manage records from a synchronous Python application.\n\nCreate one client per API credential and reuse it across requests. Use\n[AsyncClient](symbol:orchard.client.AsyncClient) in an async application.\n\nThe sample client keeps records in memory; it doesn't make network calls.",
+      "summary": "Manage records from a synchronous Python application.",
+      "constructorSignature": "Client(api_key: str, *, base_url: str = 'https://api.example.com/v1', timeout: float = 10.0, max_retries: int = 2)",
+      "signatures": [
+        "class Client"
+      ]
+    },
+    {
+      "id": "orchard.client.Client.__init__",
+      "name": "__init__",
+      "kind": "constructor",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 16
+      },
+      "raises": [
+        {
+          "name": "AuthenticationError",
+          "description": "If the API key is empty."
+        }
+      ],
+      "description": "Configure a reusable client.",
+      "summary": "Configure a reusable client.",
+      "signatures": [
+        "def __init__(api_key: str, *, base_url: str = 'https://api.example.com/v1', timeout: float = 10.0, max_retries: int = 2)"
+      ],
+      "parameters": [
+        {
+          "name": "api_key",
+          "type": "str",
+          "description": "Credential used to identify the application."
+        },
+        {
+          "name": "base_url",
+          "type": "str",
+          "default": "'https://api.example.com/v1'",
+          "description": "Root URL of the API deployment."
+        },
+        {
+          "name": "timeout",
+          "type": "float",
+          "default": "10.0",
+          "description": "Default request timeout, in seconds."
+        },
+        {
+          "name": "max_retries",
+          "type": "int",
+          "default": "2",
+          "description": "Number of retries for transient failures."
+        }
+      ],
+      "typeReferences": {
+        "AuthenticationError": "orchard.errors.AuthenticationError"
+      }
+    },
+    {
+      "id": "orchard.client.Client.base_url",
+      "name": "base_url",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 30
+      },
+      "default": "base_url",
+      "signatures": [
+        "base_url"
+      ]
+    },
+    {
+      "id": "orchard.client.Client.bulk_create",
+      "name": "bulk_create",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 148
+      },
+      "returns": {
+        "description": "Created records in the same order as the submitted inputs.",
+        "type": "list[Record]"
+      },
+      "raises": [
+        {
+          "name": "ValueError",
+          "description": "If the batch size is outside the supported range."
+        }
+      ],
+      "description": "Create multiple records in bounded batches.",
+      "summary": "Create multiple records in bounded batches.",
+      "signatures": [
+        "def bulk_create(records: Sequence[RecordInput], *, batch_size: int = 25) -> list[Record]"
+      ],
+      "parameters": [
+        {
+          "name": "records",
+          "type": "Sequence[RecordInput]",
+          "description": "Input models to create, in submission order."
+        },
+        {
+          "name": "batch_size",
+          "type": "int",
+          "default": "25",
+          "description": "Maximum number of records per batch, from 1 to 100."
+        }
+      ],
+      "typeReferences": {
+        "Record": "orchard.models.Record",
+        "RecordInput": "orchard.models.RecordInput"
+      }
+    },
+    {
+      "id": "orchard.client.Client.create_record",
+      "name": "create_record",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 127
+      },
+      "returns": {
+        "description": "An immutable snapshot of the created record.",
+        "type": "Record"
+      },
+      "examples": [
+        {
+          "code": ">>> data = RecordInput(title=\"Deployment notes\", labels={\"team\": \"platform\"})\n>>> record = client.create_record(data, idempotency_key=\"deploy-42\")"
+        }
+      ],
+      "description": "Create a record from a typed input model.\n\nUse an idempotency key when retrying a request after a timeout. Reuse the\nsame key only for retries of the same logical operation.",
+      "summary": "Create a record from a typed input model.",
+      "signatures": [
+        "def create_record(data: RecordInput, *, idempotency_key: str | None = None) -> Record"
+      ],
+      "parameters": [
+        {
+          "name": "data",
+          "type": "RecordInput",
+          "description": "Title and labels for the new record."
+        },
+        {
+          "name": "idempotency_key",
+          "type": "str | None",
+          "default": "None",
+          "description": "Application-generated retry token."
+        }
+      ],
+      "typeReferences": {
+        "Record": "orchard.models.Record",
+        "RecordInput": "orchard.models.RecordInput"
+      }
+    },
+    {
+      "id": "orchard.client.Client.fetch",
+      "name": "fetch",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 39
+      },
+      "returns": {
+        "description": "The record model, or a dictionary when `raw=True`.",
+        "type": "Record | RecordDict"
+      },
+      "raises": [
+        {
+          "name": "ValueError",
+          "description": "If the record identifier is empty."
+        },
+        {
+          "name": "NotFoundError",
+          "description": "If no record matches the identifier."
+        }
+      ],
+      "examples": [
+        {
+          "code": ">>> client = Client(\"demo-key\")\n>>> record = client.fetch(\"rec_42\")\n>>> record.title\n'Getting started'\n>>> payload = client.fetch(\"rec_42\", raw=True)\n>>> payload[\"status\"]\n'ready'"
+        }
+      ],
+      "description": "Retrieve a record by its stable identifier.\n\nThe default response is a typed [Record](symbol:orchard.models.Record).\nSet `raw=True` to receive a dictionary for serialization or a legacy\nintegration. An explicit timeout overrides the client's default.",
+      "summary": "Retrieve a record by its stable identifier.",
+      "signatures": [
+        "def fetch(record_id: str, *, raw: Literal[False] = False, timeout: float | None = None) -> Record",
+        "def fetch(record_id: str, *, raw: Literal[True], timeout: float | None = None) -> RecordDict"
+      ],
+      "parameters": [
+        {
+          "name": "record_id",
+          "type": "str",
+          "description": "Stable identifier of the record to retrieve."
+        },
+        {
+          "name": "raw",
+          "type": "bool",
+          "default": "False",
+          "description": "Return a wire-format dictionary instead of a model."
+        },
+        {
+          "name": "timeout",
+          "type": "float | None",
+          "default": "None",
+          "description": "Request timeout override, in seconds."
+        }
+      ],
+      "typeReferences": {
+        "Record": "orchard.models.Record",
+        "RecordDict": "orchard.models.RecordDict",
+        "NotFoundError": "orchard.errors.NotFoundError"
+      }
+    },
+    {
+      "id": "orchard.client.Client.iter_records",
+      "name": "iter_records",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 102
+      },
+      "yields": {
+        "description": "Records in the service's response order.",
+        "type": "Record"
+      },
+      "examples": [
+        {
+          "code": ">>> for record in client.iter_records(page_size=50):\n...     print(record.id, record.title)"
+        }
+      ],
+      "description": "Iterate through records across every page.\n\nPagination is lazy: another page is read only when the iterator needs it.\nStop iteration early to avoid fetching pages your application won't use.",
+      "summary": "Iterate through records across every page.",
+      "signatures": [
+        "def iter_records(*, page_size: int = 20, status: RecordStatus | None = None) -> Iterator[Record]"
+      ],
+      "parameters": [
+        {
+          "name": "page_size",
+          "type": "int",
+          "default": "20",
+          "description": "Number of records requested per page, from 1 to 100."
+        },
+        {
+          "name": "status",
+          "type": "RecordStatus | None",
+          "default": "None",
+          "description": "Optional processing status filter."
+        }
+      ],
+      "returns": {
+        "type": "Iterator[Record]"
+      },
+      "typeReferences": {
+        "Record": "orchard.models.Record",
+        "RecordStatus": "orchard.models.RecordStatus"
+      }
+    },
+    {
+      "id": "orchard.client.Client.list_records",
+      "name": "list_records",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 74
+      },
+      "returns": {
+        "description": "A page of matching records with an optional continuation cursor.",
+        "type": "Page[Record]"
+      },
+      "raises": [
+        {
+          "name": "ValueError",
+          "description": "If the page size is outside the supported range."
+        }
+      ],
+      "examples": [
+        {
+          "code": ">>> page = client.list_records(limit=10, status=RecordStatus.READY)\n>>> titles = page.map(lambda record: record.title)"
+        }
+      ],
+      "description": "List a single page of records with optional status filtering.\n\nUse [iter_records](symbol:orchard.client.Client.iter_records) when you\nwant to read every page without managing continuation cursors.",
+      "summary": "List a single page of records with optional status filtering.",
+      "signatures": [
+        "def list_records(*, limit: int = 20, cursor: str | None = None, status: RecordStatus | None = None) -> Page[Record]"
+      ],
+      "parameters": [
+        {
+          "name": "limit",
+          "type": "int",
+          "default": "20",
+          "description": "Maximum number of records in a page, from 1 to 100."
+        },
+        {
+          "name": "cursor",
+          "type": "str | None",
+          "default": "None",
+          "description": "Opaque continuation token from an earlier response."
+        },
+        {
+          "name": "status",
+          "type": "RecordStatus | None",
+          "default": "None",
+          "description": "Include only records with this processing status."
+        }
+      ],
+      "typeReferences": {
+        "Page[Record]": "orchard.pagination.Page",
+        "Page": "orchard.pagination.Page",
+        "Record": "orchard.models.Record",
+        "RecordStatus": "orchard.models.RecordStatus"
+      }
+    },
+    {
+      "id": "orchard.client.Client.max_retries",
+      "name": "max_retries",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 32
+      },
+      "default": "max_retries",
+      "signatures": [
+        "max_retries"
+      ]
+    },
+    {
+      "id": "orchard.client.Client.timeout",
+      "name": "timeout",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.client.Client",
+      "source": {
+        "path": "orchard/client.py",
+        "line": 31
+      },
+      "default": "timeout",
+      "signatures": [
+        "timeout"
+      ]
+    },
+    {
+      "id": "orchard.errors",
+      "name": "errors",
+      "kind": "module",
+      "visibility": "public",
+      "parent": "orchard",
+      "source": {
+        "path": "orchard/errors.py"
+      },
+      "description": "Typed errors an application can handle without inspecting error messages.",
+      "summary": "Typed errors an application can handle without inspecting error messages."
+    },
+    {
+      "id": "orchard.errors.APIError",
+      "name": "APIError",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.errors",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 3
+      },
+      "description": "Base error for unsuccessful API operations.\n\nHandle a more specific exception when your application can recover from it.\nUse `request_id` when reporting a failed request to an operator.",
+      "summary": "Base error for unsuccessful API operations.",
+      "bases": [
+        "Exception"
+      ],
+      "constructorSignature": "APIError(message: str, *, request_id: str | None = None)",
+      "signatures": [
+        "class APIError(Exception)"
+      ]
+    },
+    {
+      "id": "orchard.errors.APIError.__init__",
+      "name": "__init__",
+      "kind": "constructor",
+      "visibility": "public",
+      "parent": "orchard.errors.APIError",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 9
+      },
+      "signatures": [
+        "def __init__(message: str, *, request_id: str | None = None)"
+      ],
+      "parameters": [
+        {
+          "name": "message",
+          "type": "str"
+        },
+        {
+          "name": "request_id",
+          "type": "str | None",
+          "default": "None"
+        }
+      ]
+    },
+    {
+      "id": "orchard.errors.APIError.request_id",
+      "name": "request_id",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.errors.APIError",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 11
+      },
+      "default": "request_id",
+      "signatures": [
+        "request_id"
+      ]
+    },
+    {
+      "id": "orchard.errors.AuthenticationError",
+      "name": "AuthenticationError",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.errors",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 13
+      },
+      "description": "The API key is missing, expired, or invalid.\n\nRefresh the credential before retrying the request. Repeating the same\nrequest with the same invalid credential won't resolve this error.",
+      "summary": "The API key is missing, expired, or invalid.",
+      "bases": [
+        "APIError"
+      ],
+      "signatures": [
+        "class AuthenticationError(APIError)"
+      ],
+      "typeReferences": {
+        "APIError": "orchard.errors.APIError"
+      }
+    },
+    {
+      "id": "orchard.errors.NotFoundError",
+      "name": "NotFoundError",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.errors",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 20
+      },
+      "description": "The requested record doesn't exist or isn't visible to the API key.",
+      "summary": "The requested record doesn't exist or isn't visible to the API key.",
+      "bases": [
+        "APIError"
+      ],
+      "signatures": [
+        "class NotFoundError(APIError)"
+      ],
+      "typeReferences": {
+        "APIError": "orchard.errors.APIError"
+      }
+    },
+    {
+      "id": "orchard.errors.RateLimitError",
+      "name": "RateLimitError",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.errors",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 23
+      },
+      "description": "The service rejected a request because its rate limit was reached.\n\nWait for `retry_after` seconds before retrying. Add jitter when multiple\nworkers share the same credentials.",
+      "summary": "The service rejected a request because its rate limit was reached.",
+      "bases": [
+        "APIError"
+      ],
+      "constructorSignature": "RateLimitError(message: str, *, retry_after: float, request_id: str | None = None)",
+      "signatures": [
+        "class RateLimitError(APIError)"
+      ],
+      "typeReferences": {
+        "APIError": "orchard.errors.APIError"
+      }
+    },
+    {
+      "id": "orchard.errors.RateLimitError.__init__",
+      "name": "__init__",
+      "kind": "constructor",
+      "visibility": "public",
+      "parent": "orchard.errors.RateLimitError",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 29
+      },
+      "signatures": [
+        "def __init__(message: str, *, retry_after: float, request_id: str | None = None)"
+      ],
+      "parameters": [
+        {
+          "name": "message",
+          "type": "str"
+        },
+        {
+          "name": "retry_after",
+          "type": "float"
+        },
+        {
+          "name": "request_id",
+          "type": "str | None",
+          "default": "None"
+        }
+      ]
+    },
+    {
+      "id": "orchard.errors.RateLimitError.retry_after",
+      "name": "retry_after",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.errors.RateLimitError",
+      "source": {
+        "path": "orchard/errors.py",
+        "line": 31
+      },
+      "default": "retry_after",
+      "signatures": [
+        "retry_after"
+      ]
+    },
+    {
+      "id": "orchard.models",
+      "name": "models",
+      "kind": "module",
+      "visibility": "public",
+      "parent": "orchard",
+      "source": {
+        "path": "orchard/models.py"
+      },
+      "description": "Typed request and response models for the records API.",
+      "summary": "Typed request and response models for the records API."
+    },
+    {
+      "id": "orchard.models.Record",
+      "name": "Record",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.models",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 41
+      },
+      "description": "A record returned by the service.\n\nRecords are immutable snapshots. Fetch the record again to observe a new\nprocessing status rather than changing its fields locally.",
+      "summary": "A record returned by the service.",
+      "constructorSignature": "Record(id: str, title: str, status: RecordStatus = RecordStatus.READY, labels: dict[str, str] = <factory>, created_at: datetime | None = None)",
+      "signatures": [
+        "class Record"
+      ],
+      "typeReferences": {
+        "RecordStatus": "orchard.models.RecordStatus"
+      }
+    },
+    {
+      "id": "orchard.models.Record.created_at",
+      "name": "created_at",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.Record",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 56
+      },
+      "description": "Creation time in UTC, if reported by the service.",
+      "summary": "Creation time in UTC, if reported by the service.",
+      "annotation": "datetime | None",
+      "default": "None",
+      "required": false,
+      "signatures": [
+        "created_at: datetime | None"
+      ]
+    },
+    {
+      "id": "orchard.models.Record.id",
+      "name": "id",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.Record",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 48
+      },
+      "description": "Stable identifier used in fetch and update operations.",
+      "summary": "Stable identifier used in fetch and update operations.",
+      "annotation": "str",
+      "required": true,
+      "signatures": [
+        "id: str"
+      ]
+    },
+    {
+      "id": "orchard.models.Record.labels",
+      "name": "labels",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.Record",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 54
+      },
+      "description": "Application-defined key/value labels.",
+      "summary": "Application-defined key/value labels.",
+      "annotation": "dict[str, str]",
+      "default": "field(default_factory=dict)",
+      "required": false,
+      "signatures": [
+        "labels: dict[str, str]"
+      ]
+    },
+    {
+      "id": "orchard.models.Record.status",
+      "name": "status",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.Record",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 52
+      },
+      "description": "Current processing state.",
+      "summary": "Current processing state.",
+      "annotation": "RecordStatus",
+      "default": "RecordStatus.READY",
+      "required": false,
+      "signatures": [
+        "status: RecordStatus"
+      ],
+      "typeReferences": {
+        "RecordStatus": "orchard.models.RecordStatus"
+      }
+    },
+    {
+      "id": "orchard.models.Record.title",
+      "name": "title",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.Record",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 50
+      },
+      "description": "Human-readable title.",
+      "summary": "Human-readable title.",
+      "annotation": "str",
+      "required": true,
+      "signatures": [
+        "title: str"
+      ]
+    },
+    {
+      "id": "orchard.models.Record.to_dict",
+      "name": "to_dict",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.models.Record",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 59
+      },
+      "returns": {
+        "description": "A mapping with the identifier, title, and string status.",
+        "type": "RecordDict"
+      },
+      "examples": [
+        {
+          "code": ">>> Record(\"rec_42\", \"Example\").to_dict()\n{'id': 'rec_42', 'title': 'Example', 'status': 'ready'}"
+        }
+      ],
+      "description": "Convert a record to its compact wire representation.",
+      "summary": "Convert a record to its compact wire representation.",
+      "signatures": [
+        "def to_dict() -> RecordDict"
+      ],
+      "typeReferences": {
+        "RecordDict": "orchard.models.RecordDict"
+      }
+    },
+    {
+      "id": "orchard.models.RecordDict",
+      "name": "RecordDict",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.models",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 20
+      },
+      "description": "Wire representation returned when `Client.fetch(raw=True)` is used.",
+      "summary": "Wire representation returned when `Client.fetch(raw=True)` is used.",
+      "bases": [
+        "TypedDict"
+      ],
+      "signatures": [
+        "class RecordDict(TypedDict)"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordDict.id",
+      "name": "id",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordDict",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 22
+      },
+      "description": "Stable record identifier.",
+      "summary": "Stable record identifier.",
+      "annotation": "str",
+      "required": true,
+      "signatures": [
+        "id: str"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordDict.status",
+      "name": "status",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordDict",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 26
+      },
+      "description": "Processing state encoded as a string.",
+      "summary": "Processing state encoded as a string.",
+      "annotation": "str",
+      "required": true,
+      "signatures": [
+        "status: str"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordDict.title",
+      "name": "title",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordDict",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 24
+      },
+      "description": "Human-readable record title.",
+      "summary": "Human-readable record title.",
+      "annotation": "str",
+      "required": true,
+      "signatures": [
+        "title: str"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordInput",
+      "name": "RecordInput",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.models",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 29
+      },
+      "description": "Input used to create a record.\n\nProvide a title and optional labels. Labels let applications group records\nwithout encoding business rules into the record identifier.",
+      "summary": "Input used to create a record.",
+      "constructorSignature": "RecordInput(title: str, labels: dict[str, str] = <factory>)",
+      "signatures": [
+        "class RecordInput"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordInput.labels",
+      "name": "labels",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordInput",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 38
+      },
+      "description": "Application-defined labels, such as `team` or `environment`.",
+      "summary": "Application-defined labels, such as `team` or `environment`.",
+      "annotation": "dict[str, str]",
+      "default": "field(default_factory=dict)",
+      "required": false,
+      "signatures": [
+        "labels: dict[str, str]"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordInput.title",
+      "name": "title",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordInput",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 36
+      },
+      "description": "Title to display to readers.",
+      "summary": "Title to display to readers.",
+      "annotation": "str",
+      "required": true,
+      "signatures": [
+        "title: str"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordStatus",
+      "name": "RecordStatus",
+      "kind": "enum",
+      "visibility": "public",
+      "parent": "orchard.models",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 7
+      },
+      "description": "Processing status reported by a record.\n\nA record moves from `pending` to `ready` after processing completes.\nFailed records retain their identifier so an application can retry them.",
+      "summary": "Processing status reported by a record.",
+      "bases": [
+        "str",
+        "Enum"
+      ],
+      "signatures": [
+        "class RecordStatus(str, Enum)"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordStatus.FAILED",
+      "name": "FAILED",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordStatus",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 17
+      },
+      "description": "Processing failed and needs a retry.",
+      "summary": "Processing failed and needs a retry.",
+      "default": "'failed'",
+      "signatures": [
+        "FAILED"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordStatus.PENDING",
+      "name": "PENDING",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordStatus",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 13
+      },
+      "description": "The record is waiting for processing.",
+      "summary": "The record is waiting for processing.",
+      "default": "'pending'",
+      "signatures": [
+        "PENDING"
+      ]
+    },
+    {
+      "id": "orchard.models.RecordStatus.READY",
+      "name": "READY",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.models.RecordStatus",
+      "source": {
+        "path": "orchard/models.py",
+        "line": 15
+      },
+      "description": "The record can be read by applications.",
+      "summary": "The record can be read by applications.",
+      "default": "'ready'",
+      "signatures": [
+        "READY"
+      ]
+    },
+    {
+      "id": "orchard.pagination",
+      "name": "pagination",
+      "kind": "module",
+      "visibility": "public",
+      "parent": "orchard",
+      "source": {
+        "path": "orchard/pagination.py"
+      },
+      "description": "Generic containers and cursor helpers for paginated responses.",
+      "summary": "Generic containers and cursor helpers for paginated responses."
+    },
+    {
+      "id": "orchard.pagination.Page",
+      "name": "Page",
+      "kind": "class",
+      "visibility": "public",
+      "parent": "orchard.pagination",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 8
+      },
+      "description": "One page of results and the cursor needed to continue reading.\n\nKeep the cursor opaque. Pass it back to `Client.list_records` instead of\ndecoding it or building a cursor from a record identifier.",
+      "summary": "One page of results and the cursor needed to continue reading.",
+      "bases": [
+        "Generic[T]"
+      ],
+      "signatures": [
+        "class Page(Generic[T])"
+      ],
+      "typeReferences": {
+        "T": "orchard.pagination.T"
+      }
+    },
+    {
+      "id": "orchard.pagination.Page.has_more",
+      "name": "has_more",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.pagination.Page",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 23
+      },
+      "description": "Whether another page is available.",
+      "summary": "Whether another page is available.",
+      "annotation": "bool",
+      "signatures": [
+        "has_more: bool"
+      ]
+    },
+    {
+      "id": "orchard.pagination.Page.items",
+      "name": "items",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.pagination.Page",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 15
+      },
+      "description": "Results included in this response.",
+      "summary": "Results included in this response.",
+      "annotation": "list[T]",
+      "required": true,
+      "signatures": [
+        "items: list[T]"
+      ],
+      "typeReferences": {
+        "T": "orchard.pagination.T"
+      }
+    },
+    {
+      "id": "orchard.pagination.Page.map",
+      "name": "map",
+      "kind": "method",
+      "visibility": "public",
+      "parent": "orchard.pagination.Page",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 27
+      },
+      "returns": {
+        "description": "A new page containing transformed items and the same cursor.",
+        "type": "Page[U]"
+      },
+      "examples": [
+        {
+          "code": ">>> page.map(lambda record: record.title)"
+        }
+      ],
+      "description": "Transform every item while preserving pagination metadata.",
+      "summary": "Transform every item while preserving pagination metadata.",
+      "signatures": [
+        "def map(transform: Callable[[T], U]) -> Page[U]"
+      ],
+      "parameters": [
+        {
+          "name": "transform",
+          "type": "Callable[[T], U]",
+          "description": "Function applied once to each item in this page."
+        }
+      ],
+      "typeReferences": {
+        "Page[U]": "orchard.pagination.Page",
+        "Page": "orchard.pagination.Page",
+        "U": "orchard.pagination.U",
+        "T": "orchard.pagination.T"
+      }
+    },
+    {
+      "id": "orchard.pagination.Page.next_cursor",
+      "name": "next_cursor",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.pagination.Page",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 17
+      },
+      "description": "Continuation cursor, or `None` when this is the final page.",
+      "summary": "Continuation cursor, or `None` when this is the final page.",
+      "annotation": "str | None",
+      "default": "None",
+      "required": false,
+      "signatures": [
+        "next_cursor: str | None"
+      ]
+    },
+    {
+      "id": "orchard.pagination.Page.total",
+      "name": "total",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.pagination.Page",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 19
+      },
+      "description": "Total result count when the service can provide one.",
+      "summary": "Total result count when the service can provide one.",
+      "annotation": "int | None",
+      "default": "None",
+      "required": false,
+      "signatures": [
+        "total: int | None"
+      ]
+    },
+    {
+      "id": "orchard.pagination.T",
+      "name": "T",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.pagination",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 5
+      },
+      "default": "TypeVar('T')",
+      "signatures": [
+        "T"
+      ]
+    },
+    {
+      "id": "orchard.pagination.U",
+      "name": "U",
+      "kind": "attribute",
+      "visibility": "public",
+      "parent": "orchard.pagination",
+      "source": {
+        "path": "orchard/pagination.py",
+        "line": 6
+      },
+      "default": "TypeVar('U')",
+      "signatures": [
+        "U"
+      ]
+    }
+  ]
+}

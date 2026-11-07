@@ -51,6 +51,7 @@ export function shareCardText(doc: Document, config: PageConfig): { title: strin
 }
 
 export function typeLabel(type: string): string {
+  if (type === 'code-reference') return 'Code API reference';
   const words = String(type).split('-').filter(Boolean).map(word => word === 'api' ? 'API' : word);
   const label = words.join(' ');
   return label.charAt(0).toUpperCase() + label.slice(1);

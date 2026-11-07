@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { readCodeReference } from './code-reference-model.js';
 import { runExportCommand, exportHelp } from './content-export-command.js';
 import { cliHelp, docsHelp, skillsHelp, runSkillsCommand } from './cli-discovery.js';
 import { compareDocumentSnapshots } from './document-sync.js';
@@ -93,6 +94,10 @@ try {
     process.stdout.write(command === 'docs' ? docsHelp : skillsHelp);
   } else if (command === 'skills') {
     process.stdout.write(await runSkillsCommand([subcommand, ...rest].filter((value): value is string => value !== undefined)));
+  } else if (command === 'references') {
+    if (subcommand !== 'check' || rest.length !== 1) throw new Error('Usage: shoalrun references check <snapshot.json>');
+    const snapshot = await readCodeReference(path.resolve(rest[0]));
+    process.stdout.write(JSON.stringify({ status: 'ok', programmingLanguage: snapshot.programmingLanguage, symbols: snapshot.symbols.length }) + '\n');
   } else if (command === 'init') {
     const args = [subcommand, ...rest].filter((item): item is string => item !== undefined);
     let directory = '.';

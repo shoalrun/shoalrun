@@ -21,6 +21,10 @@ When reading a published site through Markdown, follow topic-index links when pr
 
 Read `reference.authoring-workspace` for tool contracts and `guide.authoring-workspace` for the working-tree procedure. Before unfamiliar syntax, check the relevant component attributes, configuration structure, or asset-handling contract instead of assuming another tool’s conventions. For MDX components, read their canonical reference; `<Step>` belongs inside `<Steps>` for an ordinary titled procedure, while your harness's task plan is separate. Read implementation/specification evidence with your harness's permitted tools; record the sources for changed claims. Bundled guidance does not establish a consumer project's facts.
 
+## Code API references
+
+For source-code library or SDK references, read [references/code-api-references.md](references/code-api-references.md). Keep these separate from OpenAPI endpoint references. Extract explicitly, validate the snapshot, preserve publication and feature scope, and choose symbol, class, module, or optional complete-page presentation deliberately.
+
 ## Products and availability
 
 For independently versioned products, cross-product reuse, product-scoped delivery, or feature availability labels, read [references/publications.md](references/publications.md). Preserve product/channel/version/language identity, distinguish publication membership from feature grants, and check installed-version support before using new fields. Availability labels describe support; they don't filter the published content.
