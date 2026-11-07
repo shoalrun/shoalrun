@@ -1,0 +1,29 @@
+schemaVersion: 1
+site:
+  title: Service documentation
+  contentDir: content
+publications:
+  defaults: { channel: production, version: current, language: en }
+  channels:
+    production: { pathPrefix: "" }
+  versions:
+    current: { pathPrefix: "" }
+  enabled:
+    - { channel: production, version: current }
+frontmatter:
+  defaults:
+    type: guide
+    channel: production
+    version: current
+    access: { policy: public }
+readerFilters:
+  facets:
+    audience:
+      label: Audience
+      options: { customer: Customers, internal: Internal }
+outputs:
+  html:
+    shareImages: false
+    highlighting: { provider: none }
+navigation:
+  - { id: billing, doc: guide.billing }

@@ -29,6 +29,10 @@ For source-code library or SDK references, read [references/code-api-references.
 
 For independently versioned products, cross-product reuse, product-scoped delivery, or feature availability labels, read [references/publications.md](references/publications.md). Preserve product/channel/version/language identity, distinguish publication membership from feature grants, and check installed-version support before using new fields. Availability labels describe support; they don't filter the published content.
 
+## Build-time facet selection
+
+For audience, region, or other facet-selected sites, read [references/facet-selection.md](references/facet-selection.md). Use `contentFilter` for pages and `<ForFacet>` for additional sections. Keep build-time omission distinct from the presentation-only `<ReaderSection>` and from customer feature grants.
+
 ## Customer editions and feature selection
 
 For SKU-selected or white-label documentation, read [references/customer-editions.md](references/customer-editions.md) before editing requirements, manifests, profiles, branding, or edition validation. Use the deployment's external profile, keep customer records out of shared source, and classify pages by feature IDs. Shared pages can use `<ForFeature>` for feature-specific sections. Preserve the project's strict-classification policy and pass the same `--profile` to baseline, validation, build, export, and development preview; a default-context pass does not verify a customer edition.

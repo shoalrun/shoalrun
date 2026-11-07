@@ -1,5 +1,6 @@
+import { createSectionSelection, pruneSelectedTree, sectionSelectionReport, writeSectionSelectionReport } from './section-selection.js';
 import { documentKey, publicationKey, samePublication } from './publication-identity.js';
-import { pruneFeatureTree, profileSelection } from './deployment-profile.js';
+import { profileSelection } from './deployment-profile.js';
 import { readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -113,7 +114,8 @@ export async function exportContent(configFile: string, destination: string, opt
   const providerSetting = configField(config.metadata, 'provider');
   const metadataProvider = await loadMetadataProvider(providerSetting, providerSetting ? explainSegments(loaded, ['metadata', 'provider', 'module']).source.file : configFile);
   const metadataDependencies = new Set<string>();
-  const workspace = await prepareContentWorkspace({ base, basePath, config, loaded, variants: [publication], language, readerFilters, metadataProvider, metadataDependencies, allowRouteCollisions: true });
+  const sectionSelection = createSectionSelection(readerFilters, selection, publications);
+  const workspace = await prepareContentWorkspace({ base, basePath, config, loaded, variants: [publication], language, readerFilters, metadataProvider, metadataDependencies, sectionSelection, allowRouteCollisions: true });
   const { docs: eligible, apiPlan, snippets, sourceForOperation } = workspace;
   const ids = new Set(target.resources ? target.resources.filter(item => item.kind !== 'snippet').map(item => item.documentId) : target.documents);
   for (const id of ids) {
@@ -163,13 +165,13 @@ export async function exportContent(configFile: string, destination: string, opt
       if (!definition) throw new Error(`Unknown export snippet ${selection.snippetId}`);
       // This is an explicit isolated context. It has no containing page, operations,
       // relationships, page variables, or inherited publication/access metadata.
-      const snippetDocument: Document = { featureContext: loaded.deployment?.context, file: definition.file, body: '', tree: root([]), variant: publication,
+      const snippetDocument: Document = { sectionSelection, featureContext: loaded.deployment?.context, file: definition.file, body: '', tree: root([]), variant: publication,
         route: `/__content_snippets/${encodeURIComponent(selection.id)}`, markdownRoute: '',
         frontmatter: { id: selection.id, title: selection.title, summary: selection.summary, type: 'snippet', slug: '/', access: { policy: 'public' } } };
       const checkSnippet = (id: string, seen = new Set<string>()) => {
         if (seen.has(id)) return; seen.add(id);
         const source = snippets.get(id); if (!source) throw new Error(`Unknown snippet ${id}`);
-        visitTree(pruneFeatureTree(source.tree, loaded.deployment?.context, source.file), node => {
+        visitTree(pruneSelectedTree(source.tree, snippetDocument, source.file, false), node => {
           if (['RelatedReading', 'DocCard', 'DocCards', 'DocCollection', 'CookbookChooser', 'ApiExample', 'ApiSchema', 'FrontmatterReference', 'Anchor'].includes(node.name)) throw new Error(`Snippet instance ${selection.id}: <${node.name}> needs page context`);
           if (node.name === 'Snippet') { const child = node.attributes?.find((a: any) => a.name === 'id')?.value; if (typeof child === 'string') checkSnippet(child, seen); }
         });
@@ -262,6 +264,10 @@ export async function exportContent(configFile: string, destination: string, opt
   const verifiedCanonicalAnchors = (destination: Document, format: PortableExportFormat) => {
     const key = `${sourceKeyFor(destination)}:${format}`;
     if (canonicalAnchors.has(key)) return canonicalAnchors.get(key)!;
+    // An export-selected tree cannot prove anchors in a differently selected website.
+    // Refuse the fragment rather than silently publish a broken canonical link.
+    const normalizeSelection = (value: typeof selection) => JSON.stringify(Object.entries(value ?? {}).sort(([a], [b]) => compare(a, b)).map(([facet, choices]) => [facet, [...choices].sort(compare)]));
+    if (sectionSelection.hasConditions && normalizeSelection(selection) !== normalizeSelection(siteSelection)) throw new Error(`Cannot verify canonical anchor in ${destination.frontmatter.id} across different site and export contentFilter selections; include the target resource or use its page URL without a fragment`);
     const source = sourceInventories.get(key);
     if (!source || destination.endpoint) throw new Error(`Cannot validate canonical fragments in ${destination.frontmatter.id}; select the target resource explicitly`);
     const reserved = ['main', 'docs-navigation', 'docs-sections', 'documentation-menu', 'page-outline', 'nav-filter', 'examples-title', 'api-view-select'];
@@ -452,7 +458,7 @@ export async function exportContent(configFile: string, destination: string, opt
     };
     const input: PdfRenderInput = { documents: printDocuments, title: selected.length === 1 ? selected[0].title : site.title, publication, assets: assets.artifacts, publicBase: target.publicBase, config: pdfConfig, configFile, assetRoots: [...roots, ...pdfInputs.map(file => path.dirname(file))] };
     const preparedPdf: PdfExportPreparation = { input, manifest, inputs };
-    const common = { status: unreviewed.length ? 'needs-review' : 'ok', output: path.resolve(destination || base), publication, formats: target.formats, profileSelection: profileSelection(loaded.deployment), resources: records.length, documents: records.length, documentIds: selected.map(item => item.doc.frontmatter.id), comparison: { status: 'no-baseline' as const, added: [], removed: [], diagnostics: [] }, assets: assets.records.size, apiReview: manifest.review.apis, diagnostics };
+    const common = { status: unreviewed.length ? 'needs-review' : 'ok', output: path.resolve(destination || base), publication, formats: target.formats, profileSelection: profileSelection(loaded.deployment), contentSelection: sectionSelectionReport(sectionSelection), resources: records.length, documents: records.length, documentIds: selected.map(item => item.doc.frontmatter.id), comparison: { status: 'no-baseline' as const, added: [], removed: [], diagnostics: [] }, assets: assets.records.size, apiReview: manifest.review.apis, diagnostics };
     if (options.preparePdfOnly) return { ...common, digest: exportDigest(JSON.stringify(manifest)), preparedPdf };
     checkOutputDirectory(destination, base, workspace.contentDir, inputs);
     // Style/font/logo files are protected by the explicit input list. Their
@@ -469,6 +475,7 @@ export async function exportContent(configFile: string, destination: string, opt
     const digest = exportDigest(JSON.stringify(payload));
     pdfArtifacts.set('manifest.json', JSON.stringify({ ...payload, digest }, null, 2) + '\n');
     await commitArtifacts(path.resolve(destination), pdfArtifacts, undefined, 'pdf');
+    await writeSectionSelectionReport(base, sectionSelection, { target: { kind: 'pdf', name: options.target ?? null, output: path.resolve(destination) }, buildId: digest, configDigest: loaded.digest, filterOrigin: target.contentFilter ? 'export.contentFilter' : 'site.contentFilter' });
     return { ...common, digest, pdf: filename };
   }
   const manifest = { schemaVersion: publication.product === undefined ? 1 : 2, kind: 'shoalrun-content-export', publicBase: target.publicBase, publication,
@@ -491,7 +498,8 @@ export async function exportContent(configFile: string, destination: string, opt
     if (prior?.review?.status === 'ok') throw new Error('Review candidate cannot overwrite an approved export; choose a separate review destination');
   }
   await commitArtifacts(path.resolve(destination), artifacts, undefined, 'export');
+  await writeSectionSelectionReport(base, sectionSelection, { target: { kind: 'export', name: options.target ?? null, output: path.resolve(destination) }, buildId: bundleDigest, configDigest: loaded.digest, filterOrigin: target.contentFilter ? 'export.contentFilter' : 'unfiltered' });
   return { status: unreviewed.length ? 'needs-review' : 'ok', output: path.resolve(destination), publication, formats: target.formats,
-    profileSelection: profileSelection(loaded.deployment), resources: records.length, documents: records.filter(item => item.ref.kind === 'page').length, documentIds: records.flatMap(item => item.ref.kind === 'page' ? [item.ref.documentId] : []), comparison, assets: assets.records.size, digest: bundleDigest,
+    profileSelection: profileSelection(loaded.deployment), contentSelection: sectionSelectionReport(sectionSelection), resources: records.length, documents: records.filter(item => item.ref.kind === 'page').length, documentIds: records.flatMap(item => item.ref.kind === 'page' ? [item.ref.documentId] : []), comparison, assets: assets.records.size, digest: bundleDigest,
     apiReview: reviews.map(row => ({ apiId: row.apiId, digest: row.digest })), diagnostics };
 }

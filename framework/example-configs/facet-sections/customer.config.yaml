@@ -1,0 +1,4 @@
+extends: [./base.yaml]
+site:
+  title: Customer documentation
+  contentFilter: { audience: [customer] }

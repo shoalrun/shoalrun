@@ -1,3 +1,4 @@
+import { createSectionSelection, type SectionSelection } from './section-selection.js';
 import { documentKey } from './publication-identity.js';
 import { matchesFeatures } from './deployment-profile.js';
 import path from 'node:path';
@@ -14,12 +15,14 @@ import type { loadMetadataProvider } from './metadata-provider.js';
 const keyFor = documentKey;
 
 /** Shared source resolution. No website navigation, styles, hosting or provider setup. */
-export async function prepareContentWorkspace({ base, basePath, config, loaded, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions }: {
+export async function prepareContentWorkspace({ base, basePath, config, loaded, variants, language, readerFilters, contentFilter, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions, sectionSelection: suppliedSectionSelection }: {
   base: string; basePath: string; config: AuthoredPublicationConfig & { snippets?: unknown; variables?: unknown; apis?: unknown; codeReferences?: unknown }; loaded: Awaited<ReturnType<typeof loadConfig>>;
   variants: Variant[]; language: string; readerFilters?: ReaderFiltersConfig; contentFilter?: ReaderSelection;
+  sectionSelection?: SectionSelection;
   metadataProvider?: Awaited<ReturnType<typeof loadMetadataProvider>>; metadataDependencies: Set<string>;
   sourceOverrides?: ReadonlyMap<string, string>; authoringFiles?: ReadonlySet<string>; allowRouteCollisions?: boolean;
 }) {
+  const sectionSelection = suppliedSectionSelection ?? createSectionSelection(readerFilters, contentFilter, config.publications);
   const { docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir } = await planAuthoredDocuments({
     base, basePath, config, variants, language, readerFilters, contentFilter, featureContext: loaded.deployment?.context, metadataProvider, metadataDependencies, sourceOverrides, authoringFiles, allowRouteCollisions
   });
@@ -40,6 +43,7 @@ export async function prepareContentWorkspace({ base, basePath, config, loaded, 
   });
   const { api, sourceForVariant, knownOperations } = apiPlan;
   for (const [key, doc] of docs) {
+    doc.sectionSelection = sectionSelection;
     doc.featureContext = loaded.deployment?.context;
     for (const operationId of doc.frontmatter.operations ?? []) {
       const known = knownOperations.get(operationId);
@@ -81,6 +85,6 @@ export async function prepareContentWorkspace({ base, basePath, config, loaded, 
     if (!binding) throw new Error(`no OpenAPI source for ${variant.channel}/${variant.version} (${operationId})`);
     return { ...binding, sourceOperationId: operation.sourceOperationId };
   };
-  return { docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir, snippets,
+  return { sectionSelection, docs, knownDocumentIds, knownDocumentTypes, authoredOperationIds, routeOwners, contentDir, snippets,
     apiPlan, api, sourceForVariant, knownOperations, relatedApiTargets, guidesByApi, sourceForOperation };
 }

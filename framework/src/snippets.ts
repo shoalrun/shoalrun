@@ -1,6 +1,6 @@
 export type SnippetVariable = { type: 'string' | 'number' | 'boolean'; required?: boolean; default?: string | number | boolean; enum?: Array<string | number | boolean> };
 export type SnippetDefinition = { file: string; tree: any; variables: Record<string, SnippetVariable> };
-export type SnippetUse = { id: string; file: string; documentId: string };
+export type SnippetUse = { id: string; file: string; documentId: string; documentKey?: string };
 
 const object = (value: unknown): value is Record<string, any> => !!value && typeof value === 'object' && !Array.isArray(value);
 const safeName = (name: string) => /^[A-Za-z_][A-Za-z0-9_-]*$/.test(name) && !['__proto__', 'prototype', 'constructor'].includes(name);

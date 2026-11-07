@@ -1,6 +1,6 @@
 import { documentKey } from './publication-identity.js';
 import type { CompilerPublicationsConfig } from './compiler-config.js';
-import { pruneFeatureTree } from './deployment-profile.js';
+import { createSectionSelection, evaluatePublicationGuard, pruneSelectedTree, warnReaderSection } from './section-selection.js';
 import { lowerComponent, type ComponentRegistry } from './component-plugins.js';
 import { cardComponent } from './cards.js';
 import { cookbookChooserComponent } from './cookbook-chooser.js';
@@ -98,8 +98,10 @@ function literalAttributes(attributes: MdxAttribute[]): attributes is Array<MdxA
 
 export function transformMdx(tree: unknown, current: Document, registry: Map<string, Document>, snippets: Map<string, SnippetDefinition> = new Map(), projectValues: Record<string, unknown> = {}, uses: SnippetUse[] = [], calloutTypes: CalloutTypes = resolveCalloutTypes(undefined, current.file), projectRoot?: string, readerConfig?: ReaderFiltersConfig, frontmatterConfig: unknown = {}, publicationConfig?: CompilerPublicationsConfig, badgeVariants: BadgeVariants = resolveBadgeVariants(undefined, current.file), componentPlugins: ComponentRegistry = new Map(), publicationRegistry?: Map<string, Document>): unknown {
   if (!isMdxRoot(tree)) throw new Error(`${current.file}: parsed content must be a root with children`);
-  tree = lowerSectionMarkers(pruneFeatureTree(tree, current.featureContext, current.file), current.file);
-  snippets = new Map([...snippets].map(([id, definition]) => [id, { ...definition, tree: pruneFeatureTree(definition.tree, current.featureContext, definition.file) }]));
+  current.sectionSelection ??= createSectionSelection(readerConfig, undefined, publicationConfig);
+  const originalSnippets = snippets;
+  tree = lowerSectionMarkers(pruneSelectedTree(tree, current), current.file);
+  snippets = new Map([...snippets].map(([id, definition]) => [id, { ...definition, tree: pruneSelectedTree(definition.tree, current, definition.file, false) }]));
   let pluginDepth = 0;
   let tabsIndex = 0;
   let walkthroughIndex = 0;
@@ -154,25 +156,13 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
         if (node.type !== 'mdxJsxFlowElement' || node.children?.length || node.attributes?.length) throw new Error(`${sourceFile}: <FrontmatterReference> must be an empty block`);
         return childrenOf(parsePlainMarkdown(frontmatterReference(frontmatterConfig, true)), scope, stack, sourceFile);
       }
-      if (node.name === 'ForFeature') {
-        const selected = pruneFeatureTree({ type: 'root', children: [node] }, current.featureContext, sourceFile);
+      if (node.name === 'ForFeature' || node.name === 'ForFacet') {
+        const selected = pruneSelectedTree({ type: 'root', children: [node] }, current, sourceFile);
         return childrenOf(selected.children, scope, stack, sourceFile);
       }
       if (node.name === 'ForPublication') {
-        const attributes = node.attributes ?? [];
-        const allowed = ['product', 'channel', 'version', 'language'];
-        if (node.type !== 'mdxJsxFlowElement' || !node.children?.length || !attributes.length || !literalAttributes(attributes) || attributes.some((item) => !allowed.includes(item.name) || !item.value.trim()) || new Set(attributes.map((item) => item.name)).size !== attributes.length) {
-          throw new Error(`${sourceFile}: <ForPublication> needs block content and distinct literal channel, version, or language attributes`);
-        }
-        const product = attributes.find(item => item.name === 'product')?.value ?? current.variant.product;
-        for (const item of attributes) {
-          const catalog = item.name === 'product' ? publicationConfig?.products
-            : item.name === 'channel' ? publicationConfig?.channels
-            : item.name === 'version' ? (product ? publicationConfig?.products?.[product]?.versions : publicationConfig?.versions) : undefined;
-          if (publicationConfig && item.name !== 'language' && (!catalog || !Object.hasOwn(catalog, item.value))) throw new Error(`${sourceFile}: <ForPublication> names unknown ${item.name} ${item.value}`);
-        }
-        if (attributes.some((item) => current.variant[item.name as keyof Variant] !== item.value)) return [];
-        return childrenOf(node.children, scope, stack, sourceFile);
+        if (!evaluatePublicationGuard(node, current, sourceFile, publicationConfig)) return [];
+        return childrenOf(node.children ?? [], scope, stack, sourceFile);
       }
       if (node.name === 'ReaderSection' || node.name === 'ReaderChoice' || node.name === 'ReaderFilter') {
         if (!readerConfig || node.type !== 'mdxJsxFlowElement') throw new Error(`${sourceFile}: <${node.name}> needs configured readerFilters and a block element`);
@@ -191,6 +181,7 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
         const choices = Object.fromEntries(attributes.filter((item) => item.name !== 'label' && (node.name !== 'ReaderChoice' || item.name !== 'scope')).map((item) => [item.name, item.value.split(',').map((value: string) => value.trim())]));
         const selection = validateReaderSelection(choices, readerConfig, `${sourceFile}: <${node.name}>`);
         if (!Object.keys(selection).length) throw new Error(`${sourceFile}: <${node.name}> needs at least one filter choice`);
+        if (node.name === 'ReaderSection') warnReaderSection(current, sourceFile, (node.position as any)?.start?.line ?? 1, selection);
         const description = Object.entries(selection).map(([facet, values]) => `${readerConfig.facets[facet].label}: ${values.map(value => readerConfig.facets[facet].options[value]).join(' or ')}`).join('; ');
         const children = node.name === 'ReaderSection' ? childrenOf(node.children ?? [], scope, stack, sourceFile) : [];
         const containsSection = (item: SemanticNode): boolean => item.type === 'docReaderSection' || (item.children ?? []).some(containsSection);
@@ -516,8 +507,9 @@ export function transformMdx(tree: unknown, current: Document, registry: Map<str
         const invocation = valuesAttribute ? snippetAttribute(valuesAttribute, `${sourceFile}: <Snippet>`) : {};
         if (!invocation || typeof invocation !== 'object' || Array.isArray(invocation)) throw new Error(`${sourceFile}: snippet values must be a literal mapping`);
         const values = resolveSnippetValues(id, definition, projectValues, { ...(current.frontmatter.variables as Record<string, unknown> ?? {}), ...scope }, invocation as Record<string, unknown>);
-        uses.push({ id, file: definition.file, documentId: current.frontmatter.id });
-        return childrenOf(definition.tree.children, values, [...stack, id], definition.file);
+        uses.push({ id, file: definition.file, documentId: current.frontmatter.id, documentKey: documentKey(current.frontmatter.id, current.variant) });
+        const selectedTree = pruneSelectedTree(originalSnippets.get(id)!.tree, current, definition.file);
+        return childrenOf(selectedTree.children, values, [...stack, id], definition.file);
       }
       if (node.name === 'Var') {
         if (!stack.length || node.type !== 'mdxJsxTextElement' || node.children?.length) throw new Error(`${sourceFile}: <Var> must be an inline snippet variable`);
