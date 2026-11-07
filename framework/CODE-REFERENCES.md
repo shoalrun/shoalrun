@@ -147,9 +147,11 @@ navigation:
 | `classes` | Class pages include member details inline. Module pages include their direct functions and class overviews. |
 | `modules` | Module pages include details for the classes, functions, and fields in that module. Submodules have their own grouping. |
 
-Individual symbol pages and URLs remain available in every layout. Choose class or module pages for the main navigation when you want fewer navigation entries. Grouping controls the reading experience; it doesn't remove the underlying symbol pages or change their content-delivery identities.
+Individual symbol pages and URLs remain available in every layout by default. Choose class or module pages for the main navigation when you want fewer navigation entries. Grouping controls the reading experience; it doesn't remove the underlying symbol pages or change their content-delivery identities.
 
 `singlePage` independently adds a complete reference for the catalog, containing every eligible symbol in the selected publication. It works with any layout. Omit it or set `singlePage: false` to disable it. Within a grouped or complete page, links to symbols included on that page jump to their sections. Links to other symbols retain their individual URLs. Generated heading anchors distinguish repeated headings, such as Parameters and Returns.
+
+Set `symbolPages: false` alongside `singlePage` to publish only the complete reference. Individual symbols remain sections on that page and do not become separate HTML pages, Markdown pages, search records, or content-delivery resources. Omitting `singlePage` with this option fails validation. Update navigation and document links to the complete page, and configure redirects for previously published symbol URLs. Section Markdown resources remain available for focused reads.
 
 The complete page defaults to document ID `reference.<catalog>.complete` and slug `<pathPrefix>/all`. You can configure its `documentId`, `slug`, `title`, `summary`, and `metadata`. Its metadata inherits the catalog's settings; an explicit `shared` or `requires` classification replaces the catalog classification. Strictly classified projects must classify the complete page as well as the symbols.
 

@@ -206,6 +206,34 @@ test('configurable class/module layouts and complete pages retain symbol URLs an
   const pdf = await preparePdfExport(config, { profile, documents: ['reference.complete'] });
   assert.match(JSON.stringify(pdf.input), /MethodDetailMarker/);
   assert.doesNotMatch(JSON.stringify(pdf.input), /RestrictedDetailMarker|PrivateDetailMarker/);
+  // Opt out of individual resources without losing selected symbol content.
+  settings.codeReferences.sdk.symbolPages = false;
+  await writeFile(config, JSON.stringify(settings));
+  const compact = await compile(config, output, {}, { profile });
+  assert.deepEqual(compact.documents.map((doc: any) => doc.id), ['reference.complete']);
+  assert.match(await readFile(path.join(output, 'reference/all.md'), 'utf8'), /MethodDetailMarker/);
+  assert.doesNotMatch(await readFile(path.join(output, 'reference/all.md'), 'utf8'), /RestrictedDetailMarker|PrivateDetailMarker/);
+  for (const old of ['module.md', 'model.md', 'get.md', 'get/index.html']) await assert.rejects(readFile(path.join(output, old)), /ENOENT/);
+  const compactSearch = JSON.parse(await readFile(path.join(output, 'search-index.json'), 'utf8'));
+  assert.deepEqual(compactSearch.documents.map((doc: any) => doc.id), ['reference.complete']);
+  assert.doesNotMatch(await readFile(path.join(output, 'llms.txt'), 'utf8'), /\/get\.md/);
+  await exportContent(config, delivered, { profile });
+  const compactExport = JSON.parse(await readFile(path.join(delivered, 'manifest.json'), 'utf8'));
+  assert.deepEqual(compactExport.resources.map((r: any) => r.ref.documentId), ['reference.complete']);
+  const compactFull = compactExport.resources[0];
+  for (const format of ['html', 'markdown']) {
+    const body = await readFile(path.join(delivered, compactFull.representations[format].path), 'utf8');
+    assert.match(body, /MethodDetailMarker/);
+    assert.doesNotMatch(body, /RestrictedDetailMarker|PrivateDetailMarker/);
+    assert.ok(compactFull.representations[format].links.every((link: any) => !link.ref || link.ref.documentId === 'reference.complete'));
+  }
+  const compactPdf = await preparePdfExport(config, { profile, documents: ['reference.complete'] });
+  assert.match(JSON.stringify(compactPdf.input), /MethodDetailMarker/);
+  assert.doesNotMatch(JSON.stringify(compactPdf.input), /RestrictedDetailMarker|PrivateDetailMarker/);
+  settings.codeReferences.sdk.singlePage = false;
+  await writeFile(config, JSON.stringify(settings));
+  await assert.rejects(compile(config, output, {}, { profile }), /requires a singlePage definition/);
+  settings.codeReferences.sdk.symbolPages = true;
   settings.codeReferences.sdk.layout = 'modules';
   settings.codeReferences.sdk.singlePage = false;
   await writeFile(config, JSON.stringify(settings));
@@ -229,6 +257,7 @@ test('configurable class/module layouts and complete pages retain symbol URLs an
   delete settings.codeReferences.sdk.source;
   settings.codeReferences.sdk.layout = 'modules';
   settings.codeReferences.sdk.singlePage = { documentId: 'reference.complete', slug: '/reference/all' };
+  settings.codeReferences.sdk.symbolPages = false;
   settings.codeReferences.sdk.publications = ['v1', 'v2'].map(version => ({ channel: 'production', version, language: 'en', source: { kind: 'file', path: `./${version}.json` } }));
   settings.publications.versions.v2 = { pathPrefix: '/v2' };
   settings.publications.enabled.push({ channel: 'production', version: 'v2', language: 'en' });
@@ -238,6 +267,7 @@ test('configurable class/module layouts and complete pages retain symbol URLs an
     const body = await readFile(path.join(output, prefix, 'reference/all.md'), 'utf8');
     assert.ok(body.includes(included)); assert.ok(!body.includes(excluded));
   }
+  settings.codeReferences.sdk.symbolPages = true;
   settings.codeReferences.sdk.singlePage.slug = '/module';
   await writeFile(config, JSON.stringify(settings));
   await assert.rejects(compile(config, output, {}, { profile }), /route collision/);

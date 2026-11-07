@@ -21,13 +21,15 @@ const catalogSchema = z.object({
   source: source.optional(),
   sourceLink: z.object({ baseUrl: z.string().url().refine(value => { const url = new URL(value); return url.protocol === 'https:' && !url.username && !url.password && !url.search && !url.hash; }, 'Source links need an HTTPS base URL without credentials, query or fragment') }).strict().optional(),
   publications: z.array(z.object({ product: z.string().optional(), channel: z.string(), version: z.string(), language: z.string().optional(), source }).strict()).min(1).optional(),
+  symbolPages: z.boolean().default(true),
   layout: z.enum(['symbols', 'classes', 'modules']).default('symbols'),
   singlePage: z.union([z.literal(false), z.object({ documentId: z.string().min(1).optional(), slug: z.string().startsWith('/').optional(), title: z.string().min(1).default('Complete API reference'), summary: z.string().min(1).default('Classes, functions, and fields in this publication.'), metadata: mapping.optional() }).strict()]).optional(),
   pathPrefix: z.string().regex(/^\/[a-zA-Z0-9_/-]+$/).default('/reference/code'),
   metadata: mapping.optional(),
   include: z.array(z.string()).optional(), exclude: z.array(z.string()).optional(),
   symbols: z.record(z.string(), override).optional()
-}).strict().refine(value => !!value.source !== !!value.publications, 'Declare source or publications');
+}).strict().refine(value => !!value.source !== !!value.publications, 'Declare source or publications')
+  .refine(value => value.symbolPages || !!value.singlePage, 'symbolPages: false requires a singlePage definition');
 
 const hash = (value: string) => createHash('sha256').update(value).digest('hex').slice(0, 16);
 export function codeDocumentId(catalog: string, symbol: string): string { return `reference.${catalog}.${/^[A-Za-z0-9_.-]+$/.test(symbol) ? symbol : hash(symbol)}`; }
@@ -127,7 +129,8 @@ export async function materializeCodeReferences(input: {
         if (frontmatter.access?.policy === 'public' && classification.some(item => documentKey(catalogId, item) === identity)) validateFeatureClassification(metadata, loaded.deployment?.context, `${file}: ${id}`);
         const granted = matchesFeatures(frontmatter.requires, loaded.deployment?.context, `${file}: ${id}`);
         const marks = pageReaderFilters(frontmatter, readerFilters, file);
-        const hasContent = [...plan.docs.values()].some(doc => doc.codeReference?.catalog === catalogId && documentKey(catalogId, doc.variant) === identity);
+        const symbolDocuments = [...plan.docs.values()].filter(doc => doc.codeReference?.catalog === catalogId && !doc.codeReference.complete && documentKey(catalogId, doc.variant) === identity);
+        const hasContent = symbolDocuments.length > 0;
         if (active && granted && hasContent && frontmatter.access.policy === 'public' && matchesContentFilter(marks, contentFilter)) {
           const key = documentKey(id, variant);
           if (plan.docs.has(key)) throw new Error(`Duplicate code reference document ${id}`);
@@ -135,7 +138,16 @@ export async function materializeCodeReferences(input: {
           if (plan.routeOwners.has(route.toLowerCase()) && !input.allowRouteCollisions) throw new Error(`Code reference route collision ${route}`);
           plan.routeOwners.set(route.toLowerCase(), key);
           plan.docs.set(key, { file, frontmatter, variant, route, markdownRoute: markdownRoute(route, basePath), readerFilters: marks, featureContext: loaded.deployment?.context, body: '', tree: null,
+            ...(!catalog.symbolPages ? { codeReferenceSymbols: symbolDocuments } : {}),
             codeReference: { catalog: catalogId, programmingLanguage: snapshot.programmingLanguage, complete: true, symbol: { id, name: single.title, kind: 'module', visibility: 'public' } } });
+        }
+        if (!catalog.symbolPages) {
+          // Retain only the already-selected symbols as private render inputs.
+          // They must not become pages, search hits, or delivery resources.
+          for (const symbolDoc of symbolDocuments) {
+            plan.docs.delete(documentKey(symbolDoc.frontmatter.id, variant));
+            plan.routeOwners.delete(symbolDoc.route.toLowerCase());
+          }
         }
       }
     }
@@ -145,7 +157,7 @@ export async function materializeCodeReferences(input: {
 /** Imported prose is inert Markdown; it never enters MDX or project directive expansion. */
 export function renderCodeReference(reference: CodeReference, doc: Document, documents: Map<string, Document>) {
   const eligible = new Map<string, Document>();
-  for (const candidate of documents.values()) if (candidate.codeReference?.catalog === reference.catalog && !candidate.codeReference.complete && documentKey('scope', candidate.variant) === documentKey('scope', doc.variant)) eligible.set(candidate.codeReference.symbol.id, candidate);
+  for (const candidate of doc.codeReferenceSymbols ?? documents.values()) if (candidate.codeReference?.catalog === reference.catalog && !candidate.codeReference.complete && documentKey('scope', candidate.variant) === documentKey('scope', doc.variant)) eligible.set(candidate.codeReference.symbol.id, candidate);
   const owner = (page: Document): string | undefined => {
     let parent = page.codeReference!.symbol.parent;
     while (parent) {
