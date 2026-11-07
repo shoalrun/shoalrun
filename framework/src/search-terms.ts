@@ -149,7 +149,7 @@ export function searchTerms(index: TermIndex, query: string, options: { variant:
     }
   }
   if (!requested.length) return { total: 0, matchMode: 'all' as const, results: [] as TermHit[] };
-  const hits = new Map<number, { score: number; units: Set<number>; prominent: number; sections: Map<number, number>; sectionUnits: Map<number, Set<number>> }>();
+  const hits = new Map<number, { score: number; units: Set<number>; titleUnits: Set<number>; prominent: number; sections: Map<number, number>; sectionUnits: Map<number, Set<number>> }>();
   for (const [unitId, unit] of requested.entries()) {
     const matches = phrase(index, unit.term, eligible);
     const weights = new Map([...matches.keys()].map(field => [field, 1]));
@@ -160,9 +160,12 @@ export function searchTerms(index: TermIndex, query: string, options: { variant:
     for (const [fieldId, weight] of weights) {
       const [docId, kind, section] = index.fields[fieldId];
       const score = [12, 5, 7, 1][kind] * weight * rarity;
-      const hit = hits.get(docId) ?? { score: 0, units: new Set<number>(), prominent: 0, sections: new Map<number, number>(), sectionUnits: new Map<number, Set<number>>() };
+      const hit = hits.get(docId) ?? { score: 0, units: new Set<number>(), titleUnits: new Set<number>(), prominent: 0, sections: new Map<number, number>(), sectionUnits: new Map<number, Set<number>>() };
       if (score > (best.get(docId) ?? 0)) { hit.score += score - (best.get(docId) ?? 0); best.set(docId, score); }
       hit.units.add(unitId);
+      // The page title is shared context in every section resource. Evidence
+      // from a different section still cannot justify a focused section read.
+      if (kind === 0) hit.titleUnits.add(unitId);
       if (kind < 3) hit.prominent = Math.max(hit.prominent, weight);
       if (section >= 0) {
         hit.sections.set(section, (hit.sections.get(section) ?? 0) + score);
@@ -176,7 +179,8 @@ export function searchTerms(index: TermIndex, query: string, options: { variant:
     const exactTitle = termWords(query).map(words => words[0]).join(' ') === termWords(document.title).map(words => words[0]).join(' ');
     const sectionId = exactTitle ? undefined : [...hit.sections].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0]?.[0];
     const prior = document.type === 'changelog-entry' && !history ? options.changelogPrior ?? 0.5 : 1;
-    return { document, coverage: hit.units.size / requested.length, score: hit.score * prior, ...(sectionId !== undefined ? { section: document.headings[sectionId], sectionComplete: hit.sectionUnits.get(sectionId)?.size === requested.length } : {}) };
+    const sectionComplete = sectionId !== undefined && new Set([...hit.titleUnits, ...(hit.sectionUnits.get(sectionId) ?? [])]).size === requested.length;
+    return { document, coverage: hit.units.size / requested.length, score: hit.score * prior, ...(sectionId !== undefined ? { section: document.headings[sectionId], sectionComplete } : {}) };
   });
   const complete = results.filter(hit => hit.coverage === 1);
   // Keep strong near-complete subjects in contention. Expanding body coverage
