@@ -1362,11 +1362,12 @@ test('theme shapes and palettes load between base and project CSS and reject unk
   await mkdir(path.join(directory, 'fonts'), { recursive: true });
   await writeFile(path.join(directory, 'fonts/Acme.woff2'), 'wOF2 test');
   ({ html } = await build('theme:\n  preset: ledger\n  fonts:\n    body: { family: Acme Sans, files: [./fonts/Acme.woff2, { file: ./fonts/Acme.woff2, style: italic, weight: 400 }] }\n    code: Berkeley Mono\n'));
-  assert.doesNotMatch(html, /rel="preload"/, 'a custom body font replaces the preset preload');
+  assert.match(html, /<link rel="preload" href="\/assets\/fonts\/project\/Acme-[a-f0-9]{64}\.woff2" as="font" type="font\/woff2" crossorigin>/, 'a custom body font replaces the preset preload');
   const customFonts = await readFile(path.join(output, 'assets/fonts.css'), 'utf8');
-  assert.match(customFonts, /@font-face\{font-family:"Acme Sans";src:url\("\/assets\/fonts\/project\/Acme\.woff2"\) format\("woff2"\);font-style:italic;font-weight:400/);
+  assert.match(customFonts, /@font-face\{font-family:"Acme Sans";src:url\("\/assets\/fonts\/project\/Acme-[a-f0-9]{64}\.woff2"\) format\("woff2"\);font-style:italic;font-weight:400/);
   assert.match(customFonts, /:root\{--font-body:"Acme Sans", ui-sans-serif, system-ui, sans-serif;--font-code:"Berkeley Mono", ui-monospace/);
-  assert.equal(await readFile(path.join(output, 'assets/fonts/project/Acme.woff2'), 'utf8'), 'wOF2 test');
+  const projectFont = /url\("(\/assets\/fonts\/project\/Acme-[a-f0-9]{64}\.woff2)"\)/.exec(customFonts)![1];
+  assert.equal(await readFile(path.join(output, projectFont), 'utf8'), 'wOF2 test');
   for (const [preset, palette] of [['reef', 'coral'], ['ledger', 'ink'], ['vice', 'vice']]) {
     const { built, html } = await build(`theme: { preset: ${preset} }\n`);
     assert.match(html, new RegExp(`data-theme="${preset}" data-palette="${palette}"`));

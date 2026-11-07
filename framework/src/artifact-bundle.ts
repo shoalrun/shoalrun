@@ -13,7 +13,8 @@ import { fictionalDocument, optionalDocument, resolveLlmsDiscovery } from './llm
 import { boundedDiscovery, type DiscoveryEntry } from './compact-discovery.js';
 import { iconLicenseFile } from './icons.js';
 import { peleLicenseFile } from './diagrams.js';
-import { fontsCss, type SiteFonts } from './fonts.js';
+import { fontsCss, fontMediaType, type SiteFonts } from './fonts.js';
+import { createHash } from 'node:crypto';
 import { defaultShareSvg, faviconSvg, fillShareTemplate, renderPng, touchIconSvg, type ShareSettings } from './share-images.js';
 import { paletteCatalog, paletteCss, presetCatalog, resolvePalette, type Palette } from './palettes.js';
 import { heading, link, list, paragraph, renderMarkdown, root, searchIndex, shareCardText, text, type Document } from './content.js';
@@ -59,6 +60,7 @@ export type ArtifactAssemblyInput = {
   colorMode: 'light' | 'dark' | 'system';
   generatedFontsCss?: string;
   fontFiles: string[];
+  projectFontAssets: Map<string, Buffer>;
   fonts: SiteFonts;
   shareImages: ShareSettings;
   shareFor: (doc: Document) => { route: string; generated: boolean; file?: string } | undefined;
@@ -190,8 +192,13 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
     if (palette.name === 'custom') addPublicArtifact('/assets/themes/palette-custom.css', paletteCss(palette, 'system'));
   }
   if (generatedFontsCss) addPublicArtifact('/assets/fonts.css', generatedFontsCss.replaceAll('url("/assets/', `url("${basePath}/assets/`));
-  for (const file of fontFiles) addPublicArtifact(`/assets/fonts/${path.basename(file)}`, await readFile(file));
-  for (const route of new Set(fonts.faces.map(face => face.route))) addPublicArtifact(route, await readFile(fonts.faces.find(face => face.route === route)!.file));
+  const addFont = (route: string, bytes: Buffer, immutable: boolean) => {
+    addPublicArtifact(route, bytes);
+    const type = fontMediaType(route);
+    if (type) headers[publicPath(route)] = { 'Content-Type': type, 'Cache-Control': immutable ? 'public, max-age=31536000, immutable' : 'public, max-age=0, must-revalidate', ETag: `"${createHash('sha256').update(bytes).digest('hex')}"` };
+  };
+  for (const file of fontFiles) addFont(`/assets/fonts/${path.basename(file)}`, await readFile(file), false);
+  for (const [route, bytes] of input.projectFontAssets) addFont(route, bytes, true);
   const shareTemplate = shareImages.template ? await readFile(shareImages.template, 'utf8') : undefined;
   for (const page of rendered) {
     const share = shareFor(page.doc);

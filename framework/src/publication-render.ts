@@ -20,7 +20,7 @@ const keyFor = documentKey;
 
 export function renderPublicationPages({ rendered, docs, relationships, knownOperations, cardUses, publishedRelationships, cookbooks, documentRoutes,
   basePath, siteOrigin, colorMode, config, highlighter, editionLabel, customStyleFile, themePreset, palette,
-  themeStyleFile, generatedPaletteCss, generatedBadgeCss, themeSwitcherData, generatedFontsCss, fontsPreload,
+  themeStyleFile, generatedPaletteCss, generatedBadgeCss, themeSwitcherData, generatedFontsCss, fontsPreload, customFontPreloads,
   shareFor, faviconRoute, logoRoute, modeToggle, header, footer, search, readerFilters, variants, externalDocuments,
   externalSiteLinks, navigationSpec, navigationEntries, navigationTagOrder, freshness }: {
   freshness?: Freshness;
@@ -47,6 +47,7 @@ export function renderPublicationPages({ rendered, docs, relationships, knownOpe
   themeSwitcherData?: string;
   generatedFontsCss?: string;
   fontsPreload?: string;
+  customFontPreloads?: import('./fonts.js').FontPreload[];
   shareFor: (doc: Document) => { route: string; generated: boolean; file?: string } | undefined;
   faviconRoute: string;
   logoRoute?: string;
@@ -146,7 +147,7 @@ export function renderPublicationPages({ rendered, docs, relationships, knownOpe
         const group = variant.product === undefined ? config.site.title : config.publications.products?.[variant.product]?.label ?? variant.product;
         return [{ group, label: `${group} · ${variant.channel} · ${variant.version}${showLanguage ? ` · ${variant.language}` : ''}`, url: target.route, current: samePublication(page.doc.variant, variant) }];
       }) : [];
-    page.html = buildHtmlPage(page.doc, page.htmlTree, page.doc.markdownRoute, config.site.title, navigation, page.pageExamples, page.pageShapes, highlighter, editionLabel(page.doc.variant), !!customStyleFile, { preset: themePreset, palette: palette.name, themeCss: !!themeStyleFile, paletteCss: !!generatedPaletteCss, badgesCss: !!generatedBadgeCss, themeSwitcher: themeSwitcherData, fontsCss: !!generatedFontsCss, preloadFont: fontsPreload, masthead: presetCatalog.find(preset => preset.name === themePreset)?.masthead, share: shareFor(page.doc), favicon: faviconRoute, logo: logoRoute, touchIcon: !faviconRoute.endsWith('.png'), origin: siteOrigin, indexing: config.site.indexing !== false, home: hasHome, mode: colorMode, toggle: modeToggle, header, footer, search: search.provider !== 'none', publicationChoices, publicationAlternates, breadcrumbs }, page.pageCurl, page.pageSamples, { ...config, readerFilters });
+    page.html = buildHtmlPage(page.doc, page.htmlTree, page.doc.markdownRoute, config.site.title, navigation, page.pageExamples, page.pageShapes, highlighter, editionLabel(page.doc.variant), !!customStyleFile, { preset: themePreset, palette: palette.name, themeCss: !!themeStyleFile, paletteCss: !!generatedPaletteCss, badgesCss: !!generatedBadgeCss, themeSwitcher: themeSwitcherData, fontsCss: !!generatedFontsCss, preloadFont: fontsPreload, preloadFonts: customFontPreloads, masthead: presetCatalog.find(preset => preset.name === themePreset)?.masthead, share: shareFor(page.doc), favicon: faviconRoute, logo: logoRoute, touchIcon: !faviconRoute.endsWith('.png'), origin: siteOrigin, indexing: config.site.indexing !== false, home: hasHome, mode: colorMode, toggle: modeToggle, header, footer, search: search.provider !== 'none', publicationChoices, publicationAlternates, breadcrumbs }, page.pageCurl, page.pageSamples, { ...config, readerFilters });
   }
   return resolvedNavigation;
 }

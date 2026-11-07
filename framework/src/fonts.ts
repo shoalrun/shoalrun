@@ -1,8 +1,12 @@
 import path from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 
 export type FontRole = 'body' | 'headings' | 'code';
 export type FontFace = { family: string; file: string; route: string; style: 'normal' | 'italic'; weight: string };
-export type SiteFonts = { bundled: boolean; faces: FontFace[]; tokens: Partial<Record<FontRole, string>>; preload?: string };
+export type FontPreload = { href: string; type: string };
+export type SiteFonts = { bundled: boolean; faces: FontFace[]; tokens: Partial<Record<FontRole, string>>; preload?: string; preloadFaces?: FontFace[] };
+export const fontMediaType = (file: string) => ({ '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.otf': 'font/otf' }[path.extname(file).toLowerCase()]);
 
 // Latin variable fonts from Fontsource, all under the SIL Open Font License. Readers download only the faces a page uses.
 export const bundledFonts = [
@@ -28,7 +32,7 @@ const fallbackFaces = [
 ];
 export const bundledFontLicenses = ['inter', 'figtree', 'source-serif-4', 'jetbrains-mono', 'jost'].map(name => `${name}-LICENSE.txt`);
 
-// The body font each preset preloads so the first paint uses it.
+// Begin fetching the preset's body font before the browser discovers its CSS rule.
 const presetBodyFont: Record<string, string> = { shoal: 'inter.woff2', reef: 'figtree.woff2', ledger: 'source-serif-4.woff2', vice: 'figtree.woff2' };
 
 const fallbacks: Record<FontRole, string> = {
@@ -49,6 +53,8 @@ export function resolveFonts(value: unknown, preset: string, declaringFile: stri
   const unknown = Object.keys(value).filter(key => !roles.includes(key as FontRole));
   if (unknown.length) throw new Error(`theme.fonts accepts only body, headings, and code; remove ${unknown.join(', ')}`);
   const faces: FontFace[] = [];
+  const preloadFaces: FontFace[] = [];
+  const families: Partial<Record<FontRole, string>> = {};
   const tokens: Partial<Record<FontRole, string>> = {};
   for (const role of roles) {
     const entry = (value as any)[role];
@@ -57,6 +63,7 @@ export function resolveFonts(value: unknown, preset: string, declaringFile: stri
     if (!spec || typeof spec !== 'object' || Array.isArray(spec) || Object.keys(spec).some(key => !['family', 'files'].includes(key))) throw new Error(`theme.fonts.${role} must be a family name or a mapping with family and files`);
     if (typeof spec.family !== 'string' || !familyName.test(spec.family)) throw new Error(`theme.fonts.${role}.family must be a font name using letters, numbers, spaces, dots, dashes, or underscores`);
     const files = spec.files ?? [];
+    families[role] = spec.family;
     if (!Array.isArray(files)) throw new Error(`theme.fonts.${role}.files must be a list`);
     for (const [index, item] of files.entries()) {
       const where = `theme.fonts.${role}.files[${index}]`;
@@ -69,11 +76,55 @@ export function resolveFonts(value: unknown, preset: string, declaringFile: stri
       if (!weightValue.test(weight)) throw new Error(`${where}.weight must be a number such as 400 or a range such as "100 900"`);
       const file = path.resolve(path.dirname(declaringFile), face.file);
       if (!/^[\w.-]+$/.test(path.basename(file))) throw new Error(`${where} file name may use only letters, numbers, dots, dashes, and underscores`);
-      faces.push({ family: spec.family, file, route: `/assets/fonts/project/${path.basename(file)}`, style, weight });
+      const registration: FontFace = { family: spec.family, file, route: `/assets/fonts/project/${path.basename(file)}`, style, weight };
+      faces.push(registration);
+
     }
     tokens[role] = `"${spec.family}", ${fallbacks[role]}`;
   }
-  return { bundled: true, faces, tokens, preload: tokens.body ? undefined : presetBodyFont[preset] };
+  // CSS resolves style before weight and prefers the last equivalent registration.
+  const registrations: FontFace[] = [...bundledFonts.map(font => ({ family: font.family, file: font.file, route: `/assets/fonts/${font.file}`, style: font.style, weight: '100 900' })), ...faces];
+  for (const role of ['body', 'headings'] as const) {
+    if (!families[role]) continue;
+    const target = role === 'body' ? 400 : preset === 'vice' ? 800 : 700;
+    const style = role === 'headings' && preset === 'vice' ? 'italic' : 'normal';
+    const family = registrations.filter(face => face.family === families[role]);
+    const exactStyle = family.filter(face => face.style === style);
+    const rank = (face: FontFace): number[] => {
+      const [min, max = min] = face.weight.split(' ').map(Number);
+      if (min <= target && max >= target) return [0, 0];
+      if (target >= 400 && target <= 500) {
+        if (min > target && min <= 500) return [1, min - target];
+        return max < target ? [2, target - max] : [3, min - target];
+      }
+      if (target < 400) return max < target ? [1, target - max] : [2, min - target];
+      return min > target ? [1, min - target] : [2, target - max];
+    };
+    const candidates = (exactStyle.length ? exactStyle : family).map((face, index) => ({ face, index, rank: rank(face) }));
+    candidates.sort((a, b) => a.rank[0] - b.rank[0] || a.rank[1] - b.rank[1] || b.index - a.index);
+    if (candidates[0]) preloadFaces.push(candidates[0].face);
+  }
+  return { bundled: true, faces, tokens, preload: tokens.body ? undefined : presetBodyFont[preset], preloadFaces };
+}
+
+/** Pin project font URLs to the same bytes that will be emitted by this build. */
+export async function prepareFontAssets(fonts: SiteFonts): Promise<Map<string, Buffer>> {
+  const files = new Map<string, Buffer>();
+  const assets = new Map<string, Buffer>();
+  for (const face of fonts.faces) {
+    let bytes = files.get(face.file);
+    if (!bytes) { bytes = await readFile(face.file); files.set(face.file, bytes); }
+    const extension = path.extname(face.file).toLowerCase();
+    const name = path.basename(face.file, path.extname(face.file));
+    const hash = createHash('sha256').update(bytes).digest('hex');
+    face.route = `/assets/fonts/project/${name}-${hash}${extension}`;
+    assets.set(face.route, bytes);
+  }
+  return assets;
+}
+
+export function customFontPreloads(fonts: SiteFonts): FontPreload[] {
+  return [...new Map((fonts.preloadFaces ?? []).map(face => [face.route, { href: face.route, type: fontMediaType(face.file)! }])).values()];
 }
 
 const face = (family: string, url: string, style: string, weight: string, format: string) =>

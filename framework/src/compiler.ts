@@ -18,7 +18,7 @@ import { validateAuthoringGuidance } from './authoring-guidance.js';
 import { loadFreshness } from './freshness.js';
 import { resolveAgentDiscovery } from './agent-discovery.js';
 import { iconLicenseFile } from './icons.js';
-import { bundledFontLicenses, bundledFonts, fontsCss, resolveFonts } from './fonts.js';
+import { bundledFontLicenses, bundledFonts, fontsCss, resolveFonts, prepareFontAssets, customFontPreloads } from './fonts.js';
 import { bundledShareFonts, resolveShareImages, shareRoute } from './share-images.js';
 import { buildInfo, type BuildProvenance } from './build-info.js';
 import { CardUse, publicationRelationships, resolveCardTree, validateRelationships } from './cards.js';
@@ -161,6 +161,7 @@ async function compileProject(configFile: string, destination: string | undefine
   const fonts = resolveFonts(theme.fonts, themePreset, theme.fonts === undefined ? configFile : explainSegments(loaded, ['theme', 'fonts']).source.file);
   for (const face of fonts.faces) if (!existsSync(face.file)) throw new Error(`theme.fonts: font file not found: ${face.file}`);
   for (const face of fonts.faces) if (fonts.faces.some(other => other.route === face.route && other.file !== face.file)) throw new Error(`theme.fonts: two font files share the name ${path.basename(face.file)}; rename one`);
+  const projectFontAssets = await prepareFontAssets(fonts);
   const generatedFontsCss = fontsCss(fonts);
   // A temporary preview aid: a floating shape and palette switcher on every page. Remove it before launch.
   // `demo` ships it hidden until a page is opened with ?theme-switcher.
@@ -344,7 +345,7 @@ async function compileProject(configFile: string, destination: string | undefine
     freshness,
     rendered, docs, relationships, knownOperations, cardUses, publishedRelationships, cookbooks, documentRoutes,
     basePath, siteOrigin, colorMode, config: options.authoringFiles ? { ...config, outputs: { ...(config.outputs as Record<string, unknown>), html: { ...(htmlOptions as Record<string, unknown>), pdf: false } } } : config, highlighter, editionLabel, customStyleFile, themePreset, palette,
-    themeStyleFile, generatedPaletteCss, generatedBadgeCss, themeSwitcherData, generatedFontsCss, fontsPreload: fonts.preload,
+    themeStyleFile, generatedPaletteCss, generatedBadgeCss, themeSwitcherData, generatedFontsCss, fontsPreload: fonts.preload, customFontPreloads: customFontPreloads(fonts),
     shareFor, faviconRoute, logoRoute, modeToggle, header, footer, search, readerFilters, variants, externalDocuments,
     externalSiteLinks, navigationSpec, navigationEntries, navigationTagOrder
   });
@@ -418,7 +419,7 @@ async function compileProject(configFile: string, destination: string | undefine
     diagramAssets, heroImages, focusedContracts, styleFiles, themeStyleFile, generatedPaletteCss,
     generatedBadgeCss, search, synonyms, config: artifactConfig, builtInSearchProvider, customReaderModule, analyticsModule, mcpAnalyticsModule,
     previewFiles, assetDirectory, themeSwitcher, themeDirectory, palette, colorMode, generatedFontsCss,
-    fontFiles, fonts, shareImages, shareFor, themePreset, shareFontFiles, shareCache, faviconFile,
+    fontFiles, projectFontAssets, fonts, shareImages, shareFor, themePreset, shareFontFiles, shareCache, faviconFile,
     faviconRoute, customStyleFile, scriptFiles, componentAssets: loaded.deployment?.context.grants ? componentPlugins.assets.filter(asset => usedComponentAssets.has(asset.route)) : componentPlugins.assets, redirects, apiPublications, api, catalog, headers,
     documentRoutes, readerFilters, apiSources
   });
