@@ -39,11 +39,20 @@ export async function queryBuiltSite(directory: string, query: string, options: 
     if (variants.length !== 1) throw new Error(`Search matches multiple publications (${variants.join(', ')}); pass --product where applicable, --channel, --version, and --language`);
     const publication = parsePublicationKey(variants[0]);
     const found = searchTerms(compiled, query, { variant: variants[0], limit });
+    // Keep contextual CLI/MCP descriptions without duplicating article prose in
+    // the compiled postings. The compatible excerpt index is already published.
+    const snippets = new Map<string, string>();
+    try {
+      const legacy: SearchIndex = JSON.parse(await readFile(path.join(directory, 'search-index.json'), 'utf8'));
+      if (legacy.schemaVersion !== 1 || !Array.isArray(legacy.documents)) throw new Error('Unsupported search excerpt index');
+      for (const doc of legacy.documents) if (doc.variant === variants[0] && typeof doc.text === 'string') snippets.set(doc.id, doc.text);
+    } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+    const snippetTerms = queryUnits(query, compiled.synonyms).flatMap(unit => [unit.term, ...unit.alternatives]);
     return { status: 'ok', query: query.trim(), publication, total: found.total, matchMode: found.matchMode, ...(found.correction ? { correction: found.correction } : {}), results: found.results.map(({ document: doc, score, section, sectionComplete }) => {
       const standalone = sectionComplete && section ? doc.sections?.find(candidate => candidate.id === section.id && candidate.standalone === true) : undefined;
       const tokens = standalone?.markdownTokens ?? doc.markdownTokens;
       return { id: doc.id, type: doc.type, title: doc.title, summary: doc.summary, score, url: section ? `${doc.url}#${section.id}` : doc.url,
-        markdownUrl: standalone?.markdownUrl ?? doc.markdownUrl, pageMarkdownUrl: doc.markdownUrl, ...(section ? { section: section.title } : {}), snippet: section?.title ?? doc.summary,
+        markdownUrl: standalone?.markdownUrl ?? doc.markdownUrl, pageMarkdownUrl: doc.markdownUrl, ...(section ? { section: section.title } : {}), snippet: snippets.has(doc.id) ? excerpt(snippets.get(doc.id)!, snippetTerms) : section?.title ?? doc.summary,
         read: { tool: standalone ? 'get_section' : 'get_page', arguments: { id: doc.id, ...publication, ...(standalone ? { section: standalone.id } : {}), ...(tokens !== undefined ? { maxTokens: Math.min(100_000, Math.max(4096, tokens * 2 + 1024)) } : {}) } },
         ...(tokens !== undefined ? { markdownTokens: tokens, markdownBytes: standalone?.markdownBytes ?? doc.markdownBytes, markdownTokenEncoding: doc.markdownTokenEncoding } : {}) };
     }) };

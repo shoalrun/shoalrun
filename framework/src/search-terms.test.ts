@@ -120,11 +120,17 @@ test('precompiled CLI reads keep the full page when query evidence spans standal
   const docs = [document('guide', { title: 'Account maintenance', headings: [{ id: 'rotate', title: 'Rotate' }, { id: 'credentials', title: 'Credentials' }], sections: [{ id: 'rotate', title: 'Rotate', markdownUrl: '/guide.sections/rotate.md', markdownBytes: 100, markdownTokens: 20, standalone: true }, { id: 'credentials', title: 'Credentials', markdownUrl: '/guide.sections/credentials.md', markdownBytes: 100, markdownTokens: 20, standalone: true }] })];
   const index = buildTermIndex(docs, [{ document: 0, kind: 0, text: 'Account maintenance' }, { document: 0, kind: 1, text: 'Timeout guidance' }, { document: 0, kind: 2, section: 0, text: 'Rotate' }, { document: 0, kind: 2, section: 1, text: 'Credentials' }]);
   await writeFile(path.join(directory, 'search-terms.json'), JSON.stringify(index));
+  await writeFile(path.join(directory, 'search-index.json'), JSON.stringify({ schemaVersion: 1, documents: [
+    { ...docs[0], text: 'Rotate credentials after checking the account configuration.' },
+    { ...docs[0], variant: 'production|old|en', text: 'Wrong-publication excerpt must never appear.' }
+  ] }));
   assert.equal((await queryBuiltSite(directory, 'rotate credentials')).results[0].read.tool, 'get_page');
   assert.equal((await queryBuiltSite(directory, 'rotate')).results[0].read.tool, 'get_section');
   const focused = (await queryBuiltSite(directory, 'account rotate')).results[0];
   assert.equal(focused.read.tool, 'get_section');
   assert.equal(focused.read.arguments.section, 'rotate');
+  assert.match(focused.snippet, /Rotate credentials/);
+  assert.doesNotMatch(focused.snippet, /Wrong-publication/);
   assert.equal((await queryBuiltSite(directory, 'account rotate credentials')).results[0].read.tool, 'get_page');
   assert.equal((await queryBuiltSite(directory, 'account rotate timeout')).results[0].read.tool, 'get_page');
   assert.equal((await queryBuiltSite(directory, 'account maintenance')).results[0].read.tool, 'get_page');
