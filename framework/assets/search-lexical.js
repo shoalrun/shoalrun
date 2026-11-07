@@ -57,10 +57,21 @@ export async function search(query, context) {
     const matched = terms.filter(term => match(title, term) || match(summary, term) || match(text, term) || headings.some(heading => match(heading, term)));
     if (!matched.length) continue;
     let score = 0;
-    for (const term of terms) score += weight(title, term, title.startsWith(term.term) ? 12 : 8) || weight(summary, term, 4) || (headings.some(heading => match(heading, term)) ? 3 : 0) || weight(text, term, 1);
+    let contentScore = 0;
+    for (const term of terms) {
+      const termScore = weight(title, term, title.startsWith(term.term) ? 12 : 8) || weight(summary, term, 4) || (headings.some(heading => match(heading, term)) ? 3 : 0) || weight(text, term, 1);
+      score += termScore;
+      if (!fallbackStopWords.has(term.term)) contentScore += termScore;
+    }
     const section = filtered || terms.every(term => match(title, term)) ? undefined : doc.headings.find((heading, index) => terms.every(term => match(headings[index], term)));
-    hits.push({ score, matched: matched.length, partialMatched: matched.filter(term => !fallbackStopWords.has(term.term)).length, result: { url: section ? `${doc.url}#${section.id}` : doc.url, title: doc.title, summary: doc.summary, section: section?.title } });
+    hits.push({ score, contentScore, matched: matched.length, partialMatched: matched.filter(term => !fallbackStopWords.has(term.term)).length, result: { url: section ? `${doc.url}#${section.id}` : doc.url, title: doc.title, summary: doc.summary, section: section?.title } });
   }
-  const complete = hits.filter(hit => hit.matched === terms.length);
-  return (complete.length ? complete : hits.filter(hit => hit.partialMatched > 0)).sort((a, b) => (complete.length ? b.matched - a.matched : b.partialMatched - a.partialMatched) || b.score - a.score || a.result.title.localeCompare(b.result.title)).slice(0, context.limit).map(hit => hit.result);
+  const contentTerms = terms.filter(term => !fallbackStopWords.has(term.term)).length;
+  // Filler words shape the sentence, not the subject. A page that covers every
+  // content term is complete even when it omits "how", "do", or "the"; otherwise
+  // a page that happens to repeat filler words can hide the focused result.
+  const complete = contentTerms === 0
+    ? hits.filter(hit => hit.matched === terms.length)
+    : hits.filter(hit => hit.partialMatched === contentTerms);
+  return (complete.length ? complete : hits.filter(hit => hit.partialMatched > 0)).sort((a, b) => (complete.length ? b.contentScore - a.contentScore : b.partialMatched - a.partialMatched) || b.score - a.score || a.result.title.localeCompare(b.result.title)).slice(0, context.limit).map(hit => hit.result);
 }

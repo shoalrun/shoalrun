@@ -62,7 +62,7 @@ export async function queryBuiltSite(directory: string, query: string, options: 
     if (!matched.length) return [];
     const termScore = (term: QueryUnit) => weight(title, term, title.startsWith(term.term) ? 12 : 8, true) || weight(summary, term, 4) || (headings.some(heading => match(heading, term)) ? 3 : 0) || weight(body, term, 1);
     let score = terms.reduce((total, term) => total + termScore(term), 0);
-    const contentScore = terms.filter(term => !fallbackStopWords.has(term.term)).reduce((total, term) => total + termScore(term), 0);
+    let contentScore = terms.filter(term => !fallbackStopWords.has(term.term)).reduce((total, term) => total + termScore(term), 0);
     const prominentMatches = terms.filter(term => !fallbackStopWords.has(term.term) && (matchTitle(title, term) || match(summary, term) || headings.some(heading => match(heading, term)))).length;
     const section = terms.every(term => matchTitle(title, term)) ? undefined : doc.headings.find((heading, at) => terms.every(term => match(headings[at], term)));
     // Use only query terms with meaning, and require a unique matching section.
@@ -76,7 +76,7 @@ export async function queryBuiltSite(directory: string, query: string, options: 
     // older indexes and unreviewed sections conservatively retain the full page.
     const selected = candidates.length === 1 && candidates[0].standalone === true ? candidates[0] : undefined;
     // A complete multiword section-title match outranks incidental page-title words.
-    if (meaningful.length >= 2 && candidates.some(candidate => meaningful.every(term => match(candidate.title.toLocaleLowerCase(), term)))) score += 20;
+    if (meaningful.length >= 2 && candidates.some(candidate => meaningful.every(term => match(candidate.title.toLocaleLowerCase(), term)))) { score += 20; contentScore += 20; }
     const { product, channel, version, language } = parsePublicationKey(doc.variant);
     const tokens = selected?.markdownTokens ?? doc.markdownTokens;
     const read = { tool: selected ? 'get_section' : 'get_page', arguments: {
@@ -85,15 +85,20 @@ export async function queryBuiltSite(directory: string, query: string, options: 
     } };
     return [{ score, contentScore, prominentMatches, matched: matched.length, partialMatched: matched.filter(term => !fallbackStopWords.has(term.term)).length, id: doc.id, type: doc.type, title: doc.title, summary: doc.summary, url: section ? `${doc.url}#${section.id}` : doc.url, markdownUrl: selected?.markdownUrl ?? doc.markdownUrl, pageMarkdownUrl: doc.markdownUrl, read, ...(tokens !== undefined ? { markdownTokens: tokens, markdownBytes: selected?.markdownBytes ?? doc.markdownBytes, markdownTokenEncoding: doc.markdownTokenEncoding } : {}), ...(selected || section ? { section: selected?.title ?? section?.title } : {}), snippet: excerpt(doc.text, terms.flatMap(unit => [unit.term, ...unit.alternatives])) }];
   });
-  const complete = hits.filter(hit => hit.matched === terms.length);
+  const contentTerms = terms.filter(term => !fallbackStopWords.has(term.term)).length;
+  // Filler words shape the sentence, not the subject. A page that covers every
+  // content term is complete even when it omits "how", "do", or "the"; otherwise
+  // a page that happens to repeat filler words can hide the focused result.
+  const complete = contentTerms === 0
+    ? hits.filter(hit => hit.matched === terms.length)
+    : hits.filter(hit => hit.partialMatched === contentTerms);
   // Relax the all-words gate only when complete matches are entirely incidental
   // body matches. A near-complete result must cover all but one content term and
   // have a stronger non-filler field score. Title/summary/heading matches on any
   // complete result preserve the original preference; filler cannot earn promotion.
-  const contentTerms = terms.filter(term => !fallbackStopWords.has(term.term)).length;
   const bestCompleteContent = Math.max(...complete.map(hit => hit.contentScore));
   const stronger = complete.length && contentTerms >= 3 && complete.every(hit => hit.prominentMatches === 0)
-    ? hits.filter(hit => hit.matched < terms.length && hit.partialMatched >= contentTerms - 1
+    ? hits.filter(hit => hit.partialMatched < contentTerms && hit.partialMatched >= contentTerms - 1
       && hit.prominentMatches > 0 && hit.contentScore > bestCompleteContent) : [];
   const ranked = complete.length ? [...complete, ...stronger] : hits.filter(hit => hit.partialMatched > 0);
   // In partial fallback, one extra incidental word must not outweigh a focused
@@ -109,7 +114,7 @@ export async function queryBuiltSite(directory: string, query: string, options: 
       if (aNear !== bNear) return Number(bNear) - Number(aNear);
       if (aNear && a.contentScore !== b.contentScore) return b.contentScore - a.contentScore;
     }
-    return (complete.length ? b.matched - a.matched : b.partialMatched - a.partialMatched) || b.score - a.score || a.title.localeCompare(b.title) || a.id.localeCompare(b.id);
+    return (complete.length ? b.contentScore - a.contentScore : b.partialMatched - a.partialMatched) || b.score - a.score || a.title.localeCompare(b.title) || a.id.localeCompare(b.id);
   });
   const publication = parsePublicationKey(variants[0]);
   return { status: 'ok', query: query.trim(), publication, total: ranked.length, matchMode: stronger.length ? 'mixed' : complete.length ? 'all' : 'partial', results: ranked.slice(0, limit).map(({ matched, partialMatched, contentScore, prominentMatches, ...result }) => result) };

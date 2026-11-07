@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { queryBuiltSite } from './search-query.js';
 
-test('browser and CLI prefer all terms, then rank partial results by coverage without widening publication or reader visibility', async t => {
+test('browser and CLI prefer content terms, then rank partial results by coverage without widening publication or reader visibility', async t => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-search-fallback-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const page = (id: string, title: string, text: string, extra = {}) => ({ id, title, text, summary: '', url: `/${id}`, markdownUrl: `/${id}.md`, variant: 'production|current|en', type: 'reference', headings: [], ...extra });
@@ -14,9 +14,12 @@ test('browser and CLI prefer all terms, then rank partial results by coverage wi
   await writeFile(path.join(directory, 'search-index.json'), JSON.stringify(index));
   const sentence = 'How can I reuse warnings across pages?';
   const cli = await queryBuiltSite(directory, sentence, { channel: 'production' });
-  assert.equal(cli.matchMode, 'partial');
+  assert.equal(cli.matchMode, 'all', 'filler words do not prevent a content-complete match');
   assert.equal(cli.results[0].id, 'snippets');
   assert.ok(!cli.results.some(hit => hit.id === 'filler'));
+  const partial = await queryBuiltSite(directory, `${sentence} tomorrow`, { channel: 'production' });
+  assert.equal(partial.matchMode, 'partial');
+  assert.equal(partial.results[0].id, 'snippets');
   const exact = await queryBuiltSite(directory, 'reuse warnings', { channel: 'production' });
   assert.equal(exact.matchMode, 'all');
   assert.deepEqual(exact.results.map(hit => hit.id), ['snippets']);
@@ -29,6 +32,27 @@ test('browser and CLI prefer all terms, then rank partial results by coverage wi
   assert.equal((await provider.search(sentence, context))[0].url, '/snippets');
   assert.deepEqual((await provider.search('reuse warnings', context)).map((hit: any) => hit.url), ['/snippets']);
   assert.deepEqual(await provider.search('secretcode missingword', { ...context, readerSelection: { audience: ['ui'] } }), []);
+});
+
+
+test('filler words do not hide a focused title match', async t => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-search-filler-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const page = (id: string, title: string, text: string) => ({ id, title, text, summary: '', url: `/${id}`, markdownUrl: `/${id}.md`, variant: 'production|current|en', type: 'reference', headings: [] });
+  await writeFile(path.join(directory, 'search-index.json'), JSON.stringify({ schemaVersion: 1, documents: [
+    page('publish', 'Deploy your documentation', 'Set site.origin in docs.config.yaml, then build.'),
+    page('filler', 'How do I?', 'How do I deploy my docs?'),
+  ] }));
+  const result = await queryBuiltSite(directory, 'how do I deploy my docs', { channel: 'production' });
+  assert.equal(result.matchMode, 'all');
+  assert.equal(result.results[0].id, 'publish', 'a focused title outranks a page that only repeats filler words');
+  const index = JSON.parse(await readFile(path.join(directory, 'search-index.json'), 'utf8'));
+  const original = globalThis.fetch;
+  globalThis.fetch = (async () => Response.json(index)) as typeof fetch;
+  t.after(() => { globalThis.fetch = original; });
+  const provider = await import(`${pathToFileURL(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../assets/search-lexical.js')).href}?filler-test`);
+  const browser = await provider.search('how do I deploy my docs', { variant: 'production|current|en', indexUrl: '/search-index.json', limit: 8 });
+  assert.equal(browser[0].url, '/publish', 'browser search applies the same content-term rule');
 });
 
 
