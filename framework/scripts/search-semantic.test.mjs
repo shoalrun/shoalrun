@@ -25,11 +25,17 @@ test('built-in semantic search sends publication and reader scope to its sibling
 });
 
 test('a missing endpoint falls back within scope and is not repeatedly requested',async t=>{
-  let endpoints=0;
-  mock(t,async url=>{if(url===context.indexUrl)return fallback();endpoints++;return new Response('',{status:404});});
+  let endpoints=0,termIndexes=0;
+  mock(t,async url=>{
+    if(url===context.indexUrl)return fallback();
+    if(url==='/manual/search-terms.json'){termIndexes++;return new Response('',{status:404});}
+    assert.ok(url.endsWith('/framework/__shoalrun/search'));
+    endpoints++;return new Response('',{status:404});
+  });
   const module=await provider();
   for(let at=0;at<2;at++)assert.deepEqual((await module.search('events',context)).map(hit=>hit.url),['/manual/7.1/connection']);
   assert.equal(endpoints,1);
+  assert.equal(termIndexes,1);
 });
 
 test('temporary errors and invalid responses retain keyword fallback without disabling future semantic requests',async t=>{

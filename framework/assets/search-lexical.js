@@ -1,4 +1,5 @@
-// Built-in search provider: case-insensitive word and phrase matching over /search-index.json.
+import { isTermIndex, searchTerms, isLiteralQueryCandidate, literalTermSearch } from './search-terms.js';
+// Built-in search provider: precompiled term lookup, with legacy excerpt-index fallback.
 // Any provider module exports the same search(query, context) function; prepare(context) is optional.
 let builtIndex = null;
 
@@ -30,6 +31,10 @@ function queryUnits(query, groups) {
 }
 
 export async function prepare({ variant, indexUrl, signal }) {
+  if (indexUrl.endsWith('/search-index.json')) {
+    const compiled = await prepareTerms(indexUrl, signal);
+    if (compiled) return { compiled, documents: compiled.documents.filter(doc => doc.variant === variant), synonyms: compiled.synonyms };
+  }
   builtIndex ??= fetch(indexUrl, { signal })
     .then(response => response.ok ? response.json() : { documents: [] })
     .catch(error => { builtIndex = null; throw error; });
@@ -37,9 +42,15 @@ export async function prepare({ variant, indexUrl, signal }) {
   return { documents: index.documents.filter(doc => doc.variant === variant), synonyms: index.synonyms ?? [] };
 }
 
-// Every term must appear on the page; titles outrank summaries, headings, and body text.
+// The compiled engine balances term coverage and field relevance; older builds use the legacy path below.
 export async function search(query, context) {
-  const { documents: pages, synonyms } = await prepare(context);
+  const prepared = await prepare(context);
+  if (prepared.compiled) {
+    const found = searchTerms(prepared.compiled, query, context);
+    context.searchStatus = { matchMode: found.matchMode, correction: found.correction };
+    return found.results.map(({ document: doc, section }) => ({ url: section ? `${doc.url}#${section.id}` : doc.url, title: doc.title, summary: doc.summary, ...(section ? { section: section.title } : {}) }));
+  }
+  const { documents: pages, synonyms } = prepared;
   const selected = context.readerSelection ?? {};
   const filtered = Object.keys(selected).length > 0;
   const matches = required => Object.entries(required ?? {}).every(([facet, values]) => !selected[facet]?.length || values.some(value => selected[facet].includes(value)));
@@ -74,4 +85,29 @@ export async function search(query, context) {
     ? hits.filter(hit => hit.matched === terms.length)
     : hits.filter(hit => hit.partialMatched === contentTerms);
   return (complete.length ? complete : hits.filter(hit => hit.partialMatched > 0)).sort((a, b) => (complete.length ? b.contentScore - a.contentScore : b.partialMatched - a.partialMatched) || b.score - a.score || a.result.title.localeCompare(b.result.title)).slice(0, context.limit).map(hit => hit.result);
+}
+
+const termIndexes = new Map();
+async function prepareTerms(indexUrl, signal) {
+  const url = indexUrl.replace(/search-index\.json$/, 'search-terms.json');
+  if (!termIndexes.has(url)) termIndexes.set(url, fetch(url, { signal }).then(async response => {
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error('Could not load search index');
+    const index = await response.json();
+    // Legacy custom-provider tests and older hosts can return their original index.
+    if (!isTermIndex(index)) return null;
+    return index;
+  }).catch(error => { termIndexes.delete(url); throw error; }));
+  return termIndexes.get(url);
+}
+
+// Semantic search uses the same exact-lookup rules before making any endpoint request.
+export async function literal(query, context) {
+  if (!isLiteralQueryCandidate(query)) return null;
+  const prepared = await prepare(context);
+  if (!prepared.compiled) return null;
+  const found = literalTermSearch(prepared.compiled, query, context);
+  if (!found) return null;
+  context.searchStatus = { matchMode: found.matchMode };
+  return found.results.map(({ document: doc, section }) => ({ url: section ? `${doc.url}#${section.id}` : doc.url, title: doc.title, summary: doc.summary, ...(section ? { section: section.title } : {}) }));
 }

@@ -287,3 +287,61 @@ test('search streams a large gallery into distinct page results and preserves de
   assert.equal(body.results[2].summary, 'settings.preview — Preview endpoint.');
   assert.ok(body.results.every((hit: { url: string }) => !hit.url.startsWith('/gallery')));
 });
+
+test('precompiled fallback is shared with browser/CLI and keeps reader and publication selection through outages', async () => {
+  const { buildTermIndex } = await import('./search-terms.js');
+  const documents = [
+    { id: 'a', title: 'Harbor guide', summary: 'Public summary', url: '/harbor', markdownUrl: '/harbor.md', type: 'reference', variant: 'production|current|en', headings: [] },
+    { id: 'hidden', title: 'Hidden', summary: 'must not appear', url: '/hidden', markdownUrl: '/hidden.md', type: 'reference', variant: 'production|current|en', readerFilters: { audience: ['maintainers'] }, headings: [] },
+    { id: 'other', title: 'Other', summary: 'other publication', url: '/other', markdownUrl: '/other.md', type: 'reference', variant: 'production|current|en|reporting', headings: [] }
+  ];
+  const compiledSearch = buildTermIndex(documents, [
+    { document: 0, kind: 3, text: 'latepublicneedle' },
+    { document: 0, kind: 3, text: 'hiddensectionneedle', filters: { audience: ['maintainers'] } },
+    { document: 1, kind: 3, text: 'hiddenpageneedle' },
+    { document: 2, kind: 3, text: 'otherpublicationneedle' }
+  ]);
+  const handle = createSearchHandler({ compiledSearch, retriever: new Retriever(prepared(index), embeddings), hosts: ['127.0.0.1:8770'], readerFilters: filters, embedQuery: async () => { throw new Error('provider outage'); } });
+  for (const query of ['latepublicneedle', 'hiddensectionneedle', 'hiddenpageneedle', 'otherpublicationneedle']) {
+    const response = await handle(request({ query, variant: 'production|current|en', readerSelection: { audience: ['authors'] } }));
+    assert.equal(response.status, 200);
+    const body = await response.json(); assert.equal(body.mode, 'lexical');
+    assert.deepEqual(body.results.map((hit: any) => hit.url), query === 'latepublicneedle' ? ['/harbor'] : []);
+  }
+});
+
+test('exact indexed symbols and nonword queries avoid model/provider calls', async () => {
+  const { buildTermIndex } = await import('./search-terms.js');
+  const documents = [{ id: 'method', title: 'getCredentials', summary: 'Exact method.', url: '/method', markdownUrl: '/method.md', type: 'code-reference', variant: 'production|current|en', headings: [] }];
+  const compiledSearch = buildTermIndex(documents, [{ document: 0, kind: 0, text: 'getCredentials' }]);
+  let embeds = 0, reranks = 0;
+  const handle = createSearchHandler({ compiledSearch, retriever: new Retriever(prepared(index), embeddings), hosts: ['127.0.0.1:8770'], embedQuery: async () => { embeds++; return new Float32Array([1, 0]); }, rerank: async () => { reranks++; return []; } });
+  const literal = await (await handle(request({ query: 'getCredentials', variant: 'production|current|en' }))).json();
+  assert.equal(literal.selection, 'literal'); assert.deepEqual(literal.results.map((r: any) => r.url), ['/method']);
+  const empty = await (await handle(request({ query: '🦩🛸', variant: 'production|current|en' }))).json();
+  assert.deepEqual(empty.results, []); assert.equal(embeds, 0); assert.equal(reranks, 0);
+});
+
+test('optional model selection stays within eligible candidates, shares the budget reservation, and times out safely', async () => {
+  let reserves = 0;
+  const handle = createSearchHandler({ retriever: new Retriever(prepared(index), embeddings), hosts: ['127.0.0.1:8770'], embedQuery: async () => new Float32Array([1, 0]), budget: { reserve: async () => { reserves++; return true; } }, rerank: async (_, candidates) => { assert.deepEqual(candidates.map(c => c.id).sort(), ['a', 'b']); return [0, 1]; } });
+  const response = await (await handle(request({ query: 'safe boating', variant: 'production|current|en' }))).json();
+  assert.equal(response.reranked, true); assert.equal(response.results[0].title, 'Sail guide'); assert.equal(reserves, 1);
+  const late = createSearchHandler({ retriever: new Retriever(prepared(index), embeddings), hosts: ['127.0.0.1:8770'], embedQuery: async () => new Float32Array([1, 0]), rerankTimeoutMs: 10, rerank: async () => new Promise<number[]>(() => {}) });
+  const fallback = await (await late(request({ query: 'safe boating', variant: 'production|current|en' }))).json();
+  assert.equal(fallback.rerankFallback, 'deadline'); assert.equal(fallback.results[0].title, 'Harbor guide');
+});
+
+test('model abstention cannot erase keyword evidence, while unsupported literal flags return no guesses', async () => {
+  const { buildTermIndex } = await import('./search-terms.js');
+  const docs = [{ id: 'a', title: 'Harbor guide', summary: 'Boat instructions.', url: '/harbor', markdownUrl: '/harbor.md', type: 'reference', variant: 'production|current|en', headings: [] }];
+  const compiledSearch = buildTermIndex(docs, [{ document: 0, kind: 3, text: 'boat instructions' }]);
+  let calls = 0;
+  const handle = createSearchHandler({ compiledSearch, retriever: new Retriever(prepared(index), embeddings), hosts: ['127.0.0.1:8770'], embedQuery: async () => { calls++; return new Float32Array([1, 0]); }, rerank: async () => [0, 0] });
+  const known = await (await handle(request({ query: 'boat', variant: 'production|current|en' }))).json();
+  assert.equal(known.rerankAbstained, true); assert.ok(known.results.length);
+  const unknown = await (await handle(request({ query: 'quantumflamingoxyz', variant: 'production|current|en' }))).json();
+  assert.equal(unknown.rerankAbstained, true); assert.deepEqual(unknown.results, []);
+  const flag = await (await handle(request({ query: '--nonexistent-quantum-flag', variant: 'production|current|en' }))).json();
+  assert.equal(flag.selection, 'literal'); assert.deepEqual(flag.results, []); assert.equal(calls, 2);
+});

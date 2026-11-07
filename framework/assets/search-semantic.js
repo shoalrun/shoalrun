@@ -7,7 +7,13 @@ export const prepare = lexical.prepare;
 export async function search(query, context) {
   const fallback = () => lexical.search(query, context);
   context.signal?.throwIfAborted();
+  if (!/[\p{L}\p{N}]/u.test(query)) return [];
   if (endpointMissing || query.trim().length < 3) return fallback();
+  try {
+    const literal = await lexical.literal(query, context);
+    context.signal?.throwIfAborted();
+    if (literal !== null) return literal;
+  } catch { context.signal?.throwIfAborted(); }
   // Debounce requests before spending query-embedding credits. Every listener
   // is removed on completion, including when a keystroke cancels this request.
   await new Promise((resolve, reject) => {
@@ -26,6 +32,7 @@ export async function search(query, context) {
     if (!response.ok) return fallback();
     const body = await response.json();
     context.signal?.throwIfAborted();
+    if (body.matchMode) context.searchStatus = { matchMode: body.matchMode, correction: body.correction };
     return Array.isArray(body.results) ? body.results : fallback();
   } catch {
     context.signal?.throwIfAborted();

@@ -104,6 +104,8 @@ export async function addAskFunction(input: { configFile: string; staticDirector
   // must not inherit chat generation, cards, logging, or compiler dependencies.
   await mkdir(path.join(searchFunc, 'site', 'ai'), { recursive: true });
   for (const name of ['chunks.json', 'embeddings.json', 'embeddings.bin']) await cp(path.join(site, 'ai', name), path.join(searchFunc, 'site', 'ai', name));
+  try { await cp(path.join(input.staticDirectory, basePath.slice(1), 'search-terms.json'), path.join(searchFunc, 'site', 'search-terms.json')); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
   const { chat: _chat, ...searchSettings } = runtime.settings;
   await writeFile(path.join(searchFunc, 'runtime.json'), JSON.stringify({ ...runtime, settings: searchSettings, searchStore: chat.budget.store }, null, 2) + '\n');
   await writeFile(path.join(searchFunc, 'package.json'), JSON.stringify({ type: 'module' }) + '\n');

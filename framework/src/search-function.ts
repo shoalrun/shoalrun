@@ -16,7 +16,7 @@ export async function createHostedSearchFunction(directory: string, env: NodeJS.
   const legacy = runtime.settings.chat as { budget?: { store?: unknown } } | undefined;
   const settings = runtime.searchStore ?? legacy?.budget?.store;
   if (!settings || typeof settings !== 'object' || !('provider' in settings) || settings.provider !== 'upstash' || !('urlEnv' in settings) || typeof settings.urlEnv !== 'string' || !('tokenEnv' in settings) || typeof settings.tokenEnv !== 'string' || !/^[A-Za-z_][A-Za-z0-9_]*$/.test(settings.urlEnv) || !/^[A-Za-z_][A-Za-z0-9_]*$/.test(settings.tokenEnv)) throw new Error('Hosted semantic search needs a shared budget store');
-  const setup = await prepareSearchRetrieval(path.join(directory, 'site'), runtime.settings);
+  const setup = await prepareSearchRetrieval(path.join(directory, 'site'), runtime.settings, env);
   const store = envBudgetStore({ urlEnv: settings.urlEnv, tokenEnv: settings.tokenEnv }, env);
   const { limits } = validateSearch(runtime.settings.search);
   return createSearchHandler({

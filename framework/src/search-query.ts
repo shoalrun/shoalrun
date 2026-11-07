@@ -1,3 +1,4 @@
+import { isTermIndex, searchTerms, type TermIndex } from './search-terms.js';
 import { parsePublicationKey } from './publication-identity.js';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -23,6 +24,30 @@ export async function queryBuiltSite(directory: string, query: string, options: 
   if (!query.trim()) throw new Error('Search query must be nonempty text');
   const limit = options.limit ?? 8;
   if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100) throw new Error('Search limit must be an integer from 1 to 100');
+  let compiled: TermIndex | undefined;
+  try {
+    const value = JSON.parse(await readFile(path.join(directory, 'search-terms.json'), 'utf8'));
+    if (!isTermIndex(value)) throw new Error('Unsupported precompiled search index');
+    compiled = value;
+  } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+  if (compiled) {
+    const variants = [...new Set(compiled.documents.filter(doc => {
+      const publication = parsePublicationKey(doc.variant);
+      return (!options.product || publication.product === options.product) && (!options.channel || publication.channel === options.channel) && (!options.version || publication.version === options.version) && (!options.language || publication.language === options.language);
+    }).map(doc => doc.variant))].sort();
+    if (!variants.length) throw new Error('No search documents match the selected publication');
+    if (variants.length !== 1) throw new Error(`Search matches multiple publications (${variants.join(', ')}); pass --product where applicable, --channel, --version, and --language`);
+    const publication = parsePublicationKey(variants[0]);
+    const found = searchTerms(compiled, query, { variant: variants[0], limit });
+    return { status: 'ok', query: query.trim(), publication, total: found.total, matchMode: found.matchMode, ...(found.correction ? { correction: found.correction } : {}), results: found.results.map(({ document: doc, score, section, sectionComplete }) => {
+      const standalone = sectionComplete && section ? doc.sections?.find(candidate => candidate.id === section.id && candidate.standalone === true) : undefined;
+      const tokens = standalone?.markdownTokens ?? doc.markdownTokens;
+      return { id: doc.id, type: doc.type, title: doc.title, summary: doc.summary, score, url: section ? `${doc.url}#${section.id}` : doc.url,
+        markdownUrl: standalone?.markdownUrl ?? doc.markdownUrl, pageMarkdownUrl: doc.markdownUrl, ...(section ? { section: section.title } : {}), snippet: section?.title ?? doc.summary,
+        read: { tool: standalone ? 'get_section' : 'get_page', arguments: { id: doc.id, ...publication, ...(standalone ? { section: standalone.id } : {}), ...(tokens !== undefined ? { maxTokens: Math.min(100_000, Math.max(4096, tokens * 2 + 1024)) } : {}) } },
+        ...(tokens !== undefined ? { markdownTokens: tokens, markdownBytes: standalone?.markdownBytes ?? doc.markdownBytes, markdownTokenEncoding: doc.markdownTokenEncoding } : {}) };
+    }) };
+  }
   let index: SearchIndex;
   try { index = JSON.parse(await readFile(path.join(directory, 'search-index.json'), 'utf8')); }
   catch (error) {

@@ -1,3 +1,5 @@
+import { compileSearchTerms } from './search-terms-build.js';
+import { validateSearchSynonyms } from './search-synonyms.js';
 import { publicationKey, samePublication } from './publication-identity.js';
 import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -30,12 +32,19 @@ export async function addMcpArtifacts(artifacts: Map<string, string | Buffer>, c
     inventory[file] = fingerprint(value);
   };
   const records = new Map(docs.map((doc: any) => [doc.markdownUrl, doc]));
-  const index = searchIndex(selected, config);
+  const synonyms = validateSearchSynonyms(config.search?.synonyms);
+  const index = searchIndex(selected, { ...config, searchSynonyms: synonyms });
   const search = { ...index, documents: index.documents.map(doc => {
     const record: any = records.get(doc.markdownUrl);
     return { ...doc, markdownBytes: record.markdownBytes, markdownTokens: record.markdownTokens, markdownTokenEncoding: record.markdownTokenEncoding, sections: record.sections };
   }) };
   if (search.documents.some(doc => doc.variant !== variant)) throw new Error('MCP search publication mismatch');
+  const termDocuments = search.documents.map(({ text, readerSegments, ...doc }) => {
+    const releaseVersion = selected.find(page => page.doc.frontmatter.id === doc.id && page.doc.route === doc.url)?.doc.frontmatter.releaseVersion;
+    const canonicalSummary = (records.get(doc.markdownUrl) as { summary?: string } | undefined)?.summary;
+    return { ...doc, ...(typeof canonicalSummary === 'string' && canonicalSummary !== doc.summary ? { canonicalSummary } : {}), ...(typeof releaseVersion === 'string' ? { releaseVersion } : {}) };
+  });
+  put('search-terms.json', JSON.stringify(compileSearchTerms(selected, termDocuments, synonyms)) + '\n');
   const catalog = mcp.publication.product === undefined ? undefined : manifest.publications?.products?.[mcp.publication.product];
   const scopedProducts = catalog && mcp.publication.product ? { [mcp.publication.product]: {
     ...(typeof catalog.label === 'string' ? { label: catalog.label } : {}),

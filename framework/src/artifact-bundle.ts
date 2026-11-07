@@ -1,3 +1,4 @@
+import { compileSearchTerms } from './search-terms-build.js';
 import type { PublicationCoordinate } from './publication-identity.js';
 import { markdownTokenEncoding } from './markdown-size.js';
 import { addMcpArtifacts } from './mcp-artifacts.js';
@@ -174,6 +175,13 @@ export async function assembleArtifacts(input: ArtifactAssemblyInput): Promise<{
         ...(page.sections.length ? { sections: page.sections.map(({ id, title, markdownUrl, markdownBytes, markdownTokens, standalone }) => ({ id, title, markdownUrl, markdownBytes, markdownTokens, ...(standalone ? { standalone } : {}) })) } : {}) };
     }) };
     addMetadataArtifact('/search-index.json', JSON.stringify(index) + '\n');
+    const termDocuments = index.documents.map(({ text, readerSegments, ...document }) => {
+      const releaseVersion = rendered.find(page => page.doc.frontmatter.id === document.id && page.doc.route === document.url)?.doc.frontmatter.releaseVersion;
+      const canonicalSummary = records.get(document.markdownUrl)?.summary;
+      return { ...document, ...(typeof canonicalSummary === 'string' && canonicalSummary !== document.summary ? { canonicalSummary } : {}), ...(typeof releaseVersion === 'string' ? { releaseVersion } : {}) };
+    });
+    addMetadataArtifact('/search-terms.json', JSON.stringify(compileSearchTerms(rendered, termDocuments, synonyms as string[][])) + '\n');
+    addPublicArtifact('/assets/search-terms.js', await readFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'search-terms.js'), 'utf8'));
     // An explicit projection prevents article text and reader segments from leaking into discovery.
     const sizes = new Map(manifest.documents.map(({ markdownUrl, markdownBytes, markdownTokens, markdownTokenEncoding }) => [markdownUrl, { markdownBytes, markdownTokens, markdownTokenEncoding }]));
     const compact = { schemaVersion: 1, documents: index.documents.map(({ id, demo, url, markdownUrl, title, summary, type, variant, headings, sections, navigationTab }) => ({ id, demo, url, markdownUrl, title, summary, type, variant, headings, ...(navigationTab ? { navigationTab } : {}), ...(sections ? { sections } : {}), ...sizes.get(markdownUrl) })) };

@@ -1,3 +1,4 @@
+import { searchHistoryIntent } from './search-terms.js';
 import type { Hit, LexicalOptions, Retriever } from './retrieval.js';
 import { compareHits, tokenize } from './retrieval.js';
 import { literalSearch } from './search-literal.js';
@@ -10,14 +11,15 @@ type SearchHit = Hit & { literalSummary?: string };
 export function createSearchResultSelector(retriever: Retriever) {
   retriever.requirePreparedSearch();
   const normalized = (text: string) => tokenize(text).join(' ');
-  return (hits: Iterable<Hit>, query: string, options: LexicalOptions, rescue?: Hit): SearchHit[] => {
+  return (hits: Iterable<Hit>, query: string, options: LexicalOptions & { mode?: 'vector' | 'lexical' }, rescue?: Hit): SearchHit[] => {
     const pages = new Map<string, { first?: Hit; prose?: Hit; literal?: SearchHit; exactTitle: boolean }>();
     const normalizedQuery = normalized(query);
     const literal = literalSearch(query);
     let exact: Hit | undefined;
     // Retain at most three candidates per page, independent of its passage
     // count. Input scores need not be sorted or collected into an array.
-    for (const hit of hits) {
+    for (const original of hits) {
+      const hit = options.mode === 'vector' && original.chunk.type === 'changelog-entry' && !searchHistoryIntent(query) ? { ...original, score: original.score * 0.8 } : original;
       const page = pages.get(hit.chunk.docId) ?? { exactTitle: normalized(hit.chunk.title) === normalizedQuery };
       if (!page.first || compareHits(hit, page.first) < 0) page.first = hit;
       if (hit.chunk.search!.paragraphs.length && (!page.prose || compareHits(hit, page.prose) < 0)) page.prose = hit;

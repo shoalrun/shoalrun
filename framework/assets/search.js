@@ -33,7 +33,7 @@ if (container && input && list && status) {
 
   const setActive = index => {
     active = index;
-    [...list.children].forEach((item, position) => item.setAttribute('aria-selected', String(position === active)));
+    [...list.querySelectorAll('[role="option"]')].forEach((item, position) => item.setAttribute('aria-selected', String(position === active)));
     if (active >= 0) {
       input.setAttribute('aria-activedescendant', `site-search-option-${active}`);
       list.children[active]?.scrollIntoView({ block: 'nearest' });
@@ -59,9 +59,12 @@ if (container && input && list && status) {
     if (!query) { results = []; list.replaceChildren(); status.textContent = ''; close(); return; }
     controller = new AbortController();
     const signal = controller.signal;
+    let details;
     try {
       const module = await load();
-      const found = await module.search(query, { ...context, signal });
+      const requestContext = { ...context, signal };
+      const found = await module.search(query, requestContext);
+      details = requestContext.searchStatus;
       if (signal.aborted) return;
       results = (Array.isArray(found) ? found : []).filter(valid).slice(0, context.limit);
     } catch (error) {
@@ -74,6 +77,11 @@ if (container && input && list && status) {
     const terms = query.split(/\s+/).filter(Boolean);
     show(results.length ? results.map((result, index) => resultItem(result, index, terms))
       : [emptyResult(`No pages match “${query}”`)], results.length);
+    if (details?.correction) status.textContent += `. Spelling adjustment: ${details.correction}`;
+    if (details?.matchMode === 'partial' || details?.matchMode === 'mixed') {
+      status.textContent += '. Some search terms did not match';
+      list.append(emptyResult('Some terms didn’t match. Try fewer or different words.'));
+    }
     outcome({ queryLength: query.length, resultCount: results.length, status: results.length ? 'results' : 'empty' });
   };
 
