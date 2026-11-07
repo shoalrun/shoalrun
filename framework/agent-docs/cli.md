@@ -111,7 +111,7 @@ Changes to the profile, SKU manifest, or declared assets rebuild the edition, in
 shoalrun search <site-directory> <query> [--product P] [--channel C] [--version V] [--language L] [--limit N]
 ```
 
-Searches a built site's `search-index.json` without a server. Quote queries with spaces. It returns JSON with the selected publication, total matches, and up to eight ranked results by default. Each result includes a page ID, HTML URL, Markdown URL, title, summary, type, score, and a short body excerpt. A section match links to its heading in the HTML URL.
+Searches a built site's precompiled `search-terms.json` without a server. Older builds fall back to `search-index.json`. Quote queries with spaces. It returns JSON with the selected publication, total matches, and up to eight ranked results by default. Each result includes a page ID, HTML URL, Markdown URL, title, summary, type, score, and a short context snippet. A section match links to its heading in the HTML URL.
 
 ```sh
 shoalrun search docs/dist "nullable response" --limit 5
@@ -379,7 +379,7 @@ See [Passage index](https://www.shoalrun.com/chat/passage-index.md) for the chun
 shoalrun serve <site-directory> --search --config docs.config.yaml [--port PORT]
 ```
 
-Optional local preview for the included semantic browser search provider or a custom provider. Run `shoalrun build` and `shoalrun index` first. The server adds `/__shoalrun/search`, which returns page and section links from vector retrieval when current embeddings are available, with lexical fallback otherwise. It reads query embedding settings from `retrieval.embeddings` and the key from the environment. It runs only on a loopback address and accepts same-origin JSON requests. It doesn't add the chat panel or call a chat model. Set `outputs.html.search.provider: semantic` to use the included endpoint integration. The lexical browser provider continues to use `/search-index.json`; a [custom provider](https://www.shoalrun.com/author/search.md) can also call the endpoint.
+Optional local preview for the included semantic browser search provider or a custom provider. Run `shoalrun build` and `shoalrun index` first. The server adds `/__shoalrun/search`, which returns page and section links from vector retrieval when current embeddings are available, with lexical fallback otherwise. It reads query embedding settings from `retrieval.embeddings` and the key from the environment. It runs only on a loopback address and accepts same-origin JSON requests. It doesn't add the chat panel or call a chat model. Set `outputs.html.search.provider: semantic` to use the included endpoint integration. The lexical browser provider uses `/search-terms.json`; a [custom provider](https://www.shoalrun.com/author/search.md) can also call the endpoint.
 
 The local `serve --search` command is a preview server. The optional Vercel `--chat` build packages the same search handler as `/__shoalrun/search`, alongside `/__shoalrun/ask`, with shared rate and embedding budgets.
 

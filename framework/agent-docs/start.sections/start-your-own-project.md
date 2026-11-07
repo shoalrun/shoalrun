@@ -38,7 +38,7 @@ Install an exact version of the beta and initialize the minimal starter:
 mkdir my-docs
 cd my-docs
 npm init -y
-npm install --save-exact @shoalrun/cli@1.1.0
+npm install --save-exact @shoalrun/cli@1.2.0
 npx --no-install shoalrun init .
 ```
 

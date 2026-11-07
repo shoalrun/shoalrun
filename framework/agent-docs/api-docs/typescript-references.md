@@ -74,7 +74,7 @@ codeReferences:
       title: Complete SDK reference
 ```
 
-Choose `symbols`, `classes`, or `modules` for the grouped presentation. `singlePage` adds an optional complete reference while retaining individual symbol URLs. Configure explicit document IDs and slugs for symbols whose public identities must survive renames. Add the complete reference or selected class/module pages to navigation by document ID. The [catalog settings](https://www.shoalrun.com/api-docs/code-reference-settings.md) describe source bindings, metadata, and routing.
+Choose `symbols`, `classes`, or `modules` for the grouped presentation. `singlePage` adds an optional complete reference. Set `symbolPages: false` to publish only that page; otherwise individual symbol URLs remain available. Configure explicit document IDs and slugs for symbols whose public identities must survive renames. Add the complete reference or selected class/module pages to navigation by document ID. The [catalog settings](https://www.shoalrun.com/api-docs/code-reference-settings.md) describe source bindings, metadata, and routing.
 
 ## Check the result
 

@@ -17,7 +17,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > MCP > Connect an MCP client
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Parent page: [Full Markdown page](/publish/mcp.md)
 
@@ -48,4 +48,4 @@ npx --no-install shoalrun build docs.config.yaml site-dist
 npx --no-install shoalrun docs mcp --site site-dist
 ```
 
-Search needs `search-index.json`; page reads need `documents.json` and the generated Markdown files. The server doesn't rebuild the site or fetch remote pages. Rebuild after editing your site's sources. The shared core reads the built files on each call.
+Search uses `search-terms.json`, with `search-index.json` as the legacy fallback; page reads need `documents.json` and the generated Markdown files. The server doesn't rebuild the site or fetch remote pages. Rebuild after editing your site's sources. The shared core reads the built files on each call.

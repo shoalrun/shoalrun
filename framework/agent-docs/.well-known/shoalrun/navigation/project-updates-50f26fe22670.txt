@@ -32,13 +32,15 @@ Full-page token counts use cl100k_base. Navigation section ID: project-updates. 
 
 - [Build selection and TypeScript references](https://www.shoalrun.com/changelog/facet-typescript.md) — ID: change.facet-typescript. changelog-entry; 694 tokens. Select additional sections for each build, generate TypeScript SDK references, and improve search queries written as questions.
 
+- [Faster, more accurate search](https://www.shoalrun.com/changelog/search-quality.md) — ID: change.search-quality. changelog-entry; 375 tokens. Search complete pages, find exact API symbols and CLI flags, and recover from common typos.
+
 - [Authoring snapshot previews and review reports](https://www.shoalrun.com/changelog/authoring-preview.md) — ID: change.authoring-preview. changelog-entry; 554 tokens. Snapshot previews with coverage and freshness reports.
 
 - [Agent authoring, search, and documentation answers](https://www.shoalrun.com/changelog/authoring-search.md) — ID: change.authoring-search. changelog-entry; 468 tokens. Reviewed agent drafts, search improvements, and answer context.
 
 - [Working-tree authoring tools](https://www.shoalrun.com/changelog/authoring-tools.md) — ID: change.authoring-tools. changelog-entry; 384 tokens. Project discovery and captured working-tree validation.
 
-- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1610 tokens. Compiler, CLI, and reader changes.
+- [Changelog](https://www.shoalrun.com/changelog.md) — ID: reference.changelog. reference; 1671 tokens. Compiler, CLI, and reader changes.
 
 - [MCP hosting, analytics, and component improvements](https://www.shoalrun.com/changelog/2026-10-17-mcp-hosting.md) — ID: change.mcp-hosting. changelog-entry; 1147 tokens. MCP hosting, analytics, and shared component content.
 

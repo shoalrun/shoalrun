@@ -16,13 +16,26 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Configuration reference > Search and integration
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Configure search synonyms, the read-only MCP endpoint, and browser analytics. These keys belong in `docs.config.yaml` or an included configuration file. For file composition and validation commands, see [Configure your project](https://www.shoalrun.com/configuration.md). Use the [configuration index](https://www.shoalrun.com/config.md) to find another setting.
 
 ## `search`
 
 Optional. `search.synonyms` is a list of groups of two or more words or phrases. Each term in a group can find the others, with exact matches ranked higher. A term can appear in only one group. Use `$include` to keep the groups in a project-owned YAML file. The [site search guide](https://www.shoalrun.com/author/search.md) shows the format and which search paths use it.
+
+`search.rerank` optionally selects a typed decision model for hosted semantic search. Omit it or set `false` to keep it off.
+
+| Field           | Meaning                                                                                                                                       |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `provider`      | `decisions`.                                                                                                                                  |
+| `endpoint`      | Required compatible HTTP endpoint. HTTPS is required except on loopback; credentials, query strings, and fragments aren't allowed in the URL. |
+| `model`         | Required model ID. Use the pinned release you evaluated.                                                                                      |
+| `keyEnv`        | Required server environment-variable name containing the credential.                                                                          |
+| `maxCandidates` | Shortlist size, 2–20; defaults to 12.                                                                                                         |
+| `timeoutMs`     | Deadline for the optional model step, 50–2,000 milliseconds; defaults to 750.                                                                 |
+
+The [model-selection example](https://www.shoalrun.com/author/search.md) explains candidate boundaries, preserved lookups, spending, and fallback behavior. Static keyword search doesn't use this setting.
 
 ## `mcp`
 

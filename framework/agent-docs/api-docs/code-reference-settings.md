@@ -37,6 +37,7 @@ Use these fields inside `codeReferences.<catalog-id>`. Catalog IDs use lowercase
 | `symbols`            | Per-symbol `{ documentId?, slug?, metadata? }` overrides.                                                                                                          |
 | `metadata`           | Ordinary page metadata, including taxonomy, reader filters, `shared`, and feature requirements. Project defaults and enforced metadata still apply.                |
 | `sourceLink.baseUrl` | Optional HTTPS repository directory URL. Must omit credentials, query strings, and fragments.                                                                      |
+| `symbolPages`        | `true` by default. Set `false` with `singlePage` configured to publish only the complete reference, including in search and content exports.                       |
 | `singlePage`         | An optional object defining a complete reference page. Omit it or use `false` to disable it.                                                                       |
 
 Generated pages have `type: code-reference`. Default document IDs combine the catalog and symbol IDs; IDs outside the simple identifier character set use a deterministic digest. Default slugs combine the path prefix, normalized symbol ID, and a digest. Use explicit overrides when a public URL or content-delivery identity must survive a symbol rename.
@@ -53,7 +54,7 @@ The `singlePage` object accepts these fields. No complete page is emitted when i
 | `summary`    | `Classes, functions, and fields in this publication.` |
 | `metadata`   | Overrides the catalog's metadata for this page.       |
 
-Grouped and complete pages use outline depth two unless frontmatter supplies another depth. Each embedded symbol gets a section heading. Links to embedded symbols target that section; ordinary symbol URLs remain valid for external links and content delivery.
+Grouped and complete pages use outline depth two unless frontmatter supplies another depth. Each embedded symbol gets a section heading. Links to embedded symbols target that section; individual symbol URLs remain available when `symbolPages` is `true`. With `symbolPages: false`, link to the complete page or its section anchors. Add redirects for previously published symbol URLs.
 
 ## Publication sources
 

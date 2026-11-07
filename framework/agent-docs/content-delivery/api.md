@@ -25,7 +25,7 @@ Import the browser-safe delivery API from `@shoalrun/cli/content`. It reads expo
 
 ## Generated TypeScript reference
 
-Use the [generated content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) to browse public exports from `@shoalrun/cli/content`. It follows the source declarations and JSDoc, including [snapshot methods](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md), [source options](https://www.shoalrun.com/content-delivery/sdk/manifest-content-source-options.md), [results](https://www.shoalrun.com/content-delivery/sdk/content-result.md), and [delivery errors](https://www.shoalrun.com/content-delivery/sdk/content-delivery-error.md). The guide and behavior reference explain how to use those interfaces and where their trust boundaries apply.
+Use the [generated content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) to browse public exports from `@shoalrun/cli/content` on one page. It follows the source declarations and JSDoc, including snapshot methods, source options, results, and delivery errors. The guide and behavior reference explain how to use those interfaces and where their trust boundaries apply.
 
 ## Open a source
 
@@ -142,7 +142,7 @@ The same typed reference selects either available representation. HTML mounting 
 
 ### Reference while working
 
-- [ContentSnapshot](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md) — Inspect the source-derived snapshot methods and their typed parameters.
+- [Complete content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) — Inspect the source-derived snapshot methods and their typed parameters.
 
 ### Related topics
 

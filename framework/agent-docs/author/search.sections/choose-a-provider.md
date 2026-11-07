@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Verified: 2026-10-01.**
 
@@ -45,7 +45,7 @@ outputs:
 
 | Provider   | Behavior                                                                                         |
 | ---------- | ------------------------------------------------------------------------------------------------ |
-| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                          |
+| `lexical`  | The default. Compiles `/search-terms.json` during the build and searches it in the browser.      |
 | `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Since 0.1.0-alpha.16 |
 | `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                  |
 | `none`     | Removes the search box. Writes no index or provider file.                                        |

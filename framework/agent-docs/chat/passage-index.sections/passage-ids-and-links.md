@@ -18,7 +18,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Retrieval and chat > Passage index
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Status: Experimental.**
 
@@ -26,7 +26,7 @@ Parent page: [Full Markdown page](/chat/passage-index.md)
 
 A passage index splits built Markdown pages into smaller pieces for retrieval. Each passage keeps its page title, heading path, and source link. [Chat](https://www.shoalrun.com/chat.md) and the optional semantic search endpoint use it to find relevant parts of a page.
 
-The default keyword [search box](https://www.shoalrun.com/author/search.md) uses the separate page-level `search-index.json`. The included `semantic` provider connects that box to the passage-search endpoint. You don't need a passage index for normal static-site keyword search.
+The default keyword [search box](https://www.shoalrun.com/author/search.md) uses the separate precompiled `search-terms.json`. The included `semantic` provider connects that box to the passage-search endpoint. You don't need a passage index for normal static-site keyword search.
 
 Create the files after building the site:
 

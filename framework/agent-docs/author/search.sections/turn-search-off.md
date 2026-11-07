@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Verified: 2026-10-01.**
 
@@ -43,4 +43,4 @@ outputs:
       provider: none
 ```
 
-This removes both the reader search box and its index, so the local search command has nothing to query. Markdown twins, `/llms.txt`, and `/documents.json` don't change with the provider. Agents can still discover and fetch pages, but `shoalrun search` can't query a missing `search-index.json`. The passage index and semantic endpoint are independent of this browser setting. Changing it doesn't remove those artifacts or disable a deployed endpoint.
+This removes both the reader search box and its index, so the local search command has nothing to query. Markdown twins, `/llms.txt`, and `/documents.json` don't change with the provider. Agents can still discover and fetch pages, but `shoalrun search` needs a generated term index or legacy search index. The passage index and semantic endpoint are independent of this browser setting. Changing it doesn't remove those artifacts or disable a deployed endpoint.

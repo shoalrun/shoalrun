@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Verified: 2026-10-01.**
 
@@ -34,16 +34,16 @@ Shoalrun supplies the search box and keyboard controls. A **search provider** su
 
 ## CLI and MCP ranking details
 
-CLI and MCP use the lexical index too, with additional ranking rules for documentation lookups. Browser search keeps its complete-match-first, coverage-first behavior.
+Browser, CLI, and MCP keyword lookups share the precompiled ranking rules. Rebuilding creates the term index; older builds without it retain their previous lexical behavior.
 
 ### Partial matches
 
-When CLI/MCP search has no complete matches, it first finds the highest meaningful-term coverage. Candidates within one term of that coverage, with at least two matched terms, rank by non-filler field score before coverage. Remaining candidates rank by coverage as before. This lets a focused subject match outrank a page containing one extra incidental word, while keeping sparse title matches below better-covered results. Results still report `matchMode: partial`. This rule applies only to CLI/MCP search; browser search retains coverage-first partial ranking.
+`matchMode: partial` means no candidate covers all meaningful query terms or their synonyms. Field relevance is balanced against coverage; matching a sparse set of terms doesn't automatically beat a broader match. The returned `total` counts candidates, while `results` respects the requested limit. A large total doesn't mean every candidate is useful.
 
 ### Title plurals
 
-CLI and MCP page-title matching also accepts a simple final-`s` query plural against a singular title. It leaves short words and endings `-ss`, `-us`, and `-is` intact. This title-only rule doesn't add general stemming to body or heading searches.
+Plain words use common English plural forms. Explicit CamelCase and qualified identifiers keep their spelling, so distinct symbols such as `getCredential` and `getCredentials` don't collapse into one name. A reported spelling correction is separate from identifier matching.
 
 ### Mixed matches
 
-CLI and MCP search can also return a stronger partial match when every complete match gets all meaningful query terms from body text alone. The partial match must contain all but one meaningful term, match at least two, and score higher through title, summary, or heading matches. Common question words can't earn this preference. A complete match with any meaningful title, summary, or heading match keeps the original preference. Results report `matchMode: mixed` when the exception applies, retain the complete matches, and rank by non-filler field score. This bounded lexical rule doesn't infer intent or guarantee an answer. The browser search box keeps its complete-match-first behavior.
+`matchMode: mixed` means the returned list includes both complete and near-complete candidates. For queries with at least three meaningful terms, a strong candidate missing one term can compete with a weak complete match. A completeness preference alone doesn't establish that a page answers the question.

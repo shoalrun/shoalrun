@@ -30,6 +30,14 @@ Updates to Shoalrun and its documentation. Each entry identifies the affected ve
 
   Select additional sections for each build, generate TypeScript SDK references, and improve search queries written as questions.
 
+- 2026-11-07
+
+  Version 1.2.0
+
+  [Faster, more accurate search](https://www.shoalrun.com/changelog/search-quality.md)
+
+  Search complete pages, find exact API symbols and CLI flags, and recover from common typos.
+
 - 2026-11-06
 
   Version 1.0.0

@@ -25,7 +25,7 @@ Use the content client in an application to read a static export. Serve the bund
 
 ## Generated TypeScript reference
 
-Use the [generated content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) to browse public exports from `@shoalrun/cli/content`. It follows the source declarations and JSDoc, including [snapshot methods](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md), [source options](https://www.shoalrun.com/content-delivery/sdk/manifest-content-source-options.md), [results](https://www.shoalrun.com/content-delivery/sdk/content-result.md), and [delivery errors](https://www.shoalrun.com/content-delivery/sdk/content-delivery-error.md). The guide and behavior reference explain how to use those interfaces and where their trust boundaries apply.
+Use the [generated content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) to browse public exports from `@shoalrun/cli/content` on one page. Agents can read a single symbol through its standalone section instead of fetching the whole reference. It follows the source declarations and JSDoc, including snapshot methods, source options, results, and delivery errors. The guide and behavior reference explain how to use those interfaces and where their trust boundaries apply.
 
 ## Open a revision
 

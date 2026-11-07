@@ -103,7 +103,7 @@ Changes to the profile, SKU manifest, or declared assets rebuild the edition, in
 shoalrun search <site-directory> <query> [--product P] [--channel C] [--version V] [--language L] [--limit N]
 ```
 
-Searches a built site's `search-index.json` without a server. Quote queries with spaces. It returns JSON with the selected publication, total matches, and up to eight ranked results by default. Each result includes a page ID, HTML URL, Markdown URL, title, summary, type, score, and a short body excerpt. A section match links to its heading in the HTML URL.
+Searches a built site's precompiled `search-terms.json` without a server. Older builds fall back to `search-index.json`. Quote queries with spaces. It returns JSON with the selected publication, total matches, and up to eight ranked results by default. Each result includes a page ID, HTML URL, Markdown URL, title, summary, type, score, and a short context snippet. A section match links to its heading in the HTML URL.
 
 ```sh
 shoalrun search docs/dist "nullable response" --limit 5

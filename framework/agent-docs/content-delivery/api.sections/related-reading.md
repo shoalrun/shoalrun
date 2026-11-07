@@ -33,7 +33,7 @@ Import the browser-safe delivery API from `@shoalrun/cli/content`. It reads expo
 
 ### Reference while working
 
-- [ContentSnapshot](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md) — Inspect the source-derived snapshot methods and their typed parameters.
+- [Complete content client reference](https://www.shoalrun.com/content-delivery/sdk/all.md) — Inspect the source-derived snapshot methods and their typed parameters.
 
 ### Related topics
 

@@ -9,7 +9,7 @@ This package provides the `shoalrun` CLI, starter projects, agent skills, and of
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@1.1.0
+npm install --save-dev --save-exact @shoalrun/cli@1.2.0
 ```
 
 ## Create and preview a site
@@ -360,7 +360,7 @@ with a Hero replaces the standard page header and does not display its dates.
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@1.1.0 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@1.2.0 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.

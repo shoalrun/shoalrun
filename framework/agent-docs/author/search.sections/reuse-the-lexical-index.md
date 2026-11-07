@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Verified: 2026-10-01.**
 
@@ -33,6 +33,10 @@ Site search returns links to pages and sections. It's enabled by default and mat
 Shoalrun supplies the search box and keyboard controls. A **search provider** supplies results; you can replace the built-in provider with your own module. [Search and chat](https://www.shoalrun.com/search-and-chat.md) explains when to add semantic search or cited answers.
 
 ## Reuse the lexical index
+
+The built-in search paths read `/search-terms.json`, which stores document metadata, scoped fields, and compressed term postings for the full published HTML article. Phrase positions are retained for configured multiword synonyms. Section conditions are evaluated during lookup. Build-time exclusions are removed before indexing; reader views remain presentation controls over published content.
+
+`/search-index.json` remains available as the excerpt-oriented format below for custom providers and existing consumers. Its 5,000-character excerpt limit doesn't limit the precompiled term index.
 
 Set `index: true` to build `/search-index.json` for a custom provider. Use it to load the pages into a client-side library such as MiniSearch or FlexSearch:
 

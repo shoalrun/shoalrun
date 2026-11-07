@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Verified: 2026-10-01.**
 
@@ -34,7 +34,7 @@ Shoalrun supplies the search box and keyboard controls. A **search provider** su
 
 ## Local semantic preview
 
-The optional search endpoint uses vector similarity when current query and passage embeddings are available. It falls back to keyword passage search if vectors are unavailable, the provider fails, the budget is exhausted, or the deadline expires.
+The optional search endpoint uses vector similarity when current query and passage embeddings are available. The browser resolves exact indexed symbols and qualified identifiers locally when possible. Direct endpoint requests use the same keyword rules without a query embedding. Queries without letters or numbers return no results. Unsupported flags and qualified names return no exact match rather than unrelated semantic guesses. It falls back to keyword passage search if vectors are unavailable, the provider fails, the budget is exhausted, or the deadline expires.
 
 For dotted configuration keys or command flags, the endpoint can add an exact-identifier explanation as the third result. It must contain every requested identifier in prose; tables, code listings, and identifier prefixes don't qualify. The first two semantic results stay in place. File-name queries and requests for fewer than three results keep semantic ranking.
 

@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Verified: 2026-10-01.**
 
@@ -34,16 +34,11 @@ Shoalrun supplies the search box and keyboard controls. A **search provider** su
 
 ## Lexical search
 
-The built-in provider matches words rather than meaning. It lowercases the query and recognizes phrases declared in `search.synonyms`.
+The built-in provider uses a precompiled inverted index: each term points to the published pages and sections containing it. Compilation reads the full HTML article and stores term postings rather than another copy of its prose. Browser, CLI, and MCP keyword search use the same lookup engine. Static sites need no server or model credentials.
 
-The browser provider ranks matches in this order:
+Titles and headings carry more weight than body mentions, and less common terms help distinguish related pages. Question words such as “how,” “do,” and “the” don't determine coverage. An incidental match for every word can compete with a stronger match covering all but one meaningful term in queries of at least three terms. The browser labels partial and mixed results and suggests refining the query.
 
-1. Pages containing every query term or its mapped synonym.
-2. If none match completely, partial results ordered by matched term count, then field score.
-
-Common filler words such as “how,” “do,” and “the” don't count toward partial-match coverage. A partial result must match at least one remaining term. This helps sentence-shaped queries but doesn't infer meaning or handle typos and general stemming.
-
-The [local search command](https://www.shoalrun.com/cli.md) shares the base index and weights, with additional CLI/MCP ranking rules described below.
+Plain-word plural normalization handles common English endings. Limited spelling recovery considers a unique nearby term in visible titles, summaries, or headings. It reports the spelling adjustment and doesn't rewrite quoted text, flags, qualified names, or capitalized identifiers. These rules don't infer meaning; semantic retrieval is a separate provider.
 
 ### Synonyms
 
@@ -60,19 +55,12 @@ The included file lists equivalent words or phrases:
 - [walkthrough, "walk through", "code tutorial", tutorial]
 ```
 
-Each group works in both directions. Exact word or phrase matches rank above synonym matches. A term can belong to only one group; groups need at least two distinct terms. Phrase matching respects word boundaries, so `walk through` is treated as one term. Shoalrun validates the file during config loading and includes its mapping in `/search-index.json` and `ai/chunks.json`. Browser search, `shoalrun search`, and lexical passage retrieval for chat share that vocabulary. Rebuild the site and passage index after editing the file. Custom search providers must read the mapping from `/search-index.json` if they want to apply it to their own results.
+Each group works in both directions. Exact word or phrase matches rank above synonym matches. A term can belong to only one group; groups need at least two distinct terms. Phrase matching respects word boundaries, so `walk through` is treated as one term. Shoalrun validates the file during config loading and includes its mapping in `/search-terms.json`, `/search-index.json`, and `ai/chunks.json`. Browser search, `shoalrun search`, and lexical passage retrieval for chat share that vocabulary. Rebuild the site and passage index after editing the file. Custom search providers must read the mapping from `/search-index.json` if they want to apply it to their own results.
 
 ### Result ordering and limits
 
-Pages rank by where the terms appear:
+Titles rank above section headings, summaries, and body text. Exact page-title queries open the page itself. Other results can link to a matching section, including a section visible in the selected reader view. The precompiled index retains each section's reader conditions so hidden headings don't supply visible links or ranking evidence.
 
-1. Title, highest when the title starts with the term.
-2. Summary.
-3. Section headings.
-4. Body text.
+Changelog entries receive a soft penalty for ordinary queries. Explicit release-history queries retain their release results, and exact-title lookups still work. The semantic provider applies its own modest changelog preference; its scores aren't interchangeable with keyword scores.
 
-The built-in lexical provider returns at most one result per page. It adds a section link when every query term matches one section heading and the query isn't already a title match. With a reader view selected, it returns page links because the unfiltered heading list may include hidden sections. Custom providers can return multiple section results from the same page.
-
-The list shows the top eight results. The provider downloads the index once, on first focus, and searches only pages in the reader's publication. Product scope Since 0.1.0-alpha.18 includes product, channel, version, and language. When [reader views](https://www.shoalrun.com/author/reader-views.md) are configured, it also excludes pages and marked section text outside the selected view. The local CLI search command reads the full index and doesn't apply a browser's saved view.
-
-The navigation sidebar has a separate filter. Its optional node-level `search` terms help readers find menu items; they don't change `/search-index.json` or masthead results. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).
+The list shows at most eight results, with one result per page. The provider loads and caches the precompiled index on first focus. Product scope Since 0.1.0-alpha.18 includes product, channel, version, and language. Reader selection filters pages and marked sections before scoring. The local CLI doesn't inherit a browser's saved view.

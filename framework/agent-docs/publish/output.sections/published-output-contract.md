@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 

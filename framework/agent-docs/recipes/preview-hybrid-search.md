@@ -17,7 +17,7 @@ Navigation section: [Examples](https://www.shoalrun.com/.well-known/shoalrun/nav
 
 Breadcrumbs: [Examples](https://www.shoalrun.com/config/examples.md) > Maintain this documentation site > Preview semantic search in this checkout
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Build the Shoalrun docs, index passages, and verify vector retrieval and lexical fallback locally.
 
@@ -37,7 +37,7 @@ set -a; . ~/.config/shoalrun/.env; set +a
 npm run docs:index
 ```
 
-The build writes `search-index.json`. The index command sends documentation passages to the configured **embedding provider** and generates or reuses passage vectors. Each semantic query also calls the embedding provider. No chat model is needed for search.
+The build writes `search-terms.json` and the excerpt-oriented `search-index.json`. The index command sends documentation passages to the configured **embedding provider** and generates or reuses passage vectors. Ordinary semantic queries also call the embedding provider. Exact indexed symbols can take a direct keyword path. No chat model is needed for search.
 
 If indexing reports a missing key or provider error, check `retrieval.embeddings` and the environment file, then rerun indexing. The [passage index guide](https://www.shoalrun.com/chat/passage-index.md) explains digests and vector reuse.
 
@@ -55,7 +55,7 @@ npm run docs:search-preview
 
 Open `http://127.0.0.1:8770/`. This command occupies the terminal. Restart it after rebuilding the passage index, because the local endpoint reads its files at startup. Vector results include only passages with current embeddings. Reindex after editing pages so semantic results include the changed passages. A literal configuration key or command flag can also recover one word-matching explanation, but this isn't a substitute for refreshing vectors.
 
-The browser search provider first asks `/__shoalrun/search`. That endpoint ranks passages by embedding similarity and returns page or section links. Successful semantic queries keep their first two pages ranked by meaning. A question containing dotted configuration keys or command flags can include one exact-identifier prose explanation as the third result. Filenames and requests for fewer than three results keep semantic ranking. It doesn't call the chat model. If the endpoint has no current vectors, it returns lexical passage results. If the endpoint is missing, slow, or fails, the browser uses `search-index.json` for lexical page search.
+The browser resolves exact indexed symbols locally. Other semantic queries ask `/__shoalrun/search`. That endpoint ranks passages by embedding similarity and returns page or section links. Semantic queries rank pages by meaning with a modest preference for current documentation over changelog entries. A question containing dotted configuration keys or command flags can include one exact-identifier prose explanation as the third result. Filenames and requests for fewer than three results keep semantic ranking. It doesn't require a chat model. If the endpoint has no current vectors, it uses the precompiled keyword index when available. If the endpoint is missing, slow, or fails, the browser uses `search-terms.json`. Older builds retain their legacy keyword fallback.
 
 Save `runningPreview`: The local site and search endpoint while the server is running.
 

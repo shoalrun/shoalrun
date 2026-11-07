@@ -59,7 +59,7 @@ CONFIG_DEMO="$(mktemp -d)"
 mkdir "$CONFIG_DEMO/site"
 cd "$CONFIG_DEMO/site"
 npm init -y
-npm install --save-exact @shoalrun/cli@1.1.0
+npm install --save-exact @shoalrun/cli@1.2.0
 npx --no-install shoalrun init . --starter minimal
 ```
 

@@ -43,4 +43,4 @@ The `singlePage` object accepts these fields. No complete page is emitted when i
 | `summary`    | `Classes, functions, and fields in this publication.` |
 | `metadata`   | Overrides the catalog's metadata for this page.       |
 
-Grouped and complete pages use outline depth two unless frontmatter supplies another depth. Each embedded symbol gets a section heading. Links to embedded symbols target that section; ordinary symbol URLs remain valid for external links and content delivery.
+Grouped and complete pages use outline depth two unless frontmatter supplies another depth. Each embedded symbol gets a section heading. Links to embedded symbols target that section; individual symbol URLs remain available when `symbolPages` is `true`. With `symbolPages: false`, link to the complete page or its section anchors. Add redirects for previously published symbol URLs.

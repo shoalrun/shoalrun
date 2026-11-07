@@ -16,7 +16,7 @@ Navigation section: [Docs](https://www.shoalrun.com/.well-known/shoalrun/navigat
 
 Breadcrumbs: [Docs](https://www.shoalrun.com/what-is-shoalrun.md) > Search, chat, and agent access > Site search
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 **Verified: 2026-10-01.**
 
@@ -37,7 +37,7 @@ outputs:
 
 | Provider   | Behavior                                                                                         |
 | ---------- | ------------------------------------------------------------------------------------------------ |
-| `lexical`  | The default. Builds `/search-index.json` and matches it in the browser.                          |
+| `lexical`  | The default. Compiles `/search-terms.json` during the build and searches it in the browser.      |
 | `semantic` | Uses Shoalrun’s same-origin search endpoint, with browser keyword fallback. Since 0.1.0-alpha.16 |
 | `custom`   | Loads your browser module. Needs `module`; `index` is optional.                                  |
 | `none`     | Removes the search box. Writes no index or provider file.                                        |
@@ -71,7 +71,7 @@ npx --no-install shoalrun index site-dist --embed --config docs.config.yaml
 npx --no-install shoalrun serve site-dist --search --config docs.config.yaml
 ```
 
-Keys remain server-side. Each semantic query calls the embedding provider; no chat model is required. The browser sends the selected publication and reader view with each request. A missing or unavailable endpoint uses the included browser keyword index. Requests cancelled by further typing don't start fallback searches.
+Keys remain server-side. Ordinary semantic queries call the embedding provider; no chat model is required. Exact indexed symbols can use the keyword path without an embedding request. The browser sends the selected publication and reader view with each request. A missing or unavailable endpoint uses the included browser keyword index. Requests cancelled by further typing don't start fallback searches.
 
 Confirm `mode: vector` in the endpoint response to verify semantic retrieval. Rebuild and reindex edited content, then restart the local server. The [passage index](https://www.shoalrun.com/chat/passage-index.md) explains input reuse and release-specific passage identities.
 
@@ -85,16 +85,11 @@ The box needs JavaScript. Without it, both the search box and sidebar filter sta
 
 ## Lexical search
 
-The built-in provider matches words rather than meaning. It lowercases the query and recognizes phrases declared in `search.synonyms`.
+The built-in provider uses a precompiled inverted index: each term points to the published pages and sections containing it. Compilation reads the full HTML article and stores term postings rather than another copy of its prose. Browser, CLI, and MCP keyword search use the same lookup engine. Static sites need no server or model credentials.
 
-The browser provider ranks matches in this order:
+Titles and headings carry more weight than body mentions, and less common terms help distinguish related pages. Question words such as “how,” “do,” and “the” don't determine coverage. An incidental match for every word can compete with a stronger match covering all but one meaningful term in queries of at least three terms. The browser labels partial and mixed results and suggests refining the query.
 
-1. Pages containing every query term or its mapped synonym.
-2. If none match completely, partial results ordered by matched term count, then field score.
-
-Common filler words such as “how,” “do,” and “the” don't count toward partial-match coverage. A partial result must match at least one remaining term. This helps sentence-shaped queries but doesn't infer meaning or handle typos and general stemming.
-
-The [local search command](https://www.shoalrun.com/cli.md) shares the base index and weights, with additional CLI/MCP ranking rules described below.
+Plain-word plural normalization handles common English endings. Limited spelling recovery considers a unique nearby term in visible titles, summaries, or headings. It reports the spelling adjustment and doesn't rewrite quoted text, flags, qualified names, or capitalized identifiers. These rules don't infer meaning; semantic retrieval is a separate provider.
 
 ### Synonyms
 
@@ -111,22 +106,15 @@ The included file lists equivalent words or phrases:
 - [walkthrough, "walk through", "code tutorial", tutorial]
 ```
 
-Each group works in both directions. Exact word or phrase matches rank above synonym matches. A term can belong to only one group; groups need at least two distinct terms. Phrase matching respects word boundaries, so `walk through` is treated as one term. Shoalrun validates the file during config loading and includes its mapping in `/search-index.json` and `ai/chunks.json`. Browser search, `shoalrun search`, and lexical passage retrieval for chat share that vocabulary. Rebuild the site and passage index after editing the file. Custom search providers must read the mapping from `/search-index.json` if they want to apply it to their own results.
+Each group works in both directions. Exact word or phrase matches rank above synonym matches. A term can belong to only one group; groups need at least two distinct terms. Phrase matching respects word boundaries, so `walk through` is treated as one term. Shoalrun validates the file during config loading and includes its mapping in `/search-terms.json`, `/search-index.json`, and `ai/chunks.json`. Browser search, `shoalrun search`, and lexical passage retrieval for chat share that vocabulary. Rebuild the site and passage index after editing the file. Custom search providers must read the mapping from `/search-index.json` if they want to apply it to their own results.
 
 ### Result ordering and limits
 
-Pages rank by where the terms appear:
+Titles rank above section headings, summaries, and body text. Exact page-title queries open the page itself. Other results can link to a matching section, including a section visible in the selected reader view. The precompiled index retains each section's reader conditions so hidden headings don't supply visible links or ranking evidence.
 
-1. Title, highest when the title starts with the term.
-2. Summary.
-3. Section headings.
-4. Body text.
+Changelog entries receive a soft penalty for ordinary queries. Explicit release-history queries retain their release results, and exact-title lookups still work. The semantic provider applies its own modest changelog preference; its scores aren't interchangeable with keyword scores.
 
-The built-in lexical provider returns at most one result per page. It adds a section link when every query term matches one section heading and the query isn't already a title match. With a reader view selected, it returns page links because the unfiltered heading list may include hidden sections. Custom providers can return multiple section results from the same page.
-
-The list shows the top eight results. The provider downloads the index once, on first focus, and searches only pages in the reader's publication. Product scope Since 0.1.0-alpha.18 includes product, channel, version, and language. When [reader views](https://www.shoalrun.com/author/reader-views.md) are configured, it also excludes pages and marked section text outside the selected view. The local CLI search command reads the full index and doesn't apply a browser's saved view.
-
-The navigation sidebar has a separate filter. Its optional node-level `search` terms help readers find menu items; they don't change `/search-index.json` or masthead results. See [Organize site navigation](https://www.shoalrun.com/author/navigation.md).
+The list shows at most eight results, with one result per page. The provider loads and caches the precompiled index on first focus. Product scope Since 0.1.0-alpha.18 includes product, channel, version, and language. Reader selection filters pages and marked sections before scoring. The local CLI doesn't inherit a browser's saved view.
 
 ## Hosted semantic search limits
 
@@ -217,6 +205,10 @@ The build copies one file. It doesn't copy files that the module imports with re
 
 ## Reuse the lexical index
 
+The built-in search paths read `/search-terms.json`, which stores document metadata, scoped fields, and compressed term postings for the full published HTML article. Phrase positions are retained for configured multiword synonyms. Section conditions are evaluated during lookup. Build-time exclusions are removed before indexing; reader views remain presentation controls over published content.
+
+`/search-index.json` remains available as the excerpt-oriented format below for custom providers and existing consumers. Its 5,000-character excerpt limit doesn't limit the precompiled term index.
+
 Set `index: true` to build `/search-index.json` for a custom provider. Use it to load the pages into a client-side library such as MiniSearch or FlexSearch:
 
 ```yaml title="docs.config.yaml"
@@ -263,6 +255,27 @@ The browser index comes from the HTML article, including HTML-only blocks and ex
 
 The `summary` field uses `outputs.text.search`, or a page’s `displayText.search` override. Without a configured selection, it uses the frontmatter summary. This site selects description before summary. The lexical provider uses the selected text for ranking and result snippets.
 
+## Optional model selection
+
+A hosted semantic search endpoint can ask a configured decision model to choose one landing page from a bounded shortlist. The model receives the query, page titles and types, summaries, and selected passage text. It can promote an existing candidate; it can't invent a URL, generate an answer, or expand the selected publication or reader view.
+
+```yaml title="docs.config.yaml"
+search:
+  rerank:
+    provider: decisions
+    endpoint: https://openrouter.ai/api/alpha/decisions
+    model: liquid/d1-ultra-20261015
+    keyEnv: OPENROUTER_API_KEY
+    maxCandidates: 12
+    timeoutMs: 750
+```
+
+This example uses a pinned model release and an OpenRouter endpoint. Any compatible typed-decision endpoint can be configured with its own model and credential variable. Set the named variable in the server environment; credentials never belong in browser code or configuration files. Reranking is off by default and isn't required for keyword or vector retrieval.
+
+Exact page titles, technical identifier queries, and explicit release-history queries retain their retrieval order. Other queries may use the model after publication and reader filtering. Invalid model output, failures, and deadlines leave the original order available. A model choosing no candidate also preserves results when keyword evidence exists. When both the model and keyword lookup find no support, the endpoint returns no matches. Model requests share the semantic query's spending reservation. Static search and keyword fallback don't call the decision model.
+
+Compare representative queries before enabling a model. A model that follows source rules accurately may still make search rankings worse. Its probability scores aren't interchangeable with another model's. The endpoint reports whether reranking ran and whether it fell back; it doesn't return the model's evidence or credentials.
+
 ## Turn search off
 
 Set the provider to `none` to remove the browser search box and its page index:
@@ -274,11 +287,11 @@ outputs:
       provider: none
 ```
 
-This removes both the reader search box and its index, so the local search command has nothing to query. Markdown twins, `/llms.txt`, and `/documents.json` don't change with the provider. Agents can still discover and fetch pages, but `shoalrun search` can't query a missing `search-index.json`. The passage index and semantic endpoint are independent of this browser setting. Changing it doesn't remove those artifacts or disable a deployed endpoint.
+This removes both the reader search box and its index, so the local search command has nothing to query. Markdown twins, `/llms.txt`, and `/documents.json` don't change with the provider. Agents can still discover and fetch pages, but `shoalrun search` needs a generated term index or legacy search index. The passage index and semantic endpoint are independent of this browser setting. Changing it doesn't remove those artifacts or disable a deployed endpoint.
 
 ## Local semantic preview
 
-The optional search endpoint uses vector similarity when current query and passage embeddings are available. It falls back to keyword passage search if vectors are unavailable, the provider fails, the budget is exhausted, or the deadline expires.
+The optional search endpoint uses vector similarity when current query and passage embeddings are available. The browser resolves exact indexed symbols and qualified identifiers locally when possible. Direct endpoint requests use the same keyword rules without a query embedding. Queries without letters or numbers return no results. Unsupported flags and qualified names return no exact match rather than unrelated semantic guesses. It falls back to keyword passage search if vectors are unavailable, the provider fails, the budget is exhausted, or the deadline expires.
 
 For dotted configuration keys or command flags, the endpoint can add an exact-identifier explanation as the third result. It must contain every requested identifier in prose; tables, code listings, and identifier prefixes don't qualify. The first two semantic results stay in place. File-name queries and requests for fewer than three results keep semantic ranking.
 
@@ -307,19 +320,19 @@ A hosted MCP build still packages one configured publication, including its prod
 
 ## CLI and MCP ranking details
 
-CLI and MCP use the lexical index too, with additional ranking rules for documentation lookups. Browser search keeps its complete-match-first, coverage-first behavior.
+Browser, CLI, and MCP keyword lookups share the precompiled ranking rules. Rebuilding creates the term index; older builds without it retain their previous lexical behavior.
 
 ### Partial matches
 
-When CLI/MCP search has no complete matches, it first finds the highest meaningful-term coverage. Candidates within one term of that coverage, with at least two matched terms, rank by non-filler field score before coverage. Remaining candidates rank by coverage as before. This lets a focused subject match outrank a page containing one extra incidental word, while keeping sparse title matches below better-covered results. Results still report `matchMode: partial`. This rule applies only to CLI/MCP search; browser search retains coverage-first partial ranking.
+`matchMode: partial` means no candidate covers all meaningful query terms or their synonyms. Field relevance is balanced against coverage; matching a sparse set of terms doesn't automatically beat a broader match. The returned `total` counts candidates, while `results` respects the requested limit. A large total doesn't mean every candidate is useful.
 
 ### Title plurals
 
-CLI and MCP page-title matching also accepts a simple final-`s` query plural against a singular title. It leaves short words and endings `-ss`, `-us`, and `-is` intact. This title-only rule doesn't add general stemming to body or heading searches.
+Plain words use common English plural forms. Explicit CamelCase and qualified identifiers keep their spelling, so distinct symbols such as `getCredential` and `getCredentials` don't collapse into one name. A reported spelling correction is separate from identifier matching.
 
 ### Mixed matches
 
-CLI and MCP search can also return a stronger partial match when every complete match gets all meaningful query terms from body text alone. The partial match must contain all but one meaningful term, match at least two, and score higher through title, summary, or heading matches. Common question words can't earn this preference. A complete match with any meaningful title, summary, or heading match keeps the original preference. Results report `matchMode: mixed` when the exception applies, retain the complete matches, and rank by non-filler field score. This bounded lexical rule doesn't infer intent or guarantee an answer. The browser search box keeps its complete-match-first behavior.
+`matchMode: mixed` means the returned list includes both complete and near-complete candidates. For queries with at least three meaningful terms, a strong candidate missing one term can compete with a weak complete match. A completeness preference alone doesn't establish that a page answers the question.
 
 ## Read a search result with an agent
 

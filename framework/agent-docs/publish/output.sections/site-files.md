@@ -17,7 +17,7 @@ Navigation section: [Reference](https://www.shoalrun.com/.well-known/shoalrun/na
 
 Breadcrumbs: [Reference](https://www.shoalrun.com/cli.md) > Output and presentation > Generated outputs
 
-**Updated: 2026-11-05.**
+**Updated: 2026-11-07.**
 
 Parent page: [Full Markdown page](/publish/output.md)
 
@@ -53,7 +53,9 @@ The site also includes a **document manifest**, `documents.json`, which indexes 
 
 - `search-index.min.json` adds page headings to titles, summaries, IDs, types, publication variants, and URLs. It omits article text and reader segments. It's generated whenever the full search index is enabled. Both are static files, not query endpoints.
 
-- `search-index.json` lists page IDs, HTML and Markdown URLs, titles, summaries, headings, and text for the [search box](https://www.shoalrun.com/author/search.md) and local search command. The default lexical provider needs it; a custom provider can opt in.
+- `search-index.json` lists page IDs, HTML and Markdown URLs, titles, summaries, headings, and text for the [search box](https://www.shoalrun.com/author/search.md) and local search command. Custom providers can opt in; older built sites use it as the lexical fallback.
+
+- `search-terms.json` stores precompiled term postings and scoped field metadata for full-article keyword search in the browser, CLI, and MCP. It's generated when the search index is enabled.
 
 - `/assets/search-provider.js` is the search provider module, built-in or custom.
 

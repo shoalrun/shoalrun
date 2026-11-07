@@ -105,7 +105,7 @@ Use `layout` to control how much detail readers see on a parent page. Individual
 | `classes` | Class pages include member details inline. Module pages include their direct functions and class overviews. |
 | `modules` | A module page includes details for its classes, functions, and fields. Submodules form separate groups.     |
 
-`singlePage` independently adds a complete reference for the catalog. It works with any layout. Omit it or set `singlePage: false` to disable it. In a grouped or complete page, links to included symbols jump to their sections; other links retain individual symbol URLs. See the [configuration reference](https://www.shoalrun.com/api-docs/code-reference-settings.md) for defaults and metadata options.
+`singlePage` independently adds a complete reference for the catalog. It works with any layout. Set `symbolPages: false` alongside it to publish only the complete page. Update navigation and links to that page, and add redirects for previously published symbol URLs. Omit it or set `singlePage: false` to disable it. In a grouped or complete page, links to included symbols jump to their sections; other links retain individual symbol URLs. See the [configuration reference](https://www.shoalrun.com/api-docs/code-reference-settings.md) for defaults and metadata options.
 
 ## Build and verify
 
@@ -130,13 +130,13 @@ Catalog and per-symbol metadata can declare reader filters, `shared`, and `requi
 
 HTML uses compact declaration blocks, linked types, field/default tables, and symbol sections. Tables scroll horizontally on narrow screens and can receive keyboard focus. Copy controls use JavaScript; reading the reference, following symbol links, and scrolling a table don't require it. A full reference is an ordinary generated page, so browser Find can search its content.
 
-Markdown retains declarations, descriptions, tables, examples, and symbol links. It doesn't include Copy controls or the website styling. Content exports preserve typed resource links and scope; PDF workflows can select a grouped page or the complete reference by document ID. Generated symbol pages remain independently addressable even when they're also shown inline elsewhere.
+Markdown retains declarations, descriptions, tables, examples, and symbol links. It doesn't include Copy controls or the website styling. Content exports preserve typed resource links and scope; PDF workflows can select a grouped page or the complete reference by document ID. With the default `symbolPages: true`, generated symbols remain independently addressable even when they're also shown inline elsewhere. Setting `symbolPages: false` removes those separate pages and delivery resources; symbols remain sections on the complete page.
 
 Agents can discover and read the generated pages through the site's indexes and read-only tools, or use the normal content-delivery API. They don't need Python or browser scripts to read published references. Source extraction describes declared interfaces; it doesn't execute examples or prove runtime behavior.
 
 ## A real TypeScript example
 
-Shoalrun uses code API references to document its own [public content client](https://www.shoalrun.com/content-delivery/sdk/all.md). Compare the generated [snapshot interface](https://www.shoalrun.com/content-delivery/sdk/content-snapshot.md) with the [integration guide](https://www.shoalrun.com/content-delivery/client.md): the reference follows public TypeScript declarations and JSDoc, while the guide explains the workflow and trust boundaries. The site builds from a saved converter snapshot rather than executing the client or running extraction during every build.
+Shoalrun uses code API references to document its own [public content client](https://www.shoalrun.com/content-delivery/sdk/all.md). Compare the generated `ContentSnapshot` interface with the [integration guide](https://www.shoalrun.com/content-delivery/client.md): the reference follows public TypeScript declarations and JSDoc, while the guide explains the workflow and trust boundaries. The site builds from a saved converter snapshot rather than executing the client or running extraction during every build.
 
 ## Related reading
 

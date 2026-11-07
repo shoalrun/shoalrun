@@ -45,6 +45,7 @@ Use these fields inside `codeReferences.<catalog-id>`. Catalog IDs use lowercase
 | `symbols`            | Per-symbol `{ documentId?, slug?, metadata? }` overrides.                                                                                                          |
 | `metadata`           | Ordinary page metadata, including taxonomy, reader filters, `shared`, and feature requirements. Project defaults and enforced metadata still apply.                |
 | `sourceLink.baseUrl` | Optional HTTPS repository directory URL. Must omit credentials, query strings, and fragments.                                                                      |
+| `symbolPages`        | `true` by default. Set `false` with `singlePage` configured to publish only the complete reference, including in search and content exports.                       |
 | `singlePage`         | An optional object defining a complete reference page. Omit it or use `false` to disable it.                                                                       |
 
 Generated pages have `type: code-reference`. Default document IDs combine the catalog and symbol IDs; IDs outside the simple identifier character set use a deterministic digest. Default slugs combine the path prefix, normalized symbol ID, and a digest. Use explicit overrides when a public URL or content-delivery identity must survive a symbol rename.
