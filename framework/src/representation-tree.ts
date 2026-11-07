@@ -20,7 +20,13 @@ export function publicTree(tree: any, representation: 'html' | 'markdown', docum
         element('div', { 'data-component-content': '' }, children)
       ])];
     }
-    if (node.type === 'docRepresentation') return node.representation === representation ? node.children.flatMap(walk) : [];
+    if (node.type === 'docRepresentation') {
+      if (node.representation !== representation) return [];
+      const children = node.children.flatMap(walk);
+      // Mark HTML-only content so agent-parity checks can distinguish intentional
+      // format-specific prose from accidental content loss in the Markdown twin.
+      return representation === 'html' ? [element('div', { 'data-markdown-ignore': '' }, children)] : children;
+    }
     if (node.type === 'docCookbookChooser') {
       const prompt = node.mode === 'single' ? 'Choose one recipe.' : 'Choose one or more recipes.';
       const details = (option: any) => [option.when ? `Use when: ${option.when}` : option.summary, option.needs ? `You need: ${option.needs}` : '', option.outcome ? `You will have: ${option.outcome}` : ''].filter(Boolean);

@@ -19,6 +19,7 @@ test('tooltips support inline and block text, while short definitions retain nat
   assert.match(markdown, /Compare the build digest \(A content fingerprint\.\) before refreshing\./);
   assert.match(markdown, /Canonical URL: The preferred page address\./);
   assert.match(html, /data-tooltip/);
+  assert.match(html, /<span class="doc-tooltip" data-tooltip="">/);
   assert.match(html, /<details class="doc-info-hint">/);
   assert.doesNotMatch(html, /aria-describedby|role="tooltip"/); // Added with the working trigger during enhancement.
   assert.match(renderMarkdown(publicTree(lower('<Tooltip label="Digest">\nA fingerprint.\n</Tooltip>'), 'markdown', new Set())), /Digest: A fingerprint\./);
