@@ -2,7 +2,7 @@
 
 Shoalrun builds a documentation website, Markdown pages, and application content from the same Markdown and MDX source. People can browse the site; applications and agents can read stable documents, sections, and snippet instances. Native components keep essential instructions and API details readable in both HTML and Markdown.
 
-This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. This beta is distributed through the public npm registry. Installation requires no npm account or package token.
+This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. The package is distributed through the public npm registry. Installation requires no npm account or package token.
 
 ## Install
 
@@ -38,7 +38,8 @@ The [features overview](https://www.shoalrun.com/features) describes the complet
 | --- | --- |
 | A documentation site | Pages, navigation, local preview, themes, palettes, fonts, and project CSS. |
 | Reusable procedures | Recipes, shared ingredients, and cookbooks that help readers choose a complete task. |
-| API reference | OpenAPI operation pages, code examples, focused contracts, and an explicit source-review gate. |
+| HTTP API references | OpenAPI operation pages, code examples, focused contracts, and an explicit source-review gate. |
+| Code API references | [Python docstrings and converter-supplied symbols](CODE-REFERENCES.md), rendered as native reference pages. |
 | Several product releases | Independent product versions and defaults, publication routes, and a header publication selector. |
 | Customer editions | External profiles, SKU revisions, feature grants, and conditional pages or sections. |
 | Application help | HTML and Markdown exports, stable page/section/snippet references, static and REST clients, and instance-safe mounting. |
@@ -50,6 +51,8 @@ Local builds and keyword search need no provider credentials. Semantic retrieval
 ## Match your brand
 
 Use `site.logo`, `site.favicon`, and header settings for site identity. Choose a theme preset and configure `theme.palette`, `theme.mode`, and `theme.fonts`. Use `site.customCss` for changes beyond those settings. Customer profiles can supply deployment-owned branding without storing customer records in the shared source.
+
+Local body and heading fonts registered through `theme.fonts` preload automatically. Custom font URLs include a content digest so browsers can cache them and fetch fresh files after font edits. Preloading starts the download earlier; first-visit layout movement still depends on the font metrics and connection.
 
 Check controls and interactive states as well as article text: a dark header can contain light inputs, menus, and search results. Palette validation doesn't check arbitrary project CSS. See [themes and fonts](https://www.shoalrun.com/styling/themes), the [CSS reference](https://www.shoalrun.com/author/css), and [deployment profiles](DEPLOYMENT-PROFILES.md).
 
@@ -353,7 +356,7 @@ Commit the updated package manifest and lockfile together. Check that the lockfi
 
 ## Status and development
 
-This beta may change configuration and output formats between releases. No compatibility promise or maintained older release line is offered yet. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
+Shoalrun 1.0 is the stable release line. Pin exact versions and review release notes for configuration or output-contract changes. Older release lines aren't maintained. Creating and previewing a basic site does not require a model provider or Chrome. Optional provider-backed features require their own configuration.
 
 Shoalrun is maintainer-led and does not accept unsolicited pull requests at this time. The [repository development instructions](https://github.com/shoalrun/shoalrun#develop-the-framework) explain how to build and test your own checkout or fork.
 

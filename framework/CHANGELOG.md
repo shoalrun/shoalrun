@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.0 — 2026-11-06
+
+- Generate [code API references](https://www.shoalrun.com/api-docs/code-references)
+  from Python source and docstrings, or bring a converter using the shared JSON
+  snapshot format. Choose symbol, class, module, or optional complete-page
+  references with linked types, field defaults, and native content delivery.
+- Preload local custom body and heading fonts, cache custom assets by content,
+  and revalidate bundled fonts. Match the preset's font style and CSS weight
+  selection, including overlapping face registrations.
+- Tighten shared page-header spacing around metadata and page actions.
+- Correct npm distribution tagging and verify it separately from upload.
+  Stable releases use `latest`; later prereleases preserve that stable channel.
+
+Upgrade to CLI `1.0.0` and rebuild. Python extraction is optional and runs
+explicitly; normal site builds consume the saved snapshot without Python.
+
+
 ## 0.1.0-beta.1 — 2026-11-05
 
 - Add custom code-fence highlighting with local TextMate JSON grammars and aliases.

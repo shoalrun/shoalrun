@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { createServer } from 'node:net';
-import { digest, json, save, directorySeal, verifyArchive, approvalId, requireApproval, publishOnce, deployOnce, releaseTag, withCompilerLock } from './release-state.mjs';
+import { digest, json, save, directorySeal, verifyArchive, approvalId, requireApproval, publishOnce, deployOnce, releaseTag, releaseTags, withCompilerLock } from './release-state.mjs';
 import { checkPackageInventory } from './package-inventory.mjs';
 import { completeRelease } from './complete-release.mjs';
 
@@ -276,7 +276,9 @@ export async function release(argv = process.argv.slice(2)) {
       run('Public registry authentication', 'npm', ['whoami', '--registry=https://registry.npmjs.org', '--@shoalrun:registry=https://registry.npmjs.org']);
       const response = await fetch('https://registry.npmjs.org/@shoalrun%2fcli', { signal: AbortSignal.timeout(20000) });
       if (!response.ok) throw new Error('Cannot determine the existing npm distribution tag');
-      tag = releaseTag(version, (await response.json())['dist-tags']?.latest);
+      const tags = (await response.json())['dist-tags'] ?? {};
+      tag = releaseTag(version, tags.latest);
+      if (!releaseTags(version, tags).includes(tag)) throw new Error(`Release would move npm ${tag} backwards; no upload performed`);
     }
     const result = await publishOnce({ marker, expected: plan, lookup, publish: async () => {
       const registry = ['--registry=https://registry.npmjs.org', '--@shoalrun:registry=https://registry.npmjs.org'];
@@ -292,6 +294,25 @@ export async function release(argv = process.argv.slice(2)) {
       await new Promise(resolve => setTimeout(resolve, 5000));
     }
     throw new Error('Registry confirmation is pending. Rerun the same command; it will not upload again.');
+  });
+  await step('distribution-tags', async () => {
+    const registered = await lookup();
+    if (registered?.version !== version || registered?.dist?.integrity !== plan.integrity) throw new Error('Verify the reviewed registry artifact before changing distribution tags');
+    const metadata = async () => {
+      const response = await fetch('https://registry.npmjs.org/@shoalrun%2fcli', { headers: { 'Cache-Control': 'no-cache' }, signal: AbortSignal.timeout(20000) });
+      if (!response.ok) throw new Error(`Distribution tag lookup failed: HTTP ${response.status}`);
+      return (await response.json())['dist-tags'] ?? {};
+    };
+    const current = await metadata();
+    const tags = releaseTags(version, current);
+    if (!tags.length) throw new Error('Newer distribution tags already exist; review the release without moving them backwards');
+    for (const tag of tags) if (current[tag] !== version) {
+      const child = spawnSync('npm', ['dist-tag', 'add', `@shoalrun/cli@${version}`, tag, '--registry=https://registry.npmjs.org', '--@shoalrun:registry=https://registry.npmjs.org'], { cwd: repo, env, stdio: 'inherit' });
+      if (child.error || child.status !== 0) throw new Error(`npm ${tag} update did not finish; rerun the same command to resume tagging without uploading again`);
+    }
+    const verified = await metadata();
+    for (const tag of tags) if (verified[tag] !== version) throw new Error(`npm ${tag} confirmation is pending; rerun the same command to resume`);
+    return { tags, verifiedAt: new Date().toISOString() };
   });
   await step('framework-sync', () => completeRelease(repo, planFile));
   await step('docs-sync', () => {

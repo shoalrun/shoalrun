@@ -1,36 +1,21 @@
 # Release checklist
 
-Shoalrun is in beta. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
+Shoalrun 1.0 is the stable release line. This checklist describes release preparation; checked source and a successful build are not evidence that a package has been published or a site deployed.
 
-## 0.1.0-beta.1 release scope
+## 1.0.0 release scope
 
-Include custom language highlighting through local TextMate JSON grammars.
-Customers register a language ID and optional aliases under
-`outputs.html.highlighting.languages`, then use those names in code fences.
-Ship the implementation with the runnable `framework/examples/custom-language/`
-example and the updated code-block and output-configuration references.
-Retain the grammar reload, project isolation, exact-code preservation, and
-authoring-capture checks in release verification.
-
-Include styled PDF page/publication export and the configurable page print action.
-Static builds must use a shared branded browser print view, produce no page PDFs
-or extra print documents, and need no build-time browser for the action. Verify
-that configured print CSS/fonts/logo are shared and the original page is unchanged.
-Keep whole-manual CLI
-downloads optional and Node endpoint downloads explicit.
-Ship the PDF example, configuration/export guide, and updated
-author/branding guidance and the `shoalrun-pdf` skill, print reference, and
-stylesheet starter together. Run the PDF checks with a supported installed
-Chromium and inspect page images, links, bookmarks, and font embedding before
-release. Verify profile/audience exclusions and private on-demand input serving.
-Browser-free passing tests don't complete the PDF rendering review.
+This release includes code API references with optional Python extraction,
+configurable grouped and complete-page layouts, custom-font preload/cache fixes,
+shared header spacing, and npm distribution-tag verification. The public release
+note and feature guides live in the matching docs checkout. Retain the exact
+package, documentation snapshot, and site provenance throughout preparation.
 
 ## Coordinated release command
 
 Run from the framework repository with the documentation checkout beside it:
 
 ```sh
-npm run release -- 0.1.0-beta.1
+npm run release -- 1.0.0
 ```
 
 This prepares versions, builds a bootstrap compiler, exports and imports the
@@ -132,3 +117,14 @@ Check current dependency advisories in both repositories with `npm audit` and `n
 ## Verify the result
 
 Confirm the package's quickstart works for its intended audience and its bundled documentation matches that version. If the website is also deployed, verify the live build identity, HTML and Markdown URLs, discovery resources, and any enabled hosted services. Report known limitations explicitly.
+
+## npm distribution tags
+
+Stable releases advance `latest`. Prereleases update their named channel and
+advance `latest` only when it is absent or points to an older prerelease. A
+stable `latest` and newer named-channel tags aren't moved backwards. Git version
+tags remain annotated `vVERSION` tags at the reviewed artifact source commit.
+
+The coordinated runner verifies distribution tags after registry checksum
+confirmation. That checkpoint can resume without uploading an existing version
+again. It uses the terminal for npm authentication/OTP when a tag update needs it.

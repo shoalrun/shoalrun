@@ -49,10 +49,37 @@ export function withCompilerLock(root, version, archive, operation) {
   }
 }
 export const approvalId = plan => digest(JSON.stringify(plan));
+function releaseVersionParts(version) {
+  const match = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$/.exec(version ?? '');
+  if (!match) throw new Error(`Invalid release version: ${version}`);
+  return { core: match.slice(1, 4).map(BigInt), pre: match[4]?.split('.') };
+}
+export function compareReleaseVersions(left, right) {
+  const a = releaseVersionParts(left), b = releaseVersionParts(right);
+  for (let i = 0; i < 3; i++) if (a.core[i] !== b.core[i]) return a.core[i] < b.core[i] ? -1 : 1;
+  if (!a.pre || !b.pre) return a.pre ? -1 : b.pre ? 1 : 0;
+  for (let i = 0; i < Math.max(a.pre.length, b.pre.length); i++) {
+    const x = a.pre[i], y = b.pre[i];
+    if (x === undefined || y === undefined) return x === undefined ? -1 : 1;
+    if (x === y) continue;
+    const numericX = /^\d+$/.test(x), numericY = /^\d+$/.test(y);
+    if (numericX && numericY) { if (BigInt(x) !== BigInt(y)) return BigInt(x) < BigInt(y) ? -1 : 1; continue; }
+    if (numericX !== numericY) return numericX ? -1 : 1;
+    return x < y ? -1 : 1;
+  }
+  return 0;
+}
 export function releaseTag(version, latest) {
-  if (!version.includes('-')) return 'latest';
-  const channel = version.split('-')[1].split('.')[0];
-  return latest?.includes(`-${channel}.`) ? 'latest' : channel;
+  const { pre } = releaseVersionParts(version);
+  if (!pre) return 'latest';
+  // Move forward from alpha to beta too, but never replace a stable latest.
+  return !latest || releaseVersionParts(latest).pre && compareReleaseVersions(version, latest) >= 0 ? 'latest' : pre[0];
+}
+export function releaseTags(version, current = {}) {
+  const { pre } = releaseVersionParts(version);
+  const tags = pre ? [pre[0]] : [];
+  if (releaseTag(version, current.latest) === 'latest') tags.push('latest');
+  return tags.filter(tag => !current[tag] || compareReleaseVersions(version, current[tag]) >= 0);
 }
 export function requireApproval(plan, approval) {
   if (approval !== approvalId(plan)) throw new Error('Approval must match the exact reviewed package, source commits, and site bundle.');

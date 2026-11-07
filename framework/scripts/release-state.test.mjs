@@ -4,7 +4,7 @@ import { mkdtempSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { approvalId, requireApproval, publishOnce, deployOnce, verifyArchive, digest, releaseTag, withCompilerLock } from './release-state.mjs';
+import { approvalId, requireApproval, publishOnce, deployOnce, verifyArchive, digest, releaseTag, releaseTags, compareReleaseVersions, withCompilerLock } from './release-state.mjs';
 import { sourceFingerprint, auditReleaseDependencies, releaseFrameworkFile } from './release.mjs';
 import { execFileSync } from 'node:child_process';
 
@@ -115,4 +115,16 @@ test('approval and publication evidence reject modified artifacts or a changed s
   assert.throws(() => requireApproval({ ...plan, buildId: 'c'.repeat(64) }, approval), /exact reviewed/);
   writeFileSync(file, 'changed archive');
   assert.throws(() => verifyArchive(file, artifact), /archive changed/);
+});
+
+test('distribution tags advance from alpha to beta, preserve stable latest and never downgrade a channel', () => {
+  assert.equal(releaseTag('0.1.0-beta.2', '0.1.0-alpha.19'), 'latest');
+  assert.deepEqual(releaseTags('0.1.0-beta.2', { latest: '0.1.0-alpha.19', beta: '0.1.0-beta.1' }), ['beta', 'latest']);
+  assert.deepEqual(releaseTags('1.1.0-beta.2', { latest: '1.0.0', beta: '1.1.0-beta.1' }), ['beta']);
+  assert.deepEqual(releaseTags('1.0.0', { latest: '0.1.0-alpha.19', beta: '0.1.0-beta.1' }), ['latest']);
+  assert.deepEqual(releaseTags('1.1.0-beta.1', { latest: '1.0.0', beta: '1.1.0-beta.2' }), []);
+  assert.deepEqual(releaseTags('1.0.0', { latest: '2.0.0' }), []);
+  assert.equal(compareReleaseVersions('1.0.0-beta.10', '1.0.0-beta.2'), 1);
+  assert.equal(compareReleaseVersions('1.0.0', '1.0.0-rc.9'), 1);
+  assert.equal(compareReleaseVersions('2.0.0-alpha.1', '1.99.99'), 1);
 });

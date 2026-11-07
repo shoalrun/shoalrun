@@ -86,7 +86,7 @@ The [release process](RELEASING.md) covers package checks, source and tag synchr
 
 ## Status and reporting
 
-Shoalrun is in beta. Configuration, commands, programmatic APIs, and generated output can change between releases; older release lines aren't maintained. Rebuild and check your site and content consumers before deploying an upgrade.
+Shoalrun 1.0 is the stable release line. Pin exact versions and read the release notes for configuration, command, and content-delivery changes. Older release lines aren't maintained. Rebuild and check your site and content consumers before deploying an upgrade.
 
 Local builds, previews, keyword search, and bundled references don't need a model provider. Semantic search and generated answers need separately configured services. Production hosting, private-edition access, and application authentication remain the deployer's responsibility.
 
