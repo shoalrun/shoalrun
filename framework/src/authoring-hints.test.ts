@@ -29,3 +29,10 @@ test('scaffold prompts in code examples are literal while prose prompts still bl
   ]) assert.equal(hasScaffoldPlaceholders(body), false, body);
   for (const body of ['[[TODO: Explain the task.]]', '## [[TODO: Name the task.]]', '```md\n[[TODO: Example.]]\n```\n\n[[TODO: Finish the introduction.]]']) assert.equal(hasScaffoldPlaceholders(body), true);
 });
+
+test('source comments neither produce authoring hints nor suppress visible hints', () => {
+  for (const wrap of [(body: string) => `<!-- ${body} -->`, (body: string) => `{/* ${body} */}`]) {
+    assert.deepEqual(authoringHints(wrap('## Related reading\n\n[Install](doc:guide.install)'), 'page.mdx'), []);
+    assert.equal(authoringHints(`${wrap('<RelatedReading />')}\n\n## Related reading\n\n[Install](doc:guide.install)`, 'page.mdx').length, 1);
+  }
+});

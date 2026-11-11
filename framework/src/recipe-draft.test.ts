@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { cp, readFile, realpath, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import test from 'node:test';
 import os from 'node:os';
 import path from 'node:path';
@@ -9,6 +9,18 @@ import { renderRecipeDraft, writeRecipeDraft } from './recipe-draft.js';
 const fixture = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../example-configs/notifications');
 const config = path.join(fixture, 'docs.config.yaml');
 const spec = path.join(fixture, 'recipe-specs/send-welcome-email.yaml');
+
+test('recipe heading analysis ignores comments while preserving them in draft source', async t => {
+  const directory = await realpath(await mkdtemp(path.join(os.tmpdir(), 'shoalrun-recipe-comments-')));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  await cp(fixture, directory, { recursive: true });
+  const ingredient = path.join(directory, 'ingredients/queue-welcome-email.mdx');
+  const comments = '<!--\n## Hidden HTML heading\n-->\n{/*\n## Hidden JSX heading\n*/}';
+  await writeFile(ingredient, (await readFile(ingredient, 'utf8')) + `\n${comments}\n\n## Visible heading\n\nKeep this.\n`);
+  const draft = await renderRecipeDraft(path.join(directory, 'docs.config.yaml'), path.join(directory, 'recipe-specs/send-welcome-email.yaml'));
+  assert.ok(draft.content.includes(comments));
+  assert.match(draft.content, /### Visible heading/);
+});
 
 test('recipe draft assembles ordered ingredients and remains reviewable', async t => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'shoalrun-recipe-'));

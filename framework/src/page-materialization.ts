@@ -71,7 +71,7 @@ export async function materializePages({ variables, frontmatterConfig, publicati
     let pageSamples: CodeSample[] | undefined;
     const local = new Map<string, Document>();
     for (const other of linkDocuments.values()) if (keyFor(other.frontmatter.id, doc.variant) === keyFor(other.frontmatter.id, other.variant)) local.set(other.frontmatter.id, other);
-    const parsed = doc.codeReference ? null : parse.parse(doc.body);
+    const parsed = doc.codeReference ? null : parse.parse({ value: doc.body, path: doc.file });
     const tree = doc.codeReference ? renderCodeReference(doc.codeReference, doc, linkDocuments) : await resolveApiEmbedTree(transformMdx(parsed, doc, local, snippets, variables, snippetUses, calloutTypes, base, readerFilters, frontmatterConfig, publications, badgeVariants, componentPlugins, linkDocuments), api, operationId => sourceForOperation(operationId, doc.variant), apiId => {
       if (doc.featureContext?.grants) throw new Error('Standalone API schema embeds require an explicitly scoped source and are not supported in profiled builds; select an operation instead');
       const definition = apiPlan.apiDefinitions[apiId];

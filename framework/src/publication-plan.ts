@@ -101,7 +101,7 @@ export async function planAuthoredDocuments({ base, basePath, config, variants, 
     if (frontmatter.access?.policy !== 'public' && !authoringFiles?.has(file)) { if (decision) decision.included = false; continue; }
     const marks = pageReaderFilters(frontmatter, readerFilters, file);
     if (!matchesContentFilter(marks, contentFilter)) { if (decision) decision.included = false; continue; }
-    if (hasScaffoldPlaceholders(body) || /\[\[TODO:[\s\S]*?\]\]/.test(JSON.stringify(frontmatter)) || frontmatter.summary?.startsWith('Draft guide for ')) throw new Error(`${file}: unresolved scaffold placeholders cannot be published`);
+    if (hasScaffoldPlaceholders(body, file) || /\[\[TODO:[\s\S]*?\]\]/.test(JSON.stringify(frontmatter)) || frontmatter.summary?.startsWith('Draft guide for ')) throw new Error(`${file}: unresolved scaffold placeholders cannot be published`);
     let selectedPublication = false;
     for (const variant of variants) {
       if (pagePublications ? !pagePublications.some(item => samePublication({ ...item, language: frontmatter.language! }, variant)) : (frontmatter.channel && frontmatter.channel !== variant.channel || frontmatter.version && frontmatter.version !== variant.version || (config.publications.products && frontmatter.product !== variant.product))) continue;

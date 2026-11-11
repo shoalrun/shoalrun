@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.1 — 2026-11-11
+
+- Allow source-only HTML (`<!-- … -->`) and JSX/MDX (`{/* … */}`) comments
+  in pages and snippets. Keep author notes and inline test instructions in
+  repository sources while omitting them from published HTML, Markdown,
+  search, discovery, and application content exports. Commented content does
+  not resolve links, components, or file dependencies. Code examples retain
+  literal comment syntax.
+
+Upgrade to CLI `1.2.1` and rebuild the site and application exports. Run
+source-based tools such as Doc Detective against the repository files.
+
 ## 1.2.0 — 2026-11-07
 
 - Improve [search](https://www.shoalrun.com/author/search) with a build-time

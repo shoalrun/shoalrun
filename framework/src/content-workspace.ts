@@ -35,7 +35,7 @@ export async function prepareContentWorkspace({ base, basePath, config, loaded, 
     const file = path.resolve(path.dirname(source), (definition as { file: string }).file);
     const body = await readFile(file, 'utf8');
     if (/^---\r?\n/.test(body)) throw new Error(`${file}: snippets use plain Markdown without page frontmatter`);
-    snippets.set(id, { file, tree: parse.parse(body), variables });
+    snippets.set(id, { file, tree: parse.parse({ value: body, path: file }), variables });
   }
   if (config.variables !== undefined && (!config.variables || typeof config.variables !== 'object' || Array.isArray(config.variables))) throw new Error('variables must be a mapping');
   const apiPlan = await materializeApiReferences({

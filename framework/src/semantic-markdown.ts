@@ -3,8 +3,9 @@ import remarkParse from 'remark-parse';
 import remarkMdx from 'remark-mdx';
 import remarkGfm from 'remark-gfm';
 import remarkStringify from 'remark-stringify';
+import { sourceComments } from './source-comments.js';
 
-export const parse = unified().use(remarkParse).use(remarkGfm).use(remarkMdx);
+export const parse = unified().use(remarkParse).use(remarkGfm).use(remarkMdx).use(sourceComments);
 const plainMarkdown = unified().use(remarkParse).use(remarkGfm);
 export function parsePlainMarkdown(value: string): any[] {
   // OpenAPI prose may contain raw HTML. It is inert in our HTML renderer, but

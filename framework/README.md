@@ -4,12 +4,25 @@ Shoalrun builds a documentation website, Markdown pages, and application content
 
 This package provides the `shoalrun` CLI, starter projects, agent skills, and offline documentation. It requires Node.js 22.12 or newer. The package is distributed through the public npm registry. Installation requires no npm account or package token.
 
+### Source comments
+
+Pages and snippets accept HTML comments (`<!-- author note -->`) and JSX/MDX
+comments (`{/* author note */}`), including multiline block comments. Comments
+remain in repository sources and generated recipe drafts, and are omitted from
+published HTML, Markdown, search, discovery, and application exports. Links,
+components, and file references inside comments are inactive. Comment syntax in
+code fences, inline code, and component attribute strings remains literal.
+
+Tools such as Doc Detective can read inline test comments from repository files
+and test the built site. Shoalrun treats comment payloads as opaque authoring
+content; there is no special test syntax or comment-preservation setting.
+
 ## Install
 
 From the project where you want to keep your documentation:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@1.2.0
+npm install --save-dev --save-exact @shoalrun/cli@1.2.1
 ```
 
 ## Create and preview a site
@@ -360,7 +373,7 @@ with a Hero replaces the standard page header and does not display its dates.
 If you previously used the private GitHub Packages alpha, check `npm config get @shoalrun:registry`. Remove or replace any `@shoalrun:registry=https://npm.pkg.github.com` entry in your project or user `.npmrc`. You can explicitly select the public registry for the upgrade:
 
 ```sh
-npm install --save-dev --save-exact @shoalrun/cli@1.2.0 --@shoalrun:registry=https://registry.npmjs.org
+npm install --save-dev --save-exact @shoalrun/cli@1.2.1 --@shoalrun:registry=https://registry.npmjs.org
 ```
 
 Commit the updated package manifest and lockfile together. Check that the lockfile resolves `@shoalrun/cli` from `registry.npmjs.org`. Keep any credentials needed by other private dependencies; Shoalrun itself no longer needs a package token.

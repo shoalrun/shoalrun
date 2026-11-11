@@ -5,9 +5,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import YAML from 'yaml';
-import remarkMdx from 'remark-mdx';
-import remarkParse from 'remark-parse';
-import { unified } from 'unified';
+import { parse } from './semantic-markdown.js';
 import { loadConfig } from './config.js';
 import { defaultLanguage } from './frontmatter.js';
 import { ingredientWorkflow, workflowValues } from './ingredient-workflow.js';
@@ -53,9 +51,9 @@ function parseIngredient(source: string, file: string) {
   return { header, body: match[2].trim() };
 }
 
-function nestHeadings(body: string): string {
+function nestHeadings(body: string, file: string): string {
   const lines = body.split('\n');
-  const tree = unified().use(remarkParse).use(remarkMdx).parse(body);
+  const tree = parse.parse({ value: body, path: file });
   for (const node of tree.children) {
     if (node.type !== 'heading' || node.depth < 2 || node.depth > 5 || !node.position) continue;
     const line = node.position.start.line - 1;
@@ -106,7 +104,7 @@ export async function renderRecipeDraft(configFile: string, specFile: string) {
       for (const operation of header.operations) operations.add(operation as string);
     }
     sources.push(`${relative}\n${source}`);
-    const nestedBody = nestHeadings(body);
+    const nestedBody = nestHeadings(body, file);
     sections.push(workflow
       ? [`## ${header.title}`, handoffs.join('\n'), nestedBody, ...Object.entries(workflow.outputs).map(([name, description]) => `Save \`${name}\`: ${description}`), `**Continue when:** ${workflow.check}`].filter(Boolean).join('\n\n')
       : `## ${header.title}\n\n> Ingredient: \`${header.id}\` from \`${relative}\`. Review how it connects to the other steps.\n\n${nestedBody}`);
