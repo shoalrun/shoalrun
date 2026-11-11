@@ -8,6 +8,8 @@
   search, discovery, and application content exports. Commented content does
   not resolve links, components, or file dependencies. Code examples retain
   literal comment syntax.
+- Mark browser-only API field-path info icons for parity checkers while keeping
+  field names, types, requirements, and descriptions in both outputs.
 
 Upgrade to CLI `1.2.1` and rebuild the site and application exports. Run
 source-based tools such as Doc Detective against the repository files.

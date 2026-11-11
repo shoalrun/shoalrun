@@ -37,6 +37,11 @@ test('synthetic reference stress project keeps its awkward API cases in both out
   assert.match(enrollment.html, /Use exactly one of these shapes:/);
   assert.match(enrollment.markdown, /Local pickup.*6 properties/);
   assert.match(enrollment.markdown, /Enrollment sandbox only/);
+  const pathHints = [...enrollment.html.matchAll(/<span\b[^>]*class="api-field-path"[^>]*>ⓘ<\/span>/g)];
+  assert.ok(pathHints.length > 0);
+  for (const [hint] of pathHints) assert.match(hint, /data-markdown-ignore=""/);
+  assert.match(enrollment.markdown, /`program` `string` \*\*required\*\*/);
+  assert.doesNotMatch(enrollment.markdown, /ⓘ|data-markdown-ignore/);
   assert.doesNotMatch(enrollment.markdown, /https:\/\/api\.cedar-parcel\.example\/v1/);
   assert.ok(enrollment.document.focusedContractUrl);
   const enrollmentContract = await readFile(path.join(output, enrollment.document.focusedContractUrl), 'utf8');

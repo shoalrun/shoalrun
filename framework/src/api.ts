@@ -622,7 +622,7 @@ export class ApiReader {
         const anchor = anchorFor([...scope, ...trail, name]);
         const typeLabel = await this.schemaTypeLabel(source, child);
         const fieldPath = [...trail, name].join('.');
-        const pathHint = { type: 'docApiPathHint', data: { hName: 'span', hProperties: { className: ['api-field-path'], 'data-path': fieldPath, 'aria-label': `Field path: ${fieldPath}`, tabIndex: 0 } }, children: [text('ⓘ')] };
+        const pathHint = { type: 'docApiPathHint', data: { hName: 'span', hProperties: { className: ['api-field-path'], 'data-path': fieldPath, 'data-markdown-ignore': '', 'aria-label': `Field path: ${fieldPath}`, tabIndex: 0 } }, children: [text('ⓘ')] };
         const field = paragraph(inline(name), text(' '), { ...inline(typeLabel), data: { hProperties: { className: ['api-field-type'] } } }, text(' '), { type: 'strong', children: [text(requirement)] }, ...(nullable ? [text(' '), { type: 'strong', data: { hProperties: { className: ['nullability-badge'] } }, children: [text('nullable')] }] : []), text(' '), pathHint);
         field.data = { hProperties: { id: anchor, 'data-field': '', 'data-presence': required ? 'present' : 'optional' } };
         const nested = await this.schemaBlocks(source, child, schemaVersion, depth + 1, seen, scope, [...trail, name], undefined, true);
